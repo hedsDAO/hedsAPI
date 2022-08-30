@@ -44,6 +44,7 @@
     "@typescript-eslint/eslint-plugin": "5.19.0",
     "@typescript-eslint/parser": "5.19.0",
     "css-loader": "^6.7.1",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-css-modules": "2.11.0",

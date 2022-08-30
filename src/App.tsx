@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Landing } from './pages/Landing/Landing';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-
 import SidebarDesktop from './components/SidebarDesktop';
 import SidebarMobile from './components/SidebarMobile';
 import Navigation from './components/Navigation';
