@@ -1,5 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { Bars3BottomLeftIcon, BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
 import React, { Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'src/store';
@@ -12,6 +14,11 @@ const userNavigation = [
 ];
 
 export const Navigation = () => {
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
   const dispatch = useDispatch<Dispatch>();
   return (
     <div className="flex flex-col md:pl-64">
@@ -57,12 +64,14 @@ export const Navigation = () => {
             <Menu as="div" className="relative ml-3">
               <div>
                 <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
+                  {isConnected ? (
+                    <div>
+                      Connected to {address}
+                      <button onClick={() => disconnect()}>Disconnect</button>
+                    </div>
+                  ) : (
+                    <button onClick={() => connect()}>Connect Wallet</button>
+                  )}
                 </Menu.Button>
               </div>
               <Transition
