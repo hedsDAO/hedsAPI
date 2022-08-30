@@ -12,8 +12,8 @@ export const MainContent = ({ children }: { children: JSX.Element }) => {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
               {/* <div className="py-4"> */}
-                {children}
-                {/* <div className="h-96 rounded-lg border-4 border-dashed border-gray-200" /> */}
+              {children}
+              {/* <div className="h-96 rounded-lg border-4 border-dashed border-gray-200" /> */}
               {/* </div> */}
               {/* /End replace */}
             </div>

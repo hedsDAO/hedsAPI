@@ -21,7 +21,11 @@ export const SidebarMobile = () => {
 
   return (
     <Transition.Root show={layoutData.sidebarOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-40 md:hidden" onClose={() => dispatch.setSidebarOpen(!layoutData.sidebarOpen)}>
+      <Dialog
+        as="div"
+        className="relative z-40 md:hidden"
+        onClose={() => dispatch.setSidebarOpen(!layoutData.sidebarOpen)}
+      >
         <Transition.Child
           as={Fragment}
           enter="transition-opacity ease-linear duration-300"
