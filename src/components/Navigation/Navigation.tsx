@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
+import { useAccount } from 'wagmi';
 import { Bars3BottomLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { ConnectButton } from '../../../src/common/ConnectButton/ConnectButton';
-import { useDispatch } from 'react-redux';
-import { Dispatch } from 'src/store';
+import ConnectButton from '../../../src/common/ConnectButton';
+import Avatar from '../../../src/common/Avatar';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, RootState } from 'src/store';
 import { classNames } from '../../utils/classNames';
 
 const userNavigation = [
@@ -13,6 +15,8 @@ const userNavigation = [
 ];
 
 export const Navigation = () => {
+  const { isConnected } = useAccount();
+  const userData = useSelector((state: RootState) => state.userModel);
   const dispatch = useDispatch<Dispatch>();
   return (
     <div className="flex flex-col md:pl-64">
@@ -23,7 +27,7 @@ export const Navigation = () => {
         >
           <Bars3BottomLeftIcon className="h-6 w-6" aria-hidden="true" />
         </button>
-        <div className="flex flex-1 justify-between items-center px-4">
+        <div className="flex flex-1 justify-between gap-x-2 items-center px-4">
           <div className="flex flex-1">
             <form className="flex w-full md:ml-0" action="#" method="GET">
               <label htmlFor="search-field" className="sr-only">
@@ -44,7 +48,7 @@ export const Navigation = () => {
               </div>
             </form>
           </div>
-          <ConnectButton />
+          {isConnected && userData ? <Avatar userData={userData} /> : <ConnectButton />}
           <Menu as="div" className="relative ml-3">
             <div>
               <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"></Menu.Button>

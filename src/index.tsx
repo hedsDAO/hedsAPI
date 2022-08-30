@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider as RematchProvider } from 'react-redux';
 import { WagmiConfig, configureChains, chain, createClient } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
+import UserWrapper from './wrappers/UserWrapper';
 import { store } from './store';
 import App from './App';
 import './index.css';
@@ -15,9 +16,11 @@ const client = createClient({ autoConnect: true, provider });
 ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
     <RematchProvider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <UserWrapper>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </UserWrapper>
     </RematchProvider>
   </WagmiConfig>,
 );
