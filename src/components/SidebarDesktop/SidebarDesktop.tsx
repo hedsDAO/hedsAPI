@@ -1,47 +1,26 @@
-import React, { Fragment } from 'react';
-import {
-  Bars3BottomLeftIcon,
-  BellIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  MagnifyingGlassIcon,
-  UsersIcon,
-} from '@heroicons/react/24/solid';
+import React from 'react';
+import { CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon } from '@heroicons/react/24/solid';
 import { classNames } from '../../utils/classNames';
-import { Menu, Transition } from '@headlessui/react';
-import { useDispatch } from 'react-redux';
-import { Dispatch } from 'src/store';
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
-];
-
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Explore', href: '#', icon: HomeIcon, current: true },
+  { name: 'Tapes', href: '#', icon: UsersIcon, current: false },
+  { name: 'Artists', href: '#', icon: FolderIcon, current: false },
+  { name: 'Vote', href: '#', icon: CalendarIcon, current: false },
+  { name: 'Spaces', href: '#', icon: InboxIcon, current: false },
+  { name: 'About', href: '#', icon: ChartBarIcon, current: false },
 ];
 
 export const SidebarDesktop = () => {
-  const dispatch = useDispatch<Dispatch>();
   return (
     <div>
       <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-        {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex min-h-0 flex-1 flex-col bg-gray-800">
           <div className="flex h-16 flex-shrink-0 items-center bg-gray-900 px-4">
             <img
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500"
-              alt="Workflow"
+              src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Fheddot.png?alt=media&token=a1e1d838-5332-4ab6-bb1e-159846efbfd4"
+              alt="heds"
             />
           </div>
           <div className="flex flex-1 flex-col overflow-y-auto">
