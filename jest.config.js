@@ -4,6 +4,8 @@ module.exports = {
   roots: ['<rootDir>'],
   moduleNameMapper: {
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
   },
   testEnvironment: 'jsdom',
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$',
