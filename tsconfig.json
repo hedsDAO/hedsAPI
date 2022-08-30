@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "./build/",
+    "noImplicitAny": true,
+    "module": "ES2015",
+    "target": "ES5",
+    "jsx": "react",
+    "lib": ["esnext", "dom"],
+    "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "@pages/*": ["src/pages/*"]
+    }
+  },
+  "exclude": ["node_modules", "build"]
+}
