@@ -15,16 +15,16 @@ export const SidebarDesktop = () => {
   return (
     <div>
       <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-        <div className="flex min-h-0 flex-1 flex-col bg-gray-800">
-          <div className="flex h-16 flex-shrink-0 items-center bg-gray-900 px-4">
+        <div className="flex min-h-0 flex-1 flex-col bg-black">
+          <div className="flex h-16 flex-shrink-0 items-center bg-black px-4">
             <img
-              className="h-8 w-auto"
+              className="h-10 w-auto"
               src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Fheddot.png?alt=media&token=a1e1d838-5332-4ab6-bb1e-159846efbfd4"
               alt="heds"
             />
           </div>
           <div className="flex flex-1 flex-col overflow-y-auto">
-            <nav className="flex-1 space-y-1 px-2 py-4">
+            <nav className="flex-1 space-y-1 px-2 py-2">
               {navigation.map((item) => (
                 <a
                   key={item.name}
