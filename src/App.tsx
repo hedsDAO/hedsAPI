@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Landing } from './pages/Landing/Landing';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+
+import SidebarDesktop from './components/SidebarDesktop';
+import SidebarMobile from './components/SidebarMobile';
+import Navigation from './components/Navigation';
+import MainContent from './components/MainContent';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBL3xNUXJjHipMLaAP7EOD4KfVDeQe6Jq8',
@@ -20,9 +25,16 @@ export const storage = getStorage(app, 'gs://heds-34ac0.appspot.com');
 
 const App = (): JSX.Element => {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-    </Routes>
+    <div>
+      <SidebarDesktop />
+      <SidebarMobile />
+      <Navigation />
+      <MainContent>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+        </Routes>
+      </MainContent>
+    </div>
   );
 };
 
