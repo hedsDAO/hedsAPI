@@ -1,5 +1,5 @@
 import React from 'react';
-import { Landing } from '@pages/Landing/Landing';
+import { Landing } from '@pages/Explore/Explore';
 import renderer from 'react-test-renderer';
 import { render, screen } from '@testing-library/react';
 
