@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../../src/App';
+import { db } from '../../App';
 
-export const Landing = ({ wallet }: { wallet?: string }) => {
+export const Explore = ({ wallet }: { wallet?: string }) => {
   const firebaseTest = async () => {
     if (wallet) {
       const docRef = doc(db, 'users', wallet.toLowerCase());
@@ -12,5 +12,5 @@ export const Landing = ({ wallet }: { wallet?: string }) => {
       }
     }
   };
-  return <></>;
+  return <>explore</>;
 };

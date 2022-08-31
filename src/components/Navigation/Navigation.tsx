@@ -19,16 +19,16 @@ export const Navigation = () => {
   const userData = useSelector((state: RootState) => state.userModel);
   const dispatch = useDispatch<Dispatch>();
   return (
-    <div className="flex flex-col md:pl-64">
-      <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
+    <div className="flex flex-col md:pl-52">
+      <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-gray-300 shadow">
         <button
           className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
           onClick={() => dispatch.layoutModel.setSidebarOpen(true)}
         >
           <Bars3BottomLeftIcon className="h-6 w-6" aria-hidden="true" />
         </button>
-        <div className="flex flex-1 justify-between gap-x-2 items-center px-4">
-          <div className="flex flex-1">
+        <div className="flex flex-1 justify-end gap-x-2 items-center px-2">
+          {/* <div className="flex flex-1">
             <form className="flex w-full md:ml-0" action="#" method="GET">
               <label htmlFor="search-field" className="sr-only">
                 Search
@@ -40,14 +40,14 @@ export const Navigation = () => {
                 <input
                   autoComplete="off"
                   id="search-field"
-                  className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
+                  className="block h-full w-full border-transparent py-2 pl-8 pr-3 bg-gray-300 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                   placeholder="Search"
                   type="search"
                   name="search"
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           {isConnected && userData ? <Avatar userData={userData} /> : <ConnectButton />}
           <Menu as="div" className="relative ml-3">
             <div>

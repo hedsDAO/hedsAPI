@@ -4,4 +4,9 @@
 
 html {
   /* background: #090909; */
+  height: auto;
+  max-width: 100%;
+  min-width: 100vw;
+  overflow-x: hidden; 
+  overscroll-behavior: none !important;
 }
