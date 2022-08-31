@@ -1,11 +1,11 @@
 import React from 'react';
-import { Landing } from '@pages/Explore/Explore';
+import { Explore } from '@pages/Explore/Explore';
 import renderer from 'react-test-renderer';
 import { render, screen } from '@testing-library/react';
 
-describe('Landing Unit', () => {
+describe('Explore Unit', () => {
   test('should render component properly', () => {
-    const render = renderer.create(<Landing />);
+    const render = renderer.create(<Explore />);
     const tree = render.toJSON();
     expect(tree).toMatchSnapshot();
   });
