@@ -15,7 +15,6 @@ const navigation = [
 
 export const SidebarDesktop = () => {
   const { pathname } = useLocation();
-  console.log(pathname)
   return (
     <div>
       <div className="hidden md:fixed md:inset-y-0 md:flex md:w-52 md:flex-col shadow-sm">
