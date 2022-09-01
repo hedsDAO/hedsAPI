@@ -13,15 +13,26 @@ import { Artists } from '@pages/Artists/Artists';
 import { Vote } from '@pages/Vote/Vote';
 import { Tapes } from '@pages/Tapes/Tapes';
 
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyBL3xNUXJjHipMLaAP7EOD4KfVDeQe6Jq8',
+//   authDomain: 'heds-34ac0.firebaseapp.com',
+//   projectId: 'heds-34ac0',
+//   storageBucket: 'heds-34ac0.appspot.com',
+//   messagingSenderId: '951859114471',
+//   appId: '1:951859114471:web:a8e6cfe3751dd063040d42',
+//   measurementId: 'G-X21PE2JM6B',
+// };
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyBL3xNUXJjHipMLaAP7EOD4KfVDeQe6Jq8',
-  authDomain: 'heds-34ac0.firebaseapp.com',
-  projectId: 'heds-34ac0',
-  storageBucket: 'heds-34ac0.appspot.com',
-  messagingSenderId: '951859114471',
-  appId: '1:951859114471:web:a8e6cfe3751dd063040d42',
-  measurementId: 'G-X21PE2JM6B',
+  apiKey: "AIzaSyAooTUjBN2EaCg9X6w0sYbRz2ba9_6mdYw",
+  authDomain: "hedsdev.firebaseapp.com",
+  projectId: "hedsdev",
+  storageBucket: "hedsdev.appspot.com",
+  messagingSenderId: "1071073703557",
+  appId: "1:1071073703557:web:4ed7423ed84d6fe1205bec",
+  measurementId: "G-J3NSZFZDS3"
 };
+
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 export const storage = getStorage(app, 'gs://heds-34ac0.appspot.com');
