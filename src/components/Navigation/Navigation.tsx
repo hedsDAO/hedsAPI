@@ -16,7 +16,7 @@ const userNavigation = [
 
 export const Navigation = () => {
   const { isConnected } = useAccount();
-  const userData = useSelector((state: RootState) => state.userModel);
+  const profileData = useSelector((state: RootState) => state.profileModel);
   const dispatch = useDispatch<Dispatch>();
   return (
     <div className="flex flex-col md:pl-52">
@@ -48,7 +48,7 @@ export const Navigation = () => {
               </div>
             </form>
           </div> */}
-          {isConnected && userData ? <Avatar userData={userData} /> : <ConnectButton />}
+          {isConnected && profileData ? <Avatar profileData={profileData} /> : <ConnectButton />}
           <Menu as="div" className="relative ml-3">
             <div>
               <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"></Menu.Button>
