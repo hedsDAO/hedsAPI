@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserState } from 'src/models/userModel';
+import { ProfileState } from 'src/models/profileModal';
 
-export const Avatar = ({ userData }: { userData: UserState }) => {
+export const Avatar = ({ profileData }: { profileData: ProfileState }) => {
   return (
     <Link to="/profile">
-      <img
-        className="inline-block h-10 w-10 rounded-full"
-        src={userData?.profilePicture}
-        alt=""
-      />
+      <img className="inline-block h-10 w-10 rounded-full" src={profileData?.profilePicture} alt="" />
     </Link>
   );
 };
