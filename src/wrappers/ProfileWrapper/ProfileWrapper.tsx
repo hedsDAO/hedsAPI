@@ -6,9 +6,8 @@ import { useDispatch } from 'react-redux';
 export const ProfileWrapper = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch<Dispatch>();
   useAccount({
-    onConnect({ address, connector, isReconnected }) {
-      console.log('Connected', { address, connector, isReconnected });
-      dispatch.profileModel.getProfileData(address);
+    onConnect({ address }) {
+      dispatch.profileModel.getProfileData(address.toLowerCase());
     },
   });
   return <Fragment>{children}</Fragment>;

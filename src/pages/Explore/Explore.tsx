@@ -8,7 +8,6 @@ export const Explore = ({ wallet }: { wallet?: string }) => {
       const docRef = doc(db, 'users', wallet.toLowerCase());
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log(docSnap.data());
       }
     }
   };
