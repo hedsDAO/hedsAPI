@@ -17,15 +17,15 @@ export const SidebarDesktop = () => {
   const { pathname } = useLocation();
   return (
     <div>
-      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-52 md:flex-col shadow-sm">
-        <div className="flex min-h-0 flex-1 flex-col bg-gray-100">
-          <div className="flex h-16 flex-shrink-0 justify-between items-center bg-gray-100 px-5 mb-1 border-b border-gray-400">
+      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+        <div className="flex min-h-0 flex-1 flex-col bg-gray-300">
+          <div className="flex h-16 flex-shrink-0 justify-between items-center bg-gray-300 px-4 mb-1">
             <img
               className="h-8 w-auto invert"
               src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Fheddot.png?alt=media&token=a1e1d838-5332-4ab6-bb1e-159846efbfd4"
               alt="heds"
             />
-            <h1 className="text-neutral-800 font-medium tracking-widest text-lg">heds</h1>
+            <h1 className="text-neutral-800 font-medium tracking-widest text-xl">heds</h1>
           </div>
           <div className="flex flex-1 flex-col overflow-y-auto">
             <nav className="flex-1 space-y-2 px-2 py-1">
