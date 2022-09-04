@@ -7,7 +7,7 @@ export interface LayoutState {
 
 export const layoutModel = createModel<RootModel>()({
   state: {
-    sidebarOpen: false,
+    sidebarOpen: true,
   } as LayoutState,
   reducers: {
     setSidebarOpen: (state, sidebarOpen: boolean) => {

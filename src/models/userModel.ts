@@ -10,12 +10,31 @@ export interface UserState {
   twitterHandle: string;
   badges: Array<BadgeData>;
   description: string;
+  displayName: string;
+  wallet: string;
 }
 
 export const userModel = createModel<RootModel>()({
-  state: {} as UserState,
+  state: {
+    profilePicture: '',
+    twitterHandle: '',
+    badges: [],
+    description: '',
+    displayName: '',
+    wallet: '',
+  } as UserState,
   reducers: {
     setUserData: (state, payload: UserState) => ({ ...state, ...payload }),
+    clearUserState: (state) => {
+      const newState = { ...state };
+      newState.profilePicture = '';
+      newState.twitterHandle = '';
+      newState.description = '';
+      newState.badges = [];
+      newState.displayName = '';
+      newState.wallet = '';
+      return newState;
+    },
   },
   effects: () => ({
     async getUserData(wallet: string) {
@@ -23,11 +42,6 @@ export const userModel = createModel<RootModel>()({
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         this.setUserData(docSnap.data());
-      } else {
-        const newUserData = populateNewUser(wallet);
-        await setDoc(docRef, newUserData).then(() => {
-          this.setUserData(newUserData);
-        });
       }
     },
   }),

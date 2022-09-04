@@ -11,5 +11,5 @@ export const Explore = ({ wallet }: { wallet?: string }) => {
       }
     }
   };
-  return <>explore</>;
+  return <></>;
 };

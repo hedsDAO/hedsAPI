@@ -5,10 +5,64 @@
 html {
   /* background: #090909; */
   background: #ffffff;
-
   height: auto;
   max-width: 100%;
   min-width: 100vw;
   overflow-x: hidden; 
   overscroll-behavior: none !important;
+}
+
+.navbar-parent {
+  font-size: 0.9rem !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.navbar-parent * {
+  box-sizing: border-box;
+}
+.navbar-parent li {
+  display: inline-block;
+  list-style: outside none none;
+  margin: 0 1em;
+  padding: 0;
+}
+.navbar-parent a {
+  padding: 0.3em 0;
+  position: relative;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+}
+.navbar-parent a:before,
+.navbar-parent a:after {
+  position: absolute;
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+.navbar-parent a:before {
+  bottom: 0;
+  display: block;
+  height: 2px;
+  width: 0%;
+  content: "";
+  background-color: #701a75;
+}
+.navbar-parent a:after {
+  left: 0;
+  top: 0;
+  padding: 0.5em 0;
+  position: absolute;
+  content: attr(data-hover);
+  white-space: nowrap;
+  max-width: 0%;
+  overflow: hidden;
+}
+.navbar-parent a:hover:before,
+.navbar-parent .current a:before {
+  opacity: 1;
+  width: 100%;
+}
+.navbar-parent a:hover:after,
+.navbar-parent .current a:after {
+  max-width: 100%;
 }
