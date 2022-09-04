@@ -11,22 +11,31 @@ import { store } from './store';
 import App from './App';
 import './index.css';
 import '../build/app/output.css';
+import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 
-const { provider } = configureChains([chain.mainnet], [infuraProvider({ apiKey: process.env.INFURA_PROVIDER_KEY })]);
-const client = createClient({ autoConnect: true, provider });
+const infuraId = process.env.INFURA_PROVIDER_KEY;
+
+const client = createClient(
+  getDefaultClient({
+    appName: 'Your App Name',
+    infuraId,
+  }),
+);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
-    <RematchProvider store={store}>
-      <ProfileWrapper>
-        <ModalWrapper>
-          <AlertWrapper>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </AlertWrapper>
-        </ModalWrapper>
-      </ProfileWrapper>
-    </RematchProvider>
+    <ConnectKitProvider>
+      <RematchProvider store={store}>
+        <ProfileWrapper>
+          <ModalWrapper>
+            <AlertWrapper>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </AlertWrapper>
+          </ModalWrapper>
+        </ProfileWrapper>
+      </RematchProvider>
+    </ConnectKitProvider>
   </WagmiConfig>,
 );

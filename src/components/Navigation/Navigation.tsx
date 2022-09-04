@@ -1,65 +1,97 @@
-import React, { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { useAccount } from 'wagmi';
-import { Bars3BottomLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ConnectButton from '../../../src/common/ConnectButton';
-import Avatar from '../../../src/common/Avatar';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from 'src/store';
-import { classNames } from '../../utils/classNames';
+import { classNames } from '../../../src/utils/classNames';
+import { Disclosure } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+const navigation = [
+  { name: 'Explore', href: '/explore' },
+  { name: 'Tapes', href: '/listen' },
+  { name: 'Artists', href: '/artists' },
+  { name: 'Vote', href: '/vote' },
+  { name: 'About', href: '/about' },
 ];
 
 export const Navigation = () => {
-  const { isConnected } = useAccount();
-  const profileData = useSelector((state: RootState) => state.profileModel);
-  const dispatch = useDispatch<Dispatch>();
+  const { pathname } = useLocation();
   return (
-    <div className="flex flex-col md:pl-52">
-      <div className="sticky top-0 z-10 flex h-16 flex-shrink-0">
-        <button
-          className="border-r border-gray-400 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
-          onClick={() => dispatch.layoutModel.setSidebarOpen(true)}
-        >
-          <Bars3BottomLeftIcon className="h-6 w-6" aria-hidden="true" />
-        </button>
-        <div className="flex flex-1 justify-end gap-x-2 items-center px-2">
-          {isConnected && profileData ? <Avatar profileData={profileData} /> : <ConnectButton />}
-          <Menu as="div" className="relative ml-3">
-            <div>
-              <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"></Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                {userNavigation.map((item) => (
-                  <Menu.Item key={item.name}>
-                    {({ active }) => (
-                      <a
-                        href={item.href}
-                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                      >
-                        {item.name}
-                      </a>
+    <Disclosure as="nav" className="">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-3">
+            <div className="flex h-16 justify-between items-center">
+              <div className="flex">
+                <div className="-ml-2 mr-2 flex items-center md:hidden">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                     )}
-                  </Menu.Item>
+                  </Disclosure.Button>
+                </div>
+                <div className="flex flex-shrink-0 items-center -mb-1">
+                  <Link to="/">
+                    <img
+                      className="hidden h-8 w-auto lg:block invert"
+                      src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Flogo.png?alt=media&token=11a43a45-07cb-4c63-8f6e-d18d77994bf6"
+                      alt="heds"
+                    />
+                  </Link>
+                </div>
+                <ul className={`md:inline hidden static py-1 text-left px-5`}>
+                  <div
+                    className={`inline-flex items-center justify-start navbar-parent text-neutral-300 dark:text-neutral-300 font-semibold`}
+                  >
+                    {navigation.map((item, i) => (
+                      <div key={item.href + i}>
+                        {pathname === item.href ? (
+                          <li className="current text-gray-600" data-hover={item.name}>
+                            <Link to={item.href}>{item.name}</Link>
+                          </li>
+                        ) : (
+                          <li className="" data-hover={item.name}>
+                            <Link to={item.href}>{item.name}</Link>
+                          </li>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </ul>
+              </div>
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <ConnectButton />
+                </div>
+              </div>
+            </div>
+          </div>
+          <Disclosure.Panel className="md:hidden">
+            <ul className={`inline md:hidden static py-1 text-left px-5`}>
+              <div
+                className={`flex flex-col gap-y-1 items-start justify-evenly navbar-parent text-neutral-300 dark:text-neutral-300 font-semibold`}
+              >
+                {navigation.map((item, i) => (
+                  <Disclosure.Button key={item.href + i}>
+                    {pathname === item.href ? (
+                      <li className="current text-gray-600" data-hover={item.name}>
+                        <Link to={item.href}>{item.name}</Link>
+                      </li>
+                    ) : (
+                      <li className="" data-hover={item.name}>
+                        <Link to={item.href}>{item.name}</Link>
+                      </li>
+                    )}
+                  </Disclosure.Button>
                 ))}
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
-      </div>
-    </div>
+              </div>
+            </ul>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
   );
 };
