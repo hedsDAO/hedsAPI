@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as RematchProvider } from 'react-redux';
-import { WagmiConfig, configureChains, chain, createClient } from 'wagmi';
-import { infuraProvider } from 'wagmi/providers/infura';
+import { WagmiConfig, chain, createClient } from 'wagmi';
 import ProfileWrapper from './wrappers/ProfileWrapper';
 import ModalWrapper from './wrappers/ModalWrapper';
 import AlertWrapper from './wrappers/AlertWrapper';
@@ -14,9 +13,11 @@ import '../build/app/output.css';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 
 const infuraId = process.env.INFURA_PROVIDER_KEY;
+const chains = [chain.mainnet];
 
 const client = createClient(
   getDefaultClient({
+    chains,
     appName: 'Your App Name',
     infuraId,
   }),
