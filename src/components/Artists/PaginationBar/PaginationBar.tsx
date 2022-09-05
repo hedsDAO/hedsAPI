@@ -1,39 +1,44 @@
-import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import React from 'react';
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, RootState } from 'src/store';
+import { classNames } from '../../../../src/utils/classNames';
 
-export const PaginationBar = ({ total, perPage }: { total: number; perPage: number }) => {
+export const PaginationBar = () => {
+  const dispatch = useDispatch<Dispatch>();
+  const artistData = useSelector((state: RootState) => state.artistModel);
   return (
-    <nav className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0 max-w-7xl mx-auto">
-      <div className="-mt-px flex w-0 flex-1">
-        <a
-          href="#"
-          className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-        >
-          <ArrowLongLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-          Previous
-        </a>
-      </div>
-      <div className="hidden md:-mt-px md:flex">
-        {[...Array((Math.ceil(total / 10) * 10) / perPage)].map((index, i) => {
+    <nav className="flex items-center justify-between px-4 sm:px-6 lg:max-w-7xl lg:px-4 max-w-7xl mx-auto">
+      <button
+        onClick={() => dispatch.artistModel.setPreviousPage()}
+        className="flex justify-start mr-auto px-3 py-1 bg-neutral-950 hover:bg-neutral-800 rounded-full transition-all"
+      >
+        <ArrowLongLeftIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
+      </button>
+      <div className="hidden md:-mt-px md:flex gap-x-1">
+        {[...Array((Math.ceil(artistData.totalArtists / 10) * 10) / 10)].map((index, i) => {
           return (
-            <a
-              href="#"
-              className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            <button
+              key={'artists' + i}
+              onClick={() => dispatch.artistModel.setCurrentPage(i + 1)}
+              className={classNames(
+                i + 1 === artistData.currentPage
+                  ? 'bg-neutral-950'
+                  : 'text-neutral-800 hover:bg-neutral-950 hover:text-gray-200',
+                'inline-flex items-center rounded-full px-3 py-1 font-medium text-gray-200 transition-all',
+              )}
             >
               {i + 1}
-            </a>
+            </button>
           );
         })}
       </div>
-      <div className="-mt-px flex w-0 flex-1 justify-end">
-        <a
-          href="#"
-          className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-        >
-          Next
-          <ArrowLongRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-        </a>
-      </div>
+      <button
+        onClick={() => dispatch.artistModel.setNextPage()}
+        className="flex justify-end ml-auto px-3 py-1 bg-neutral-950 hover:bg-neutral-800 rounded-full transition-all"
+      >
+        <ArrowLongRightIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
+      </button>
     </nav>
   );
 };

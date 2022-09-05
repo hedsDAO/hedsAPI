@@ -27,9 +27,9 @@ export const Navigation = () => {
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                      <XMarkIcon className="block h-8 w-8" aria-hidden="true" />
                     ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                      <Bars3Icon className="block h-8 w-8" aria-hidden="true" />
                     )}
                   </Disclosure.Button>
                 </div>
@@ -44,7 +44,7 @@ export const Navigation = () => {
                 </div>
                 <ul className={`md:inline hidden static py-1 text-left px-5`}>
                   <div
-                    className={`inline-flex items-center justify-start navbar-parent text-neutral-300 dark:text-neutral-300 font-semibold`}
+                    className={`inline-flex text-sm items-center justify-start navbar-parent text-neutral-400 dark:text-neutral-300 font-semibold tracking-widest`}
                   >
                     {navigation.map((item, i) => (
                       <div key={item.href + i}>

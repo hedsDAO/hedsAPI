@@ -7,19 +7,18 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
 
 export const Artists = () => {
   const dispatch = useDispatch<Dispatch>();
-  const artistData = useSelector((state: RootState) => state.artistModel);
+  const { allArtists, currentPage } = useSelector((state: RootState) => state.artistModel);
   useEffect(() => {
     dispatch.artistModel.getAllArtists();
   }, []);
-
   return (
     <>
-      <div className="bg-white px-10 my-10 pb-20">
-        {artistData?.allArtists && (
+      <div className="bg-white my-10 pb-20">
+        {allArtists && (
           <Fragment>
-            <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 mb-4">
+            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-4 mb-4">
               <div className="flex flex-1 justify-between">
-                <h2 className="text-center font-medium uppercase tracking-widest text-gray-200 bg-neutral-950 px-4 py-1 rounded-full">
+                <h2 className="text-center font-thin uppercase tracking-widest text-gray-200 bg-neutral-950 px-4 py-1 rounded-full">
                   Artists
                 </h2>
                 <button className="px-2 bg-neutral-950 rounded-full">
@@ -27,7 +26,7 @@ export const Artists = () => {
                 </button>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-y-4 gap-x-3 xl:grid-cols-5 xl:gap-x-4">
-                {Object.values(artistData?.allArtists).map((artist) => (
+                {allArtists.slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10).map((artist) => (
                   <div key={artist?.wallet} className="group bg-black relative rounded-lg p-2">
                     <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:aspect-square">
                       <img
@@ -50,7 +49,7 @@ export const Artists = () => {
                 ))}
               </div>
             </div>
-            <PaginationBar total={artistData?.totalArtists} perPage={10} />
+            <PaginationBar />
           </Fragment>
         )}
       </div>

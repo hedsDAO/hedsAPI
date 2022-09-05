@@ -9,6 +9,8 @@ export interface ArtistState {
   artist: User;
   allArtists: Array<User>;
   totalArtists: number;
+  totalPages: number;
+  currentPage: number;
 }
 
 export const artistModel = createModel<RootModel>()({
@@ -16,7 +18,21 @@ export const artistModel = createModel<RootModel>()({
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),
     setAllArtists: (state, allArtists: any) => ({ ...state, allArtists }),
-    setTotalArtists: (state, totalArtists: number) => ({...state, totalArtists})
+    setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
+    setTotalPages: (state, totalPages: number) => ({ ...state, totalPages }),
+    setCurrentPage: (state, currentPage: number) => ({ ...state, currentPage }),
+    setPreviousPage: (state) => {
+      const newState = {...state}
+      const currentPage = newState.currentPage - 1;
+      if (currentPage) return ({...state, currentPage})
+      else return ({...state})
+    },
+    setNextPage: (state) => {
+      const newState = {...state};
+      const currentPage = newState.currentPage + 1;
+      if (currentPage <= newState.totalPages) return ({...state, currentPage})
+      else return ({...state})
+    },
   },
   effects: () => ({
     async getArtistData(wallet: string) {
@@ -32,17 +48,12 @@ export const artistModel = createModel<RootModel>()({
       }
     },
     async getAllArtists() {
-      const artistTank = {};
-      const querySnapshot = await getDocs(collection(db, 'artists'));
-      this.setTotalArtists(querySnapshot.size);
-      const first = await query(collection(db, 'artists'), orderBy('displayName'), limit(10));
-      const documentSnapshots = await getDocs(first);
-      const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-      console.log('last', lastVisible.data());
-      documentSnapshots.forEach((res: DocumentData) => {
-        // @ts-ignore
-        artistTank[res.id] = res.data();
-      });
+      const artistTank: Array<User> = [];
+      const artistSnapshot = await getDocs(query(collection(db, "artists"), orderBy("displayName", "asc"), limit(10000)));
+      this.setTotalArtists(artistSnapshot.size);
+      this.setTotalPages(Math.ceil(artistSnapshot.size / 10));
+      this.setCurrentPage(1);
+      artistSnapshot.forEach((res: DocumentData) => artistTank.push(res.data()));
       this.setAllArtists(artistTank);
     },
   }),
