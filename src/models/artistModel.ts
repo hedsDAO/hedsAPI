@@ -5,12 +5,18 @@ import { User } from './common';
 import { populateNewUser } from '../../src/utils/populateNewUser';
 import { db } from '../../src/App';
 
+export enum ArtistSort {
+  ALPHA_ASC = 0,
+  ALPHA_DESC,
+}
+
 export interface ArtistState {
   artist: User;
   allArtists: Array<User>;
   totalArtists: number;
   totalPages: number;
   currentPage: number;
+  currentSort: ArtistSort;
 }
 
 export const artistModel = createModel<RootModel>()({
@@ -21,6 +27,13 @@ export const artistModel = createModel<RootModel>()({
     setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
     setTotalPages: (state, totalPages: number) => ({ ...state, totalPages }),
     setCurrentPage: (state, currentPage: number) => ({ ...state, currentPage }),
+    setArtistSort: (state, currentSort: ArtistSort) => {
+      const newState = {...state};
+      const allArtists = newState.allArtists;
+      if (currentSort === ArtistSort.ALPHA_ASC) allArtists.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      else allArtists.reverse();
+      return ({...state, allArtists, currentSort})
+    },
     setPreviousPage: (state) => {
       const newState = {...state}
       const currentPage = newState.currentPage - 1;
@@ -55,6 +68,7 @@ export const artistModel = createModel<RootModel>()({
       this.setCurrentPage(1);
       artistSnapshot.forEach((res: DocumentData) => artistTank.push(res.data()));
       this.setAllArtists(artistTank);
+      this.setArtistSort(ArtistSort.ALPHA_ASC);
     },
   }),
 });
