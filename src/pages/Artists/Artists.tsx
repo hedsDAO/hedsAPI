@@ -19,7 +19,7 @@ export const Artists = () => {
           <Fragment>
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-4 mb-4">
               <div className="flex flex-1 justify-between">
-                <h2 className="text-center font-thin uppercase tracking-widest text-gray-200 bg-neutral-950 px-4 py-1 rounded-full">
+                <h2 className="text-center font-thin uppercase tracking-widest text-gray-200 bg-neutral-950 px-5 py-1 rounded-full shadow-sm">
                   Artists
                 </h2>
                 <button
@@ -28,19 +28,28 @@ export const Artists = () => {
                       ? () => dispatch.artistModel.setArtistSort(ArtistSort.ALPHA_DESC)
                       : () => dispatch.artistModel.setArtistSort(ArtistSort.ALPHA_ASC)
                   }
-                  className="px-2 bg-neutral-950 rounded-full"
+                  className="px-2 bg-neutral-950 rounded-full shadow-sm"
                 >
-                  <AdjustmentsHorizontalIcon className={currentSort === ArtistSort.ALPHA_ASC ? "rotate-180 h-5 w-5 text-gray-200 transition-all" : "h-5 w-5 text-gray-200 transition-all"} />
+                  <AdjustmentsHorizontalIcon
+                    className={
+                      currentSort === ArtistSort.ALPHA_ASC
+                        ? 'rotate-180 h-5 w-5 text-gray-200 transition-all'
+                        : 'h-5 w-5 text-gray-200 transition-all'
+                    }
+                  />
                 </button>
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-y-4 gap-x-3 xl:grid-cols-5 xl:gap-x-4">
+              <div className="my-8 grid gri-rows-2 grid-cols-2 gap-y-4 gap-x-3 xl:grid-cols-5 xl:gap-x-4">
                 {allArtists.slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10).map((artist) => (
-                  <div key={artist?.wallet} className="group bg-black relative rounded-lg p-2">
-                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:aspect-square">
+                  <div
+                    key={artist?.wallet}
+                    className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-gray-200 col-span-1"
+                  >
+                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 transition-all lg:aspect-square shadow-sm hover:shadow-md border border-gray-200">
                       <img
                         src={artist?.profilePicture}
                         alt={artist?.displayName}
-                        className="h-full w-full object-cover aspect-square object-center lg:h-full lg:w-full rounded-lg shadow-sm"
+                        className="h-full w-full object-cover aspect-square object-center lg:h-full lg:w-full rounded-lg"
                       />
                       {/* <span className="absolute bottom-14 right-3 lg:bottom-10 lg:right-4 flex rounded-full gap-x-1">
                         <img
@@ -59,7 +68,7 @@ export const Artists = () => {
                     </div>
                     <div className="flex flex-col justify-center">
                       <div className="flex flex-col justify-center">
-                        <h3 className="text-sm text-neutral-200 font-thin tracking-widest py-2 px-3 w-full mt-2">
+                        <h3 className="text-sm text-gray-700 font-medium tracking-widest py-2 px-3 w-full mt-2">
                           <Link to={'/u/' + artist.wallet}>
                             <span aria-hidden="true" className="absolute inset-0 truncate" />
                             {artist?.displayName}
