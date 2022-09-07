@@ -20,3 +20,15 @@ export enum Alerts {
   DISCONNECTED = 0,
   NETWORK_CHANGE,
 }
+
+export interface TapeData {
+  contract: string;
+  curator: string;
+  description: string;
+  etherscan: string;
+  image: string;
+  name: string;
+  opensea: string;
+  route: string;
+  tracks: [string];
+}

@@ -8,7 +8,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 const navigation = [
   { name: 'Explore', href: '/explore' },
-  { name: 'Tapes', href: '/listen' },
+  { name: 'Tapes', href: '/tapes' },
   { name: 'Artists', href: '/artists' },
   { name: 'Vote', href: '/vote' },
   { name: 'About', href: '/about' },
