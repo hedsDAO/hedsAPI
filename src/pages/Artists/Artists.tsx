@@ -18,7 +18,7 @@ export const Artists = () => {
         {allArtists && (
           <Fragment>
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-4 mb-4">
-              <div className="flex flex-1 justify-between">
+              <div className="flex flex-1 justify-between px-1">
                 <h2 className="text-center font-thin uppercase tracking-widest text-gray-200 bg-neutral-950 px-5 py-1 rounded-full shadow-sm">
                   Artists
                 </h2>
@@ -45,7 +45,7 @@ export const Artists = () => {
                     key={artist?.wallet}
                     className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-gray-200 col-span-1"
                   >
-                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 transition-all lg:aspect-square shadow-sm hover:shadow-md border border-gray-200">
+                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 transition-all lg:aspect-square shadow-sm hover:shadow-md">
                       <img
                         src={artist?.profilePicture}
                         alt={artist?.displayName}
@@ -68,7 +68,7 @@ export const Artists = () => {
                     </div>
                     <div className="flex flex-col justify-center">
                       <div className="flex flex-col justify-center">
-                        <h3 className="text-sm text-gray-700 font-medium tracking-widest py-2 px-3 w-full mt-2">
+                        <h3 className="text-sm text-gray-900 font-medium tracking-widest py-2 px-3 w-full mt-2">
                           <Link to={'/u/' + artist.wallet}>
                             <span aria-hidden="true" className="absolute inset-0 truncate" />
                             {artist?.displayName}

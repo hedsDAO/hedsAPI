@@ -44,7 +44,7 @@ html {
   display: block;
   height: 2px;
   width: 0%;
-  content: "";
+  content: '';
   background-color: #701a75;
 }
 .navbar-parent a:after {

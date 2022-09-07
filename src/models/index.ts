@@ -5,6 +5,7 @@ import { modelModel } from './modalModel';
 import { alertModel } from './alertModel';
 import { profileModel } from './profileModal';
 import { artistModel } from './artistModel';
+import { tapesModel } from './tapesModel';
 
 export interface RootModel extends Models<RootModel> {
   layoutModel: typeof layoutModel;
@@ -13,6 +14,7 @@ export interface RootModel extends Models<RootModel> {
   alertModel: typeof alertModel;
   profileModel: typeof profileModel;
   artistModel: typeof artistModel;
+  tapesModel: typeof tapesModel;
 }
 
 export const models: RootModel = {
@@ -22,4 +24,5 @@ export const models: RootModel = {
   profileModel,
   alertModel,
   artistModel,
+  tapesModel,
 };

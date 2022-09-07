@@ -10,6 +10,7 @@ import { Artists } from '@pages/Artists/Artists';
 import { Vote } from '@pages/Vote/Vote';
 import { Tapes } from '@pages/Tapes/Tapes';
 import { User } from '@pages/User/User';
+import Footer from './components/Footer';
 
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyBL3xNUXJjHipMLaAP7EOD4KfVDeQe6Jq8',
@@ -39,6 +40,7 @@ const App = (): JSX.Element => {
   return (
     <div>
       <Navigation />
+      <div className='min-h-[90vh]'>
       <Routes>
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
@@ -47,6 +49,8 @@ const App = (): JSX.Element => {
         <Route path="/Vote" element={<Vote />} />
         <Route path="/tapes" element={<Tapes />} />
       </Routes>
+      </div>
+      <Footer />
     </div>
   );
 };
