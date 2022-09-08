@@ -10,9 +10,6 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
 export const Artists = () => {
   const dispatch = useDispatch<Dispatch>();
   const { allArtists, currentPage, currentSort } = useSelector((state: RootState) => state.artistModel);
-  useEffect(() => {
-    dispatch.artistModel.getAllArtists();
-  }, []);
   return (
     <>
       <div className="bg-white my-10 pb-20">
