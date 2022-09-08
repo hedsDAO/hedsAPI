@@ -20,7 +20,9 @@ export interface ArtistState {
 }
 
 export const artistModel = createModel<RootModel>()({
-  state: {} as ArtistState,
+  state: {
+    currentSort: ArtistSort.ALPHA_ASC,
+  } as ArtistState,
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),
     setAllArtists: (state, allArtists: any) => ({ ...state, allArtists }),
@@ -28,23 +30,25 @@ export const artistModel = createModel<RootModel>()({
     setTotalPages: (state, totalPages: number) => ({ ...state, totalPages }),
     setCurrentPage: (state, currentPage: number) => ({ ...state, currentPage }),
     setArtistSort: (state, currentSort: ArtistSort) => {
-      const newState = {...state};
+      const newState = { ...state };
       const allArtists = newState.allArtists;
-      if (currentSort === ArtistSort.ALPHA_ASC) allArtists.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      if (currentSort !== ArtistSort.ALPHA_ASC) {
+        allArtists.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      }
       else allArtists.reverse();
-      return ({...state, allArtists, currentSort})
+      return { ...state, allArtists, currentSort, currentPage: 1 };
     },
     setPreviousPage: (state) => {
-      const newState = {...state}
+      const newState = { ...state };
       const currentPage = newState.currentPage - 1;
-      if (currentPage) return ({...state, currentPage})
-      else return ({...state})
+      if (currentPage) return { ...state, currentPage };
+      else return { ...state };
     },
     setNextPage: (state) => {
-      const newState = {...state};
+      const newState = { ...state };
       const currentPage = newState.currentPage + 1;
-      if (currentPage <= newState.totalPages) return ({...state, currentPage})
-      else return ({...state})
+      if (currentPage <= newState.totalPages) return { ...state, currentPage };
+      else return { ...state };
     },
   },
   effects: () => ({
@@ -62,13 +66,14 @@ export const artistModel = createModel<RootModel>()({
     },
     async getAllArtists() {
       const artistTank: Array<User> = [];
-      const artistSnapshot = await getDocs(query(collection(db, "artists"), orderBy("displayName", "asc"), limit(10000)));
+      const artistSnapshot = await getDocs(
+        query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)),
+      );
       this.setTotalArtists(artistSnapshot.size);
       this.setTotalPages(Math.ceil(artistSnapshot.size / 10));
       this.setCurrentPage(1);
       artistSnapshot.forEach((res: DocumentData) => artistTank.push(res.data()));
       this.setAllArtists(artistTank);
-      this.setArtistSort(ArtistSort.ALPHA_ASC);
     },
   }),
 });

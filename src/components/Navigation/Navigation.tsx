@@ -36,7 +36,7 @@ export const Navigation = () => {
                 <div className="flex flex-shrink-0 items-center -mb-1">
                   <Link to="/">
                     <img
-                      className="hidden h-8 w-auto lg:block invert"
+                      className="hidden h-8 w-auto md:block invert"
                       src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Flogo.png?alt=media&token=11a43a45-07cb-4c63-8f6e-d18d77994bf6"
                       alt="heds"
                     />

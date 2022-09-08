@@ -22,7 +22,6 @@
     "ethers": "^5.7.0",
     "firebase": "^9.9.3",
     "jest": "27.5.1",
-    "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "6.3.0",
