@@ -73,7 +73,7 @@ export const User = () => {
                       leave="transition-opacity duration-150"
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
-                      className="text-[0.65rem] font-thin mt-auto px-2 py-0.5 text-neutral-600 bg-teal-100 mx-1 rounded-lg"
+                      className="text-[0.65rem] font-thin mt-auto px-2.5 py-0.5 text-neutral-300 bg-neutral-800 mx-1 rounded-lg"
                       as="div"
                     >
                       copied
