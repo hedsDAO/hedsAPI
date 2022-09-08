@@ -12,6 +12,9 @@ export interface UserState {
   description: string;
   displayName: string;
   wallet: string;
+  submissions?: any;
+  samples?: any;
+  tracks?: any;
 }
 
 export const userModel = createModel<RootModel>()({

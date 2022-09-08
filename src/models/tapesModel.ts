@@ -1,5 +1,5 @@
 import { createModel } from '@rematch/core';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, collectionGroup, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { BadgeData, TapeData } from './common';
 import { populateNewUser } from '../../src/utils/populateNewUser';
 import { db } from '../../src/App';
@@ -16,10 +16,12 @@ export const tapesModel = createModel<RootModel>()({
   },
   effects: () => ({
     async getSpacesData(tape: string) {
-      const docRef = doc(db, 'spaces', 'heds');
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        this.setSpacesData(docSnap.data()[tape]);
+      const docRef = collection(doc(db, 'spaces', 'heds'), tape);
+      const docSnap = await getDocs(docRef);
+      if (docSnap.docs) {
+        docSnap.forEach((e) => {
+          this.setSpacesData({[e.id] : e.data()})
+        });
       }
     },
   }),

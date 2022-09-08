@@ -11,6 +11,7 @@ export interface User {
   badges: Array<BadgeData>;
   description: string;
   displayName: string;
+  samples?: any;
   role: number;
   wallet: string;
 }
