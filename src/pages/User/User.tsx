@@ -42,7 +42,7 @@ export const User = () => {
                 <div className="inline-flex items-center justify-start gap-x-1">
                   {userData?.twitterHandle && (
                     <a href={`https://www.twitter.com/${userData?.twitterHandle}`} target="_blank">
-                      <span className="inline-flex items-center text-xs self-start mt-4 font-thin tracking-tight text-neutral-600 bg-blue-200 px-2.5 py-0.5 rounded-lg">
+                      <span className="inline-flex items-center text-xs self-start mt-4 font-thin tracking-tight text-neutral-600 bg-blue-200 hover:bg-blue-200/75 px-2.5 py-0.5 rounded-lg transition-all ">
                         <i className="fa-brands fa-twitter mr-2 text-[0.65rem]"></i>@{userData.twitterHandle}
                       </span>
                     </a>
@@ -55,6 +55,16 @@ export const User = () => {
                         userData?.wallet.slice(userData?.wallet?.length - 4, userData?.wallet?.length)}
                     </span>
                   )}
+                </div>
+
+                <p className="text-gray-500 text-sm font-semibold tracking-tight mt-5 px-1">badges:</p>
+                <div className="grid grid-cols-8 gap-x-2 mt-2">
+                  {userData?.badges.map((badge) => (
+                    <div className="flex flex-col items-center text-black col-span-1 bg-gray-100 rounded-lg p-1.5 shadow-sm border border-gray-200 gap-y-1">
+                      <img className="rounded-md shadow-sm" src={badge.image} />
+                      <span className="text-gray-400 text-xs font-medium tracking-wide px-1 uppercase py-1">{badge.name}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

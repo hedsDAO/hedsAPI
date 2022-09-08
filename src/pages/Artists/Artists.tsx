@@ -48,7 +48,7 @@ export const Artists = () => {
                   >
                     <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-80 transition-all lg:aspect-square shadow-sm hover:shadow-md">
                       {artist.samples && (
-                        <span className="absolute top-4 left-4 lg:top-3.5 lg:left-3.5 flex items-center rounded-md lg:-space-x-1 text-xs bg-red-100 text-neutral-600 border border-red-200 px-2 py-0.5 tracking-tight shadow-md font-semibold">
+                        <span className="absolute top-4 left-4 lg:top-3.5 lg:left-3.5 flex items-center rounded-full lg:-space-x-1 text-xs bg-gray-100 text-neutral-600 border border-gray-100 px-2 py-0.5 tracking-tight shadow-md font-semibold">
                           <i className="fa-sharp fa-solid fa-waveform-lines mr-1"></i> curator
                         </span>
                       )}
@@ -61,10 +61,10 @@ export const Artists = () => {
                     </div>
                     <div className="flex flex-col justify-center">
                       <div className="flex justify-start">
-                        <h3 className="text-sm text-gray-900 font-medium tracking-widest py-1.5 px-3 w-full mt-2 bg-white rounded-lg shadow-sm border border-gray-300">
+                        <h3 className="text-sm text-gray-800 font-thin tracking-widest py-1.5 px-3 w-full mt-2 bg-white rounded-lg shadow-sm border border-gray-300">
                           <Link to={'/u/' + artist.wallet}>
                             <span aria-hidden="true" className="absolute inset-0 truncate" />
-                            <i className="fa-sharp fa-solid fa-user mr-1 text-xs"></i> {artist?.displayName}
+                            {artist?.displayName}
                           </Link>
                         </h3>
                       </div>
