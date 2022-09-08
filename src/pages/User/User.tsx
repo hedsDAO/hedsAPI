@@ -58,9 +58,9 @@ export const User = () => {
                 </div>
 
                 <p className="text-gray-500 text-sm font-semibold tracking-tight mt-5 px-1">badges:</p>
-                <div className="grid grid-cols-8 gap-x-2 mt-2">
+                <div className="grid grid-cols-4 lg:grid-cols-8 gap-x-2 mt-2">
                   {userData?.badges.map((badge) => (
-                    <div className="flex flex-col items-center text-black col-span-1 bg-gray-100 rounded-lg p-1.5 shadow-sm border border-gray-200 gap-y-1">
+                    <div key={badge.name} className="flex flex-col items-center text-black col-span-1 bg-gray-100 rounded-lg p-1.5 shadow-sm border border-gray-200 gap-y-1">
                       <img className="rounded-md shadow-sm" src={badge.image} />
                       <span className="text-gray-400 text-xs font-medium tracking-wide px-1 uppercase py-1">{badge.name}</span>
                     </div>
