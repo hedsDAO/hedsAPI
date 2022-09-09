@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as RematchProvider } from 'react-redux';
 import { WagmiConfig, chain, createClient } from 'wagmi';
+import { ChakraProvider } from '@chakra-ui/react';
 import ProfileWrapper from './wrappers/ProfileWrapper';
 import ModalWrapper from './wrappers/ModalWrapper';
 import AlertWrapper from './wrappers/AlertWrapper';
@@ -27,15 +28,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
     <ConnectKitProvider>
       <RematchProvider store={store}>
-        <ProfileWrapper>
-          <ModalWrapper>
-            <AlertWrapper>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </AlertWrapper>
-          </ModalWrapper>
-        </ProfileWrapper>
+        <ChakraProvider>
+          <ProfileWrapper>
+            <ModalWrapper>
+              <AlertWrapper>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </AlertWrapper>
+            </ModalWrapper>
+          </ProfileWrapper>
+        </ChakraProvider>
       </RematchProvider>
     </ConnectKitProvider>
   </WagmiConfig>,
