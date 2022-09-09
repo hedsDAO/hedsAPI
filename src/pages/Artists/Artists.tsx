@@ -17,9 +17,9 @@ export const Artists = () => {
           <Fragment>
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-4 mb-4">
               <div className="flex flex-1 justify-between px-1">
-                <h2 className="flex items-center text-center font-thin uppercase tracking-widest text-gray-200 bg-neutral-950 px-5 py-1 rounded-full shadow-sm gap-x-2">
+                <span className="flex items-center text-center uppercase tracking-widest text-gray-200 bg-neutral-950 px-5 py-1 rounded-full shadow-sm gap-x-2">
                   <i className="fa-sharp fa-solid fa-user text-sm"></i> Artists
-                </h2>
+                </span>
                 <button
                   onClick={
                     currentSort === ArtistSort.ALPHA_ASC
@@ -58,7 +58,7 @@ export const Artists = () => {
                     </div>
                     <div className="flex flex-col justify-center">
                       <div className="flex justify-start">
-                        <h3 className="text-sm text-gray-800 font-thin tracking-widest py-1.5 px-3 w-full mt-2 bg-white rounded-lg shadow-sm border border-gray-300">
+                        <h3 className="text-sm text-gray-800 tracking-widest py-1.5 px-3 w-full mt-2 bg-white rounded-lg shadow-sm border border-gray-300">
                           <Link to={'/u/' + artist.wallet}>
                             <span aria-hidden="true" className="absolute inset-0 truncate" />
                             {artist?.displayName}

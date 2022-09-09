@@ -36,6 +36,7 @@ export const userModel = createModel<RootModel>()({
       newState.badges = [];
       newState.displayName = '';
       newState.wallet = '';
+      newState.samples = {};
       return newState;
     },
   },
