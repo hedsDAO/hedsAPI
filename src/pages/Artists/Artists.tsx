@@ -3,8 +3,8 @@ import { Dispatch, RootState } from 'src/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ArtistSort } from '../../../src/models/artistModel';
-import PaginationBar from '../../../src/components/Artists/PaginationBar';
-import TapeIcons from '../../../src/components/Artists/TapeIcons';
+import PaginationBar from '@components/Artists/PaginationBar';
+import TapeIcons from '@components/Artists/TapeIcons';
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
 
 export const Artists = () => {
@@ -52,7 +52,7 @@ export const Artists = () => {
                       <img
                         src={artist?.profilePicture}
                         alt={artist?.displayName}
-                        className="h-full w-full object-fill aspect-square object-center lg:h-full lg:w-full rounded-lg shadow-md"
+                        className="h-full w-full object-cover aspect-square object-center lg:h-full lg:w-full rounded-lg shadow-md"
                       />
                       {<TapeIcons user={artist} />}
                     </div>
