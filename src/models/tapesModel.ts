@@ -1,28 +1,42 @@
 import { createModel } from '@rematch/core';
-import { collection, collectionGroup, doc, getDoc, getDocs, query } from 'firebase/firestore';
-import { BadgeData, TapeData } from './common';
-import { populateNewUser } from '../../src/utils/populateNewUser';
+import { collection, getDocs } from 'firebase/firestore';
+import { TapeData } from './common';
 import { db } from '../../src/App';
 import type { RootModel } from '.';
 
+interface AllTapes {
+  [tapeName: string]: {
+    [tapeId: string]: TapeData;
+  };
+}
+
 export interface TapeState {
-  [tape: string]: TapeData;
+  allTapes: AllTapes;
+  tapeTypes: Array<string>;
 }
 
 export const tapesModel = createModel<RootModel>()({
   state: {} as TapeState,
   reducers: {
-    setSpacesData: (state, payload) => ({ ...state, ...payload }),
+    setAllTapes: (state, allTapes) => ({ ...state, allTapes }),
+    setTapeTypes: (state, tapeTypes) => ({ ...state, tapeTypes }),
   },
   effects: () => ({
-    async getSpacesData(tape: string) {
-      const docRef = collection(doc(db, 'spaces', 'heds'), tape);
+    async getAllTapes() {
+      const docRef = collection(db, 'tapes');
       const docSnap = await getDocs(docRef);
-      if (docSnap.docs) {
-        docSnap.forEach((e) => {
-          this.setSpacesData({[e.id] : e.data()})
+      const allTapes: AllTapes = {};
+      const tapeTypes: Array<string> = [];
+      if (!docSnap.empty) {
+        docSnap.forEach((tape) => {
+          tapeTypes.push(tape.id);
+          allTapes[tape.id] = tape.data();
         });
       }
+      tapeTypes.reverse();
+      this.setTapeTypes(tapeTypes);
+      this.setAllTapes(allTapes);
+      return;
     },
   }),
 });
