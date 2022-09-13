@@ -18,6 +18,7 @@ export interface User {
   description: string;
   displayName: string;
   samples?: any;
+  tracks?: any;
   role: number;
   wallet: string;
 }
