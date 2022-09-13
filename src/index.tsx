@@ -7,6 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import ProfileWrapper from './wrappers/ProfileWrapper';
 import ModalWrapper from './wrappers/ModalWrapper';
 import AlertWrapper from './wrappers/AlertWrapper';
+import TapeWrapper from './wrappers/TapeWrapper';
 import { store } from './store';
 import App from './App';
 import './index.css';
@@ -29,15 +30,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ConnectKitProvider>
       <RematchProvider store={store}>
         <ChakraProvider>
-          <ProfileWrapper>
-            <ModalWrapper>
-              <AlertWrapper>
-                <BrowserRouter>
-                  <App />
-                </BrowserRouter>
-              </AlertWrapper>
-            </ModalWrapper>
-          </ProfileWrapper>
+          <TapeWrapper>
+            <ProfileWrapper>
+              <ModalWrapper>
+                <AlertWrapper>
+                  <BrowserRouter>
+                    <App />
+                  </BrowserRouter>
+                </AlertWrapper>
+              </ModalWrapper>
+            </ProfileWrapper>
+          </TapeWrapper>
         </ChakraProvider>
       </RematchProvider>
     </ConnectKitProvider>

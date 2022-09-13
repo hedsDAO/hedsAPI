@@ -4,14 +4,7 @@ import { Link } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
 
 export const Tapes = () => {
-  const dispatch = useDispatch<Dispatch>();
   const { tapeTypes, allTapes } = useSelector((state: RootState) => state.tapesModel);
-
-  useEffect(() => {
-    dispatch.artistModel.getAllArtists();
-    dispatch.tapesModel.getAllTapes();
-  }, []);
-  console.log(allTapes?.['hedstape']);
   return (
     <>
       <div className="bg-white my-10 pb-20">
@@ -28,7 +21,10 @@ export const Tapes = () => {
                   {allTapes &&
                     Object.values(allTapes[tapeType])?.map((tape, index) => {
                       return (
-                        <div key={tape.contract + index} className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-gray-200 col-span-1">
+                        <div
+                          key={tape.contract + index}
+                          className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-gray-200 col-span-1"
+                        >
                           <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 transition-all lg:aspect-square shadow-sm hover:shadow-md">
                             <img
                               src={tape?.image}

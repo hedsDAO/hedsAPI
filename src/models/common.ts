@@ -5,6 +5,12 @@ export interface BadgeData {
   image: string;
 }
 
+export interface TrackMetadata {
+  audio: string;
+  duration: number;
+  track: string;
+}
+
 export interface User {
   profilePicture: string;
   twitterHandle: string;
@@ -31,5 +37,5 @@ export interface TapeData {
   name: string;
   opensea: string;
   route: string;
-  tracks: [string];
+  tracks: Array<string>;
 }
