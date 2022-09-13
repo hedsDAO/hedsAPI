@@ -9,6 +9,7 @@ export const Tapes = () => {
     <>
       <div className="bg-white my-10 pb-20">
         {tapeTypes &&
+          allTapes &&
           tapeTypes.map((tapeType) => {
             return (
               <div key={tapeType} className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-4 mb-4">

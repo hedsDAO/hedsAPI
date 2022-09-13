@@ -13,6 +13,7 @@ export enum ArtistSort {
 export interface ArtistState {
   artist: User;
   allArtists: Array<User>;
+  artistMapping: { [key: string]: User };
   totalArtists: number;
   totalPages: number;
   currentPage: number;
@@ -26,6 +27,7 @@ export const artistModel = createModel<RootModel>()({
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),
     setAllArtists: (state, allArtists: any) => ({ ...state, allArtists }),
+    setArtistMapping: (state, artistMapping: any) => ({ ...state, artistMapping }),
     setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
     setTotalPages: (state, totalPages: number) => ({ ...state, totalPages }),
     setCurrentPage: (state, currentPage: number) => ({ ...state, currentPage }),
@@ -34,8 +36,7 @@ export const artistModel = createModel<RootModel>()({
       const allArtists = newState.allArtists;
       if (currentSort !== ArtistSort.ALPHA_ASC) {
         allArtists.sort((a, b) => a.displayName.localeCompare(b.displayName));
-      }
-      else allArtists.reverse();
+      } else allArtists.reverse();
       return { ...state, allArtists, currentSort, currentPage: 1 };
     },
     setPreviousPage: (state) => {
@@ -66,13 +67,18 @@ export const artistModel = createModel<RootModel>()({
     },
     async getAllArtists() {
       const artistTank: Array<User> = [];
+      const artistMapping: { [key: string]: User } = {};
       const artistSnapshot = await getDocs(
         query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)),
       );
       this.setTotalArtists(artistSnapshot.size);
       this.setTotalPages(Math.ceil(artistSnapshot.size / 10));
       this.setCurrentPage(1);
-      artistSnapshot.forEach((res: DocumentData) => artistTank.push(res.data()));
+      artistSnapshot.forEach((res: DocumentData) => {
+        artistMapping[res.id] = res.data();
+        artistTank.push(res.data());
+      });
+      this.setArtistMapping(artistMapping);
       this.setAllArtists(artistTank);
     },
   }),

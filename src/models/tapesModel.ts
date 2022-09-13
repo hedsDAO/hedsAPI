@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { TapeData, TrackMetadata } from './common';
+import { TapeData, User } from './common';
 import { db } from '../../src/App';
 import type { RootModel } from '.';
 
@@ -10,11 +10,31 @@ interface AllTapes {
   };
 }
 
+export interface TrackAndArtistMetadata {
+  audio: string;
+  duration: number;
+  track: string;
+  profilePicture: string;
+  wallet: string;
+  displayName: string;
+}
+
+interface TapeAndArtistData {
+  contract: string;
+  curator: string;
+  description: string;
+  etherscan: string;
+  image: string;
+  name: string;
+  opensea: string;
+  route: string;
+  tracks: Array<TrackAndArtistMetadata>;
+}
+
 export interface TapeState {
   allTapes: AllTapes;
   tapeTypes: Array<string>;
-  currentTape: [string, string, string];
-  currentTracks: Array<any>;
+  currentTracks: Array<TrackAndArtistMetadata>;
 }
 
 export const tapesModel = createModel<RootModel>()({
@@ -23,7 +43,6 @@ export const tapesModel = createModel<RootModel>()({
     setAllTapes: (state, allTapes) => ({ ...state, allTapes }),
     setTapeTypes: (state, tapeTypes) => ({ ...state, tapeTypes }),
     setCurrentTracks: (state, currentTracks) => ({ ...state, currentTracks }),
-    setCurrentTape: (state, currentTape: [string, string, string]) => ({ ...state, currentTape }),
   },
   effects: () => ({
     async getAllTapes() {
@@ -42,22 +61,31 @@ export const tapesModel = createModel<RootModel>()({
       this.setAllTapes(allTapes);
       return;
     },
-    async getCurrentTracks([allTapes, space, tape, id]: [AllTapes, string, string, string]) {
-      const tapeTracks = allTapes?.[tape]?.[id]?.tracks;
-      const tapeTracksTank: Array<any> = [];
-      tapeTracks.forEach(async (artist: string) => {
-        const docRef = doc(db, 'artists', artist.toLowerCase());
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const artistTrack = {
-            ...docSnap.data()?.['tracks']?.[space]?.[tape]?.[id],
-            profilePicture: docSnap.data()?.profilePicture,
-            wallet: docSnap.data()?.wallet,
-          };
-          if (artistTrack) tapeTracksTank.push(artistTrack);
+    async getCurrentTape([allTapes, allArtists, space, tape, id]: [
+      AllTapes,
+      { [key: string]: User },
+      string,
+      string,
+      string,
+    ]) {
+      const currentTape = allTapes?.[tape]?.[id];
+      const currentTracks = currentTape?.tracks;
+      const tracks: Array<TrackAndArtistMetadata> = [];
+      currentTape.tracks.map((wallet) => {
+        if (wallet in allArtists) {
+          const { displayName, profilePicture } = allArtists[wallet];
+          const { duration, track, audio } = allArtists[wallet]?.tracks?.[space]?.[tape]?.[id];
+          tracks.push({
+            displayName,
+            profilePicture,
+            wallet: allArtists[wallet].wallet,
+            duration,
+            track,
+            audio,
+          });
         }
       });
-      this.setCurrentTracks(tapeTracksTank);
+      this.setCurrentTracks(tracks);
     },
   }),
 });
