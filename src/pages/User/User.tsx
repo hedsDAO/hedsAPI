@@ -41,9 +41,7 @@ export const User = () => {
                 className="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
               />
               <div className="sm:mt-6 mt-4">
-                <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
-                  {userData.displayName}
-                </h1>
+                <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl">{userData.displayName}</h1>
               </div>
               <p className="text-gray-500 text-sm mb-1 px-1">{userData.description || '...'}</p>
               <div className="inline-flex items-center justify-start gap-x-1">
@@ -61,9 +59,7 @@ export const User = () => {
                       className="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600 bg-teal-200 hover:bg-teal-100 px-2.5 py-0.5 rounded-lg"
                     >
                       <i className="fa-solid fa-copy mr-2 text-[0.65rem]"></i>
-                      {userData.wallet.slice(0, 4) +
-                        '...' +
-                        userData?.wallet.slice(userData?.wallet?.length - 4, userData?.wallet?.length)}
+                      {userData.wallet.slice(0, 4) + '...' + userData?.wallet.slice(userData?.wallet?.length - 4, userData?.wallet?.length)}
                     </button>
                     <Transition
                       show={isShowing}

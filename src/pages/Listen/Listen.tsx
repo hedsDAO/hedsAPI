@@ -9,10 +9,11 @@ export const Listen = () => {
   const { allTapes, currentTape } = useSelector((state: RootState) => state.tapesModel);
   const { artistMapping } = useSelector((state: RootState) => state.artistModel);
   const dispatch = useDispatch<Dispatch>();
+
   useEffect(() => {
     if (allTapes && artistMapping) dispatch.tapesModel.getCurrentTape([allTapes, artistMapping, space, tape, id]);
   }, [allTapes, space, tape, id]);
-  
+
   return (
     <>
       <div className="bg-white my-10 pb-20">
@@ -25,16 +26,13 @@ export const Listen = () => {
               <div className="flex items-center justify-between rounded-sm py-2 gap-x-4">
                 <div className="flex items-center gap-x-3">
                   <img className="w-8 h-8 rounded-sm" src={currentTape.curator.profilePicture} />
-                  <span className="font-semibold tracking-tight text-sm text-neutral-800">
-                    {currentTape.curator.displayName}
-                  </span>
+                  <span className="font-semibold tracking-tight text-sm text-neutral-800">{currentTape.curator.displayName}</span>
                 </div>
-                <div className="flex items-center px-2"></div>
-                <div className="flex items-center px-2">
-                  <span className="font-semibold tracking-tight text-sm text-neutral-800">
-                    {formatTime(currentTape.curator.duration)}
-                  </span>
-                </div>
+                {currentTape.curator?.audio && (
+                  <div className="flex items-center px-2">
+                    <span className="font-semibold tracking-tight text-sm text-neutral-800">{formatTime(currentTape.curator.duration)}</span>
+                  </div>
+                )}
               </div>
               <span className="font-semibold tracking-tight text-sm text-neutral-800 mt-2">{currentTape.name}</span>
               <div className="flex items-center w-2/5 py-2">
@@ -45,20 +43,14 @@ export const Listen = () => {
               {currentTape.tracks &&
                 currentTape.tracks?.map((track) => {
                   return (
-                    <div className="flex items-center justify-between rounded-sm p-2 gap-x-4">
+                    <div key={track.wallet} className="flex items-center justify-between rounded-sm p-2 gap-x-4">
                       <div className="flex items-center gap-x-3">
                         <img className="w-8 h-8 rounded-sm" src={track.profilePicture} />
-                        <span className="font-semibold tracking-tight text-sm text-neutral-800">
-                          {track.displayName}
-                        </span>
+                        <span className="font-semibold tracking-tight text-sm text-neutral-800">{track.displayName}</span>
                       </div>
+                      <div className="flex items-center px-2">{/* <audio className="h-8" controls src={track.audio} />{' '} */}</div>
                       <div className="flex items-center px-2">
-                        {/* <audio className="h-8" controls src={track.audio} />{' '} */}
-                      </div>
-                      <div className="flex items-center px-2">
-                        <span className="font-semibold tracking-tight text-sm text-neutral-800">
-                          {formatTime(track.duration)}
-                        </span>
+                        <span className="font-semibold tracking-tight text-sm text-neutral-800">{formatTime(track.duration)}</span>
                       </div>
                     </div>
                   );

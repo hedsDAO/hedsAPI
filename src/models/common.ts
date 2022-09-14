@@ -17,36 +17,23 @@ export interface User {
   badges: Array<BadgeData>;
   description: string;
   displayName: string;
-  samples?: SampleMapping;
-  tracks?: TrackMapping;
   role: number;
   wallet: string;
+  samples?: TrackMetadataMapping;
+  tracks?: TrackMetadataMapping;
+  submissions?: TrackMetadataMapping;
 }
 
 export interface ArtistMapping {
   [key: string]: User;
 }
 
-export interface SampleMapping {
+export interface TrackMetadataMapping {
   [key: string]: {
     [key: string]: {
       [key: string]: TrackMetadata;
     };
   };
-}
-
-export interface TrackMapping {
-  [key: string]: {
-    [key: string]: {
-      [key: string]: TrackMetadata;
-    };
-  };
-}
-
-// ** Alerts **
-export enum Alerts {
-  DISCONNECTED = 0,
-  NETWORK_CHANGE,
 }
 
 /**
@@ -94,6 +81,15 @@ export interface TrackArtistMetadata {
   audio: string;
   duration: number;
   track: string;
+  profilePicture: string;
+  wallet: string;
+  displayName: string;
+}
+
+export interface CuratorMetadata {
+  audio: string | null;
+  duration: number | null;
+  track: string | null;
   profilePicture: string;
   wallet: string;
   displayName: string;

@@ -12,8 +12,9 @@ module.exports = {
     alias: {
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@components': path.resolve(__dirname, 'src/components'),
-      '@common': path.resolve(__dirname, 'src/common'),
-      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@common': path.resolve(__dirname, 'src/common/'),
+      '@utils': path.resolve(__dirname, 'src/utils/'),
+      '@models': path.resolve(__dirname, 'src/models/'),
     },
   },
   output: {

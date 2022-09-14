@@ -1,47 +1,36 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import Navigation from './components/Navigation';
+import { Navigation } from '@components/Navigation/Navigation';
+import { Footer } from '@components/Footer/Footer';
 import { About } from '@pages/About/About';
 import { Explore } from '@pages/Explore/Explore';
 import { Artists } from '@pages/Artists/Artists';
 import { Vote } from '@pages/Vote/Vote';
 import { Tapes } from '@pages/Tapes/Tapes';
 import { User } from '@pages/User/User';
-import Footer from './components/Footer';
 import { Listen } from '@pages/Listen/Listen';
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyBL3xNUXJjHipMLaAP7EOD4KfVDeQe6Jq8',
-//   authDomain: 'heds-34ac0.firebaseapp.com',
-//   projectId: 'heds-34ac0',
-//   storageBucket: 'heds-34ac0.appspot.com',
-//   messagingSenderId: '951859114471',
-//   appId: '1:951859114471:web:a8e6cfe3751dd063040d42',
-//   measurementId: 'G-X21PE2JM6B',
-// };
-
 const firebaseConfig = {
-  apiKey: 'AIzaSyAooTUjBN2EaCg9X6w0sYbRz2ba9_6mdYw',
-  authDomain: 'hedsdev.firebaseapp.com',
-  projectId: 'hedsdev',
-  storageBucket: 'hedsdev.appspot.com',
-  messagingSenderId: '1071073703557',
-  appId: '1:1071073703557:web:4ed7423ed84d6fe1205bec',
-  measurementId: 'G-J3NSZFZDS3',
+  apiKey: process.env.FB_DEV_API,
+  authDomain: process.env.FB_DEV_AUTHDOMAIN,
+  projectId: process.env.FB_DEV_PROJECT_ID,
+  storageBucket: process.env.FB_DEV_STORAGE,
+  messagingSenderId: process.env.FB_DEV_MSG_SENDER_ID,
+  appId: process.env.FB_DEV_APP_ID,
+  measurementId: process.env.FB_DEV_MESUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
-export const storage = getStorage(app, 'gs://heds-34ac0.appspot.com');
+export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 
 const App = (): JSX.Element => {
   return (
-    <div>
+    <Fragment>
       <Navigation />
-      <div className='min-h-[90vh]'>
       <Routes>
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
@@ -51,9 +40,8 @@ const App = (): JSX.Element => {
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/listen/:space/:tape/:id" element={<Listen />} />
       </Routes>
-      </div>
       <Footer />
-    </div>
+    </Fragment>
   );
 };
 

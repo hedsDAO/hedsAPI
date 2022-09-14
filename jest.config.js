@@ -7,6 +7,7 @@ module.exports = {
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@common/(.*)$': '<rootDir>/src/common/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@models/(.*)$': '<rootDir>/src/models/$1',
   },
   testEnvironment: 'jsdom',
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$',
