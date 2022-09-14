@@ -4,7 +4,7 @@
   "description": "heds",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development --open --hot --config ./webpack.config.js",
+    "start": "NODE_ENV=development webpack serve --mode development --open --hot --config ./webpack.config.js",
     "build": "webpack --mode production --config ./webpack.config.js",
     "tw": "tailwindcss -i ./src/index.css -o ./build/app/output.css --watch",
     "tw-prod": "tailwindcss -i ./src/index.css -o ./build/app/output.css",

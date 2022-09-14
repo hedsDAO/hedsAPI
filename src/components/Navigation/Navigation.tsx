@@ -26,11 +26,7 @@ export const Navigation = () => {
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-8 w-8" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-8 w-8" aria-hidden="true" />
-                    )}
+                    {open ? <XMarkIcon className="block h-8 w-8" aria-hidden="true" /> : <Bars3Icon className="block h-8 w-8" aria-hidden="true" />}
                   </Disclosure.Button>
                 </div>
                 <div className="flex flex-shrink-0 items-center -mb-1">
@@ -71,9 +67,7 @@ export const Navigation = () => {
           </div>
           <Disclosure.Panel className="md:hidden">
             <ul className={`inline md:hidden static py-1 text-left px-5`}>
-              <div
-                className={`flex flex-col gap-y-1 items-start justify-evenly navbar-parent text-neutral-300 dark:text-neutral-300 font-semibold`}
-              >
+              <div className={`flex flex-col gap-y-1 items-start justify-evenly navbar-parent text-neutral-300 dark:text-neutral-300 font-semibold`}>
                 {navigation.map((item, i) => (
                   <Disclosure.Button key={item.href + i}>
                     {pathname === item.href ? (

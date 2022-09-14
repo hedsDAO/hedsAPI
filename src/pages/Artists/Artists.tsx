@@ -30,19 +30,14 @@ export const Artists = () => {
                 >
                   <AdjustmentsHorizontalIcon
                     className={
-                      currentSort === ArtistSort.ALPHA_ASC
-                        ? 'rotate-180 h-5 w-5 text-gray-200 transition-all'
-                        : 'h-5 w-5 text-gray-200 transition-all'
+                      currentSort === ArtistSort.ALPHA_ASC ? 'rotate-180 h-5 w-5 text-gray-200 transition-all' : 'h-5 w-5 text-gray-200 transition-all'
                     }
                   />
                 </button>
               </div>
               <div className="my-8 grid grid-rows-2 grid-cols-2 gap-y-4 gap-x-3 xl:grid-cols-5 xl:gap-x-4">
                 {allArtists.slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10).map((artist) => (
-                  <div
-                    key={artist?.wallet}
-                    className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-neutral-300 col-span-1"
-                  >
+                  <div key={artist?.wallet} className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-neutral-300 col-span-1">
                     <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-80 transition-all lg:aspect-square shadow-sm hover:shadow-md">
                       {artist.samples && (
                         <span className="absolute top-4 left-4 lg:top-3.5 lg:left-3.5 flex items-center rounded-full lg:-space-x-1 text-xs bg-gray-100 text-neutral-600 border border-gray-100 px-2 py-0.5 tracking-tight shadow-md font-semibold">

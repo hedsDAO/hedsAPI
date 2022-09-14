@@ -59,10 +59,7 @@ export const About = () => {
               {timeline.map((step, stepIdx) => (
                 <li key={step.name} className={classNames(stepIdx !== timeline.length - 1 ? 'pb-10' : '', 'relative')}>
                   {stepIdx !== timeline.length - 1 ? (
-                    <div
-                      className="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-fuchsia-700"
-                      aria-hidden="true"
-                    />
+                    <div className="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-fuchsia-700" aria-hidden="true" />
                   ) : null}
                   <div className="relative flex items-start group">
                     <span className="h-9 flex items-center">

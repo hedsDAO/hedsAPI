@@ -22,10 +22,7 @@ export const Tapes = () => {
                   {allTapes &&
                     Object.values(allTapes[tapeType])?.map((tape, index) => {
                       return (
-                        <div
-                          key={tape.contract + index}
-                          className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-gray-200 col-span-1"
-                        >
+                        <div key={tape.contract + index} className="group bg-gray-100 relative rounded-lg p-2 shadow-md border border-gray-200 col-span-1">
                           <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-75 transition-all lg:aspect-square shadow-sm hover:shadow-md">
                             <img
                               src={tape?.image}

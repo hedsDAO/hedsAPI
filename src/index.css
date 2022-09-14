@@ -8,7 +8,7 @@ html {
   height: auto;
   max-width: 100%;
   min-width: 100vw;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   overscroll-behavior: none !important;
 }
 

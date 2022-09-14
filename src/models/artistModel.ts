@@ -68,9 +68,7 @@ export const artistModel = createModel<RootModel>()({
     async getAllArtists() {
       const artistTank: Array<User> = [];
       const artistMapping: { [key: string]: User } = {};
-      const artistSnapshot = await getDocs(
-        query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)),
-      );
+      const artistSnapshot = await getDocs(query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)));
       this.setTotalArtists(artistSnapshot.size);
       this.setTotalPages(Math.ceil(artistSnapshot.size / 10));
       this.setCurrentPage(1);
