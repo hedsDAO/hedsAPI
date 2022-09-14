@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as RematchProvider } from 'react-redux';
 import { WagmiConfig, chain, createClient } from 'wagmi';
+import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
+import { store } from './store';
+
 import ProfileWrapper from './wrappers/ProfileWrapper';
 import ModalWrapper from './wrappers/ModalWrapper';
-import AlertWrapper from './wrappers/AlertWrapper';
 import TapeWrapper from './wrappers/TapeWrapper';
-import { store } from './store';
 import App from './App';
+
 import './index.css';
 import '../build/app/output.css';
-import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 
 const infuraId = process.env.INFURA_PROVIDER_KEY;
 const chains = [chain.mainnet];
@@ -33,11 +35,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <TapeWrapper>
             <ProfileWrapper>
               <ModalWrapper>
-                <AlertWrapper>
-                  <BrowserRouter>
-                    <App />
-                  </BrowserRouter>
-                </AlertWrapper>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
               </ModalWrapper>
             </ProfileWrapper>
           </TapeWrapper>
