@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 import { collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
 import type { RootModel } from '.';
-import { User } from './common';
+import { User, ArtistMapping } from './common';
 import { populateNewUser } from '../../src/utils/populateNewUser';
 import { db } from '../../src/App';
 
@@ -13,7 +13,7 @@ export enum ArtistSort {
 export interface ArtistState {
   artist: User;
   allArtists: Array<User>;
-  artistMapping: { [key: string]: User };
+  artistMapping: ArtistMapping;
   totalArtists: number;
   totalPages: number;
   currentPage: number;
