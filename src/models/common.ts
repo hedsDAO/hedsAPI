@@ -1,15 +1,12 @@
-// USER DATA & MODELS
-export interface BadgeData {
-  name: string;
-  description: string;
-  image: string;
-}
-
-export interface TrackMetadata {
-  audio: string;
-  duration: number;
-  track: string;
-}
+/**
+ * @name UserModels
+ * @summary Properties used for public user profiles. This can include artists, curators and non-engaged users.
+ *
+ * @interface User - Base user model; conditionally set
+ * @interface ArtistMapping - Mapping for referencing artists by wallet id.
+ * @interface TrackMetadataMapping - individual track, sample and submissions within a tape.
+ * @interface BadgeData - Structure for user profile badges.
+ */
 
 export interface User {
   profilePicture: string;
@@ -24,10 +21,6 @@ export interface User {
   submissions?: TrackMetadataMapping;
 }
 
-export interface ArtistMapping {
-  [key: string]: User;
-}
-
 export interface TrackMetadataMapping {
   [key: string]: {
     [key: string]: {
@@ -36,15 +29,30 @@ export interface TrackMetadataMapping {
   };
 }
 
+export interface BadgeData {
+  name: string;
+  description: string;
+  image: string;
+}
+
+export interface ArtistMapping {
+  [key: string]: User;
+}
+
+export interface TrackMetadata {
+  audio: string;
+  duration: number;
+  track: string;
+}
+
 /**
  * @name TapeModels
  * @summary Properties used for tapes, tracks and artist metadata.
- *
+ * 
  * @interface AllTapes - Stucture for referencing tapes by tape name and id.
  * @interface TapeData - Tape data when pulled from database
  * @interface TapeAndTrackData - @type {TapeData} that includes artist, audio & sample metadata.
  * @interface TrackArtistMetadata - structure of an individual track or sample within a tape.
- *
  */
 
 export interface AllTapes {
