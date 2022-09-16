@@ -8,7 +8,7 @@ import { Box, Image } from '@chakra-ui/react';
 import { IconBrandTwitter, IconClipboard } from '@tabler/icons';
 
 // Models
-import { UserState } from 'src/models/userModel';
+import { User } from 'src/models/common';
 
 // Styling
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ export const UserPage = () => {
 
   // Will need to change to User model
   // no role in User Model
-  const userData: UserState = useSelector((state: RootState) => state.userModel);
+  const userData: User = useSelector((state: RootState) => state.userModel);
 
   const { wallet } = useParams<{ wallet: string }>();
   useEffect(() => {
