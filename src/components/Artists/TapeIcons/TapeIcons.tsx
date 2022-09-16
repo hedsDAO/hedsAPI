@@ -1,8 +1,8 @@
 import React from 'react';
-import { UserState } from '../../../../src/models/userModel';
+import { User } from '../../../../src/models/common';
 import { parseTapeIcons } from '../../../../src/utils/parseTapeIcons';
 
-export const TapeIcons = ({ user }: { user: UserState }) => {
+export const TapeIcons = ({ user }: { user: User }) => {
   return (
     <>
       <span className="absolute bottom-16 right-4 lg:bottom-[3.75rem] lg:right-4 flex rounded-full lg:-space-x-1">

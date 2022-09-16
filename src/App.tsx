@@ -12,6 +12,7 @@ import { Vote } from '@pages/Vote/Vote';
 import { Tapes } from '@pages/Tapes/Tapes';
 import { User } from '@pages/User/User';
 import { Listen } from '@pages/Listen/Listen';
+import { Profile } from '@pages/Profile/Profile';
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,
@@ -38,6 +39,7 @@ const App = (): JSX.Element => {
         <Route path="/artists" element={<Artists />} />
         <Route path="/Vote" element={<Vote />} />
         <Route path="/tapes" element={<Tapes />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/listen/:space/:tape/:id" element={<Listen />} />
       </Routes>
       <Footer />
