@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { RootModel } from '.';
-import { BadgeData } from './common';
+import { BadgeData, User } from './common';
 import { populateNewUser } from '../../src/utils/populateNewUser';
 import { db } from '../../src/App';
 

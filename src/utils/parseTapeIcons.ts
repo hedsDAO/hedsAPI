@@ -1,4 +1,4 @@
-import { UserState } from 'src/models/userModel';
+import { User } from '../models/common';
 
 const icons: { [key: string]: string } = {
   '1': 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/icons%2Fhedstape%2F1.jpg?alt=media&token=22fd5c42-5906-45f3-9b04-c69cbeb241bd',
@@ -10,7 +10,7 @@ const icons: { [key: string]: string } = {
   '7': 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/icons%2Fhedstape%2F7.jpg?alt=media&token=9a620817-2d4a-470c-9e72-1ffb6f84a326',
 };
 
-function parseTapeIcons(user: UserState) {
+function parseTapeIcons(user: User) {
   const space = 'heds';
   const tape = 'hedstape';
   if (user?.tracks?.[space]?.[tape]) {

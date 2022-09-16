@@ -1,33 +1,13 @@
-import { createModel } from '@rematch/core';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { RootModel } from '.';
-import { BadgeData } from './common';
-import { populateNewUser } from '../../src/utils/populateNewUser';
+import { createModel } from '@rematch/core';
+import { doc, getDoc } from 'firebase/firestore';
+import { User } from './common';
 import { db } from '../../src/App';
 
-export interface UserState {
-  profilePicture: string;
-  twitterHandle: string;
-  badges: Array<BadgeData>;
-  description: string;
-  displayName: string;
-  wallet: string;
-  submissions?: any;
-  samples?: any;
-  tracks?: any;
-}
-
 export const userModel = createModel<RootModel>()({
-  state: {
-    profilePicture: '',
-    twitterHandle: '',
-    badges: [],
-    description: '',
-    displayName: '',
-    wallet: '',
-  } as UserState,
+  state: {} as User,
   reducers: {
-    setUserData: (state, payload: UserState) => ({ ...state, ...payload }),
+    setUserData: (state, payload: User) => ({ ...state, ...payload }),
     clearUserState: (state) => {
       const newState = { ...state };
       newState.profilePicture = '';

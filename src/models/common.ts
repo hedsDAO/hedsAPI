@@ -1,6 +1,6 @@
 /**
  * @name UserModels
- * @summary Properties used for public user profiles. This can include artists, curators and non-engaged users.
+ * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
  *
  * @interface User - Base user model; conditionally set
  * @interface ArtistMapping - Mapping for referencing artists by wallet id.
@@ -48,7 +48,7 @@ export interface TrackMetadata {
 /**
  * @name TapeModels
  * @summary Properties used for tapes, tracks and artist metadata.
- * 
+ *
  * @interface AllTapes - Stucture for referencing tapes by tape name and id.
  * @interface TapeData - Tape data when pulled from database
  * @interface TapeAndTrackData - @type {TapeData} that includes artist, audio & sample metadata.
