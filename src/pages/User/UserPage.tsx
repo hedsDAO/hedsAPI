@@ -1,0 +1,109 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Dispatch, RootState } from 'src/store';
+
+// Components
+import { Box, Image } from '@chakra-ui/react';
+import { IconBrandTwitter, IconClipboard } from '@tabler/icons';
+
+// Models
+import { User } from 'src/models/common';
+
+// Styling
+import styled from 'styled-components';
+
+export const UserPage = () => {
+  const [isShowing, setIsShowing] = useState(false);
+  const dispatch = useDispatch<Dispatch>();
+
+  // Will need to change to User model
+  // no role in User Model
+  const userData: User = useSelector((state: RootState) => state.userModel);
+
+  const { wallet } = useParams<{ wallet: string }>();
+  useEffect(() => {
+    if (wallet) dispatch.userModel.getUserData(wallet);
+    return () => {
+      dispatch.userModel.clearUserState();
+    };
+  }, []);
+
+  const handleCopy = () => {
+    setIsShowing(true);
+    const el = document.createElement('textarea');
+    el.value = wallet;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    const timer = setTimeout(() => {
+      setIsShowing(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  };
+
+  const profilePicture = userData.wallet
+    ? userData.profilePicture
+    : 'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc';
+
+  return (
+    <Container>
+      <Section $width="30%">
+        <Image src={profilePicture} alt={userData.displayName} borderRadius="0.5rem" />
+        <DisplayName>{userData.displayName || 'Not Found'}</DisplayName>
+        <Description>{userData.description || '...'}</Description>
+        <Box>
+          <a href={`https://www.twitter.com/${userData.twitterHandle}`} target="_blank" rel="noreferrer">
+            <Description>
+              <IconBrandTwitter />
+              {userData.twitterHandle}
+            </Description>
+          </a>
+        </Box>
+        <Box>
+          <Description>
+            <IconClipboard />
+            {userData.wallet}
+          </Description>
+        </Box>
+      </Section>
+
+      <Section $width="70%">
+        <DisplayName>Submissions</DisplayName>
+        <DisplayName>Featured on</DisplayName>
+      </Section>
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  max-width: 80rem;
+  margin: 2.5rem auto 2.5rem auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+`;
+
+const Section = styled.div<{ $width: string }>`
+  width: ${(props) => props.$width || '100%'};
+  flex-direction: column;
+`;
+
+const DisplayName = styled.h1`
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: rgb(17, 24, 39);
+`;
+
+const Description = styled.span`
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(82, 82, 82);
+`;
