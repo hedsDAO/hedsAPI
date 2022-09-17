@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
 
 // Components
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Image, Skeleton } from '@chakra-ui/react';
 import { IconBrandTwitter, IconClipboard } from '@tabler/icons';
 
 // Models
@@ -14,6 +14,7 @@ import { User } from 'src/models/common';
 import styled from 'styled-components';
 
 export const UserPage = () => {
+  const isUserDataLoading = useSelector((state: RootState) => state.loading.models.userModel);
   const [isShowing, setIsShowing] = useState(false);
   const dispatch = useDispatch<Dispatch>();
 
@@ -50,25 +51,30 @@ export const UserPage = () => {
   return (
     <Container>
       <Section $width="30%">
-        <Image src={profilePicture} alt={userData.displayName} borderRadius="0.5rem" />
+        <Box>
+          <Image src={profilePicture} alt={userData.displayName} borderRadius="0.5rem" />
+        </Box>
         <DisplayName>{userData.displayName || 'Not Found'}</DisplayName>
         <Description>{userData.description || '...'}</Description>
         <Box>
-          <a href={`https://www.twitter.com/${userData.twitterHandle}`} target="_blank" rel="noreferrer">
-            <Description>
-              <IconBrandTwitter />
-              {userData.twitterHandle}
-            </Description>
-          </a>
+          <Skeleton fadeDuration={2} isLoaded={!isUserDataLoading}>
+            <a href={`https://www.twitter.com/${userData.twitterHandle}`} target="_blank" rel="noreferrer">
+              <Description>
+                <IconBrandTwitter />
+                {userData.twitterHandle}
+              </Description>
+            </a>
+          </Skeleton>
         </Box>
         <Box>
-          <Description>
-            <IconClipboard />
-            {userData.wallet}
-          </Description>
+          <Skeleton fadeDuration={3} isLoaded={!isUserDataLoading}>
+            <Description>
+              <IconClipboard />
+              {userData.wallet}
+            </Description>
+          </Skeleton>
         </Box>
       </Section>
-
       <Section $width="70%">
         <DisplayName>Submissions</DisplayName>
         <DisplayName>Featured on</DisplayName>
