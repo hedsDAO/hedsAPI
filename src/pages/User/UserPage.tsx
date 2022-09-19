@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
-
-// Components
+import { User } from 'src/models/common';
 import { Box, Image, Skeleton } from '@chakra-ui/react';
 import { IconBrandTwitter, IconClipboard } from '@tabler/icons';
-
-// Models
-import { User } from 'src/models/common';
-
-// Styling
 import styled from 'styled-components';
+import Container from '@/common/Container';
 
 export const UserPage = () => {
   const isUserDataLoading = useSelector((state: RootState) => state.loading.models.userModel);
-  const [isShowing, setIsShowing] = useState(false);
-  const dispatch = useDispatch<Dispatch>();
-
-  // Will need to change to User model
-  // no role in User Model
   const userData: User = useSelector((state: RootState) => state.userModel);
-
+  const dispatch = useDispatch<Dispatch>();
   const { wallet } = useParams<{ wallet: string }>();
+
   useEffect(() => {
     if (wallet) dispatch.userModel.getUserData(wallet);
     return () => {
@@ -30,29 +21,11 @@ export const UserPage = () => {
     };
   }, []);
 
-  const handleCopy = () => {
-    setIsShowing(true);
-    const el = document.createElement('textarea');
-    el.value = wallet;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    const timer = setTimeout(() => {
-      setIsShowing(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  };
-
-  const profilePicture = userData.wallet
-    ? userData.profilePicture
-    : 'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc';
-
   return (
     <Container>
       <Section $width="30%">
         <Box>
-          <Image src={profilePicture} alt={userData.displayName} borderRadius="0.5rem" />
+          <Image src={userData.profilePicture} alt={userData.displayName} borderRadius="0.5rem" />
         </Box>
         <DisplayName>{userData.displayName || 'Not Found'}</DisplayName>
         <Description>{userData.description || '...'}</Description>
@@ -83,15 +56,15 @@ export const UserPage = () => {
   );
 };
 
-const Container = styled.div`
-  max-width: 80rem;
-  margin: 2.5rem auto 2.5rem auto;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-`;
+// const Container = styled.div`
+//   max-width: 80rem;
+//   margin: 2.5rem auto 2.5rem auto;
+//   padding-left: 0.75rem;
+//   padding-right: 0.75rem;
+//   display: flex;
+//   flex-direction: row;
+//   gap: 2rem;
+// `;
 
 const Section = styled.div<{ $width: string }>`
   width: ${(props) => props.$width || '100%'};
