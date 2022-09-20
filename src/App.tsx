@@ -14,8 +14,6 @@ import { User } from '@pages/User/User';
 import { Listen } from '@pages/Listen/Listen';
 import { Profile } from '@pages/Profile/Profile';
 
-import { UserPage } from '@pages/User/UserPage';
-
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,
   authDomain: process.env.FB_DEV_AUTHDOMAIN,
@@ -35,7 +33,7 @@ const App = (): JSX.Element => {
     <Fragment>
       <Navigation />
       <Routes>
-        <Route path="/u/:wallet" element={<UserPage />} />
+        <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/about" element={<About />} />
         <Route path="/artists" element={<Artists />} />
