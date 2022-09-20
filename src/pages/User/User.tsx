@@ -79,11 +79,11 @@ export const User = () => {
         </Skeleton>
       </div>
       <div className="sm:w-[75%]">
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Submissions</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Submissions</h1>
         <ul role="list" className="divide-y divide-gray-200">
           {userData.submissions?.heds?.hedstape &&
             Object.values(userData.submissions?.heds?.hedstape).map((submission, i) => (
-              <li className="text-s text-gray-600" key={i}>
+              <li className="text-xs text-gray-600" key={i}>
                 <a href="#" className="block hover:bg-gray-50">
                   <div className="flex items-center px-4 py-3 sm:px-6">
                     <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
@@ -96,7 +96,7 @@ export const User = () => {
               </li>
             ))}
         </ul>
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Featured On</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Featured On</h1>
       </div>
     </Container>
   );
