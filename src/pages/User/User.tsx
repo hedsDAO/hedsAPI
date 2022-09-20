@@ -6,7 +6,7 @@ import { Dispatch, RootState } from 'src/store';
 import Container from '@/common/Container';
 import { Skeleton } from '@chakra-ui/react';
 import { DEFAULT_PROFILE_PICTURE } from '@/common/constants/User';
-import { convertSecondsToMinutes } from '@/common/constants/helpers';
+import { convertSecondsToMinutes, formatWallet } from '@/common/constants/helpers';
 
 export const User = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -60,7 +60,7 @@ export const User = () => {
               className="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600  px-2.5 py-0.5 rounded-lg"
             >
               <i className="fa-solid fa-copy mr-2 text-[0.75rem]"></i>
-              {userData?.wallet && userData.wallet.slice(0, 4) + '...' + userData.wallet.slice(userData.wallet.length - 4, userData.wallet.length)}
+              {userData?.wallet && formatWallet(userData.wallet)}
             </button>
             <Transition
               show={isCopied}
