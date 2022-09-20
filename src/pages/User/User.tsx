@@ -83,14 +83,16 @@ export const User = () => {
         <ul role="list" className="divide-y divide-gray-200">
           {userData.submissions?.heds?.hedstape &&
             Object.values(userData.submissions?.heds?.hedstape).map((submission, i) => (
-              <li key={i}>
-                <div className="flex items-center px-4 py-4 sm:px-6">
-                  <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
-                  <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
-                    <span className="mr-2">{convertSecondsToMinutes(submission.duration)}</span>
-                    <i className="fa-solid fa-play"></i>
+              <li className="text-s text-gray-600" key={i}>
+                <a href="#" className="block hover:bg-gray-50">
+                  <div className="flex items-center px-4 py-3 sm:px-6">
+                    <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
+                    <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
+                      <span className="mr-2">{convertSecondsToMinutes(submission.duration)}</span>
+                      <i className="fa-solid fa-play"></i>
+                    </div>
                   </div>
-                </div>
+                </a>
               </li>
             ))}
         </ul>
