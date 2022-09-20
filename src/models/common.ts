@@ -1,3 +1,16 @@
+import React from 'react';
+
+/**
+ * @name Global
+ * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
+ *
+ * @interface ReactChildrenAsProps - returns any number of react children as props from an element.
+ */
+
+export interface ReactChildrenAsProps {
+  children: React.ReactNode | React.ReactNode[];
+}
+
 /**
  * @name UserModels
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.

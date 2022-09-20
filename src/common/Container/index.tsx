@@ -1,3 +1,4 @@
 import React from 'react';
 import { Container } from './Container';
-export default ({ children }: { children: any }): any => <Container>{children}</Container>;
+import { ReactChildrenAsProps } from '@/models/common';
+export default ({ children }: ReactChildrenAsProps): JSX.Element => <Container>{children}</Container>;

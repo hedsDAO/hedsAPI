@@ -23,7 +23,13 @@ export const UserPage = () => {
 
   return (
     <Container>
-      <Section $width="30%">
+      <div>
+
+      </div>
+      <div>
+        
+      </div>
+      {/* <Section $width="30%">
         <Box>
           <Image src={userData.profilePicture} alt={userData.displayName} borderRadius="0.5rem" />
         </Box>
@@ -51,7 +57,7 @@ export const UserPage = () => {
       <Section $width="70%">
         <DisplayName>Submissions</DisplayName>
         <DisplayName>Featured on</DisplayName>
-      </Section>
+      </Section> */}
     </Container>
   );
 };
