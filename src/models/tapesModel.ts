@@ -4,6 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import artistMapping from '@utils/artistMapping';
 import { TapeAndTrackData, AllTapes, TrackArtistMetadata, ArtistMapping, CuratorMetadata } from './common';
 import { db } from '@/App';
+import { RootState } from '@/store';
 
 export interface TapeState {
   allTapes: AllTapes;

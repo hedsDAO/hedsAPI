@@ -1,4 +1,4 @@
 import React from 'react';
-import { ProfileState } from 'src/models/profileModal';
+import { User } from '@/models/common';
 import { Avatar } from './Avatar';
-export default ({ profileData }: { profileData: ProfileState }): JSX.Element => <Avatar profileData={profileData} />;
+export default ({ profileData }: { profileData: User }): JSX.Element => <Avatar profileData={profileData} />;
