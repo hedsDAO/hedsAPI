@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Dispatch, RootState } from 'src/store';
+import { Dispatch, RootState } from '@/store';
 import Container from '@/common/Container';
 import { Skeleton } from '@chakra-ui/react';
 import { DEFAULT_PROFILE_PICTURE } from '@/common/constants/User';
@@ -13,6 +13,7 @@ export const User = () => {
   const dispatch = useDispatch<Dispatch>();
   const isUserDataLoading = useSelector((state: RootState) => state.loading.models.userModel);
   const userData = useSelector((state: RootState) => state.userModel);
+  const submissions = useSelector((state: RootState) => state.userModel.submissions?.heds?.hedstape);
   const { wallet } = useParams<{ wallet: string }>();
   useEffect(() => {
     if (wallet) dispatch.userModel.getUserData(wallet);
@@ -81,11 +82,12 @@ export const User = () => {
       <div className="sm:w-[75%]">
         <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Submissions</h1>
         <ul role="list" className="divide-y divide-gray-200">
-          {userData.submissions?.heds?.hedstape &&
-            Object.values(userData.submissions?.heds?.hedstape).map((submission, i) => (
+          {submissions &&
+            Object.entries(submissions).map(([id, submission], i) => (
               <li className="text-xs text-gray-600" key={i}>
                 <a href="#" className="block hover:bg-gray-50">
-                  <div className="flex items-center px-4 py-3 sm:px-6">
+                  <div className="flex items-center px-4 py-3 sm:px-6 gap-x-2">
+                    <span className='text-xs font-thin'>HT{id}</span>
                     <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
                     <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                       <span className="mr-2">{convertSecondsToMinutes(submission.duration)}</span>

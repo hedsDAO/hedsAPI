@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Dispatch, RootState } from 'src/store';
+import { Dispatch, RootState, store } from '@/store';
 
 export const Tapes = () => {
   const { tapeTypes, allTapes } = useSelector((state: RootState) => state.tapesModel);
+  const tapeData = useSelector((state: RootState) => state.tapesModel);
+
   return (
     <>
       <div className="bg-white my-10 pb-20">
