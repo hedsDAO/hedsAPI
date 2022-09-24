@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
 import Container from '@/common/Container';
-import { DEFAULT_PROFILE_PICTURE } from '@/common/constants/User';
+// import { DEFAULT_PROFILE_PICTURE } from '@/common/constants/User';
 
 export const Profile = () => {
   const [isShowing, setIsShowing] = useState(false);
@@ -33,7 +33,7 @@ export const Profile = () => {
       <div className="flex">
         <div className="min-w-full aspect-square sm:w-[25%]">
           <img
-            src={profileData.profilePicture || DEFAULT_PROFILE_PICTURE}
+            // src={profileData.profilePicture || DEFAULT_PROFILE_PICTURE}
             alt={profileData.displayName}
             className="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
           />

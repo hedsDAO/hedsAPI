@@ -3,10 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from '@/store';
-import Container from '@/common/Container';
+import { Container } from '@common/Container/Container';
 import { Skeleton } from '@chakra-ui/react';
-import { DEFAULT_PROFILE_PICTURE } from '@/common/constants/User';
-import { convertSecondsToMinutes, formatWallet } from '@/common/constants/helpers';
+import { convertSecondsToMinutes, formatWallet } from '@common/constants/helpers';
 
 export const User = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -39,10 +38,11 @@ export const User = () => {
     <Container>
       <div className="aspect-square sm:w-[25%]">
         <img
-          src={userData.profilePicture || DEFAULT_PROFILE_PICTURE}
+          src={userData.profilePicture || process.env.DEFAULT_PROFILE_PICTURE}
           alt={userData.displayName}
           className="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
         />
+        <p>hello world</p>
         <div className="sm:mt-6 mt-4">
           <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl">{userData.displayName}</h1>
         </div>
@@ -87,7 +87,7 @@ export const User = () => {
               <li className="text-xs text-gray-600" key={i}>
                 <a href="#" className="block hover:bg-gray-50">
                   <div className="flex items-center px-4 py-3 sm:px-6 gap-x-2">
-                    <span className='text-xs font-thin'>HT{id}</span>
+                    <span className="text-xs font-thin">HT{id}</span>
                     <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
                     <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                       <span className="mr-2">{convertSecondsToMinutes(submission.duration)}</span>

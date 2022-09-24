@@ -3,6 +3,7 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/**/*.{ts, tsx}'],
   roots: ['<rootDir>'],
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@common/(.*)$': '<rootDir>/src/common/$1',
