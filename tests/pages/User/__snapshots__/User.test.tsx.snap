@@ -1,0 +1,306 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User unit <User /> snapshot snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="max-w-7xl my-10 mx-auto px-3 flex flex-row gap-8"
+      >
+        <div
+          class="aspect-square sm:w-[25%]"
+        >
+          <div
+            class="chakra-skeleton w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
+          >
+            <img
+              alt="Alexander Lewis"
+              class="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
+              data-testid="user-profile-picture"
+              src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0xde5bc302fc6d899eab4334602dd15efb20cd745f.jpeg?alt=media&token=9f251bf5-38c8-4800-b4c4-bc9166a0ebc2"
+            />
+          </div>
+          <div
+            class="sm:mt-6 mt-4"
+          >
+            <h1
+              class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl"
+              data-testid="user-display-name"
+            >
+              Alexander Lewis
+            </h1>
+          </div>
+          <p
+            class="text-gray-500 text-sm mb-1 px-1"
+            data-testid="user-description"
+          >
+            ...
+          </p>
+          <a
+            data-testid="user-twitter-link"
+            href="https://www.twitter.com/_alexanderlewis"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <span
+              class="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600 px-2.5 py-0.5 rounded-lg transition-all "
+              data-testid="user-twitter-text"
+            >
+              <i
+                class="fa-brands fa-twitter mr-2 text-[0.75rem]"
+              />
+              @
+              _alexanderlewis
+            </span>
+          </a>
+          <div
+            class="inline-flex"
+            data-testid="user-copy-container"
+          >
+            <button
+              class="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600  px-2.5 py-0.5 rounded-lg"
+              data-testid="user-wallet"
+            >
+              <i
+                class="fa-solid fa-copy mr-2 text-[0.75rem]"
+              />
+              0xde...745f
+            </button>
+          </div>
+        </div>
+        <div
+          class="sm:w-[75%]"
+        >
+          <h1
+            class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+          >
+            Submissions
+          </h1>
+          <ul
+            class="divide-y divide-gray-200"
+            data-testid="user-submissions"
+            role="list"
+          >
+            <li
+              class="text-xs text-gray-600"
+            >
+              <a
+                class="block hover:bg-gray-50"
+                href="#"
+              >
+                <div
+                  class="flex items-center px-4 py-3 sm:px-6 gap-x-2"
+                >
+                  <span
+                    class="text-xs font-thin"
+                  >
+                    HT
+                    5
+                  </span>
+                  <div
+                    class="min-w-0 flex-1 sm:flex"
+                  >
+                    fretful dormouse
+                  </div>
+                  <div
+                    class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
+                  >
+                    <span
+                      class="mr-2"
+                    >
+                      01:14
+                    </span>
+                    <i
+                      class="fa-solid fa-play"
+                    />
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <h1
+            class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+          >
+            Featured On
+          </h1>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="max-w-7xl my-10 mx-auto px-3 flex flex-row gap-8"
+    >
+      <div
+        class="aspect-square sm:w-[25%]"
+      >
+        <div
+          class="chakra-skeleton w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
+        >
+          <img
+            alt="Alexander Lewis"
+            class="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
+            data-testid="user-profile-picture"
+            src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0xde5bc302fc6d899eab4334602dd15efb20cd745f.jpeg?alt=media&token=9f251bf5-38c8-4800-b4c4-bc9166a0ebc2"
+          />
+        </div>
+        <div
+          class="sm:mt-6 mt-4"
+        >
+          <h1
+            class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl"
+            data-testid="user-display-name"
+          >
+            Alexander Lewis
+          </h1>
+        </div>
+        <p
+          class="text-gray-500 text-sm mb-1 px-1"
+          data-testid="user-description"
+        >
+          ...
+        </p>
+        <a
+          data-testid="user-twitter-link"
+          href="https://www.twitter.com/_alexanderlewis"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <span
+            class="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600 px-2.5 py-0.5 rounded-lg transition-all "
+            data-testid="user-twitter-text"
+          >
+            <i
+              class="fa-brands fa-twitter mr-2 text-[0.75rem]"
+            />
+            @
+            _alexanderlewis
+          </span>
+        </a>
+        <div
+          class="inline-flex"
+          data-testid="user-copy-container"
+        >
+          <button
+            class="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600  px-2.5 py-0.5 rounded-lg"
+            data-testid="user-wallet"
+          >
+            <i
+              class="fa-solid fa-copy mr-2 text-[0.75rem]"
+            />
+            0xde...745f
+          </button>
+        </div>
+      </div>
+      <div
+        class="sm:w-[75%]"
+      >
+        <h1
+          class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+        >
+          Submissions
+        </h1>
+        <ul
+          class="divide-y divide-gray-200"
+          data-testid="user-submissions"
+          role="list"
+        >
+          <li
+            class="text-xs text-gray-600"
+          >
+            <a
+              class="block hover:bg-gray-50"
+              href="#"
+            >
+              <div
+                class="flex items-center px-4 py-3 sm:px-6 gap-x-2"
+              >
+                <span
+                  class="text-xs font-thin"
+                >
+                  HT
+                  5
+                </span>
+                <div
+                  class="min-w-0 flex-1 sm:flex"
+                >
+                  fretful dormouse
+                </div>
+                <div
+                  class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
+                >
+                  <span
+                    class="mr-2"
+                  >
+                    01:14
+                  </span>
+                  <i
+                    class="fa-solid fa-play"
+                  />
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <h1
+          class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+        >
+          Featured On
+        </h1>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
