@@ -59,18 +59,20 @@ export const User = () => {
         <p data-testid="user-description" className="text-gray-500 text-sm mb-1 px-1">
           {userData?.description || '...'}
         </p>
-        {userData?.twitterHandle && <a data-testid="user-twitter-link" href={`https://www.twitter.com/${userData?.twitterHandle}`} target="_blank" rel="noreferrer">
-          <span
-            data-testid="user-twitter-text"
-            className="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600 px-2.5 py-0.5 rounded-lg transition-all "
-          >
-            <i className="fa-brands fa-twitter mr-2 text-[0.75rem]"></i>@{userData.twitterHandle}
-          </span>
-        </a>}
-        <div className="inline-flex">
+        {userData?.twitterHandle && (
+          <a data-testid="user-twitter-link" href={`https://www.twitter.com/${userData?.twitterHandle}`} target="_blank" rel="noreferrer">
+            <span
+              data-testid="user-twitter-text"
+              className="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600 px-2.5 py-0.5 rounded-lg transition-all "
+            >
+              <i className="fa-brands fa-twitter mr-2 text-[0.75rem]"></i>@{userData.twitterHandle}
+            </span>
+          </a>
+        )}
+        <div data-testid="user-copy-container" className="inline-flex">
           <button
-            onClick={() => handleCopy()}
             data-testid="user-wallet"
+            onClick={() => handleCopy()}
             className="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600  px-2.5 py-0.5 rounded-lg"
           >
             <i className="fa-solid fa-copy mr-2 text-[0.75rem]"></i>
