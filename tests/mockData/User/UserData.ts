@@ -50,17 +50,17 @@ const userData: User = {
       },
     },
   },
-  // submissions: {
-  //   heds: {
-  //     hedstape: {
-  //       '5': {
-  //         audio: 'https://www.heds.cloud/ipfs/Qmaf8psHYYhprQpdubAgMrUr4rudLuoeDyoeevweTouRcn',
-  //         duration: 73.6,
-  //         track: 'fretful dormouse',
-  //       },
-  //     },
-  //   },
-  // },
+  submissions: {
+    heds: {
+      hedstape: {
+        '5': {
+          audio: 'https://www.heds.cloud/ipfs/Qmaf8psHYYhprQpdubAgMrUr4rudLuoeDyoeevweTouRcn',
+          duration: 73.6,
+          track: 'fretful dormouse',
+        },
+      },
+    },
+  },
 };
 
 export { userData };
