@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '@pages/User/User';
 import { store } from '@/store';
 import { renderWithRematchStore } from '../../utils/testUtils';
-import { act, screen } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import { userData } from '../../mockData/User/UserData';
 import { formatWallet } from '@utils/formatWallet';
 
@@ -42,6 +42,15 @@ describe('User unit', () => {
     const walletText = screen.queryByTestId('user-wallet');
     const { wallet } = userData;
     expect(walletText).toHaveTextContent(formatWallet(wallet));
+  });
+  it('should copy wallet address to clipboard', () => {
+    document.execCommand = jest.fn();
+    const copyButton = screen.queryByTestId('user-wallet');
+    const copyContainer = screen.queryByTestId('user-copy-container');
+    act(() => copyButton.click());
+    expect(copyContainer.lastChild).toHaveTextContent('copied');
+    expect(document.execCommand).toHaveBeenCalledWith('copy');
+    waitFor(() => expect(copyContainer.lastChild).not.toHaveTextContent('copied'));
   });
   it('should render user submissions', () => {
     const userSubmissions = screen.queryByTestId('user-submissions');
