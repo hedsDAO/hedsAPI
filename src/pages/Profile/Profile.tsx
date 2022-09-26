@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
 import Container from '@/common/Container';
-import { DEFAULT_PROFILE_PICTURE } from '@/common/constants/User';
+import { convertSecondsToMinutes } from '@/common/constants/helpers';
+import DEFAULT_PROFILE_PICTURE from '/public/default.png';
 
 export const Profile = () => {
   const [isShowing, setIsShowing] = useState(false);
   const dispatch = useDispatch<Dispatch>();
   const profileData = useSelector((state: RootState) => state.profileModel);
+  const submissions = useSelector((state: RootState) => state.profileModel.submissions?.heds?.hedstape);
   const { wallet } = useParams<{ wallet: string }>();
   useEffect(() => {
     dispatch.profileModel.getProfileData(wallet);
@@ -70,6 +72,23 @@ export const Profile = () => {
       </div>
       <div className="min-w-[75%] sm:w-[75%]">
         <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl">Submissions</h1>
+        <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
+          {submissions &&
+            Object.entries(submissions).map(([id, submission], i) => (
+              <li className="text-xs text-gray-600" key={i}>
+                <a href="#" className="block hover:bg-gray-50">
+                  <div className="flex items-center px-4 py-3 sm:px-6 gap-x-2">
+                    <span className="text-xs font-thin">HT{id}</span>
+                    <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
+                    <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
+                      <span className="mr-2">{convertSecondsToMinutes(submission.duration)}</span>
+                      <i className="fa-solid fa-play"></i>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            ))}
+        </ul>
         <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl">Featured On</h1>
       </div>
     </Container>
