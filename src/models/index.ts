@@ -1,10 +1,10 @@
 import { Models } from '@rematch/core';
-import { userModel } from './userModel';
+import { userModel } from '../modules/user/userModel';
 import { modelModel } from './modalModel';
-import { profileModel } from './profileModal';
-import { artistModel } from './artistModel';
-import { tapesModel } from './tapesModel';
-import { audioModel } from './audioModel';
+import { profileModel } from '../modules/profile/profileModel';
+import { artistModel } from '../modules/artists/artistModel';
+import { tapesModel } from '../modules/tapes/tapesModel';
+import { audioModel } from '../modules/audio/audioModel';
 
 export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;

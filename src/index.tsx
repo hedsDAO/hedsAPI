@@ -8,10 +8,10 @@ import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import { store } from './store';
 
-import ProfileWrapper from './wrappers/ProfileWrapper';
-import ModalWrapper from './wrappers/ModalWrapper';
-import TapeWrapper from './wrappers/TapeWrapper';
-import App from './App';
+import ProfileWrapper from '@/common/components/wrappers/ProfileWrapper';
+import ModalWrapper from '@/common/components/wrappers/ModalWrapper';
+import TapeWrapper from '@/common/components/wrappers/TapeWrapper';
+import App from '@/App';
 
 import './index.css';
 import '../build/app/output.css';

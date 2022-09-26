@@ -3,16 +3,16 @@ import { Routes, Route } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { Navigation } from '@components/Navigation/Navigation';
-import { Footer } from '@components/Footer/Footer';
-import { About } from '@pages/About/About';
-import { Explore } from '@pages/Explore/Explore';
-import { Artists } from '@pages/Artists/Artists';
-import { Vote } from '@pages/Vote/Vote';
-import { Tapes } from '@pages/Tapes/Tapes';
-import { User } from '@pages/User/User';
-import { Listen } from '@pages/Listen/Listen';
-import { Profile } from '@pages/Profile/Profile';
+import { Navigation } from '@/common/components/Navigation';
+import { Footer } from '@/common/components/Footer';
+import { About } from '@/modules/about/pages/About';
+import { Explore } from '@/modules/explore/pages/Explore';
+import { Artists } from '@/modules/artists/pages/Artists';
+import { Vote } from '@/modules/vote/pages/Vote';
+import { Tapes } from '@/modules/tapes/pages/Tapes';
+import { User } from '@/modules/user/pages/User';
+import { Listen } from '@/modules/listen/pages/Listen';
+import { Profile } from '@/modules/profile/pages/Profile';
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,
