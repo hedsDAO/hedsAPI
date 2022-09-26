@@ -6,6 +6,7 @@ import { Dispatch, RootState } from '@/store';
 import { Container } from '@common/Container/Container';
 import { Skeleton } from '@chakra-ui/react';
 import { convertSecondsToMinutes, formatWallet } from '@common/constants/helpers';
+import DEFAULT_PROFILE_PICTURE from '/public/default.png';
 
 export const User = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -45,7 +46,7 @@ export const User = () => {
           isLoaded={!isUserDataLoading}
         >
           <img
-            src={userData.profilePicture || process.env.DEFAULT_PROFILE_PICTURE}
+            src={userData.profilePicture || DEFAULT_PROFILE_PICTURE}
             alt={userData.displayName}
             className="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
             data-testid="user-profile-picture"
