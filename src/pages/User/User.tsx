@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from '@/store';
-import { Container } from '@common/Container/Container';
 import { Skeleton } from '@chakra-ui/react';
 import { formatTime } from '@utils/formatTime';
 import { formatWallet } from '@utils/formatWallet';
@@ -37,8 +36,8 @@ export const User = () => {
     return () => clearTimeout(timer);
   };
   return (
-    <Container>
-      <div className="aspect-square sm:w-[25%]">
+    <div className="max-w-7xl mx-auto flex sm:flex-row flex-col gap-5">
+      <div className="aspect-square flex flex-col">
         <Skeleton
           className="w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem]"
           borderRadius={'0.5rem'}
@@ -95,7 +94,7 @@ export const User = () => {
           </Transition>
         </div>
       </div>
-      <div className="sm:w-[75%]">
+      <div className="">
         <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Submissions</h1>
         <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
           {submissions &&
@@ -116,6 +115,6 @@ export const User = () => {
         </ul>
         <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2">Featured On</h1>
       </div>
-    </Container>
+    </div>
   );
 };
