@@ -1,6 +1,13 @@
 import { ArtistMapping, TrackMetadata, TrackArtistMetadata } from 'src/models/common';
 
-const artistMapping = ([wallets, artistMapping, space, tape, id, isSample]: [Array<string>, ArtistMapping, string, string, string, boolean]): Array<TrackArtistMetadata> => {
+const artistMapping = ([wallets, artistMapping, space, tape, id, isSample]: [
+  Array<string>,
+  ArtistMapping,
+  string,
+  string,
+  string,
+  boolean,
+]): Array<TrackArtistMetadata> => {
   const mappingTank: Array<TrackArtistMetadata> = [];
   wallets.map((address: string) => {
     if (address in artistMapping) {

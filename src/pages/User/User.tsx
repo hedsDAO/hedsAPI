@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from '@/store';
 import { Container } from '@common/Container/Container';
 import { Skeleton } from '@chakra-ui/react';
-import { convertSecondsToMinutes, formatWallet } from '@common/constants/helpers';
+import { formatTime } from '@utils/formatTime';
+import { formatWallet } from '@utils/formatWallet';
 import DEFAULT_PROFILE_PICTURE from '/public/default.png';
 
 export const User = () => {
@@ -105,7 +106,7 @@ export const User = () => {
                     <span className="text-xs font-thin">HT{id}</span>
                     <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
                     <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
-                      <span className="mr-2">{convertSecondsToMinutes(submission.duration)}</span>
+                      <span className="mr-2">{formatTime(submission.duration)}</span>
                       <i className="fa-solid fa-play"></i>
                     </div>
                   </div>

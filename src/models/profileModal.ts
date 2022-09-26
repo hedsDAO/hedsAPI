@@ -6,9 +6,7 @@ import { populateNewUser } from '../../src/utils/populateNewUser';
 import { db } from '../../src/App';
 
 export const profileModel = createModel<RootModel>()({
-  state: {
-    
-  } as User,
+  state: {} as User,
   reducers: {
     setProfileData: (state, payload: User) => ({ ...state, ...payload }),
   },
