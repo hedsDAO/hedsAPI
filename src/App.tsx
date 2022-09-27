@@ -12,7 +12,7 @@ import { Vote } from '@/modules/vote/pages/Vote';
 import { Tapes } from '@/modules/tapes/pages/Tapes';
 import { User } from '@/modules/user/page/User';
 import { Listen } from '@/modules/listen/pages/Listen';
-import { Profile } from '@/modules/profile/pages/Profile';
+import { Profile } from '@/modules/profile/page/Profile';
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,

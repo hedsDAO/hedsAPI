@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi';
 import { Dispatch } from 'src/store';
 import { useDispatch } from 'react-redux';
 
-export const ProfileWrapper = ({ children }: { children: JSX.Element }) => {
+export const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch<Dispatch>();
   useAccount({
     onConnect({ address }) {
