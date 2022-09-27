@@ -5,9 +5,9 @@ import { Stack, Skeleton } from '@chakra-ui/react';
 
 const UserSubmissions = ({ loading, userData }: { loading: boolean; userData: User }) => {
   return (
-    <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
-      <Stack spacing='2'>
-        <Skeleton rounded='md' fadeDuration={2} isLoaded={!loading}>
+    <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200 px-3 py-3">
+      <Stack spacing="2">
+        <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
           {userData?.submissions?.heds?.hedstape &&
             Object.entries(userData.submissions.heds.hedstape).map(([id, submission], i) => (
               <li className="text-xs text-gray-600 py-2" key={i}>

@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect';
 import { RootState } from '@/store';
+import { TapeData } from '@models/common';
 
-const selectAllHedsTapes = (state: RootState) => state.tapesModel.allTapes?.hedstape;
+export const selectAllHedsTapes = (state: RootState): { [key: string]: TapeData } => state.tapesModel.allTapes?.hedstape || {};
 
-const selectAllCollabTapes = (state: RootState) => state.tapesModel.allTapes?.collabtape;
+const selectAllCollabTapes = (state: RootState): { [key: string]: TapeData } => state.tapesModel.allTapes?.collabtape || {};
 
-export const selectAllTapes = createSelector(selectAllHedsTapes, selectAllCollabTapes, (hedsTapes, collabTapes) => ({
+const selectAllTapes = createSelector(selectAllHedsTapes, selectAllCollabTapes, (hedsTapes, collabTapes) => ({
   ...hedsTapes,
   ...collabTapes,
 }));
