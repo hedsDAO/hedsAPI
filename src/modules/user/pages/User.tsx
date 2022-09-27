@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { Heading, Stack } from '@chakra-ui/react';
 import UserWrapper from '@/common/components/wrappers/UserWrapper';
 import { TwitterLinkButton, UserSubmissions, ProfilePicture, CopyWalletButton, DisplayName, UserDescription } from '@/modules/user/components';
+import { selectUserData, selectUserDataLoading } from '@/modules/user/selectors';
 
 export const User = () => {
-  const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userData = useSelector((state: RootState) => state.userModel);
+  const loading = useSelector(selectUserDataLoading);
+  const userData = useSelector(selectUserData);
+
   return (
     <UserWrapper>
       <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen">
