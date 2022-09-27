@@ -15,12 +15,12 @@ export const User = () => {
           <ProfilePicture loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
           <UserDescription loading={loading} userData={userData} />
-          <CopyWalletButton wallet={userData?.wallet} />
-          <TwitterLinkButton userData={userData} />
+          <CopyWalletButton loading={loading} wallet={userData?.wallet} />
+          <TwitterLinkButton loading={loading} userData={userData} />
         </Stack>
         <Stack direction={'column'} spacing="2" width={'full'}>
           <Heading fontSize={'3xl'}>Submissions</Heading>
-          <UserSubmissions userData={userData} />
+          <UserSubmissions loading={loading} userData={userData} />
           <Heading fontSize={'3xl'}>Featured On</Heading>
         </Stack>
       </UserWrapper>

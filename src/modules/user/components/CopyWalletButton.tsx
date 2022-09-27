@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { formatWallet, handleCopy } from '@/utils';
+import { Flex, Skeleton, Text } from '@chakra-ui/react';
 
-const CopyWalletButton = ({ wallet }: { wallet: string }) => {
+const CopyWalletButton = ({ loading, wallet }: { loading: boolean; wallet: string }) => {
   const [isCopied, setIsCopied] = useState(false);
   return (
-    <div data-testid="user-copy-container" className="inline-flex">
-      <button
-        data-testid="user-wallet"
-        onClick={() => handleCopy(setIsCopied, wallet)}
-        className="inline-flex items-center text-xs self-start tracking-tight text-black py-0.5 rounded-lg"
-      >
-        <i className="fa-solid fa-copy mr-2 text-[0.75rem]"></i>
-        {wallet && formatWallet(wallet)}
-      </button>
+    <Flex data-testid="user-copy-container">
+      <Skeleton rounded="md" height="10px" fadeDuration={2} isLoaded={!loading}>
+        <Text as="button" onClick={() => handleCopy(setIsCopied, wallet)} data-testid="user-wallet" fontSize={'sm'}>
+          <i className="fa-solid fa-copy mr-2 text-[0.75rem]" />
+          {formatWallet(wallet || '0x0000')}
+        </Text>
+      </Skeleton>
       <Transition
         show={isCopied}
         enter="transition-opacity duration-75"
@@ -24,10 +23,9 @@ const CopyWalletButton = ({ wallet }: { wallet: string }) => {
         leaveTo="opacity-0"
         className="text-[0.75rem] font-bold mt-auto px-2.5 py-0.5 text-white bg-gray-200 w-24 rounded-lg"
         as="div"
-      >
-        copied
-      </Transition>
-    </div>
+        children={'copied'}
+      />
+    </Flex>
   );
 };
 
