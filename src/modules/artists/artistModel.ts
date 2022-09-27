@@ -34,7 +34,7 @@ export const artistModel = createModel<RootModel>()({
     setArtistSort: (state, currentSort: ArtistSort) => {
       const newState = { ...state };
       const allArtists = newState.allArtists;
-      if (currentSort !== ArtistSort.ALPHA_ASC) {
+      if (currentSort === ArtistSort.ALPHA_ASC) {
         allArtists.sort((a, b) => a.displayName.localeCompare(b.displayName));
       } else allArtists.reverse();
       return { ...state, allArtists, currentSort, currentPage: 1 };
@@ -76,6 +76,7 @@ export const artistModel = createModel<RootModel>()({
         artistMapping[res.id] = res.data();
         artistTank.push(res.data());
       });
+      artistTank.sort((a, b) => a.displayName.localeCompare(b.displayName));
       this.setArtistMapping(artistMapping);
       this.setAllArtists(artistTank);
     },

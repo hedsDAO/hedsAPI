@@ -8,6 +8,7 @@ const icons: { [key: string]: string } = {
   '5': 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/icons%2Fhedstape%2F5.jpg?alt=media&token=c8c1892c-9918-4fd1-8c85-0909021b9150',
   '6': 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/icons%2Fhedstape%2F6.jpg?alt=media&token=53f85484-b7b0-4020-9c09-64e4ed570b59',
   '7': 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/icons%2Fhedstape%2F7.jpg?alt=media&token=9a620817-2d4a-470c-9e72-1ffb6f84a326',
+  '8': 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/icons%2Fhedstape%2F8.jpg?alt=media&token=6231430f-604c-479f-87d9-3d77212a0086',
 };
 
 function parseTapeIcons(user: User) {
