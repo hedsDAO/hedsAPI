@@ -5,7 +5,7 @@ import { formatTime } from '@/utils';
 const UserSubmissions = ({ userData }: { userData: User }) => {
   return (
     <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
-      {userData?.submissions?.heds?.hedstape  &&
+      {userData?.submissions?.heds?.hedstape &&
         Object.entries(userData.submissions.heds.hedstape).map(([id, submission], i) => (
           <li className="text-xs text-gray-600" key={i}>
             <a href="#" className="block hover:bg-gray-50">
