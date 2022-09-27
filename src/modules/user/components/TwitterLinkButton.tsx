@@ -7,7 +7,7 @@ const TwitterLinkButton = ({ userData }: { userData: User }) => {
   return (
     <Fragment>
       {userData?.twitterHandle && (
-        <Link fontSize={'sm'} data-testid="user-twitter-link" href={formatTwitterUrl(userData.twitterHandle)} isExternal>
+        <Link fontSize={'sm'} data-testid="user-twitter" href={formatTwitterUrl(userData.twitterHandle)} isExternal>
           <i className="fa-brands fa-twitter mr-2 text-[0.75rem]"></i>@{userData.twitterHandle}
         </Link>
       )}
