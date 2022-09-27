@@ -53,32 +53,44 @@ Object {
             />
           </div>
           <div
-            class="inline-flex"
+            class="css-0"
             data-testid="user-copy-container"
           >
-            <button
-              class="inline-flex items-center text-xs self-start tracking-tight text-black py-0.5 rounded-lg"
-              data-testid="user-wallet"
+            <div
+              class="chakra-skeleton css-0"
             >
-              <i
-                class="fa-solid fa-copy mr-2 text-[0.75rem]"
-              />
-              0xde...745f
-            </button>
+              <button
+                class="chakra-text css-0"
+                data-testid="user-wallet"
+              >
+                <i
+                  class="fa-solid fa-copy mr-2 text-[0.75rem]"
+                />
+                0xde...745f
+              </button>
+            </div>
           </div>
-          <a
-            class="chakra-link css-0"
-            data-testid="user-twitter"
-            href="https://www.twitter.com/_alexanderlewis"
-            rel="noopener"
-            target="_blank"
+          <div
+            class="css-0"
           >
-            <i
-              class="fa-brands fa-twitter mr-2 text-[0.75rem]"
-            />
-            @
-            _alexanderlewis
-          </a>
+            <div
+              class="chakra-skeleton css-0"
+            >
+              <a
+                class="chakra-link css-0"
+                data-testid="user-twitter"
+                href="https://www.twitter.com/_alexanderlewis"
+                rel="noopener"
+                target="_blank"
+              >
+                <i
+                  class="fa-brands fa-twitter mr-2 text-[0.75rem]"
+                />
+                @
+                _alexanderlewis
+              </a>
+            </div>
+          </div>
         </div>
         <div
           class="chakra-stack css-0"
@@ -93,42 +105,50 @@ Object {
             data-testid="user-submissions"
             role="list"
           >
-            <li
-              class="text-xs text-gray-600"
+            <div
+              class="chakra-stack css-0"
             >
-              <a
-                class="block hover:bg-gray-50"
-                href="#"
+              <div
+                class="chakra-skeleton css-0"
               >
-                <div
-                  class="flex items-center px-2 py-3 gap-x-2"
+                <li
+                  class="text-xs text-gray-600"
                 >
-                  <span
-                    class="text-xs font-thin"
+                  <a
+                    class="block hover:bg-gray-50"
+                    href="#"
                   >
-                    HT
-                    5
-                  </span>
-                  <div
-                    class="min-w-0 flex-1 sm:flex"
-                  >
-                    fretful dormouse
-                  </div>
-                  <div
-                    class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
-                  >
-                    <span
-                      class="mr-2"
+                    <div
+                      class="flex items-center gap-x-2"
                     >
-                      1:13
-                    </span>
-                    <i
-                      class="fa-solid fa-play"
-                    />
-                  </div>
-                </div>
-              </a>
-            </li>
+                      <span
+                        class="text-xs font-thin"
+                      >
+                        HT
+                        5
+                      </span>
+                      <div
+                        class="min-w-0 flex-1 sm:flex"
+                      >
+                        fretful dormouse
+                      </div>
+                      <div
+                        class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
+                      >
+                        <span
+                          class="mr-2"
+                        >
+                          1:13
+                        </span>
+                        <i
+                          class="fa-solid fa-play"
+                        />
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </div>
+            </div>
           </ul>
           <h2
             class="chakra-heading css-0"
@@ -188,32 +208,44 @@ Object {
           />
         </div>
         <div
-          class="inline-flex"
+          class="css-0"
           data-testid="user-copy-container"
         >
-          <button
-            class="inline-flex items-center text-xs self-start tracking-tight text-black py-0.5 rounded-lg"
-            data-testid="user-wallet"
+          <div
+            class="chakra-skeleton css-0"
           >
-            <i
-              class="fa-solid fa-copy mr-2 text-[0.75rem]"
-            />
-            0xde...745f
-          </button>
+            <button
+              class="chakra-text css-0"
+              data-testid="user-wallet"
+            >
+              <i
+                class="fa-solid fa-copy mr-2 text-[0.75rem]"
+              />
+              0xde...745f
+            </button>
+          </div>
         </div>
-        <a
-          class="chakra-link css-0"
-          data-testid="user-twitter"
-          href="https://www.twitter.com/_alexanderlewis"
-          rel="noopener"
-          target="_blank"
+        <div
+          class="css-0"
         >
-          <i
-            class="fa-brands fa-twitter mr-2 text-[0.75rem]"
-          />
-          @
-          _alexanderlewis
-        </a>
+          <div
+            class="chakra-skeleton css-0"
+          >
+            <a
+              class="chakra-link css-0"
+              data-testid="user-twitter"
+              href="https://www.twitter.com/_alexanderlewis"
+              rel="noopener"
+              target="_blank"
+            >
+              <i
+                class="fa-brands fa-twitter mr-2 text-[0.75rem]"
+              />
+              @
+              _alexanderlewis
+            </a>
+          </div>
+        </div>
       </div>
       <div
         class="chakra-stack css-0"
@@ -228,42 +260,50 @@ Object {
           data-testid="user-submissions"
           role="list"
         >
-          <li
-            class="text-xs text-gray-600"
+          <div
+            class="chakra-stack css-0"
           >
-            <a
-              class="block hover:bg-gray-50"
-              href="#"
+            <div
+              class="chakra-skeleton css-0"
             >
-              <div
-                class="flex items-center px-2 py-3 gap-x-2"
+              <li
+                class="text-xs text-gray-600"
               >
-                <span
-                  class="text-xs font-thin"
+                <a
+                  class="block hover:bg-gray-50"
+                  href="#"
                 >
-                  HT
-                  5
-                </span>
-                <div
-                  class="min-w-0 flex-1 sm:flex"
-                >
-                  fretful dormouse
-                </div>
-                <div
-                  class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
-                >
-                  <span
-                    class="mr-2"
+                  <div
+                    class="flex items-center gap-x-2"
                   >
-                    1:13
-                  </span>
-                  <i
-                    class="fa-solid fa-play"
-                  />
-                </div>
-              </div>
-            </a>
-          </li>
+                    <span
+                      class="text-xs font-thin"
+                    >
+                      HT
+                      5
+                    </span>
+                    <div
+                      class="min-w-0 flex-1 sm:flex"
+                    >
+                      fretful dormouse
+                    </div>
+                    <div
+                      class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
+                    >
+                      <span
+                        class="mr-2"
+                      >
+                        1:13
+                      </span>
+                      <i
+                        class="fa-solid fa-play"
+                      />
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </div>
+          </div>
         </ul>
         <h2
           class="chakra-heading css-0"

@@ -6,16 +6,16 @@ import { Stack, Skeleton } from '@chakra-ui/react';
 const UserSubmissions = ({ loading, userData }: { loading: boolean; userData: User }) => {
   return (
     <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
-      <Stack spacing="2">
-        <Skeleton height="4" fadeDuration={2} isLoaded={!loading}>
+      <Stack spacing='2'>
+        <Skeleton rounded='md' fadeDuration={2} isLoaded={!loading}>
           {userData?.submissions?.heds?.hedstape &&
             Object.entries(userData.submissions.heds.hedstape).map(([id, submission], i) => (
-              <li className="text-xs text-gray-600" key={i}>
+              <li className="text-xs text-gray-600 py-2" key={i}>
                 <a href="#" className="block hover:bg-gray-50">
                   <div className="flex items-center gap-x-2">
                     <span className="text-xs font-thin">HT{id}</span>
                     <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>
-                    <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
+                    <div className="flex-shrink-0 sm:mt-0 sm:ml-5">
                       <span className="mr-2">{formatTime(submission.duration)}</span>
                       <i className="fa-solid fa-play"></i>
                     </div>
