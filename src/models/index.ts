@@ -1,6 +1,6 @@
 import { Models } from '@rematch/core';
 import { userModel } from '../modules/user/userModel';
-import { modelModel } from './modalModel';
+import { modelModel } from '../modals/modalModel';
 import { profileModel } from '../modules/profile/profileModel';
 import { artistModel } from '../modules/artists/artistModel';
 import { tapesModel } from '../modules/tapes/tapesModel';
