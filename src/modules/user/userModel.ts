@@ -1,7 +1,7 @@
-import type { RootModel } from '../../models';
+import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
-import { User } from '../../models/common';
+import { User } from '@/models/common';
 import { db } from '@/App';
 
 export const userModel = createModel<RootModel>()({
