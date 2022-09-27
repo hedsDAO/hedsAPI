@@ -1,9 +1,9 @@
 import React from 'react';
-import { User } from '@/modules/user/pages/User';
+import { User } from '@/modules/user/User/User';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 import { act, screen, waitFor } from '@testing-library/react';
-import { userData } from '@/modules/user/tests/mocks/UserData';
+import { userData } from '@/modules/user/User/tests/mocks/UserData';
 import { formatWallet } from '@/utils';
 
 describe('User unit', () => {

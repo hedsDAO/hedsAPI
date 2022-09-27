@@ -112,7 +112,7 @@ Object {
                 class="chakra-skeleton css-0"
               >
                 <li
-                  class="text-xs text-gray-600"
+                  class="text-xs text-gray-600 py-2"
                 >
                   <a
                     class="block hover:bg-gray-50"
@@ -133,7 +133,7 @@ Object {
                         fretful dormouse
                       </div>
                       <div
-                        class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
+                        class="flex-shrink-0 sm:mt-0 sm:ml-5"
                       >
                         <span
                           class="mr-2"
@@ -267,7 +267,7 @@ Object {
               class="chakra-skeleton css-0"
             >
               <li
-                class="text-xs text-gray-600"
+                class="text-xs text-gray-600 py-2"
               >
                 <a
                   class="block hover:bg-gray-50"
@@ -288,7 +288,7 @@ Object {
                       fretful dormouse
                     </div>
                     <div
-                      class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5"
+                      class="flex-shrink-0 sm:mt-0 sm:ml-5"
                     >
                       <span
                         class="mr-2"
