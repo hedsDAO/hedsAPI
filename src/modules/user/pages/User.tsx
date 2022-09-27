@@ -10,8 +10,8 @@ export const User = () => {
   const userData = useSelector(selectUserData);
 
   return (
-    <UserWrapper>
-      <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen">
+    <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen">
+      <UserWrapper>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
@@ -24,7 +24,7 @@ export const User = () => {
           <UserSubmissions userData={userData} />
           <Heading fontSize={'3xl'}>Featured On</Heading>
         </Stack>
-      </div>
-    </UserWrapper>
+      </UserWrapper>
+    </div>
   );
 };
