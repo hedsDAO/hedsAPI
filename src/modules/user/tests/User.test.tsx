@@ -4,7 +4,7 @@ import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 import { act, screen, waitFor } from '@testing-library/react';
 import { userData } from '@/modules/user/tests/mocks/UserData';
-import { formatWallet } from '@utils/formatWallet';
+import { formatWallet } from '@/utils';
 
 describe('User unit', () => {
   describe('snapshot', () => {

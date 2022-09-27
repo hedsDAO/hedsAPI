@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
-import { formatTime } from '@/utils/formatTime';
+import { formatTime } from '@/utils';
 
 export const Listen = () => {
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();

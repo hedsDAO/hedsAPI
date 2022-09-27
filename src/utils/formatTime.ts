@@ -6,4 +6,4 @@ const formatTime = function (time?: number) {
     ].join(':');
 };
 
-export { formatTime };
+export default formatTime;

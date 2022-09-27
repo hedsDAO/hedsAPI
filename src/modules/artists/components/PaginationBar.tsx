@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from 'src/store';
-import { classNames } from '@/utils/classNames';
+import { classNames } from '@/utils';
 
 export const PaginationBar = () => {
   const dispatch = useDispatch<Dispatch>();

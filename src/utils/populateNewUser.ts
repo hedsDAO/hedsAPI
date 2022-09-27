@@ -12,10 +12,13 @@ const populateNewUser = (wallet: string) => {
     twitterHandle: '',
     badges: [vistorBadge],
     description: '',
+    displayName: '',
     votingPower: 0,
     wallet: wallet.toLowerCase(),
+    role: 0,
+    public: false,
   };
   return newUserData;
 };
 
-export { populateNewUser };
+export default populateNewUser;
