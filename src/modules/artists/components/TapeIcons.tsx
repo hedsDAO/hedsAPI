@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '@/models/common';
-import { parseTapeIcons } from '@/utils/parseTapeIcons';
+import { parseTapeIcons } from '@/utils';
 
 export const TapeIcons = ({ user }: { user: User }) => {
   return (

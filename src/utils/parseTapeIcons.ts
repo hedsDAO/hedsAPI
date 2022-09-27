@@ -22,4 +22,4 @@ function parseTapeIcons(user: User) {
   } else return [];
 }
 
-export { parseTapeIcons };
+export default parseTapeIcons;

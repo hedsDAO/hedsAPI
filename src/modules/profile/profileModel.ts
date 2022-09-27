@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import type { RootModel } from '../../models';
 import { User } from '../../models/common';
-import { populateNewUser } from '../../utils/populateNewUser';
+import { populateNewUser } from '@/utils';
 import { db } from '../../App';
 
 export const profileModel = createModel<RootModel>()({

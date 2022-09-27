@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
 import { Container } from '@/common/components/Container';
-import { formatTime } from '@utils/formatTime';
+import { formatTime } from '@/utils';
 import DEFAULT_PROFILE_PICTURE from '/public/default.png';
 
 export const Profile = () => {

@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 import { collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
 import type { RootModel } from '@/models';
 import { User, ArtistMapping } from '../../models/common';
-import { populateNewUser } from '../../utils/populateNewUser';
+import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 
 export enum ArtistSort {

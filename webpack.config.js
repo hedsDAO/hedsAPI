@@ -8,7 +8,7 @@ module.exports = {
     main: './src/index.tsx',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss'],
+    extensions: ['.ts', '.tsx', '.js', '.scss', '.png'],
     alias: {
       '@': path.resolve(__dirname, 'src/'),
       '@pages': path.resolve(__dirname, 'src/pages'),
