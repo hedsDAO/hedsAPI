@@ -10,7 +10,7 @@ export const User = () => {
   const userData = useSelector((state: RootState) => state.userModel);
   return (
     <UserWrapper>
-      <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4">
+      <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen">
         <div className="flex flex-col gap-2">
           <ProfilePicture loading={loading} userData={userData} />
           <Heading>{userData?.displayName}</Heading>
@@ -18,7 +18,7 @@ export const User = () => {
           <CopyWalletButton wallet={userData?.wallet} />
           <TwitterLinkButton userData={userData} />
         </div>
-        <div>
+        <div className="flex flex-col gap-2 w-full">
           <Heading fontSize={'3xl'}>Submissions</Heading>
           <UserSubmissions userData={userData} />
           <Heading fontSize={'3xl'}>Featured On</Heading>

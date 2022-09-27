@@ -17,6 +17,7 @@ export const userModel = createModel<RootModel>()({
       newState.displayName = '';
       newState.wallet = '';
       newState.samples = {};
+      newState.submissions = {};
       return newState;
     },
   },
