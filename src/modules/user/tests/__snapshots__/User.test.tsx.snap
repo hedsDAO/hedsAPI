@@ -9,10 +9,10 @@ Object {
         class="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen"
       >
         <div
-          class="flex flex-col gap-2"
+          class="chakra-stack css-0"
         >
           <div
-            class="chakra-skeleton lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
+            class="chakra-skeleton css-0"
           >
             <img
               alt="Alexander Lewis"
@@ -35,10 +35,23 @@ Object {
               </h2>
             </div>
           </div>
-          <p
-            class="chakra-text css-0"
-            data-testid="user-description"
-          />
+          <div
+            class="css-0"
+          >
+            <div
+              class="chakra-skeleton css-0"
+            >
+              <p
+                class="chakra-text css-0"
+                data-testid="user-description"
+              >
+                ...
+              </p>
+            </div>
+            <div
+              class="chakra-skeleton css-0"
+            />
+          </div>
           <div
             class="inline-flex"
             data-testid="user-copy-container"
@@ -68,7 +81,7 @@ Object {
           </a>
         </div>
         <div
-          class="flex flex-col gap-2 w-full"
+          class="chakra-stack css-0"
         >
           <h2
             class="chakra-heading css-0"
@@ -131,10 +144,10 @@ Object {
       class="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen"
     >
       <div
-        class="flex flex-col gap-2"
+        class="chakra-stack css-0"
       >
         <div
-          class="chakra-skeleton lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
+          class="chakra-skeleton css-0"
         >
           <img
             alt="Alexander Lewis"
@@ -157,10 +170,23 @@ Object {
             </h2>
           </div>
         </div>
-        <p
-          class="chakra-text css-0"
-          data-testid="user-description"
-        />
+        <div
+          class="css-0"
+        >
+          <div
+            class="chakra-skeleton css-0"
+          >
+            <p
+              class="chakra-text css-0"
+              data-testid="user-description"
+            >
+              ...
+            </p>
+          </div>
+          <div
+            class="chakra-skeleton css-0"
+          />
+        </div>
         <div
           class="inline-flex"
           data-testid="user-copy-container"
@@ -190,7 +216,7 @@ Object {
         </a>
       </div>
       <div
-        class="flex flex-col gap-2 w-full"
+        class="chakra-stack css-0"
       >
         <h2
           class="chakra-heading css-0"
