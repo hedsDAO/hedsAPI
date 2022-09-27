@@ -6,56 +6,45 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="max-w-7xl mx-auto flex sm:flex-row flex-col gap-5"
+        class="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen"
       >
         <div
-          class="aspect-square flex flex-col"
+          class="flex flex-col gap-2"
         >
           <div
-            class="chakra-skeleton w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
+            class="chakra-skeleton lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
           >
             <img
               alt="Alexander Lewis"
-              class="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
+              class="object-cover lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
               data-testid="user-profile-picture"
               src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0xde5bc302fc6d899eab4334602dd15efb20cd745f.jpeg?alt=media&token=9f251bf5-38c8-4800-b4c4-bc9166a0ebc2"
             />
           </div>
           <div
-            class="chakra-stack css-0"
+            class="css-0"
           >
-            <h2
-              class="chakra-heading css-0"
-              data-testid="user-display-name"
+            <div
+              class="chakra-skeleton css-0"
             >
-              Alexander Lewis
-            </h2>
-            <p
-              class="chakra-text css-0"
-              data-testid="user-description"
-            >
-              ...
-            </p>
-            <a
-              class="chakra-link css-0"
-              data-testid="user-twitter-link"
-              href="https://www.twitter.com/_alexanderlewis"
-              rel="noopener"
-              target="_blank"
-            >
-              <i
-                class="fa-brands fa-twitter mr-2 text-[0.75rem]"
-              />
-              @
-              _alexanderlewis
-            </a>
+              <h2
+                class="chakra-heading css-0"
+                data-testid="user-display-name"
+              >
+                Alexander Lewis
+              </h2>
+            </div>
           </div>
+          <p
+            class="chakra-text css-0"
+            data-testid="user-description"
+          />
           <div
             class="inline-flex"
             data-testid="user-copy-container"
           >
             <button
-              class="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600  px-2.5 py-0.5 rounded-lg"
+              class="inline-flex items-center text-xs self-start tracking-tight text-black py-0.5 rounded-lg"
               data-testid="user-wallet"
             >
               <i
@@ -64,15 +53,28 @@ Object {
               0xde...745f
             </button>
           </div>
+          <a
+            class="chakra-link css-0"
+            data-testid="user-twitter"
+            href="https://www.twitter.com/_alexanderlewis"
+            rel="noopener"
+            target="_blank"
+          >
+            <i
+              class="fa-brands fa-twitter mr-2 text-[0.75rem]"
+            />
+            @
+            _alexanderlewis
+          </a>
         </div>
         <div
-          class=""
+          class="flex flex-col gap-2 w-full"
         >
-          <h1
-            class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+          <h2
+            class="chakra-heading css-0"
           >
             Submissions
-          </h1>
+          </h2>
           <ul
             class="divide-y divide-gray-200"
             data-testid="user-submissions"
@@ -86,7 +88,7 @@ Object {
                 href="#"
               >
                 <div
-                  class="flex items-center px-4 py-3 sm:px-6 gap-x-2"
+                  class="flex items-center px-2 py-3 gap-x-2"
                 >
                   <span
                     class="text-xs font-thin"
@@ -115,67 +117,56 @@ Object {
               </a>
             </li>
           </ul>
-          <h1
-            class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+          <h2
+            class="chakra-heading css-0"
           >
             Featured On
-          </h1>
+          </h2>
         </div>
       </div>
     </div>
   </body>,
   "container": <div>
     <div
-      class="max-w-7xl mx-auto flex sm:flex-row flex-col gap-5"
+      class="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen"
     >
       <div
-        class="aspect-square flex flex-col"
+        class="flex flex-col gap-2"
       >
         <div
-          class="chakra-skeleton w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
+          class="chakra-skeleton lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] css-0"
         >
           <img
             alt="Alexander Lewis"
-            class="object-cover w-full h-full lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
+            class="object-cover lg:min-h-[18rem] lg:max-h-[18rem] lg:min-w-[18rem] lg:max-w-[18rem] aspect-square rounded-lg object-center"
             data-testid="user-profile-picture"
             src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0xde5bc302fc6d899eab4334602dd15efb20cd745f.jpeg?alt=media&token=9f251bf5-38c8-4800-b4c4-bc9166a0ebc2"
           />
         </div>
         <div
-          class="chakra-stack css-0"
+          class="css-0"
         >
-          <h2
-            class="chakra-heading css-0"
-            data-testid="user-display-name"
+          <div
+            class="chakra-skeleton css-0"
           >
-            Alexander Lewis
-          </h2>
-          <p
-            class="chakra-text css-0"
-            data-testid="user-description"
-          >
-            ...
-          </p>
-          <a
-            class="chakra-link css-0"
-            data-testid="user-twitter-link"
-            href="https://www.twitter.com/_alexanderlewis"
-            rel="noopener"
-            target="_blank"
-          >
-            <i
-              class="fa-brands fa-twitter mr-2 text-[0.75rem]"
-            />
-            @
-            _alexanderlewis
-          </a>
+            <h2
+              class="chakra-heading css-0"
+              data-testid="user-display-name"
+            >
+              Alexander Lewis
+            </h2>
+          </div>
         </div>
+        <p
+          class="chakra-text css-0"
+          data-testid="user-description"
+        />
         <div
           class="inline-flex"
           data-testid="user-copy-container"
         >
           <button
-            class="inline-flex items-center text-xs self-start mt-4 tracking-tight text-neutral-600  px-2.5 py-0.5 rounded-lg"
+            class="inline-flex items-center text-xs self-start tracking-tight text-black py-0.5 rounded-lg"
             data-testid="user-wallet"
           >
             <i
@@ -184,15 +175,28 @@ Object {
             0xde...745f
           </button>
         </div>
+        <a
+          class="chakra-link css-0"
+          data-testid="user-twitter"
+          href="https://www.twitter.com/_alexanderlewis"
+          rel="noopener"
+          target="_blank"
+        >
+          <i
+            class="fa-brands fa-twitter mr-2 text-[0.75rem]"
+          />
+          @
+          _alexanderlewis
+        </a>
       </div>
       <div
-        class=""
+        class="flex flex-col gap-2 w-full"
       >
-        <h1
-          class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+        <h2
+          class="chakra-heading css-0"
         >
           Submissions
-        </h1>
+        </h2>
         <ul
           class="divide-y divide-gray-200"
           data-testid="user-submissions"
@@ -206,7 +210,7 @@ Object {
               href="#"
             >
               <div
-                class="flex items-center px-4 py-3 sm:px-6 gap-x-2"
+                class="flex items-center px-2 py-3 gap-x-2"
               >
                 <span
                   class="text-xs font-thin"
@@ -235,11 +239,11 @@ Object {
             </a>
           </li>
         </ul>
-        <h1
-          class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-3xl my-2"
+        <h2
+          class="chakra-heading css-0"
         >
           Featured On
-        </h1>
+        </h2>
       </div>
     </div>
   </div>,

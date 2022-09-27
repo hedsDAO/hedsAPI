@@ -22,7 +22,7 @@ const CopyWalletButton = ({ wallet }: { wallet: string }) => {
         leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="text-[0.75rem] font-bold mt-auto px-2.5 py-0.5 text-white bg-teal-300 w-24 rounded-lg"
+        className="text-[0.75rem] font-bold mt-auto px-2.5 py-0.5 text-white bg-gray-200 w-24 rounded-lg"
         as="div"
       >
         copied

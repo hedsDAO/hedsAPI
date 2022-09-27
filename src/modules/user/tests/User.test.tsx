@@ -35,16 +35,16 @@ describe('User unit', () => {
     it('renders desciption', () => {
       const descriptionText = screen.getByTestId('user-description');
       const { description } = userData;
-      expect(descriptionText).toHaveTextContent(description || '...');
+      expect(descriptionText).toHaveTextContent(description || '');
     });
     it('renders twitter link if present', () => {
-      const twitterLink = screen.queryByTestId('user-twitter-link');
-      const twitterText = screen.queryByTestId('user-twitter-text');
+      const twitterLink = screen.queryByTestId('user-twitter');
+      // const twitterText = screen.queryByTestId('user-twitter-text');
       const { twitterHandle } = userData;
       if (twitterHandle) {
         expect(twitterLink).toHaveAttribute('href', `https://www.twitter.com/${twitterHandle}`);
-        expect(twitterText).toHaveTextContent(`@${twitterHandle}`);
-      } else expect(twitterText && twitterLink).toBeFalsy();
+        expect(twitterLink).toHaveTextContent(`@${twitterHandle}`);
+      } else expect(twitterLink).toBeFalsy();
     });
     it('renders wallet address', () => {
       const walletText = screen.queryByTestId('user-wallet');
