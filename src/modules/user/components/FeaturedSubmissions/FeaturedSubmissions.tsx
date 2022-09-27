@@ -7,8 +7,6 @@ import { TapeData } from '@models/common';
 
 const FeaturedSubmissions = ({ loading }: { loading: boolean }) => {
   const featuredSubmissions: { [key: string]: TapeData } = useSelector(selectUserFeaturedSubmissions);
-
-  console.log(loading);
   return (
     <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
       <div className="flex flex-row gap-4 flex-wrap px-3 py-3">
