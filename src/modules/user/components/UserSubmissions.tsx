@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '@/models/common';
 import { formatTime } from '@/utils';
 
-export const UserSubmissions = ({ userData }: { userData: User }) => {
+const UserSubmissions = ({ userData }: { userData: User }) => {
   return (
     <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
       {userData.submissions &&
@@ -23,3 +23,5 @@ export const UserSubmissions = ({ userData }: { userData: User }) => {
     </ul>
   );
 };
+
+export default UserSubmissions;

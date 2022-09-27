@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { formatWallet, handleCopy } from '@/utils';
 
-export const CopyWalletButton = ({ wallet }: { wallet: string }) => {
+const CopyWalletButton = ({ wallet }: { wallet: string }) => {
   const [isCopied, setIsCopied] = useState(false);
   return (
     <div data-testid="user-copy-container" className="inline-flex">
@@ -30,3 +30,5 @@ export const CopyWalletButton = ({ wallet }: { wallet: string }) => {
     </div>
   );
 };
+
+export default CopyWalletButton;

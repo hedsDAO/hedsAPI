@@ -3,7 +3,7 @@ import { User } from '@/models/common';
 import { formatTwitterUrl } from '@/utils';
 import { Link } from '@chakra-ui/react';
 
-export const TwitterLinkButton = ({ userData }: { userData: User }) => {
+const TwitterLinkButton = ({ userData }: { userData: User }) => {
   return (
     <Fragment>
       {userData?.twitterHandle && (
@@ -14,3 +14,5 @@ export const TwitterLinkButton = ({ userData }: { userData: User }) => {
     </Fragment>
   );
 };
+
+export default TwitterLinkButton;
