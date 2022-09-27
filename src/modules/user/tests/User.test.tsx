@@ -32,14 +32,13 @@ describe('User unit', () => {
       const { displayName } = userData;
       expect(displayNameText).toHaveTextContent(displayName);
     });
-    it('renders desciption', () => {
+    it('renders description', async () => {
       const descriptionText = screen.getByTestId('user-description');
       const { description } = userData;
-      expect(descriptionText).toHaveTextContent(description || '');
+      expect(descriptionText).toHaveTextContent(description || '...')
     });
     it('renders twitter link if present', () => {
       const twitterLink = screen.queryByTestId('user-twitter');
-      // const twitterText = screen.queryByTestId('user-twitter-text');
       const { twitterHandle } = userData;
       if (twitterHandle) {
         expect(twitterLink).toHaveAttribute('href', `https://www.twitter.com/${twitterHandle}`);
