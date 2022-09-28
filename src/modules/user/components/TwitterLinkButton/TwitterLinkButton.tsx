@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react';
 import { User } from '@/models/common';
 import { formatTwitterUrl } from '@/utils';
 import { Link, Box, Skeleton } from '@chakra-ui/react';

@@ -1,5 +1,5 @@
 import { Models } from '@rematch/core';
-import { userModel } from '../modules/user/userModel';
+import { userModel } from '../modules/user/models/userModel';
 import { modalModel } from '../modals/modalModel';
 import { profileModel } from '../modules/profile/profileModel';
 import { artistModel } from '../modules/artists/artistModel';
