@@ -14,3 +14,5 @@ const selectUserTracksOnHedsTapes = (state: RootState): { [key: string]: TrackMe
 export const selectUserFeaturedTracks = createSelector(selectUserTracksOnHedsTapes, selectAllHedsTapes, (userTracks, allTapes) => {
   return Object.keys(userTracks).reduce((acc, curr) => ({ ...acc, [curr]: allTapes[curr] }), {});
 });
+
+export const selectPublicUserProfile = (state: RootState): boolean => state.userModel.public;

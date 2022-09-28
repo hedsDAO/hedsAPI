@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { formatWallet, handleCopy } from '@/utils';
 import { Flex, Skeleton, Text } from '@chakra-ui/react';

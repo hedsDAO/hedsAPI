@@ -1,13 +1,16 @@
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Skeleton } from '@chakra-ui/react';
-import { selectUserFeaturedTracks } from '@/modules/user/models/selectors';
+import { Heading, Skeleton } from '@chakra-ui/react';
 import { TapeData } from '@models/common';
 
-const FeaturedSubmissions = ({ loading }: { loading: boolean }) => {
-  const featuredTracks: { [key: string]: TapeData } = useSelector(selectUserFeaturedTracks);
+interface OwnProps {
+  loading: boolean;
+  featuredTracks: { [key: string]: TapeData };
+}
+
+const FeaturedSubmissions = ({ loading, featuredTracks }: OwnProps) => {
   return (
     <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
+      <Heading fontSize={'3xl'}>Featured On</Heading>
       <div className="flex flex-row gap-4 flex-wrap px-3 py-3">
         {!loading &&
           Object.entries(featuredTracks).map(([id, track]) => {
