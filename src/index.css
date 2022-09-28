@@ -66,3 +66,11 @@ html {
 .navbar-parent .current a:after {
   max-width: 100%;
 }
+
+*:focus {
+  box-shadow: none !important;
+}
+
+*[data-focus] {
+  box-shadow: none !important;
+}

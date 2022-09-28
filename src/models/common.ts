@@ -32,6 +32,7 @@ export interface User {
   samples?: TrackMetadataMapping;
   tracks?: TrackMetadataMapping;
   submissions?: TrackMetadataMapping;
+  public: boolean
 }
 
 export interface TrackMetadataMapping {

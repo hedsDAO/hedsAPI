@@ -10,7 +10,7 @@ export interface ModalState {
   isOpen: boolean;
 }
 
-export const modelModel = createModel<RootModel>()({
+export const modalModel = createModel<RootModel>()({
   state: {
     isOpen: false,
   } as ModalState,

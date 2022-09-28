@@ -28,8 +28,8 @@ const ProfilePicture = ({ loading, profileData }: { loading: boolean; profileDat
       />
       <IconButton
         onClick={() => {
-          dispatch.modelModel.setModal(Modals.PROFILE_MODAL);
-          dispatch.modelModel.setModalOpen(true);
+          dispatch.modalModel.setModal(Modals.PROFILE_MODAL);
+          dispatch.modalModel.setModalOpen(true);
         }}
         size="xs"
         className="relative bottom-9 left-2"
