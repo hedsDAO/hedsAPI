@@ -10,7 +10,7 @@ import {
   DisplayName,
   UserDescription,
 } from '@/modules/user/components';
-import { selectUserData, selectUserDataLoading } from '@/modules/user/selectors';
+import { selectUserData, selectUserDataLoading } from '@/modules/user/models/selectors';
 
 export const User = () => {
   const loading = useSelector(selectUserDataLoading);
