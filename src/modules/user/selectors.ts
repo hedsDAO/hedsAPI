@@ -7,9 +7,10 @@ export const selectUserData = (state: RootState) => state.userModel;
 
 export const selectUserDataLoading = (state: RootState) => state.loading.models.userModel;
 
-const selectUserSubmissionsOnHedsTapes = (state: RootState): { [key: string]: TrackMetadata } => state.userModel.submissions?.heds?.hedstape || {};
+export const selectUserSubmissionsOnHedsTapes = (state: RootState): { [key: string]: TrackMetadata } => state.userModel.submissions?.heds?.hedstape || {};
 
-// Currently only grabbing heds tapes from user submissions (not collabs yet)
-export const selectUserFeaturedSubmissions = createSelector(selectUserSubmissionsOnHedsTapes, selectAllHedsTapes, (userSubmissions, allTapes) => {
-  return Object.keys(userSubmissions).reduce((acc, curr) => ({ ...acc, [curr]: allTapes[curr] }), {});
+const selectUserTracksOnHedsTapes = (state: RootState): { [key: string]: TrackMetadata } => state.userModel.tracks?.heds?.hedstape || {};
+
+export const selectUserFeaturedTracks = createSelector(selectUserTracksOnHedsTapes, selectAllHedsTapes, (userTracks, allTapes) => {
+  return Object.keys(userTracks).reduce((acc, curr) => ({ ...acc, [curr]: allTapes[curr] }), {});
 });
