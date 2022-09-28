@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dialog } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
