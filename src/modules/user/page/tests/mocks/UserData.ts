@@ -61,6 +61,7 @@ const userData: User = {
       },
     },
   },
+  public: true,
 };
 
 export { userData };
