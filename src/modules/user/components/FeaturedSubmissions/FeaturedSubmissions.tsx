@@ -16,10 +16,9 @@ const FeaturedSubmissions = ({ loading, featuredTracks }: OwnProps) => {
           Object.entries(featuredTracks).map(([id, track]) => {
             if (track) {
               return (
-                <Link to={track?.route}>
+                <Link to={track?.route} key={id}>
                   <img
                     className="object-cover lg:min-h-[12rem] lg:max-h-[12rem] lg:min-w-[12rem] lg:max-w-[12rem] aspect-square rounded-lg object-center hover:opacity-75"
-                    key={id}
                     src={track.image}
                   />
                 </Link>

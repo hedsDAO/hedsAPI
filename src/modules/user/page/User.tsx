@@ -37,14 +37,16 @@ export const User = () => {
           <TwitterLinkButton loading={loading} userData={userData} />
         </Stack>
         <Stack direction={'column'} spacing="2" width={'full'}>
-          {isPublic ? (
-            <>
-              {!!Object.keys(userSubmissions).length && <UserSubmissions loading={loading} submissions={userSubmissions} />}
-              {!!Object.keys(featuredTracks).length && <FeaturedSubmissions loading={loading} featuredTracks={featuredTracks} />}
-            </>
-          ) : (
-            <PrivateUserDisplay />
-          )}
+          {userData.wallet ? (
+            isPublic ? (
+              <>
+                {!!Object.keys(userSubmissions).length && <UserSubmissions loading={loading} submissions={userSubmissions} />}
+                {!!Object.keys(featuredTracks).length && <FeaturedSubmissions loading={loading} featuredTracks={featuredTracks} />}
+              </>
+            ) : (
+              <PrivateUserDisplay />
+            )
+          ) : null}
         </Stack>
       </UserWrapper>
     </div>
