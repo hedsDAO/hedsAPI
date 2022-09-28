@@ -1,4 +1,5 @@
 import { User } from '@/models/common';
+import { formatWallet } from '@/utils';
 import { Box, Heading, Skeleton } from '@chakra-ui/react';
 
 const DisplayName = ({ loading, profileData }: { loading: boolean; profileData: User }) => {
@@ -6,7 +7,7 @@ const DisplayName = ({ loading, profileData }: { loading: boolean; profileData: 
     <Box>
       <Skeleton rounded="md" height="1.5rem" fadeDuration={2} isLoaded={!loading}>
         <Heading size={'lg'} data-testid="user-display-name">
-          {profileData?.displayName}
+          {profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}
         </Heading>
       </Skeleton>
     </Box>

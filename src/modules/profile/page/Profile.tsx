@@ -1,12 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { Dispatch } from '@/store';
+import { useSelector } from 'react-redux';
 import { Heading, Stack } from '@chakra-ui/react';
 import { TwitterLinkButton, UserSubmissions, ProfilePicture, CopyWalletButton, DisplayName, UserDescription } from '@/modules/profile/components';
 import { selectProfileData, selectProfileDataLoading } from '@/modules/profile/selectors';
 import ProfileWrapper from '@/common/components/wrappers/ProfileWrapper';
 
 export const Profile = () => {
-  const dispatch = useDispatch<Dispatch>();
   const loading = useSelector(selectProfileDataLoading);
   const profileData = useSelector(selectProfileData);
 

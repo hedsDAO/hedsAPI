@@ -7,7 +7,6 @@ import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import { store } from './store';
 
-import ProfileWrapper from '@/common/components/wrappers/ProfileWrapper';
 import ModalWrapper from '@/common/components/wrappers/ModalWrapper';
 import TapeWrapper from '@/common/components/wrappers/TapeWrapper';
 import App from '@/App';
@@ -32,13 +31,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RematchProvider store={store}>
         <ChakraProvider>
           <TapeWrapper>
-            <ProfileWrapper>
-              <ModalWrapper>
-                <BrowserRouter>
-                  <App />
-                </BrowserRouter>
-              </ModalWrapper>
-            </ProfileWrapper>
+            <ModalWrapper>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </ModalWrapper>
           </TapeWrapper>
         </ChakraProvider>
       </RematchProvider>
