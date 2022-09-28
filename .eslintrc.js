@@ -19,6 +19,7 @@ module.exports = {
     'prettier',
     'plugin:css-modules/recommended',
     'plugin:prettier/recommended',
+    'plugin:react/jsx-runtime',
   ],
   rules: {
     'prettier/indent': 'off',
