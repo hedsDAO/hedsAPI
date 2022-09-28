@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from 'src/store';

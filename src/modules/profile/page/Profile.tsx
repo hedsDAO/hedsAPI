@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 import { Heading, Stack } from '@chakra-ui/react';

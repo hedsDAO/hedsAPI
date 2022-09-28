@@ -1,4 +1,3 @@
-import React from 'react';
 import { User } from '@/modules/user/page/User';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
@@ -35,7 +34,7 @@ describe('User unit', () => {
     it('renders description', async () => {
       const descriptionText = screen.getByTestId('user-description');
       const { description } = userData;
-      expect(descriptionText).toHaveTextContent(description || '...')
+      expect(descriptionText).toHaveTextContent(description || '...');
     });
     it('renders twitter link if present', () => {
       const twitterLink = screen.queryByTestId('user-twitter');

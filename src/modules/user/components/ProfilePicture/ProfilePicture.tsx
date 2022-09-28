@@ -1,4 +1,3 @@
-import React from 'react';
 import { User } from '@/models/common';
 import { Skeleton } from '@chakra-ui/react';
 import DEFAULT_PROFILE_PICTURE from '/public/default.png';

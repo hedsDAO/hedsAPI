@@ -1,4 +1,3 @@
-import React from 'react';
 import { ReactChildrenAsProps } from '@/models/common';
 
 export const Container = ({ children }: ReactChildrenAsProps) => {
