@@ -1,6 +1,5 @@
 import { ConnectKitButton } from 'connectkit';
 import LoadingIcon from '@/common/Icons/LoadingIcon';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Heading, Stack } from '@chakra-ui/react';
 import UserWrapper from '@/common/components/wrappers/UserWrapper';
