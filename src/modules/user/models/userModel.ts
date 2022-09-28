@@ -1,25 +1,15 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
-import { User } from '@/models/common';
+import { User } from './common';
+import { emptyUserState } from './utils';
 import { db } from '@/App';
 
 export const userModel = createModel<RootModel>()({
   state: {} as User,
   reducers: {
     setUserData: (state, payload: User) => ({ ...state, ...payload }),
-    clearUserState: (state) => {
-      const newState = { ...state };
-      newState.profilePicture = '';
-      newState.twitterHandle = '';
-      newState.description = '';
-      newState.badges = [];
-      newState.displayName = '';
-      newState.wallet = '';
-      newState.samples = {};
-      newState.submissions = {};
-      return newState;
-    },
+    clearUserState: (state) => emptyUserState(state),
   },
   effects: () => ({
     async getUserData(wallet: string) {

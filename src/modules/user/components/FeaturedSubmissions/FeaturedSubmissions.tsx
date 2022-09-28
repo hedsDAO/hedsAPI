@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Skeleton } from '@chakra-ui/react';
-import { selectUserFeaturedTracks } from '@/modules/user/selectors';
+import { selectUserFeaturedTracks } from '@/modules/user/models/selectors';
 import { TapeData } from '@models/common';
 
 const FeaturedSubmissions = ({ loading }: { loading: boolean }) => {
