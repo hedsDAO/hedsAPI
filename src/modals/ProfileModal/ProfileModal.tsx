@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
