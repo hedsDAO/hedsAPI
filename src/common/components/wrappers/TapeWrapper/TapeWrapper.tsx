@@ -6,7 +6,7 @@ export const TapeWrapper = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
     dispatch.artistModel.getAllArtists();
-    dispatch.tapesModel.getAllTapes();
+    dispatch.tapesModel.getHedsTapes();
   }, []);
 
   return <Fragment>{children}</Fragment>;

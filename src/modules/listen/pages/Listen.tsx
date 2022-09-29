@@ -12,7 +12,7 @@ export const Listen = () => {
 
   useEffect(() => {
     if (allTapes && artistMapping) dispatch.tapesModel.getCurrentTape([allTapes, artistMapping, space, tape, id]);
-  }, [allTapes, space, tape, id]);
+  }, [allTapes, id]);
 
   return (
     <>
