@@ -1,30 +1,24 @@
-import { store } from '@/store';
+import { useEffect } from 'react';
 import { Button } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
-import { useContractReads, erc721ABI } from 'wagmi';
+import { User, UserCollection } from '@/modules/profile/models/common';
+import useTapeOwnership from '@/hooks/useTapeOwnership';
+import { Dispatch, store } from '@/store';
+import { useDispatch } from 'react-redux';
+import { isEmpty } from '@/utils';
 
-const ProfileCollection = ({ wallet, loading }: { wallet: string; loading: boolean }) => {
-  const tapeDataForOwnership = store.select.tapesModel.getTapeDataForOwnership(store.getState());
-  const contractArgs = tapeDataForOwnership ? Object.entries(tapeDataForOwnership).map(([key, value]) => ({
-    addressOrName: key,
-    functionName: 'balanceOf',
-    contractInterface: erc721ABI,
-    args: wallet,
-  })) : [];
-  console.log(contractArgs, 'args');
-  const { data } = useContractReads({
-    contracts: contractArgs || [],
-    onSuccess(data) {
-      console.log(data, 'yay!');
-      return data;
-    },
-    onError(err) {
-      console.log(err);
-    },
-  });
-  console.log(data)
+const ProfileCollection = ({ profileData, loading }: { profileData: User; loading: boolean }) => {
+  const dispatch = useDispatch<Dispatch>();
+  const tapeDataForOwnership: UserCollection = store.select.tapesModel.getTapeDataForOwnership(store.getState());
+  const { data, refetch, isRefetching } = useTapeOwnership(profileData?.wallet || '', !isEmpty(profileData?.collection) ? {} : tapeDataForOwnership);
+  useEffect(() => {
+    if ((data?.length, tapeDataForOwnership, profileData?.wallet)) {
+      dispatch.profileModel.updateUserCollection([profileData.wallet, tapeDataForOwnership, data]);
+    }
+  }, [data, isRefetching]);
+
   return (
-    <Button onClick={() => {}}>
+    <Button onClick={() => refetch()}>
       <IconRefresh height={8} width={8} />
     </Button>
   );
