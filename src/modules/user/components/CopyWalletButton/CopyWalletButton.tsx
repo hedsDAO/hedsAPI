@@ -23,8 +23,9 @@ const CopyWalletButton = ({ loading, wallet }: { loading: boolean; wallet: strin
         leaveTo="opacity-0"
         className="text-[0.75rem] font-bold mt-auto px-2.5 py-0.5 text-white bg-gray-200 w-24 rounded-lg"
         as="div"
-        children={'copied'}
-      />
+      >
+        copied
+      </Transition>
     </Flex>
   );
 };
