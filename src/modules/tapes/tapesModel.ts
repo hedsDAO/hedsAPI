@@ -4,6 +4,7 @@ import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import artistMapping from '@utils/artistMapping';
 import { TapeAndTrackData, AllTapes, TrackArtistMetadata, ArtistMapping, CuratorMetadata } from '../../models/common';
 import { db } from '@/App';
+import { RootState } from '@/store';
 
 export interface TapeState {
   allTapes: AllTapes;
@@ -30,6 +31,15 @@ export const tapesModel = createModel<RootModel>()({
       const curator: TrackArtistMetadata | CuratorMetadata = artistMapping([[allTapes[id].curator], allArtists, space, tape, id, true])[0];
       const tracks: Array<TrackArtistMetadata> = artistMapping([allTapes[id].tracks, allArtists, space, tape, id, false]);
       this.setCurrentTape({ ...allTapes[id], curator, tracks });
+    },
+  }),
+  selectors: (slice) => ({
+    getTapeDataForOwnership() {
+      return slice((tapeData: TapeState) => {
+        if (tapeData?.allTapes) {
+          return Object.values(tapeData.allTapes).reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name } }), {}) || {};
+        }
+      });
     },
   }),
 });

@@ -3,11 +3,14 @@
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
  *
  * @interface ReactChildrenAsProps - returns any number of react children as props from an element.
+ * @interface Address - typechecked ethereum address
  */
 
 export interface ReactChildrenAsProps {
   children: React.ReactNode | React.ReactNode[];
 }
+
+export { Address } from '@wagmi/core/dist/declarations/src/types';
 
 /**
  * @name UserModels
@@ -68,7 +71,7 @@ export interface TrackMetadata {
  */
 
 export interface AllTapes {
-    [tapeId: string]: TapeData;
+  [tapeId: string]: TapeData;
 }
 
 export interface TapeData {
