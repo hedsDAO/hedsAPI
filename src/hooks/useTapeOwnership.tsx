@@ -1,22 +1,13 @@
-import { useContractReads, erc721ABI } from 'wagmi';
+import { UserCollection } from '@/modules/user/models/common';
+import { formatReadContractArgs } from '@/utils';
+import { useContractReads } from 'wagmi';
 
-export const useTapeOwnership = () => {
-    
-  const getTapeOwnership = (wallet: string, tapeDataForOwnership: any) => {
-    console.log(tapeDataForOwnership, '1');
-    console.log(wallet, '2');
-    if (tapeDataForOwnership && wallet) {
-      const contractArgs = Object.entries(tapeDataForOwnership).map(([key, value]) => ({
-        addressOrName: key,
-        functionName: 'balanceOf',
-        contractInterface: erc721ABI,
-        args: wallet,
-      }));
-      console.log(contractArgs, 'args');
-      
-
-    }
-    return 'sorry';
-  };
-  return { getTapeOwnership };
+const useTapeOwnership = (wallet: string, tapeDataForOwnership?: UserCollection) => {
+  const { data, isError, isLoading, isRefetching, refetch } = useContractReads({
+    contracts: formatReadContractArgs(wallet, tapeDataForOwnership) || [],
+    allowFailure: true,
+  });
+  return { data, isError, isLoading, refetch, isRefetching };
 };
+
+export default useTapeOwnership;

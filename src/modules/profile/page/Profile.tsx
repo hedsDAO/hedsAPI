@@ -33,8 +33,8 @@ export const Profile = () => {
           <UserSubmissions loading={loading} profileData={profileData} />
           <FeaturedSubmissions loading={loading} userTracks={userTracks} />
         </Stack>
+        <ProfileCollection loading={loading} profileData={profileData} />
       </ProfileWrapper>
-      <ProfileCollection loading={loading} wallet={profileData?.wallet} />
     </Flex>
   );
 };
