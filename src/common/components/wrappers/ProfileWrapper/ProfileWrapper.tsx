@@ -15,16 +15,13 @@ export const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
       dispatch.profileModel.getProfileData(address.toLowerCase());
     },
     onDisconnect() {
-      console.log('hello');
       navigate('/');
     },
   });
   useEffect(() => {
     if (!address && pathname === '/profile') navigate('/');
     if (address && pathname === '/profile') dispatch.profileModel.getProfileData(address.toLowerCase());
-    return () => {
-      
-    }
+    return () => {};
   }, [pathname]);
   return <Fragment>{children}</Fragment>;
 };
