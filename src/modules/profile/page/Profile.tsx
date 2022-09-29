@@ -11,6 +11,7 @@ import {
   DisplayName,
   UserDescription,
   FeaturedSubmissions,
+  ProfileCollection,
 } from '@/modules/profile/components';
 
 export const Profile = () => {
@@ -33,6 +34,7 @@ export const Profile = () => {
           <FeaturedSubmissions loading={loading} userTracks={userTracks} />
         </Stack>
       </ProfileWrapper>
+      <ProfileCollection loading={loading} wallet={profileData?.wallet} />
     </Flex>
   );
 };

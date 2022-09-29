@@ -1,3 +1,5 @@
+import { Address } from '@/models/common';
+
 /**
  * @name UserModels
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
@@ -6,6 +8,7 @@
  * @interface ArtistMapping - Mapping for referencing artists by wallet id.
  * @interface TrackMetadataMapping - individual track, sample and submissions within a tape.
  * @interface BadgeData - Structure for user profile badges.
+ * @interface UserCollection - conditional interface for user collection object.
  */
 
 export interface User {
@@ -20,6 +23,7 @@ export interface User {
   tracks?: TrackMetadataMapping;
   submissions?: TrackMetadataMapping;
   public: boolean;
+  collection?: UserCollection;
 }
 
 export interface TrackMetadataMapping {
@@ -44,4 +48,12 @@ export interface TrackMetadata {
   audio: string;
   duration: number;
   track: string;
+}
+
+export interface UserCollection {
+  [key: Address]: {
+    name: string;
+    image: string;
+    quantity: number;
+  };
 }

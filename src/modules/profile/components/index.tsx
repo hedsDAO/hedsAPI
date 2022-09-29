@@ -5,3 +5,4 @@ export { default as UserSubmissions } from './UserSubmissions/UserSubmissions';
 export { default as DisplayName } from './DisplayName/DisplayName';
 export { default as UserDescription } from './UserDescription/UserDescription';
 export { default as FeaturedSubmissions } from './FeaturedSubmissions/FeaturedSubmissions';
+export { default as ProfileCollection } from './ProfileCollection/ProfileCollection';
