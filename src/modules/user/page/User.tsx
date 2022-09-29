@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { TapeData } from '@/models/common';
 import { RootState, store } from '@/store';
-import { Stack } from '@chakra-ui/react';
+import { TapeData } from '@/models/common';
+import { Flex, Stack } from '@chakra-ui/react';
 import UserWrapper from '@/common/components/wrappers/UserWrapper';
 import {
   FeaturedSubmissions,
@@ -14,13 +14,13 @@ import {
   PrivateUserWrapper,
 } from '@/modules/user/components';
 
-export const User = () => {
+export const User: React.FC = (): JSX.Element => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const userData = useSelector((state: RootState) => state.userModel);
   const tapeData = useSelector((state: RootState) => state.tapesModel);
   const userTracks: { [key: string]: TapeData } = store.select.userModel.getTapeCovers(store.getState(), tapeData.allTapes);
   return (
-    <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen">
+    <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={10} px={[10, 4, 2, 0]} py={10}>
       <UserWrapper>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
@@ -36,6 +36,6 @@ export const User = () => {
           </PrivateUserWrapper>
         </Stack>
       </UserWrapper>
-    </div>
+    </Flex>
   );
 };
