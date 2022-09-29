@@ -1,14 +1,15 @@
 import { User } from '@/models/common';
 import { formatTime } from '@/utils';
-import { Stack, Skeleton } from '@chakra-ui/react';
+import { Stack, Skeleton, Heading } from '@chakra-ui/react';
 
 const UserSubmissions = ({ loading, profileData }: { loading: boolean; profileData: User }) => {
-  return (
-    <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200">
-      <Stack spacing="2">
-        <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
-          {profileData?.submissions?.heds?.hedstape &&
-            Object.entries(profileData.submissions.heds.hedstape).map(([id, submission], i) => (
+  if (profileData?.submissions?.heds?.hedstape && !loading)
+    return (
+      <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
+        <Heading fontSize={'3xl'}>Submissions</Heading>
+        <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200 px-3 py-3">
+          <Stack spacing="2">
+            {Object.entries(profileData?.submissions?.heds?.hedstape).map(([id, submission], i) => (
               <li className="text-xs text-gray-600 py-2" key={i}>
                 <a href="#" className="block hover:bg-gray-50">
                   <div className="flex items-center gap-x-2">
@@ -22,10 +23,10 @@ const UserSubmissions = ({ loading, profileData }: { loading: boolean; profileDa
                 </a>
               </li>
             ))}
-        </Skeleton>
-      </Stack>
-    </ul>
-  );
+          </Stack>
+        </ul>
+      </Skeleton>
+    );
 };
 
 export default UserSubmissions;
