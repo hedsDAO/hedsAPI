@@ -12,7 +12,7 @@ export const selectUserSubmissionsOnHedsTapes = (state: RootState): { [key: stri
 const selectUserTracksOnHedsTapes = (state: RootState): { [key: string]: TrackMetadata } => state.userModel.tracks?.heds?.hedstape || {};
 
 export const selectUserFeaturedTracks = createSelector(selectUserTracksOnHedsTapes, selectAllHedsTapes, (userTracks, allTapes) => {
-  return Object.keys(userTracks).reduce((acc, curr) => ({ ...acc, [curr]: allTapes[curr] }), {});
+  return Object.keys(userTracks).reduce((acc, curr) => ({ ...acc, [curr]: allTapes }), {});
 });
 
 export const selectPublicUserProfile = (state: RootState): boolean => state.userModel.public;

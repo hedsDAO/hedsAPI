@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Heading, Stack } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import UserWrapper from '@/common/components/wrappers/UserWrapper';
 import {
   FeaturedSubmissions,

@@ -68,9 +68,7 @@ export interface TrackMetadata {
  */
 
 export interface AllTapes {
-  [tapeName: string]: {
     [tapeId: string]: TapeData;
-  };
 }
 
 export interface TapeData {
