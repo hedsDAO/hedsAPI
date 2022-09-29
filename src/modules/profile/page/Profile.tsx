@@ -1,15 +1,25 @@
 import { useSelector } from 'react-redux';
-import { Heading, Stack } from '@chakra-ui/react';
-import { TwitterLinkButton, UserSubmissions, ProfilePicture, CopyWalletButton, DisplayName, UserDescription } from '@/modules/profile/components';
-import { selectProfileData, selectProfileDataLoading } from '@/modules/profile/selectors';
+import { TapeData } from '@/models/common';
+import { RootState, store } from '@/store';
+import { Stack, Flex } from '@chakra-ui/react';
 import ProfileWrapper from '@/common/components/wrappers/ProfileWrapper';
+import {
+  TwitterLinkButton,
+  UserSubmissions,
+  ProfilePicture,
+  CopyWalletButton,
+  DisplayName,
+  UserDescription,
+  FeaturedSubmissions,
+} from '@/modules/profile/components';
 
 export const Profile = () => {
-  const loading = useSelector(selectProfileDataLoading);
-  const profileData = useSelector(selectProfileData);
-
+  const loading = useSelector((state: RootState) => state.loading.models.profileModel);
+  const profileData = useSelector((state: RootState) => state.profileModel);
+  const tapeData = useSelector((state: RootState) => state.tapesModel);
+  const userTracks: { [key: string]: TapeData } = store.select.profileModel.getTapeCovers(store.getState(), tapeData.allTapes);
   return (
-    <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-10 lg:px-0 px-4 py-10 min-h-screen">
+    <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={10} px={[10, 4, 2, 0]} py={10}>
       <ProfileWrapper>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} profileData={profileData} />
@@ -19,11 +29,10 @@ export const Profile = () => {
           <TwitterLinkButton loading={loading} profileData={profileData} />
         </Stack>
         <Stack direction={'column'} spacing="2" width={'full'}>
-          <Heading fontSize={'3xl'}>Submissions</Heading>
           <UserSubmissions loading={loading} profileData={profileData} />
-          <Heading fontSize={'3xl'}>Featured On</Heading>
+          <FeaturedSubmissions loading={loading} userTracks={userTracks} />
         </Stack>
       </ProfileWrapper>
-    </div>
+    </Flex>
   );
 };
