@@ -4,15 +4,17 @@ import type { RootModel } from '../../../models';
 import { AllTapes, User } from '../../../models/common';
 import { populateNewUser } from '@/utils';
 import { db } from '../../../App';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { UserCollection } from './common';
 import { BigNumber } from 'ethers';
 import { Result } from 'ethers/lib/utils';
+import { emptyUserState } from '@/models/utils';
 
 export const profileModel = createModel<RootModel>()({
   state: {} as User,
   reducers: {
     setProfileData: (state, payload: User) => ({ ...state, ...payload }),
+    clearProfileState: (state) => emptyUserState(state),
   },
   effects: () => ({
     async getProfileData(wallet: string) {
@@ -27,17 +29,20 @@ export const profileModel = createModel<RootModel>()({
         });
       }
     },
-    async updateUserCollection([wallet, tapeDataForOwnership, data]: [string, UserCollection, Result[]]) {
+    async updateUserCollection([wallet, data]: [string, Result[]]) {
+      console.log(wallet, data)
+      const tapeDataForOwnership: UserCollection = store.select.tapesModel.getTapeDataForOwnership(store.getState());
       const userCollectionTank = { ...tapeDataForOwnership };
       const docRef = doc(db, 'users', wallet.toLowerCase());
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         Object.keys(tapeDataForOwnership).map((key: string, index: number) => {
-          if (BigNumber.isBigNumber(data?.[index])) userCollectionTank[key] = { ...tapeDataForOwnership[key], quantity: data?.[index].toNumber() };
+          if (BigNumber.isBigNumber(data?.[index]) && data?.[index].toNumber() !== 0) userCollectionTank[key] = { ...tapeDataForOwnership[key], quantity: data?.[index].toNumber() };
           else delete userCollectionTank[key];
         });
-        console.log(userCollectionTank, 'hello')
-        await setDoc(docRef, { ...docSnap.data(), collection: userCollectionTank });
+        await setDoc(docRef, { ...docSnap.data(), collection: userCollectionTank })
+          .then(() => this.setProfileData({ ...docSnap.data(), collection: userCollectionTank }))
+          .catch((err) => console.log(err));
       }
     },
   }),
