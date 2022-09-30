@@ -32,8 +32,8 @@ export const Profile = () => {
         <Stack direction={'column'} spacing="2" width={'full'}>
           <UserSubmissions loading={loading} profileData={profileData} />
           <FeaturedSubmissions loading={loading} userTracks={userTracks} />
+          <ProfileCollection loading={loading} profileData={profileData} />
         </Stack>
-        <ProfileCollection loading={loading} profileData={profileData} />
       </ProfileWrapper>
     </Flex>
   );

@@ -51,7 +51,7 @@ export interface TrackMetadata {
 }
 
 export interface UserCollection {
-  [key: Address]: {
+  [key: string]: {
     name: string;
     image: string;
     quantity: number;

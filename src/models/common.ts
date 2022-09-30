@@ -33,6 +33,7 @@ export interface User {
   samples?: TrackMetadataMapping;
   tracks?: TrackMetadataMapping;
   submissions?: TrackMetadataMapping;
+  collection?: UserCollection;
   public: boolean;
 }
 
@@ -58,6 +59,14 @@ export interface TrackMetadata {
   audio: string;
   duration: number;
   track: string;
+}
+
+export interface UserCollection {
+  [key: string]: {
+    name: string;
+    image: string;
+    quantity: number;
+  };
 }
 
 /**

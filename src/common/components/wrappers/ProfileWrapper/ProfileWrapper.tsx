@@ -15,6 +15,7 @@ export const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
       dispatch.profileModel.getProfileData(address.toLowerCase());
     },
     onDisconnect() {
+      dispatch.profileModel.clearProfileState()
       navigate('/');
     },
   });
