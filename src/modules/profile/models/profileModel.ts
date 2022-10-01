@@ -30,16 +30,22 @@ export const profileModel = createModel<RootModel>()({
       }
     },
     async updateUserCollection([wallet, data]: [string, Result[]]) {
-      console.log(wallet, data)
       const tapeDataForOwnership: UserCollection = store.select.tapesModel.getTapeDataForOwnership(store.getState());
-      const userCollectionTank = { ...tapeDataForOwnership };
+      const userCollectionTank: UserCollection = {};
       const docRef = doc(db, 'users', wallet.toLowerCase());
       const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
+      if (docSnap.exists() && tapeDataForOwnership) {
         Object.keys(tapeDataForOwnership).map((key: string, index: number) => {
-          if (BigNumber.isBigNumber(data?.[index]) && data?.[index].toNumber() !== 0) userCollectionTank[key] = { ...tapeDataForOwnership[key], quantity: data?.[index].toNumber() };
-          else delete userCollectionTank[key];
+          if (data?.[index] !== null) {
+            if (data[index].toNumber() !== 0) {
+              userCollectionTank[key] = {
+                ...tapeDataForOwnership[key],
+                quantity: data[index].toNumber(),
+              };
+            } else delete userCollectionTank[key];
+          }
         });
+
         await setDoc(docRef, { ...docSnap.data(), collection: userCollectionTank })
           .then(() => this.setProfileData({ ...docSnap.data(), collection: userCollectionTank }))
           .catch((err) => console.log(err));

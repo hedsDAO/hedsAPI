@@ -1,39 +1,16 @@
-import { useEffect, useState } from 'react';
 import { Button, Flex, Grid, GridItem, Heading, Image, Skeleton, Stack } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
-import { User, UserCollection } from '@/modules/profile/models/common';
-import useTapeOwnership from '@/hooks/useTapeOwnership';
-import { Dispatch, store } from '@/store';
-import { useDispatch } from 'react-redux';
+import { User } from '@/modules/profile/models/common';
 import { isEmpty } from '@/utils';
 
 const ProfileCollection = ({ profileData, loading }: { profileData: User; loading: boolean }) => {
-  const [contractTapeData, setContractTapeData] = useState(null);
-  const dispatch = useDispatch<Dispatch>();
-  const collectionTapeData = store.select.tapesModel.getTapeDataForOwnership(store.getState());
-  const { data, refetch, isRefetching, isFetching } = useTapeOwnership(profileData?.wallet, collectionTapeData);
-
-  useEffect(() => {
-    if (data?.length && collectionTapeData) dispatch.profileModel.updateUserCollection([profileData.wallet, data]);
-  }, [data, isRefetching, isFetching]);
-
-  useEffect(() => {
-    if (!isEmpty(collectionTapeData)) {
-      if (isRefetching) setContractTapeData(collectionTapeData);
-      if (isEmpty(profileData?.collection)) setContractTapeData(collectionTapeData);
-    }
-  }, [collectionTapeData]);
-
   return (
     <Stack>
       <Flex justifyContent={'space-between'}>
         <Heading fontSize={'3xl'}>Collection</Heading>
-        <Button bg="gray.200" color="blackAlpha.900" onClick={() => refetch()}>
-          <IconRefresh height={12} width={12} />
-        </Button>
       </Flex>
       <Grid className="px-3 py-3" templateColumns="repeat(5, 1fr)" gap={4}>
-        {profileData?.collection &&
+        {!isEmpty(profileData?.collection) &&
           Object.values(profileData?.collection).map((collectionItem) => {
             return (
               <GridItem key={collectionItem.name + collectionItem.quantity}>
