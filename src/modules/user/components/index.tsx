@@ -6,3 +6,5 @@ export { default as DisplayName } from './DisplayName/DisplayName';
 export { default as UserDescription } from './UserDescription/UserDescription';
 export { default as FeaturedSubmissions } from './FeaturedSubmissions/FeaturedSubmissions';
 export { default as PrivateUserWrapper } from './PrivateUserWrapper/PrivateUserWrapper';
+export { default as UserCollection } from './UserCollection/UserCollection';
+export { default as RefreshCollectionButton } from './RefreshCollectionButton/RefreshCollectionButton';

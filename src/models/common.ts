@@ -3,14 +3,18 @@
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
  *
  * @interface ReactChildrenAsProps - returns any number of react children as props from an element.
- * @interface Address - typechecked ethereum address
+ * @interface UserRoles - enum mapping for user, artist and curator roles.
  */
 
 export interface ReactChildrenAsProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
-export { Address } from '@wagmi/core/dist/declarations/src/types';
+export enum UserRoles {
+  USER = 0,
+  ARTIST,
+  CURATOR,
+}
 
 /**
  * @name UserModels

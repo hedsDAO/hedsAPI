@@ -3,7 +3,6 @@ import { TapeData } from '@/models/common';
 import { RootState, store } from '@/store';
 import { Stack, Flex } from '@chakra-ui/react';
 import ProfileWrapper from '@/common/components/wrappers/ProfileWrapper';
-
 import {
   TwitterLinkButton,
   UserSubmissions,
