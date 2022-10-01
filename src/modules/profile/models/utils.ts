@@ -21,6 +21,7 @@ export const emptyProfileState = (state: User): User => {
     samples: {},
     tracks: {},
     submissions: {},
+    collection: {},
     public: false,
   };
 };

@@ -9,7 +9,7 @@ module.exports = {
     '^@common/(.*)$': '<rootDir>/src/common/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@models/(.*)$': '<rootDir>/src/models/$1',
-    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy',
   },
   testEnvironment: 'jsdom',
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$',

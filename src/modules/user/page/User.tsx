@@ -12,6 +12,8 @@ import {
   DisplayName,
   UserDescription,
   PrivateUserWrapper,
+  UserCollection,
+  RefreshCollectionButton,
 } from '@/modules/user/components';
 
 export const User: React.FC = (): JSX.Element => {
@@ -33,6 +35,8 @@ export const User: React.FC = (): JSX.Element => {
           <PrivateUserWrapper loading={loading} userData={userData}>
             <UserSubmissions loading={loading} userData={userData} />
             <FeaturedSubmissions loading={loading} userTracks={userTracks} />
+            <RefreshCollectionButton userData={userData} />
+            <UserCollection loading={loading} userData={userData} />
           </PrivateUserWrapper>
         </Stack>
       </UserWrapper>

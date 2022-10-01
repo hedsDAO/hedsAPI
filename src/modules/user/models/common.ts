@@ -1,5 +1,3 @@
-import { Address } from '@/models/common';
-
 /**
  * @name UserModels
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.

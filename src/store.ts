@@ -9,7 +9,7 @@ export const store = init<RootModel, FullModel>({
   plugins: [selectPlugin(), loadingPlugin()],
   redux: {
     devtoolOptions: {
-      disabled: process.env.NODE_ENV === 'production'
+      disabled: process.env.NODE_ENV === 'production',
     },
   },
 });

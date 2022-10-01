@@ -1,28 +1,28 @@
 import { User } from '@/models/common';
 import { Dispatch, store } from '@/store';
-import { formatReadContractArgs, isEmpty } from '@/utils';
+import { formatReadContractArgs } from '@/utils';
 import { Button } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useContractReads } from 'wagmi';
 
-const RefreshCollectionButton = ({ profileData }: { profileData: User }) => {
+const RefreshCollectionButton = ({ userData }: { userData: User }) => {
   const [isFetching, setIsFetching] = useState(false);
   const dispatch = useDispatch<Dispatch>();
   const collectionTapeData = store.select.tapesModel.getTapeDataForOwnership(store.getState());
   const { data } = useContractReads({
-    contracts: formatReadContractArgs(profileData?.wallet, collectionTapeData) || [],
+    contracts: formatReadContractArgs(userData?.wallet, collectionTapeData) || [],
     allowFailure: true,
-    enabled: !profileData?.collection || isFetching,
+    enabled: !userData?.collection || isFetching,
   });
   useEffect(() => {
-    if (!profileData?.collection) setIsFetching(true);
-  }, [profileData]);
+    if (!userData?.collection) setIsFetching(true);
+  }, [userData]);
 
   useEffect(() => {
-    if (isFetching && data?.length && profileData?.wallet) {
-      dispatch.profileModel.updateUserCollection([profileData?.wallet, data]);
+    if (isFetching && data?.length && userData?.wallet) {
+      dispatch.userModel.updateUserCollection([userData?.wallet, data]);
       setIsFetching(false);
     }
   }, [data, isFetching]);
