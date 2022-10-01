@@ -33,7 +33,7 @@ export const Profile = () => {
         <Stack direction={'column'} spacing="2" width={'full'}>
           <UserSubmissions loading={loading} profileData={profileData} />
           <FeaturedSubmissions loading={loading} userTracks={userTracks} />
-          <RefreshCollectionButton profileData={profileData} />
+          <RefreshCollectionButton loading={loading} profileData={profileData} />
           <ProfileCollection loading={loading} profileData={profileData} />
         </Stack>
       </ProfileWrapper>

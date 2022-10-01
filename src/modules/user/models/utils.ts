@@ -10,7 +10,6 @@ import { User } from './common';
 
 export const emptyUserState = (state: User): User => {
   return {
-    ...state,
     profilePicture: '',
     twitterHandle: '',
     badges: [],
@@ -21,7 +20,6 @@ export const emptyUserState = (state: User): User => {
     samples: {},
     tracks: {},
     submissions: {},
-    collection: {},
     public: false,
   };
 };
