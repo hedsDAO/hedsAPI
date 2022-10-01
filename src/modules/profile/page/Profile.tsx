@@ -3,6 +3,7 @@ import { TapeData } from '@/models/common';
 import { RootState, store } from '@/store';
 import { Stack, Flex } from '@chakra-ui/react';
 import ProfileWrapper from '@/common/components/wrappers/ProfileWrapper';
+
 import {
   TwitterLinkButton,
   UserSubmissions,
@@ -12,6 +13,7 @@ import {
   UserDescription,
   FeaturedSubmissions,
   ProfileCollection,
+  RefreshCollectionButton,
 } from '@/modules/profile/components';
 
 export const Profile = () => {
@@ -32,6 +34,7 @@ export const Profile = () => {
         <Stack direction={'column'} spacing="2" width={'full'}>
           <UserSubmissions loading={loading} profileData={profileData} />
           <FeaturedSubmissions loading={loading} userTracks={userTracks} />
+          <RefreshCollectionButton profileData={profileData} />
           <ProfileCollection loading={loading} profileData={profileData} />
         </Stack>
       </ProfileWrapper>
