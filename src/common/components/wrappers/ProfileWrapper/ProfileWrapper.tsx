@@ -22,7 +22,9 @@ export const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!address && pathname === '/profile') navigate('/');
     if (address && pathname === '/profile') dispatch.profileModel.getProfileData(address.toLowerCase());
-    return () => {};
+    return () => {
+      dispatch.profileModel.clearProfileState();
+    };
   }, [pathname]);
   return <Fragment>{children}</Fragment>;
 };

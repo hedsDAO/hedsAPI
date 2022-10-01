@@ -31,9 +31,9 @@ export const profileModel = createModel<RootModel>()({
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const profileData = docSnap.exists() ? docSnap.data() : null;
       const { role } = profileData;
-      if (role === UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...profileData, collection });
-      if (role === UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...profileData, collection });
-      if (role === UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...profileData, collection });
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...profileData, collection });
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...profileData, collection });
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...profileData, collection });
       this.setProfileData({ ...profileData, collection });
     },
   }),

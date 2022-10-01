@@ -7,25 +7,26 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useContractReads } from 'wagmi';
 
-const RefreshCollectionButton = ({ userData }: { userData: User }) => {
+const RefreshCollectionButton = ({ userData, loading }: { userData: User; loading: boolean }) => {
   const [isFetching, setIsFetching] = useState(false);
   const dispatch = useDispatch<Dispatch>();
   const collectionTapeData = store.select.tapesModel.getTapeDataForOwnership(store.getState());
-  const { data } = useContractReads({
+  useContractReads({
     contracts: formatReadContractArgs(userData?.wallet, collectionTapeData) || [],
     allowFailure: true,
-    enabled: !userData?.collection || isFetching,
+    enabled: !loading && !userData?.collection || isFetching,
+    onSuccess(data) {
+      if (data?.length) dispatch.userModel.updateUserCollection([userData?.wallet?.toLowerCase(), data]);
+    },
+    onSettled() {
+      setIsFetching(false);
+    },
   });
-  useEffect(() => {
-    if (!userData?.collection) setIsFetching(true);
-  }, [userData]);
 
   useEffect(() => {
-    if (isFetching && data?.length && userData?.wallet) {
-      dispatch.userModel.updateUserCollection([userData?.wallet, data]);
-      setIsFetching(false);
-    }
-  }, [data, isFetching]);
+    if (!loading && !userData?.collection) setIsFetching(true);
+    return () => setIsFetching(false);
+  }, [loading, userData]);
 
   return (
     <Button bg="gray.200" color="blackAlpha.900" onClick={() => setIsFetching(true)}>

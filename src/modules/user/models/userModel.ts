@@ -6,7 +6,7 @@ import { emptyUserState } from './utils';
 import { db } from '@/App';
 import { RootState } from '@/store';
 import { AllTapes, UserRoles } from '@/models/common';
-import { formatUserCollection, isEmpty } from '@/utils';
+import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
 export const userModel = createModel<RootModel>()({
@@ -28,9 +28,9 @@ export const userModel = createModel<RootModel>()({
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;
-      if (role === UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, collection });
-      if (role === UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, collection });
-      if (role === UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, collection });
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, collection });
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
       this.setUserData({ ...userData, collection });
     },
   }),

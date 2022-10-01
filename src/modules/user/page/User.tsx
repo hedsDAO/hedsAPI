@@ -15,6 +15,7 @@ import {
   UserCollection,
   RefreshCollectionButton,
 } from '@/modules/user/components';
+import { useEffect } from 'react';
 
 export const User: React.FC = (): JSX.Element => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
@@ -35,7 +36,7 @@ export const User: React.FC = (): JSX.Element => {
           <PrivateUserWrapper loading={loading} userData={userData}>
             <UserSubmissions loading={loading} userData={userData} />
             <FeaturedSubmissions loading={loading} userTracks={userTracks} />
-            <RefreshCollectionButton userData={userData} />
+            <RefreshCollectionButton loading={loading} userData={userData} />
             <UserCollection loading={loading} userData={userData} />
           </PrivateUserWrapper>
         </Stack>
