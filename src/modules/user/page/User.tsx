@@ -15,7 +15,6 @@ import {
   UserCollection,
   RefreshCollectionButton,
 } from '@/modules/user/components';
-import { useEffect } from 'react';
 
 export const User: React.FC = (): JSX.Element => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
