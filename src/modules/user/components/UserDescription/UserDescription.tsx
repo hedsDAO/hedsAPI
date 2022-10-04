@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { User } from '@/models/common';
 import { Box, Skeleton, Text } from '@chakra-ui/react';
 
