@@ -15,7 +15,7 @@ export const userModel = createModel<RootModel>()({
     setUserData: (state, payload: User) => ({ ...state, ...payload }),
     clearUserState: (state) => emptyUserState(state),
   },
-  effects: () => ({
+  effects: (dispatch) => ({
     async getUserData(wallet: string) {
       const docRef = doc(db, 'users', wallet.toLowerCase());
       const docSnap = await getDoc(docRef);
@@ -32,6 +32,16 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, collection });
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
       this.setUserData({ ...userData, collection });
+    },
+    async updateUserData([wallet, newUserData]: [string, User]) {
+      const docSnap = await getDoc(doc(db, 'users', wallet));
+      const userData = docSnap.exists() ? docSnap.data() : null;
+      const { role } = userData;
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), newUserData);
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
+      dispatch.profileModel.setProfileData(newUserData);
+      dispatch.userModel.setUserData(newUserData);
     },
   }),
   selectors: (slice, createSelector) => ({
