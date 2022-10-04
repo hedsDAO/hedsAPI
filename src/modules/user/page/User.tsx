@@ -14,6 +14,7 @@ import {
   PrivateUserWrapper,
   UserCollection,
   RefreshCollectionButton,
+  UserBadge,
 } from '@/modules/user/components';
 
 export const User: React.FC = (): JSX.Element => {
@@ -26,6 +27,7 @@ export const User: React.FC = (): JSX.Element => {
       <UserWrapper>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
+          <UserBadge loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
           <UserDescription loading={loading} userData={userData} />
           <CopyWalletButton loading={loading} wallet={userData?.wallet} />
