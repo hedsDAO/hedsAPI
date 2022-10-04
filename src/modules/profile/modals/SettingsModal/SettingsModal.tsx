@@ -96,13 +96,20 @@ export const SettingsModal = () => {
                 <FormLabel width={'fit-content'} variant="inline">
                   Description
                 </FormLabel>
+                <Stack>
                 <Textarea
-                  onChange={(e) => dispatch.settingsModalModel.setDescription(e.target.value.trim())}
+                  onChange={(e) => {
+                    dispatch.settingsModalModel.setCharacters(e.target.value.trim()?.length)
+                    dispatch.settingsModalModel.setDescription(e.target.value.trim())
+                  }}
+                  maxLength={130}
                   maxW={{ md: '3xl' }}
                   rows={3}
                   resize="none"
                   defaultValue={profileChanges?.description}
                 />
+                <Text fontSize='xs'>{characters ? 130 - characters : 130} remaining.</Text>
+                </Stack>
               </Stack>
             </FormControl>
           </Stack>

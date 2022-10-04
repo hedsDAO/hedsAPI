@@ -3,6 +3,7 @@ import type { RootModel } from '../models';
 
 export enum Modals {
   SETTINGS_MODAL = 0,
+  TWITTER_MODAL,
 }
 
 export interface ModalState {

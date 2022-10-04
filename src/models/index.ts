@@ -6,6 +6,7 @@ import { artistModel } from '@/modules/artists/artistModel';
 import { tapesModel } from '@/modules/tapes/tapesModel';
 import { audioModel } from '@/modules/audio/audioModel';
 import { settingsModalModel } from '@/modules/profile/models/settingsModalModel';
+import { twitterModalModel } from '@/modules/profile/models/twitterModalModel';
 
 export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;
@@ -15,6 +16,7 @@ export interface RootModel extends Models<RootModel> {
   tapesModel: typeof tapesModel;
   audioModel: typeof audioModel;
   settingsModalModel: typeof settingsModalModel;
+  twitterModalModel: typeof twitterModalModel;
 }
 
 export const models: RootModel = {
@@ -25,4 +27,5 @@ export const models: RootModel = {
   tapesModel,
   audioModel,
   settingsModalModel,
+  twitterModalModel,
 };
