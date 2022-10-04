@@ -9,3 +9,4 @@ export { default as PrivateUserWrapper } from './PrivateUserWrapper/PrivateUserW
 export { default as UserCollection } from './UserCollection/UserCollection';
 export { default as RefreshCollectionButton } from './RefreshCollectionButton/RefreshCollectionButton';
 export { default as UserBadge } from './UserBadge/UserBadge';
+export { default as Samples } from './Samples/Samples';
