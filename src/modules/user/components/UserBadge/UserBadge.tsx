@@ -7,7 +7,7 @@ const UserBadge = ({ loading, userData }: { loading: boolean; userData: User }) 
       <Stack direction="row">
         {userData.badges &&
           Object.entries(userData.badges).map(([id, badge]) => (
-            <Badge variant="solid" colorScheme="purple" key={id}>
+            <Badge variant="subtle" colorScheme="purple" key={id}>
               {badge.name}
             </Badge>
           ))}
