@@ -27,7 +27,7 @@ const ProfilePicture = ({ loading, profileData }: { loading: boolean; profileDat
       />
       <IconButton
         onClick={() => {
-          dispatch.modalModel.setModal(Modals.PROFILE_MODAL);
+          dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
           dispatch.modalModel.setModalOpen(true);
         }}
         size="xs"

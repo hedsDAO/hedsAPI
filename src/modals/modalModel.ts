@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 import type { RootModel } from '../models';
 
 export enum Modals {
-  PROFILE_MODAL = 0,
+  SETTINGS_MODAL = 0,
 }
 
 export interface ModalState {
