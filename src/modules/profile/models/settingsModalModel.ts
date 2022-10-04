@@ -5,7 +5,7 @@ import { storage } from '@/App';
 import { User } from '@/models/common';
 import { getCurrentImagePath } from '@/utils';
 
-class ProfileModalState {
+class SettingsModalState {
   profileChanges: User;
   loading = false;
   error = '';
@@ -16,7 +16,7 @@ class ProfileModalState {
 }
 
 export const settingsModalModel = createModel<RootModel>()({
-  state: {} as ProfileModalState,
+  state: {} as SettingsModalState,
   reducers: {
     setProfileModelData: (state, profileChanges: User) => ({ ...state, profileChanges }),
     setPublic: (state, payload: boolean) => ({ ...state, profileChanges: { ...state.profileChanges, public: payload } }),
@@ -29,10 +29,10 @@ export const settingsModalModel = createModel<RootModel>()({
     setFile: (state, file: File) => ({ ...state, file }),
     setFileType: (state, fileType: string) => ({ ...state, fileType }),
     setPreview: (state, preview) => ({ ...state, preview }),
-    clearProfileModalState: (state) => new ProfileModalState(),
+    clearProfileModalState: (state) => new SettingsModalState(),
   },
   effects: (dispatch) => ({
-    async handleSubmit([prevProfileData, profileModalState]: [User, ProfileModalState]) {
+    async handleSubmit([prevProfileData, profileModalState]: [User, SettingsModalState]) {
       this.setLoading(true);
       const { file, fileType, preview } = profileModalState;
       const newProfileData = { ...profileModalState.profileChanges };
