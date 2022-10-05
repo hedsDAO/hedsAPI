@@ -14,14 +14,13 @@ export const TwitterModal = () => {
   const { currentStep, loading, hashedTweet, copied, windowParams, pastedTweetUrl, userHash, twitterHandle } = useSelector(
     (state: RootState) => state.twitterModalModel,
   );
+  // TODO: add error messages for incompatible i/o.
   const profileData = useSelector((state: RootState) => state.profileModel);
-
   useEffect(() => {
     return () => {
       dispatch.twitterModalModel.clearTwitterModalState();
     };
   }, []);
-  console.log(copied);
   return (
     <ModalContainer isOpen={isOpen} setModalOpen={(isOpen: boolean) => dispatch.modalModel.setModalOpen(isOpen)}>
       <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-gray-100 p-6 text-left align-middle shadow-xl transition-all">
@@ -166,7 +165,15 @@ export const TwitterModal = () => {
             <Button onClick={() => dispatch.modalModel.setModalOpen(false)} bg="gray.200">
               Back
             </Button>
-            {currentStep === TwitterStep.LINK_ACCOUNT && <Button bg="green.200">Confirm</Button>}
+            {currentStep === TwitterStep.LINK_ACCOUNT && (
+              <Button
+                isLoading={loading}
+                onClick={() => dispatch.twitterModalModel.linkTwitterHandleToUser([profileData.wallet, profileData, twitterHandle])}
+                bg="green.200"
+              >
+                Confirm
+              </Button>
+            )}
           </Flex>
         </Stack>
       </Dialog.Panel>
