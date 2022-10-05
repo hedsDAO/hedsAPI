@@ -20,6 +20,7 @@ export const emptyUserState = (state: User): User => {
     samples: {},
     tracks: {},
     submissions: {},
+    collection: {},
     public: false,
   };
 };

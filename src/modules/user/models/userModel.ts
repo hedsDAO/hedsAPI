@@ -41,7 +41,7 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
       dispatch.profileModel.setProfileData(newUserData);
-      dispatch.userModel.setUserData(newUserData);
+      this.setUserData(newUserData);
     },
   }),
   selectors: (slice, createSelector) => ({

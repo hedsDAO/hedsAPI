@@ -2,6 +2,7 @@ import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
+import { User } from '@/modules/user/models/common';
 const TWITTER_AUTH_CLOUD_FN = 'https://us-central1-heds-34ac0.cloudfunctions.net/twitterAuth/';
 
 export enum TwitterStep {
@@ -69,17 +70,29 @@ export const twitterModalModel = createModel<RootModel>()({
       axios
         .get(TWITTER_AUTH_CLOUD_FN + tweetId)
         .then((res) => {
-          if (res) {
-            if (res.data.data[0].text.split('HDS')[1] === userHash) this.setTwitterHandle(twitterHandle);
-          } else this.setError('there was a problem verifying your tweet');
-          this.setCurrentStep(TwitterStep.LINK_ACCOUNT);
+          if (res?.data?.data?.[0]?.text?.split('HDS')[1] === userHash) {
+            this.setTwitterHandle(twitterHandle);
+            setTimeout(() => {
+              this.setLoading(false);
+              this.setCurrentStep(TwitterStep.LINK_ACCOUNT);
+            }, 1000);
+          } else {
+            this.setLoading(false);
+            this.setError('there was a problem verifying your tweet');
+          }
         })
-        .catch(() => {
-          this.setError('there was a problem verifying your tweet');
-        });
+        .catch(() => this.setError('there was a problem verifying your tweet'));
+    },
+    async linkTwitterHandleToUser([wallet, userData, twitterHandle]: [string, User, string]) {
+      this.setLoading(true);
+      if (wallet?.length && userData && twitterHandle?.length) {
+        const newUserData = { ...userData, twitterHandle };
+        dispatch.userModel.updateUserData([wallet, newUserData]);
+      }
       setTimeout(() => {
         this.setLoading(false);
-      }, 2000);
+        dispatch.modalModel.setModalOpen(false);
+      }, 1000);
     },
   }),
 });

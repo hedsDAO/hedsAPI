@@ -13,7 +13,7 @@ export const SettingsModal = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const profileData = useSelector((state: RootState) => state.profileModel);
-  // TODO: added character length for bio, add error messages for incompatible i/o.
+  // TODO: add error messages for incompatible i/o.
   const { profileChanges, loading, preview, file, fileType, characters, error } = useSelector((state: RootState) => state.settingsModalModel);
   const profileModalData = useSelector((state: RootState) => state.settingsModalModel);
   useEffect(() => {
@@ -59,6 +59,21 @@ export const SettingsModal = () => {
                 />
               </Stack>
             </FormControl>
+            {profileData?.twitterHandle && (
+              <FormControl id="twitterHandle">
+                <Stack direction={'row'} spacing={{ base: '1.5', md: '8' }} alignItems="baseline" justifyContent={'space-between'}>
+                  <FormLabel variant="inline">Linked Twitter</FormLabel>
+                  <Flex justifyContent={'end'} alignItems={'center'} gap={3}>
+                    <Text px={2} size={'xs'} fontWeight="semibold">
+                      @{profileData?.twitterHandle}
+                    </Text>
+                    <Button size="sm" fontWeight={'light'} bg="red.200">
+                      unlink
+                    </Button>
+                  </Flex>
+                </Stack>
+              </FormControl>
+            )}
             <FormControl id="picture">
               <Stack direction={'row'} justify={'space-between'} alignItems="center">
                 <FormLabel width={'fit-content'} variant="inline">
@@ -97,18 +112,18 @@ export const SettingsModal = () => {
                   Description
                 </FormLabel>
                 <Stack>
-                <Textarea
-                  onChange={(e) => {
-                    dispatch.settingsModalModel.setCharacters(e.target.value.trim()?.length)
-                    dispatch.settingsModalModel.setDescription(e.target.value.trim())
-                  }}
-                  maxLength={130}
-                  maxW={{ md: '3xl' }}
-                  rows={3}
-                  resize="none"
-                  defaultValue={profileChanges?.description}
-                />
-                <Text fontSize='xs'>{characters ? 130 - characters : 130} remaining.</Text>
+                  <Textarea
+                    onChange={(e) => {
+                      dispatch.settingsModalModel.setCharacters(e.target.value.trim()?.length);
+                      dispatch.settingsModalModel.setDescription(e.target.value.trim());
+                    }}
+                    maxLength={130}
+                    maxW={{ md: '3xl' }}
+                    rows={3}
+                    resize="none"
+                    defaultValue={profileChanges?.description}
+                  />
+                  <Text fontSize="xs">{characters ? 130 - characters : 130} remaining.</Text>
                 </Stack>
               </Stack>
             </FormControl>
