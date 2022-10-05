@@ -11,7 +11,9 @@ import { TwitterStep } from '../../models/twitterModalModel';
 export const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
-  const { currentStep, loading, hashedTweet, copied, windowParams, pastedTweetUrl } = useSelector((state: RootState) => state.twitterModalModel);
+  const { currentStep, loading, hashedTweet, copied, windowParams, pastedTweetUrl, userHash, twitterHandle } = useSelector(
+    (state: RootState) => state.twitterModalModel,
+  );
   const profileData = useSelector((state: RootState) => state.profileModel);
 
   useEffect(() => {
@@ -120,7 +122,7 @@ export const TwitterModal = () => {
                         bg="green.200"
                         h="1.75rem"
                         size="sm"
-                        onClick={() => dispatch.twitterModalModel.verifyTweet(pastedTweetUrl)}
+                        onClick={() => dispatch.twitterModalModel.verifyTweet([pastedTweetUrl, userHash])}
                       >
                         Verify
                       </Button>
@@ -155,7 +157,7 @@ export const TwitterModal = () => {
                 </Tag>
                 <IconLink height={20} width={20} />
                 <Tag py={1} size="lg" colorScheme="blue" borderRadius="full">
-                  <TagLabel> @twitterHandle</TagLabel>
+                  <TagLabel>{twitterHandle}</TagLabel>
                 </Tag>
               </Flex>
             </FormControl>
