@@ -7,6 +7,7 @@ import { Avatar, Button, Flex, FormControl, FormLabel, Input, Stack, StackDivide
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { formatWallet, isEmpty } from '@/utils';
 import DEFAULT_PROFILE_PICTURE from '/public/default.png';
+import { IconAlertCircle } from '@tabler/icons';
 
 export const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -56,35 +57,31 @@ export const SettingsModal = () => {
                 <Stack>
                   <Input
                     onChange={(e) => {
-                      dispatch.settingsModalModel.setNameCharacters(e.target.value.trim()?.length);
-                      dispatch.settingsModalModel.setDisplayName(e.target.value.trim());
+                      dispatch.settingsModalModel.setError(null);
+                      if (!e.target.value?.length) {
+                        dispatch.settingsModalModel.setDisplayName(profileData?.displayName);
+                        dispatch.settingsModalModel.setNameCharacters(null);
+                      } else {
+                        dispatch.settingsModalModel.setNameCharacters(e.target.value.trim()?.length);
+                        dispatch.settingsModalModel.setDisplayName(e.target.value.trim());
+                      }
                     }}
                     width={'fit-content'}
                     disabled={!isEmpty(profileChanges?.tracks)}
                     maxLength={16}
-                    defaultValue={profileChanges?.wallet && (profileChanges?.displayName || formatWallet(profileChanges?.wallet))}
+                    minLength={3}
+                    defaultValue={profileData?.displayName || ''}
                   />
-                  <Text fontSize="xs">
-                    {profileChanges?.displayName === profileData?.displayName ? 16 - profileChanges?.displayName?.length : 16 - nameCharacters} remaining.
-                  </Text>
+                  {profileChanges?.displayName !== profileData?.displayName && <Text fontSize="xs">{16 - profileChanges?.displayName?.length} remaining.</Text>}
                 </Stack>
               </Stack>
+              {error?.length && nameCharacters < 3 && (
+                <Flex mt={1} justifyContent="center" alignItems={'center'} gap={2}>
+                  <IconAlertCircle className="text-red-500" height={16} width={16} />
+                  <Text color="red.300">{error}</Text>
+                </Flex>
+              )}
             </FormControl>
-            {profileData?.twitterHandle && (
-              <FormControl id="twitterHandle">
-                <Stack direction={'row'} spacing={{ base: '1.5', md: '8' }} alignItems="baseline" justifyContent={'space-between'}>
-                  <FormLabel variant="inline">Linked Twitter</FormLabel>
-                  <Flex justifyContent={'end'} alignItems={'center'} gap={3}>
-                    <Text px={2} size={'xs'} fontWeight="semibold">
-                      @{profileData?.twitterHandle}
-                    </Text>
-                    <Button size="sm" fontWeight={'light'} bg="red.200">
-                      unlink
-                    </Button>
-                  </Flex>
-                </Stack>
-              </FormControl>
-            )}
             <FormControl id="picture">
               <Stack direction={'row'} justify={'space-between'} alignItems="center">
                 <FormLabel width={'fit-content'} variant="inline">
