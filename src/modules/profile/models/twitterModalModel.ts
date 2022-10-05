@@ -62,6 +62,7 @@ export const twitterModalModel = createModel<RootModel>()({
       }, 1000);
     },
     async verifyTweet([pastedTweetUrl, userHash]: [string, string]) {
+      this.setError('');
       this.setLoading(true);
       const urlTank = pastedTweetUrl.split('/');
       let tweetId = urlTank[urlTank.length - 1];
@@ -81,7 +82,11 @@ export const twitterModalModel = createModel<RootModel>()({
             this.setError('there was a problem verifying your tweet');
           }
         })
-        .catch(() => this.setError('there was a problem verifying your tweet'));
+        .catch(() => {
+          console.log('here');
+          this.setLoading(false);
+          this.setError('there was a problem verifying your tweet');
+        });
     },
     async linkTwitterHandleToUser([wallet, userData, twitterHandle]: [string, User, string]) {
       this.setLoading(true);

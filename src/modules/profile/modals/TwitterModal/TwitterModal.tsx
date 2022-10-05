@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ModalContainer } from '@/common/components/containers/ModalContainer/ModalContainer';
 import { Dispatch, RootState } from '@/store';
 import { Dialog, Transition } from '@headlessui/react';
@@ -11,10 +11,9 @@ import { TwitterStep } from '../../models/twitterModalModel';
 export const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
-  const { currentStep, loading, hashedTweet, copied, windowParams, pastedTweetUrl, userHash, twitterHandle } = useSelector(
+  const { currentStep, loading, hashedTweet, copied, windowParams, pastedTweetUrl, userHash, twitterHandle, error } = useSelector(
     (state: RootState) => state.twitterModalModel,
   );
-  // TODO: add error messages for incompatible i/o.
   const profileData = useSelector((state: RootState) => state.profileModel);
   useEffect(() => {
     return () => {
@@ -105,14 +104,15 @@ export const TwitterModal = () => {
                 </Stack>
               </FormControl>
               <FormControl isDisabled={currentStep !== TwitterStep.VERIFY_TWEET} id="paste-tweet">
-                <Stack spacing={-1} direction={'row'} alignItems="baseline" justifyContent={'start'}>
-                  <FormLabel variant="inline">4.</FormLabel>
+                <Stack gap={2} spacing={-0.5} direction={'column'} alignItems="baseline" justifyContent={'start'}>
+                  <FormLabel variant="inline">4. Paste tweet url</FormLabel>
                   <InputGroup size="md">
                     <Input
                       onChange={(e) => dispatch.twitterModalModel.setPastedTweetUrl(e.target.value)}
                       pr="4.5rem"
                       type="url"
-                      placeholder="Paste tweet url here"
+                      fontSize={'sm'}
+                      placeholder="https://twitter.com/twitterName/status/1517702864168099840"
                     />
                     <InputRightElement width="4.5rem">
                       <Button
@@ -128,6 +128,12 @@ export const TwitterModal = () => {
                     </InputRightElement>
                   </InputGroup>
                 </Stack>
+                {error?.length && currentStep === TwitterStep.VERIFY_TWEET && (
+                  <Flex mt={1} alignItems={'center'} gap={2}>
+                    <IconAlertCircle className="text-red-500" height={16} width={16} />
+                    <Text color="red.300">{error}</Text>
+                  </Flex>
+                )}
               </FormControl>
             </Stack>
           )}

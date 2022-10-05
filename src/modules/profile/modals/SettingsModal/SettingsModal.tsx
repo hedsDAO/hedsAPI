@@ -14,7 +14,9 @@ export const SettingsModal = () => {
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const profileData = useSelector((state: RootState) => state.profileModel);
   // TODO: add error messages for incompatible i/o.
-  const { profileChanges, loading, preview, file, fileType, characters, error } = useSelector((state: RootState) => state.settingsModalModel);
+  const { profileChanges, loading, preview, file, fileType, nameCharacters, descCharacters, error } = useSelector(
+    (state: RootState) => state.settingsModalModel,
+  );
   const profileModalData = useSelector((state: RootState) => state.settingsModalModel);
   useEffect(() => {
     if (profileData) dispatch.settingsModalModel.setProfileModelData(profileData);
@@ -32,7 +34,7 @@ export const SettingsModal = () => {
         <Stack spacing="5">
           <Stack spacing="5" divider={<StackDivider />}>
             <FormControl id="public">
-              <Stack direction={'row'} spacing={{ base: '1.5', md: '8' }} justify={'space-between'} alignItems={'baseline'}>
+              <Stack direction={'row'} spacing={{ base: '1.5', md: '8' }} alignItems="baseline" justifyContent={'space-between'}>
                 <FormLabel variant="inline">Profile Visibility</FormLabel>
                 <Flex justifyContent={'end'} alignItems={'center'} gap={3}>
                   <Text size={'xs'} fontWeight="semibold">
@@ -51,12 +53,21 @@ export const SettingsModal = () => {
             <FormControl id="displayName">
               <Stack direction={'row'} spacing={{ base: '1.5', md: '8' }} alignItems="baseline" justifyContent={'space-between'}>
                 <FormLabel variant="inline">Display Name</FormLabel>
-                <Input
-                  onChange={(e) => dispatch.settingsModalModel.setDisplayName(e.target.value.trim())}
-                  width={'fit-content'}
-                  disabled={!isEmpty(profileChanges?.tracks)}
-                  defaultValue={profileChanges?.wallet && (profileChanges?.displayName || formatWallet(profileChanges?.wallet))}
-                />
+                <Stack>
+                  <Input
+                    onChange={(e) => {
+                      dispatch.settingsModalModel.setNameCharacters(e.target.value.trim()?.length);
+                      dispatch.settingsModalModel.setDisplayName(e.target.value.trim());
+                    }}
+                    width={'fit-content'}
+                    disabled={!isEmpty(profileChanges?.tracks)}
+                    maxLength={16}
+                    defaultValue={profileChanges?.wallet && (profileChanges?.displayName || formatWallet(profileChanges?.wallet))}
+                  />
+                  <Text fontSize="xs">
+                    {profileChanges?.displayName === profileData?.displayName ? 16 - profileChanges?.displayName?.length : 16 - nameCharacters} remaining.
+                  </Text>
+                </Stack>
               </Stack>
             </FormControl>
             {profileData?.twitterHandle && (
@@ -114,7 +125,7 @@ export const SettingsModal = () => {
                 <Stack>
                   <Textarea
                     onChange={(e) => {
-                      dispatch.settingsModalModel.setCharacters(e.target.value.trim()?.length);
+                      dispatch.settingsModalModel.setDescCharacters(e.target.value.trim()?.length);
                       dispatch.settingsModalModel.setDescription(e.target.value.trim());
                     }}
                     maxLength={130}
@@ -123,7 +134,7 @@ export const SettingsModal = () => {
                     resize="none"
                     defaultValue={profileChanges?.description}
                   />
-                  <Text fontSize="xs">{characters ? 130 - characters : 130} remaining.</Text>
+                  <Text fontSize="xs">{descCharacters ? 130 - descCharacters : 130} remaining.</Text>
                 </Stack>
               </Stack>
             </FormControl>
