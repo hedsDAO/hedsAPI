@@ -36,10 +36,15 @@ export const settingsModalModel = createModel<RootModel>()({
   effects: (dispatch) => ({
     async handleSubmit([prevProfileData, profileModalState]: [User, SettingsModalState]) {
       this.setLoading(true);
+      this.setError('');
       const { file, fileType, preview } = profileModalState;
       const newProfileData = { ...profileModalState.profileChanges };
       const { profilePicture: prevProfilePicture, wallet } = prevProfileData;
-      if (prevProfileData?.profilePicture !== newProfileData?.profilePicture) {
+      if (newProfileData?.displayName !== prevProfileData?.displayName && newProfileData?.displayName?.length < 3) {
+        this.setError('Display name must be between 3-16 characters.');
+        this.setLoading(false);
+        return;
+      } else if (prevProfileData?.profilePicture !== newProfileData?.profilePicture) {
         if (prevProfilePicture?.includes(wallet)) await deleteObject(ref(storage, 'users/' + getCurrentImagePath(prevProfilePicture, wallet)));
         if (preview) {
           await uploadBytes(ref(storage, `users/${wallet}${fileType}`), file).then((snapshot) =>
