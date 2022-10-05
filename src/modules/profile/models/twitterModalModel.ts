@@ -1,6 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { sha256 } from 'js-sha256';
+import axios from 'axios';
 const TWITTER_AUTH_CLOUD_FN = 'https://us-central1-heds-34ac0.cloudfunctions.net/twitterAuth/';
 
 export enum TwitterStep {
@@ -40,6 +41,8 @@ export const twitterModalModel = createModel<RootModel>()({
     setCopied: (state, copied: boolean) => ({ ...state, copied }),
     setPastedTweetUrl: (state, pastedTweetUrl: string) => ({ ...state, pastedTweetUrl }),
     setWindowParams: (state, windowParams: [string, string, string]) => ({ ...state, windowParams }),
+    setTwitterHandle: (state, twitterHandle: string) => ({ ...state, twitterHandle }),
+    setError: (state, error: string) => ({ ...state, error }),
     clearTwitterModalState: (state) => new TwitterModalState(),
   },
   effects: (dispatch) => ({
@@ -57,16 +60,26 @@ export const twitterModalModel = createModel<RootModel>()({
         this.setCurrentStep(TwitterStep.COPY_TWEET);
       }, 1000);
     },
-    async verifyTweet(pastedTweetUrl: string) {
+    async verifyTweet([pastedTweetUrl, userHash]: [string, string]) {
       this.setLoading(true);
-      const urlTank = pastedTweetUrl.split("/");
-			let tweetId = urlTank[urlTank.length - 1];
-			tweetId = tweetId.slice(0, 19);
-      console.log(tweetId)
+      const urlTank = pastedTweetUrl.split('/');
+      let tweetId = urlTank[urlTank.length - 1];
+      const twitterHandle = urlTank[3];
+      tweetId = tweetId.slice(0, 19);
+      axios
+        .get(TWITTER_AUTH_CLOUD_FN + tweetId)
+        .then((res) => {
+          if (res) {
+            if (res.data.data[0].text.split('HDS')[1] === userHash) this.setTwitterHandle(twitterHandle);
+          } else this.setError('there was a problem verifying your tweet');
+          this.setCurrentStep(TwitterStep.LINK_ACCOUNT);
+        })
+        .catch(() => {
+          this.setError('there was a problem verifying your tweet');
+        });
       setTimeout(() => {
         this.setLoading(false);
-        this.setCurrentStep(TwitterStep.LINK_ACCOUNT);
-      }, 2000)
-    }
+      }, 2000);
+    },
   }),
 });
