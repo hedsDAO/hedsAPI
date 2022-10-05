@@ -8,3 +8,5 @@ export { default as FeaturedSubmissions } from './FeaturedSubmissions/FeaturedSu
 export { default as PrivateUserWrapper } from './PrivateUserWrapper/PrivateUserWrapper';
 export { default as UserCollection } from './UserCollection/UserCollection';
 export { default as RefreshCollectionButton } from './RefreshCollectionButton/RefreshCollectionButton';
+export { default as UserBadge } from './UserBadge/UserBadge';
+export { default as Samples } from './Samples/Samples';
