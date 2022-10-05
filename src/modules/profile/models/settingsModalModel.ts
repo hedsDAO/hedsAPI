@@ -11,7 +11,8 @@ class SettingsModalState {
   error = '';
   file: File;
   fileType: string;
-  characters: number;
+  descCharacters: number;
+  nameCharacters: number;
   preview: string;
 }
 
@@ -23,7 +24,8 @@ export const settingsModalModel = createModel<RootModel>()({
     setDescription: (state, description: string) => ({ ...state, profileChanges: { ...state.profileChanges, description } }),
     setDisplayName: (state, displayName: string) => ({ ...state, profileChanges: { ...state.profileChanges, displayName } }),
     setProfileProfilePicture: (state, profilePicture: string) => ({ ...state, profileChanges: { ...state.profileChanges, profilePicture } }),
-    setCharacters: (state, characters: number) => ({ ...state, characters }),
+    setDescCharacters: (state, descCharacters: number) => ({ ...state, descCharacters }),
+    setNameCharacters: (state, nameCharacters: number) => ({ ...state, nameCharacters }),
     setError: (state, error: string) => ({ ...state, error }),
     setLoading: (state, loading: boolean) => ({ ...state, loading }),
     setFile: (state, file: File) => ({ ...state, file }),
