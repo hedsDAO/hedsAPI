@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { TapeData } from '@/models/common';
-import { Flex, Stack } from '@chakra-ui/react';
+import { Divider, Flex, Stack } from '@chakra-ui/react';
 import UserWrapper from '@/common/components/wrappers/UserWrapper';
 import {
   FeaturedSubmissions,
@@ -31,6 +31,7 @@ export const User: React.FC = (): JSX.Element => {
           <UserBadge loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
           <UserDescription loading={loading} userData={userData} />
+          <Divider />
           <CopyWalletButton loading={loading} wallet={userData?.wallet} />
           <TwitterLinkButton loading={loading} userData={userData} />
         </Stack>

@@ -5,7 +5,7 @@ import { Box, Skeleton, Text } from '@chakra-ui/react';
 const UserDescription = ({ loading, userData }: { loading: boolean; userData: User }) => {
   return (
     <Fragment>
-      <Box py="1">
+      <Box py={2}>
         <Skeleton rounded="md" height="10px" fadeDuration={2} isLoaded={!loading}>
           <Text data-testid="user-description" fontSize={'sm'}>
             {userData?.description || '...'}
