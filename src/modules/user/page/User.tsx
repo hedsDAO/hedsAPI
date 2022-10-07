@@ -14,11 +14,16 @@ export const User: React.FC = (): JSX.Element => {
   return (
     <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={10} px={[10, 4, 2, 0]} py={10}>
       <UserWrapper>
-        <Stack direction={'column'}>
+        <Stack direction={'column'} spacing={4}>
           <ProfilePicture loading={loading} userData={userData} />
           <Badges loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
+<<<<<<< HEAD
           <Description loading={loading} userData={userData} />
+=======
+          <UserDescription loading={loading} userData={userData} />
+          <Divider />
+>>>>>>> 62c801df32deef2ac3bdb9d30c4181436cffbe26
           <CopyWalletButton loading={loading} wallet={userData?.wallet} />
           <TwitterLinkButton loading={loading} userData={userData} />
         </Stack>
