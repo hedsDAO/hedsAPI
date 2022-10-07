@@ -18,12 +18,7 @@ export const User: React.FC = (): JSX.Element => {
           <ProfilePicture loading={loading} userData={userData} />
           <Badges loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
-<<<<<<< HEAD
           <Description loading={loading} userData={userData} />
-=======
-          <UserDescription loading={loading} userData={userData} />
-          <Divider />
->>>>>>> 62c801df32deef2ac3bdb9d30c4181436cffbe26
           <CopyWalletButton loading={loading} wallet={userData?.wallet} />
           <TwitterLinkButton loading={loading} userData={userData} />
         </Stack>
