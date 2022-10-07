@@ -12,7 +12,7 @@ const useTapeOwnership = (profileData: User) => {
     allowFailure: true,
     enabled: isEmpty(profileData.collection),
   });
-  if (data?.length && profileData?.wallet && isRefetching) dispatch.profileModel.updateUserCollection([profileData?.wallet, data]);
+  if (data?.length && profileData?.wallet && isRefetching) dispatch.userModel.updateUserCollection([profileData?.wallet, data]);
   return { data, isError, isLoading, refetch, isRefetching, isFetching };
 };
 

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Dialog } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
-import { ModalContainer } from '@/common/components/containers/ModalContainer/ModalContainer';
+import { ModalContainer } from '@/common/containers/ModalContainer/ModalContainer';
 import { Avatar, Button, Flex, FormControl, FormLabel, Input, Stack, StackDivider, Switch, Text, Textarea } from '@chakra-ui/react';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { formatWallet, isEmpty } from '@/utils';
@@ -14,15 +14,12 @@ export const SettingsModal = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const profileData = useSelector((state: RootState) => state.profileModel);
-  // TODO: add error messages for incompatible i/o.
-  const { profileChanges, loading, preview, file, fileType, nameCharacters, descCharacters, error } = useSelector(
-    (state: RootState) => state.settingsModalModel,
-  );
-  const profileModalData = useSelector((state: RootState) => state.settingsModalModel);
+  const { profileChanges, loading, preview, file, fileType, nameCharacters, descCharacters, error } = useSelector((state: RootState) => state.settingsModel);
+  const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
-    if (profileData) dispatch.settingsModalModel.setProfileModelData(profileData);
+    if (profileData) dispatch.settingsModel.setProfileModelData(profileData);
     return () => {
-      dispatch.settingsModalModel.clearProfileModalState();
+      dispatch.settingsModel.clearProfileModalState();
     };
   }, []);
 
@@ -42,7 +39,7 @@ export const SettingsModal = () => {
                     {profileChanges?.public ? 'PUBLIC' : 'PRIVATE'}
                   </Text>
                   <Switch
-                    onChange={() => dispatch.settingsModalModel.setPublic(!profileChanges?.public)}
+                    onChange={() => dispatch.settingsModel.setPublic(!profileChanges?.public)}
                     isChecked={profileChanges?.public}
                     shadow={'none'}
                     outline={'none'}
@@ -57,13 +54,13 @@ export const SettingsModal = () => {
                 <Stack>
                   <Input
                     onChange={(e) => {
-                      dispatch.settingsModalModel.setError(null);
+                      dispatch.settingsModel.setError(null);
                       if (!e.target.value?.length) {
-                        dispatch.settingsModalModel.setDisplayName(profileData?.displayName);
-                        dispatch.settingsModalModel.setNameCharacters(null);
+                        dispatch.settingsModel.setDisplayName(profileData?.displayName);
+                        dispatch.settingsModel.setNameCharacters(null);
                       } else {
-                        dispatch.settingsModalModel.setNameCharacters(e.target.value.trim()?.length);
-                        dispatch.settingsModalModel.setDisplayName(e.target.value.trim());
+                        dispatch.settingsModel.setNameCharacters(e.target.value.trim()?.length);
+                        dispatch.settingsModel.setDisplayName(e.target.value.trim());
                       }
                     }}
                     width={'fit-content'}
@@ -93,14 +90,14 @@ export const SettingsModal = () => {
                     <Flex gap={2}>
                       <input
                         ref={inputRef}
-                        onChange={(e) => dispatch.settingsModalModel.handleFileUpload(e)}
+                        onChange={(e) => dispatch.settingsModel.handleFileUpload(e)}
                         type="file"
                         className="h-[38px] rounded-full border text-sm text-slate-500 file:rounded-full file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                       />
                       <Button
                         onClick={() => {
                           if (file) inputRef.current.value = '';
-                          dispatch.settingsModalModel.deleteProfilePicture([profileChanges.profilePicture, preview]);
+                          dispatch.settingsModel.deleteProfilePicture([profileChanges.profilePicture, preview]);
                         }}
                         height="38px"
                         bg="red.300"
@@ -122,8 +119,8 @@ export const SettingsModal = () => {
                 <Stack>
                   <Textarea
                     onChange={(e) => {
-                      dispatch.settingsModalModel.setDescCharacters(e.target.value.trim()?.length);
-                      dispatch.settingsModalModel.setDescription(e.target.value.trim());
+                      dispatch.settingsModel.setDescCharacters(e.target.value.trim()?.length);
+                      dispatch.settingsModel.setDescription(e.target.value.trim());
                     }}
                     maxLength={130}
                     maxW={{ md: '3xl' }}
@@ -142,7 +139,7 @@ export const SettingsModal = () => {
             </Button>
             <Button
               isLoading={loading}
-              onClick={() => dispatch.settingsModalModel.handleSubmit([profileData, profileModalData])}
+              onClick={() => dispatch.settingsModel.handleSubmit([profileData, profileModalData])}
               disabled={JSON.stringify(profileData) === JSON.stringify(profileChanges) && !file}
               bg="green.200"
             >

@@ -2,21 +2,9 @@ import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { TapeData } from '@/models/common';
 import { Flex, Stack } from '@chakra-ui/react';
-import UserWrapper from '@/common/components/wrappers/UserWrapper';
-import {
-  FeaturedSubmissions,
-  TwitterLinkButton,
-  UserSubmissions,
-  ProfilePicture,
-  CopyWalletButton,
-  DisplayName,
-  UserDescription,
-  PrivateUserWrapper,
-  UserCollection,
-  RefreshCollectionButton,
-  UserBadge,
-  Samples,
-} from '@/modules/user/components';
+import { UserWrapper, PrivateUserWrapper } from '@/common/wrappers';
+import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
+import { Tracks, Submissions, ProfilePicture, DisplayName, Description, Collection, Badges, Samples } from '@/common/user';
 
 export const User: React.FC = (): JSX.Element => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
@@ -28,18 +16,17 @@ export const User: React.FC = (): JSX.Element => {
       <UserWrapper>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
-          <UserBadge loading={loading} userData={userData} />
+          <Badges loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />
-          <UserDescription loading={loading} userData={userData} />
+          <Description loading={loading} userData={userData} />
           <CopyWalletButton loading={loading} wallet={userData?.wallet} />
           <TwitterLinkButton loading={loading} userData={userData} />
         </Stack>
         <Stack direction={'column'} spacing="2" width={'full'}>
           <PrivateUserWrapper loading={loading} userData={userData}>
-            <UserSubmissions loading={loading} userData={userData} />
-            <FeaturedSubmissions loading={loading} userTracks={userTracks} />
-            <RefreshCollectionButton loading={loading} userData={userData} />
-            <UserCollection loading={loading} userData={userData} />
+            <Submissions loading={loading} userData={userData} />
+            <Tracks loading={loading} userTracks={userTracks} />
+            <Collection loading={loading} userData={userData} />
             <Samples loading={loading} userData={userData} />
           </PrivateUserWrapper>
         </Stack>
