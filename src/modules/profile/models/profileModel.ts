@@ -1,11 +1,9 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { AllTapes, User, UserRoles } from '@/models/common';
-import { formatUserCollection, populateNewUser } from '@/utils';
+import { User, UserRoles } from '@/models/common';
+import { populateNewUser } from '@/utils';
 import { db } from '@/App';
-import { RootState } from '@/store';
-import { Result } from 'ethers/lib/utils';
 import { emptyUserState } from '@/models/utils';
 
 export const profileModel = createModel<RootModel>()({
@@ -26,29 +24,15 @@ export const profileModel = createModel<RootModel>()({
         });
       }
     },
-    async updateUserCollection([wallet, data]: [string, Result[]]) {
-      const collection = formatUserCollection(data);
+    async updateUserData([wallet, newUserData]: [string, User]) {
       const docSnap = await getDoc(doc(db, 'users', wallet));
-      const profileData = docSnap.exists() ? docSnap.data() : null;
-      const { role } = profileData;
-      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...profileData, collection });
-      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...profileData, collection });
-      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...profileData, collection });
-      this.setProfileData({ ...profileData, collection });
-    },
-  }),
-  selectors: (slice, createSelector) => ({
-    getTapeCovers() {
-      return createSelector(
-        slice,
-        (a: RootState, tapeData: AllTapes) => (a ? tapeData : null),
-        (userData, tapeData) => {
-          const userTracks = userData?.tracks?.heds?.hedstape;
-          if (userTracks && tapeData) {
-            return Object.keys(userTracks).reduce((acc, curr) => ({ ...acc, [curr]: tapeData[curr] }), {});
-          }
-        },
-      );
+      const userData = docSnap.exists() ? docSnap.data() : null;
+      const { role } = userData;
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), newUserData);
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
+      this.setProfileData(newUserData);
+      this.setUserData(newUserData);
     },
   }),
 });

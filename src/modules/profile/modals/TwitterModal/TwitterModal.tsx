@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
-import { ModalContainer } from '@/common/components/containers/ModalContainer/ModalContainer';
+import { ModalContainer } from '@/common/containers/ModalContainer/ModalContainer';
 import { Dispatch, RootState } from '@/store';
 import { Dialog, Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Stack, StackDivider, Tag, TagLabel, Text } from '@chakra-ui/react';
 import { IconAlertCircle, IconCheck, IconClipboard, IconKey, IconLink } from '@tabler/icons';
 import { formatWallet } from '@/utils';
-import { TwitterStep } from '../../models/twitterModalModel';
+import { TwitterStep } from '../../models/twitterModel';
 
 export const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const { currentStep, loading, hashedTweet, copied, windowParams, pastedTweetUrl, userHash, twitterHandle, error } = useSelector(
-    (state: RootState) => state.twitterModalModel,
+    (state: RootState) => state.twitterModel,
   );
-  const profileData = useSelector((state: RootState) => state.profileModel);
+  const userData = useSelector((state: RootState) => state.userModel);
   useEffect(() => {
     return () => {
-      dispatch.twitterModalModel.clearTwitterModalState();
+      dispatch.twitterModel.clearTwitterModalState();
     };
   }, []);
   return (
@@ -39,7 +39,7 @@ export const TwitterModal = () => {
                       disabled={currentStep !== TwitterStep.GENERATE_HASH}
                       leftIcon={<IconKey height={16} width={16} />}
                       size={'sm'}
-                      onClick={() => dispatch.twitterModalModel.generateHash(profileData?.wallet)}
+                      onClick={() => dispatch.twitterModel.generateHash(userData?.wallet)}
                       bg="gray.200"
                     >
                       Generate hash
@@ -68,11 +68,11 @@ export const TwitterModal = () => {
                       leftIcon={<IconClipboard height={16} width={16} />}
                       size={'sm'}
                       onClick={() => {
-                        dispatch.twitterModalModel.setCopied(true);
+                        dispatch.twitterModel.setCopied(true);
                         navigator.clipboard.writeText(hashedTweet);
                         setTimeout(() => {
-                          dispatch.twitterModalModel.setCopied(false);
-                          dispatch.twitterModalModel.setCurrentStep(TwitterStep.TWEET_HASH);
+                          dispatch.twitterModel.setCopied(false);
+                          dispatch.twitterModel.setCurrentStep(TwitterStep.TWEET_HASH);
                         }, 1000);
                       }}
                       bg="gray.200"
@@ -93,7 +93,7 @@ export const TwitterModal = () => {
                       onClick={() => {
                         window.open(windowParams[0], windowParams[1], windowParams[2]);
                         setTimeout(() => {
-                          dispatch.twitterModalModel.setCurrentStep(TwitterStep.VERIFY_TWEET);
+                          dispatch.twitterModel.setCurrentStep(TwitterStep.VERIFY_TWEET);
                         }, 1000);
                       }}
                       bg="gray.200"
@@ -108,7 +108,7 @@ export const TwitterModal = () => {
                   <FormLabel variant="inline">4. Paste tweet url</FormLabel>
                   <InputGroup size="md">
                     <Input
-                      onChange={(e) => dispatch.twitterModalModel.setPastedTweetUrl(e.target.value)}
+                      onChange={(e) => dispatch.twitterModel.setPastedTweetUrl(e.target.value)}
                       pr="4.5rem"
                       type="url"
                       fontSize={'sm'}
@@ -121,7 +121,7 @@ export const TwitterModal = () => {
                         bg="green.200"
                         h="1.75rem"
                         size="sm"
-                        onClick={() => dispatch.twitterModalModel.verifyTweet([pastedTweetUrl, userHash])}
+                        onClick={() => dispatch.twitterModel.verifyTweet([pastedTweetUrl, userHash])}
                       >
                         Verify
                       </Button>
@@ -152,13 +152,13 @@ export const TwitterModal = () => {
               <Flex alignItems={'center'} my={5} gap={4} direction={'row'}>
                 <Tag size="lg" colorScheme="blue" borderRadius="full">
                   <Avatar
-                    src={profileData?.profilePicture}
+                    src={userData?.profilePicture}
                     size="2xs"
-                    name={profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}
+                    name={userData?.displayName ? userData?.displayName : userData?.wallet ? formatWallet(userData?.wallet) : ''}
                     ml={-1}
                     mr={2}
                   />
-                  <TagLabel> {profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}</TagLabel>
+                  <TagLabel> {userData?.displayName ? userData?.displayName : userData?.wallet ? formatWallet(userData?.wallet) : ''}</TagLabel>
                 </Tag>
                 <IconLink height={20} width={20} />
                 <Tag py={1} size="lg" colorScheme="blue" borderRadius="full">
@@ -174,7 +174,7 @@ export const TwitterModal = () => {
             {currentStep === TwitterStep.LINK_ACCOUNT && (
               <Button
                 isLoading={loading}
-                onClick={() => dispatch.twitterModalModel.linkTwitterHandleToUser([profileData.wallet, profileData, twitterHandle])}
+                onClick={() => dispatch.twitterModel.linkTwitterHandleToUser([userData.wallet, userData, twitterHandle])}
                 bg="green.200"
               >
                 Confirm

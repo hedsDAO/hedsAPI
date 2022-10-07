@@ -6,9 +6,7 @@ import { WagmiConfig, chain, createClient } from 'wagmi';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import { store } from './store';
-
-import ModalWrapper from '@/common/components/wrappers/ModalWrapper';
-import TapeWrapper from '@/common/components/wrappers/TapeWrapper';
+import { ModalWrapper, TapeWrapper } from './common/wrappers';
 import App from '@/App';
 
 import './index.css';
