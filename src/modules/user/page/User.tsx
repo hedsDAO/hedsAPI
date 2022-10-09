@@ -14,7 +14,7 @@ export const User: React.FC = (): JSX.Element => {
   return (
     <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={10} px={[10, 4, 2, 0]} py={10}>
       <UserWrapper>
-        <Stack direction={'column'} spacing={4}>
+        <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
           <Badges loading={loading} userData={userData} />
           <DisplayName loading={loading} userData={userData} />

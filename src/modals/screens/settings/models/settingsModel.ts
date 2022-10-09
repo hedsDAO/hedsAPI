@@ -71,6 +71,16 @@ export const settingsModel = createModel<RootModel>()({
         }
       }
     },
+    async handleDisplayNameInput([e, userData]: [React.ChangeEvent<HTMLInputElement>, User]) {
+      this.setError(null);
+      if (!e.target.value?.length) {
+        this.setDisplayName(userData?.displayName);
+        this.setNameCharacters(null);
+      } else {
+        this.setNameCharacters(e.target.value.trim()?.length);
+        this.setDisplayName(e.target.value.trim());
+      }
+    },
     async deleteProfilePicture([profilePicture, preview]: [string, string]) {
       if (profilePicture) {
         const defaultImageRef = ref(storage, 'users/' + getCurrentImagePath('.png', `0x${'0'.repeat(30)}`));

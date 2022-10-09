@@ -24,9 +24,10 @@ export enum UserRoles {
  * @interface ArtistMapping - Mapping for referencing artists by wallet id.
  * @interface TrackMetadataMapping - individual track, sample and submissions within a tape.
  * @interface BadgeData - Structure for user profile badges.
+ * @interface UserCollection - conditional interface for user collection object.
  */
 
-export interface User {
+ export interface User {
   profilePicture: string;
   twitterHandle: string;
   badges: Array<BadgeData>;
@@ -37,8 +38,8 @@ export interface User {
   samples?: TrackMetadataMapping;
   tracks?: TrackMetadataMapping;
   submissions?: TrackMetadataMapping;
-  collection?: UserCollection;
   public: boolean;
+  collection?: UserCollection;
 }
 
 export interface TrackMetadataMapping {
@@ -72,6 +73,7 @@ export interface UserCollection {
     quantity: number;
   };
 }
+
 
 /**
  * @name TapeModels
