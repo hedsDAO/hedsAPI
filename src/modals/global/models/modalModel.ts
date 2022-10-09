@@ -1,5 +1,5 @@
 import { createModel } from '@rematch/core';
-import type { RootModel } from '../models';
+import type { RootModel } from '@/models';
 
 export enum Modals {
   SETTINGS_MODAL = 0,

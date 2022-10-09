@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 import { Button } from '@chakra-ui/react';
-import { Modals } from '@/modals/modalModel';
+import { Modals } from '@/modals/global/models/modalModel';
 import { IconBrandTwitter } from '@tabler/icons';
 
 const VerifyTwitterButton = () => {

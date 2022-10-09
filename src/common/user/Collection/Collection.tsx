@@ -10,7 +10,7 @@ const Collection = ({ userData, loading }: { userData: User; loading: boolean })
         <Heading fontSize={'3xl'}>Collection</Heading>
         <RefreshCollectionButton userData={userData} loading={loading} />
       </Flex>
-      <Grid className="px-3 py-3" templateColumns="repeat(5, 1fr)" gap={4}>
+      <Grid className="px-3 py-3" templateColumns={{base: "repeat(3, 1fr)", md: "repeat(5, 1fr)"}} gap={4}>
         {!isEmpty(userData?.collection) &&
           Object.values(userData?.collection).map((collectionItem) => {
             return (
