@@ -4,7 +4,7 @@ import { RootState, store } from '@/store';
 import { Stack, Flex } from '@chakra-ui/react';
 import { ProfileWrapper } from '@/common/wrappers';
 import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
-import { SettingsButton, VerifyTwitterButton } from '@/modules/profile/components';
+import { SettingsButton, VerifyTwitterButton, NameButton } from '@/modules/profile/components';
 import { Badges, Collection, Description, DisplayName, ProfilePicture, Samples, Submissions, Tracks } from '@/common/user';
 
 export const Profile = () => {
@@ -20,6 +20,7 @@ export const Profile = () => {
           <ProfilePicture loading={loading} userData={userData} />
           <Flex gap={2} alignItems={'stretch'}>
             <SettingsButton />
+            {!userData?.displayName && <NameButton />}
             {!userData?.twitterHandle && <VerifyTwitterButton />}
           </Flex>
           <Badges loading={loading} userData={userData} />
