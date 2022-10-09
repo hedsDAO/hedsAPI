@@ -4,7 +4,7 @@ import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
 import { Dialog } from '@headlessui/react';
 import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm } from '@/modals/screens/settings/components';
-import { ModalContainer } from '@/common/containers/ModalContainer/ModalContainer';
+import { ModalContainer } from '@/modals/global/components/ModalContainer/ModalContainer';
 
 export const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();

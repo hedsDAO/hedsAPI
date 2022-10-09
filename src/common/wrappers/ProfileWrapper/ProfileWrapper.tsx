@@ -12,6 +12,7 @@ const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   useAccount({
     onConnect({ address }) {
+      
       dispatch.userModel.getUserData(address.toLowerCase());
     },
     onDisconnect() {
