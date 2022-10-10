@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { ModalContainer } from '@/modals/global/components/ModalContainer/ModalContainer';
+import { ModalContainer } from '@/modules/modals/global/components/ModalContainer/ModalContainer';
 import { CopyTweetForm, GenerateHashForm, PasteTweetForm, TweetHashForm, VerifyAndLinkAccountForm } from '../components';
 import { Dispatch, RootState } from '@/store';
 import { Dialog } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
-import { TwitterStep } from '@/modals/screens/twitter/models/twitterModel';
+import { TwitterStep } from '@/modules/modals/screens/twitter/models/twitterModel';
 
 export const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();

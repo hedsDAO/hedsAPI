@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
 import { Dialog } from '@headlessui/react';
-import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm } from '@/modals/screens/settings/components';
-import { ModalContainer } from '@/modals/global/components/ModalContainer/ModalContainer';
+import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm } from '@/modules/modals/screens/settings/components';
+import { ModalContainer } from '@/modules/modals/global/components/ModalContainer/ModalContainer';
 
 export const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
