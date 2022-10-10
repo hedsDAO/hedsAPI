@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 import { Button } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/24/solid';
-import { Modals } from '@/modals/global/models/modalModel';
+import { Modals } from '@/modules/modals/global/models/modalModel';
 
 const NameButton = () => {
   const dispatch = useDispatch<Dispatch>();
