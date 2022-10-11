@@ -12,6 +12,7 @@ import {
   StackDivider,
   Avatar,
   Text,
+  IconButton,
 } from '@chakra-ui/react';
 
 const DesktopQueue = () => {
@@ -19,9 +20,14 @@ const DesktopQueue = () => {
     <Flex h="full" justifyContent={'center'} alignItems={'center'}>
       <Popover arrowPadding={16}>
         <PopoverTrigger>
-          <Button bg="transparent" _hover={{ bg: 'transparent' }} _active={{ bg: 'transparent' }}>
-            <i className="fa-sharp fa-solid fa-layer-group"></i>
-          </Button>
+          <IconButton
+            aria-label="queue"
+            icon={<i className="fa-sharp fa-solid fa-layer-group"></i>}
+            className="hover:rotate-180 duration-500 ease-in-out"
+            bg="transparent"
+            _hover={{ bg: 'transparent' }}
+            _active={{ bg: 'transparent' }}
+          />
         </PopoverTrigger>
         <PopoverContent>
           <PopoverArrow />
@@ -54,6 +60,5 @@ const DesktopQueue = () => {
     </Flex>
   );
 };
-
 
 export default DesktopQueue;

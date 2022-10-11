@@ -1,22 +1,30 @@
 import { useRef, useEffect } from 'react';
-import { RootState } from '@/store';
+import { Dispatch, RootState } from '@/store';
 import WaveSurfer from 'wavesurfer.js';
 import { formWaveSurferOptions } from '@/utils';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem } from '@chakra-ui/react';
 import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/screens/desktop/components';
 
 const DesktopAudio = () => {
+  const dispatch = useDispatch<Dispatch>();
   const waveformRef = useRef<HTMLDivElement | null>(null);
   const wavesurfer = useRef<WaveSurfer | null>();
   const audioData = useSelector((state: RootState) => state.audioModel);
 
   useEffect(() => {
+    dispatch.audioModel.setIsLoading(true);
     var options; // wavesurfer params
     if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
     if (options) wavesurfer.current = WaveSurfer.create(options);
     wavesurfer?.current?.load(audioData?.queue?.[0]?.audio);
-  }, []);
+    wavesurfer?.current?.on('ready', () => {
+      dispatch.audioModel.setIsLoading(false);
+    });
+    return () => {
+      wavesurfer.current.destroy();
+    };
+  }, [audioData.queue]);
 
   return (
     <Grid display={{ base: 'none', lg: 'grid' }} height="6rem" templateColumns="repeat(24, 1fr)">
@@ -24,7 +32,7 @@ const DesktopAudio = () => {
         <TrackDetails />
       </GridItem>
       <GridItem colSpan={2}>
-        <PlayerButtons />
+        <PlayerButtons wavesurfer={wavesurfer} />
       </GridItem>
       <GridItem colSpan={14}>
         <Flex alignItems={'center'} justifyContent={'center'} height="100%" bg="gray.200" w="full">
@@ -35,7 +43,7 @@ const DesktopAudio = () => {
         <DesktopQueue />
       </GridItem>
       <GridItem colSpan={3} bg="gray.200">
-        <VolumeSlider />
+        <VolumeSlider wavesurfer={wavesurfer} />
       </GridItem>
     </Grid>
   );
