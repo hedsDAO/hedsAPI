@@ -1,5 +1,5 @@
 import { fireEvent, screen, render, waitFor } from '@testing-library/react';
-import { userData } from '@/modules/user/page/tests/mocks/UserData';
+import { userData } from '@/pages/profile/page/tests/mocks/UserData';
 import { CopyWalletButton } from '@/common/buttons';
 import { formatWallet } from '@/utils';
 

@@ -4,14 +4,14 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { Navigation, Footer } from '@/common/navs';
-import { About } from '@/modules/about/pages/About';
-import { Explore } from '@/modules/explore/pages/Explore';
-import { Artists } from '@/modules/artists/pages/Artists';
-import { Vote } from '@/modules/vote/pages/Vote';
-import { Tapes } from '@/modules/tapes/pages/Tapes';
-import { User } from '@/modules/user/page/User';
-import { Listen } from '@/modules/listen/pages/Listen';
-import { Profile } from '@/modules/profile/page/Profile';
+import { About } from '@/pages/about/pages/About';
+import { Explore } from '@/pages/explore/pages/Explore';
+import { Artists } from '@/pages/artists/pages/Artists';
+import { Vote } from '@/pages/vote/pages/Vote';
+import { Tapes } from '@/pages/tapes/pages/Tapes';
+import { User } from '@/pages/user/page/User';
+import { Listen } from '@/pages/listen/pages/Listen';
+import { Profile } from '@/pages/profile/page/Profile';
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,

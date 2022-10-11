@@ -1,4 +1,4 @@
-import { UserCollection } from '@/modules/user/models/common';
+import { UserCollection } from '@/pages/user/store/common';
 import { erc721ABI } from 'wagmi';
 
 const formatReadContractArgs = (wallet: string, tapeDataForOwnership: UserCollection): Array<any> => {

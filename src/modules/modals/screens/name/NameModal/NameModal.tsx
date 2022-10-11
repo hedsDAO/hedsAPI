@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
-import { ModalContainer } from '@/modules/modals/global/components';
+import { ModalContainer } from '@/modules/modals/components';
 import { Dialog } from '@headlessui/react';
 import { FormControl, FormLabel, Input, Stack, StackDivider } from '@chakra-ui/react';
 

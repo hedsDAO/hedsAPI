@@ -2,7 +2,7 @@ import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
-import { User } from '@/modules/user/models/common';
+import { User } from '@/models/common';
 const TWITTER_AUTH_CLOUD_FN = 'https://us-central1-heds-34ac0.cloudfunctions.net/twitterAuth/';
 
 export enum TwitterStep {

@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react';
-import { userData } from '@/modules/user/page/tests/mocks/UserData';
+import { userData } from '@/pages/profile/page/tests/mocks/UserData';
 import { Description } from '@/common/user';
 
 describe('User description component', () => {

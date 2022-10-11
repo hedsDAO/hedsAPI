@@ -1,10 +1,10 @@
 import { Models } from '@rematch/core';
-import { userModel } from '@/modules/user/models/userModel';
-import { modalModel } from '@/modules/modals/global/models/modalModel';
-import { profileModel } from '@/modules/profile/models/profileModel';
-import { artistModel } from '@/modules/artists/artistModel';
-import { tapesModel } from '@/modules/tapes/tapesModel';
-import { audioModel } from '@/modules/audio/audioModel';
+import { userModel } from '@/pages/user/store/userModel';
+import { modalModel } from '@/modules/modals/store/modalModel';
+import { profileModel } from '@/pages/profile/store/profileModel';
+import { artistModel } from '@/pages/artists/store/artistModel';
+import { tapesModel } from '@/pages/tapes/store/tapesModel';
+import { audioModel } from '@/modules/audio/store/audioModel';
 import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
 

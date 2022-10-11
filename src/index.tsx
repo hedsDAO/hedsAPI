@@ -6,10 +6,11 @@ import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import { store } from './store';
 import { TapeWrapper } from '@/common/wrappers';
-import { ModalWrapper } from '@/modules/modals/global/components';
-import { AudioWrapper } from '@/modules/audio/global/components';
+import { ModalWrapper } from '@/modules/modals/components';
+import { AudioWrapper } from '@/modules/audio/components';
 import App from '@/App';
 
+import 'animate.css';
 import './index.css';
 import '../build/app/output.css';
 
