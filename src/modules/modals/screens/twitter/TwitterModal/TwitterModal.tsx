@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ModalContainer } from '@/modules/modals/global/components/ModalContainer/ModalContainer';
+import { ModalContainer } from '@/modules/modals/global/components';
 import { CopyTweetForm, GenerateHashForm, PasteTweetForm, TweetHashForm, VerifyAndLinkAccountForm } from '../components';
 import { Dispatch, RootState } from '@/store';
 import { Dialog } from '@headlessui/react';

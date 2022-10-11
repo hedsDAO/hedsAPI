@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-export const ModalContainer = ({ isOpen, setModalOpen, children }: { isOpen: boolean; setModalOpen: Function; children: JSX.Element }) => {
+const ModalContainer = ({ isOpen, setModalOpen, children }: { isOpen: boolean; setModalOpen: Function; children: JSX.Element }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setModalOpen(false)}>
@@ -35,3 +35,5 @@ export const ModalContainer = ({ isOpen, setModalOpen, children }: { isOpen: boo
     </Transition>
   );
 };
+
+export default ModalContainer;
