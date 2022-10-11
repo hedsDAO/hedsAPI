@@ -10,3 +10,4 @@ export { default as formatReadContractArgs } from './formatReadContractArgs';
 export { default as isEmpty } from './isEmpty';
 export { default as formatUserCollection } from './formatUserCollection';
 export { default as getCurrentImagePath } from './getCurrentImagePath';
+export { default as formWaveSurferOptions } from './formWaveSurferOptions';

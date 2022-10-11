@@ -1,12 +1,13 @@
 import ReactDOM from 'react-dom/client';
-
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as RematchProvider } from 'react-redux';
 import { WagmiConfig, chain, createClient } from 'wagmi';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import { store } from './store';
-import { ModalWrapper, TapeWrapper } from './common/wrappers';
+import { TapeWrapper } from '@/common/wrappers';
+import { ModalWrapper } from '@/modules/modals/global/components';
+import { AudioWrapper } from '@/modules/audio/global/components';
 import App from '@/App';
 
 import './index.css';
@@ -30,9 +31,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <ChakraProvider>
           <TapeWrapper>
             <ModalWrapper>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
+              <AudioWrapper>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </AudioWrapper>
             </ModalWrapper>
           </TapeWrapper>
         </ChakraProvider>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, RootState } from 'src/store';
 import { formatTime } from '@/utils';
+import { TapeData, TrackArtistMetadata, TrackMetadata, User } from '@/models/common';
 
 export const Listen = () => {
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
@@ -13,6 +14,17 @@ export const Listen = () => {
   useEffect(() => {
     if (allTapes && artistMapping) dispatch.tapesModel.getCurrentTape([allTapes, artistMapping, space, tape, id]);
   }, [allTapes, id]);
+
+  const handlePlay = (currentTrack: TrackArtistMetadata) => {
+    const track: TrackMetadata = {
+      track: currentTrack.track,
+      audio: currentTrack.audio,
+      duration: currentTrack.duration,
+    };
+    const tape: TapeData = allTapes[id];
+    const artist: User = artistMapping[currentTrack.wallet];
+    dispatch.audioModel.pushToQueue([track, tape, artist]);
+  };
 
   return (
     <>
@@ -43,7 +55,7 @@ export const Listen = () => {
               {currentTape.tracks &&
                 currentTape.tracks?.map((track) => {
                   return (
-                    <div key={track.wallet} className="flex items-center justify-between rounded-sm p-2 gap-x-4">
+                    <div onClick={() => handlePlay(track)} key={track.wallet} className="flex items-center justify-between rounded-sm p-2 gap-x-4">
                       <div className="flex items-center gap-x-3">
                         <img className="w-8 h-8 rounded-sm" src={track.profilePicture} />
                         <span className="font-semibold tracking-tight text-sm text-neutral-800">{track.displayName}</span>
