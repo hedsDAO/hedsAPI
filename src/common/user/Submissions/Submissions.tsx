@@ -8,10 +8,10 @@ const Submissions = ({ loading, userData }: { loading: boolean; userData: User }
       <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
         <Heading fontSize={'3xl'}>Submissions</Heading>
         <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200 px-3 py-3">
-          <Stack spacing="2">
+          <Stack spacing="1">
             {Object.entries(userData?.submissions?.heds?.hedstape).map(([id, submission], i) => (
-              <li className="text-xs text-gray-600 py-2" key={i}>
-                <a href="#" className="block hover:bg-gray-50">
+              <li className="text-sm text-gray-600 py-1  hover:bg-gray-50" key={i}>
+                <a href="#" className="block">
                   <div className="flex items-center gap-x-2">
                     <span className="text-xs font-thin">HT{id}</span>
                     <div className="min-w-0 flex-1 sm:flex">{submission.track}</div>

@@ -4,7 +4,7 @@ import { User } from '@/pages/profile/store/common';
 import { isEmpty } from '@/utils';
 
 const Collection = ({ userData, loading }: { userData: User; loading: boolean }) => {
-  return (
+  return Object.keys(userData.collection).length ? (
     <Stack>
       <Flex justifyContent={'space-between'}>
         <Heading fontSize={'3xl'}>Collection</Heading>
@@ -30,7 +30,7 @@ const Collection = ({ userData, loading }: { userData: User; loading: boolean })
           })}
       </Grid>
     </Stack>
-  );
+  ) : null;
 };
 
 export default Collection;
