@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Dispatch } from 'src/store';
 import { useDispatch } from 'react-redux';
 
