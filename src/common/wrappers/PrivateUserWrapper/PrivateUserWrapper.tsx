@@ -1,4 +1,4 @@
-import { User } from '@/modules/user/models/common';
+import { User } from '@/pages/user/store/common';
 
 const PrivateUserWrapper = ({ userData, loading, children }: { userData: User; loading: boolean; children: React.ReactNode }) => {
   if (userData?.public && !loading) return <>{children}</>;

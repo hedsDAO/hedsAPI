@@ -1,6 +1,6 @@
 import { Flex, Grid, GridItem, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { RefreshCollectionButton } from '@/common/buttons';
-import { User } from '@/modules/profile/models/common';
+import { User } from '@/pages/profile/store/common';
 import { isEmpty } from '@/utils';
 
 const Collection = ({ userData, loading }: { userData: User; loading: boolean }) => {

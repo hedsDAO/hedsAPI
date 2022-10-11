@@ -2,7 +2,7 @@ import { formatReadContractArgs, isEmpty } from '@/utils';
 import { useContractReads } from 'wagmi';
 import { useDispatch } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { User } from '@/modules/profile/models/common';
+import { User } from '@/pages/profile/store/common';
 
 const useTapeOwnership = (userData: User) => {
   const dispatch = useDispatch<Dispatch>();
