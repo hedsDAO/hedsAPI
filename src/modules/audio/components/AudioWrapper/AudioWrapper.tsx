@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
-import { DesktopAudio, MobileAudio } from '@/modules/audio/pages';
+import { DesktopAudio, MobileAudio } from '@/modules/audio/screens';
 import { Transition } from '@headlessui/react';
 
 const AudioWrapper = ({ children }: { children: JSX.Element }) => {
@@ -9,12 +9,12 @@ const AudioWrapper = ({ children }: { children: JSX.Element }) => {
   return (
     <Fragment>
       {children}
-      {audioData?.queue?.length && (
+      {audioData?.queue?.length ? (
         <div className="bottom-0 fixed z-50 w-screen">
           <DesktopAudio />
           <MobileAudio />
         </div>
-      )}
+      ) : <></>}
     </Fragment>
   );
 };

@@ -13,7 +13,7 @@ const VerifyTwitterButton = () => {
         dispatch.modalModel.setModalOpen(true);
       }}
       size="xs"
-      className=""
+      className="mx-0"
       aria-label="edit profile"
       leftIcon={<IconBrandTwitter className="text-gray-700" width={16} height={16} />}
     >

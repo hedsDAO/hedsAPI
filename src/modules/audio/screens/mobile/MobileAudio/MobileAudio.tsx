@@ -1,5 +1,5 @@
 import { IconButton, Flex, Grid, GridItem, Center, Image, Text } from '@chakra-ui/react';
-import { PlayerButtons, TrackDetails } from '@/modules/audio/pages/mobile/components';
+import { PlayerButtons, TrackDetails } from '@/modules/audio/screens/mobile/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import Marquee from 'react-fast-marquee';

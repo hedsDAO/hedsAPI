@@ -4,7 +4,7 @@ import WaveSurfer from 'wavesurfer.js';
 import { formWaveSurferOptions } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem, IconButton } from '@chakra-ui/react';
-import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/pages/desktop/components';
+import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/screens/desktop/components';
 
 const DesktopAudio = () => {
   const dispatch = useDispatch<Dispatch>();

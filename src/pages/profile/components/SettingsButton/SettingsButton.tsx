@@ -12,10 +12,11 @@ const SettingsButton = () => {
         dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
         dispatch.modalModel.setModalOpen(true);
       }}
+      bg="gray.200"
       size="xs"
-      className=""
+      className="relative bottom-10 left-2 -mb-10"
       aria-label="edit profile"
-      leftIcon={<Cog6ToothIcon className="text-gray-700" width={16} height={16} />}
+      leftIcon={<Cog6ToothIcon className="text-gray-700 -mr-0.5" width={16} height={16} />}
     >
       Edit profile
     </Button>
