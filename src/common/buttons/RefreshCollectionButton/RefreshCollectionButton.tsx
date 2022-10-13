@@ -29,8 +29,8 @@ const RefreshCollectionButton = ({ userData, loading }: { userData: User; loadin
   }, [loading, userData]);
 
   return (
-    <Button bg="gray.200" color="blackAlpha.900" onClick={() => setIsFetching(true)}>
-      <IconRefresh height={12} width={12} />
+    <Button bg={'transparent'} className='bg-transparent hover:rotate-180 ease-in-out duration-500 delay-75' size='sm' color="blackAlpha.900" onClick={() => setIsFetching(true)}>
+      <IconRefresh className='hover:rotate-180 ease-in-out' height={14} width={14} />
     </Button>
   );
 };

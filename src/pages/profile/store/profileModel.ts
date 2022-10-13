@@ -12,7 +12,7 @@ export const profileModel = createModel<RootModel>()({
     setProfileData: (state, payload: User) => ({ ...state, ...payload }),
     clearProfileState: (state) => emptyUserState(state),
   },
-  effects: () => ({
+  effects: (dispatch) => ({
     async getProfileData(wallet: string) {
       const docRef = doc(db, 'users', wallet.toLowerCase());
       const docSnap = await getDoc(docRef);
@@ -32,7 +32,7 @@ export const profileModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
       this.setProfileData(newUserData);
-      this.setUserData(newUserData);
+      dispatch.userModel.setUserData(newUserData);
     },
   }),
 });

@@ -9,7 +9,7 @@ const Samples = ({ loading, userData }: { loading: boolean; userData: User }) =>
       {userData?.role === UserRoles.CURATOR && (
         <Fragment>
           <Heading fontSize={'3xl'}>Samples</Heading>
-          <ul data-testid="user-samples" role="list" className="divide-y divide-gray-200 px-3 py-3">
+          <ul data-testid="user-samples" role="list" className="divide-y divide-gray-200 py-3">
             <Stack spacing="2">
               {Object.entries(userData?.samples?.heds?.hedstape).map(([id, submission], i) => (
                 <li className="text-xs text-gray-600 py-2" key={i}>

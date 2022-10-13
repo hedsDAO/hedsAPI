@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
 import { Dialog } from '@headlessui/react';
-import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm } from '@/modules/modals/screens/settings/components';
+import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm, BannerForm } from '@/modules/modals/screens/settings/components';
 import { ModalContainer } from '@/modules/modals/components';
 
 export const SettingsModal = () => {
@@ -29,6 +29,7 @@ export const SettingsModal = () => {
           <ProfileVisibilityForm />
           <DescriptionForm />
           <ProfilePictureForm />
+          {/* <BannerForm /> */}
           <Flex gap={2} className="mt-6">
             <Button onClick={() => dispatch.modalModel.setModalOpen(false)} bg="gray.200">
               Back
