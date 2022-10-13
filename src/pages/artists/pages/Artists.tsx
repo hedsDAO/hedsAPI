@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Dispatch, RootState } from 'src/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
