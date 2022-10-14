@@ -18,7 +18,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   return (
-    <Disclosure as="nav" className="">
+    <Disclosure as="nav" className="bg-[#f5f5f5]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-3">
         <div className="flex h-16 justify-between items-center">
           <div className="flex">

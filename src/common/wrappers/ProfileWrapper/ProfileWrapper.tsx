@@ -12,7 +12,6 @@ const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   useAccount({
     onConnect({ address }) {
-      
       dispatch.userModel.getUserData(address.toLowerCase());
     },
     onDisconnect() {
@@ -27,7 +26,7 @@ const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
       dispatch.userModel.clearUserState();
     };
   }, [pathname]);
-  return <Fragment>{children}</Fragment>;
+  return <div className="bg-[#f5f5f5]">{children}</div>;
 };
 
 export default ProfileWrapper;

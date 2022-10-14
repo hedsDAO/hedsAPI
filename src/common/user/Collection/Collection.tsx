@@ -14,14 +14,14 @@ const Collection = ({ userData, loading }: { userData: User; loading: boolean })
         <RefreshCollectionButton userData={userData} loading={loading} />
       </Flex>
       <Divider pt={0} mt={0} border={'1px'} size="md" />
-      <Grid className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>
-        {!isEmpty(userData?.collection) &&
-          Object.values(userData?.collection).map((collectionItem) => {
+      {!isEmpty(userData?.collection) ? (
+        <Grid className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>
+          {Object.values(userData?.collection).map((collectionItem) => {
             return (
               <GridItem key={collectionItem?.name + collectionItem?.quantity}>
                 <Skeleton w="full" h="fit-content" rounded="lg" isLoaded={!loading} fadeDuration={2}>
                   <div className="relative">
-                    <img src={collectionItem?.image} className="object-cover aspect-square rounded-lg object-center hover:opacity-75" />
+                    <img src={collectionItem?.image} className="object-cover aspect-square rounded-lg object-center hover:opacity-75 shadow-md" />
                     <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-70 rounded-l-lg">x{collectionItem.quantity}</div>
                   </div>
                 </Skeleton>
@@ -31,7 +31,12 @@ const Collection = ({ userData, loading }: { userData: User; loading: boolean })
               </GridItem>
             );
           })}
-      </Grid>
+        </Grid>
+      ) : (
+        <Flex w="full">
+          <div className="text-center w-full font-thin italic text-xs py-4">theres nothing here...</div>
+        </Flex>
+      )}
     </Stack>
   );
 };
