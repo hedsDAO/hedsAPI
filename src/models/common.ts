@@ -65,6 +65,10 @@ export interface TrackMetadata {
   audio: string;
   duration: number;
   track: string;
+  artist: string;
+  cover: string;
+  tape: string;
+  wallet: string;
 }
 
 export interface UserCollection {
@@ -99,6 +103,7 @@ export interface TapeData {
   opensea: string;
   route: string;
   tracks: Array<string>;
+  timeline: Timeline;
 }
 
 export interface TapeAndTrackData {
@@ -111,25 +116,19 @@ export interface TapeAndTrackData {
   opensea: string;
   route: string;
   tracks: Array<TrackArtistMetadata>;
+  timeline: Timeline;
 }
 
 export interface TrackArtistMetadata {
   audio: string;
   duration: number;
   track: string;
-  profilePicture: string;
+  artist: string;
+  cover: string;
+  tape: string;
   wallet: string;
-  displayName: string;
 }
 
-export interface CuratorMetadata {
-  audio: string | null;
-  duration: number | null;
-  track: string | null;
-  profilePicture: string;
-  wallet: string;
-  displayName: string;
-}
 
 export enum TimelineStatus {
   PRIVATE = 0,

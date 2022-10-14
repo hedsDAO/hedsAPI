@@ -1,4 +1,4 @@
-import { User } from './common';
+import { User } from '@/models/common';
 
 /**
  * @name emptyUserState

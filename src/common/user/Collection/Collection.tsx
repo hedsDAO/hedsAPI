@@ -2,6 +2,7 @@ import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Stack } from '@chakra
 import { RefreshCollectionButton } from '@/common/buttons';
 import { User } from '@/models/common';
 import { isEmpty } from '@/utils';
+import { Fragment } from 'react';
 
 const Collection = ({ userData, loading }: { userData: User; loading: boolean }) => {
   return (

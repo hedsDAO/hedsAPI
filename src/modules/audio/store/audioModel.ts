@@ -3,9 +3,7 @@ import type { RootModel } from '../../../models';
 import { TapeData, TrackMetadata, User } from '../../../models/common';
 
 export interface AudioState {
-  tapes: Array<TapeData>;
   queue: Array<TrackMetadata>;
-  artists: Array<User>;
   currentTrack: number;
   currentTapeId: any;
   currentTape: string;
@@ -25,16 +23,12 @@ export const audioModel = createModel<RootModel>()({
     isShowingQueue: false,
     volume: 100,
     queue: [],
-    tapes: [],
-    artists: [],
   } as AudioState,
   reducers: {
-    pushToQueue: (state, [track, tape, artist]: [TrackMetadata, TapeData, User]) => {
+    pushToQueue: (state, track: TrackMetadata) => {
       const newState: AudioState = { ...state };
       const queue = [...newState.queue, track];
-      const tapes = [...newState.tapes, tape];
-      const artists = [...state.artists, artist];
-      return { ...state, queue, tapes, artists };
+      return { ...state, queue };
     },
     setIsShowingQueue: (state, isShowingQueue: boolean) => ({...state, isShowingQueue}),
     setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),

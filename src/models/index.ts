@@ -5,7 +5,7 @@ import { profileModel } from '@/pages/profile/store/profileModel';
 import { artistModel } from '@/pages/artists/store/artistModel';
 import { tapesModel } from '@/pages/tapes/store/tapesModel';
 import { audioModel } from '@/modules/audio/store/audioModel';
-import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
+import { settingsModel } from '@/modules/modals/screens/settings/state/settingsModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
 
 export interface RootModel extends Models<RootModel> {
