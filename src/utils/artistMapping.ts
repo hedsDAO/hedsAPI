@@ -14,14 +14,14 @@ const artistMapping = ([wallets, artistMapping, space, tape, id, isSample]: [
       const currentTrack: TrackMetadata = isSample ? artistMapping[address]?.samples[space][tape][id] : artistMapping[address]?.tracks[space][tape][id];
       const { displayName, profilePicture, wallet } = artistMapping[address];
       const { duration, track, audio } = currentTrack;
-      mappingTank.push({
-        displayName,
-        profilePicture,
-        wallet,
-        duration: duration || null,
-        track: track || null,
-        audio: audio || null,
-      });
+    //   mappingTank.push({
+    //     displayName,
+    //     profilePicture,
+    //     wallet,
+    //     duration: duration || null,
+    //     track: track || null,
+    //     audio: audio || null,
+    //   });
     }
   });
   return mappingTank;

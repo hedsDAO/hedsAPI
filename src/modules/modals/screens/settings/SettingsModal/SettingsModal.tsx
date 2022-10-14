@@ -10,7 +10,7 @@ export const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const userData = useSelector((state: RootState) => state.userModel);
-  const { profileChanges, loading, file } = useSelector((state: RootState) => state.settingsModel);
+  const { profileChanges, loading } = useSelector((state: RootState) => state.settingsModel);
   const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
     if (userData) dispatch.settingsModel.setProfileModelData(userData);
@@ -29,7 +29,7 @@ export const SettingsModal = () => {
           <ProfileVisibilityForm />
           <DescriptionForm />
           <ProfilePictureForm />
-          {/* <BannerForm /> */}
+          <BannerForm />
           <Flex gap={2} className="mt-6">
             <Button onClick={() => dispatch.modalModel.setModalOpen(false)} bg="gray.200">
               Back
@@ -37,7 +37,7 @@ export const SettingsModal = () => {
             <Button
               isLoading={loading}
               onClick={() => dispatch.settingsModel.handleSubmit([userData, profileModalData])}
-              disabled={JSON.stringify(userData) === JSON.stringify(profileChanges) && !file}
+              disabled={JSON.stringify(userData) === JSON.stringify(profileChanges)}
               bg="green.200"
             >
               Save

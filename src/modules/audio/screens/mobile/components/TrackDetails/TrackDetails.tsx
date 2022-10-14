@@ -9,7 +9,7 @@ const TrackDetails = () => {
   return (
     <Flex px={2} alignItems={'center'} justifyContent={'start'} height="100%" bg="gray.200" w="full">
       <Center w="5rem">
-        <Image my="auto" maxW="5rem" minH="5rem" maxH="5rem" minW="5rem" rounded="lg" src={audioData?.tapes?.[0]?.image} objectFit="cover" />
+        <Image my="auto" maxW="5rem" minH="5rem" maxH="5rem" minW="5rem" rounded="lg" src={audioData?.queue?.[0]?.cover} objectFit="cover" />
       </Center>
       <Flex alignItems={'center'} justifyContent={'center'} direction={'column'}>
         <Marquee className="ml-2" gradient={false}>
@@ -18,19 +18,19 @@ const TrackDetails = () => {
               {audioData?.queue?.[0].track}
             </Text>
             <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'} fontWeight={'semibold'}>
-              {audioData?.tapes?.[0]?.name}
+              {audioData?.queue?.[0]?.tape}
             </Text>
             <Text py={1} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'xs'} fontWeight="light">
-              {audioData?.artists?.[0]?.displayName}
+              {audioData?.queue?.[0]?.artist}
             </Text>
           </Flex>
         </Marquee>
       </Flex>
       <Flex bg="gray.200" w="full" gap={2} textAlign="center" justifyContent="center" alignItems={'center'}>
-          <i className="fa-sharp fa-solid fa-backward-step"></i>
-          <i className="fa-sharp fa-solid fa-play"></i>
-          <i className="fa-sharp fa-solid fa-forward-step"></i>
-        </Flex>
+        <i className="fa-sharp fa-solid fa-backward-step"></i>
+        <i className="fa-sharp fa-solid fa-play"></i>
+        <i className="fa-sharp fa-solid fa-forward-step"></i>
+      </Flex>
     </Flex>
   );
 };

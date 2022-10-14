@@ -1,7 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
-import { TapeAndTrackData, AllTapes, TrackArtistMetadata, ArtistMapping, CuratorMetadata } from '@/models/common';
+import { TapeAndTrackData, AllTapes } from '@/models/common';
 import { artistMapping } from '@/utils';
 import { db } from '@/App';
 

@@ -13,7 +13,7 @@ const MobileAudio = () => {
       <GridItem colSpan={3} bg="gray.200">
         <Flex px={2} alignItems={'center'} justifyContent={'start'} height="100%" bg="gray.200" w="full">
           <Center w="5rem">
-            <Image my="auto" maxW="5rem" minH="5rem" maxH="5rem" minW="5rem" rounded="lg" src={audioData?.tapes?.[0]?.image} objectFit="cover" />
+            <Image my="auto" maxW="5rem" minH="5rem" maxH="5rem" minW="5rem" rounded="lg" src={audioData?.queue?.[0]?.cover} objectFit="cover" />
           </Center>
         </Flex>
       </GridItem>
@@ -25,10 +25,10 @@ const MobileAudio = () => {
                 {audioData?.queue?.[0].track}
               </Text>
               <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'} fontWeight={'semibold'}>
-                {audioData?.tapes?.[0]?.name}
+                {audioData?.queue?.[0]?.tape}
               </Text>
               <Text py={1} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'xs'} fontWeight="light">
-                {audioData?.artists?.[0]?.displayName}
+                {audioData?.queue?.[0]?.artist}
               </Text>
             </Flex>
           </Marquee>

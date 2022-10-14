@@ -1,4 +1,4 @@
-import { User } from './common';
+import { User } from '@/models/common';
 
 /**
  * @name emptyProfileState
@@ -11,6 +11,7 @@ import { User } from './common';
 export const emptyProfileState = (state: User): User => {
   return {
     profilePicture: '',
+    banner: '',
     twitterHandle: '',
     badges: [],
     description: '',
