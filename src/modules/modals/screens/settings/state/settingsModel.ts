@@ -47,7 +47,6 @@ export const settingsModel = createModel<RootModel>()({
       const { bannerFile, bannerFileType, bannerPreview, profilePictureFile, profilePictureFileType, profilePicturePreview } = profileModalState;
       const newProfileData = { ...profileModalState.profileChanges };
       const { profilePicture: prevProfilePicture, banner: prevBanner, wallet } = prevProfileData;
-      console.log(prevBanner, newProfileData?.banner);
       if (prevProfileData?.profilePicture !== newProfileData?.profilePicture) {
         if (prevProfilePicture?.includes(wallet)) await deleteObject(ref(storage, 'users/' + getCurrentImagePath(prevProfilePicture, wallet)));
         if (profilePicturePreview) {
@@ -59,7 +58,6 @@ export const settingsModel = createModel<RootModel>()({
       if (prevProfileData?.banner !== newProfileData?.banner) {
         if (prevBanner?.includes(wallet)) await deleteObject(ref(storage, 'banners/' + getCurrentImagePath(prevBanner, wallet)));
         if (bannerPreview) {
-          console.log('here');
           await uploadBytes(ref(storage, `banners/${wallet}${bannerFileType}`), bannerFile).then((snapshot) =>
             getDownloadURL(snapshot.ref).then((url) => (newProfileData.banner = url)),
           );
