@@ -11,6 +11,7 @@
 
 export interface User {
   profilePicture: string;
+  banner: string;
   twitterHandle: string;
   badges: Array<BadgeData>;
   description: string;

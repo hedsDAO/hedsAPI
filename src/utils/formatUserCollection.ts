@@ -7,7 +7,7 @@ const formatUserCollection = (data: Result) => {
   const userCollectionTank: UserCollection = {};
   Object.keys(tapeDataForOwnership).map((key: string, index: number) => {
     if (data?.[index] !== null) {
-      if (data[index].toNumber() !== 0) {
+      if (data?.[index].toNumber() !== 0) {
         userCollectionTank[key] = {
           ...tapeDataForOwnership[key],
           quantity: data[index].toNumber(),

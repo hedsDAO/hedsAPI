@@ -11,6 +11,7 @@ import { User } from './common';
 export const emptyUserState = (state: User): User => {
   return {
     profilePicture: '',
+    banner: '',
     twitterHandle: '',
     badges: [],
     description: '',

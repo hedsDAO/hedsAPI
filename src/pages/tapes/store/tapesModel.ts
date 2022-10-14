@@ -26,17 +26,21 @@ export const tapesModel = createModel<RootModel>()({
         this.setAllTapes(docSnap.data());
       }
     },
-    async getCurrentTape([allTapes, allArtists, space, tape, id]: [AllTapes, ArtistMapping, string, string, string]) {
-      const curator: TrackArtistMetadata | CuratorMetadata = artistMapping([[allTapes[id].curator], allArtists, space, tape, id, true])[0];
-      const tracks: Array<TrackArtistMetadata> = artistMapping([allTapes[id].tracks, allArtists, space, tape, id, false]);
-      this.setCurrentTape({ ...allTapes[id], curator, tracks });
-    },
+    // async getCurrentTape([allTapes, allArtists, space, tape, id]: [AllTapes, ArtistMapping, string, string, string]) {
+    //   const curator: TrackArtistMetadata | CuratorMetadata = artistMapping([[allTapes[id].curator], allArtists, space, tape, id, true])[0];
+    //   const tracks: Array<TrackArtistMetadata> = artistMapping([allTapes[id].tracks, allArtists, space, tape, id, false]);
+    //   this.setCurrentTape({ ...allTapes[id], curator, tracks });
+    // },
   }),
   selectors: (slice) => ({
     getTapeDataForOwnership() {
       return slice((tapeData: TapeState) => {
         if (tapeData?.allTapes) {
-          return Object.values(tapeData.allTapes).reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name } }), {}) || {};
+          return (
+            Object.values(tapeData.allTapes)
+              .filter((tape) => tape?.contract?.length)
+              .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name } }), {}) || {}
+          );
         }
       });
     },

@@ -15,6 +15,8 @@ const userData: User = {
   ],
   profilePicture:
     'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0xde5bc302fc6d899eab4334602dd15efb20cd745f.jpeg?alt=media&token=9f251bf5-38c8-4800-b4c4-bc9166a0ebc2',
+  banner:
+    'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=652af26f-1f52-4e2d-852e-0b101c60a015',
   displayName: 'Alexander Lewis',
   wallet: '0xde5bc302fc6d899eab4334602dd15efb20cd745f',
   role: 2,
