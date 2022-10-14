@@ -6,18 +6,16 @@ import { ProfileWrapper } from '@/common/wrappers';
 import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
 import { SettingsButton, VerifyTwitterButton, NameButton } from '@/pages/profile/components';
 import { Badges, Collection, Description, DisplayName, ProfilePicture, Samples, Submissions, Tracks } from '@/common/user';
-const DEFAULT_BANNER =
-  'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=652af26f-1f52-4e2d-852e-0b101c60a015';
 
 export const Profile = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const userData = useSelector((state: RootState) => state.userModel);
   const tapeData = useSelector((state: RootState) => state.tapesModel);
   const userTracks: { [key: string]: TapeData } = store.select.userModel.getTapeCovers(store.getState(), tapeData.allTapes);
-
+  console.log(userTracks)
   return (
     <ProfileWrapper>
-      <Image shadow={'lg'} src={DEFAULT_BANNER} className="w-screen -mb-32 bg-gray-600" h="48" />
+      <Image shadow={'lg'} src={userData?.banner} className="w-screen -mb-32 bg-gray-600" h="48" />
       <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={6} px={[10, 4, 2, 0]} py={4}>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
@@ -36,7 +34,7 @@ export const Profile = () => {
           </Flex>
         </Stack>
         <Stack mt={{ base: '0', md: '32' }} direction={'column'} spacing="2" width={'full'}>
-          {/* <Tracks loading={loading} userTracks={userTracks} /> */}
+          {<Tracks loading={loading} userTracks={userTracks} />}
           <Submissions loading={loading} userData={userData} />
           <Collection loading={loading} userData={userData} />
           <Samples loading={loading} userData={userData} />

@@ -27,8 +27,9 @@ export enum UserRoles {
  * @interface UserCollection - conditional interface for user collection object.
  */
 
- export interface User {
+export interface User {
   profilePicture: string;
+  banner: string;
   twitterHandle: string;
   badges: Array<BadgeData>;
   description: string;
@@ -73,7 +74,6 @@ export interface UserCollection {
     quantity: number;
   };
 }
-
 
 /**
  * @name TapeModels
@@ -129,4 +129,18 @@ export interface CuratorMetadata {
   profilePicture: string;
   wallet: string;
   displayName: string;
+}
+
+export enum TimelineStatus {
+  PRIVATE = 0,
+  SUBMIT,
+  VOTE,
+  CURATE,
+  MINT,
+  CLOSED,
+}
+
+export interface Timeline {
+  status: number;
+  countdowns?: [string, string, string, string, string];
 }

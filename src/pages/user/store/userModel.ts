@@ -1,11 +1,10 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { User } from './common';
 import { emptyUserState } from './utils';
 import { db } from '@/App';
 import { RootState } from '@/store';
-import { AllTapes, UserRoles } from '@/models/common';
+import { AllTapes, UserRoles, User } from '@/models/common';
 import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 

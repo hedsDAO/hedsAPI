@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { RootState } from '@/store';
-import { AspectRatio, Image } from '@chakra-ui/react';
+// import { useSelector } from 'react-redux';
+// import { Link } from 'react-router-dom';
+// import { RootState } from '@/store';
+// import { AspectRatio, Image } from '@chakra-ui/react';
 
 export const Tapes = () => {
-  const { allTapes } = useSelector((state: RootState) => state.tapesModel);
+  // const { allTapes } = useSelector((state: RootState) => state.tapesModel);
   return (
     <>
-      <div className="bg-white my-10 pb-20 grid grid-cols-6 max-w-7xl mx-auto">
+      {/* <div className="bg-white my-10 pb-20 grid grid-cols-6 max-w-7xl mx-auto">
         {allTapes &&
           Object.values(allTapes)?.map((tape, index) => {
             return (
@@ -28,7 +28,7 @@ export const Tapes = () => {
               </div>
             );
           })}
-      </div>
+      </div> */}
     </>
   );
 };

@@ -9,6 +9,7 @@ const populateNewUser = (wallet: string) => {
   const newUserData = {
     profilePicture:
       'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc',
+    banner: "https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=652af26f-1f52-4e2d-852e-0b101c60a015",
     twitterHandle: '',
     badges: [vistorBadge],
     description: '',
