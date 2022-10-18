@@ -5,6 +5,7 @@ import { formWaveSurferOptions } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem, IconButton } from '@chakra-ui/react';
 import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/screens/desktop/components';
+import { Transition } from '@headlessui/react';
 
 const DesktopAudio = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -21,28 +22,40 @@ const DesktopAudio = () => {
     wavesurfer?.current?.on('ready', () => {
       dispatch.audioModel.setIsLoading(false);
     });
+    wavesurfer?.current?.on('finish', () => {
+      dispatch.audioModel.setIsShowingPlayer(false);
+      wavesurfer.current.destroy();
+      dispatch.audioModel.clearAudioState();
+    });
     return () => {
+      dispatch.audioModel.clearAudioState();
       wavesurfer.current.destroy();
     };
   }, [audioData.queue]);
 
   return (
-    <Fragment>
+    <Transition
+      show={audioData?.isShowingPlayer}
+      enter="transform transition ease-in-out duration-500 sm:duration-700"
+      enterFrom="translate-y-20"
+      enterTo="translate-y-full"
+      leave="transform transition ease-in-out duration-500 sm:duration-700"
+      leaveFrom="translate-y-0"
+      leaveTo="translate-y-full"
+    >
       <DesktopQueue />
       <Grid className="animate__animated animate__fadeInUp" display={{ base: 'none', lg: 'grid' }} height="6rem" templateColumns="repeat(24, 1fr)">
         <GridItem colSpan={4} bg="gray.200">
           <TrackDetails />
         </GridItem>
-        <GridItem colSpan={2}>
-          <PlayerButtons wavesurfer={wavesurfer} />
-        </GridItem>
+        <GridItem colSpan={2}>{wavesurfer?.current && <PlayerButtons wavesurfer={wavesurfer} />}</GridItem>
         <GridItem colSpan={14}>
           <Flex alignItems={'center'} justifyContent={'center'} height="100%" bg="gray.200" w="full">
             <div id="waveform-global" className="flex-shrink-0 flex-grow-0 mx-2 w-[90%]" ref={waveformRef} />
           </Flex>
         </GridItem>
         <GridItem colSpan={1} bg="gray.200">
-          <Flex h='full' alignItems={'center'} justifyContent={'center'}>
+          <Flex h="full" alignItems={'center'} justifyContent={'center'}>
             <IconButton
               onClick={() => dispatch.audioModel.setIsShowingQueue(!audioData?.isShowingQueue)}
               aria-label="queue"
@@ -56,7 +69,7 @@ const DesktopAudio = () => {
           <VolumeSlider wavesurfer={wavesurfer} />
         </GridItem>
       </Grid>
-    </Fragment>
+    </Transition>
   );
 };
 
