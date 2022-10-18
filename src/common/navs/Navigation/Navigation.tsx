@@ -10,7 +10,6 @@ const navigation = [
   { name: 'Tapes', href: '/tapes' },
   { name: 'Collabs', href: '/collab' },
   { name: 'Artists', href: '/artists' },
-  { name: 'Vote', href: '/vote' },
   { name: 'About', href: '/about' },
 ];
 

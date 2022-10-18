@@ -7,8 +7,8 @@ import { Navigation, Footer } from '@/common/navs';
 import { About } from '@/pages/about/page/About';
 import { Explore } from '@/pages/explore/pages/Explore';
 import { Artists } from '@/pages/artists/page/Artists';
-import { Vote } from '@/pages/vote/pages/Vote';
 import { Tapes } from '@/pages/tapes/page/Tapes';
+import { Collab } from '@/pages/collab/page/Collab';
 import { User } from '@/pages/user/page/User';
 import { Listen } from '@/pages/listen/pages/Listen';
 import { Profile } from '@/pages/profile/page/Profile';
@@ -36,8 +36,8 @@ const App = (): JSX.Element => {
         <Route path="/explore" element={<Explore />} />
         <Route path="/about" element={<About />} />
         <Route path="/artists" element={<Artists />} />
-        <Route path="/Vote" element={<Vote />} />
         <Route path="/tapes" element={<Tapes />} />
+        <Route path="/collab" element={<Collab />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/listen/:space/:tape/:id" element={<Listen />} />
       </Routes>
