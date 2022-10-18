@@ -11,12 +11,12 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
       <IconButton _hover={{ bg: 'gray.200' }} onClick={() => {}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
       {audioData?.isLoading ? (
         <IconButton _hover={{ bg: 'gray.200' }} aria-label="loading" isLoading={true} />
-      ) : audioData?.isPlaying ? (
+      ) : audioData?.isPlaying && wavesurfer?.current?.isPlaying() ? (
         <IconButton
           _hover={{ bg: 'gray.200' }}
           onClick={() => {
             dispatch.audioModel.setIsPlaying(false);
-            wavesurfer.current?.playPause();
+            wavesurfer?.current?.playPause();
           }}
           aria-label="pause"
           icon={<i className="fa-solid fa-pause"></i>}
@@ -26,7 +26,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
           _hover={{ bg: 'gray.200' }}
           onClick={() => {
             dispatch.audioModel.setIsPlaying(true);
-            wavesurfer.current?.playPause();
+            wavesurfer?.current?.playPause();
           }}
           aria-label="play"
           icon={<i className="fa-solid fa-play"></i>}

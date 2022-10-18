@@ -9,7 +9,7 @@ const AudioWrapper = ({ children }: { children: JSX.Element }) => {
   return (
     <Fragment>
       {children}
-      {audioData?.queue?.length ? (
+      {audioData?.isShowingPlayer ? (
         <div className="bottom-0 fixed z-50 w-screen">
           <DesktopAudio />
           <MobileAudio />
