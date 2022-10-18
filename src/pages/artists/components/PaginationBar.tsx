@@ -22,7 +22,7 @@ export const PaginationBar = () => {
               onClick={() => dispatch.artistModel.setCurrentPage(i + 1)}
               className={classNames(
                 i + 1 === artistData.currentPage ? 'bg-neutral-950 shadow-sm' : 'text-neutral-800 hover:bg-neutral-950 hover:text-gray-200',
-                'inline-flex items-center rounded-full px-3 py-1 font-medium text-gray-200 transition-all',
+                'inline-flex items-center rounded-full px-3 py-1 font-medium text-gray-300 transition-all',
               )}
             >
               {i + 1}

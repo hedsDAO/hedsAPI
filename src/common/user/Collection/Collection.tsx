@@ -2,7 +2,6 @@ import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Stack } from '@chakra
 import { RefreshCollectionButton } from '@/common/buttons';
 import { User } from '@/models/common';
 import { isEmpty } from '@/utils';
-import { Fragment } from 'react';
 
 const Collection = ({ userData, loading }: { userData: User; loading: boolean }) => {
   return (
@@ -34,7 +33,7 @@ const Collection = ({ userData, loading }: { userData: User; loading: boolean })
         </Grid>
       ) : (
         <Flex w="full">
-          <div className="text-center w-full font-thin italic text-xs py-4">theres nothing here...</div>
+          <div className="text-center w-full font-thin italic text-xs py-4">there's nothing here...</div>
         </Flex>
       )}
     </Stack>

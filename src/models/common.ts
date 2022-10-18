@@ -93,6 +93,14 @@ export interface AllTapes {
   [tapeId: string]: TapeData;
 }
 
+export interface HedsTapes {
+  [tapeId: string]: TapeData;
+}
+
+export interface CollabTapes {
+  [tapeId: string]: TapeData;
+}
+
 export interface TapeData {
   contract: string;
   curator: string;

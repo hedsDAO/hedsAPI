@@ -1,7 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
-import { TapeAndTrackData, AllTapes } from '@/models/common';
+import { TapeAndTrackData, AllTapes, HedsTapes, CollabTapes } from '@/models/common';
 import { artistMapping } from '@/utils';
 import { db } from '@/App';
 
@@ -9,6 +9,8 @@ export interface TapeState {
   allTapes: AllTapes;
   tapeTypes: Array<string>;
   currentTape: TapeAndTrackData;
+  hedsTapes: HedsTapes;
+  collabTapes: CollabTapes;
 }
 
 export const tapesModel = createModel<RootModel>()({
@@ -16,15 +18,20 @@ export const tapesModel = createModel<RootModel>()({
   reducers: {
     setAllTapes: (state, allTapes) => ({ ...state, allTapes }),
     setTapeTypes: (state, tapeTypes) => ({ ...state, tapeTypes }),
+    setHedsTapes: (state, hedsTapes) => ({ ...state, hedsTapes }),
+    setCollabTapes: (state, collabTapes) => ({ ...state, collabTapes }),
     setCurrentTape: (state, currentTape) => ({ ...state, currentTape }),
   },
   effects: () => ({
     async getHedsTapes() {
       const docRef = doc(db, 'tapes', 'hedstape');
       const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        this.setAllTapes(docSnap.data());
-      }
+      docSnap.exists() ? this.setHedsTapes(docSnap.data()) : null;
+    },
+    async getCollabTapes() {
+      const docRef = doc(db, 'tapes', 'collabtape');
+      const docSnap = await getDoc(docRef);
+      docSnap.exists() ? this.setCollabTapes(docSnap.data()) : null;
     },
     // async getCurrentTape([allTapes, allArtists, space, tape, id]: [AllTapes, ArtistMapping, string, string, string]) {
     //   const curator: TrackArtistMetadata | CuratorMetadata = artistMapping([[allTapes[id].curator], allArtists, space, tape, id, true])[0];

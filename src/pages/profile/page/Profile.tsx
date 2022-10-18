@@ -14,7 +14,7 @@ export const Profile = () => {
   const userTracks: { [key: string]: TapeData } = store.select.userModel.getTapeCovers(store.getState(), tapeData.allTapes);
   return (
     <ProfileWrapper>
-      <Image shadow={'lg'} src={userData?.banner} className="object-fit object-cover w-screen -mb-32 bg-gray-600 shadow-sm" h="48" />
+      <Image shadow={'lg'} src={userData?.banner} className="object-fit object-cover w-screen -mb-32 bg-gray-600 shadow-sm" h="64" />
       <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={8} px={[10, 4, 2, 0]} py={4}>
         <Stack direction={'column'}>
           <ProfilePicture loading={loading} userData={userData} />
