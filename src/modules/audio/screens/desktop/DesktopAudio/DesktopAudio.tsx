@@ -44,17 +44,17 @@ const DesktopAudio = () => {
       leaveTo="translate-y-full"
     >
       <DesktopQueue />
-      <Grid className="animate__animated animate__fadeInUp" display={{ base: 'none', lg: 'grid' }} height="6rem" templateColumns="repeat(24, 1fr)">
-        <GridItem colSpan={4} bg="gray.200">
+      <Grid className="animate__animated animate__fadeInUp border-t border-neutral-400 bg-white" display={{ base: 'none', lg: 'grid' }} height="6rem" templateColumns="repeat(24, 1fr)">
+        <GridItem colSpan={4}>
           <TrackDetails />
         </GridItem>
         <GridItem colSpan={2}>{wavesurfer?.current && <PlayerButtons wavesurfer={wavesurfer} />}</GridItem>
         <GridItem colSpan={14}>
-          <Flex alignItems={'center'} justifyContent={'center'} height="100%" bg="gray.200" w="full">
+          <Flex alignItems={'center'} justifyContent={'center'} height="100%" w="full">
             <div id="waveform-global" className="flex-shrink-0 flex-grow-0 mx-2 w-[90%]" ref={waveformRef} />
           </Flex>
         </GridItem>
-        <GridItem colSpan={1} bg="gray.200">
+        <GridItem colSpan={1}>
           <Flex h="full" alignItems={'center'} justifyContent={'center'}>
             <IconButton
               onClick={() => dispatch.audioModel.setIsShowingQueue(!audioData?.isShowingQueue)}
@@ -65,7 +65,7 @@ const DesktopAudio = () => {
             />
           </Flex>
         </GridItem>
-        <GridItem colSpan={3} bg="gray.200">
+        <GridItem colSpan={3}>
           <VolumeSlider wavesurfer={wavesurfer} />
         </GridItem>
       </Grid>

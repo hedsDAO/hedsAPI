@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { Link as ReactLink } from 'react-router-dom';
-import { Link, Box, Flex, Heading, Image, Stack, AspectRatio, Skeleton, Button } from '@chakra-ui/react';
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
+import { Box, Flex, Heading, Image, Stack, AspectRatio, Skeleton, Button } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 
 export const Tapes = () => {
+  const navigate = useNavigate();
   const { hedsTapes } = useSelector((state: RootState) => state.tapesModel);
   const loading = useSelector((state: RootState) => state.loading.models.tapesModel);
   return (
@@ -76,17 +77,27 @@ export const Tapes = () => {
                   ?.reverse()
                   ?.map((tape, index) => {
                     return (
-                      <div key={tape.contract + index} className="group bg-gray-50 relative border border-gray-200 col-span-1 rounded-md shadow-sm">
+                      <div
+                        role="button"
+                        onClick={() => navigate(tape.route, { replace: true })}
+                        key={tape.contract + index}
+                        className="group bg-gray-50 relative border border-gray-200 col-span-1 rounded-md shadow-sm"
+                      >
                         <AspectRatio ratio={1}>
-                          <Image w="full" src={tape.image} alt={tape.name} objectFit="cover" roundedTop={'md'} />
+                          <Image
+                            w="full"
+                            src={tape.image}
+                            alt={tape.name}
+                            objectFit="cover"
+                            roundedTop={'md'}
+                            className="group-hover:opacity-60 ease-in-out transition-all"
+                          />
                         </AspectRatio>
                         <div className="flex flex-col justify-center">
                           <div className="flex flex-col justify-center">
                             <h3 className="text-sm text-gray-900 font-semibold tracking-widest p-4 w-full">
-                              <Link href={tape.route}>
-                                {tape.name}
-                                <span aria-hidden="true" className="absolute inset-0 truncate" />
-                              </Link>
+                              {tape.name}
+                              <span aria-hidden="true" className="absolute inset-0 truncate" />
                             </h3>
                           </div>
                         </div>

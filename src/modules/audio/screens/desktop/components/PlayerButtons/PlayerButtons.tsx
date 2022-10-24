@@ -7,7 +7,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   const dispatch = useDispatch<Dispatch>();
   const audioData = useSelector((state: RootState) => state.audioModel);
   return (
-    <Flex height="100%" bg="gray.200" w="full" gap={2} justifyContent="center" alignItems={'center'}>
+    <Flex height="100%" gap={2} justifyContent="center" alignItems={'center'}>
       <IconButton _hover={{ bg: 'gray.200' }} onClick={() => {}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
       {audioData?.isLoading ? (
         <IconButton _hover={{ bg: 'gray.200' }} aria-label="loading" isLoading={true} />

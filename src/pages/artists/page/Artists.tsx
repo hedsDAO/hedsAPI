@@ -6,6 +6,7 @@ import { ArtistSort } from '@/pages/artists/store/artistModel';
 import { PaginationBar } from '@/pages/artists/components/PaginationBar';
 import { TapeIcons } from '@/pages/artists/components/TapeIcons';
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
+import { isEmpty } from '@/utils';
 
 export const Artists = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -39,7 +40,7 @@ export const Artists = () => {
                 {allArtists.slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10).map((artist) => (
                   <div key={artist?.wallet} className="group bg-gray-100 relative rounded-md p-2 shadow-md border border-neutral-300 col-span-1">
                     <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-80 transition-all lg:aspect-square shadow-sm hover:shadow-md">
-                      {artist.samples && (
+                      {!isEmpty(artist.samples) && (
                         <span className="absolute top-4 left-4 lg:top-3.5 lg:left-3.5 flex items-center rounded-full lg:-space-x-1 text-xs bg-gray-100 text-neutral-600 border border-gray-100 px-2 py-0.5 tracking-tight shadow-md font-semibold">
                           <i className="fa-sharp fa-solid fa-waveform-lines mr-1"></i> curator
                         </span>

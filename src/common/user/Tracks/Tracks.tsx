@@ -39,7 +39,7 @@ const Tracks = ({ loading, userTracks }: { loading: boolean; userTracks: { [key:
               );
             })}
           </Grid>
-          {/* <div className="flex flex-row gap-4 flex-wrap py-3">
+          <div className="flex flex-row gap-4 flex-wrap py-3">
             {Object.entries(userTracks).map(([id, tape]) => {
               return (
                 <Flex key={tape.contract + id} direction={'column'}>
@@ -65,7 +65,7 @@ const Tracks = ({ loading, userTracks }: { loading: boolean; userTracks: { [key:
                 </Flex>
               );
             })}
-          </div> */}
+          </div>
         </Skeleton>
       )}
     </Fragment>
