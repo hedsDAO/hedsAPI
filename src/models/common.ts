@@ -116,14 +116,14 @@ export interface TapeData {
 
 export interface TapeAndTrackData {
   contract: string;
-  curator: TrackArtistMetadata;
+  curator: User;
   description: string;
   etherscan: string;
   image: string;
   name: string;
   opensea: string;
   route: string;
-  tracks: Array<TrackArtistMetadata>;
+  tracks: Array<User>;
   timeline: Timeline;
 }
 

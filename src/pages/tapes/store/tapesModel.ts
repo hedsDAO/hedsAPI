@@ -1,8 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
-import { TapeAndTrackData, AllTapes, HedsTapes, CollabTapes } from '@/models/common';
-import { artistMapping } from '@/utils';
+import { TapeAndTrackData, AllTapes, HedsTapes, CollabTapes, ArtistMapping, TapeData } from '@/models/common';
 import { db } from '@/App';
 
 export interface TapeState {
@@ -33,11 +32,12 @@ export const tapesModel = createModel<RootModel>()({
       const docSnap = await getDoc(docRef);
       docSnap.exists() ? this.setCollabTapes(docSnap.data()) : null;
     },
-    // async getCurrentTape([allTapes, allArtists, space, tape, id]: [AllTapes, ArtistMapping, string, string, string]) {
-    //   const curator: TrackArtistMetadata | CuratorMetadata = artistMapping([[allTapes[id].curator], allArtists, space, tape, id, true])[0];
-    //   const tracks: Array<TrackArtistMetadata> = artistMapping([allTapes[id].tracks, allArtists, space, tape, id, false]);
-    //   this.setCurrentTape({ ...allTapes[id], curator, tracks });
-    // },
+    async getHedsTapeArtists([hedsTape, artistMapping]: [TapeData, ArtistMapping]) {
+      const artistAddresses = [hedsTape?.curator, ...hedsTape?.tracks];
+      const populatedArtists = artistAddresses.map((address: string) => artistMapping[address]);
+      this.setCurrentTape({ ...hedsTape, curator: populatedArtists.shift(), tracks: populatedArtists });
+    },
+    // async getCollabTapeTracks() {},
   }),
   selectors: (slice) => ({
     getTapeDataForOwnership() {

@@ -10,6 +10,7 @@ const CopyWalletButton = ({ loading, wallet }: { loading: boolean; wallet: strin
       <Button
         onClick={() => handleCopy(setIsCopied, wallet)}
         size="xs"
+        bg={"teal.100"}
         className="mx-0"
         aria-label="edit profile"
         leftIcon={<i className="fa-solid fa-copy" />}

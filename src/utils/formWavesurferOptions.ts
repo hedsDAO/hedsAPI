@@ -5,7 +5,7 @@ const formWaveSurferOptions = (ref: HTMLDivElement): WaveSurferParams => ({
   waveColor: '#323232',
   progressColor: '#C025D3',
   cursorColor: 'transparent',
-  barWidth: 2,
+  barWidth: 0.5,
   barRadius: 0,
   responsive: true,
   height: 40,

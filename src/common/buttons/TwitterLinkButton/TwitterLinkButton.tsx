@@ -10,6 +10,7 @@ const TwitterLinkButton = ({ loading, userData }: { loading: boolean; userData: 
           as={Link}
           href={formatTwitterUrl(userData.twitterHandle)}
           size="xs"
+          bg={"twitter.100"}
           style={{ textDecoration: 'none' }}
           className="mx-0 decoration-transparent"
           aria-label="edit profile"
