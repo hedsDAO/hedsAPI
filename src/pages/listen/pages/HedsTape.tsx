@@ -45,31 +45,33 @@ export const HedsTape = () => {
       <Heading maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
         Sample Curator
       </Heading>
-      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} px={[10, 4, 2, 0]} py={6}>
-        <Stack alignItems={['center', 'center', 'center', 'start']}>
-          <Avatar rounded="none" size="xl" src={currentTape?.curator?.profilePicture} />
-          <Text textAlign={'center'} whiteSpace={'nowrap'} fontWeight={'semibold'} pb={1} mx={1} fontSize={'2xl'}>
-            {currentTape?.curator?.displayName}
-          </Text>
-          <Flex gap={2}>
-            <IconButton bg={'green.100'} aria-label="download" icon={<i className="fa-solid fa-download"></i>} />
-            <IconButton
-              bg={'blackAlpha.100'}
-              onClick={() => {
-                dispatch.audioModel.pushToQueue(currentTape?.curator?.samples?.[space]?.[tape]?.[id]);
-                dispatch.audioModel.setIsShowingPlayer(true);
-              }}
-              aria-label="play"
-              icon={<i className="fa-solid fa-play"></i>}
-            />
+      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={'column'} gap={2} px={[10, 6, 4, 0]} py={4}>
+        <Flex
+          as={Button}
+          key={currentTape?.curator?.wallet + space + tape + id}
+          onClick={() => {
+            dispatch.audioModel.setIsShowingPlayer(true);
+            dispatch.audioModel.pushToQueue(currentTape?.curator?.samples?.[space]?.[tape]?.[id]);
+          }}
+          justify={'space-between'}
+        >
+          <Flex gap={2} alignItems={'center'}>
+            <Avatar src={currentTape?.curator?.profilePicture} size={'sm'} />
+            <Flex direction={'column'} alignItems="start">
+              <Text fontSize={'xs'}>{currentTape?.curator?.displayName}</Text>
+              <Text fontSize={'2xs'}>{currentTape?.curator?.wallet && formatWallet(currentTape?.curator?.wallet)}</Text>
+            </Flex>
           </Flex>
-        </Stack>
+          <Flex>
+            <Text fontSize={'2xs'}>{formatTime(currentTape?.curator?.samples?.[space]?.[tape]?.[id]?.duration)}</Text>
+          </Flex>
+        </Flex>
       </Flex>
       <Divider my={5} />
       <Heading maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
         Tracks
       </Heading>
-      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={'column'} gap={4} px={[10, 6, 4, 2]} py={4}>
+      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={'column'} gap={2} px={[10, 6, 4, 0]} py={4}>
         {currentTape?.tracks?.map((track) => {
           return (
             <Flex
@@ -83,7 +85,7 @@ export const HedsTape = () => {
             >
               <Flex gap={2} alignItems={'center'}>
                 <Avatar src={track.profilePicture} size={'sm'} />
-                <Flex direction={'column'} alignItems='start'>
+                <Flex direction={'column'} alignItems="start">
                   <Text fontSize={'xs'}>{track.displayName}</Text>
                   <Text fontSize={'2xs'}>{formatWallet(track.wallet)}</Text>
                 </Flex>
