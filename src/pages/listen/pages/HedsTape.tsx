@@ -54,6 +54,7 @@ export const HedsTape = () => {
             dispatch.audioModel.pushToQueue(currentTape?.curator?.samples?.[space]?.[tape]?.[id]);
           }}
           justify={'space-between'}
+          py={2}
         >
           <Flex gap={2} alignItems={'center'}>
             <Avatar src={currentTape?.curator?.profilePicture} size={'sm'} />
