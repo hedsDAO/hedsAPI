@@ -33,7 +33,7 @@ export const Profile = () => {
           </Flex>
         </Stack>
         <Stack mt={{ base: '0', md: '36' }} direction={'column'} spacing="10" width={'full'}>
-          <Tracks loading={loading} userTracks={userTracks}/>
+          <Tracks loading={loading} userTracks={userTracks} />
           <Submissions loading={loading} userData={userData} />
           <Collection loading={loading} userData={userData} />
           <Samples loading={loading} userData={userData} />

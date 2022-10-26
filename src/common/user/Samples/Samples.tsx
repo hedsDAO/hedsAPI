@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 const Samples = ({ loading, userData }: { loading: boolean; userData: User }) => {
   const dispatch = useDispatch<Dispatch>();
   const handlePlay = (submission: TrackMetadata) => {
-    dispatch.audioModel.pushToQueue(submission);
+    dispatch.audioModel.setCurrentTrack(submission);
   };
   if (userData?.samples?.heds?.hedstape && !loading)
     return (
