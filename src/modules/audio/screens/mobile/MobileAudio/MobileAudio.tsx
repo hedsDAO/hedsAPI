@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import Marquee from 'react-fast-marquee';
 
-const MobileAudio = () => {
+const MobileAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const audioData = useSelector((state: RootState) => state.audioModel);
   return (
