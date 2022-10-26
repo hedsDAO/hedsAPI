@@ -10,7 +10,7 @@ export const HedsTape = () => {
   const { hedsTapes, currentTape } = useSelector((state: RootState) => state.tapesModel);
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="">
       <Flex
         justifyContent={'center'}
         alignItems="center"
@@ -42,7 +42,7 @@ export const HedsTape = () => {
         </Stack>
       </Flex>
       <Divider my={5} />
-      <Heading maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
+      <Heading mx="auto" maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
         Sample Curator
       </Heading>
       <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={'column'} gap={2} px={[10, 6, 4, 0]} py={4}>
@@ -51,7 +51,7 @@ export const HedsTape = () => {
           key={currentTape?.curator?.wallet + space + tape + id}
           onClick={() => {
             dispatch.audioModel.setIsShowingPlayer(true);
-            dispatch.audioModel.pushToQueue(currentTape?.curator?.samples?.[space]?.[tape]?.[id]);
+            dispatch.audioModel.setCurrentTrack(currentTape?.curator?.samples?.[space]?.[tape]?.[id]);
           }}
           justify={'space-between'}
           py={2}
@@ -69,7 +69,7 @@ export const HedsTape = () => {
         </Flex>
       </Flex>
       <Divider my={5} />
-      <Heading maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
+      <Heading mx="auto" maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
         Tracks
       </Heading>
       <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={'column'} gap={2} px={[10, 6, 4, 0]} py={4}>
@@ -80,7 +80,7 @@ export const HedsTape = () => {
               key={track.wallet + space + tape + id}
               onClick={() => {
                 dispatch.audioModel.setIsShowingPlayer(true);
-                dispatch.audioModel.pushToQueue(track?.tracks?.[space]?.[tape]?.[id]);
+                dispatch.audioModel.setCurrentTrack(track?.tracks?.[space]?.[tape]?.[id]);
               }}
               justify={'space-between'}
             >

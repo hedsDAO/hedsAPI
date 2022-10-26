@@ -14,24 +14,25 @@ const DesktopAudio = () => {
   const audioData = useSelector((state: RootState) => state.audioModel);
 
   useEffect(() => {
-    dispatch.audioModel.setIsLoading(true);
-    var options; // wavesurfer params
-    if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
-    if (options) wavesurfer.current = WaveSurfer.create(options);
-    wavesurfer?.current?.load(audioData?.queue?.[0]?.audio);
-    wavesurfer?.current?.on('ready', () => {
-      dispatch.audioModel.setIsLoading(false);
-    });
-    wavesurfer?.current?.on('finish', () => {
-      dispatch.audioModel.setIsShowingPlayer(false);
-      wavesurfer.current.destroy();
-      dispatch.audioModel.clearAudioState();
-    });
+    if (audioData?.currentTrack || audioData?.queue?.length) {
+      dispatch.audioModel.setIsLoading(true);
+      var options; // wavesurfer params
+      if (wavesurfer?.current && waveformRef.current) wavesurfer.current.destroy();
+      if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
+      if (options) wavesurfer.current = WaveSurfer.create(options);
+      wavesurfer?.current?.load(audioData?.currentTrack?.audio);
+      wavesurfer?.current?.on('ready', () => {
+        dispatch.audioModel.setIsLoading(false);
+      });
+      wavesurfer?.current?.on('finish', () => {});
+    }
     return () => {
-      dispatch.audioModel.clearAudioState();
-      wavesurfer.current.destroy();
+      if (!audioData?.currentTrack) {
+        dispatch.audioModel.clearAudioState();
+        wavesurfer.current.destroy();
+      }
     };
-  }, [audioData.queue]);
+  }, [audioData.currentTrack]);
 
   return (
     <Transition
@@ -44,7 +45,12 @@ const DesktopAudio = () => {
       leaveTo="translate-y-full"
     >
       <DesktopQueue />
-      <Grid className="animate__animated animate__fadeInUp border-t border-neutral-400 bg-white" display={{ base: 'none', lg: 'grid' }} height="6rem" templateColumns="repeat(24, 1fr)">
+      <Grid
+        className="animate__animated animate__fadeInUp border-t border-neutral-400 bg-white"
+        display={{ base: 'none', lg: 'grid' }}
+        height="6rem"
+        templateColumns="repeat(24, 1fr)"
+      >
         <GridItem colSpan={4}>
           <TrackDetails />
         </GridItem>

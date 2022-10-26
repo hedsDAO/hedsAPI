@@ -8,7 +8,7 @@ const Submissions = ({ loading, userData }: { loading: boolean; userData: User }
   const dispatch = useDispatch<Dispatch>();
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
-    dispatch.audioModel.pushToQueue(submission)
+    dispatch.audioModel.setCurrentTrack(submission);
   };
   if (userData?.submissions?.heds?.hedstape && !loading)
     return (
@@ -19,7 +19,10 @@ const Submissions = ({ loading, userData }: { loading: boolean; userData: User }
           <Stack spacing="1">
             {Object.values(userData?.submissions?.heds?.hedstape).map((submission, i) => (
               <li className="text-sm text-gray-600 rounded-md" key={i}>
-                <button onClick={() => handlePlay(submission)} className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md">
+                <button
+                  onClick={() => handlePlay(submission)}
+                  className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
+                >
                   <Image className="grayscale" borderRadius="full" boxSize="25px" src={submission.cover} alt={submission.tape} />
                   <span className="text-xs font-light">{submission.tape}</span>
                   <div className="min-w-0 flex-1 sm:flex text-neutral-800">{submission.track}</div>
