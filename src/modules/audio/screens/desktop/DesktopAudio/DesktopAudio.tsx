@@ -7,10 +7,9 @@ import { Flex, Grid, GridItem, IconButton } from '@chakra-ui/react';
 import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/screens/desktop/components';
 import { Transition } from '@headlessui/react';
 
-const DesktopAudio = () => {
+const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const waveformRef = useRef<HTMLDivElement | null>(null);
-  const wavesurfer = useRef<WaveSurfer | null>();
   const audioData = useSelector((state: RootState) => state.audioModel);
 
   useEffect(() => {
