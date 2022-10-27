@@ -1,7 +1,8 @@
-import { Link, Button, Divider, Flex, Heading, Image, Stack, Text, Avatar, IconButton } from '@chakra-ui/react';
+import { Link, Button, Divider, Flex, Heading, Image, Stack, Text, Avatar, IconButton, Grid, GridItem } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { useParams } from 'react-router-dom';
+import { Timeline } from '@/pages/listen/components';
 import { formatTime, formatWallet } from '@/utils';
 
 export const HedsTape = () => {
@@ -41,6 +42,23 @@ export const HedsTape = () => {
           </Text>
         </Stack>
       </Flex>
+      <Divider my={5} />
+      <Grid maxW="7xl" mx="auto" templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={2}>
+        <GridItem colSpan={1}>
+          <Flex alignItems={'center'} justifyContent={'center'} direction={'column'} shadow="md" rounded="lg" w="full" h="full" bg="gray.200">
+            <Text color="gray.700">Current Step</Text>
+            <Text color="gray.400" fontSize={'xs'}>
+              Info on the current step ...
+            </Text>
+            <Text color="gray.300" fontSize={'xxs'}>
+              probably also a button here
+            </Text>
+          </Flex>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <Timeline />
+        </GridItem>
+      </Grid>
       <Divider my={5} />
       <Heading mx="auto" maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
         Sample Curator
