@@ -6,7 +6,7 @@ import { Dialog } from '@headlessui/react';
 import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm, BannerForm } from '@/modules/modals/screens/settings/components';
 import { ModalContainer } from '@/modules/modals/components';
 
-export const SettingsModal = () => {
+const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const userData = useSelector((state: RootState) => state.userModel);
@@ -48,3 +48,5 @@ export const SettingsModal = () => {
     </ModalContainer>
   );
 };
+
+export default SettingsModal;

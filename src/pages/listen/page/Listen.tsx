@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { isEmpty } from '@/utils';
-import { HedsTape } from '@/pages/listen/pages/HedsTape';
+import { HedsTape } from '@/pages/listen/screens/HedsTape/HedsTape';
 
 export const Listen = () => {
   const dispatch = useDispatch<Dispatch>();

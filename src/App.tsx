@@ -10,7 +10,7 @@ import { Artists } from '@/pages/artists/page/Artists';
 import { Tapes } from '@/pages/tapes/page/Tapes';
 import { Collab } from '@/pages/collab/page/Collab';
 import { User } from '@/pages/user/page/User';
-import { Listen } from '@/pages/listen/pages/Listen';
+import { Listen } from '@/pages/listen/page/Listen';
 import { Profile } from '@/pages/profile/page/Profile';
 
 const firebaseConfig = {

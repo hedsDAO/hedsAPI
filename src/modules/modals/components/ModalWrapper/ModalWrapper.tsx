@@ -2,9 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 import { Modals } from '@/modules/modals/store/modalModel';
-import { SettingsModal } from '@/modules/modals/screens/settings/SettingsModal/SettingsModal';
-import { TwitterModal } from '@/modules/modals/screens/twitter/TwitterModal/TwitterModal';
-import { NameModal } from '@/modules/modals/screens/name/NameModal/NameModal';
+import { TwitterModal, SettingsModal, NameModal } from '@/modules/modals/screens';
 
 const ModalWrapper = ({ children }: { children: JSX.Element }) => {
   const { currentModal, isOpen } = useSelector((state: RootState) => state.modalModel);
