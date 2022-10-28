@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { TwitterStep } from '@/modules/modals/screens/twitter/models/twitterModel';
 
-export const TwitterModal = () => {
+const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const { currentStep, loading, twitterHandle } = useSelector((state: RootState) => state.twitterModel);
@@ -53,3 +53,5 @@ export const TwitterModal = () => {
     </ModalContainer>
   );
 };
+
+export default TwitterModal;
