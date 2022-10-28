@@ -4,6 +4,7 @@ import { Dispatch, RootState } from '@/store';
 import { useParams } from 'react-router-dom';
 import { Header, Timeline } from '@/pages/listen/components';
 import { formatTime, formatWallet } from '@/utils';
+import { Modals } from '@/modules/modals/store/modalModel';
 
 export const HedsTape = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -17,15 +18,40 @@ export const HedsTape = () => {
       <Grid maxW="7xl" mx="auto" templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }} gap={2}>
         <GridItem px={{ base: '5', md: '3' }} colSpan={2}>
           <Flex alignItems={'center'} justifyContent={'center'} direction={'column'} shadow="md" rounded="lg" w={'full'} h={'full'} bg="gray.200">
-            <Text py={2} color="gray.700">Current Step</Text>
+            <Text py={2} color="gray.700">
+              Current Step
+            </Text>
             <Text color="gray.400" fontSize={'xs'}>
               Info on the current step ...
             </Text>
             <Flex py={3} gap={2}>
-              <Button size={'sm'}>Sample</Button>
-              <Button size={'sm'}>Submit</Button>
-              <Button size={'sm'}>Vote</Button>
-              <Button size={'sm'}>Mint</Button>
+              <Button
+                onClick={() => {
+                  dispatch.modalModel.setModal(Modals.SAMPLE_MODAL);
+                  dispatch.modalModel.setModalOpen(true);
+                }}
+                size={'sm'}
+              >
+                Sample
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch.modalModel.setModal(Modals.SUBMIT_MODAL);
+                  dispatch.modalModel.setModalOpen(true);
+                }}
+                size={'sm'}
+              >
+                Submit
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                  dispatch.modalModel.setModalOpen(true);
+                }}
+                size={'sm'}
+              >
+                Mint
+              </Button>
             </Flex>
           </Flex>
         </GridItem>
