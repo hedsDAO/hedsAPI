@@ -4,7 +4,7 @@ import { Description } from '@/common/user';
 
 describe('User description component', () => {
   it('renders correct user description', () => {
-    render(<Description loading={false} userData={userData} />);
+    render(<Description />);
     const descriptionText = screen.getByTestId('user-description');
     const { description } = userData;
     expect(descriptionText).toHaveTextContent(description || '...');

@@ -1,15 +1,18 @@
-import { UserCollection } from '@/models/common';
+import { HedsTapes, UserCollection } from '@/models/common';
 import { Result } from 'ethers/lib/utils';
-import { store } from '@/store';
 
-const formatUserCollection = (data: Result) => {
-  const tapeDataForOwnership: UserCollection = store.select.tapesModel.getTapeDataForOwnership(store.getState());
+const formatUserCollection = (data: Result, hedsTapes: HedsTapes) => {
+  const collectionData: UserCollection =
+    Object.values(hedsTapes)
+      .filter((tape) => tape?.contract?.length)
+      .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name } }), {}) || {};
+
   const userCollectionTank: UserCollection = {};
-  Object.keys(tapeDataForOwnership).map((key: string, index: number) => {
+  Object.keys(collectionData).map((key: string, index: number) => {
     if (data?.[index] !== null) {
       if (data?.[index].toNumber() !== 0) {
         userCollectionTank[key] = {
-          ...tapeDataForOwnership[key],
+          ...collectionData[key],
           quantity: data[index].toNumber(),
         };
       } else delete userCollectionTank[key];

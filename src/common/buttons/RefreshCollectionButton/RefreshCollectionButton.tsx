@@ -1,22 +1,26 @@
-import { User } from '@/models/common';
-import { Dispatch, store } from '@/store';
-import { formatReadContractArgs } from '@/utils';
+import { selectUserCollection, selectUserWallet } from '@/pages/user/store/selectors';
+import { Dispatch, RootState } from '@/store';
+import { formatReadContractArgs, isEmpty } from '@/utils';
 import { Button } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useContractReads } from 'wagmi';
 
-const RefreshCollectionButton = ({ userData, loading }: { userData: User; loading: boolean }) => {
-  const [isFetching, setIsFetching] = useState(false);
+const RefreshCollectionButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const collectionTapeData = store.select.tapesModel.getTapeDataForOwnership(store.getState());
-  useContractReads({
-    contracts: formatReadContractArgs(userData?.wallet, collectionTapeData) || [],
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const loading = useSelector((state: RootState) => state.loading.models.userModel);
+  const hedsTapes = useSelector((state: RootState) => state.tapesModel.hedsTapes);
+  const collection = useSelector(selectUserCollection);
+  const wallet = useSelector(selectUserWallet);
+
+  const { isLoading } = useContractReads({
+    contracts: (!loading && formatReadContractArgs(wallet, hedsTapes)) || [],
     allowFailure: true,
-    enabled: !loading && !userData?.collection || isFetching,
+    enabled: isFetching,
     onSuccess(data) {
-      if (data?.length) dispatch.userModel.updateUserCollection([userData?.wallet?.toLowerCase(), data]);
+      if (data?.length) dispatch.userModel.updateUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
     },
     onSettled() {
       setIsFetching(false);
@@ -24,13 +28,23 @@ const RefreshCollectionButton = ({ userData, loading }: { userData: User; loadin
   });
 
   useEffect(() => {
-    if (!loading && !userData?.collection) setIsFetching(true);
+    if (!isEmpty(collection)) setIsFetching(false);
     return () => setIsFetching(false);
-  }, [loading, userData]);
+  }, [collection]);
+
+  useEffect(() => {
+    return () => setIsFetching(false);
+  }, []);
 
   return (
-    <Button bg={'transparent'} className='bg-transparent hover:rotate-180 ease-in-out duration-500 delay-75' size='sm' color="blackAlpha.900" onClick={() => setIsFetching(true)}>
-      <IconRefresh className='hover:rotate-180 ease-in-out' height={14} width={14} />
+    <Button
+      bg={'transparent'}
+      className="bg-transparent hover:rotate-180 ease-in-out duration-500 delay-75"
+      size="sm"
+      color="blackAlpha.900"
+      onClick={() => setIsFetching(true)}
+    >
+      <IconRefresh className="hover:rotate-180 ease-in-out" height={14} width={14} />
     </Button>
   );
 };

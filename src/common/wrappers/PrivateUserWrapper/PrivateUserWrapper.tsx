@@ -1,7 +1,13 @@
 import { User } from '@/models/common';
+import { selectUserPublicStatus } from '@/pages/user/store/selectors';
+import { RootState } from '@/store';
+import { useSelector } from 'react-redux';
 
-const PrivateUserWrapper = ({ userData, loading, children }: { userData: User; loading: boolean; children: React.ReactNode }) => {
-  if (userData?.public && !loading) return <>{children}</>;
+const PrivateUserWrapper = ({ children }: { children: React.ReactNode }) => {
+  const loading = useSelector((state: RootState) => state.loading.models.userModel);
+  const isPublic = useSelector(selectUserPublicStatus);
+
+  if (isPublic && !loading) return <>{children}</>;
   else
     return (
       <div className="text-center text-gray-500 mt-[8rem]">

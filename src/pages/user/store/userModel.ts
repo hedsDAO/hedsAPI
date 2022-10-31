@@ -4,7 +4,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { emptyUserState } from './utils';
 import { db } from '@/App';
 import { RootState } from '@/store';
-import { AllTapes, UserRoles, User } from '@/models/common';
+import { AllTapes, UserRoles, User, HedsTapes } from '@/models/common';
 import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
@@ -22,8 +22,8 @@ export const userModel = createModel<RootModel>()({
         this.setUserData(docSnap.data());
       }
     },
-    async updateUserCollection([wallet, data]: [string, Result[]]) {
-      const collection = formatUserCollection(data);
+    async updateUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
+      const collection = formatUserCollection(data, hedsTapes);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;

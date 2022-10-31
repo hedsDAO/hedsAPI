@@ -1,22 +1,30 @@
 import { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { formatWallet, handleCopy } from '@/utils';
-import { Button, Flex, Skeleton, Text } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { selectUserWallet } from '@/pages/user/store/selectors';
+import { RootState } from '@/store';
 
-const CopyWalletButton = ({ loading, wallet }: { loading: boolean; wallet: string }) => {
+const CopyWalletButton = () => {
   const [isCopied, setIsCopied] = useState(false);
+  const loading = useSelector((state: RootState) => state.loading.models.userModel);
+  const wallet = useSelector(selectUserWallet);
+
   return (
     <Flex alignItems={'center'} data-testid="user-copy-container">
-      <Button
-        onClick={() => handleCopy(setIsCopied, wallet)}
-        size="xs"
-        bg={"teal.100"}
-        className="mx-0"
-        aria-label="edit profile"
-        leftIcon={<i className="fa-solid fa-copy" />}
-      >
-        {wallet?.length && formatWallet(wallet)}
-      </Button>
+      {!loading && (
+        <Button
+          onClick={() => handleCopy(setIsCopied, wallet)}
+          size="xs"
+          bg={'teal.100'}
+          className="mx-0"
+          aria-label="edit profile"
+          leftIcon={<i className="fa-solid fa-copy" />}
+        >
+          {wallet?.length && formatWallet(wallet)}
+        </Button>
+      )}
       <Transition
         show={isCopied}
         enter="transition-opacity duration-75"

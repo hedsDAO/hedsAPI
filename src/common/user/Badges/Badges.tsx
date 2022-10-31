@@ -1,12 +1,16 @@
-import { User } from '@/models/common';
+import { RootState } from '@/store';
 import { Badge, Skeleton, Stack } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { selectUserBadges } from '@/pages/user/store/selectors';
 
-const Badges = ({ loading, userData }: { loading: boolean; userData: User }) => {
+const Badges = () => {
+  const loading = useSelector((state: RootState) => state.loading.models.userModel);
+  const userBadges = useSelector(selectUserBadges);
   return (
     <Skeleton rounded="md" height="10px" fadeDuration={2} isLoaded={!loading}>
       <Stack direction="row">
-        {userData.badges &&
-          Object.entries(userData.badges).map(([id, badge]) => (
+        {userBadges &&
+          Object.entries(userBadges).map(([id, badge]) => (
             <Badge variant="subtle" colorScheme="purple" key={id}>
               {badge.name}
             </Badge>
