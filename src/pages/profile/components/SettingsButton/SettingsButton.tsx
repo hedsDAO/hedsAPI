@@ -1,12 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
-import { Button } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Cog6ToothIcon } from '@heroicons/react/24/solid';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 const SettingsButton = () => {
   const dispatch = useDispatch<Dispatch>();
   return (
+    <Flex gap={2} alignItems={'stretch'}>
     <Button
       onClick={() => {
         dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
@@ -20,6 +21,7 @@ const SettingsButton = () => {
     >
       Edit profile
     </Button>
+    </Flex>
   );
 };
 

@@ -2,20 +2,25 @@ import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Stack } from '@chakra
 import { RefreshCollectionButton } from '@/common/buttons';
 import { User } from '@/models/common';
 import { isEmpty } from '@/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { selectUserCollection } from '@/pages/user/store/selectors';
 
-const Collection = ({ userData, loading }: { userData: User; loading: boolean }) => {
+const Collection = () => {
+  const loading = useSelector((state: RootState) => state.loading.models.userModel);
+  const collection = useSelector(selectUserCollection);
   return (
     <Stack>
       <Flex justifyContent={'space-between'} alignItems="center">
         <Heading color={'gray.700'} fontSize={'3xl'}>
           Collection
         </Heading>
-        <RefreshCollectionButton userData={userData} loading={loading} />
+        <RefreshCollectionButton />
       </Flex>
       <Divider pt={0} mt={0} border={'1px'} size="md" />
-      {!isEmpty(userData?.collection) ? (
+      {!isEmpty(collection) ? (
         <Grid className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>
-          {Object.values(userData?.collection).map((collectionItem) => {
+          {Object.values(collection).map((collectionItem) => {
             return (
               <GridItem key={collectionItem?.name + collectionItem?.quantity}>
                 <Skeleton w="full" h="fit-content" rounded="lg" isLoaded={!loading} fadeDuration={2}>

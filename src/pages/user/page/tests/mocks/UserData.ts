@@ -32,6 +32,7 @@ const userData: User = {
           tape: 'hedsTAPE 06',
           cover:
             'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F6.png?alt=media&token=72d071a3-9276-47b9-98df-d1b42177c5a8',
+          public: true,
         },
       },
     },
@@ -51,6 +52,7 @@ const userData: User = {
             'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/tapes%2F3%2Faudio%2F5_aj.mp3?alt=media&token=9d848cdf-1397-4fd7-8673-7b4b3f03bea4',
           cover:
             'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F3.png?alt=media&token=5413c9e1-753a-4c74-8b24-823d78aba1e6',
+          public: true,
           wallet: '0xde5bc302fc6d899eab4334602dd15efb20cd745f',
         },
         '5': {
@@ -60,6 +62,7 @@ const userData: User = {
           audio: 'https://www.heds.cloud/ipfs/Qmaf8psHYYhprQpdubAgMrUr4rudLuoeDyoeevweTouRcn',
           cover:
             'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F5.png?alt=media&token=3a94898c-e05a-4c06-8b1b-11150bfd0c98',
+          public: true,
           tape: 'hedsTAPE 05',
           duration: 73.6,
         },
@@ -81,6 +84,7 @@ const userData: User = {
             'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F3.png?alt=media&token=5413c9e1-753a-4c74-8b24-823d78aba1e6',
           audio:
             'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/tapes%2F3%2Faudio%2F5_aj.mp3?alt=media&token=9d848cdf-1397-4fd7-8673-7b4b3f03bea4',
+          public: true,
         },
         '5': {
           wallet: '0xde5bc302fc6d899eab4334602dd15efb20cd745f',
@@ -92,6 +96,7 @@ const userData: User = {
           duration: 73,
           audio:
             'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/tapes%2F6%2Faudio%2F5_al.mp3?alt=media&token=8d7d6ba7-a577-483d-bf8c-6f3784db694e',
+          public: true,
         },
       },
     },

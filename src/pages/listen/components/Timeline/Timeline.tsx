@@ -17,7 +17,7 @@ const Timeline = () => {
     '7 October 2022 12:00:00 GMT-07:00',
     '14 October 2022 12:00:00 GMT-07:00',
     '21 October 2022 12:00:00 GMT-07:00',
-    '30 October 2022 12:00:00 GMT-07:00',
+    '30 November 2022 12:00:00 GMT-07:00',
   ];
   let globTime = DateTime.now().setZone('utc');
   let time = globTime.toLocaleString({
@@ -41,8 +41,6 @@ const Timeline = () => {
     });
     setDeadlines(deadlineTank);
   }, []);
-
-  // console.log(deadlines);
 
   return (
     <Box bg="bg-surface">

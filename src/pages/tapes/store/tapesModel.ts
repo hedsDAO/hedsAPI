@@ -39,17 +39,4 @@ export const tapesModel = createModel<RootModel>()({
     },
     // async getCollabTapeTracks() {},
   }),
-  selectors: (slice) => ({
-    getTapeDataForOwnership() {
-      return slice((tapeData: TapeState) => {
-        if (tapeData?.allTapes) {
-          return (
-            Object.values(tapeData.allTapes)
-              .filter((tape) => tape?.contract?.length)
-              .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name } }), {}) || {}
-          );
-        }
-      });
-    },
-  }),
 });

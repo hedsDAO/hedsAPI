@@ -4,7 +4,7 @@ import { Submissions } from '@/common/user';
 
 describe('Twitter link button component', () => {
   it('renders correct twitter link', () => {
-    render(<Submissions loading={false} userData={userData} />);
+    render(<Submissions />);
     const userSubmissions = screen.queryByTestId('user-submissions');
     const { submissions } = userData;
     if (!submissions) expect(userSubmissions).toBeEmptyDOMElement();

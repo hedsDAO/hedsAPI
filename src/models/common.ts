@@ -69,6 +69,7 @@ export interface TrackMetadata {
   cover: string;
   tape: string;
   wallet: string;
+  public: boolean;
 }
 
 export interface UserCollection {
@@ -136,7 +137,6 @@ export interface TrackArtistMetadata {
   tape: string;
   wallet: string;
 }
-
 
 export enum TimelineStatus {
   PRIVATE = 0,

@@ -4,7 +4,7 @@ import { TwitterLinkButton } from '@/common/buttons';
 
 describe('Twitter link button component', () => {
   it('renders correct twitter link', () => {
-    render(<TwitterLinkButton loading={false} userData={userData} />);
+    render(<TwitterLinkButton />);
     const twitterLink = screen.queryByTestId('user-twitter');
     const { twitterHandle } = userData;
     if (twitterHandle) {

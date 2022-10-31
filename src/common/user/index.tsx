@@ -6,3 +6,4 @@ export { default as ProfilePicture } from './ProfilePicture/ProfilePicture';
 export { default as Samples } from './Samples/Samples';
 export { default as Submissions } from './Submissions/Submissions';
 export { default as Tracks } from './Tracks/Tracks';
+export { default as Banner } from './Banner/Banner';

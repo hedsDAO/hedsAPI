@@ -1,13 +1,18 @@
 import { Fragment } from 'react';
-import { User } from '@/models/common';
-import { Box, Skeleton, Text } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { Skeleton, Text } from '@chakra-ui/react';
+import { selectUserDescription } from '@/pages/user/store/selectors';
 
-const UserDescription = ({ loading, userData }: { loading: boolean; userData: User }) => {
+const UserDescription = () => {
+  const loading = useSelector((state: RootState) => state.loading.models.userModel);
+  const description = useSelector(selectUserDescription);
+
   return (
     <Fragment>
       <Skeleton rounded="md" height="fit-content" fadeDuration={2} isLoaded={!loading}>
-        <Text className='-mt-2' data-testid="user-description" fontSize={'sm'} color={'gray.600'}>
-          {userData?.description || '...'}
+        <Text className="-mt-2" data-testid="user-description" fontSize={'sm'} color={'gray.600'}>
+          {description || '...'}
         </Text>
       </Skeleton>
     </Fragment>

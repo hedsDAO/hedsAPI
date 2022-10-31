@@ -4,7 +4,7 @@ import { ProfilePicture } from '@/common/user';
 
 describe('Profile picture component', () => {
   it('renders correct profile picture', () => {
-    render(<ProfilePicture loading={false} userData={userData} />);
+    render(<ProfilePicture />);
     const profilePictureImage = screen.getByTestId('user-profile-picture');
     const { profilePicture } = userData;
     expect(profilePictureImage).toHaveAttribute('src', profilePicture);

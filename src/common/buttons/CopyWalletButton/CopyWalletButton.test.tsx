@@ -5,14 +5,14 @@ import { formatWallet } from '@/utils';
 
 describe('Twitter link button component', () => {
   it('renders correct twitter link', () => {
-    render(<CopyWalletButton loading={false} wallet={userData.wallet} />);
+    render(<CopyWalletButton />);
     const walletText = screen.queryByTestId('user-wallet');
     const { wallet } = userData;
     expect(walletText).toHaveTextContent(formatWallet(wallet));
   });
 
   it('renders correct twitter link', async () => {
-    render(<CopyWalletButton loading={false} wallet={userData.wallet} />);
+    render(<CopyWalletButton />);
     const copyButton = screen.queryByTestId('user-wallet');
     const copyContainer = screen.queryByTestId('user-copy-container');
     fireEvent.click(copyButton);
