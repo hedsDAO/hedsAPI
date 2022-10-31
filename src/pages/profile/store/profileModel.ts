@@ -1,7 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { User, UserRoles } from '@/models/common';
+import { TrackMetadata, User, UserRoles } from '@/models/common';
 import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 import { emptyUserState } from '@/models/utils';
@@ -28,6 +28,21 @@ export const profileModel = createModel<RootModel>()({
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), newUserData);
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
+      this.setProfileData(newUserData);
+      dispatch.userModel.setUserData(newUserData);
+    },
+    async updateSubmissionVisibility([submission, userData]: [TrackMetadata, User]) {
+      const newUserData = { ...userData };
+      const { role, wallet } = userData;
+      const userSubmissions = newUserData.submissions.heds.hedstape;
+      for (const key in userSubmissions) {
+        if (userSubmissions[key].audio === submission.audio) {
+          userSubmissions[key].public = !userSubmissions[key].public;
+        }
+      }
       if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), newUserData);
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
