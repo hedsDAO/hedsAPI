@@ -14,7 +14,7 @@ const Tracks = () => {
         <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
           <Heading fontSize={'3xl'}>Featured On</Heading>
           <Divider />
-          <Grid className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>
+          <Grid data-testid="user-tracks" className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>
             {Object.entries(userTracks).map(([id, tape]) => {
               return (
                 <GridItem key={tape.wallet + id}>
