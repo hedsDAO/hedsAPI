@@ -8,10 +8,10 @@ const Badges = () => {
   const userBadges = useSelector(selectUserBadges);
   return (
     <Skeleton rounded="md" height="10px" fadeDuration={2} isLoaded={!loading}>
-      <Stack direction="row">
+      <Stack data-testid="user-badge-container" direction="row">
         {userBadges &&
           Object.entries(userBadges).map(([id, badge]) => (
-            <Badge variant="subtle" colorScheme="purple" key={id}>
+            <Badge data-testid="user-badge" variant="subtle" colorScheme="purple" key={id}>
               {badge.name}
             </Badge>
           ))}

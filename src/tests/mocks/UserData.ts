@@ -69,7 +69,48 @@ const userData: User = {
       },
     },
   },
-  collection: {},
+  collection: {
+    '0x8045fd700946a00436923f37d08f280ade3b4af6': {
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F4.png?alt=media&token=f1035070-2eb5-49eb-9dc8-c1ab43506399',
+      name: 'hedsTAPE 04',
+      quantity: 2,
+    },
+    '0x567e687C93103010962F9E9Cf5730Ae8DBFC6d41': {
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F3.png?alt=media&token=5413c9e1-753a-4c74-8b24-823d78aba1e6',
+      name: 'hedsTAPE 03',
+      quantity: 3,
+    },
+    '0xA2acEd918E8cff703b8BB4129a30146A1Dc35675': {
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F8.png?alt=media&token=85033672-edfe-42ce-9987-fa293b3a1bcd',
+      name: 'hedsTAPE 08',
+      quantity: 1,
+    },
+    '0x20F2717F113d0B3815124876F3D72f8E1179341e': {
+      quantity: 1,
+      name: 'hedsTAPE 07',
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F7.png?alt=media&token=6669ac60-7886-4e4e-a41a-6976afb978aa',
+    },
+    '0x5083cF11003f2B25Ca7456717e6dC980545002e5': {
+      quantity: 1,
+      name: 'hedsTAPE 02',
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F2.png?alt=media&token=b37ac39b-243e-411f-820f-17c9b8e454df',
+    },
+    '0xEb8377be44222e90388Ff8BB04be27F9bFC6a98e': {
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F9.png?alt=media&token=1b42feb2-8832-4323-ab56-a93ff7ef18a7',
+      quantity: 1,
+      name: 'hedsTAPE 09',
+    },
+    '0x8f36eB094F7B960a234a482d4d8FFb8b37f728C6': {
+      quantity: 1,
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F6.png?alt=media&token=72d071a3-9276-47b9-98df-d1b42177c5a8',
+      name: 'hedsTAPE 06',
+    },
+    '0xDE8a0b17D3Dc0468AdC65309881D9d6A6Cd66372': {
+      name: 'hedsTAPE 01',
+      image: 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F1.png?alt=media&token=59b78f03-5b26-4e43-8470-a45e33f7791b',
+      quantity: 1,
+    },
+  },
   description: '',
   tracks: {
     heds: {

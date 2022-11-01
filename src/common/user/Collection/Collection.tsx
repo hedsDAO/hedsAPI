@@ -10,7 +10,7 @@ const Collection = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const collection = useSelector(selectUserCollection);
   return (
-    <Stack>
+    <Stack data-testid="user-collection-container">
       <Flex justifyContent={'space-between'} alignItems="center">
         <Heading color={'gray.700'} fontSize={'3xl'}>
           Collection
@@ -20,9 +20,9 @@ const Collection = () => {
       <Divider pt={0} mt={0} border={'1px'} size="md" />
       {!isEmpty(collection) ? (
         <Grid className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>
-          {Object.values(collection).map((collectionItem) => {
+          {Object.values(collection).map((collectionItem, i) => {
             return (
-              <GridItem key={collectionItem?.name + collectionItem?.quantity}>
+              <GridItem data-testid={`user-collection-${i}`} key={collectionItem?.name + collectionItem?.quantity}>
                 <Skeleton w="full" h="fit-content" rounded="lg" isLoaded={!loading} fadeDuration={2}>
                   <div className="relative">
                     <img src={collectionItem?.image} className="object-cover aspect-square rounded-lg object-center hover:opacity-75 shadow-md" />
