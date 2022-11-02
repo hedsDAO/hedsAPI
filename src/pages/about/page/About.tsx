@@ -31,7 +31,7 @@ function classNames(...classes: any) {
 
 export const About = () => {
   return (
-    <div className="relative pb-10 lg:py-5 overflow-hidden bg-[#f5f5f5]">
+    <div className="relative pb-10 lg:py-5 overflow-hidden">
       <div className="relative px-4 sm:px-6 lg:px-8">
         <div className="text-lg max-w-6xl mx-auto">
           <h1>

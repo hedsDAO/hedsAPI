@@ -3,62 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { useParams } from 'react-router-dom';
 import { Header, Timeline } from '@/pages/listen/components';
-import { formatTime, formatWallet } from '@/utils';
+import { formatTime, formatWallet, classNames } from '@/utils';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 export const HedsTape = () => {
   const dispatch = useDispatch<Dispatch>();
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
   const { currentTape } = useSelector((state: RootState) => state.tapesModel);
-
   return (
     <div className="">
       <Header />
       <Divider my={5} />
-      <Grid maxW="7xl" mx="auto" templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }} gap={2}>
-        <GridItem px={{ base: '5', md: '3' }} colSpan={2}>
-          <Flex alignItems={'center'} justifyContent={'center'} direction={'column'} shadow="md" rounded="lg" w={'full'} h={'full'} bg="gray.200">
-            <Text py={2} color="gray.700">
-              Current Step
-            </Text>
-            <Text color="gray.400" fontSize={'xs'}>
-              Info on the current step ...
-            </Text>
-            <Flex py={3} gap={2}>
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.SAMPLE_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
-                }}
-                size={'sm'}
-              >
-                Sample
-              </Button>
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.SUBMIT_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
-                }}
-                size={'sm'}
-              >
-                Submit
-              </Button>
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.MINT_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
-                }}
-                size={'sm'}
-              >
-                Mint
-              </Button>
-            </Flex>
-          </Flex>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <Timeline />
-        </GridItem>
-      </Grid>
+      <Flex rounded="sm" w={{ base: '90%', sm: '95%', lg: 'full' }} maxW="7xl" mx={'auto'} h="32" bg="gray.200"></Flex>
+      <Divider my={5} />
+      <Timeline />
       <Divider my={5} />
       <Heading fontSize={{ base: 'xl', md: '2xl' }} mx="auto" maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
         Tracks

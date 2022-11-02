@@ -7,16 +7,16 @@ import { HedsTape } from '@/pages/listen/screens/HedsTape/HedsTape';
 
 export const Listen = () => {
   const dispatch = useDispatch<Dispatch>();
-
   const { tape, id } = useParams<{ space?: string; tape: string; id: string }>();
-  const { hedsTapes, currentTape } = useSelector((state: RootState) => state.tapesModel);
+  const { hedsTapes } = useSelector((state: RootState) => state.tapesModel);
   const { artistMapping } = useSelector((state: RootState) => state.artistModel);
 
   useEffect(() => {
     if (!isEmpty(hedsTapes) && tape && id && !isEmpty(artistMapping)) {
       dispatch.tapesModel.getHedsTapeArtists([hedsTapes?.[id], artistMapping]);
+      dispatch.hedstapeModel.getTapeTimeline(hedsTapes?.[id]);
     }
   }, [hedsTapes, tape, id]);
 
-  return <div className="bg-[#f5f5f5]">{tape === 'hedstape' && <HedsTape />}</div>;
+  return <div className="">{tape === 'hedstape' && <HedsTape />}</div>;
 };

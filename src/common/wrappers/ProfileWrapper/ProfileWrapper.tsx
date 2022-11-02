@@ -26,7 +26,7 @@ const ProfileWrapper = ({ children }: { children: React.ReactNode }) => {
       dispatch.userModel.clearUserState();
     };
   }, [pathname]);
-  return <div className="bg-[#f5f5f5]">{children}</div>;
+  return <>{children}</>;
 };
 
 export default ProfileWrapper;

@@ -8,7 +8,6 @@ export const Collab = () => {
   const { collabTapes } = useSelector((state: RootState) => state.tapesModel);
   const loading = useSelector((state: RootState) => state.loading.models.tapesModel);
   return (
-    <div className="bg-[#f5f5f5]">
       <div className="">
         {collabTapes &&
           Object.values(collabTapes)?.map((tape, index) => {
@@ -95,6 +94,5 @@ export const Collab = () => {
           </div>
         </>
       </div>
-    </div>
   );
 };

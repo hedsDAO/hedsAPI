@@ -148,6 +148,16 @@ export enum TimelineStatus {
 }
 
 export interface Timeline {
-  status: number;
-  countdowns?: [string, string, string, string, string];
+  submit: {
+    start: number;
+    end: number;
+  };
+  vote: {
+    start: number;
+    end: number;
+  };
+  mint: {
+    start: number;
+    end: number;
+  };
 }

@@ -8,7 +8,7 @@ export const Profile = () => {
   return (
     <ProfileWrapper>
       <Banner />
-      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={8} px={[10, 4, 2, 0]} py={4}>
+      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={[2, 4, 8, 12]} px={[12, 8, 4, 2]} py={2}>
         <Stack direction={'column'}>
           <ProfilePicture />
           <SettingsButton />
@@ -24,9 +24,9 @@ export const Profile = () => {
             <VerifyTwitterButton />
           </Flex>
         </Stack>
-        <Stack mt={{ base: '0', md: '36' }} direction={'column'} spacing="10" width={'full'}>
-          <Tracks />
+        <Stack mt={{ base: '0', md: '40' }} direction={'column'} spacing="10" width={'full'}>
           <Submissions />
+          <Tracks />
           <Collection />
           <Samples />
         </Stack>

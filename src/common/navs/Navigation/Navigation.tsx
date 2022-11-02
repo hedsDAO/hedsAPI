@@ -4,6 +4,7 @@ import { ConnectButton } from '@/common/buttons';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Fragment, useState } from 'react';
+import { Flex, Text } from '@chakra-ui/react';
 
 const navigation = [
   { name: 'Explore', href: '/explore' },
@@ -17,10 +18,10 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   return (
-    <Disclosure as="nav" className="bg-[#f5f5f5]">
+    <Disclosure as="nav" className="lg:pt-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-3">
         <div className="flex h-16 justify-between items-center">
-          <div className="flex">
+          <div className="flex items-baseline">
             <div className="-ml-2 mr-2 flex items-center md:hidden">
               <Disclosure.Button
                 onClick={() => setIsOpen(!isOpen)}
@@ -34,16 +35,22 @@ const Navigation = () => {
                 )}
               </Disclosure.Button>
             </div>
-            <div className="flex flex-shrink-0 items-center -mb-1">
+            <Flex alignItems={'baseline'} gap={2.5}>
               <Link to="/">
                 <img
-                  className="hidden h-8 w-auto md:block invert"
+                  className="hidden h-6 w-auto md:block invert"
                   src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Flogo.png?alt=media&token=11a43a45-07cb-4c63-8f6e-d18d77994bf6"
                   alt="heds"
                 />
               </Link>
-            </div>
-            <ul className={`md:inline hidden static py-1 text-left px-5`}>
+              <Link className="lg:inline hidden" to="/">
+                <Text fontSize={'3xl'} fontWeight={'bold'}>
+                  heds
+                </Text>
+              </Link>
+            </Flex>
+
+            <ul className={`md:inline hidden static text-left px-5 pb-5`}>
               <div
                 className={`inline-flex text-sm items-center justify-start navbar-parent text-neutral-400 dark:text-neutral-300 font-semibold tracking-widest`}
               >
