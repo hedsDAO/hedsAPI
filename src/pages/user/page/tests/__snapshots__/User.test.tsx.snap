@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="bg-[#f5f5f5]"
+        class=""
       >
         <img
           class="object-fit object-cover w-screen -mb-32 bg-gray-600 shadow-sm css-bzcbpt"
@@ -256,10 +256,10 @@ Object {
                 role="list"
               >
                 <div
-                  class="chakra-stack css-hxjtip"
+                  class="chakra-stack css-1uzszlh"
                 >
                   <li
-                    class="text-sm text-gray-600 rounded-md"
+                    class="text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm"
                   >
                     <div
                       class="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
@@ -270,17 +270,22 @@ Object {
                         src="https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F3.png?alt=media&token=5413c9e1-753a-4c74-8b24-823d78aba1e6"
                       />
                       <span
-                        class="text-xs sm:inline hidden font-light"
+                        class="text-xs sm:inline hidden font-light whitespace-nowrap"
                       >
                         hedsTAPE 03
                       </span>
                       <div
-                        class="min-w-0 flex-1 sm:flex text-xs text-neutral-800"
+                        class="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap"
                       >
                         witty donkey
                       </div>
                       <span
-                        class="mr-2 sm:mr-4"
+                        class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
+                      >
+                        private
+                      </span>
+                      <span
+                        class="mr-2 sm:mr-4 whitespace-nowrap"
                       >
                         1:17
                       </span>
@@ -297,7 +302,7 @@ Object {
                       </button>
                       <button
                         aria-label="add to queue"
-                        class="chakra-button flex-shrink-0 css-1x16842"
+                        class="chakra-button flex-shrink-0 css-1i707w2"
                         type="button"
                       >
                         <i
@@ -309,7 +314,7 @@ Object {
                     </div>
                   </li>
                   <li
-                    class="text-sm text-gray-600 rounded-md"
+                    class="text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm"
                   >
                     <div
                       class="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
@@ -320,17 +325,22 @@ Object {
                         src="https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F5.png?alt=media&token=3a94898c-e05a-4c06-8b1b-11150bfd0c98"
                       />
                       <span
-                        class="text-xs sm:inline hidden font-light"
+                        class="text-xs sm:inline hidden font-light whitespace-nowrap"
                       >
                         hedsTAPE 05
                       </span>
                       <div
-                        class="min-w-0 flex-1 sm:flex text-xs text-neutral-800"
+                        class="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap"
                       >
                         fretful dormouse
                       </div>
                       <span
-                        class="mr-2 sm:mr-4"
+                        class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
+                      >
+                        private
+                      </span>
+                      <span
+                        class="mr-2 sm:mr-4 whitespace-nowrap"
                       >
                         1:13
                       </span>
@@ -347,7 +357,7 @@ Object {
                       </button>
                       <button
                         aria-label="add to queue"
-                        class="chakra-button flex-shrink-0 css-1x16842"
+                        class="chakra-button flex-shrink-0 css-1i707w2"
                         type="button"
                       >
                         <i
@@ -675,7 +685,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="bg-[#f5f5f5]"
+      class=""
     >
       <img
         class="object-fit object-cover w-screen -mb-32 bg-gray-600 shadow-sm css-bzcbpt"
@@ -925,10 +935,10 @@ Object {
               role="list"
             >
               <div
-                class="chakra-stack css-hxjtip"
+                class="chakra-stack css-1uzszlh"
               >
                 <li
-                  class="text-sm text-gray-600 rounded-md"
+                  class="text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm"
                 >
                   <div
                     class="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
@@ -939,17 +949,22 @@ Object {
                       src="https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F3.png?alt=media&token=5413c9e1-753a-4c74-8b24-823d78aba1e6"
                     />
                     <span
-                      class="text-xs sm:inline hidden font-light"
+                      class="text-xs sm:inline hidden font-light whitespace-nowrap"
                     >
                       hedsTAPE 03
                     </span>
                     <div
-                      class="min-w-0 flex-1 sm:flex text-xs text-neutral-800"
+                      class="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap"
                     >
                       witty donkey
                     </div>
                     <span
-                      class="mr-2 sm:mr-4"
+                      class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
+                    >
+                      private
+                    </span>
+                    <span
+                      class="mr-2 sm:mr-4 whitespace-nowrap"
                     >
                       1:17
                     </span>
@@ -966,7 +981,7 @@ Object {
                     </button>
                     <button
                       aria-label="add to queue"
-                      class="chakra-button flex-shrink-0 css-1x16842"
+                      class="chakra-button flex-shrink-0 css-1i707w2"
                       type="button"
                     >
                       <i
@@ -978,7 +993,7 @@ Object {
                   </div>
                 </li>
                 <li
-                  class="text-sm text-gray-600 rounded-md"
+                  class="text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm"
                 >
                   <div
                     class="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
@@ -989,17 +1004,22 @@ Object {
                       src="https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F5.png?alt=media&token=3a94898c-e05a-4c06-8b1b-11150bfd0c98"
                     />
                     <span
-                      class="text-xs sm:inline hidden font-light"
+                      class="text-xs sm:inline hidden font-light whitespace-nowrap"
                     >
                       hedsTAPE 05
                     </span>
                     <div
-                      class="min-w-0 flex-1 sm:flex text-xs text-neutral-800"
+                      class="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap"
                     >
                       fretful dormouse
                     </div>
                     <span
-                      class="mr-2 sm:mr-4"
+                      class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
+                    >
+                      private
+                    </span>
+                    <span
+                      class="mr-2 sm:mr-4 whitespace-nowrap"
                     >
                       1:13
                     </span>
@@ -1016,7 +1036,7 @@ Object {
                     </button>
                     <button
                       aria-label="add to queue"
-                      class="chakra-button flex-shrink-0 css-1x16842"
+                      class="chakra-button flex-shrink-0 css-1i707w2"
                       type="button"
                     >
                       <i

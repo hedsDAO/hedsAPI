@@ -47,7 +47,7 @@ body {
   height: 2px;
   width: 0%;
   content: '';
-  background-color: #701a75;
+  background-color: #000000;
 }
 .navbar-parent a:after {
   left: 0;
@@ -83,4 +83,22 @@ body {
 
 .bs-preset-2 {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 5px 8px -6px, rgba(0, 0, 0, 0.3) 0px 6px 9px -4px;
+}
+
+.gradient {
+	background: linear-gradient(-45deg, #ee6652d2, #e6673c7e, #2366a6d5, #2366d5ab);
+	background-size: 500% 500%;
+	animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

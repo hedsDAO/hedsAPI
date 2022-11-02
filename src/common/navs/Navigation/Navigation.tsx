@@ -20,7 +20,7 @@ const Navigation = () => {
   return (
     <Disclosure as="nav" className="lg:pt-10 lg:pb-4">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-3">
-        <div className="flex h-16 justify-between items-baseline">
+        <div className="flex h-16 justify-between items-center">
           <div className="flex items-baseline">
             <div className="-ml-2 mr-2 flex items-center md:hidden">
               <Disclosure.Button
@@ -35,21 +35,21 @@ const Navigation = () => {
                 )}
               </Disclosure.Button>
             </div>
-            <Flex alignItems={'baseline'} gap={4} mr={5}>
-              <Link className="inline lg:hidden" to="/">
+            <Flex alignItems={'baseline'} gap={4} mr={1}>
+              <Link className="self-end lg:hidden" to="/">
                 <img
-                  className="hidden h-6 w-auto md:block invert opacity-60 animate-pulse"
+                  className="hidden h-4 w-auto md:block invert opacity-60 animate-pulse"
                   src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Flogo.png?alt=media&token=11a43a45-07cb-4c63-8f6e-d18d77994bf6"
                   alt="heds"
                 />
               </Link>
               <Link className="lg:inline hidden relative top-1" to="/">
-                <Text fontSize={'5xl'} fontWeight={'bold'}>
+                <Text fontSize={'4xl'} fontWeight={'bold'} letterSpacing='tight'>
                   heds
                 </Text>
               </Link>
             </Flex>
-            <ul className={`md:inline hidden static text-left px-5`}>
+            <ul className={`md:inline hidden bottom-[1px] relative text-left px-4`}>
               <div
                 className={`inline-flex text-sm items-center justify-start navbar-parent text-neutral-400 dark:text-neutral-300 font-semibold tracking-widest`}
               >
