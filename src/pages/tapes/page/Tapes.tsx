@@ -23,7 +23,7 @@ export const Tapes = () => {
         >
           Releases
         </Heading>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
           {hedsTapes && (
             <Fragment>
               {Object.values(hedsTapes)
@@ -48,7 +48,8 @@ export const Tapes = () => {
                           />
                         </AspectRatio>
                       </Skeleton>
-                      <div className="flex flex-col justify-center px-4 py-3 group-hover:bg-gray-500/20 duration-500">
+                      <Divider />
+                      <div className="flex flex-col justify-center px-4 py-4 group-hover:bg-gray-500/20 duration-500">
                         <div className="flex flex-col justify-center">
                           <h3 className="text-2xl text-gray-700 font-bold tracking-widest w-full text-right">
                             {tape.name.split(' ')[0]}

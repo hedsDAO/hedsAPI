@@ -44,12 +44,12 @@ const Navigation = () => {
                 />
               </Link>
               <Link className="lg:inline hidden relative top-1" to="/">
-                <Text fontSize={'4xl'} fontWeight={'bold'} letterSpacing='tight'>
+                <Text fontSize={'4xl'} fontWeight={'bold'} letterSpacing="tight">
                   heds
                 </Text>
               </Link>
             </Flex>
-            <ul className={`md:inline hidden bottom-[1px] relative text-left px-4`}>
+            <ul className={`md:inline hidden sticky text-left px-4`}>
               <div
                 className={`inline-flex text-sm items-center justify-start navbar-parent text-neutral-400 dark:text-neutral-300 font-semibold tracking-widest`}
               >
