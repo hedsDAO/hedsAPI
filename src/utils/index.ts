@@ -12,3 +12,4 @@ export { default as formatUserCollection } from './formatUserCollection';
 export { default as getCurrentImagePath } from './getCurrentImagePath';
 export { default as formWaveSurferOptions } from './formWaveSurferOptions';
 export { default as formatTimestamp } from './formatTimestamp';
+export { default as compareTimestamps } from './compareTimestamps';

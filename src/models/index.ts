@@ -4,6 +4,7 @@ import { modalModel } from '@/modules/modals/store/modalModel';
 import { profileModel } from '@/pages/profile/store/profileModel';
 import { artistModel } from '@/pages/artists/store/artistModel';
 import { tapesModel } from '@/pages/tapes/store/tapesModel';
+import { hedstapeModel } from '@/pages/listen/store/hedstapeModel';
 import { audioModel } from '@/modules/audio/store/audioModel';
 import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
@@ -17,6 +18,7 @@ export interface RootModel extends Models<RootModel> {
   audioModel: typeof audioModel;
   settingsModel: typeof settingsModel;
   twitterModel: typeof twitterModel;
+  hedstapeModel: typeof hedstapeModel;
 }
 
 export const models: RootModel = {
@@ -28,4 +30,5 @@ export const models: RootModel = {
   audioModel,
   settingsModel,
   twitterModel,
+  hedstapeModel,
 };

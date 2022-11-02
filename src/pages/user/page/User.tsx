@@ -5,7 +5,7 @@ import { Tracks, Submissions, ProfilePicture, DisplayName, Description, Collecti
 
 export const User = () => {
   return (
-    <div className="bg-[#f5f5f5]">
+    <div className="">
       <Banner />
       <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={10} px={[10, 4, 2, 0]} py={4}>
         <UserWrapper>
