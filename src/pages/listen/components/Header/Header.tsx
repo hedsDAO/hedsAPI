@@ -1,5 +1,6 @@
 import { RootState } from '@/store';
 import { Button, Flex, Image, Link, Stack, Text } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -10,7 +11,7 @@ const Header = () => {
   return (
     <Fragment>
       <Flex className="group" px={2} maxW={'7xl'} mx={'auto'}>
-        <Text fontSize={'xs'}>
+        <Text to={'/tapes'} as={ReactLink} fontSize={'xs'}>
           <i className="fa-solid fa-arrow-left group-hover:mr-4 mr-2 ease-in-out transition-all" />
           view all tapes
         </Text>
