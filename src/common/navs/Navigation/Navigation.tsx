@@ -18,9 +18,9 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   return (
-    <Disclosure as="nav" className="lg:pt-10">
+    <Disclosure as="nav" className="lg:pt-10 lg:pb-4">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-3">
-        <div className="flex h-16 justify-between items-center">
+        <div className="flex h-16 justify-between items-baseline">
           <div className="flex items-baseline">
             <div className="-ml-2 mr-2 flex items-center md:hidden">
               <Disclosure.Button
@@ -35,27 +35,26 @@ const Navigation = () => {
                 )}
               </Disclosure.Button>
             </div>
-            <Flex alignItems={'baseline'} gap={2.5}>
-              <Link to="/">
+            <Flex alignItems={'baseline'} gap={4} mr={5}>
+              <Link className="inline lg:hidden" to="/">
                 <img
-                  className="hidden h-6 w-auto md:block invert"
+                  className="hidden h-6 w-auto md:block invert opacity-60 animate-pulse"
                   src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Flogo.png?alt=media&token=11a43a45-07cb-4c63-8f6e-d18d77994bf6"
                   alt="heds"
                 />
               </Link>
-              <Link className="lg:inline hidden" to="/">
-                <Text fontSize={'3xl'} fontWeight={'bold'}>
+              <Link className="lg:inline hidden relative top-1" to="/">
+                <Text fontSize={'5xl'} fontWeight={'bold'}>
                   heds
                 </Text>
               </Link>
             </Flex>
-
-            <ul className={`md:inline hidden static text-left px-5 pb-5`}>
+            <ul className={`md:inline hidden static text-left px-5`}>
               <div
                 className={`inline-flex text-sm items-center justify-start navbar-parent text-neutral-400 dark:text-neutral-300 font-semibold tracking-widest`}
               >
                 {navigation.map((item, i) => (
-                  <div key={item.href + i}>
+                  <div className="" key={item.href + i}>
                     {pathname === item.href ? (
                       <li className="current text-gray-600" data-hover={item.name}>
                         <Link to={item.href}>{item.name}</Link>
