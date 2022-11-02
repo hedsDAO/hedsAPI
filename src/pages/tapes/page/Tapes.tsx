@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useNavigate } from 'react-router-dom';
-import { Heading, Image, AspectRatio, Skeleton } from '@chakra-ui/react';
+import { Heading, Image, AspectRatio, Skeleton, Divider } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
 import { Fragment } from 'react';
 
@@ -14,9 +14,9 @@ export const Tapes = () => {
       <div className="mx-auto w-full px-10">
         <Heading
           className="animate__animated animate__fadeInUp"
-          fontWeight={'bold'}
-          size={['2xl', '4xl']}
-          color={'black'}
+          fontWeight={'semibold'}
+          size={['xl', '2xl']}
+          color={'gray.800'}
           mt={{ base: 5, lg: 10 }}
           mb={3}
           p={1}
@@ -48,7 +48,7 @@ export const Tapes = () => {
                           />
                         </AspectRatio>
                       </Skeleton>
-                      <div className="flex flex-col justify-center px-4 py-5 group-hover:bg-gray-500/20 duration-500">
+                      <div className="flex flex-col justify-center px-4 py-3 group-hover:bg-gray-500/20 duration-500">
                         <div className="flex flex-col justify-center">
                           <h3 className="text-2xl text-gray-700 font-bold tracking-widest w-full text-right">
                             {tape.name.split(' ')[0]}
