@@ -3,15 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { useParams } from 'react-router-dom';
 import { Header, Timeline } from '@/pages/listen/components';
-import { formatTime, formatWallet, classNames } from '@/utils';
-import { Modals } from '@/modules/modals/store/modalModel';
+import { formatTime, formatWallet } from '@/utils';
 
 export const HedsTape = () => {
   const dispatch = useDispatch<Dispatch>();
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
   const { currentTape } = useSelector((state: RootState) => state.tapesModel);
   return (
-    <div className="">
+    <div className="pt-10">
       <Header />
       <Divider my={5} />
       <Flex rounded="sm" w={{ base: '90%', sm: '95%', lg: 'full' }} maxW="7xl" mx={'auto'} h="32" bg="gray.200"></Flex>

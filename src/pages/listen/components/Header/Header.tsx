@@ -18,20 +18,20 @@ const Header = () => {
       py={4}
     >
       <Stack direction={'column'}>
-        <Image className="bs-preset-1" maxH={'18rem'} maxW={'18rem'} minH={'18rem'} minW={'18rem'} rounded="lg" src={hedsTapes?.[id]?.image} />
+        <Image className="bs-preset-1" maxH={'18rem'} maxW={'18rem'} minH={'18rem'} minW={'18rem'} rounded="sm" src={hedsTapes?.[id]?.image} />
       </Stack>
       <Stack direction={'column'} spacing="2" width={'full'} alignItems={['center', 'center', 'center', 'start']} justifyContent="center">
         <Text fontWeight={'semibold'} fontSize={'4xl'}>
           {hedsTapes?.[id]?.name}
         </Text>
-        <Flex pb={3} gap={2}>
-          <Button as={Link} to={{ pathname: hedsTapes?.[id]?.opensea }} bg={'twitter.200'} size={'xs'} leftIcon={<i className="fak fa-opensea text-xs" />}>
+        {/* <Flex pb={3} gap={2}>
+          <Button as={Link} to={{ pathname: hedsTapes?.[id]?.opensea }} bg={'blue.200'} rounded="md" size={'xs'} leftIcon={<i className="fak fa-opensea text-xs" />}>
             OpenSea
           </Button>
-          <Button as={Link} to={{ pathname: hedsTapes?.[id]?.etherscan }} bg={'gray.200'} size={'xs'} leftIcon={<i className="fak fa-etherscan text-xs" />}>
+          <Button as={Link} to={{ pathname: hedsTapes?.[id]?.etherscan }} bg={'gray.200'} rounded="md" size={'xs'} leftIcon={<i className="fak fa-etherscan text-xs" />}>
             Etherscan
           </Button>
-        </Flex>
+        </Flex> */}
         <Text textAlign={['center', 'center', 'center', 'start']} fontWeight={'light'} fontSize={'xs'} maxWidth={'md'}>
           {hedsTapes?.[id]?.description}
         </Text>
