@@ -5,54 +5,22 @@ import { User, ArtistMapping, UserRoles } from '../../../models/common';
 import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 
-export enum ArtistSort {
-  ALPHA_ASC = 0,
-  ALPHA_DESC,
-}
-
 export interface ArtistState {
   artist: User;
   allArtists: Array<User>;
   allCurators: Array<User>;
   artistMapping: ArtistMapping;
   totalArtists: number;
-  totalPages: number;
-  currentPage: number;
-  currentSort: ArtistSort;
 }
 
 export const artistModel = createModel<RootModel>()({
-  state: {
-    currentSort: ArtistSort.ALPHA_ASC,
-  } as ArtistState,
+  state: {} as ArtistState,
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),
     setAllArtists: (state, allArtists: any) => ({ ...state, allArtists }),
     setAllCurators: (state, allCurators: any) => ({ ...state, allCurators }),
     setArtistMapping: (state, artistMapping: any) => ({ ...state, artistMapping }),
     setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
-    setTotalPages: (state, totalPages: number) => ({ ...state, totalPages }),
-    setCurrentPage: (state, currentPage: number) => ({ ...state, currentPage }),
-    setArtistSort: (state, currentSort: ArtistSort) => {
-      const newState = { ...state };
-      const allArtists = newState.allArtists;
-      if (currentSort === ArtistSort.ALPHA_ASC) {
-        allArtists.sort((a, b) => a.displayName.localeCompare(b.displayName));
-      } else allArtists.reverse();
-      return { ...state, allArtists, currentSort, currentPage: 1 };
-    },
-    setPreviousPage: (state) => {
-      const newState = { ...state };
-      const currentPage = newState.currentPage - 1;
-      if (currentPage) return { ...state, currentPage };
-      else return { ...state };
-    },
-    setNextPage: (state) => {
-      const newState = { ...state };
-      const currentPage = newState.currentPage + 1;
-      if (currentPage <= newState.totalPages) return { ...state, currentPage };
-      else return { ...state };
-    },
   },
   effects: () => ({
     async getArtistData(wallet: string) {
@@ -73,8 +41,6 @@ export const artistModel = createModel<RootModel>()({
       const artistMapping: { [key: string]: User } = {};
       const artistSnapshot = await getDocs(query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)));
       this.setTotalArtists(artistSnapshot.size);
-      this.setTotalPages(Math.ceil(artistSnapshot.size / 10));
-      this.setCurrentPage(1);
       artistSnapshot.forEach((res: DocumentData) => {
         const currentArtist: User = res.data();
         artistMapping[res.id] = res.data();
