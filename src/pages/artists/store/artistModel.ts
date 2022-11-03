@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 import { collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
 import type { RootModel } from '@/models';
-import { User, ArtistMapping } from '../../../models/common';
+import { User, ArtistMapping, UserRoles } from '../../../models/common';
 import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 
@@ -13,6 +13,7 @@ export enum ArtistSort {
 export interface ArtistState {
   artist: User;
   allArtists: Array<User>;
+  allCurators: Array<User>;
   artistMapping: ArtistMapping;
   totalArtists: number;
   totalPages: number;
@@ -27,6 +28,7 @@ export const artistModel = createModel<RootModel>()({
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),
     setAllArtists: (state, allArtists: any) => ({ ...state, allArtists }),
+    setAllCurators: (state, allCurators: any) => ({ ...state, allCurators }),
     setArtistMapping: (state, artistMapping: any) => ({ ...state, artistMapping }),
     setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
     setTotalPages: (state, totalPages: number) => ({ ...state, totalPages }),
@@ -66,6 +68,7 @@ export const artistModel = createModel<RootModel>()({
       }
     },
     async getAllArtists() {
+      const curatorTank: Array<User> = [];
       const artistTank: Array<User> = [];
       const artistMapping: { [key: string]: User } = {};
       const artistSnapshot = await getDocs(query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)));
@@ -73,11 +76,14 @@ export const artistModel = createModel<RootModel>()({
       this.setTotalPages(Math.ceil(artistSnapshot.size / 10));
       this.setCurrentPage(1);
       artistSnapshot.forEach((res: DocumentData) => {
+        const currentArtist: User = res.data();
         artistMapping[res.id] = res.data();
         artistTank.push(res.data());
+        if (currentArtist.role === UserRoles.CURATOR) curatorTank.push(res.data());
       });
       artistTank.sort((a, b) => a.displayName.localeCompare(b.displayName));
       this.setArtistMapping(artistMapping);
+      this.setAllCurators(curatorTank);
       this.setAllArtists(artistTank);
     },
   }),

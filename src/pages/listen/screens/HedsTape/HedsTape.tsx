@@ -4,7 +4,7 @@ import { ViewTapesButton } from '@/common/buttons';
 
 export const HedsTape = () => {
   return (
-    <Container maxW="7xl">
+    <Container maxW="7xl" pt={3}>
       <ViewTapesButton />
       <Header />
       <Divider my={5} />
