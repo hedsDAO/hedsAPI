@@ -1,69 +1,95 @@
 import { Fragment } from 'react';
 import { Dispatch, RootState } from 'src/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { ArtistSort } from '@/pages/artists/store/artistModel';
-import { PaginationBar } from '@/pages/artists/components/PaginationBar';
-import { TapeIcons } from '@/pages/artists/components/TapeIcons';
-import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
-import { isEmpty } from '@/utils';
+import { useNavigate } from 'react-router-dom';
+import { formatWallet } from '@/utils';
+import { Container, Divider, Flex, Heading, Image, Skeleton, Text } from '@chakra-ui/react';
+import Marquee from 'react-fast-marquee';
 
 export const Artists = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch>();
-  const { allArtists, currentPage, currentSort } = useSelector((state: RootState) => state.artistModel);
+  const loading = useSelector((state: RootState) => state.loading.models.artistModel);
+  const { allArtists, allCurators, currentPage, currentSort } = useSelector((state: RootState) => state.artistModel);
   return (
     <>
       {allArtists && (
         <Fragment>
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-4 mb-4">
-            <div className="flex flex-1 justify-between px-1">
-              <span className="flex items-center text-center uppercase tracking-widest text-gray-200 bg-neutral-950 px-5 py-1 rounded-full shadow-sm gap-x-2">
-                <i className="fa-sharp fa-solid fa-user text-sm"></i> Artists
-              </span>
-              <button
-                onClick={
-                  currentSort === ArtistSort.ALPHA_ASC
-                    ? () => dispatch.artistModel.setArtistSort(ArtistSort.ALPHA_DESC)
-                    : () => dispatch.artistModel.setArtistSort(ArtistSort.ALPHA_ASC)
-                }
-                className="px-2 bg-neutral-950 rounded-full shadow-sm"
-              >
-                <AdjustmentsHorizontalIcon
-                  className={currentSort === ArtistSort.ALPHA_ASC ? 'rotate-180 h-5 w-5 text-gray-200 transition-all' : 'h-5 w-5 text-gray-200 transition-all'}
-                />
-              </button>
+          <Container maxW="7xl" className="mx-auto pb-5">
+            <div className="mx-auto w-full px-4 lg:px-1">
+              <Heading fontWeight={'bold'} letterSpacing={'tight'} size={['lg', 'xl']} color={'gray.800'} mt={{ base: 5, lg: 10 }} mb={3} p={1}>
+                Sample Curators
+              </Heading>
             </div>
-            <div className="my-8 grid grid-rows-2 grid-cols-2 gap-y-4 gap-x-3 xl:grid-cols-5 xl:gap-x-4">
-              {allArtists.slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10).map((artist) => (
-                <div key={artist?.wallet} className="group bg-gray-100 relative rounded-md p-2 shadow-md border border-neutral-300 col-span-1">
-                  <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md group-hover:opacity-80 transition-all lg:aspect-square shadow-sm hover:shadow-md">
-                    {!isEmpty(artist.samples) && (
-                      <span className="absolute top-4 left-4 lg:top-3.5 lg:left-3.5 flex items-center rounded-full lg:-space-x-1 text-xs bg-gray-100 text-neutral-600 border border-gray-100 px-2 py-0.5 tracking-tight shadow-md font-semibold">
-                        <i className="fa-sharp fa-solid fa-waveform-lines mr-1"></i> curator
-                      </span>
-                    )}
-                    <img
-                      src={artist?.profilePicture}
-                      alt={artist?.displayName}
-                      className="h-full w-full object-cover aspect-square object-center lg:h-full lg:w-full rounded-lg shadow-md"
-                    />
-                    {<TapeIcons user={artist} />}
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <div className="flex justify-start">
-                      <h3 className="text-sm text-gray-800 tracking-widest py-1.5 px-3 w-full mt-2 bg-white rounded-lg shadow-sm border border-gray-300">
-                        <Link to={'/u/' + artist.wallet}>
-                          <span aria-hidden="true" className="absolute inset-0 truncate" />
-                          {artist?.displayName}
-                        </Link>
-                      </h3>
+            <Marquee gradient={false}>
+              {allCurators?.length &&
+                allCurators.map((curator) => {
+                  return (
+                    <div
+                      role="button"
+                      onClick={() => navigate('/u/' + curator.wallet)}
+                      key={curator.wallet + curator.banner}
+                      className="group bg-gray-50 relative col-span-1 rounded-sm bs-preset-1 m-2"
+                    >
+                      <Flex direction={'column'} className="col-span-1">
+                        <Skeleton fadeDuration={3} className="col-span-1" isLoaded={!loading}>
+                          <Image
+                            maxH={{ base: '10rem', lg: '10rem' }}
+                            maxW={{ base: 'full', lg: '10rem' }}
+                            minH={{ base: '10rem', lg: '10rem' }}
+                            minW={{ base: 'full', lg: '10rem' }}
+                            src={curator.profilePicture}
+                            alt={curator.displayName}
+                            objectFit="contain"
+                            rounded="sm"
+                            className="aspect-square group-hover:saturate-0 group-hover:rounded-sm ease-in-out transition-all duration-300"
+                          />
+                        </Skeleton>
+                        <Flex direction={'column'} py={2}>
+                          <Text maxW="10rem" className="truncate" fontWeight={'semibold'} fontSize={{ base: 'xs', lg: 'base' }} px={3}>
+                            {curator.displayName}
+                          </Text>
+                          <Text px={3} textColor={'gray.400'} fontSize={'xs'}>
+                            {formatWallet(curator.wallet)}
+                          </Text>
+                        </Flex>
+                      </Flex>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  );
+                })}
+            </Marquee>
+          </Container>
+          <Divider my={3} />
+          <Container maxW="7xl" className="mx-auto">
+            <div className="mx-auto w-full px-4 lg:px-1">
+              <Heading fontWeight={'bold'} letterSpacing={'tight'} size={['xl', '2xl']} color={'gray.800'} mt={{ base: 5, lg: 10 }} mb={3} p={1}>
+                Artists
+              </Heading>
             </div>
-          </div>
-          <PaginationBar />
+            <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 px-3">
+              {allArtists?.length &&
+                allArtists.map((artist) => {
+                  return (
+                    <Flex className="col-span-1">
+                      <Skeleton fadeDuration={3} className="col-span-1" isLoaded={!loading}>
+                        <Image
+                          w="full"
+                          maxH={{ base: 'full' }}
+                          maxW={{ base: 'full' }}
+                          minH={{ base: 'full' }}
+                          minW={{ base: 'full' }}
+                          src={artist.profilePicture}
+                          alt={artist.displayName}
+                          objectFit="cover"
+                          rounded="sm"
+                          className="aspect-square group-hover:saturate-0 group-hover:rounded-sm ease-in-out transition-all duration-300"
+                        />
+                      </Skeleton>
+                    </Flex>
+                  );
+                })}
+            </div>
+          </Container>
         </Fragment>
       )}
     </>
