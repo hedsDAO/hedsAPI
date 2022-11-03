@@ -16,7 +16,6 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
   const getTimeUntil = (deadline: number) => {
     const currentTime = new Date();
     const time = deadline - Date.parse(String(currentTime));
-    console.log(time);
     if (time < 0) {
       setSeconds(0);
       setMinutes(0);
