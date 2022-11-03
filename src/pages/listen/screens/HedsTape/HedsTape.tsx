@@ -28,7 +28,7 @@ export const HedsTape = () => {
               key={track.wallet + space + tape + id}
               onClick={() => {
                 dispatch.audioModel.setIsShowingPlayer(true);
-                dispatch.audioModel.setCurrentTrack(track?.tracks?.[space]?.[tape]?.[id]);
+                dispatch.audioModel.setActiveTrack(track?.tracks?.[space]?.[tape]?.[id]);
               }}
               justify={'space-between'}
             >

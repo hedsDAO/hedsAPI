@@ -15,7 +15,7 @@ const Submissions = () => {
   const userSubmissions = useSelector(selectUserSubmissions);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
-    dispatch.audioModel.setCurrentTrack(submission);
+    dispatch.audioModel.setActiveTrack(submission);
   };
   return (
     <Fragment>
