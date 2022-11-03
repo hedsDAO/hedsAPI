@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
 interface CountdownProps {
-  deadline: string;
+  deadline: number;
   setIsMintOpen?: Function;
 }
 
@@ -13,9 +13,10 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
   const [seconds, setSeconds] = useState(0);
   const [done, setDone] = useState(false);
 
-  const getTimeUntil = (deadline: string) => {
+  const getTimeUntil = (deadline: number) => {
     const currentTime = new Date();
-    const time = Date.parse(deadline) - Date.parse(String(currentTime));
+    const time = deadline - Date.parse(String(currentTime));
+    console.log(time);
     if (time < 0) {
       setSeconds(0);
       setMinutes(0);
@@ -36,6 +37,7 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
   }, [done]);
 
   useEffect(() => {
+    if (hours + days + minutes + seconds === 0) getTimeUntil(deadline);
     const intervalTimer = setInterval(() => getTimeUntil(deadline), 1000);
     if (!done) intervalTimer;
     return () => {
@@ -58,7 +60,7 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
       leaveTo="opacity-0"
     >
       {done ? (
-        <div className="countdown-box flex">
+        <div className="countdown-box flex gap-1">
           <div className="flex mr-1">
             <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{days}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">D</h5>
@@ -77,7 +79,7 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
           </div>
         </div>
       ) : (
-        <div className="countdown-box flex">
+        <div className="countdown-box flex gap-1">
           <div className="flex mr-1">
             <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{leading0(days)}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">D</h5>

@@ -49,7 +49,7 @@ export const Tapes = () => {
                       key={tape.contract + index}
                       className="group bg-gray-50 relative border border-gray-200 col-span-1 rounded-sm bs-preset-1"
                     >
-                      <Skeleton h="fit-content" fadeDuration={2} className="col-span-1" isLoaded={!loading}>
+                      <Skeleton fadeDuration={3} className="col-span-1" isLoaded={!loading}>
                         <AspectRatio className="m-2 lg:m-4" ratio={1}>
                           <Image
                             w="full"
