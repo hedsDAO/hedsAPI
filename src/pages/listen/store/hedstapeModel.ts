@@ -23,9 +23,9 @@ export enum TimelineSteps {
 }
 
 export enum TimelineStatus {
-  PENDING = 0,
-  CURRENT,
-  CLOSED,
+  CLOSED = 0,
+  OPEN,
+  UPCOMING,
 }
 
 interface TimelineItem {
@@ -78,7 +78,7 @@ export const hedstapeModel = createModel<RootModel>()({
         status: compareTimestamps(now, mintTimes.start, mintTimes.end),
       };
       for (const step in timelineTank) {
-        if (timelineTank[step].status === TimelineStatus.CURRENT) {
+        if (timelineTank[step].status === TimelineStatus.OPEN) {
           if (timelineTank[step].name === names.mint) this.setActiveStep(TimelineSteps.MINT);
           if (timelineTank[step].name === names.vote) this.setActiveStep(TimelineSteps.VOTE);
           if (timelineTank[step].name === names.submit) this.setActiveStep(TimelineSteps.SUBMIT);
