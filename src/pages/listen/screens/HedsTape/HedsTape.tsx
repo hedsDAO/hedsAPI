@@ -1,9 +1,10 @@
-import { Button, Divider, Flex, Heading, Text, Avatar, Grid, GridItem } from '@chakra-ui/react';
+import { Button, Divider, Flex, Heading, Text, Avatar, Grid, GridItem, Container, IconButton, Image, Stack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { useParams } from 'react-router-dom';
 import { Header, Timeline } from '@/pages/listen/components';
 import { formatTime, formatWallet } from '@/utils';
+import { TimelineSteps } from '../../store/hedstapeModel';
 
 export const HedsTape = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -13,39 +14,35 @@ export const HedsTape = () => {
     <div className="pt-10">
       <Header />
       <Divider my={5} />
-      <Flex rounded="sm" w={{ base: '90%', sm: '95%', lg: 'full' }} maxW="7xl" mx={'auto'} h="32" bg="gray.200"></Flex>
-      <Divider my={5} />
       <Timeline />
       <Divider my={5} />
-      <Heading fontSize={{ base: 'xl', md: '2xl' }} mx="auto" maxWidth={'7xl'} textAlign={['center', 'center', 'center', 'start']}>
-        Tracks
-      </Heading>
-      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={'column'} gap={2} px={[10, 6, 4, 0]} py={4}>
-        {currentTape?.tracks?.map((track) => {
-          return (
-            <Flex
-              as={Button}
-              key={track.wallet + space + tape + id}
-              onClick={() => {
-                dispatch.audioModel.setIsShowingPlayer(true);
-                dispatch.audioModel.setCurrentTrack(track?.tracks?.[space]?.[tape]?.[id]);
-              }}
-              justify={'space-between'}
-            >
-              <Flex gap={2} alignItems={'center'}>
-                <Avatar src={track.profilePicture} size={'sm'} />
-                <Flex direction={'column'} alignItems="start">
-                  <Text fontSize={'xs'}>{track.displayName}</Text>
-                  <Text fontSize={'2xs'}>{formatWallet(track.wallet)}</Text>
-                </Flex>
-              </Flex>
-              <Flex>
-                <Text fontSize={'2xs'}>{formatTime(track.tracks?.[space]?.[tape]?.[id]?.duration)}</Text>
-              </Flex>
-            </Flex>
-          );
-        })}
-      </Flex>
+      <Container px={{ base: 5, md: 0 }} maxW="7xl">
+        <Heading fontSize={{ base: '2xl', md: '3xl' }} mx="auto" maxWidth={'7xl'} textAlign={'start'}>
+          Tracks
+        </Heading>
+        <ul data-testid="user-submissions" role="list" className="divide-y divide-gray-200 py-3">
+          <Stack spacing="2">
+            {currentTape?.tracks?.map((track) => {
+              return (
+                <li className={`text-sm text-gray-600 rounded-md border-green-200/60 border`} key={id + track?.displayName}>
+                  <div className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md">
+                    <Flex alignItems={'center'} gap={2}>
+                      <Avatar borderRadius="full" boxSize="25px" src={track?.profilePicture} />
+                      <div className="min-w-0 flex-1 sm:flex text-xs text-neutral-800 -mr-1">{track?.tracks?.[space][tape][id]?.track}.</div>
+                      <span className="text-xs font-medium">{track?.displayName}</span>
+                    </Flex>
+                    <Flex alignItems={'center'} gap={2}>
+                      <span className="mr-2 sm:mr-4 whitespace-nowrap">{formatTime(track?.tracks?.[space][tape][id]?.duration)}</span>
+                      <IconButton bg="blue.200" size="xs" aria-label="play" icon={<i className="fa-solid fa-play"></i>} className="flex-shrink-0" />
+                      <IconButton bg="green.200" size="xs" aria-label="add queue" icon={<i className="fa-solid fa-layer-plus"></i>} className="flex-shrink-0" />
+                    </Flex>
+                  </div>
+                </li>
+              );
+            })}
+          </Stack>
+        </ul>
+      </Container>
     </div>
   );
 };

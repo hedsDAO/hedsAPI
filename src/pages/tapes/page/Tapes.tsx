@@ -62,25 +62,25 @@ export const Tapes = () => {
                         </AspectRatio>
                       </Skeleton>
                       <Container textColor="white" className="font-bold relative bottom-8 lg:bottom-10 lg:left-1 -mb-5">
-                        <Text fontSize={{base: 'xs', lg: 'sm'}} px={1} w="fit-content" rounded="sm" bg={'black'}>
+                        <Text fontSize={{ base: 'xs', lg: 'sm' }} px={1} w="fit-content" rounded="sm" bg={'black'}>
                           {getTotalDuration(tape.tracks, tape.route)}
                         </Text>
                       </Container>
                       <Divider />
-                      <div className="flex flex-col justify-center p-2 lg:p-4 group-hover:bg-gray-500/20 duration-500">
+                      <div className="flex flex-col justify-center p-2 lg:p-4 duration-500 group-hover:bg-gray-500/20">
                         <div className="flex flex-col justify-center gap-1">
                           <h3 className="text-sm sm:text-base lg:text-2xl text-gray-700 font-bold tracking-widest whitespace-nowrap w-full text-right">
                             {tape.name.split(' ')[0]}
                             <span className="text-red-500 font-light ml-2">{tape.name.split(' ')[1]}</span>
                             <span aria-hidden="true" className="absolute inset-0 truncate" />
                           </h3>
-                          <Text fontWeight={'light'} fontSize={{ base: 'xs', lg: 'sm' }} textAlign={'right'} mb={{base: 2, lg:0}}>
+                          <Text fontWeight={'light'} fontSize={{ base: 'xs', lg: 'sm' }} textAlign={'right'} mb={{ base: 2, lg: 0 }}>
                             {DateTime.fromMillis(tape?.timeline?.mint?.end).toLocaleString({ month: 'long', day: 'numeric', year: 'numeric' })}
                           </Text>
-                          <Divider my={2}/>
-                          <Flex gap={2} alignItems="center">
+                          <Divider my={2} />
+                          <Flex className="" gap={2} alignItems="center">
                             <Avatar src={artistMapping[tape?.curator].profilePicture} size="2xs" />
-                            <Text textColor={'gray.800'} fontWeight={'semibold'} letterSpacing={'widest'} fontSize={{base:'2xs', lg: 'xs'}}>
+                            <Text textColor={'gray.800'} fontWeight={'semibold'} letterSpacing={'widest'} fontSize={{ base: '2xs', lg: 'xs' }}>
                               {artistMapping[tape?.curator].displayName}
                             </Text>
                           </Flex>

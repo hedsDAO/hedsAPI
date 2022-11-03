@@ -1,98 +1,150 @@
 import { RootState } from '@/store';
 import { classNames } from '@/utils';
-import { Box, Container, Flex, ListItem, Text, UnorderedList } from '@chakra-ui/react';
-import { CheckIcon } from '@heroicons/react/24/solid';
-import { IconHourglass } from '@tabler/icons';
+import { BoltIcon, GlobeAltIcon, ScaleIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, EyeIcon, LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
+import { TimelineDescriptions, TimelineNames, TimelineStatus } from '@/pages/listen/store/hedstapeModel';
+import { Box, Button, Divider, Flex, IconButton, Text } from '@chakra-ui/react';
+import { DateTime } from 'luxon';
+import { IconClock, IconDownload, IconLine } from '@tabler/icons';
 
 const Timeline = () => {
+  const { currentTape } = useSelector((state: RootState) => state.tapesModel);
   const { timeline } = useSelector((state: RootState) => state.hedstapeModel);
+  const names = new TimelineNames();
+  const desc = new TimelineDescriptions();
   return (
-    <>
-      <div className="lg:border-t lg:border-b lg:border-gray-200">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Progress">
-          <UnorderedList role="list" className="overflow-hidden rounded-md lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200">
-            {timeline &&
-              Object.entries(timeline).map(([step, data], i) => (
-                <ListItem key={data.name} flex={1} overflow={{ lg: 'hidden' }} pos={'relative'}>
-                  <Container
-                    className={classNames(
-                      i === 0 ? 'border-b-0 rounded-t-md' : '',
-                      i === Object.keys(timeline).length - 1 ? 'border-t-0 rounded-b-md' : '',
-                      'border border-gray-200 overflow-hidden lg:border-0',
-                    )}
-                  >
-                    {data.status === 'closed' ? (
-                      <Container className="group transition-all ease-in-out">
-                        <Box
-                          className="absolute top-0 left-0 h-full w-1 bg-transparent group-hover:bg-gray-200 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                          aria-hidden="true"
-                        />
-                        <Flex justifyContent={'center'} alignItems={'center'} pl={i == 0 && { lg: '9' }} px={4} py={5} gap={2} fontSize={'sm'}>
-                          <Box flexShrink={0}>
-                            <Box className="flex h-7 w-7 items-center justify-center rounded-full bg-green-200">
-                              <CheckIcon className="h-4 w-4 text-gray-600" aria-hidden="true" />
-                            </Box>
-                          </Box>
-                          <Flex flexDirection={'column'} className="mt-0.5 ml-4 flex min-w-0 flex-col" gap={1}>
-                            <Text className="text-sm font-medium">{data.name}</Text>
-                            <Text className="text-xs font-medium text-gray-500">{data.description}</Text>
-                          </Flex>
-                        </Flex>
-                      </Container>
-                    ) : data.status === 'closed' ? (
-                      <Container className="group transition-all ease-in-out">
-                        <Box
-                          className="absolute top-0 left-0 h-full w-1 group-hover:bg-green-400 bg-green-600 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                          aria-hidden="true"
-                        />
-                        <Flex justifyContent={'center'} alignItems={'center'} pl={i == 0 && { lg: '9' }} px={4} py={5} gap={2} fontSize={'sm'}>
-                          <Box flexShrink={0}>
-                            <Box className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-green-600">
-                              <CheckIcon className="h-4 w-4 text-gray-600" aria-hidden="true" />
-                            </Box>
-                          </Box>
-                          <Flex flexDirection={'column'} className="mt-0.5 ml-4 flex min-w-0 flex-col" gap={1}>
-                            <Text className="text-sm font-medium">{data.name}</Text>
-                            <Text className="text-xs font-medium text-gray-500">{data.description}</Text>
-                          </Flex>
-                        </Flex>
-                      </Container>
-                    ) : (
-                      <Container className="group transition-all ease-in-out">
-                        <Box
-                          className="absolute top-0 left-0 h-full w-1 bg-transparent group-hover:bg-gray-200 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                          aria-hidden="true"
-                        />
-                        <Flex justifyContent={'center'} alignItems={'center'} pl={i == 0 && { lg: '9' }} px={4} py={5} gap={2} fontSize={'sm'}>
-                          <Box flexShrink={0}>
-                            <Box className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-gray-300">
-                              <IconHourglass className="h-4 w-4 text-gray-600" aria-hidden="true" />
-                            </Box>
-                          </Box>
-                          <Flex flexDirection={'column'} className="mt-0.5 ml-4 flex min-w-0 flex-col" gap={1}>
-                            <Text className="text-sm font-medium">{data.name}</Text>
-                            <Text className="text-xs font-medium text-gray-500">{data.description}</Text>
-                          </Flex>
-                        </Flex>
-                      </Container>
-                    )}
-                    {i !== 0 ? (
-                      <>
-                        <div className="absolute inset-0 top-0 left-0 hidden w-3 lg:block" aria-hidden="true">
-                          <svg className="h-full w-full text-gray-300" viewBox="0 0 12 82" fill="none" preserveAspectRatio="none">
-                            <path d="M0.5 0V31L10.5 41L0.5 51V82" stroke="currentcolor" vectorEffect="non-scaling-stroke" />
-                          </svg>
-                        </div>
-                      </>
-                    ) : null}
-                  </Container>
-                </ListItem>
-              ))}
-          </UnorderedList>
-        </nav>
-      </div>
-    </>
+    <Fragment>
+      {currentTape && (
+        <div className="bg-white py-6">
+          <div className="mx-auto max-w-xl lg:max-w-7xl px-5 lgpx-10">
+            <dl className="space-y-10 lg:grid lg:grid-cols-3 lg:gap-20 lg:space-y-0">
+              {/* Submit */}
+              <div>
+                <dt>
+                  <Flex alignItems={'baseline'} gap={2.5} mb={2}>
+                    <i className="fa-sharp fa-solid fa-arrow-up-from-bracket" />
+                    <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.submit}</Text>
+                  </Flex>
+                  <Flex my={3} alignItems={'stretch'} gap={2}>
+                    <IconButton bg="green.200" shadow={'sm'} aria-label="submit" icon={<CheckIcon height="16" width="16" />} />
+                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="green.50" border={'1px'} borderColor={'green.100'} px={4}>
+                      <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
+                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                          {DateTime.fromMillis(currentTape?.timeline?.submit.start, { zone: 'GMT' }).toLocaleString({
+                            month: 'numeric',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </Text>
+                        <Text className="relative bottom-[0.1rem]">-</Text>
+                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                          {DateTime.fromMillis(currentTape?.timeline?.submit.end, { zone: 'GMT' }).toLocaleString({
+                            month: 'numeric',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </Text>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                </dt>
+                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.submit}</dd>
+                <Flex mt={4} gap={2}>
+                  <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<IconDownload height="14" width="14" />} size={'sm'} pr={3}>
+                    Download
+                  </Button>
+                  <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                    Submit
+                  </Button>
+                </Flex>
+              </div>
+              {/* Vote */}
+              <div>
+                <dt>
+                  <Flex alignItems={'baseline'} gap={2.5} mb={2}>
+                    <i className="fa-sharp fa-solid fa-xmark-to-slot"></i>
+                    <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.vote}</Text>
+                  </Flex>
+                  <Flex my={3} alignItems={'stretch'} gap={2}>
+                    <IconButton bg="green.200" shadow={'sm'} aria-label="vote" icon={<CheckIcon height="16" width="16" />} />
+                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="green.50" border={'1px'} borderColor={'green.100'} px={4}>
+                      <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
+                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                          {DateTime.fromMillis(currentTape?.timeline?.vote.start, { zone: 'GMT' }).toLocaleString({
+                            month: 'numeric',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </Text>
+                        <Text className="relative bottom-[0.1rem]">-</Text>
+                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                          {DateTime.fromMillis(currentTape?.timeline?.vote.end, { zone: 'GMT' }).toLocaleString({
+                            month: 'numeric',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </Text>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                </dt>
+                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.vote}</dd>
+                <Flex mt={4} gap={2}>
+                  <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<EyeIcon height="14" width="14" />} size={'sm'} pr={3}>
+                    View Results
+                  </Button>
+                  <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                    Submit
+                  </Button>
+                </Flex>
+              </div>
+              {/* Mint */}
+              <div>
+                <dt>
+                  <Flex alignItems={'baseline'} gap={2.5} mb={2}>
+                    <i className="fa-sharp fa-solid fa-album-collection"></i>
+                    <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.mint}</Text>
+                  </Flex>
+                  <Flex my={3} alignItems={'stretch'} gap={2}>
+                    <IconButton bg="green.200" shadow={'sm'} aria-label="mint" icon={<CheckIcon height="16" width="16" />} />
+                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="green.50" border={'1px'} borderColor={'green.100'} px={4}>
+                      <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
+                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                          {DateTime.fromMillis(currentTape?.timeline?.mint.start, { zone: 'GMT' }).toLocaleString({
+                            month: 'numeric',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </Text>
+                        <Text className="relative bottom-[0.1rem]">-</Text>
+                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                          {DateTime.fromMillis(currentTape?.timeline?.mint.end, { zone: 'GMT' }).toLocaleString({
+                            month: 'numeric',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </Text>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                </dt>
+                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.mint}</dd>
+                <Flex mt={4} gap={2}>
+                  <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<i className="fak fa-opensea text-xs" />} size={'sm'} pr={3}>
+                    OpenSea
+                  </Button>
+                  <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                    Mint
+                  </Button>
+                </Flex>
+              </div>
+            </dl>
+          </div>
+        </div>
+      )}
+    </Fragment>
   );
 };
 
