@@ -5,9 +5,10 @@ import { CheckIcon, EyeIcon, LockClosedIcon, LockOpenIcon } from '@heroicons/rea
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { TimelineDescriptions, TimelineNames, TimelineStatus } from '@/pages/listen/store/hedstapeModel';
-import { Box, Button, Divider, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Divider, Flex, IconButton, Text } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
-import { IconClock, IconDownload, IconLine } from '@tabler/icons';
+import { IconClock, IconDownload, IconHourglassLow, IconLine } from '@tabler/icons';
+import DateCountdown from '@/common/countdown/DateCountdown';
 
 const Timeline = () => {
   const { currentTape } = useSelector((state: RootState) => state.tapesModel);
@@ -18,18 +19,31 @@ const Timeline = () => {
     <Fragment>
       {currentTape && (
         <div className="bg-white py-6">
-          <div className="mx-auto max-w-xl lg:max-w-7xl px-5 lgpx-10">
+          <div className="mx-auto max-w-xl lg:max-w-7xl px-10 lg:px-10">
             <dl className="space-y-10 lg:grid lg:grid-cols-3 lg:gap-20 lg:space-y-0">
               {/* Submit */}
               <div>
+                <Flex alignItems={'center'} gap={2.5} mb={2}>
+                  {/* <i className="fa-sharp fa-solid fa-arrow-up-from-bracket" /> */}
+                  <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.submit}</Text>
+                  <Badge variant={'outline'} fontSize="xs">
+                    closed
+                  </Badge>
+                </Flex>
+                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.submit}</dd>
                 <dt>
-                  <Flex alignItems={'baseline'} gap={2.5} mb={2}>
-                    <i className="fa-sharp fa-solid fa-arrow-up-from-bracket" />
-                    <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.submit}</Text>
-                  </Flex>
                   <Flex my={3} alignItems={'stretch'} gap={2}>
-                    <IconButton bg="green.200" shadow={'sm'} aria-label="submit" icon={<CheckIcon height="16" width="16" />} />
-                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="green.50" border={'1px'} borderColor={'green.100'} px={4}>
+                    <IconButton
+                      pointerEvents={'none'}
+                      _hover={{ background: 'gray.100' }}
+                      border={'solid 1px'}
+                      borderColor={'gray.200'}
+                      bg="gray.100"
+                      shadow={'sm'}
+                      aria-label="submit"
+                      icon={<CheckIcon height="16" width="16" />}
+                    />
+                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="gray.100" border={'1px'} borderColor={'gray.200'} px={4}>
                       <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
                         <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
                           {DateTime.fromMillis(currentTape?.timeline?.submit.start, { zone: 'GMT' }).toLocaleString({
@@ -50,66 +64,81 @@ const Timeline = () => {
                     </Box>
                   </Flex>
                 </dt>
-                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.submit}</dd>
                 <Flex mt={4} gap={2}>
                   <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<IconDownload height="14" width="14" />} size={'sm'} pr={3}>
                     Download
                   </Button>
                   <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-                    Submit
+                    Submissions Closed
                   </Button>
                 </Flex>
               </div>
               {/* Vote */}
               <div>
+                <Flex alignItems={'center'} gap={2.5} mb={2}>
+                  {/* <i className="fa-sharp fa-solid fa-xmark-to-slot"></i> */}
+                  <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.vote}</Text>
+                  <Badge colorScheme={'green'} variant={'outline'} fontSize="xs">
+                    open
+                  </Badge>
+                </Flex>
+                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.vote}</dd>
                 <dt>
-                  <Flex alignItems={'baseline'} gap={2.5} mb={2}>
-                    <i className="fa-sharp fa-solid fa-xmark-to-slot"></i>
-                    <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.vote}</Text>
-                  </Flex>
                   <Flex my={3} alignItems={'stretch'} gap={2}>
-                    <IconButton bg="green.200" shadow={'sm'} aria-label="vote" icon={<CheckIcon height="16" width="16" />} />
+                    <IconButton
+                      className="animate-pulse"
+                      pointerEvents={'none'}
+                      _hover={{ background: 'green.200' }}
+                      border={'solid 1px'}
+                      borderColor="green.100"
+                      bg="green.200"
+                      shadow={'sm'}
+                      aria-label="vote"
+                      icon={<IconHourglassLow height="16" width="16" />}
+                    />
                     <Box w="fit-content" rounded="md" shadow={'sm'} bg="green.50" border={'1px'} borderColor={'green.100'} px={4}>
                       <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
-                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
-                          {DateTime.fromMillis(currentTape?.timeline?.vote.start, { zone: 'GMT' }).toLocaleString({
-                            month: 'numeric',
-                            day: 'numeric',
-                            year: 'numeric',
-                          })}
-                        </Text>
-                        <Text className="relative bottom-[0.1rem]">-</Text>
-                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
-                          {DateTime.fromMillis(currentTape?.timeline?.vote.end, { zone: 'GMT' }).toLocaleString({
-                            month: 'numeric',
-                            day: 'numeric',
-                            year: 'numeric',
-                          })}
-                        </Text>
+                        <DateCountdown deadline={currentTape?.timeline?.vote.end + 5000000000} />
                       </Flex>
                     </Box>
                   </Flex>
                 </dt>
-                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.vote}</dd>
                 <Flex mt={4} gap={2}>
-                  <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<EyeIcon height="14" width="14" />} size={'sm'} pr={3}>
-                    View Results
+                  <Button
+                    border={'solid 1px'}
+                    borderColor="green.200"
+                    bg="green.100"
+                    leftIcon={<i className="fa-sharp fa-solid fa-xmark-to-slot"></i>}
+                    size={'sm'}
+                    pr={3}
+                  >
+                    Vote
                   </Button>
-                  <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-                    Submit
-                  </Button>
+                  {/* <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                    Vote Closed
+                  </Button> */}
                 </Flex>
               </div>
               {/* Mint */}
               <div>
+                <Flex alignItems={'center'} gap={2.5} mb={2}>
+                  {/* <i className="fa-sharp fa-solid fa-album-collection"></i> */}
+                  <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.mint}</Text>
+                  <Badge colorScheme={'orange'} variant={'outline'} fontSize="xs">
+                    upcoming
+                  </Badge>
+                </Flex>
+                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.mint}</dd>
                 <dt>
-                  <Flex alignItems={'baseline'} gap={2.5} mb={2}>
-                    <i className="fa-sharp fa-solid fa-album-collection"></i>
-                    <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{names.mint}</Text>
-                  </Flex>
                   <Flex my={3} alignItems={'stretch'} gap={2}>
-                    <IconButton bg="green.200" shadow={'sm'} aria-label="mint" icon={<CheckIcon height="16" width="16" />} />
-                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="green.50" border={'1px'} borderColor={'green.100'} px={4}>
+                    <IconButton
+                      disabled
+                      bg="gray.200"
+                      shadow={'sm'}
+                      aria-label="mint"
+                      icon={<LockClosedIcon className="text-gray-400" height="16" width="16" />}
+                    />
+                    <Box w="fit-content" rounded="md" shadow={'sm'} bg="gray.50" border={'1px'} borderColor={'gray.100'} px={4}>
                       <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
                         <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
                           {DateTime.fromMillis(currentTape?.timeline?.mint.start, { zone: 'GMT' }).toLocaleString({
@@ -130,15 +159,14 @@ const Timeline = () => {
                     </Box>
                   </Flex>
                 </dt>
-                <dd className="mt-2 text-sm tracking-tight text-gray-500">{desc.mint}</dd>
-                <Flex mt={4} gap={2}>
+                {/* <Flex mt={4} gap={2}>
                   <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<i className="fak fa-opensea text-xs" />} size={'sm'} pr={3}>
                     OpenSea
                   </Button>
                   <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-                    Mint
+                    Mint Closed
                   </Button>
-                </Flex>
+                </Flex> */}
               </div>
             </dl>
           </div>

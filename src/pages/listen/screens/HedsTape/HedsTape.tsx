@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Header, Timeline } from '@/pages/listen/components';
 import { formatTime, formatWallet } from '@/utils';
 import { TimelineSteps } from '../../store/hedstapeModel';
+import { Link } from 'react-router-dom';
 
 export const HedsTape = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -16,7 +17,7 @@ export const HedsTape = () => {
       <Divider my={5} />
       <Timeline />
       <Divider my={5} />
-      <Container px={{ base: 5, md: 0 }} maxW="7xl">
+      <Container px={{ base: 10, md: 0 }} maxW="7xl">
         <Heading fontSize={{ base: '2xl', md: '3xl' }} mx="auto" maxWidth={'7xl'} textAlign={'start'}>
           Tracks
         </Heading>
@@ -27,7 +28,7 @@ export const HedsTape = () => {
                 <li className={`text-sm text-gray-600 rounded-md border-green-200/60 border`} key={id + track?.displayName}>
                   <div className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md">
                     <Flex alignItems={'center'} gap={2}>
-                      <Avatar borderRadius="full" boxSize="25px" src={track?.profilePicture} />
+                      <Avatar to={`/u/${track.wallet}`} as={Link} borderRadius="full" boxSize="25px" src={track?.profilePicture} />
                       <div className="min-w-0 flex-1 sm:flex text-xs text-neutral-800 -mr-1">{track?.tracks?.[space][tape][id]?.track}.</div>
                       <span className="text-xs font-medium">{track?.displayName}</span>
                     </Flex>
