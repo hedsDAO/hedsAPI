@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
 interface CountdownProps {
-  deadline: string;
+  deadline: number;
   setIsMintOpen?: Function;
 }
 
@@ -13,9 +13,9 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
   const [seconds, setSeconds] = useState(0);
   const [done, setDone] = useState(false);
 
-  const getTimeUntil = (deadline: string) => {
+  const getTimeUntil = (deadline: number) => {
     const currentTime = new Date();
-    const time = Date.parse(deadline) - Date.parse(String(currentTime));
+    const time = deadline - Date.parse(String(currentTime));
     if (time < 0) {
       setSeconds(0);
       setMinutes(0);
@@ -36,6 +36,7 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
   }, [done]);
 
   useEffect(() => {
+    if (hours + days + minutes + seconds === 0) getTimeUntil(deadline);
     const intervalTimer = setInterval(() => getTimeUntil(deadline), 1000);
     if (!done) intervalTimer;
     return () => {
@@ -58,41 +59,41 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
       leaveTo="opacity-0"
     >
       {done ? (
-        <div className="countdown-box flex">
+        <div className="countdown-box flex gap-1">
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{days}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">D</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{days}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">D</h5>
           </div>
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{hours}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">H</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{hours}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">H</h5>
           </div>
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{minutes}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">M</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{minutes}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">M</h5>
           </div>
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{seconds}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">S</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{seconds}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">S</h5>
           </div>
         </div>
       ) : (
-        <div className="countdown-box flex">
+        <div className="countdown-box flex gap-1">
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{leading0(days)}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">D</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{leading0(days)}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">D</h5>
           </div>
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{leading0(hours)}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">H</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{leading0(hours)}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">H</h5>
           </div>
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{leading0(minutes)}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">M</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{leading0(minutes)}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">M</h5>
           </div>
           <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-[1.025rem]">{leading0(seconds)}</div>
-            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-[1.025rem]">S</h5>
+            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs">{leading0(seconds)}</div>
+            <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs">S</h5>
           </div>
         </div>
       )}
