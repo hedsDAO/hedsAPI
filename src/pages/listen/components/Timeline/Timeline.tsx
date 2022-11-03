@@ -1,16 +1,18 @@
-import { RootState } from '@/store';
+import { Dispatch, RootState } from '@/store';
 import { classNames } from '@/utils';
 import { BoltIcon, GlobeAltIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import { CheckIcon, EyeIcon, LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TimelineDescriptions, TimelineNames, TimelineStatus } from '@/pages/listen/store/hedstapeModel';
 import { Badge, Box, Button, Divider, Flex, IconButton, Text } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
 import { IconClock, IconDownload, IconHourglassLow, IconLine } from '@tabler/icons';
 import DateCountdown from '@/common/countdown/DateCountdown';
+import { Modals } from '@/modules/modals/store/modalModel';
 
 const Timeline = () => {
+  const dispatch = useDispatch<Dispatch>();
   const { currentTape } = useSelector((state: RootState) => state.tapesModel);
   const { timeline } = useSelector((state: RootState) => state.hedstapeModel);
   const names = new TimelineNames();
@@ -45,15 +47,17 @@ const Timeline = () => {
                     />
                     <Box w="fit-content" rounded="md" shadow={'sm'} bg="gray.100" border={'1px'} borderColor={'gray.200'} px={4}>
                       <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
-                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                        <Text textColor={'gray.600'} fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
                           {DateTime.fromMillis(currentTape?.timeline?.submit.start, { zone: 'GMT' }).toLocaleString({
                             month: 'numeric',
                             day: 'numeric',
                             year: 'numeric',
                           })}
                         </Text>
-                        <Text className="relative bottom-[0.1rem]">-</Text>
-                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                        <Text textColor={'gray.600'} className="relative bottom-[0.1rem]">
+                          -
+                        </Text>
+                        <Text textColor={'gray.600'} fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
                           {DateTime.fromMillis(currentTape?.timeline?.submit.end, { zone: 'GMT' }).toLocaleString({
                             month: 'numeric',
                             day: 'numeric',
@@ -65,7 +69,18 @@ const Timeline = () => {
                   </Flex>
                 </dt>
                 <Flex mt={4} gap={2}>
-                  <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<IconDownload height="14" width="14" />} size={'sm'} pr={3}>
+                  <Button
+                    onClick={() => {
+                      dispatch.modalModel.setModal(Modals.SUBMIT_MODAL);
+                      dispatch.modalModel.setModalOpen(true);
+                    }}
+                    border={'solid 1px'}
+                    borderColor="blue.100"
+                    bg="blue.50"
+                    leftIcon={<IconDownload height="14" width="14" />}
+                    size={'sm'}
+                    pr={3}
+                  >
                     Download
                   </Button>
                   <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
@@ -133,28 +148,31 @@ const Timeline = () => {
                   <Flex my={3} alignItems={'stretch'} gap={2}>
                     <IconButton
                       disabled
-                      bg="gray.200"
+                      bg="gray.300"
                       shadow={'sm'}
                       aria-label="mint"
                       icon={<LockClosedIcon className="text-gray-400" height="16" width="16" />}
                     />
                     <Box w="fit-content" rounded="md" shadow={'sm'} bg="gray.50" border={'1px'} borderColor={'gray.100'} px={4}>
                       <Flex h="full" alignItems={'center'} justifyContent="center" gap={2}>
-                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                        <Text textColor={'gray.400'} fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
                           {DateTime.fromMillis(currentTape?.timeline?.mint.start, { zone: 'GMT' }).toLocaleString({
                             month: 'numeric',
                             day: 'numeric',
                             year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZoneName: 'short',
                           })}
                         </Text>
-                        <Text className="relative bottom-[0.1rem]">-</Text>
-                        <Text fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
+                        {/* <Text className="text-gray-400 relative bottom-[0.1rem]">-</Text>
+                        <Text textColor={'gray.400'} fontWeight={'medium'} letterSpacing="widest" fontSize={'xs'}>
                           {DateTime.fromMillis(currentTape?.timeline?.mint.end, { zone: 'GMT' }).toLocaleString({
                             month: 'numeric',
                             day: 'numeric',
                             year: 'numeric',
                           })}
-                        </Text>
+                        </Text> */}
                       </Flex>
                     </Box>
                   </Flex>
@@ -163,7 +181,11 @@ const Timeline = () => {
                   <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<i className="fak fa-opensea text-xs" />} size={'sm'} pr={3}>
                     OpenSea
                   </Button>
-                  <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                  <Button
+                      onClick={() => {
+                      dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                      dispatch.modalModel.setModalOpen(true);
+                    }} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
                     Mint Closed
                   </Button>
                 </Flex> */}
