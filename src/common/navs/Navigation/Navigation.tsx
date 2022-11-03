@@ -36,15 +36,8 @@ const Navigation = () => {
               </Disclosure.Button>
             </div>
             <Flex alignItems={'baseline'} gap={4} mr={1}>
-              <Link className="self-end lg:hidden" to="/">
-                <img
-                  className="hidden h-4 w-auto md:block invert opacity-60 animate-pulse"
-                  src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/public%2Flogo.png?alt=media&token=11a43a45-07cb-4c63-8f6e-d18d77994bf6"
-                  alt="heds"
-                />
-              </Link>
-              <Link className="lg:inline hidden relative top-1" to="/">
-                <Text fontSize={'4xl'} fontWeight={'bold'} letterSpacing="tight">
+              <Link className="md:inline hidden relative top-1" to="/">
+                <Text fontSize={{ base: 'lg', md: '4xl' }} fontWeight={'bold'} letterSpacing="tight">
                   heds
                 </Text>
               </Link>

@@ -10,15 +10,17 @@ const Header = () => {
   const { hedsTapes } = useSelector((state: RootState) => state.tapesModel);
   return (
     <Fragment>
-      <Flex className="group" px={2} maxW={'7xl'} mx={'auto'}>
-        <Text to={'/tapes'} as={ReactLink} fontSize={'xs'}>
-          <i className="fa-solid fa-arrow-left group-hover:mr-4 mr-2 ease-in-out transition-all" />
-          view all tapes
-        </Text>
+      <Flex maxW={'7xl'} mx={'auto'} px={[10, 6, 4, 2]} mb={2}>
+        <Flex className="group" width={'fit-content'} alignItems={'center'}>
+          <i className="fa-regular fa-arrow-left group-hover:mr-3 mr-2 ease-in-out transition-all text-sm" />
+          <Text className="relative bottom-[1px]" to={'/tapes'} as={ReactLink} fontSize={'xs'}>
+            view all tapes
+          </Text>
+        </Flex>
       </Flex>
       <Flex
         justifyContent={'center'}
-        alignItems="center"
+        alignItems={{ base: 'start', lg: 'center' }}
         maxWidth={'7xl'}
         mx={'auto'}
         flexDirection={['column', 'column', 'column', 'row']}
@@ -27,9 +29,17 @@ const Header = () => {
         py={4}
       >
         <Stack direction={'column'}>
-          <Image className="bs-preset-1" maxH={'18rem'} maxW={'18rem'} minH={'18rem'} minW={'18rem'} rounded="sm" src={hedsTapes?.[id]?.image} />
+          <Image
+            className="bs-preset-1"
+            maxH={{ base: 'full', lg: '18rem' }}
+            maxW={{ base: 'full', lg: '18rem' }}
+            minH={{ base: 'full', lg: '18rem' }}
+            minW={{ base: 'full', lg: '18rem' }}
+            rounded="sm"
+            src={hedsTapes?.[id]?.image}
+          />
         </Stack>
-        <Stack direction={'column'} spacing="2" width={'full'} alignItems={['center', 'center', 'center', 'start']} justifyContent="center">
+        <Stack direction={'column'} spacing="2" width={'full'} alignItems={'start'} justifyContent="center">
           <Text fontWeight={'semibold'} fontSize={'4xl'}>
             {hedsTapes?.[id]?.name}
           </Text>
@@ -37,8 +47,10 @@ const Header = () => {
             <Button
               as={Link}
               to={{ pathname: hedsTapes?.[id]?.opensea }}
-              bg={'blue.200'}
-              rounded="md"
+              bg={'blue.50'}
+              border={'solid 1px'}
+              borderColor="blue.100"
+              rounded="lg"
               size={'xs'}
               leftIcon={<i className="fak fa-opensea text-xs" />}
             >
@@ -47,15 +59,17 @@ const Header = () => {
             <Button
               as={Link}
               to={{ pathname: hedsTapes?.[id]?.etherscan }}
-              bg={'gray.200'}
-              rounded="md"
+              bg={'gray.50'}
+              border={'solid 1px'}
+              borderColor="gray.100"
+              rounded="lg"
               size={'xs'}
               leftIcon={<i className="fak fa-etherscan text-xs" />}
             >
               Etherscan
             </Button>
           </Flex>
-          <Text textAlign={['center', 'center', 'center', 'start']} fontWeight={'light'} fontSize={'xs'} maxWidth={'md'}>
+          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={'md'}>
             {hedsTapes?.[id]?.description}
           </Text>
         </Stack>
