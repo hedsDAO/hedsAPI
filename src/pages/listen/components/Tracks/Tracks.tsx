@@ -1,12 +1,23 @@
 import { selectCurrentTapeTracks } from '@/pages/tapes/store/selectors';
+import { TrackMetadata, User, UserRoles } from '@/models/common';
 import { formatTime } from '@/utils';
+import { Dispatch, RootState } from '@/store';
 import { Avatar, Container, Flex, Heading, IconButton, Stack } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';import { Link, useParams } from 'react-router-dom';
 
 const Tracks = () => {
+  const dispatch = useDispatch<Dispatch>();
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
   const tracks = useSelector(selectCurrentTapeTracks);
+  const handlePlay = (submission: TrackMetadata) => {
+    dispatch.audioModel.setIsShowingPlayer(true);
+    dispatch.audioModel.setActiveTrack(submission);
+  };
+
+  const addToQueue = (submission: TrackMetadata) => {
+    dispatch.audioModel.pushTrackToQueue(submission);
+  };
+
   return (
     <Container px={{ base: 10, md: 0 }} maxW="7xl">
       <Heading fontSize={{ base: '2xl', md: '3xl' }} mx="auto" maxWidth={'7xl'} textAlign={'start'}>
@@ -25,8 +36,14 @@ const Tracks = () => {
                   </Flex>
                   <Flex alignItems={'center'} gap={2}>
                     <span className="mr-2 sm:mr-4 whitespace-nowrap">{formatTime(track?.tracks?.[space][tape][id]?.duration)}</span>
-                    <IconButton bg="blue.200" size="xs" aria-label="play" icon={<i className="fa-solid fa-play"></i>} className="flex-shrink-0" />
-                    <IconButton bg="green.200" size="xs" aria-label="add queue" icon={<i className="fa-solid fa-layer-plus"></i>} className="flex-shrink-0" />
+                    <IconButton 
+                      bg="blue.200" size="xs" aria-label="play" icon={<i className="fa-solid fa-play"></i>}
+                      onClick={() => handlePlay(track?.tracks?.[space][tape][id])} className="flex-shrink-0"
+                    />
+                    <IconButton 
+                      bg="green.200" size="xs" aria-label="add queue" icon={<i className="fa-solid fa-layer-plus"></i>}
+                      onClick={() => addToQueue(track?.tracks?.[space][tape][id])} className="flex-shrink-0" 
+                    />
                   </Flex>
                 </div>
               </li>
