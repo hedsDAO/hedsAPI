@@ -17,12 +17,13 @@ const TwitterLinkButton = () => {
               as={Link}
               href={formatTwitterUrl(twitterHandle)}
               size="xs"
-              bg={'twitter.100'}
+              bg={'blue.50'}
+              borderColor={'blue.200'}
               style={{ textDecoration: 'none' }}
-              className="mx-0 decoration-transparent"
+              className="mx-0 decoration-transparent border"
               aria-label="edit profile"
               target="_blank"
-              leftIcon={<i className="fa-brands fa-twitter text-[0.75rem]" />}
+              leftIcon={<i className="fa-brands fa-twitter" />}
             >
               @{twitterHandle}
             </Button>
