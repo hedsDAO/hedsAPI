@@ -13,9 +13,10 @@ const SettingsButton = () => {
         dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
         dispatch.modalModel.setModalOpen(true);
       }}
-      bg="gray.200"
+      bg="gray.50"
       size="xs"
-      className="relative bottom-10 left-2 -mb-10"
+      borderColor={'gray.200'}
+      className="relative bottom-10 left-2 -mb-10 border opacity-75 hover:opacity-100"
       aria-label="edit profile"
       leftIcon={<Cog6ToothIcon className="text-gray-700 -mr-0.5" width={16} height={16} />}
     >
