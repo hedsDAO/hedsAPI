@@ -13,25 +13,25 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
   const audioData = useSelector((state: RootState) => state.audioModel);
 
   useEffect(() => {
-    if (audioData?.currentTrack || audioData?.queue?.length) {
+    if (audioData?.activeTrack || audioData?.queue?.length) {
       dispatch.audioModel.setIsLoading(true);
       var options; // wavesurfer params
       if (wavesurfer?.current && waveformRef.current) wavesurfer.current.destroy();
       if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
       if (options) wavesurfer.current = WaveSurfer.create(options);
-      wavesurfer?.current?.load(audioData?.currentTrack?.audio);
+      wavesurfer?.current?.load(audioData?.activeTrack?.audio);
       wavesurfer?.current?.on('ready', () => {
         dispatch.audioModel.setIsLoading(false);
       });
       wavesurfer?.current?.on('finish', () => {});
     }
     return () => {
-      if (!audioData?.currentTrack) {
+      if (!audioData?.activeTrack) {
         dispatch.audioModel.clearAudioState();
         wavesurfer.current.destroy();
       }
     };
-  }, [audioData.currentTrack]);
+  }, [audioData.activeTrack]);
 
   return (
     <Transition

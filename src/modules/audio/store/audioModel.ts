@@ -4,7 +4,7 @@ import { TrackMetadata } from '../../../models/common';
 
 export interface AudioState {
   queue: Array<TrackMetadata>;
-  currentTrack?: TrackMetadata;
+  activeTrack?: TrackMetadata;
   currentTapeId?: any;
   currentTape?: string;
   isPlaying: boolean;
@@ -27,13 +27,20 @@ export const audioModel = createModel<RootModel>()({
     queue: [],
   } as AudioState,
   reducers: {
-    pushToQueue: (state, track: TrackMetadata) => ({ ...state, queue: [track, ...state.queue] }),
+    pushTrackToQueue: (state, track: TrackMetadata) => ({ ...state, queue: [...state.queue, track] }),
+    pushTapeToQueue: (state, tape: TrackMetadata[]) => ({ ...state, queue: [...state.queue, ...tape] }),
     shiftQueue: (state) => {
       const newQueue = [...state.queue];
       newQueue.shift();
       return { ...state, queue: newQueue };
     },
-    setCurrentTrack: (state, currentTrack) => ({ ...state, currentTrack}),
+    skipToNextTrack: (state) => {
+      const newQueue = [...state.queue];
+      const newActiveTrack = newQueue.shift();
+      return { ...state, currentTrack: newActiveTrack, queue: newQueue };
+    },
+    clearQueue: (state, track: TrackMetadata) => ({ ...state, queue: [] }),
+    setActiveTrack: (state, currentTrack) => ({ ...state, currentTrack}),
     setIsShowingPlayer: (state, isShowingPlayer) => ({ ...state, isShowingPlayer }),
     setIsShowingQueue: (state, isShowingQueue: boolean) => ({ ...state, isShowingQueue }),
     setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),

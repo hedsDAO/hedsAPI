@@ -12,7 +12,7 @@ const MobileAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSu
       <GridItem colSpan={3} bg="gray.200">
         <Flex px={2} alignItems={'center'} justifyContent={'start'} height="100%" bg="gray.200" w="full">
           <Center w="5rem">
-            <Image my="auto" maxW="5rem" minH="5rem" maxH="5rem" minW="5rem" rounded="lg" src={audioData?.currentTrack?.cover} objectFit="cover" />
+            <Image my="auto" maxW="5rem" minH="5rem" maxH="5rem" minW="5rem" rounded="lg" src={audioData?.activeTrack?.cover} objectFit="cover" />
           </Center>
         </Flex>
       </GridItem>
@@ -21,13 +21,13 @@ const MobileAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSu
           <Marquee className="-ml-2 py-2 w-[98%]" gradient={false}>
             <Flex px={3} direction={'row'} alignItems="baseline" gap={2}>
               <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize="md" fontWeight={'bold'}>
-                {audioData?.currentTrack.track}
+                {audioData?.activeTrack.track}
               </Text>
               <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'} fontWeight={'semibold'}>
-                {audioData?.currentTrack?.tape}
+                {audioData?.activeTrack?.tape}
               </Text>
               <Text py={1} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'xs'} fontWeight="light">
-                {audioData?.currentTrack?.artist}
+                {audioData?.activeTrack?.artist}
               </Text>
             </Flex>
           </Marquee>
