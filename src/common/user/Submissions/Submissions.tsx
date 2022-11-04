@@ -59,10 +59,12 @@ const Submissions = () => {
                       <Image className="grayscale" borderRadius="full" boxSize="25px" src={submission.cover} alt={submission.tape} />
                       <span className="text-xs sm:inline hidden font-light whitespace-nowrap">{submission.tape}</span>
                       <div className="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap">{submission.track}</div>
-                      {!submission?.public ? (
+                      {!submission?.public && pathname === '/profile' ? (
                         <span className="animate__animated animate__fadeInUp text-xs font-semibold text-red-500 ml-1 w-full text-center">private</span>
-                      ) : (
+                      ) : pathname === '/profile' ? (
                         <span className="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center">private</span>
+                      ) : (
+                        <></>
                       )}
                       <span className="mr-2 sm:mr-4 whitespace-nowrap">{formatTime(submission.duration)}</span>
                       <IconButton

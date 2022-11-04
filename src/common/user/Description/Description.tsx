@@ -11,7 +11,7 @@ const UserDescription = () => {
   return (
     <Fragment>
       <Skeleton rounded="md" height="fit-content" fadeDuration={2} isLoaded={!loading}>
-        <Text pb={{ base: 6, lg: 2 }} className="-mt-2" data-testid="user-description" fontSize={'sm'} color={'gray.600'}>
+        <Text className="-mt-2" data-testid="user-description" fontSize={'sm'} color={'gray.600'}>
           {description || '...'}
         </Text>
       </Skeleton>

@@ -3,6 +3,7 @@ import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Text } from '@chakra-
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { selectUserTracks } from '@/pages/user/store/selectors';
+import { isEmpty } from '@/utils';
 
 const Tracks = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
@@ -10,7 +11,7 @@ const Tracks = () => {
 
   return (
     <Fragment>
-      {userTracks && (
+      {userTracks && !isEmpty(userTracks) && (
         <Skeleton rounded="md" fadeDuration={2} isLoaded={!loading}>
           <Heading fontSize={'3xl'}>Featured On</Heading>
           <Divider />
