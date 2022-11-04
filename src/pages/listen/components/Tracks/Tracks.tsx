@@ -19,7 +19,7 @@ const Tracks = () => {
   };
 
   return (
-    <Container px={{ base: 10, md: 0 }} maxW="7xl">
+    <Container px={{ base: 4, md: 0 }} maxW="7xl">
       <Heading fontSize={{ base: '2xl', md: '3xl' }} mx="auto" maxWidth={'7xl'} textAlign={'start'}>
         Tracks
       </Heading>
