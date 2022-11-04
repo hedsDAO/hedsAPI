@@ -11,7 +11,7 @@ const Samples = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const samples = useSelector(selectUserSamples);
   const handlePlay = (submission: TrackMetadata) => {
-    dispatch.audioModel.setCurrentTrack(submission);
+    dispatch.audioModel.setActiveTrack(submission);
   };
   if (!isEmpty(samples) && !loading)
     return (

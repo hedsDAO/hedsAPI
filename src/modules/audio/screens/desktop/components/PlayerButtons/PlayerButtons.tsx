@@ -6,6 +6,15 @@ import { IconButton } from '@chakra-ui/react';
 const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const audioData = useSelector((state: RootState) => state.audioModel);
+
+  const resetTrack = () => {
+    dispatch.audioModel.setIsPlaying(false);
+    wavesurfer?.current?.playPause();
+    wavesurfer?.current?.stop();
+    wavesurfer?.current?.play(0);
+    wavesurfer?.current?.playPause();
+  }
+  
   return (
     <Flex height="100%" gap={2} justifyContent="center" alignItems={'center'}>
       <IconButton _hover={{ bg: 'gray.200' }} onClick={() => {}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
@@ -32,7 +41,17 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
           icon={<i className="fa-solid fa-play"></i>}
         />
       )}
-      <IconButton _hover={{ bg: 'gray.200' }} onClick={() => {}} aria-label="next track" icon={<i className="fa-solid fa-forward-step"></i>} />
+      <IconButton 
+        _hover={{ bg: 'gray.200' }}
+        onClick={() => {
+        dispatch.audioModel.setIsPlaying(false);
+        wavesurfer?.current?.playPause();
+
+        audioData.queue.length ?
+        dispatch.audioModel.skipToNextTrack() :
+        resetTrack();
+        }}
+        aria-label="next track" icon={<i className="fa-solid fa-forward-step"></i>} />
     </Flex>
   );
 };
