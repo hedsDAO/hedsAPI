@@ -16,7 +16,7 @@ export const User = () => {
               <DisplayName />
             </Flex>
             <Description />
-            <Flex alignItems={'end'} direction={'row'} gap={2}>
+            <Flex alignItems={'end'} direction={'row'} gap={2} pt={2}>
               <TwitterLinkButton />
               <CopyWalletButton />
             </Flex>

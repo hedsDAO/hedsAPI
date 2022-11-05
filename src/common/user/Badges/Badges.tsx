@@ -13,7 +13,7 @@ const Badges = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const userBadges = useSelector(selectUserBadges);
   return (
-    <Skeleton rounded="md" height="10px" fadeDuration={2} isLoaded={!loading}>
+    <Skeleton rounded="md" mt={3} height="10px" fadeDuration={2} isLoaded={!loading}>
       <Stack data-testid="user-badge-container" direction="row">
         {userBadges &&
           Object.entries(userBadges).map(([id, badge]) => (

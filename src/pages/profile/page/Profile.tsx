@@ -8,7 +8,7 @@ export const Profile = () => {
   return (
     <ProfileWrapper>
       <Banner />
-      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={[2, 4, 8, 12]} px={[12, 8, 4, 2]} py={2}>
+      <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={[2, 4, 8, 10]} px={[12, 8, 4, 2]} py={2}>
         <Stack direction={'column'}>
           <ProfilePicture />
           <SettingsButton />
