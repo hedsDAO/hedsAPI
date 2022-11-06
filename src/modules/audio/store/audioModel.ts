@@ -37,10 +37,26 @@ export const audioModel = createModel<RootModel>()({
     skipToNextTrack: (state) => {
       const newQueue = [...state.queue];
       const newActiveTrack = newQueue.shift();
-      return { ...state, currentTrack: newActiveTrack, queue: newQueue };
+      return { ...state, activeTrack: newActiveTrack, queue: newQueue };
+    },
+    skipToPreviousTrack: (state) => {
+      const newQueue = [...state.queue];
+      const newActiveTrack = newQueue.shift();
+      return { ...state, activeTrack: newActiveTrack, queue: newQueue };
+    },
+    resetTrack: (state) => {
+      const newQueue = [...state.queue];
+      const newActiveTrack = newQueue.shift();
+      return { ...state, activeTrack: newActiveTrack, queue: newQueue };
+    },
+    removeTrackFromQueue: (state, track: TrackMetadata) => {
+      const newQueue = [...state.queue];
+      const trackToRemove = state.queue.indexOf(track);
+      if (trackToRemove) newQueue.splice(trackToRemove,1);
+      return { ...state, queue: newQueue };
     },
     clearQueue: (state, track: TrackMetadata) => ({ ...state, queue: [] }),
-    setActiveTrack: (state, currentTrack) => ({ ...state, currentTrack}),
+    setActiveTrack: (state, activeTrack) => ({ ...state, activeTrack}),
     setIsShowingPlayer: (state, isShowingPlayer) => ({ ...state, isShowingPlayer }),
     setIsShowingQueue: (state, isShowingQueue: boolean) => ({ ...state, isShowingQueue }),
     setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),

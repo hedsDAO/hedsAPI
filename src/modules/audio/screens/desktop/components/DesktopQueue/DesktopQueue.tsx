@@ -1,10 +1,12 @@
-import { RootState } from '@/store';
-import { Flex, Stack, StackDivider, Avatar, Text, Box } from '@chakra-ui/react';
+import { Dispatch, RootState } from '@/store';
+import { Flex, Stack, StackDivider, Avatar, Text, Box, IconButton } from '@chakra-ui/react';
 import { Transition } from '@headlessui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DesktopQueue = () => {
+  const dispatch = useDispatch<Dispatch>();
   const audioData = useSelector((state: RootState) => state.audioModel);
+  console.log(audioData)
   return (
     <Transition
       className={'relative -z-10'}
@@ -21,19 +23,35 @@ const DesktopQueue = () => {
           Up Next
         </Text>
         {audioData?.queue?.length &&
-          audioData?.queue.map((queueItem) => {
+          audioData?.queue.map((queueItem, i) => {
             return (
-              <Stack divider={<StackDivider />} fontSize="sm" px="2" py={3} spacing="0.5">
-                <Flex alignItems="center">
-                  <Avatar size="sm" />
-                  <Flex direction="column">
-                    <Text fontWeight="medium" color="emphasized">
-                      {queueItem?.track}
-                    </Text>
-                    <Text color="subtle">{queueItem?.artist}</Text>
+              <Flex key={i}>
+                <Stack  divider={<StackDivider />} fontSize="sm" px="2" py={3} spacing="0.5">
+                  <Flex alignItems="center">
+                    <Avatar size="sm" />
+                    <Flex direction="column">
+                      <Flex direction="column">
+                        <Text fontWeight="medium" color="emphasized">
+                            {queueItem?.track}
+                        </Text>
+                      </Flex>
+                      <Text color="subtle">{queueItem?.artist}</Text>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Stack>
+                </Stack>
+                <IconButton
+                        onClick={() => {
+                          console.log('here');
+                          dispatch.audioModel.removeTrackFromQueue(queueItem)
+                        }
+                        }
+                        disabled={false}
+                        aria-label="remove"
+                        icon={<i className="fa-solid fa-layer-group"></i>}
+                        className="hover:scale-125"
+                        _hover={{ bg: 'gray.200' }}
+                      />
+              </Flex>
             );
           })}
       </Box>
