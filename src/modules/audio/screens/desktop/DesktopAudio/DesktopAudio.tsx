@@ -23,7 +23,17 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
       wavesurfer?.current?.on('ready', () => {
         dispatch.audioModel.setIsLoading(false);
       });
-      wavesurfer?.current?.on('finish', () => {});
+      wavesurfer?.current?.on('finish', () => {
+        dispatch.audioModel.setIsPlaying(false);
+        if (audioData?.queue?.length) {
+          setTimeout(() => {
+            dispatch.audioModel.skipToNextTrack();
+          }, 500);
+        } else {
+          dispatch.audioModel.setIsShowingPlayer(false);
+          wavesurfer.current.destroy();
+        }
+      });
     }
     return () => {
       if (!audioData?.activeTrack) {
