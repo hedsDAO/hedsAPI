@@ -1,7 +1,7 @@
 import { selectCurrentTapeTracks } from '@/pages/tapes/store/selectors';
-import { TrackMetadata, User, UserRoles } from '@/models/common';
+import { TrackMetadata } from '@/models/common';
 import { formatTime } from '@/utils';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch } from '@/store';
 import { Avatar, Container, Flex, Heading, IconButton, Stack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -46,17 +46,7 @@ const Tracks = () => {
                     <span className="text-xs font-medium">{track?.displayName}</span>
                   </Flex>
                   <Flex alignItems={'center'} gap={2}>
-                    <span className="mr-2 sm:mr-4 whitespace-nowrap text-xs lg:text-sm">{formatTime(track?.tracks?.[space][tape][id]?.duration)}</span>
-                    <IconButton
-                      bg="red.200"
-                      borderColor={'red.300'}
-                      textColor={'blackAlpha.800'}
-                      size={{ base: 'xs', lg: 'xs' }}
-                      aria-label="like"
-                      icon={<i className="fa-solid fa-heart"></i>}
-                      onClick={() => handlePlay(track?.tracks?.[space][tape][id])}
-                      className="flex-shrink-0 border"
-                    />
+                    <span className="mr-2 whitespace-nowrap text-xs lg:text-sm">{formatTime(track?.tracks?.[space][tape][id]?.duration)}</span>
                     <IconButton
                       bg="green.200"
                       borderColor={'green.300'}

@@ -12,11 +12,11 @@ const SampleModal = () => {
     <ModalContainer isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
       <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-gray-100 px-6 py-4 text-left align-middle shadow-xl transition-all">
         <Dialog.Title as="h2" className="text-2xl font-semibold text-gray-900 mb-6">
-          <i className="fa-light fa-waveform-lines mr-1 text-xl"></i> Sample Modal
+          <i className="fa-light fa-waveform-lines mr-1 text-xl"></i> Sample
         </Dialog.Title>
         <Divider my={5} />
         <Flex>
-          <Avatar size="xl" src={currentTape?.curator?.profilePicture} />
+          <Avatar size="md" src={currentTape?.curator?.profilePicture} />
         </Flex>
         <Divider my={5} />
         <Dialog.Description>
