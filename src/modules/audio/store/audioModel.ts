@@ -1,9 +1,12 @@
 import { createModel } from '@rematch/core';
+
 import type { RootModel } from '../../../models';
-import { TrackMetadata } from '../../../models/common';
+import { TrackMetadata, TrackStats } from '../../../models/common';
+import { collection, doc, DocumentData, getDoc, getDocs, getFirestore, updateDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
 export interface AudioState {
-  queue: Array<TrackMetadata>;
+  queue?: Array<TrackMetadata>;
+  history?: Array<TrackMetadata>;
   activeTrack?: TrackMetadata;
   currentTapeId?: any;
   currentTape?: string;
@@ -15,7 +18,7 @@ export interface AudioState {
   currentTime?: [string, number];
   duration?: [string, number];
   isShowingPlayer: boolean;
-}
+};
 
 export const audioModel = createModel<RootModel>()({
   state: {
@@ -25,6 +28,7 @@ export const audioModel = createModel<RootModel>()({
     isShowingPlayer: false,
     volume: 100,
     queue: [],
+    history: [],
   } as AudioState,
   reducers: {
     pushTrackToQueue: (state, track: TrackMetadata) => ({ ...state, queue: [...state.queue, track] }),
@@ -69,5 +73,39 @@ export const audioModel = createModel<RootModel>()({
       return newState;
     },
   },
-  effects: () => ({}),
+  effects: (dispatch) => ({
+    async updateTrackMetadataStats({track, walletId, newStats}: {track: TrackMetadata, walletId: string, newStats: TrackStats}) {
+      if (track.stats === newStats) return "Stats are identical, an update will not be performed";
+      const db = getFirestore();
+      const userRef = doc(db, "users", walletId);
+      const userSnap = await (await getDoc(userRef)).data();
+      const tapeNumber = parseInt(track.tape.slice(-2));
+
+			if (userSnap.exists()) {
+				const updatedUserData = { 
+          ...userSnap,
+          submissions: {
+            heds: {
+              hedstape: {
+                [tapeNumber]: {
+                  stats: newStats,
+                }
+              }
+            }
+          }
+        };
+        
+        try {
+          await updateDoc(userRef, updatedUserData);
+          await dispatch.userModel.getUserData(walletId);
+        } catch (e) {
+          return {
+            erorr: e,
+            message: e.message,
+            memo: "Call to update user failed",
+          }
+        }
+			}
+    }
+  }),
 });
