@@ -29,7 +29,18 @@ const Submit = () => {
         <UpcomingDateBox start={start} />
       )}
       <Flex mt={4} gap={2}>
-        <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<IconDownload height="14" width="14" />} size={'sm'} pr={3}>
+        <Button
+          onClick={() => {
+            dispatch.modalModel.setModal(Modals.SAMPLE_MODAL);
+            dispatch.modalModel.setModalOpen(true);
+          }}
+          border={'solid 1px'}
+          borderColor="blue.100"
+          bg="blue.50"
+          leftIcon={<IconDownload height="14" width="14" />}
+          size={'sm'}
+          pr={3}
+        >
           Download Sample
         </Button>
         {submit.status === TimelineStatus.OPEN ? (

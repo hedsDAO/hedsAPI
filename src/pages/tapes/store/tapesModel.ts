@@ -10,6 +10,7 @@ export interface TapeState {
   currentTape: TapeAndTrackData;
   hedsTapes: HedsTapes;
   collabTapes: CollabTapes;
+  spaceTapeId: [string, string, string];
 }
 
 export const tapesModel = createModel<RootModel>()({
@@ -20,6 +21,7 @@ export const tapesModel = createModel<RootModel>()({
     setHedsTapes: (state, hedsTapes) => ({ ...state, hedsTapes }),
     setCollabTapes: (state, collabTapes) => ({ ...state, collabTapes }),
     setCurrentTape: (state, currentTape) => ({ ...state, currentTape }),
+    setSpaceTapeId: (state, [space, tape, id]: [string, string, string]) => ({ ...state, spaceTapeId: [space, tape, id] }),
   },
   effects: () => ({
     async getHedsTapes() {

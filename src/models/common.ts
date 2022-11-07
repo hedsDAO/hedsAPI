@@ -102,6 +102,7 @@ export interface CollabTapes {
 }
 
 export interface TapeData {
+  bpm: number,
   contract: string;
   curator: string;
   description: string;
@@ -115,6 +116,7 @@ export interface TapeData {
 }
 
 export interface TapeAndTrackData {
+  bpm: number,
   contract: string;
   curator: User;
   description: string;
