@@ -23,7 +23,6 @@ export const settingsModel = createModel<RootModel>()({
   state: {} as SettingsModalState,
   reducers: {
     setProfileModelData: (state, profileChanges: User) => ({ ...state, profileChanges }),
-    setPublic: (state, payload: boolean) => ({ ...state, profileChanges: { ...state.profileChanges, public: payload } }),
     setDescription: (state, description: string) => ({ ...state, profileChanges: { ...state.profileChanges, description } }),
     setDisplayName: (state, displayName: string) => ({ ...state, profileChanges: { ...state.profileChanges, displayName } }),
     setProfilePicture: (state, profilePicture: string) => ({ ...state, profileChanges: { ...state.profileChanges, profilePicture } }),

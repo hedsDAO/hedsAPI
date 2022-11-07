@@ -1,14 +1,16 @@
 import { EtherscanButton, OpenSeaButton } from '@/common/buttons';
+import { Modals } from '@/modules/modals/store/modalModel';
 import { selectCurrentTapeCover, selectCurrentTapeDescription, selectCurrentTapeName } from '@/pages/tapes/store/selectors';
-import { RootState } from '@/store';
+import { Dispatch, RootState } from '@/store';
 import { Avatar, Button, Flex, IconButton, Image, Stack, Text } from '@chakra-ui/react';
 import { IconDownload } from '@tabler/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const Header = () => {
   const { space, tape, id } = useParams();
+  const dispatch = useDispatch<Dispatch>();
   const cover = useSelector(selectCurrentTapeCover);
   const description = useSelector(selectCurrentTapeDescription);
   const name = useSelector(selectCurrentTapeName);
@@ -34,7 +36,15 @@ const Header = () => {
           rounded="sm"
           src={cover}
         />
-        <Button rounded='sm' textColor={'gray.700'} border={'solid 1px'} borderColor={'green.200'} bg="green.100" leftIcon={<i className="fa-solid fa-layer-plus"></i>} size={'xs'}>
+        <Button
+          rounded="sm"
+          textColor={'gray.700'}
+          border={'solid 1px'}
+          borderColor={'green.200'}
+          bg="green.100"
+          leftIcon={<i className="fa-solid fa-layer-plus"></i>}
+          size={'xs'}
+        >
           Add to Queue
         </Button>
       </Stack>
@@ -59,7 +69,17 @@ const Header = () => {
               </Flex>
               <Flex pl={{ base: 12, lg: 0 }} alignItems={'center'} gap={2}>
                 <IconButton bg="blue.200" size="xs" aria-label="play" icon={<i className="fa-solid fa-play"></i>} className="flex-shrink-0" />
-                <IconButton bg="green.200" size="xs" aria-label="play" icon={<IconDownload height="14" width="14" />} className="flex-shrink-0" />
+                <IconButton
+                  onClick={() => {
+                    dispatch.modalModel.setModal(Modals.SAMPLE_MODAL);
+                    dispatch.modalModel.setModalOpen(true);
+                  }}
+                  bg="green.200"
+                  size="xs"
+                  aria-label="play"
+                  icon={<IconDownload height="14" width="14" />}
+                  className="flex-shrink-0"
+                />
               </Flex>
             </Flex>
           </Flex>
