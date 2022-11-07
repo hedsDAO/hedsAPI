@@ -69,6 +69,12 @@ export interface TrackMetadata {
   tape: string;
   wallet: string;
   public: boolean;
+  stats?: TrackStats;
+}
+
+export interface TrackStats {
+  favorites: number;
+  plays: number; 
 }
 
 export interface UserCollection {
