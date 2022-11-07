@@ -37,7 +37,6 @@ const userData: User = {
       },
     },
   },
-  public: true,
   profilePicture:
     'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0xde5bc302fc6d899eab4334602dd15efb20cd745f.jpeg?alt=media&token=9f251bf5-38c8-4800-b4c4-bc9166a0ebc2',
   submissions: {

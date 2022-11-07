@@ -22,6 +22,5 @@ export const emptyUserState = (state: User): User => {
     tracks: {},
     submissions: {},
     collection: {},
-    public: false,
   };
 };

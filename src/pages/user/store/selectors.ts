@@ -9,5 +9,4 @@ export const selectUserBanner = (state: RootState) => state.userModel.banner || 
 export const selectUserWallet = (state: RootState) => state.userModel.wallet || '';
 export const selectUserDescription = (state: RootState) => state.userModel.description || '';
 export const selectUserTwitterHandle = (state: RootState) => state.userModel.twitterHandle || '';
-export const selectUserPublicStatus = (state: RootState) => state.userModel.public || false;
 export const selectUserCollection = (state: RootState) => state.userModel.collection || {};
