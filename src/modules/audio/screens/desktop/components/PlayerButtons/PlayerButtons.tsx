@@ -9,7 +9,6 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
 
   const resetTrack = () => {
     dispatch.audioModel.setIsPlaying(false);
-    wavesurfer?.current?.playPause();
     wavesurfer?.current?.stop();
     wavesurfer?.current?.play(0);
     wavesurfer?.current?.playPause();
@@ -17,7 +16,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   
   return (
     <Flex height="100%" gap={2} justifyContent="center" alignItems={'center'}>
-      <IconButton _hover={{ bg: 'gray.200' }} onClick={() => {}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
+      <IconButton _hover={{ bg: 'gray.200' }} onClick={() => { resetTrack()}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
       {audioData?.isLoading ? (
         <IconButton _hover={{ bg: 'gray.200' }} aria-label="loading" isLoading={true} />
       ) : audioData?.isPlaying && wavesurfer?.current?.isPlaying() ? (

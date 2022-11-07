@@ -21,7 +21,7 @@ const MobileAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSu
           <Marquee className="-ml-2 py-2 w-[98%]" gradient={false}>
             <Flex px={3} direction={'row'} alignItems="baseline" gap={2}>
               <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize="md" fontWeight={'bold'}>
-                {audioData?.activeTrack.track}
+                {audioData?.activeTrack?.track}
               </Text>
               <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'} fontWeight={'semibold'}>
                 {audioData?.activeTrack?.tape}
