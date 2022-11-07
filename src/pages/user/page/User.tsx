@@ -1,5 +1,5 @@
 import { Flex, Stack } from '@chakra-ui/react';
-import { UserWrapper, PrivateUserWrapper } from '@/common/wrappers';
+import { UserWrapper } from '@/common/wrappers';
 import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
 import { Tracks, Submissions, ProfilePicture, DisplayName, Description, Collection, Badges, Samples, Banner } from '@/common/user';
 
@@ -22,12 +22,10 @@ export const User = () => {
             </Flex>
           </Stack>
           <Stack mt={{ base: '0', md: '36' }} direction={'column'} spacing="10" width={'full'}>
-            <PrivateUserWrapper>
-              <Samples />
-              <Tracks />
-              <Submissions />
-              <Collection />
-            </PrivateUserWrapper>
+            <Samples />
+            <Tracks />
+            <Submissions />
+            <Collection />
           </Stack>
         </UserWrapper>
       </Flex>
