@@ -12,3 +12,5 @@ export { default as getCurrentImagePath } from './getCurrentImagePath';
 export { default as formWaveSurferOptions } from './formWaveSurferOptions';
 export { default as formatTimestamp } from './formatTimestamp';
 export { default as compareTimestamps } from './compareTimestamps';
+export { default as handleDownloadFile } from './handleDownloadFile';
+export { default as generateSampleLink } from './generateSampleLink';

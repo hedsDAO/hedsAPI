@@ -2,7 +2,10 @@ import { createSelector } from 'reselect';
 import { RootState } from '@/store';
 import { TapeData } from '@models/common';
 
-export const selectCurrentTapeTimeline = (state: RootState) => state.tapesModel?.currentTape?.timeline || {};
+export const selectSpaceTapeId = (state: RootState) => state.tapesModel.spaceTapeId || ['', '', ''];
+export const selectCurrentTapeBpm = (state: RootState) => state.tapesModel?.currentTape?.bpm || 0;
+export const selectCurrentTapeCurator = (state: RootState) => state.tapesModel?.currentTape?.curator;
+export const selectCurrentTapeTimeline = (state: RootState) => state.tapesModel?.currentTape?.timeline;
 export const selectCurrentTapeName = (state: RootState) => state.tapesModel?.currentTape?.name || '';
 export const selectCurrentTapeDescription = (state: RootState) => state.tapesModel?.currentTape?.description || '';
 export const selectCurrentTapeCover = (state: RootState) => state.tapesModel?.currentTape?.image || '';
