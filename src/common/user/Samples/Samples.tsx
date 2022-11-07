@@ -2,8 +2,7 @@ import { TrackMetadata, User, UserRoles } from '@/models/common';
 import { selectUserSamples } from '@/pages/user/store/selectors';
 import { Dispatch, RootState } from '@/store';
 import { formatTime, isEmpty } from '@/utils';
-import { Heading, Stack, Skeleton, Divider, Image } from '@chakra-ui/react';
-import { Fragment } from 'react';
+import { Heading, Stack, Skeleton, Divider, Image, IconButton } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Samples = () => {
@@ -21,16 +20,30 @@ const Samples = () => {
         <ul data-testid="user-samples" role="list" className="divide-y divide-gray-200 py-3">
           <Stack spacing="1">
             {Object.values(samples).map((sample, i) => (
-              <li className="text-sm text-gray-600 rounded-md" key={i}>
-                <button onClick={() => handlePlay(sample)} className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md">
-                  <Image className="" borderRadius="full" boxSize="25px" src={sample.cover} alt={sample.tape} />
-                  <span className="text-xs font-light">{sample.tape}</span>
-                  <div className="min-w-0 flex-1 sm:flex" />
-                  <div className="flex-shrink-0 sm:mt-0 sm:ml-5">
-                    <span className="mr-2 sm:mr-4">{formatTime(sample.duration)}</span>
-                    <i className="fa-solid fa-play"></i>
-                  </div>
-                </button>
+              <li key={sample.audio + sample.artist} className={`text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm`}>
+                <div className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md">
+                  <Image borderRadius="full" boxSize="25px" src={sample.cover} alt={sample.tape} />
+                  <span className="text-xs sm:inline hidden font-light whitespace-nowrap">{sample.tape}</span>
+                  <span className="text-xs inline sm:hidden font-light whitespace-nowrap">{'HT' + sample.tape.split(' ')[1]}</span>
+                  <div className="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap uppercase">sample</div>
+                  <span className="mr-2 sm:mr-4 whitespace-nowrap">{formatTime(sample.duration)}</span>
+                  <IconButton
+                    bg="blue.200"
+                    size="xs"
+                    aria-label="play"
+                    icon={<i className="fa-solid fa-play"></i>}
+                    onClick={() => handlePlay(sample)}
+                    className="flex-shrink-0"
+                  />
+                  <IconButton
+                    bg="green.200"
+                    size="xs"
+                    aria-label="add to queue"
+                    icon={<i className="fa-solid fa-layer-plus"></i>}
+                    // onClick={}
+                    className="flex-shrink-0"
+                  />
+                </div>
               </li>
             ))}
           </Stack>

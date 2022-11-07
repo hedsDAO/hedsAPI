@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
 import { Dialog } from '@headlessui/react';
-import { DescriptionForm, ProfilePictureForm, ProfileVisibilityForm, BannerForm } from '@/modules/modals/screens/settings/components';
+import { DescriptionForm, ProfilePictureForm, BannerForm } from '@/modules/modals/screens/settings/components';
 import { ModalContainer } from '@/modules/modals/components';
 
 const SettingsModal = () => {
@@ -26,7 +26,6 @@ const SettingsModal = () => {
           Edit Profile
         </Dialog.Title>
         <Stack spacing="5" divider={<StackDivider />}>
-          <ProfileVisibilityForm />
           <DescriptionForm />
           <ProfilePictureForm />
           <BannerForm />

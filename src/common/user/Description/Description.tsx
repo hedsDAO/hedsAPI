@@ -10,7 +10,7 @@ const UserDescription = () => {
 
   return (
     <Fragment>
-      <Skeleton rounded="md" height="fit-content" fadeDuration={2} isLoaded={!loading}>
+      <Skeleton rounded="md" height="fit-content" fadeDuration={2} isLoaded={!loading} px={1}>
         <Text className="-mt-2" data-testid="user-description" fontSize={'sm'} color={'gray.600'}>
           {description || '...'}
         </Text>
