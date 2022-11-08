@@ -60,39 +60,39 @@ const DateCountdown = ({ deadline, setIsMintOpen }: CountdownProps) => {
     >
       {done ? (
         <div className="countdown-box flex gap-1">
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{days}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{days}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">D</h5>
           </div>
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{hours}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{hours}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">H</h5>
           </div>
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{minutes}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{minutes}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">M</h5>
           </div>
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{seconds}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{seconds}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">S</h5>
           </div>
         </div>
       ) : (
         <div className="countdown-box flex gap-1">
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{leading0(days)}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{leading0(days)}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">D</h5>
           </div>
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{leading0(hours)}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{leading0(hours)}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">H</h5>
           </div>
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{leading0(minutes)}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{leading0(minutes)}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">M</h5>
           </div>
-          <div className="flex mr-1">
-            <div className="text-neutral-700 dark:text-neutral-200 mr-1 lg:text-xs text-sm">{leading0(seconds)}</div>
+          <div className="flex mr-0.5">
+            <div className="text-neutral-700 dark:text-neutral-200 mr-0.5 lg:text-xs text-sm">{leading0(seconds)}</div>
             <h5 className="text-neutral-500 dark:text-neutral-400 lg:text-xs text-sm">S</h5>
           </div>
         </div>

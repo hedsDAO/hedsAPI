@@ -25,14 +25,18 @@ const Disclaimer = () => {
                 <Text fontSize="xl" textColor={'blackAlpha.800'} fontWeight={'bold'}>
                   {sampleModalText.h1}
                 </Text>
-                <Flex mt={4} gap={2} alignItems={'center'}>
+                <Flex mt={4} gap={2} direction={{ base: 'column', lg: 'row' }} alignItems={{ base: 'start', lg: 'center' }}>
                   <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
                     {sampleModalText.req1}
                     <span className="text-green-600 font-semibold ml-1">{bpm}</span>
                   </Badge>
                   <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
                     {sampleModalText.req2}
-                    <span className="text-orange-600 font-semibold ml-1">{'60-90 sec.'}</span>
+                    <span className="text-orange-600 font-semibold ml-1">{'60-90 sec'}</span>
+                  </Badge>
+                  <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
+                    {sampleModalText.req3}
+                    <span className="text-blue-600 font-semibold ml-1">{'> 1 sec'}</span>
                   </Badge>
                 </Flex>
                 <Checkbox mt={5} onChange={(e) => dispatch.sampleModel.setIsChecked(!isChecked)}>
