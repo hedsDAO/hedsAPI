@@ -15,7 +15,7 @@ const ConnectButton = () => {
               type="button"
               className={`
                 ${isConnected ? 'bg-black' : 'gradient'}
-                inline-flex items-center rounded-full border border-transparent px-6 py-1.5 font-semibold text-sm tracking-widest leading-4 text-gray-100 shadow-sm hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2
+                inline-flex items-center rounded-full border border-transparent px-6 py-1.5 font-semibold text-xs tracking-widest leading-4 text-white shadow-sm hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2
               `}
             >
               {isConnected ? ensName || address.slice(0, 5) + '...' : isConnecting ? <i className="fas fa-circle-notch fa-spin"></i> : 'connect'}

@@ -8,6 +8,7 @@ import { hedstapeModel } from '@/pages/listen/store/hedstapeModel';
 import { audioModel } from '@/modules/audio/store/audioModel';
 import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
+import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
 
 export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;
@@ -19,6 +20,7 @@ export interface RootModel extends Models<RootModel> {
   settingsModel: typeof settingsModel;
   twitterModel: typeof twitterModel;
   hedstapeModel: typeof hedstapeModel;
+  sampleModel: typeof sampleModel;
 }
 
 export const models: RootModel = {
@@ -31,4 +33,5 @@ export const models: RootModel = {
   settingsModel,
   twitterModel,
   hedstapeModel,
+  sampleModel,
 };
