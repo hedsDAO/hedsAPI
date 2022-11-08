@@ -21,7 +21,7 @@ const TapeAndCurator = () => {
             {curator?.displayName}
           </Text>
           <XMarkIcon width="11" height="11" />
-          <Text fontWeight={'semibold'} fontSize={{ base: 'xs', lg: 'sm' }}>
+          <Text fontWeight={'semibold'} fontSize={{ base: 'sm', lg: 'md' }}>
             {tapeName}
           </Text>
         </Flex>

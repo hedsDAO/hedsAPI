@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const GenerateHashForm = () => {
   const dispatch = useDispatch<Dispatch>();
-  const userData = useSelector((state: RootState) => state.userModel);
+  const profileData = useSelector((state: RootState) => state.profileModel);
   const { currentStep, loading } = useSelector((state: RootState) => state.twitterModel);
 
   return (
@@ -20,7 +20,7 @@ const GenerateHashForm = () => {
             disabled={currentStep !== TwitterStep.GENERATE_HASH}
             leftIcon={<IconKey height={16} width={16} />}
             size={'sm'}
-            onClick={() => dispatch.twitterModel.generateHash(userData?.wallet)}
+            onClick={() => dispatch.twitterModel.generateHash(profileData?.wallet)}
             bg="gray.200"
           >
             Generate hash

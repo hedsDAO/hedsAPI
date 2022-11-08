@@ -6,12 +6,11 @@ const OpenDateBox = ({ end }: { end: number }) => {
   return (
     <Flex my={3} alignItems={'stretch'} gap={2}>
       <IconButton
-        className="animate-pulse"
         pointerEvents={'none'}
-        _hover={{ background: 'green.200' }}
+        _hover={{ background: 'green.50' }}
         border={'solid 1px'}
         borderColor="green.100"
-        bg="green.200"
+        bg="green.50"
         shadow={'sm'}
         aria-label="vote"
         icon={<ClockIcon height="16" width="16" />}

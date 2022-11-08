@@ -9,7 +9,8 @@ export class SampleModalText {
   icon = 'fa-light fa-waveform-lines mr-1 text-xl';
   h1 = 'Requirements';
   req1 = 'bpm:';
-  req2 = 'duration:';
+  req2 = 'length:';
+  req3 = 'sample used';
   primaryAlertText = 'Public submissions end in:';
   warningAlertText = 'Public submissions have ended.';
   checkboxText = 'I understand the submission requirements.';

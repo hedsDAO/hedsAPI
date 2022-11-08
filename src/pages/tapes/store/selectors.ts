@@ -9,6 +9,7 @@ export const selectCurrentTapeId = (state: RootState) => state.tapesModel?.space
 export const selectSpaceTapeId = (state: RootState) => state.tapesModel.spaceTapeId || ['', '', ''];
 
 // Current Tape Data
+export const selectHedsTapeById = (state: RootState, id: string) => state.tapesModel?.hedsTapes?.[id];
 export const selectCurrentTape = (state: RootState) => state.tapesModel?.currentTape;
 export const selectCurrentTapeBpm = (state: RootState) => state.tapesModel?.currentTape?.bpm || 0;
 export const selectCurrentTapeCurator = (state: RootState) => state.tapesModel?.currentTape?.curator;

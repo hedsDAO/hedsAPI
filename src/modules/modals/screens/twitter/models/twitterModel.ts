@@ -96,7 +96,6 @@ export const twitterModel = createModel<RootModel>()({
       }
       setTimeout(() => {
         this.setLoading(false);
-        dispatch.modalModel.setModalOpen(false);
       }, 1000);
     },
   }),
