@@ -9,6 +9,7 @@ import { audioModel } from '@/modules/audio/store/audioModel';
 import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
 import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
+import { submitModel } from '@/modules/modals/screens/submit/models/submitModel';
 
 export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;
@@ -21,6 +22,7 @@ export interface RootModel extends Models<RootModel> {
   twitterModel: typeof twitterModel;
   hedstapeModel: typeof hedstapeModel;
   sampleModel: typeof sampleModel;
+  submitModel: typeof submitModel;
 }
 
 export const models: RootModel = {
@@ -34,4 +36,5 @@ export const models: RootModel = {
   twitterModel,
   hedstapeModel,
   sampleModel,
+  submitModel,
 };

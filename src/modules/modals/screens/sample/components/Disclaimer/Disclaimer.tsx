@@ -1,35 +1,57 @@
-import { selectCurrentTapeCurator, selectCurrentTapeTimeline } from '@/pages/tapes/store/selectors';
-import { Dispatch, RootState } from '@/store';
-import { Checkbox, Divider, Flex, Text } from '@chakra-ui/react';
-import { DateTime } from 'luxon';
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Badge, Checkbox, Divider, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Dispatch, RootState } from '@/store';
+import { selectCurrentTapeBpm, selectCurrentTapeTimeline } from '@/pages/tapes/store/selectors';
+import { PrimaryAlert, WarningAlert } from '@/common/alerts';
+import { DateTime } from 'luxon';
 
 const Disclaimer = () => {
-  const { isChecked } = useSelector((state: RootState) => state.sampleModel);
-  const curator = useSelector(selectCurrentTapeCurator);
   const dispatch = useDispatch<Dispatch>();
   const now = DateTime.now().setZone('utc').toMillis();
-  const timeline = useSelector(selectCurrentTapeTimeline);
+  const { isChecked, sampleModalText } = useSelector((state: RootState) => state.sampleModel);
+  const { end } = useSelector(selectCurrentTapeTimeline).submit;
+  const bpm = useSelector(selectCurrentTapeBpm);
+
   return (
-    <Fragment>
-      <Divider my={3} />
-      {now < timeline?.submit?.end ? (
-        <Flex px={1} direction={'column'}>
-          <Text mb={1} textColor={'red.400'} fontWeight={'bold'}>
-            Disclaimer
-          </Text>
-          <Text textColor={'gray.700'} fontSize="xs">
-            My submission does not contain and copyrighted material and adheres to the bpm and length requirements.
-          </Text>
-          <Checkbox mt={3} onChange={(e) => dispatch.sampleModel.setIsChecked(!isChecked)}>
-            <Text fontSize={'xs'}>I agree</Text>
-          </Checkbox>
-        </Flex>
-      ) : (
-        <></>
+    <>
+      {sampleModalText && (
+        <Fragment>
+          {now < end ? (
+            <Flex direction={'column'}>
+              <Divider my={5} />
+              <PrimaryAlert countdown={end}>{useBreakpointValue({ base: '', lg: sampleModalText.primaryAlertText })}</PrimaryAlert>
+              <Flex mt={5} px={2} direction={'column'}>
+                <Text fontSize="xl" textColor={'blackAlpha.800'} fontWeight={'bold'}>
+                  {sampleModalText.h1}
+                </Text>
+                <Flex mt={4} gap={2} alignItems={'center'}>
+                  <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
+                    {sampleModalText.req1}
+                    <span className="text-green-600 font-semibold ml-1">{bpm}</span>
+                  </Badge>
+                  <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
+                    {sampleModalText.req2}
+                    <span className="text-orange-600 font-semibold ml-1">{'60-90 sec.'}</span>
+                  </Badge>
+                </Flex>
+                <Checkbox mt={5} onChange={(e) => dispatch.sampleModel.setIsChecked(!isChecked)}>
+                  <Text fontSize={'xs'}>{sampleModalText.checkboxText}</Text>
+                </Checkbox>
+                <Divider my={5} />
+              </Flex>
+            </Flex>
+          ) : (
+            <Fragment>
+              <Divider my={5} />
+              <Flex mb={5}>
+                <WarningAlert>{sampleModalText.warningAlertText}</WarningAlert>
+              </Flex>
+            </Fragment>
+          )}
+        </Fragment>
       )}
-    </Fragment>
+    </>
   );
 };
 

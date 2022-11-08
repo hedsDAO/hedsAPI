@@ -3,14 +3,18 @@ import { storage } from '@/App';
 import { generateSampleLink } from '@/utils';
 import { createModel } from '@rematch/core';
 import { getDownloadURL, ref } from 'firebase/storage';
+import { SampleModalText } from '@/modules/modals/store/common';
 
 class SampleModalState {
   isChecked: boolean;
   isLoading: boolean;
+  sampleModalText: SampleModalText;
 }
 
 export const sampleModel = createModel<RootModel>()({
-  state: {} as SampleModalState,
+  state: {
+    sampleModalText: new SampleModalText(),
+  } as SampleModalState,
   reducers: {
     setIsLoading: (state, isLoading) => ({ ...state, isLoading }),
     setIsChecked: (state, isChecked) => ({ ...state, isChecked }),
