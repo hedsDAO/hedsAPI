@@ -1,13 +1,13 @@
 import { Fragment, useCallback, useRef } from 'react';
-import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Center, Container, Divider, Flex, FormControl, FormLabel, HStack, Icon, IconButton, Square, Text, VStack } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
-import { IconUpload } from '@tabler/icons';
-import { PrimaryButton, SecondaryButton } from '@/common/buttons';
+import { useDropzone } from 'react-dropzone';
 import { selectCurrentTapeId, selectHedsTapeById } from '@/pages/tapes/store/selectors';
-import { SubmitSteps } from '../../models/submitModel';
-import { computeLength, formatTime } from '@/utils';
+import { SubmitSteps } from '@modals/screens/submit/models/common';
+import { Box, Button, Center, Container, Divider, Flex, FormControl, HStack, Icon, Square, Text, VStack } from '@chakra-ui/react';
+import { PrimaryButton, SecondaryButton } from '@/common/buttons';
+import { IconUpload } from '@tabler/icons';
+import { computeLength } from '@/utils';
 
 const UploadSubmission = () => {
   const dispatch = useDispatch<Dispatch>();

@@ -1,6 +1,6 @@
+import { Fragment } from 'react';
 import { ConnectButton } from '@/common/buttons';
 import { Divider, Text } from '@chakra-ui/react';
-import { Fragment } from 'react';
 
 const ConnectWallet = () => {
   return (

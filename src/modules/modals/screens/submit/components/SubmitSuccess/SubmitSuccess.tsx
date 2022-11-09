@@ -1,8 +1,8 @@
-import { PrimaryButton, SecondaryButton } from '@/common/buttons';
+import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { Badge, Divider, Flex, Text } from '@chakra-ui/react';
+import { SecondaryButton } from '@/common/buttons';
 import { IconCircleCheck } from '@tabler/icons';
-import { useDispatch, useSelector } from 'react-redux';
 
 const SubmitSucess = () => {
   const dispatch = useDispatch<Dispatch>();
