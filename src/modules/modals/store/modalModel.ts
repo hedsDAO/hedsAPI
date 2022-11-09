@@ -7,11 +7,12 @@ export enum Modals {
   NAME_MODAL,
   SAMPLE_MODAL,
   SUBMIT_MODAL,
-  MINT_MODAL
+  MINT_MODAL,
 }
 
 export interface ModalState {
   currentModal: Modals;
+  nextModal?: Modals;
   isOpen: boolean;
 }
 
@@ -22,6 +23,7 @@ export const modalModel = createModel<RootModel>()({
   reducers: {
     setModal: (state, currentModal) => ({ ...state, currentModal }),
     setModalOpen: (state, isOpen: boolean) => ({ ...state, isOpen }),
+    setNextModal: (state, nextModal: Modals) => ({ ...state, nextModal }),
   },
   effects: () => ({}),
 });

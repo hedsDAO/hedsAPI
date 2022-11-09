@@ -9,9 +9,9 @@ import { TwitterStep } from '@/modules/modals/screens/twitter/models/twitterMode
 
 const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();
-  const { isOpen } = useSelector((state: RootState) => state.modalModel);
+  const { isOpen, nextModal } = useSelector((state: RootState) => state.modalModel);
   const { currentStep, loading, twitterHandle } = useSelector((state: RootState) => state.twitterModel);
-  const userData = useSelector((state: RootState) => state.userModel);
+  const profileData = useSelector((state: RootState) => state.profileModel);
   useEffect(() => {
     return () => {
       dispatch.twitterModel.clearTwitterModalState();
@@ -41,7 +41,11 @@ const TwitterModal = () => {
             {currentStep === TwitterStep.LINK_ACCOUNT && (
               <Button
                 isLoading={loading}
-                onClick={() => dispatch.twitterModel.linkTwitterHandleToUser([userData.wallet, userData, twitterHandle])}
+                onClick={async () => {
+                  await dispatch.twitterModel.linkTwitterHandleToUser([profileData.wallet, profileData, twitterHandle]);
+                  if (nextModal) dispatch.modalModel.setModal(nextModal);
+                  else dispatch.modalModel.setModalOpen(false);
+                }}
                 bg="green.200"
               >
                 Confirm

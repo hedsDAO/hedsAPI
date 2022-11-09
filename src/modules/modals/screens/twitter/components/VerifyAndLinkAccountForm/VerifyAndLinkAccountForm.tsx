@@ -5,7 +5,7 @@ import { IconAlertCircle, IconLink } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 
 const VerifyAndLinkAccountForm = () => {
-  const userData = useSelector((state: RootState) => state.userModel);
+  const profileData = useSelector((state: RootState) => state.profileModel);
   const { twitterHandle } = useSelector((state: RootState) => state.twitterModel);
 
   return (
@@ -23,13 +23,13 @@ const VerifyAndLinkAccountForm = () => {
       <Flex alignItems={'center'} my={5} gap={4} direction={'row'}>
         <Tag size="lg" colorScheme="blue" borderRadius="full">
           <Avatar
-            src={userData?.profilePicture}
+            src={profileData?.profilePicture}
             size="2xs"
-            name={userData?.displayName ? userData?.displayName : userData?.wallet ? formatWallet(userData?.wallet) : ''}
+            name={profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}
             ml={-1}
             mr={2}
           />
-          <TagLabel> {userData?.displayName ? userData?.displayName : userData?.wallet ? formatWallet(userData?.wallet) : ''}</TagLabel>
+          <TagLabel> {profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}</TagLabel>
         </Tag>
         <IconLink height={20} width={20} />
         <Tag py={1} size="lg" colorScheme="blue" borderRadius="full">

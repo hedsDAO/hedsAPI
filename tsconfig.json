@@ -16,7 +16,8 @@
       "@components/*": ["src/components/*"],
       "@utils/*": ["src/utils/*"],
       "@common/*": ["src/common/*"],
-      "@models/*": ["src/models/*"]
+      "@models/*": ["src/models/*"],
+      "@modals/*": ["src/modules/modals/*"]
     }
   },
   "exclude": ["node_modules", "build"]

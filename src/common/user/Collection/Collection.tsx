@@ -1,5 +1,5 @@
 import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Stack } from '@chakra-ui/react';
-import { RefreshCollectionButton } from '@/common/buttons';
+import { RefreshCollectionButton } from '@/common/user';
 import { User } from '@/models/common';
 import { isEmpty } from '@/utils';
 import { useSelector } from 'react-redux';

@@ -4,11 +4,11 @@ import { Button, Flex } from '@chakra-ui/react';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { IconBrandTwitter } from '@tabler/icons';
 import { Fragment } from 'react';
-import { selectUserTwitterHandle } from '@/pages/user/store/selectors';
+import { selectProfileTwitterHandle } from '../../store/selectors';
 
 const VerifyTwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const twitterHandle = useSelector(selectUserTwitterHandle);
+  const twitterHandle = useSelector(selectProfileTwitterHandle);
   return (
     <Fragment>
       {!twitterHandle?.length && (

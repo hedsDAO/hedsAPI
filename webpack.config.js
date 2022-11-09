@@ -16,6 +16,7 @@ module.exports = {
       '@common': path.resolve(__dirname, 'src/common/'),
       '@utils': path.resolve(__dirname, 'src/utils/'),
       '@models': path.resolve(__dirname, 'src/models/'),
+      '@modals': path.resolve(__dirname, 'src/modules/modals')
     },
   },
   output: {
@@ -54,6 +55,9 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',

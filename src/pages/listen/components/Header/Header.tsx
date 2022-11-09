@@ -1,4 +1,4 @@
-import { EtherscanButton, OpenSeaButton } from '@/common/buttons';
+import { EtherscanButton, OpenSeaButton } from '@/common/tape';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { selectCurrentTapeCover, selectCurrentTapeDescription, selectCurrentTapeName } from '@/pages/tapes/store/selectors';
 import { Dispatch, RootState } from '@/store';
