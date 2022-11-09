@@ -10,8 +10,8 @@ const RequirementsAndDisclaimer = () => {
   const bpm = useSelector(selectCurrentTapeBpm);
   const { isDisclaimerChecked, isRequirementsChecked } = useSelector((state: RootState) => state.submitModel);
   return (
-    <Flex direction={'column'} px={2}>
-      <Flex px={2} direction={'column'}>
+    <Flex direction={'column'}>
+      <Flex direction={'column'}>
         <Text fontSize="xl" textColor={'blackAlpha.800'} fontWeight={'bold'}>
           Submission Requirements
         </Text>
@@ -30,23 +30,20 @@ const RequirementsAndDisclaimer = () => {
           </Badge>
         </Flex>
         <Checkbox as={Flex} alignItems="start" mt={8} onChange={() => dispatch.submitModel.setIsRequirementsChecked(!isRequirementsChecked)}>
-          <Text
-            mt={-1}
-            fontSize={'xs'}
-          >{`I understand that my submission may be subject to disqualification if it does not follow the requirements above.`}</Text>
+          <Text fontSize={'xs'}>{`I understand that my submission may be subject to disqualification if it does not follow the requirements above.`}</Text>
         </Checkbox>
         <Divider my={5} />
         <Text fontSize="lg" textColor={'red.500'} fontWeight={'bold'}>
           Copyright Disclaimer
         </Text>
         <Checkbox as={Flex} alignItems="start" mt={5} onChange={() => dispatch.submitModel.setIsDisclaimerChecked(!isDisclaimerChecked)}>
-          <Text mt={-1} textColor={'black'} fontSize={'xs'}>
+          <Text textColor={'black'} fontSize={'xs'}>
             {'I acknowledge that my submission contains no copyrighted content.'}
           </Text>
         </Checkbox>
       </Flex>
       <Divider my={5} />
-      <div className="flex gap-2">
+      <div className="flex gap-2 mb-2">
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{'Back'}</SecondaryButton>
         <PrimaryButton
           disabled={!isRequirementsChecked || !isDisclaimerChecked}

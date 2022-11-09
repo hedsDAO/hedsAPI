@@ -10,6 +10,7 @@ const PrimaryButton = ({ isLoading, disabled, onClick, children }: { isLoading?:
       bg="green.100"
       borderColor={'green.200'}
       className={'border'}
+      size={'sm'}
     >
       {children}
     </Button>

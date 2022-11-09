@@ -9,7 +9,6 @@ export const selectCurrentTapeId = (state: RootState) => state.tapesModel?.space
 export const selectSpaceTapeId = (state: RootState) => state.tapesModel.spaceTapeId || ['', '', ''];
 
 // Current Tape Data
-export const selectHedsTapeById = (state: RootState, id: string) => state.tapesModel?.hedsTapes?.[id];
 export const selectCurrentTape = (state: RootState) => state.tapesModel?.currentTape;
 export const selectCurrentTapeBpm = (state: RootState) => state.tapesModel?.currentTape?.bpm || 0;
 export const selectCurrentTapeCurator = (state: RootState) => state.tapesModel?.currentTape?.curator;
@@ -20,6 +19,11 @@ export const selectCurrentTapeCover = (state: RootState) => state.tapesModel?.cu
 export const selectCurrentTapeEtherscanLink = (state: RootState) => state.tapesModel?.currentTape?.etherscan || '';
 export const selectCurrentTapeOpenSeaLink = (state: RootState) => state.tapesModel?.currentTape?.opensea || '';
 export const selectCurrentTapeTracks = (state: RootState) => state.tapesModel?.currentTape?.tracks || [];
+
+// HedsTape Data
+export const selectHedstapeByNameById = (state: RootState, id: string) => state.tapesModel.hedsTapes?.[id]?.name
+export const selectHedstapeCoverById = (state: RootState, id: string) => state.tapesModel.hedsTapes?.[id]?.image
+export const selectHedsTapeById = (state: RootState, id: string) => state.tapesModel?.hedsTapes?.[id];
 
 // Global
 export const selectAllHedsTapes = (state: RootState): { [key: string]: TapeData } => state.tapesModel.allTapes || {};
