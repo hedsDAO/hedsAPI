@@ -33,12 +33,12 @@ const PasteTweetForm = () => {
           </InputRightElement>
         </InputGroup>
       </Stack>
-      {error?.length && currentStep === TwitterStep.VERIFY_TWEET && (
+      {error?.length && currentStep === TwitterStep.VERIFY_TWEET ? (
         <Flex mt={1} alignItems={'center'} gap={2}>
           <IconAlertCircle className="text-red-500" height={16} width={16} />
           <Text color="red.300">{error}</Text>
         </Flex>
-      )}
+      ) : <></>}
     </FormControl>
   );
 };

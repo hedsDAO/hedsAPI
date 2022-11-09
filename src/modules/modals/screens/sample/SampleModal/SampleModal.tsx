@@ -1,33 +1,42 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
-import { ModalContainer } from '@/modules/modals/components';
 import { Dialog } from '@headlessui/react';
-import { Avatar, Button, Divider, Flex, Icon, Image } from '@chakra-ui/react';
+import { Dispatch, RootState } from '@/store';
+import { selectCurrentTape, selectCurrentTapeId } from '@/pages/tapes/store/selectors';
+import { SecondaryButton, PrimaryButton } from '@/common/buttons';
+import { ModalContainer } from '@/modules/modals/components';
+import { Disclaimer, TapeAndCurator } from '@/modules/modals/screens/sample/components';
+import { DateTime } from 'luxon';
 
 const SampleModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
-  const { currentTape } = useSelector((state: RootState) => state.tapesModel);
+  const { isLoading, isChecked, sampleModalText } = useSelector((state: RootState) => state.sampleModel);
+  const { end } = useSelector(selectCurrentTape).timeline.submit;
+  const id = useSelector(selectCurrentTapeId);
+  const now = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();
+
+  useEffect(() => {
+    return () => {
+      dispatch.sampleModel.setIsChecked(false);
+      dispatch.sampleModel.setIsLoading(false);
+    };
+  }, []);
+
   return (
     <ModalContainer isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
-      <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-gray-100 px-6 py-4 text-left align-middle shadow-xl transition-all">
-        <Dialog.Title as="h2" className="text-2xl font-semibold text-gray-900 mb-6">
-          <i className="fa-light fa-waveform-lines mr-1 text-xl"></i> Sample
+      <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-100 px-6 py-5 text-left align-middle shadow-xl transition-all">
+        <Dialog.Title className="h4 text-2xl mb-2 font-semibold">
+          <i className={sampleModalText.icon} /> {sampleModalText.title}
         </Dialog.Title>
-        <Divider my={5} />
-        <Flex>
-          <Avatar size="md" src={currentTape?.curator?.profilePicture} />
-        </Flex>
-        <Divider my={5} />
-        <Dialog.Description>
-          {currentTape?.name} features a sample provided by {currentTape?.curator?.displayName}. To prevent disqualification through the curation process, your
-          submission must be 120bpm and use at least 1 second of the sample.
-        </Dialog.Description>
-        <Divider my={5} />
-        <Flex>
-          <Button>Back</Button>
-          <Button>Download</Button>
-        </Flex>
+        <TapeAndCurator />
+        <Disclaimer />
+        <div className="flex gap-2">
+          <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{sampleModalText.secondaryButtonText}</SecondaryButton>
+          <PrimaryButton isLoading={isLoading} onClick={() => dispatch.sampleModel.getSampleDownload(id)} disabled={now > end ? false : !isChecked}>
+            {sampleModalText.primaryButtonText}
+          </PrimaryButton>
+        </div>
       </Dialog.Panel>
     </ModalContainer>
   );

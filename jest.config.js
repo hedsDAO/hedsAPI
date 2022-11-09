@@ -9,6 +9,7 @@ module.exports = {
     '^@common/(.*)$': '<rootDir>/src/common/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@models/(.*)$': '<rootDir>/src/models/$1',
+    '^@modals/(.*)$': '<rootDir>/src/modules/modals/$1',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy',
   },
   testEnvironment: 'jsdom',

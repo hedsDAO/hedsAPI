@@ -31,13 +31,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RematchProvider store={store}>
         <ChakraProvider>
           <TapeWrapper>
-            <ModalWrapper>
-              <AudioWrapper>
-                <BrowserRouter>
+            <AudioWrapper>
+              <BrowserRouter>
+                <ModalWrapper>
                   <App />
-                </BrowserRouter>
-              </AudioWrapper>
-            </ModalWrapper>
+                </ModalWrapper>
+              </BrowserRouter>
+            </AudioWrapper>
           </TapeWrapper>
         </ChakraProvider>
       </RematchProvider>

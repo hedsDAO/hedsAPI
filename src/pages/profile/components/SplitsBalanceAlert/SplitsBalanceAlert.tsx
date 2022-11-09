@@ -2,13 +2,13 @@ import { Fragment, useEffect, useState } from 'react';
 import { Box, Button, Container, Flex, Icon, Link, Text } from '@chakra-ui/react';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
-import { selectUserWallet } from '@/pages/user/store/selectors';
 import { getSplitsBalance } from '@/utils/graphql/getSplitsBalance';
 import { ethers } from 'ethers';
+import { selectProfileWallet } from '../../store/selectors';
 
 const SplitsBalanceAlert = () => {
   const [balance, setBalance] = useState<string>('');
-  const wallet = useSelector(selectUserWallet);
+  const wallet = useSelector(selectProfileWallet);
   useEffect(() => {
     if (wallet) getUserBalance(wallet);
   }, [wallet]);
