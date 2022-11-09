@@ -5,7 +5,6 @@ import { TrackMetadata, User, UserRoles } from '@/models/common';
 import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 import { emptyUserState } from '@/models/utils';
-import { SubmitSteps } from '@/modules/modals/screens/submit/models/submitModel';
 
 export const profileModel = createModel<RootModel>()({
   state: {} as User,
