@@ -11,7 +11,7 @@ import { Result } from 'ethers/lib/utils';
 export const userModel = createModel<RootModel>()({
   state: {} as User,
   reducers: {
-    setUserData: (state, payload: User) => ({ ...state, ...payload }),
+    setUserData: (state, payload) => ({ ...state, ...payload }),
     clearUserState: (state) => emptyUserState(state),
   },
   effects: () => ({

@@ -15,3 +15,4 @@ export { default as compareTimestamps } from './compareTimestamps';
 export { default as handleDownloadFile } from './handleDownloadFile';
 export { default as generateSampleLink } from './generateSampleLink';
 export { default as computeLength } from './computeLength';
+export { default as handlePinataMetadata } from './handlePinataMetadata';
