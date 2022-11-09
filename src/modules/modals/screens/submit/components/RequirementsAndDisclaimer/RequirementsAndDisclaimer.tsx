@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
-import { Badge, Checkbox, Divider, Flex, Text } from '@chakra-ui/react';
 import { selectCurrentTapeBpm } from '@/pages/tapes/store/selectors';
+import { Badge, Checkbox, Divider, Flex, Text } from '@chakra-ui/react';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
-import { SubmitSteps } from '../../models/submitModel';
+import { SubmitSteps } from '@modals/screens/submit/models/common';
 
 const RequirementsAndDisclaimer = () => {
   const dispatch = useDispatch<Dispatch>();

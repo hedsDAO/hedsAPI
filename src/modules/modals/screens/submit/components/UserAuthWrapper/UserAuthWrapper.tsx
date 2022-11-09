@@ -1,15 +1,11 @@
 import { Fragment, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSpaceTapeId } from '@/pages/tapes/store/selectors';
 import { Dispatch, RootState } from '@/store';
 import { Flex } from '@chakra-ui/react';
-
-
-
-import { SubmitSteps } from '../../models/submitModel';
-import ConnectWallet from '../ConnectWallet/ConnectWallet';
-import VerifyTwitter from '../VerifyTwitter/VerifyTwitter';
+import { selectSpaceTapeId } from '@/pages/tapes/store/selectors';
+import { SubmitSteps } from '@modals/screens/submit/models/common';
+import { ConnectWallet, VerifyTwitter } from '@modals/screens/submit/components';
 
 const UserAuthWrapper = ({ children }: { children: any }) => {
   const dispatch = useDispatch<Dispatch>();

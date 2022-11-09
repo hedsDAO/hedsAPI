@@ -1,8 +1,8 @@
-import { SecondaryButton, WarningButton } from '@/common/buttons';
+import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 import { Divider, Flex, Text } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
-import { SubmitSteps } from '../../models/submitModel';
+import { SecondaryButton, WarningButton } from '@/common/buttons';
+import { SubmitSteps } from '@modals/screens/submit/models/common';
 
 const PreviousSubmission = () => {
   const dispatch = useDispatch<Dispatch>();

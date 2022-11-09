@@ -1,0 +1,8 @@
+
+export enum SubmitSteps {
+    REQUIREMENTS_AND_DISCLAIMER = 0,
+    UPLOAD_SUBMISSION,
+    VERIFY_AND_SUBMIT,
+    SUCCESS,
+    PREVIOUS_SUBMISSION,
+  }

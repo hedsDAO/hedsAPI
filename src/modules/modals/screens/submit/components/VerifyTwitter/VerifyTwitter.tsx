@@ -1,13 +1,12 @@
-import { Modals } from '@/modules/modals/store/modalModel';
-import { Dispatch } from '@/store';
-import { Button, Divider, Flex, Text } from '@chakra-ui/react';
-import { IconBrandTwitter } from '@tabler/icons';
 import { Fragment } from 'react';
 import { useDispatch } from 'react-redux';
+import { Dispatch } from '@/store';
+import { Modals } from '@/modules/modals/store/modalModel';
+import { Button, Divider, Flex, Text } from '@chakra-ui/react';
+import { IconBrandTwitter } from '@tabler/icons';
 
 const VerifyTwitter = () => {
   const dispatch = useDispatch<Dispatch>();
-
   return (
     <Fragment>
       <Text mb={4} fontSize="lg" fontWeight={'semibold'} textColor={'blackAlpha.800'}>
