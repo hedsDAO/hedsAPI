@@ -7,12 +7,24 @@ import { useEffect } from 'react';
 const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const audioData = useSelector((state: RootState) => state.audioModel);
+  const userData = useSelector((state: RootState) => state.userModel);
 
-  const countSeconds = () => {
-    setInterval(() => {
-      dispatch.audioModel.setTimerSeconds(audioData.timerSeconds++);
-    }, 1000)
-  }
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (audioData.isPlaying === true) {
+      interval = setInterval(() => {
+        if (audioData.timerSeconds === audioData.countPlayThreshold) {
+          dispatch.audioModel.updateTrackMetadataStats({track: audioData.activeTrack, walletId: audioData.activeTrack.wallet, newStats: {...audioData.activeTrack.stats, plays: audioData.activeTrack.stats ? audioData.activeTrack.stats.plays++ : 1}})
+          setTimeout(() => dispatch.audioModel.updaterUserListeningHistory({track: audioData.activeTrack, walletId: userData?.wallet}),500)
+        }
+        dispatch.audioModel.setTimerSeconds(++audioData.timerSeconds);
+      }, 1000);
+    }
+    return () => {
+      return clearInterval(interval);
+    };
+  }, [audioData.isPlaying]);
+
 
   const resetTrack = () => {
     dispatch.audioModel.setIsPlaying(false);

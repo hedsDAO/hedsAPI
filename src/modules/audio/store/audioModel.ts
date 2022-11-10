@@ -71,7 +71,7 @@ export const audioModel = createModel<RootModel>()({
     setVolume: (state, volume: number) => ({ ...state, volume }),
     setCurrentTime: (state, currentTime: [string, number]) => ({ ...state, currentTime }),
     setTimerSeconds: (state, timerSeconds: number) => ({ ...state, timerSeconds }),
-    setCountPlayThreshold: (state, countPlayThreshold: number) => ({ ...state, countPlayThreshold }),
+    setCountPlayThreshold: (state, duration: number) => ({ ...state, countPlayThreshold: Math.ceil(duration/4) }),
     setDuration: (state, duration: number) => ({ ...state, duration }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     clearAudioState: (state) => {
@@ -88,7 +88,7 @@ export const audioModel = createModel<RootModel>()({
       const userSnap = await (await getDoc(userRef)).data();
       const tapeNumber = parseInt(track.tape.slice(-2));
 
-			if (userSnap.exists()) {
+			if (userSnap) {
 				const updatedUserData = { 
           ...userSnap,
           submissions: {
@@ -103,8 +103,9 @@ export const audioModel = createModel<RootModel>()({
         };
 
         try {
-          await updateDoc(userRef, updatedUserData);
-          await dispatch.userModel.getUserData(walletId);
+          console.log(updatedUserData)
+          // await updateDoc(userRef, updatedUserData);
+          // await dispatch.userModel.getUserData(walletId);
         } catch (e) {
           return {
             erorr: e,
@@ -118,18 +119,17 @@ export const audioModel = createModel<RootModel>()({
       const db = getFirestore();
       const userRef = doc(db, "users", walletId);
       const userSnap = await (await getDoc(userRef)).data();
+      console.log(userSnap)
 
-      const newHistory = [...userSnap.history, track];
-
-      if (userSnap.exists()) {
+      if (userSnap) {
 				const updatedUserData = { 
           ...userSnap,
-          history: newHistory,
+          history: [track],
         };
-
+        console.log(updatedUserData)
         try {
-          await updateDoc(userRef, updatedUserData);
-          await dispatch.userModel.getUserData(walletId);
+          // await updateDoc(userRef, updatedUserData);
+          // await dispatch.userModel.getUserData(walletId);
         } catch (e) {
           return {
             erorr: e,
