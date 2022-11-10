@@ -138,7 +138,7 @@ const UploadSubmission = () => {
         <SecondaryButton
           onClick={() => {
             dispatch.submitModel.clearModalState();
-            dispatch.submitModel.setCurrentStep(SubmitSteps.REQUIREMENTS_AND_DISCLAIMER);
+            dispatch.submitModel.setCurrentStep(SubmitSteps.REQS_AND_DISCLAIMER);
           }}
         >
           {'Back'}
