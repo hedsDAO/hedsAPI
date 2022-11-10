@@ -22,6 +22,9 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
       wavesurfer?.current?.load(audioData?.activeTrack?.audio);
       wavesurfer?.current?.on('ready', () => {
         dispatch.audioModel.setIsLoading(false);
+        const duration = Math.ceil(wavesurfer.current.getDuration());
+        dispatch.audioModel.setDuration(duration);
+        dispatch.audioModel.setCountPlayThreshold(Math.ceil(duration/4));
       });
       wavesurfer?.current?.on('finish', () => {
         dispatch.audioModel.setIsPlaying(false);
