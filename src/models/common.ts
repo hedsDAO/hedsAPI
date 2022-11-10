@@ -40,6 +40,7 @@ export interface User {
   tracks?: TrackMetadataMapping;
   submissions?: TrackMetadataMapping;
   collection?: UserCollection;
+  history?: Array<TrackMetadata>;
 }
 
 export interface TrackMetadataMapping {

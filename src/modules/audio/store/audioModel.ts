@@ -75,6 +75,7 @@ export const audioModel = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     async updateTrackMetadataStats({track, walletId, newStats}: {track: TrackMetadata, walletId: string, newStats: TrackStats}) {
+      //TODO: Make this check in the component
       if (track.stats === newStats) return "Stats are identical, an update will not be performed";
       const db = getFirestore();
       const userRef = doc(db, "users", walletId);
@@ -94,7 +95,32 @@ export const audioModel = createModel<RootModel>()({
             }
           }
         };
-        
+
+        try {
+          await updateDoc(userRef, updatedUserData);
+          await dispatch.userModel.getUserData(walletId);
+        } catch (e) {
+          return {
+            erorr: e,
+            message: e.message,
+            memo: "Call to update user failed",
+          }
+        }
+			}
+    },
+    async updaterUserListeningHistory({track, walletId}: {track: TrackMetadata, walletId: string}) {
+      const db = getFirestore();
+      const userRef = doc(db, "users", walletId);
+      const userSnap = await (await getDoc(userRef)).data();
+
+      const newHistory = [...userSnap.history, track];
+
+      if (userSnap.exists()) {
+				const updatedUserData = { 
+          ...userSnap,
+          history: newHistory,
+        };
+
         try {
           await updateDoc(userRef, updatedUserData);
           await dispatch.userModel.getUserData(walletId);
