@@ -2,10 +2,17 @@ import { Dispatch, RootState } from '@/store';
 import { Flex } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const audioData = useSelector((state: RootState) => state.audioModel);
+
+  const countSeconds = () => {
+    setInterval(() => {
+      dispatch.audioModel.setTimerSeconds(audioData.timerSeconds++);
+    }, 1000)
+  }
 
   const resetTrack = () => {
     dispatch.audioModel.setIsPlaying(false);

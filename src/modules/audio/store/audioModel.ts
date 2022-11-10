@@ -16,7 +16,9 @@ export interface AudioState {
   volume: number;
   isSample?: boolean;
   currentTime?: [string, number];
-  duration?: [string, number];
+  countPlayThreshold: number;
+  timerSeconds: number;
+  duration?: number;
   isShowingPlayer: boolean;
 };
 
@@ -27,6 +29,8 @@ export const audioModel = createModel<RootModel>()({
     isShowingQueue: false,
     isShowingPlayer: false,
     volume: 100,
+    timerSeconds: 0,
+    countPlayThreshold: 0,
     queue: [],
     history: [],
   } as AudioState,
@@ -66,10 +70,12 @@ export const audioModel = createModel<RootModel>()({
     setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),
     setVolume: (state, volume: number) => ({ ...state, volume }),
     setCurrentTime: (state, currentTime: [string, number]) => ({ ...state, currentTime }),
-    setDuration: (state, duration: [string, number]) => ({ ...state, duration }),
+    setTimerSeconds: (state, timerSeconds: number) => ({ ...state, timerSeconds }),
+    setCountPlayThreshold: (state, countPlayThreshold: number) => ({ ...state, countPlayThreshold }),
+    setDuration: (state, duration: number) => ({ ...state, duration }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     clearAudioState: (state) => {
-      const newState: AudioState = { isPlaying: false, isLoading: false, isShowingQueue: false, isShowingPlayer: false, volume: 100, queue: [] };
+      const newState: AudioState = { isPlaying: false, isLoading: false, isShowingQueue: false, isShowingPlayer: false, volume: 100, timerSeconds: 0, countPlayThreshold: 0, queue: [] };
       return newState;
     },
   },
