@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { formatTime } from '@/utils';
 
 describe('Submissions Unit', () => {
-  beforeAll(async () => await store.dispatch.userModel.setUserData(userData));
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   beforeEach(() =>
     renderWithRematchStore(
       <Router>

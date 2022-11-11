@@ -5,9 +5,7 @@ import { userData } from '@/tests/mocks/UserData';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 
 describe('Badges Unit', () => {
-  beforeAll(async () => {
-    await store.dispatch.userModel.setUserData(userData);
-  });
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   it('renders badges', () => {
     renderWithRematchStore(<Badges />, store);
     const userBadges = screen.getAllByTestId('user-badge-container');

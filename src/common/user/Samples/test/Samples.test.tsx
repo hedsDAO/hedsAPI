@@ -5,7 +5,7 @@ import { userData } from '@/tests/mocks/UserData';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 
 describe('Samples Unit', () => {
-  beforeAll(async () => await store.dispatch.userModel.setUserData(userData));
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   beforeEach(() => renderWithRematchStore(<Samples />, store));
   it('renders samples', () => {
     const userSamples = screen.getByTestId('user-samples');

@@ -5,7 +5,7 @@ import { userData } from '@/tests/mocks/UserData';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 
 describe('DisplayName Unit', () => {
-  beforeAll(async () => await store.dispatch.userModel.setUserData(userData));
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   beforeEach(() => renderWithRematchStore(<DisplayName />, store));
   it('renders display name', () => {
     const userDisplayName = screen.getByTestId('user-display-name');
