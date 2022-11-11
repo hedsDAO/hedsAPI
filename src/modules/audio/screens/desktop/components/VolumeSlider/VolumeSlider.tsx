@@ -1,11 +1,10 @@
-import { selectAudioVolume } from '@/modules/audio/store/selectors';
-import { Dispatch } from '@/store';
+import { Dispatch, store } from '@/store';
 import { Flex, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const VolumeSlider = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
-  const volume = useSelector(selectAudioVolume);
+  const volume = useSelector(store.select.audioModel.selectAudioVolume)
   return (
     <Flex h="full" alignItems={'center'} gap={2} px={9}>
       {volume < 25 ? (
@@ -34,4 +33,4 @@ const VolumeSlider = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
   );
 };
 
-export default VolumeSlider;
+export default(VolumeSlider);

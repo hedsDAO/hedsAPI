@@ -1,15 +1,13 @@
-import { Dispatch } from '@/store';
-import { selectIsQueueEmpty, selectIsShowingQueue, selectQueue } from '@/modules/audio/store/selectors';
-
+import { Dispatch, store } from '@/store';
 import { Flex, Stack, StackDivider, Avatar, Text, Box, IconButton } from '@chakra-ui/react';
 import { Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const DesktopQueue = () => {
   const dispatch = useDispatch<Dispatch>();
-  const queue = useSelector(selectQueue);
-  const isShowingQueue = useSelector(selectIsShowingQueue);
-  const isQueueEmpty = useSelector(selectIsQueueEmpty);
+  const queue = useSelector(store.select.audioModel.selectQueue);
+  const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
+  const isQueueEmpty = useSelector(store.select.audioModel.selectIsQueueEmpty);
   return (
     <Transition
       className={'relative -z-10'}

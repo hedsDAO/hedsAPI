@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Dispatch } from '@/store';
-import { selectActiveTrack, selectIsQueueEmpty, selectIsShowingPlayer, selectIsShowingQueue, selectQueue } from '@/modules/audio/store/selectors';
+import { Dispatch, store } from '@/store';
 import WaveSurfer from 'wavesurfer.js';
 import { formWaveSurferOptions } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,10 +10,10 @@ import { Transition } from '@headlessui/react';
 const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const waveformRef = useRef<HTMLDivElement | null>(null);
-  const { audio} = useSelector(selectActiveTrack);
-  const isQueueEmpty = useSelector(selectIsQueueEmpty);
-  const isShowingPlayer = useSelector(selectIsShowingPlayer);
-  const isShowingQueue = useSelector(selectIsShowingQueue);
+  const { audio} = useSelector(store.select.audioModel.selectActiveTrack);
+  const isQueueEmpty = useSelector(store.select.audioModel.selectIsQueueEmpty);
+  const isShowingPlayer = useSelector(store.select.audioModel.selectIsShowingPlayer);
+  const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
 
 
   useEffect(() => {

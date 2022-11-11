@@ -1,12 +1,11 @@
 import { createModel } from '@rematch/core';
-
 import type { RootModel } from '../../../models';
 import { TrackMetadata, TrackStats } from '../../../models/common';
 import { collection, doc, DocumentData, getDoc, getDocs, getFirestore, updateDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
 export interface AudioState {
-  queue?: Array<TrackMetadata>;
-  history?: Array<TrackMetadata>;
+  queue?: TrackMetadata[];
+  history?: TrackMetadata[];
   activeTrack?: TrackMetadata;
   currentTapeId?: any;
   currentTape?: string;
@@ -34,6 +33,42 @@ export const audioModel = createModel<RootModel>()({
     queue: [],
     history: [],
   } as AudioState,
+  selectors: (slice, createSelector, hasProps) => ({
+    selectIsLoading() {
+      return slice((audioModel) => audioModel.isLoading);
+    },
+    selectIsShowingPlayer() {
+      return slice((audioModel) => audioModel.isShowingPlayer);
+    },
+    selectIsTrackPlaying() {
+      return slice((audioModel) => audioModel.isPlaying);
+    },
+    selectActiveTrack() {
+      return slice((audioModel) => audioModel.activeTrack);
+    },
+    selectActiveTrackStats() {
+      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack?.stats);
+    },
+    selectIsShowingQueue() {
+      return slice((audioModel) => audioModel.isShowingQueue);
+    },
+    selectQueue() {
+      return slice((audioModel) => audioModel.queue);
+    },
+    selectIsQueueEmpty() {
+      return createSelector(this.selectQueue, (queue: TrackMetadata[]) => queue.length ? false : true);
+    },
+    selectAudioVolume() {
+      return slice((audioModel) => audioModel.volume);
+    },
+    selectTimerSeconds() {
+      return slice((audioModel) => audioModel.timerSeconds)
+    },
+    selectCountPlayThreshold() {
+      return slice((audioModel) => audioModel.countPlayThreshold)
+    },
+    
+  }),
   reducers: {
     pushTrackToQueue: (state, track: TrackMetadata) => ({ ...state, queue: [...state.queue, track] }),
     pushTapeToQueue: (state, tape: TrackMetadata[]) => ({ ...state, queue: [...state.queue, ...tape] }),

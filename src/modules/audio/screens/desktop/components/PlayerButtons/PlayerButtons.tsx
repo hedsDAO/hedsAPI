@@ -1,20 +1,19 @@
-import { Dispatch } from '@/store';
+import { Dispatch, store } from '@/store';
 import { Flex } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { selectActiveTrack, selectActiveTrackStats, selectCountPlayThreshold, selectIsLoading, selectIsQueueEmpty, selectIsTrackPlaying, selectTimerSeconds } from '@/modules/audio/store/selectors';
 import { selectUserWallet } from '@/pages/user/store/selectors';
 
 const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
-  const isLoading = useSelector(selectIsLoading);
-  const isTrackPlaying = useSelector(selectIsTrackPlaying);
-  const isQueueEmpty = useSelector(selectIsQueueEmpty);
-  const timerSeconds = useSelector(selectTimerSeconds);
-  const countPlayThreshold = useSelector(selectCountPlayThreshold);
-  const activeTrack = useSelector(selectActiveTrack);
-  const activeTrackStats = useSelector(selectActiveTrackStats);
+  const isLoading = useSelector(store.select.audioModel.selectIsLoading);
+  const isTrackPlaying = useSelector(store.select.audioModel.selectIsTrackPlaying);
+  const isQueueEmpty = useSelector(store.select.audioModel.selectIsQueueEmpty);
+  const timerSeconds = useSelector(store.select.audioModel.selectTimerSeconds);
+  const countPlayThreshold = useSelector(store.select.audioModel.selectCountPlayThreshold);
+  const activeTrack = useSelector(store.select.audioModel.selectActiveTrack);
+  const activeTrackStats = useSelector(store.select.audioModel.selectActiveTrackStats);
   const userWallet = useSelector(selectUserWallet);
 
   useEffect(() => {

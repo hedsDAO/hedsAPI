@@ -1,9 +1,9 @@
-import { selectActiveTrack } from '@/modules/audio/store/selectors';
+import { store } from '@/store';
 import { Center, Flex, Image, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const TrackDetails = () => {
-  const {artist, cover, tape, track} = useSelector(selectActiveTrack);
+  const {artist, cover, tape, track} = useSelector(store.select.audioModel.selectActiveTrack);
   return (
     <Flex px={3} h="full" alignItems={'center'} justifyContent={'start'}>
       <Center w="70px">
