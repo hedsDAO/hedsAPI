@@ -13,7 +13,7 @@ const client = createClient({
 });
 
 describe('Collection Unit', () => {
-  beforeAll(async () => await store.dispatch.userModel.setUserData(userData));
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   beforeEach(() =>
     renderWithRematchStore(
       <WagmiConfig client={client}>

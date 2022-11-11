@@ -1,92 +1,77 @@
-import { Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
-import { Fragment, useCallback } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { Box, Button, Center, Container, Flex, FormControl, HStack, Icon, Spinner, Square, Text, VStack } from '@chakra-ui/react';
+import { IconAlertTriangle, IconUpload, IconWaveSawTool } from '@tabler/icons';
 
-const FileDropzone = ({ error, file }: { error: string; file: File }) => {
+interface FileDropzone {
+  inputRef?: React.MutableRefObject<HTMLInputElement>;
+  file?: File;
+  maxFiles: number;
+  error?: string;
+  accept?: string[];
+  validation?: Function;
+  onSuccess?: Function;
+  onRetry?: Function;
+  isLoading?: boolean;
+}
+
+const FileDropzone = ({ inputRef, validation, accept, file, error, onSuccess, onRetry, isLoading, maxFiles }: FileDropzone) => {
+  const [fileData, setFileData] = useState<{ size: number; name: string }>();
+  const handleClick = () => inputRef?.current?.click();
   const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'audio/*': accept }, maxFiles: maxFiles });
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    await validation(e.target.files[0]);
+    if (!error) {
+      const { size, name } = e.target.files[0];
+      setFileData({ size, name });
+      onSuccess();
+    }
+  };
   return (
     <Fragment>
-      <VStack spacing="1" pb={2}>
-        <HStack spacing="1" whiteSpace="nowrap">
-          {isDragActive ? (
-            <Text className="animate-bounce italic" fontSize="sm" color="muted">
-              drop files here...
-            </Text>
-          ) : (
-            <Fragment>
-              <Flex>
-                {error?.length ? (
-                  <Flex className="animate__animated animate__headShake" direction={'column'} alignItems="center">
-                    <Text px={10} className="whitespace-pre-wrap text-center" textColor={'red.300'} fontSize={'xs'}>
-                      {error}
+      <Flex px={2} direction={'column'}>
+        <input disabled={isLoading} {...getInputProps()} ref={inputRef} onChange={(e) => onChange(e)} type="file" className="hidden" />
+        <Box as="section" bg="bg-surface" py={{ base: '2', md: '4' }}>
+          <Container px={{ base: '1', lg: '4' }} maxW="lg">
+            <FormControl id="file">
+              <Center borderWidth="1px" borderRadius="lg" px={1} py={8} bg={'white'}>
+                <VStack spacing="3">
+                  <Square size="10" bg="bg-subtle" borderRadius="lg">
+                    <Icon as={error ? IconAlertTriangle : file ? IconWaveSawTool : IconUpload} boxSize="6" color={error ? 'red' : 'muted'} />
+                  </Square>
+                  <VStack spacing="2" pb={2}>
+                    <HStack spacing="1" whiteSpace="nowrap">
+                      <Button
+                        disabled={isLoading}
+                        {...getRootProps()}
+                        onClick={async () => {
+                          if (error) {
+                            await onRetry();
+                            inputRef.current.value = null;
+                          }
+                          handleClick();
+                        }}
+                        variant={error ? 'solid' : file ? 'link' : 'solid'}
+                        colorScheme={error ? 'red' : 'blue'}
+                        size="sm"
+                      >
+                        {error ? 'Try again' : fileData ? 'Change file' : 'Click to upload'}
+                      </Button>
+                    </HStack>
+                    <Text className={error ? 'whitespace-pre-wrap text-center px-10 text-red-500 text-sm' : 'text-sm'}>
+                      {error ? error : fileData ? `${fileData?.name} - ${fileData?.size?.toString().slice(0, 2)}mb` : ''}
                     </Text>
-                  </Flex>
-                ) : (
-                  <Fragment>
-                    {file?.name ? (
-                      <Flex alignItems={'baseline'} mb={4} gap={1}>
-                        <Text fontWeight={'semibold'} fontSize="sm" color="muted">
-                          {file.name}
-                        </Text>
-                        <Button
-                          bg={'transparent'}
-                          borderColor={'transparent'}
-                          textColor="red.200"
-                          _hover={{ bg: 'transparent', textColor: 'red.400' }}
-                          //   onClick={() => {
-                          //     inputRef.current.value = null;
-                          //     dispatch.submitModel.removeCurrentSubmission();
-                          //   }}
-                          size="xs"
-                        >
-                          <i className="fa-sharp fa-solid fa-trash-xmark text-sm" />
-                        </Button>
-                      </Flex>
-                    ) : (
-                      <Flex direction={'column'}>
-                        <Button
-                          {...getRootProps()}
-                          // onClick={() => handleClick()}
-                          variant="link"
-                          colorScheme="blue"
-                          size="sm"
-                        >
-                          Click to upload
-                        </Button>
-                        <Text fontSize="sm" color="muted">
-                          or drag and drop
-                        </Text>
-                      </Flex>
-                    )}
-                  </Fragment>
-                )}
-              </Flex>
-            </Fragment>
-          )}
-        </HStack>
-        {error ? (
-          <Flex pt={4}>
-            <Button
-              bg={'transparent'}
-              borderColor={'transparent'}
-              textColor="gray.500"
-              _hover={{ bg: 'transparent', textColor: 'gray.700' }}
-              size="xs"
-              //   onClick={() => {
-              //     inputRef.current.value = null;
-              //     dispatch.submitModel.setError(null);
-              //   }}
-            >
-              <i className="fa-sharp fa-solid fa-arrow-turn-down-left text-sm"></i>
-            </Button>
-          </Flex>
-        ) : (
-          <Text mt={2} fontSize="2xs" color="muted">
-            MP3, WAV up to 20MB
-          </Text>
-        )}
-      </VStack>
+                    <Text className={isDragActive ? 'animate-bounce italic' : ''} mt={2} fontSize="2xs" color="muted">
+                      {isDragActive ? 'drop files here...' : 'MP3, WAV up to 20MB'}
+                    </Text>
+                  </VStack>
+                </VStack>
+              </Center>
+            </FormControl>
+          </Container>
+        </Box>
+      </Flex>
     </Fragment>
   );
 };

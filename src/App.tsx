@@ -12,14 +12,7 @@ import { Collab } from '@/pages/collab/page/Collab';
 import { User } from '@/pages/user/page/User';
 import { Listen } from '@/pages/listen/page/Listen';
 import { Profile } from '@/pages/profile/page/Profile';
-import { create, IPFSHTTPClient } from 'ipfs-http-client';
 
-const token = process.env.INFURA_IPFS_PROJECT_ID + ':' + process.env.INFURA_IPFS_SECRET;
-const auth = 'Basic ' + Buffer.from(token).toString('base64');
-export let ipfs: IPFSHTTPClient | undefined = create({
-  url: 'https://ipfs.infura.io:5001',
-  headers: { authorization: auth },
-});
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,

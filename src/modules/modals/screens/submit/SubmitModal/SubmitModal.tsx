@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
-import { SubmitSteps, SubmitModalTitle } from '@/modules/modals/screens/submit/models/common';
+import { SubmitSteps } from '@modals/screens/submit/models/common';
+import { SUBMIT_MODAL_TITLE } from '@/modules/modals/screens/submit/models/constants';
 import { PrevSubmission, SubmitSuccess, UserAuthWrapper, VerifyAndSubmit, UploadSubmission, ReqsAndDisclaimer } from '@modals/screens/submit/components';
 import { IconUpload } from '@tabler/icons';
 
@@ -10,6 +11,7 @@ const SubmitModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const { currentStep } = useSelector((state: RootState) => state.submitModel);
+
   useEffect(() => {
     return () => {
       dispatch.submitModel.clearModalState();
@@ -18,7 +20,7 @@ const SubmitModal = () => {
 
   return (
     <ModalContainer isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
-      <ModalHeader title={SubmitModalTitle} Icon={IconUpload} />
+      <ModalHeader title={SUBMIT_MODAL_TITLE} Icon={IconUpload} />
       <UserAuthWrapper>
         {currentStep === SubmitSteps.REQS_AND_DISCLAIMER && <ReqsAndDisclaimer />}
         {currentStep === SubmitSteps.UPLOAD_SUBMISSION && <UploadSubmission />}

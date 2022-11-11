@@ -2,10 +2,13 @@ import { Fragment, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
-import { Flex } from '@chakra-ui/react';
+import { Button, Divider, Flex, Text } from '@chakra-ui/react';
 import { selectSpaceTapeId } from '@/pages/tapes/store/selectors';
 import { SubmitSteps } from '@modals/screens/submit/models/common';
-import { ConnectWallet, VerifyTwitter } from '@modals/screens/submit/components';
+import { ConnectButton } from '@/common/buttons';
+import { IconBrandTwitter } from '@tabler/icons';
+import { Modals } from '@/modules/modals/store/modalModel';
+import { CONNECT_WALLET_TEXT, VERIFY_TWITTER_TEXT, VERIFY_BUTTON_TEXT } from '../../models/constants';
 
 const UserAuthWrapper = ({ children }: { children: any }) => {
   const dispatch = useDispatch<Dispatch>();
@@ -25,11 +28,35 @@ const UserAuthWrapper = ({ children }: { children: any }) => {
     <Fragment>
       {!isConnected ? (
         <Flex alignItems={'center'} px={2} direction={'column'}>
-          <ConnectWallet />
+          <Text mb={4} fontSize="lg" fontWeight={'semibold'}>
+            {CONNECT_WALLET_TEXT}
+          </Text>
+          <ConnectButton />
+          <Divider my={5} />
         </Flex>
       ) : !profileData?.twitterHandle ? (
         <Flex alignItems={'center'} px={2} direction={'column'}>
-          <VerifyTwitter />
+          <Text mb={4} fontSize="lg" fontWeight={'semibold'}>
+            {VERIFY_TWITTER_TEXT}
+          </Text>
+          <Flex alignItems={'center'} data-testid="verify-twitter-container">
+            <Button
+              onClick={() => {
+                dispatch.modalModel.setNextModal(Modals.SUBMIT_MODAL);
+                dispatch.modalModel.setModal(Modals.TWITTER_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+              }}
+              size="sm"
+              className="mx-0 border"
+              bg="blue.100"
+              borderColor={'blue.200'}
+              aria-label="edit profile"
+              leftIcon={<IconBrandTwitter className="text-gray-700" width={16} height={16} />}
+            >
+              {VERIFY_BUTTON_TEXT}
+            </Button>
+          </Flex>
+          <Divider my={5} />
         </Flex>
       ) : (
         <Fragment>{children}</Fragment>

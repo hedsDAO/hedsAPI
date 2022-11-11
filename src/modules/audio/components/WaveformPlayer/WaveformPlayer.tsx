@@ -16,6 +16,7 @@ const WaveformPlayer = ({ track }: { track?: TrackMetadata }) => {
 
   useEffect(() => {
     if (!isEmpty(track)) {
+      console.log(track.audio, '@')
       dispatch.submitModel.setIsLoading(true);
       var options; // wavesurfer params
       if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
