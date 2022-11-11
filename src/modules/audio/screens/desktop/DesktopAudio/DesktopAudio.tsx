@@ -1,5 +1,6 @@
-import { useRef, useEffect, Fragment } from 'react';
-import { Dispatch, RootState } from '@/store';
+import { useRef, useEffect } from 'react';
+import { Dispatch } from '@/store';
+import { selectActiveTrack, selectIsQueueEmpty, selectIsShowingPlayer, selectIsShowingQueue, selectQueue } from '@/modules/audio/store/selectors';
 import WaveSurfer from 'wavesurfer.js';
 import { formWaveSurferOptions } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,16 +11,20 @@ import { Transition } from '@headlessui/react';
 const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const waveformRef = useRef<HTMLDivElement | null>(null);
-  const audioData = useSelector((state: RootState) => state.audioModel);
+  const { audio} = useSelector(selectActiveTrack);
+  const isQueueEmpty = useSelector(selectIsQueueEmpty);
+  const isShowingPlayer = useSelector(selectIsShowingPlayer);
+  const isShowingQueue = useSelector(selectIsShowingQueue);
+
 
   useEffect(() => {
-    if (audioData?.activeTrack || audioData?.queue?.length) {
+    if (audio || !isQueueEmpty) {
       dispatch.audioModel.setIsLoading(true);
       var options; // wavesurfer params
       if (wavesurfer?.current && waveformRef.current) wavesurfer.current.destroy();
       if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
       if (options) wavesurfer.current = WaveSurfer.create(options);
-      wavesurfer?.current?.load(audioData?.activeTrack?.audio);
+      wavesurfer?.current?.load(audio);
       wavesurfer?.current?.on('ready', () => {
         dispatch.audioModel.setIsLoading(false);
         const duration = Math.ceil(wavesurfer.current.getDuration());
@@ -29,7 +34,7 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
       });
       wavesurfer?.current?.on('finish', () => {
         dispatch.audioModel.setIsPlaying(false);
-        if (audioData?.queue?.length) {
+        if (!isQueueEmpty) {
           setTimeout(() => {
             dispatch.audioModel.skipToNextTrack();
           }, 500);
@@ -40,16 +45,16 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
       });
     }
     return () => {
-      if (!audioData?.activeTrack) {
+      if (!audio) {
         dispatch.audioModel.clearAudioState();
         wavesurfer.current.destroy();
       }
     };
-  }, [audioData.activeTrack]);
+  }, [audio]);
 
   return (
     <Transition
-      show={audioData?.isShowingPlayer}
+      show={isShowingPlayer}
       enter="transform transition ease-in-out duration-500 sm:duration-700"
       enterFrom="translate-y-20"
       enterTo="translate-y-full"
@@ -76,7 +81,7 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
         <GridItem colSpan={1}>
           <Flex h="full" alignItems={'center'} justifyContent={'center'}>
             <IconButton
-              onClick={() => dispatch.audioModel.setIsShowingQueue(!audioData?.isShowingQueue)}
+              onClick={() => dispatch.audioModel.setIsShowingQueue(!isShowingQueue)}
               aria-label="queue"
               icon={<i className="fa-solid fa-layer-group"></i>}
               className="hover:scale-125"

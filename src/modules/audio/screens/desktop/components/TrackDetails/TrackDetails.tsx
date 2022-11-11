@@ -1,23 +1,23 @@
-import { RootState } from '@/store';
+import { selectActiveTrack } from '@/modules/audio/store/selectors';
 import { Center, Flex, Image, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const TrackDetails = () => {
-  const audioData = useSelector((state: RootState) => state.audioModel);
+  const {artist, cover, tape, track} = useSelector(selectActiveTrack);
   return (
     <Flex px={3} h="full" alignItems={'center'} justifyContent={'start'}>
       <Center w="70px">
-        <Image my="auto" maxW="70px" minH="70px" maxH="70px" minW="70px" rounded="lg" src={audioData?.activeTrack?.cover} objectFit="cover" />
+        <Image my="auto" maxW="70px" minH="70px" maxH="70px" minW="70px" rounded="lg" src={cover} objectFit="cover" />
       </Center>
       <Flex w="full" justifySelf={'start'} className="-space-y-1" px={3} direction={'column'}>
         <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize="lg" fontWeight={'bold'}>
-          {audioData?.activeTrack?.track}
+          {track}
         </Text>
         <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'} fontWeight={'semibold'}>
-          {audioData?.activeTrack?.tape}
+          {tape}
         </Text>
         <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'xs'} fontWeight="light">
-          {audioData?.activeTrack?.artist}
+          {artist}
         </Text>
       </Flex>
     </Flex>
