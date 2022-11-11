@@ -3,6 +3,7 @@ import { Dispatch, RootState } from '@/store';
 import { Badge, Divider, Flex, Text } from '@chakra-ui/react';
 import { SecondaryButton } from '@/common/buttons';
 import { IconCircleCheck } from '@tabler/icons';
+import { ANON_ID_TEXT, BACK_TO_TAPE_BUTTON_TEXT, SUCCESS_MESSAGE_TEXT, SUCCESS_TITLE } from '@modals/screens/submit/models/constants';
 
 const SubmitSucess = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -13,23 +14,23 @@ const SubmitSucess = () => {
         <Flex gap={2} alignItems={'center'} className="animate__animated animate__bounce">
           <IconCircleCheck className="text-green-500" height={'24'} width={'24'} />
           <Text fontSize={'2xl'} fontWeight="semibold" textColor={'green.500'}>
-            Success
+            {SUCCESS_TITLE}
           </Text>
         </Flex>
-        <Divider mb={3} />
+        <Divider mt={-1} mb={3} />
         <Text mb={1} fontSize={'sm'} px={10} textAlign="center" fontWeight={'semibold'}>
-          Your submission has been successfully submitted.
+          {SUCCESS_MESSAGE_TEXT}
         </Text>
         <Text fontSize={'sm'} px={10} textAlign="center" fontWeight={'light'}>
-          Your anonymous id is{' '}
+          {ANON_ID_TEXT}{' '}
           <Badge bg="gray.200" fontSize={'xs'} py={1} px={2} mx={1}>
             <span className="text-blue-600 font-semibold">{pendingSubmission.track}</span>
           </Badge>
         </Text>
-        <Divider my={3} />
+        <Divider mt={1} mb={3} />
       </Flex>
       <div className="flex">
-        <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{'Back to tape'}</SecondaryButton>
+        <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_TO_TAPE_BUTTON_TEXT}</SecondaryButton>
       </div>
     </Flex>
   );

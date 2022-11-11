@@ -5,7 +5,7 @@ import { userData } from '@/tests/mocks/UserData';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 
 describe('ProfilePicture Unit', () => {
-  beforeAll(async () => await store.dispatch.userModel.setUserData(userData));
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   beforeEach(() => renderWithRematchStore(<ProfilePicture />, store));
   it('renders profile picture', () => {
     const userProfilePicture = screen.getByTestId('user-profile-picture');

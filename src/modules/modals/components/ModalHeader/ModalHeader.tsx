@@ -8,13 +8,13 @@ const ModalHeader = ({ Icon, title }: { Icon: TablerIcon; title: string }) => {
     <Fragment>
       <Dialog.Title>
         <HStack>
-          <Circle size="30px" bg="gray.900" color="white" mr={1}>
-            <Icon height="15" width="15" />
+          <Circle size={{ base: '24px', lg: '30px' }} bg="gray.900" color="white" mr={1}>
+            <Icon height="10" width="10" />
           </Circle>
           <Text className="text-xl font-semibold text-gray-900 mb-6">{title}</Text>
         </HStack>
       </Dialog.Title>
-      <Divider my={5} />
+      <Divider borderColor={'gray.300'} my={4} />
     </Fragment>
   );
 };
