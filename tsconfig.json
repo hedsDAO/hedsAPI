@@ -20,5 +20,5 @@
       "@modals/*": ["src/modules/modals/*"]
     }
   },
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "build", "ipfs-http-client"]
 }

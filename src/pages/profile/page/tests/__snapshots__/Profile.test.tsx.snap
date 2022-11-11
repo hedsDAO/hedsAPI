@@ -11,7 +11,7 @@ Object {
         src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=652af26f-1f52-4e2d-852e-0b101c60a015"
       />
       <div
-        class="css-1wz4w7d"
+        class="css-54mus7"
       >
         <div
           class="chakra-stack css-n21gh5"
@@ -32,7 +32,7 @@ Object {
           >
             <button
               aria-label="edit profile"
-              class="chakra-button relative bottom-10 left-2 -mb-10 css-ef1emx"
+              class="chakra-button relative bottom-10 left-2 -mb-10 border opacity-75 hover:opacity-100 css-wzdeq1"
               type="button"
             >
               <span
@@ -59,7 +59,7 @@ Object {
             </button>
           </div>
           <div
-            class="chakra-skeleton css-1h4o0kv"
+            class="chakra-skeleton css-ovijwg"
           >
             <div
               class="chakra-stack css-x9juev"
@@ -80,7 +80,7 @@ Object {
             </div>
           </div>
           <div
-            class="css-11hcisz"
+            class="css-10kh5e8"
           >
             <div
               class="chakra-skeleton css-1ct2wuv"
@@ -94,7 +94,7 @@ Object {
             </div>
           </div>
           <div
-            class="chakra-skeleton css-1ct2wuv"
+            class="chakra-skeleton css-1cm6zg8"
           >
             <p
               class="chakra-text -mt-2 css-130t7v7"
@@ -104,15 +104,43 @@ Object {
             </p>
           </div>
           <div
-            class="css-1ni1uu9"
+            class="css-zao92p"
           >
+            <div
+              class="css-70qvj9"
+              data-testid="user-copy-container"
+            >
+              <div
+                class="chakra-skeleton css-mrvdji"
+              >
+                <a
+                  aria-label="edit profile"
+                  class="chakra-link chakra-button mx-0 decoration-transparent border css-19sz338"
+                  href="https://www.twitter.com/_alexanderlewis"
+                  style="text-decoration: none;"
+                  target="_blank"
+                >
+                  <span
+                    class="chakra-button__icon css-1wh2kri"
+                  >
+                    <i
+                      aria-hidden="true"
+                      class="fa-brands fa-twitter"
+                      focusable="false"
+                    />
+                  </span>
+                  @
+                  _alexanderlewis
+                </a>
+              </div>
+            </div>
             <div
               class="css-70qvj9"
               data-testid="user-copy-container"
             >
               <button
                 aria-label="edit profile"
-                class="chakra-button mx-0 css-1aqan9i"
+                class="chakra-button mx-0 border css-wzdeq1"
                 type="button"
               >
                 <span
@@ -124,36 +152,51 @@ Object {
                     focusable="false"
                   />
                 </span>
-                0xde...745f
+                <span
+                  class="animate__animated animate__fadeIn"
+                >
+                  0xde...745f
+                </span>
               </button>
             </div>
             <div
               class="css-70qvj9"
-              data-testid="user-copy-container"
+              data-testid="verify-twitter-container"
             >
-              <div
-                class="chakra-skeleton css-mrvdji"
+              <button
+                aria-label="edit profile"
+                class="chakra-button mx-0 css-4xx2wk"
+                type="button"
               >
-                <a
-                  aria-label="edit profile"
-                  class="chakra-link chakra-button mx-0 decoration-transparent css-1dnvz7i"
-                  href="https://www.twitter.com/_alexanderlewis"
-                  style="text-decoration: none;"
-                  target="_blank"
+                <span
+                  class="chakra-button__icon css-1wh2kri"
                 >
-                  <span
-                    class="chakra-button__icon css-1wh2kri"
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-700"
+                    fill="none"
+                    focusable="false"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <i
-                      aria-hidden="true"
-                      class="fa-brands fa-twitter text-[0.75rem]"
-                      focusable="false"
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                      stroke="none"
                     />
-                  </span>
-                  @
-                  _alexanderlewis
-                </a>
-              </div>
+                    <path
+                      d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z"
+                    />
+                  </svg>
+                </span>
+                Verify
+              </button>
             </div>
           </div>
         </div>
@@ -201,11 +244,6 @@ Object {
                     >
                       witty donkey
                     </div>
-                    <span
-                      class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
-                    >
-                      private
-                    </span>
                     <span
                       class="mr-2 sm:mr-4 whitespace-nowrap"
                     >
@@ -256,11 +294,6 @@ Object {
                     >
                       fretful dormouse
                     </div>
-                    <span
-                      class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
-                    >
-                      private
-                    </span>
                     <span
                       class="mr-2 sm:mr-4 whitespace-nowrap"
                     >
@@ -681,35 +714,57 @@ Object {
                 class="chakra-stack css-hxjtip"
               >
                 <li
-                  class="text-sm text-gray-600 rounded-md"
+                  class="text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm"
                 >
-                  <button
+                  <div
                     class="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
                   >
                     <img
                       alt="hedsTAPE 06"
-                      class=" css-anyv6z"
+                      class="chakra-image css-anyv6z"
                       src="https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F6.png?alt=media&token=72d071a3-9276-47b9-98df-d1b42177c5a8"
                     />
                     <span
-                      class="text-xs font-light"
+                      class="text-xs sm:inline hidden font-light whitespace-nowrap"
                     >
                       hedsTAPE 06
                     </span>
-                    <div
-                      class="min-w-0 flex-1 sm:flex"
-                    />
-                    <div
-                      class="flex-shrink-0 sm:mt-0 sm:ml-5"
+                    <span
+                      class="text-xs inline sm:hidden font-light whitespace-nowrap"
                     >
-                      <span
-                        class="mr-2 sm:mr-4"
-                      />
-                      <i
-                        class="fa-solid fa-play"
-                      />
+                      HT06
+                    </span>
+                    <div
+                      class="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap uppercase"
+                    >
+                      sample
                     </div>
-                  </button>
+                    <span
+                      class="mr-2 sm:mr-4 whitespace-nowrap"
+                    />
+                    <button
+                      aria-label="play"
+                      class="chakra-button flex-shrink-0 css-4oyhih"
+                      type="button"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="fa-solid fa-play"
+                        focusable="false"
+                      />
+                    </button>
+                    <button
+                      aria-label="add to queue"
+                      class="chakra-button flex-shrink-0 css-1i707w2"
+                      type="button"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="fa-solid fa-layer-plus"
+                        focusable="false"
+                      />
+                    </button>
+                  </div>
                 </li>
               </div>
             </ul>
@@ -725,7 +780,7 @@ Object {
       src="https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=652af26f-1f52-4e2d-852e-0b101c60a015"
     />
     <div
-      class="css-1wz4w7d"
+      class="css-54mus7"
     >
       <div
         class="chakra-stack css-n21gh5"
@@ -746,7 +801,7 @@ Object {
         >
           <button
             aria-label="edit profile"
-            class="chakra-button relative bottom-10 left-2 -mb-10 css-ef1emx"
+            class="chakra-button relative bottom-10 left-2 -mb-10 border opacity-75 hover:opacity-100 css-wzdeq1"
             type="button"
           >
             <span
@@ -773,7 +828,7 @@ Object {
           </button>
         </div>
         <div
-          class="chakra-skeleton css-1h4o0kv"
+          class="chakra-skeleton css-ovijwg"
         >
           <div
             class="chakra-stack css-x9juev"
@@ -794,7 +849,7 @@ Object {
           </div>
         </div>
         <div
-          class="css-11hcisz"
+          class="css-10kh5e8"
         >
           <div
             class="chakra-skeleton css-1ct2wuv"
@@ -808,7 +863,7 @@ Object {
           </div>
         </div>
         <div
-          class="chakra-skeleton css-1ct2wuv"
+          class="chakra-skeleton css-1cm6zg8"
         >
           <p
             class="chakra-text -mt-2 css-130t7v7"
@@ -818,15 +873,43 @@ Object {
           </p>
         </div>
         <div
-          class="css-1ni1uu9"
+          class="css-zao92p"
         >
+          <div
+            class="css-70qvj9"
+            data-testid="user-copy-container"
+          >
+            <div
+              class="chakra-skeleton css-mrvdji"
+            >
+              <a
+                aria-label="edit profile"
+                class="chakra-link chakra-button mx-0 decoration-transparent border css-19sz338"
+                href="https://www.twitter.com/_alexanderlewis"
+                style="text-decoration: none;"
+                target="_blank"
+              >
+                <span
+                  class="chakra-button__icon css-1wh2kri"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="fa-brands fa-twitter"
+                    focusable="false"
+                  />
+                </span>
+                @
+                _alexanderlewis
+              </a>
+            </div>
+          </div>
           <div
             class="css-70qvj9"
             data-testid="user-copy-container"
           >
             <button
               aria-label="edit profile"
-              class="chakra-button mx-0 css-1aqan9i"
+              class="chakra-button mx-0 border css-wzdeq1"
               type="button"
             >
               <span
@@ -838,36 +921,51 @@ Object {
                   focusable="false"
                 />
               </span>
-              0xde...745f
+              <span
+                class="animate__animated animate__fadeIn"
+              >
+                0xde...745f
+              </span>
             </button>
           </div>
           <div
             class="css-70qvj9"
-            data-testid="user-copy-container"
+            data-testid="verify-twitter-container"
           >
-            <div
-              class="chakra-skeleton css-mrvdji"
+            <button
+              aria-label="edit profile"
+              class="chakra-button mx-0 css-4xx2wk"
+              type="button"
             >
-              <a
-                aria-label="edit profile"
-                class="chakra-link chakra-button mx-0 decoration-transparent css-1dnvz7i"
-                href="https://www.twitter.com/_alexanderlewis"
-                style="text-decoration: none;"
-                target="_blank"
+              <span
+                class="chakra-button__icon css-1wh2kri"
               >
-                <span
-                  class="chakra-button__icon css-1wh2kri"
+                <svg
+                  aria-hidden="true"
+                  class="text-gray-700"
+                  fill="none"
+                  focusable="false"
+                  height="16"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <i
-                    aria-hidden="true"
-                    class="fa-brands fa-twitter text-[0.75rem]"
-                    focusable="false"
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                    stroke="none"
                   />
-                </span>
-                @
-                _alexanderlewis
-              </a>
-            </div>
+                  <path
+                    d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z"
+                  />
+                </svg>
+              </span>
+              Verify
+            </button>
           </div>
         </div>
       </div>
@@ -915,11 +1013,6 @@ Object {
                   >
                     witty donkey
                   </div>
-                  <span
-                    class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
-                  >
-                    private
-                  </span>
                   <span
                     class="mr-2 sm:mr-4 whitespace-nowrap"
                   >
@@ -970,11 +1063,6 @@ Object {
                   >
                     fretful dormouse
                   </div>
-                  <span
-                    class="animate__animated animate__fadeOutDown text-xs font-semibold text-red-500 ml-1 w-full text-center"
-                  >
-                    private
-                  </span>
                   <span
                     class="mr-2 sm:mr-4 whitespace-nowrap"
                   >
@@ -1395,35 +1483,57 @@ Object {
               class="chakra-stack css-hxjtip"
             >
               <li
-                class="text-sm text-gray-600 rounded-md"
+                class="text-sm text-gray-600 rounded-md border-green-200/60 border shadow-sm"
               >
-                <button
+                <div
                   class="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 px-2 py-2 rounded-md"
                 >
                   <img
                     alt="hedsTAPE 06"
-                    class=" css-anyv6z"
+                    class="chakra-image css-anyv6z"
                     src="https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F6.png?alt=media&token=72d071a3-9276-47b9-98df-d1b42177c5a8"
                   />
                   <span
-                    class="text-xs font-light"
+                    class="text-xs sm:inline hidden font-light whitespace-nowrap"
                   >
                     hedsTAPE 06
                   </span>
-                  <div
-                    class="min-w-0 flex-1 sm:flex"
-                  />
-                  <div
-                    class="flex-shrink-0 sm:mt-0 sm:ml-5"
+                  <span
+                    class="text-xs inline sm:hidden font-light whitespace-nowrap"
                   >
-                    <span
-                      class="mr-2 sm:mr-4"
-                    />
-                    <i
-                      class="fa-solid fa-play"
-                    />
+                    HT06
+                  </span>
+                  <div
+                    class="min-w-0 flex-1 sm:flex text-xs text-neutral-800  whitespace-nowrap uppercase"
+                  >
+                    sample
                   </div>
-                </button>
+                  <span
+                    class="mr-2 sm:mr-4 whitespace-nowrap"
+                  />
+                  <button
+                    aria-label="play"
+                    class="chakra-button flex-shrink-0 css-4oyhih"
+                    type="button"
+                  >
+                    <i
+                      aria-hidden="true"
+                      class="fa-solid fa-play"
+                      focusable="false"
+                    />
+                  </button>
+                  <button
+                    aria-label="add to queue"
+                    class="chakra-button flex-shrink-0 css-1i707w2"
+                    type="button"
+                  >
+                    <i
+                      aria-hidden="true"
+                      class="fa-solid fa-layer-plus"
+                      focusable="false"
+                    />
+                  </button>
+                </div>
               </li>
             </div>
           </ul>

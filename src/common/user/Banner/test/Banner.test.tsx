@@ -5,9 +5,7 @@ import { userData } from '@/tests/mocks/UserData';
 import { renderWithRematchStore } from '@/tests/utils/testUtils';
 
 describe('Banner Unit', () => {
-  beforeAll(async () => {
-    await store.dispatch.userModel.setUserData(userData);
-  });
+  beforeAll(() => store.dispatch.userModel.setUserData(userData));
   it('renders banner', () => {
     renderWithRematchStore(<Banner />, store);
     const userBanner = screen.getByTestId('user-banner');
