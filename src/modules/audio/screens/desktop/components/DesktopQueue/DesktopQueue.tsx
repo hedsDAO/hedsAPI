@@ -1,16 +1,19 @@
-import { Dispatch, RootState } from '@/store';
+import { Dispatch } from '@/store';
+import { selectIsQueueEmpty, selectIsShowingQueue, selectQueue } from '@/modules/audio/store/selectors';
+
 import { Flex, Stack, StackDivider, Avatar, Text, Box, IconButton } from '@chakra-ui/react';
 import { Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const DesktopQueue = () => {
   const dispatch = useDispatch<Dispatch>();
-  const audioData = useSelector((state: RootState) => state.audioModel);
-  console.log(audioData)
+  const queue = useSelector(selectQueue);
+  const isShowingQueue = useSelector(selectIsShowingQueue);
+  const isQueueEmpty = useSelector(selectIsQueueEmpty);
   return (
     <Transition
       className={'relative -z-10'}
-      show={audioData.isShowingQueue}
+      show={isShowingQueue}
       enter="transition-all duration-500"
       enterFrom="opacity-0 translate-y-full"
       enterTo="opacity-100 translate-y-0"
@@ -19,11 +22,11 @@ const DesktopQueue = () => {
       leaveTo="opacity-0 translate-y-full"
     >
       <Box className="relative h-full w-screen bg-gray-200 px-[10%]">
-        <Text mb={2} px={2} fontSize={'lg'} fontWeight={'bold'}>
+        { !isQueueEmpty && <Text mb={2} px={2} fontSize={'lg'} fontWeight={'bold'}>
           Up Next
-        </Text>
-        {audioData?.queue?.length &&
-          audioData?.queue.map((queueItem, i) => {
+        </Text>}
+        {!isQueueEmpty &&
+          queue.map((queueItem, i) => {
             return (
               <Flex key={i}>
                 <Stack  divider={<StackDivider />} fontSize="sm" px="2" py={3} spacing="0.5">

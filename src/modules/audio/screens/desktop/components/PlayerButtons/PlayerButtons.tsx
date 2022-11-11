@@ -1,29 +1,37 @@
-import { Dispatch, RootState } from '@/store';
+import { Dispatch } from '@/store';
 import { Flex } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { selectActiveTrack, selectActiveTrackStats, selectCountPlayThreshold, selectIsLoading, selectIsQueueEmpty, selectIsTrackPlaying, selectTimerSeconds } from '@/modules/audio/store/selectors';
+import { selectUserWallet } from '@/pages/user/store/selectors';
 
 const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
-  const audioData = useSelector((state: RootState) => state.audioModel);
-  const userData = useSelector((state: RootState) => state.userModel);
+  const isLoading = useSelector(selectIsLoading);
+  const isTrackPlaying = useSelector(selectIsTrackPlaying);
+  const isQueueEmpty = useSelector(selectIsQueueEmpty);
+  const timerSeconds = useSelector(selectTimerSeconds);
+  const countPlayThreshold = useSelector(selectCountPlayThreshold);
+  const activeTrack = useSelector(selectActiveTrack);
+  const activeTrackStats = useSelector(selectActiveTrackStats);
+  const userWallet = useSelector(selectUserWallet);
 
   useEffect(() => {
     let interval: NodeJS.Timer;
-    if (audioData.isPlaying === true) {
+    if (isTrackPlaying) {
       interval = setInterval(() => {
-        if (audioData.timerSeconds === audioData.countPlayThreshold) {
-          dispatch.audioModel.updateTrackMetadataStats({track: audioData.activeTrack, walletId: audioData.activeTrack.wallet, newStats: {...audioData.activeTrack.stats, plays: audioData.activeTrack.stats ? audioData.activeTrack.stats.plays++ : 1}})
-          setTimeout(() => dispatch.audioModel.updaterUserListeningHistory({track: audioData.activeTrack, walletId: userData?.wallet}),500)
+        if (timerSeconds === countPlayThreshold) {
+          dispatch.audioModel.updateTrackMetadataStats({track: activeTrack, walletId: activeTrack.wallet, newStats: {...activeTrackStats, plays: activeTrackStats ? activeTrackStats.plays + 1 : 1}})
+          setTimeout(() => dispatch.audioModel.updaterUserListeningHistory({track: activeTrack, walletId: userWallet}),500)
         }
-        dispatch.audioModel.setTimerSeconds(++audioData.timerSeconds);
+        dispatch.audioModel.setTimerSeconds(timerSeconds + 1);
       }, 1000);
     }
     return () => {
       return clearInterval(interval);
     };
-  }, [audioData.isPlaying]);
+  }, [isTrackPlaying]);
 
 
   const resetTrack = () => {
@@ -36,9 +44,9 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   return (
     <Flex height="100%" gap={2} justifyContent="center" alignItems={'center'}>
       <IconButton _hover={{ bg: 'gray.200' }} onClick={() => { resetTrack()}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
-      {audioData?.isLoading ? (
+      {isLoading ? (
         <IconButton _hover={{ bg: 'gray.200' }} aria-label="loading" isLoading={true} />
-      ) : audioData?.isPlaying && wavesurfer?.current?.isPlaying() ? (
+      ) : isTrackPlaying && wavesurfer?.current?.isPlaying() ? (
         <IconButton
           _hover={{ bg: 'gray.200' }}
           onClick={() => {
@@ -65,7 +73,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         dispatch.audioModel.setIsPlaying(false);
         wavesurfer?.current?.playPause();
 
-        audioData.queue.length ?
+        !isQueueEmpty ?
         dispatch.audioModel.skipToNextTrack() :
         resetTrack();
         }}
