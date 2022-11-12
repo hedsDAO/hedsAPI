@@ -1,21 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
-import { selectHedstapeByNameById, selectHedstapeCoverById, selectSpaceTapeId } from '@/pages/tapes/store/selectors';
-import { Divider, Flex, Text } from '@chakra-ui/react';
-import { SubmitSteps } from '@modals/screens/submit/models/common';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { WaveformPlayer } from '@/modules/audio/components';
-import { CONFIRM_AND_UPLOAD_BUTTON_TEXT, IPFS_LOADING_TEXT, BACK_TO_UPLOAD_BUTTON_TEXT, PREVIEW_SUBMISSION_TEXT } from '../../models/constants';
+import { selectProfileDisplayName, selectProfileSubmissionsBySpaceTapeId, selectProfileWallet } from '@/pages/profile/store/selectors';
+import { selectHedstapeByNameById, selectHedstapeCoverById, selectSpaceTapeId } from '@/pages/tapes/store/selectors';
+import { Dispatch, RootState } from '@/store';
+import { isEmpty } from '@/utils';
+import { Divider, Flex, Text } from '@chakra-ui/react';
+import { SubmitSteps } from '@modals/screens/submit/models/common';
+import { BACK_TO_UPLOAD_BUTTON_TEXT, CONFIRM_AND_UPLOAD_BUTTON_TEXT, IPFS_LOADING_TEXT, PREVIEW_SUBMISSION_TEXT } from '../../models/constants';
 
 const VerifyAndSubmit = () => {
   const dispatch = useDispatch<Dispatch>();
-  const { pendingSubmission, isLoading, isUploading } = useSelector((state: RootState) => state.submitModel);
+  const { isLoading, isUploading, file, hasPrevSubmitted } = useSelector((state: RootState) => state.submitModel);
   const [space, tape, id] = useSelector(selectSpaceTapeId);
   const name = useSelector((state: RootState) => selectHedstapeByNameById(state, id));
   const cover = useSelector((state: RootState) => selectHedstapeCoverById(state, id));
+  const wallet = useSelector(selectProfileWallet);
+  const artist = useSelector(selectProfileDisplayName);
+  const prevSub = useSelector((state: RootState) => selectProfileSubmissionsBySpaceTapeId(state, [space, tape, id]));
 
   return (
-    <Flex px={2} direction={'column'}>
+    <Flex data-testid="submit-verify" px={2} direction={'column'}>
       {isLoading ? (
         <Text className="animate__animated animate__fadeIn" mb={5} fontWeight={'light'} fontSize={'xs'}>
           {IPFS_LOADING_TEXT}
@@ -25,13 +30,17 @@ const VerifyAndSubmit = () => {
           {PREVIEW_SUBMISSION_TEXT}
         </Text>
       )}
-      <WaveformPlayer track={pendingSubmission} />
+      <WaveformPlayer audio={file} />
       <Divider my={5} />
       <div className="flex gap-2">
         <SecondaryButton onClick={() => dispatch.submitModel.setCurrentStep(SubmitSteps.UPLOAD_SUBMISSION)}>{BACK_TO_UPLOAD_BUTTON_TEXT}</SecondaryButton>
         <PrimaryButton
           isLoading={isUploading}
-          onClick={() => dispatch.submitModel.handleUploadSubmission([pendingSubmission, [space, tape, id], [name, cover]])}
+          disabled={isUploading}
+          onClick={() => {
+            if (hasPrevSubmitted && !isEmpty(prevSub)) dispatch.submitModel.removePreviousSubmission(prevSub);
+            dispatch.submitModel.handleUploadSubmission([file, wallet, artist, [space, tape, id], [name, cover]]);
+          }}
         >
           {CONFIRM_AND_UPLOAD_BUTTON_TEXT}
         </PrimaryButton>

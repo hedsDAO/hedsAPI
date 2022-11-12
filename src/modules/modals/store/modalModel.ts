@@ -8,6 +8,7 @@ export enum Modals {
   SAMPLE_MODAL,
   SUBMIT_MODAL,
   MINT_MODAL,
+  CONNECT_MODAL,
 }
 
 export interface ModalState {

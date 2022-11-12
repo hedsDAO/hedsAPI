@@ -13,7 +13,6 @@ import { User } from '@/pages/user/page/User';
 import { Listen } from '@/pages/listen/page/Listen';
 import { Profile } from '@/pages/profile/page/Profile';
 
-
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,
   authDomain: process.env.FB_DEV_AUTHDOMAIN,
