@@ -63,7 +63,7 @@ export const Tapes = () => {
                       </Skeleton>
                       <Container textColor="white" className="font-bold relative bottom-8 lg:bottom-10 lg:left-1 -mb-5">
                         <Text fontSize={{ base: 'xs', lg: 'sm' }} px={1} w="fit-content" rounded="sm" bg={'black'}>
-                          {getTotalDuration(tape.tracks, tape.route)}
+                          {tape?.tracks?.length ? getTotalDuration(tape.tracks, tape.route) : 'PENDING'}
                         </Text>
                       </Container>
                       <Divider />
