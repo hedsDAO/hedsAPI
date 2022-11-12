@@ -3,7 +3,12 @@ import { Dialog } from '@headlessui/react';
 import { Circle, Divider, HStack, Text } from '@chakra-ui/react';
 import { TablerIcon } from '@tabler/icons';
 
-const ModalHeader = ({ Icon, title }: { Icon: TablerIcon; title: string }) => {
+interface ModalHeaderProps {
+  Icon: TablerIcon;
+  title: string;
+}
+
+const ModalHeader = ({ Icon, title }: ModalHeaderProps) => {
   return (
     <Fragment>
       <Dialog.Title>
