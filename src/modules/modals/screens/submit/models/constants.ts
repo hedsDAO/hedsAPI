@@ -91,7 +91,7 @@ export const BACK_TO_UPLOAD_BUTTON_TEXT = 'Back to upload';
  */
 
 export const PREVIOUS_SUBMISSION_TITLE = 'You have previously submitted for this tape.';
-export const PREVIOUS_SUBMISSION_DISCLAIMER = 'Replacing your submission will remove the previously uploaded track.';
+export const PREVIOUS_SUBMISSION_DISCLAIMER = 'Replacing your submission will overwrite the previously uploaded track.';
 export const CONTINUE_TO_REQ_BUTTON_TEXT = 'Replace Submission';
 
 /**
