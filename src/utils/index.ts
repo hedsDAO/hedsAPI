@@ -16,3 +16,5 @@ export { default as handleDownloadFile } from './handleDownloadFile';
 export { default as generateSampleLink } from './generateSampleLink';
 export { default as computeLength } from './computeLength';
 export { default as handlePinataMetadata } from './handlePinataMetadata';
+export { default as removeFileFromPinata } from './api/removeFileFromPinata';
+export { default as uploadFileToPinata } from './api/uploadFileToPinata';

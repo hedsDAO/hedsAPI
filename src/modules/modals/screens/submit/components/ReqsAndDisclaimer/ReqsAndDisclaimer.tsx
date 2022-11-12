@@ -29,7 +29,7 @@ const ReqsAndDisclaimer = () => {
   return (
     <VStack data-testid="submit-reqs" gap={3} align={'start'}>
       <Heading fontSize={'xl'}>{REQUIREMENTS_HEADING}</Heading>
-      <Flex mt={5} gap={2} direction={{ base: 'column', lg: 'row' }} alignItems={{ base: 'start', lg: 'center' }}>
+      <Flex data-testid="submit-req-badges" mt={5} gap={2} direction={{ base: 'column', lg: 'row' }} alignItems={{ base: 'start', lg: 'center' }}>
         <LabelBadge label={BPM_LABEL} text={bpm.toString()} textColor={'green.600'} />
         <LabelBadge label={LENGTH_LABEL} text={LENGTH_VALUE} textColor={'orange.600'} />
         <LabelBadge label={SAMPLE_LABEL} text={SAMPLE_VALUE} textColor={'blue.600'} />

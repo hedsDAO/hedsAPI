@@ -10,12 +10,11 @@ interface FileDropzone {
   error?: string;
   accept?: string[];
   validation?: Function;
-  onSuccess?: Function;
   onRetry?: Function;
   isLoading?: boolean;
 }
 
-const FileDropzone = ({ inputRef, validation, accept, file, error, onSuccess, onRetry, isLoading, maxFiles }: FileDropzone) => {
+const FileDropzone = ({ inputRef, validation, accept, file, error, onRetry, isLoading, maxFiles }: FileDropzone) => {
   const [fileData, setFileData] = useState<{ size: number; name: string }>();
   const handleClick = () => inputRef?.current?.click();
   const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
@@ -25,7 +24,6 @@ const FileDropzone = ({ inputRef, validation, accept, file, error, onSuccess, on
     if (!error) {
       const { size, name } = e.target.files[0];
       setFileData({ size, name });
-      onSuccess();
     }
   };
   return (
