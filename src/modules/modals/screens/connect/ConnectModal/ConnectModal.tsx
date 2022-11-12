@@ -20,17 +20,21 @@ const ConnectModal = () => {
     }
   }, [isConnected]);
   return (
-    <ModalContainer isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
+    <ModalContainer size="sm" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
       <ModalHeader title={'Connect Wallet'} Icon={IconLink} />
       <Flex gap={2} direction={'column'}>
         {connectors.map((connector) => {
           return (
-            <Button key={connector.id} disabled={!connector.ready} onClick={() => connect({ connector })}>
+            <Button
+              isLoading={isLoading && pendingConnector?.id === connector.id}
+              key={connector.id}
+              disabled={!connector.ready || isLoading}
+              onClick={() => connect({ connector })}
+            >
               <Flex gap={2}>
                 {connector.name === 'MetaMask' && <MetamaskIcon />}
                 {connector.name === 'WalletConnect' && <WalletConnectIcon />}
                 <Text>{connector.name}</Text>
-                {/* {isLoading && pendingConnector?.id === connector.id && ' (connecting)'} */}
               </Flex>
             </Button>
           );

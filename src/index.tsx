@@ -7,7 +7,7 @@ import { infuraProvider } from 'wagmi/providers/infura';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { ChakraProvider } from '@chakra-ui/react';
-import { TapeWrapper } from '@/common/wrappers';
+import { DisplayNameWrapper, TapeWrapper } from '@/common/wrappers';
 import { ModalWrapper } from '@/modules/modals/components';
 import { AudioWrapper } from '@/modules/audio/components';
 import { store } from './store';
@@ -43,7 +43,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <AudioWrapper>
             <BrowserRouter>
               <ModalWrapper>
-                <App />
+                <DisplayNameWrapper>
+                  <App />
+                </DisplayNameWrapper>
               </ModalWrapper>
             </BrowserRouter>
           </AudioWrapper>
