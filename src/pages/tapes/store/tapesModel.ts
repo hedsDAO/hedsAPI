@@ -35,9 +35,14 @@ export const tapesModel = createModel<RootModel>()({
       docSnap.exists() ? this.setCollabTapes(docSnap.data()) : null;
     },
     async getHedsTapeArtists([hedsTape, artistMapping]: [TapeData, ArtistMapping]) {
-      const artistAddresses = [hedsTape?.curator, ...hedsTape?.tracks];
-      const populatedArtists = artistAddresses.map((address: string) => artistMapping[address]);
-      this.setCurrentTape({ ...hedsTape, curator: populatedArtists.shift(), tracks: populatedArtists });
+      if (hedsTape?.tracks?.length) {
+        const artistAddresses = [hedsTape?.curator, ...hedsTape?.tracks];
+        const populatedArtists = artistAddresses.map((address: string) => artistMapping[address]);
+        this.setCurrentTape({ ...hedsTape, curator: populatedArtists.shift(), tracks: populatedArtists });
+      } else {
+        const curator = artistMapping[hedsTape?.curator];
+        this.setCurrentTape({ ...hedsTape, curator: curator, tracks: [] });
+      }
     },
     // async getCollabTapeTracks() {},
   }),
