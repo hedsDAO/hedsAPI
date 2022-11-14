@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 const TransactionProgress = () => {
   return (
     <Fragment>
-      <Center width={'full'} height={'2xs'} color="white">
+      <Center className="animate__animated animate__zoomIn" width={'full'} height={'2xs'} color="white">
         <Flex alignItems={'center'} direction={'column'} gap={8}>
           <Spinner thickness="3px" speed="0.5s" emptyColor="gray.300" color="blackAlpha.500" size="lg" />
           <LabelBadge label="status" text="processing" textColor={'orange.500'} />
