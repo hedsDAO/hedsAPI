@@ -1,43 +1,40 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dialog } from '@headlessui/react';
 import { Dispatch, RootState } from '@/store';
-import { selectCurrentTape, selectCurrentTapeId } from '@/pages/tapes/store/selectors';
-import { SecondaryButton, PrimaryButton } from '@/common/buttons';
-import { ModalContainer } from '@/modules/modals/components';
-import { Disclaimer, TapeAndCurator } from '@/modules/modals/screens/sample/components';
 import { DateTime } from 'luxon';
+import { Flex } from '@chakra-ui/react';
+import { PrimaryButton, SecondaryButton } from '@/common/buttons';
+import { ModalContainer, ModalHeader } from '@/modules/modals/components';
+import { Disclaimer, TapeAndCurator } from '@/modules/modals/screens/sample/components';
+import { selectCurrentTape, selectCurrentTapeId } from '@/pages/tapes/store/selectors';
+import { BACK_BUTTON_TEXT, DOWNLOAD_BUTTON_TEXT, SAMPLE_MODAL_TITLE } from '@modals/screens/sample/models/constants';
+import { IconWaveSawTool } from '@tabler/icons';
 
 const SampleModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
-  const { isLoading, isChecked, sampleModalText } = useSelector((state: RootState) => state.sampleModel);
+  const { isLoading, isChecked } = useSelector((state: RootState) => state.sampleModel);
   const { end } = useSelector(selectCurrentTape).timeline.submit;
   const id = useSelector(selectCurrentTapeId);
   const now = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();
 
   useEffect(() => {
     return () => {
-      dispatch.sampleModel.setIsChecked(false);
-      dispatch.sampleModel.setIsLoading(false);
+      dispatch.sampleModel.clearModalState();
     };
   }, []);
 
   return (
-    <ModalContainer isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
-      <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-100 px-6 py-5 text-left align-middle shadow-xl transition-all">
-        <Dialog.Title className="h4 text-2xl mb-2 font-semibold">
-          <i className={sampleModalText.icon} /> {sampleModalText.title}
-        </Dialog.Title>
-        <TapeAndCurator />
-        <Disclaimer />
-        <div className="flex gap-2">
-          <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{sampleModalText.secondaryButtonText}</SecondaryButton>
-          <PrimaryButton isLoading={isLoading} onClick={() => dispatch.sampleModel.getSampleDownload(id)} disabled={now > end ? false : !isChecked}>
-            {sampleModalText.primaryButtonText}
-          </PrimaryButton>
-        </div>
-      </Dialog.Panel>
+    <ModalContainer size={'lg'} isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
+      <ModalHeader title={SAMPLE_MODAL_TITLE} Icon={IconWaveSawTool} />
+      <TapeAndCurator />
+      <Disclaimer />
+      <Flex gap={2}>
+        <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
+        <PrimaryButton isLoading={isLoading} onClick={() => dispatch.sampleModel.getSampleDownload(id)} disabled={now > end ? false : !isChecked}>
+          {DOWNLOAD_BUTTON_TEXT}
+        </PrimaryButton>
+      </Flex>
     </ModalContainer>
   );
 };

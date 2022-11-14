@@ -1,34 +1,43 @@
-import { ConnectKitButton } from 'connectkit';
-import { useNavigate } from 'react-router-dom';
+import { Modals } from '@/modules/modals/store/modalModel';
+import { Dispatch } from '@/store';
+import { Flex } from '@chakra-ui/react';
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
-import { classNames } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAccount, useDisconnect, useEnsName } from 'wagmi';
 
-const ConnectButton = () => {
+const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<Dispatch>();
+  const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { data, isLoading } = useEnsName({ address: address });
+
   return (
-    <ConnectKitButton.Custom>
-      {({ isConnected, isConnecting, show, hide, address, ensName }) => {
-        return (
-          <div className="flex items-center gap-x-1">
-            <button
-              onClick={isConnected ? () => navigate('/profile') : () => show()}
-              type="button"
-              className={`
-                ${isConnected ? 'bg-black' : 'gradient'}
-                inline-flex items-center rounded-full border border-transparent px-6 py-1.5 font-semibold text-xs tracking-widest leading-4 text-white shadow-sm hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2
-              `}
-            >
-              {isConnected ? ensName || address.slice(0, 5) + '...' : isConnecting ? <i className="fas fa-circle-notch fa-spin"></i> : 'connect'}
-            </button>
-            {isConnected && (
-              <button onClick={() => show()} className="px-3 py-1.5 bg-neutral-950 rounded-full">
-                <EllipsisHorizontalIcon className="h-5 w-5 text-gray-300" />
-              </button>
-            )}
-          </div>
-        );
-      }}
-    </ConnectKitButton.Custom>
+    <Flex gap={1}>
+      <button
+        onClick={() => {
+          if (isConnected) navigate('/profile');
+          if (!isConnected) {
+            dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
+            if (nextModal) dispatch.modalModel.setNextModal(nextModal);
+            dispatch.modalModel.setModalOpen(true);
+          }
+        }}
+        className={`px-6 text-white inline-flex items-center rounded-full tracking-widest text-sm py-1 ${
+          isConnected ? 'bg-black' : 'gradient'
+        } hover:bg-neutral-900 ease-linear`}
+      >
+        {isConnected && !isLoading ? data || address : 'connect'}
+      </button>
+      {isConnected ? (
+        <button onClick={() => disconnect()} className={`px-2.5 text-white inline-flex items-center rounded-full tracking-widest text-sm py-1 bg-black`}>
+          <EllipsisHorizontalIcon className="h-5 w-5 text-gray-100" />
+        </button>
+      ) : (
+        <></>
+      )}
+    </Flex>
   );
 };
 

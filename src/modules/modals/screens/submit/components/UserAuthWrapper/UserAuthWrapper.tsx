@@ -21,7 +21,10 @@ const UserAuthWrapper = ({ children }: { children: any }) => {
   }, [address]);
 
   useEffect(() => {
-    if (profileData?.submissions?.[space]?.[tape]?.[id]) dispatch.submitModel.setCurrentStep(SubmitSteps.PREVIOUS_SUBMISSION);
+    if (profileData?.submissions?.[space]?.[tape]?.[id]) {
+      dispatch.submitModel.setHasPrevSubmitted(true);
+      dispatch.submitModel.setCurrentStep(SubmitSteps.PREVIOUS_SUBMISSION);
+    } else dispatch.submitModel.setCurrentStep(SubmitSteps.REQS_AND_DISCLAIMER);
   }, [profileData]);
 
   return (
@@ -31,8 +34,8 @@ const UserAuthWrapper = ({ children }: { children: any }) => {
           <Text mb={4} fontSize="lg" fontWeight={'semibold'}>
             {CONNECT_WALLET_TEXT}
           </Text>
-          <ConnectButton />
-          <Divider my={5} />
+          <ConnectButton nextModal={Modals.SUBMIT_MODAL} />
+          <Divider mt={5} />
         </Flex>
       ) : !profileData?.twitterHandle ? (
         <Flex alignItems={'center'} px={2} direction={'column'}>

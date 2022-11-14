@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import { useDispatch, useSelector } from 'react-redux';
 import { TimelineStatus } from '@/pages/listen/store/hedstapeModel';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
+import { Modals } from '@/modules/modals/store/modalModel';
 
 const Mint = () => {
   const zone = { zone: 'GMT' };
@@ -39,7 +40,10 @@ const Mint = () => {
           </>
         ) : mint.status === TimelineStatus.OPEN ? (
           <Button
-            onClick={() => {}}
+            onClick={() => {
+              dispatch.modalModel.setModal(Modals.MINT_MODAL);
+              dispatch.modalModel.setModalOpen(true);
+            }}
             border={'solid 1px'}
             borderColor="green.200"
             bg="green.100"

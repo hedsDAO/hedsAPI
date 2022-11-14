@@ -12,36 +12,32 @@ import {
 } from '@modals/screens/submit/models/constants';
 
 describe('PreviousSubmission Unit', () => {
+  beforeEach(() => renderWithRematchStore(<PrevSubmission />, store));
   beforeAll(() => {
     store.dispatch.modalModel.setModal(Modals.SUBMIT_MODAL);
     store.dispatch.modalModel.setModalOpen(true);
     store.dispatch.userModel.setUserData(userData);
   });
   it('renders properly', () => {
-    renderWithRematchStore(<PrevSubmission />, store);
     const prevSubmissionContainer = screen.getAllByTestId('submit-prev');
     expect(prevSubmissionContainer).toBeTruthy();
   });
   it('renders text properly', () => {
-    renderWithRematchStore(<PrevSubmission />, store);
     const title = screen.getByTestId('submit-prev-title');
     const text = screen.getByTestId('submit-prev-text');
     expect(title).toHaveTextContent(PREVIOUS_SUBMISSION_TITLE);
     expect(text).toHaveTextContent(PREVIOUS_SUBMISSION_DISCLAIMER);
   });
   it('render buttons properly', () => {
-    renderWithRematchStore(<PrevSubmission />, store);
     const backButton = screen.getAllByRole('button')[0];
     const continueButton = screen.getAllByRole('button')[1];
     expect(backButton).toHaveTextContent(EXIT_MODAL_BUTTON_TEXT);
     expect(continueButton).toHaveTextContent(CONTINUE_TO_REQ_BUTTON_TEXT);
   });
   it('render buttons properly', () => {
-    renderWithRematchStore(<PrevSubmission />, store);
     const backButton = screen.getAllByRole('button')[0];
     const continueButton = screen.getAllByRole('button')[1];
     expect(backButton).toHaveTextContent(EXIT_MODAL_BUTTON_TEXT);
     expect(continueButton).toHaveTextContent(CONTINUE_TO_REQ_BUTTON_TEXT);
   });
-
 });
