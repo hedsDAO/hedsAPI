@@ -5,4 +5,4 @@
  */
 
 export const NAME_MODAL_LABEL = 'Display Name';
-export const NAME_MODAL_TEXT = 'Choose your display name.';
+export const NAME_MODAL_TEXT = 'Choose Your Name';

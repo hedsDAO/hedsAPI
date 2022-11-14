@@ -13,9 +13,9 @@ const MintModal = () => {
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
       <ModalHeader title={MINT_MODAL_TITLE} Icon={IconDisc} />
-      <MintDetails />
       <TapeNameAndCurator />
       <TapeCover />
+      <MintDetails />
       {/* <TransactionProgress /> */}
       <Flex gap={2}>
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>Back</SecondaryButton>

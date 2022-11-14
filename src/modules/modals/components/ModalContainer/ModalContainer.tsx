@@ -6,9 +6,10 @@ interface ModalContainerProps {
   setModalOpen: Function;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   children: React.ReactNode;
+  focus?: '25' | '50' | '75' | '100';
 }
 
-const ModalContainer = ({ isOpen, setModalOpen, size, children }: ModalContainerProps) => {
+const ModalContainer = ({ isOpen, setModalOpen, size, focus, children }: ModalContainerProps) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setModalOpen(false)}>
@@ -21,7 +22,19 @@ const ModalContainer = ({ isOpen, setModalOpen, size, children }: ModalContainer
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-75" />
+          <div
+            className={`fixed inset-0 bg-black ${
+              focus === '25'
+                ? 'bg-opacity-25'
+                : focus === '50'
+                ? 'bg-opacity-50'
+                : focus === '75'
+                ? 'bg-opacity-75'
+                : focus === '100'
+                ? 'bg-opacity-100'
+                : 'bg-opacity-75'
+            }`}
+          />
         </Transition.Child>
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
