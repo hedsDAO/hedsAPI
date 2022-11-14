@@ -62,10 +62,8 @@ const Navigation = () => {
               </div>
             </ul>
           </div>
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <ConnectButton />
-            </div>
+          <div className="flex flex-col items-end sm:-mb-4 -mb-2">
+            <ConnectButton />
           </div>
         </div>
       </div>

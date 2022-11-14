@@ -1,61 +1,61 @@
 import { Fragment } from 'react';
+import { LabelBadge } from '@/common/badges';
 import { useDispatch, useSelector } from 'react-redux';
-import { Badge, Checkbox, Divider, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Checkbox, Divider, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
 import { selectCurrentTapeBpm, selectCurrentTapeTimeline } from '@/pages/tapes/store/selectors';
 import { PrimaryAlert, WarningAlert } from '@/common/alerts';
 import { DateTime } from 'luxon';
+import {
+  BPM_LABEL,
+  CHECKBOX_TEXT,
+  CLOSED_TEXT,
+  COUNTDOWN_TEXT,
+  LENGTH_LABEL,
+  LENGTH_VALUE,
+  SAMPLE_LABEL,
+  SAMPLE_REQUIREMENTS_TITLE,
+  SAMPLE_VALUE,
+} from '../../models/constants';
 
 const Disclaimer = () => {
   const dispatch = useDispatch<Dispatch>();
   const now = DateTime.now().setZone('utc').toMillis();
-  const { isChecked, sampleModalText } = useSelector((state: RootState) => state.sampleModel);
+  const loading = useSelector((state: RootState) => state.loading.models.sampleModel);
+  const { isChecked } = useSelector((state: RootState) => state.sampleModel);
   const { end } = useSelector(selectCurrentTapeTimeline).submit;
   const bpm = useSelector(selectCurrentTapeBpm);
 
   return (
-    <>
-      {sampleModalText && (
+    <Flex data-testid="sample-disclaimer" direction={'column'}>
+      {!loading && now < end ? (
         <Fragment>
-          {now < end ? (
-            <Flex direction={'column'}>
-              <Divider my={5} />
-              <PrimaryAlert countdown={end}>{useBreakpointValue({ base: '', lg: sampleModalText.primaryAlertText })}</PrimaryAlert>
-              <Flex mt={5} px={2} direction={'column'}>
-                <Text fontSize="xl" textColor={'blackAlpha.800'} fontWeight={'bold'}>
-                  {sampleModalText.h1}
-                </Text>
-                <Flex mt={4} gap={2} direction={{ base: 'column', lg: 'row' }} alignItems={{ base: 'start', lg: 'center' }}>
-                  <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
-                    {sampleModalText.req1}
-                    <span className="text-green-600 font-semibold ml-1">{bpm}</span>
-                  </Badge>
-                  <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
-                    {sampleModalText.req2}
-                    <span className="text-orange-600 font-semibold ml-1">{'60-90 sec'}</span>
-                  </Badge>
-                  <Badge bg="gray.200" fontSize={'xs'} py={1} px={2}>
-                    {sampleModalText.req3}
-                    <span className="text-blue-600 font-semibold ml-1">{'> 1 sec'}</span>
-                  </Badge>
-                </Flex>
-                <Checkbox mt={5} onChange={(e) => dispatch.sampleModel.setIsChecked(!isChecked)}>
-                  <Text fontSize={'xs'}>{sampleModalText.checkboxText}</Text>
-                </Checkbox>
-                <Divider my={5} />
-              </Flex>
+          <Divider my={5} />
+          <PrimaryAlert countdown={end}>{COUNTDOWN_TEXT}</PrimaryAlert>
+          <Flex mt={5} px={2} direction={'column'}>
+            <Text fontSize="xl" textColor={'blackAlpha.800'} fontWeight={'bold'}>
+              {SAMPLE_REQUIREMENTS_TITLE}
+            </Text>
+            <Flex mt={4} gap={2} direction={{ base: 'column', lg: 'row' }} alignItems={{ base: 'start', lg: 'center' }}>
+              <LabelBadge label={BPM_LABEL} text={bpm.toString()} textColor={'green.600'} />
+              <LabelBadge label={LENGTH_LABEL} text={LENGTH_VALUE} textColor={'orange.600'} />
+              <LabelBadge label={SAMPLE_LABEL} text={SAMPLE_VALUE} textColor={'blue.600'} />
             </Flex>
-          ) : (
-            <Fragment>
-              <Divider my={5} />
-              <Flex mb={5}>
-                <WarningAlert>{sampleModalText.warningAlertText}</WarningAlert>
-              </Flex>
-            </Fragment>
-          )}
+            <Checkbox mt={5} onChange={(e) => dispatch.sampleModel.setIsChecked(!isChecked)}>
+              <Text fontSize={'xs'}>{CHECKBOX_TEXT}</Text>
+            </Checkbox>
+            <Divider my={5} />
+          </Flex>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <Divider my={5} />
+          <Flex mb={5}>
+            <WarningAlert>{CLOSED_TEXT}</WarningAlert>
+          </Flex>
         </Fragment>
       )}
-    </>
+    </Flex>
   );
 };
 

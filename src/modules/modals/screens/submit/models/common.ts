@@ -20,7 +20,8 @@ export class SubmitModalState {
   currentStep: SubmitSteps;
   isRequirementsChecked: boolean;
   isDisclaimerChecked: boolean;
-  pendingSubmission: TrackMetadata;
+  hasPrevSubmitted: boolean;
+  submission: TrackMetadata;
   ipfsHash: string;
   file: File;
 }

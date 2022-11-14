@@ -1,13 +1,11 @@
 /**
  * @urls Firebase (FB) Cloud Functions and URL references.
  * @const PINATA_IPFS_URL : Heds Pinata Gateway URL reference.
- * @const INFURA_IPFS_URL : Heds (Placeholder) IPFS/Infura URL reference.
  * @const ID_FUNC : FB/API for generating random track IDs.
  * @const PIN_HASH_TO_IPFS_FUNC: FB/API for pinning IPFS cids (hashes) to Heds Pinata Gateway.
  */
 
 export const PINATA_IPFS_URL = 'https://www.heds.cloud/ipfs/';
-export const INFURA_IPFS_URL = 'https://heds.infura-ipfs.io/ipfs/';
 export const ID_FUNC = 'https://us-central1-heds-34ac0.cloudfunctions.net/generateId';
 export const PIN_HASH_TO_IPFS_FUNC = 'https://us-central1-heds-34ac0.cloudfunctions.net/pinHashToIpfs';
 
@@ -93,7 +91,7 @@ export const BACK_TO_UPLOAD_BUTTON_TEXT = 'Back to upload';
  */
 
 export const PREVIOUS_SUBMISSION_TITLE = 'You have previously submitted for this tape.';
-export const PREVIOUS_SUBMISSION_DISCLAIMER = 'Replacing your submission will remove the previously uploaded track.';
+export const PREVIOUS_SUBMISSION_DISCLAIMER = 'Replacing your submission will overwrite the previously uploaded track.';
 export const CONTINUE_TO_REQ_BUTTON_TEXT = 'Replace Submission';
 
 /**

@@ -1,7 +1,14 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-const ModalContainer = ({ isOpen, setModalOpen, children }: { isOpen: boolean; setModalOpen: Function; children: React.ReactNode }) => {
+interface ModalContainerProps {
+  isOpen: boolean;
+  setModalOpen: Function;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  children: React.ReactNode;
+}
+
+const ModalContainer = ({ isOpen, setModalOpen, size, children }: ModalContainerProps) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setModalOpen(false)}>
@@ -27,7 +34,21 @@ const ModalContainer = ({ isOpen, setModalOpen, children }: { isOpen: boolean; s
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-gray-100 px-7 py-5 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className={`w-full ${
+                  size === 'xs'
+                    ? 'max-w-xs'
+                    : size === 'sm'
+                    ? 'max-w-sm'
+                    : size === 'md'
+                    ? 'max-w-md'
+                    : size === 'lg'
+                    ? 'max-w-lg'
+                    : size === 'xl'
+                    ? 'max-w-xl'
+                    : 'max-w-xl'
+                } transform overflow-hidden rounded-2xl bg-gray-100 px-7 py-5 text-left align-middle shadow-xl transition-all`}
+              >
                 {children}
               </Dialog.Panel>
             </Transition.Child>
