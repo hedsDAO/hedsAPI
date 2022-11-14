@@ -132,7 +132,7 @@ export interface TapeAndTrackData {
   name: string;
   opensea: string;
   route: string;
-  tracks: Array<User>;
+  tracks?: Array<User>;
   timeline: Timeline;
 }
 
