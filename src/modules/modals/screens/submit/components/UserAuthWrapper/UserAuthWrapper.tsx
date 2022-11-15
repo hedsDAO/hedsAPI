@@ -42,7 +42,7 @@ const UserAuthWrapper = ({ children }: { children: any }) => {
           <Text mb={4} fontSize="lg" fontWeight={'semibold'}>
             {VERIFY_TWITTER_TEXT}
           </Text>
-          <Flex alignItems={'center'} data-testid="verify-twitter-container">
+          <Flex alignItems={'center'} data-testid="verify-twitter-container" mb={2}>
             <Button
               onClick={() => {
                 dispatch.modalModel.setNextModal(Modals.SUBMIT_MODAL);
@@ -59,7 +59,6 @@ const UserAuthWrapper = ({ children }: { children: any }) => {
               {VERIFY_BUTTON_TEXT}
             </Button>
           </Flex>
-          <Divider my={5} />
         </Flex>
       ) : (
         <Fragment>{children}</Fragment>

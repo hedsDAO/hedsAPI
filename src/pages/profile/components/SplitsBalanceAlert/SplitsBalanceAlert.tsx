@@ -4,11 +4,11 @@ import { BellIcon } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 import { getSplitsBalance } from '@/utils/graphql/getSplitsBalance';
 import { ethers } from 'ethers';
-import { selectProfileWallet } from '../../store/selectors';
+import { selectUserWallet } from '@/pages/user/store/selectors';
 
 const SplitsBalanceAlert = () => {
   const [balance, setBalance] = useState<string>('');
-  const wallet = useSelector(selectProfileWallet);
+  const wallet = useSelector(selectUserWallet);
   useEffect(() => {
     if (wallet) getUserBalance(wallet);
   }, [wallet]);
@@ -24,7 +24,15 @@ const SplitsBalanceAlert = () => {
   return (
     <Fragment>
       {balance && +balance > 0 && (
-        <Container mt={{base: 4, sm: 0}} maxW="full" px={2} rounded="md" borderColor={'green.300'} className="border animate__animated animate__fadeInDown" bg={'green.100'}>
+        <Container
+          mt={{ base: 4, sm: 0 }}
+          maxW="full"
+          px={2}
+          rounded="md"
+          borderColor={'green.300'}
+          className="border animate__animated animate__fadeInDown"
+          bg={'green.100'}
+        >
           <Flex gap={2} my={2} direction={{ base: 'column', lg: 'row' }} justifyContent="space-between" alignItems={'center'}>
             <Flex gap={2} alignItems={'center'}>
               <Box as={Flex} alignItems="center" borderColor={'green.300'} className="border" p={1} bg={'green.50'} rounded="lg">
