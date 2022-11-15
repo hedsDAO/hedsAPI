@@ -111,19 +111,12 @@ Object {
                 data-testid="user-copy-container"
               >
                 <button
-                  aria-label="edit profile"
-                  class="chakra-button mx-0 border css-wzdeq1"
+                  class="chakra-button border css-pp6qdb"
                   type="button"
                 >
-                  <span
-                    class="chakra-button__icon css-1wh2kri"
-                  >
-                    <i
-                      aria-hidden="true"
-                      class="fa-solid fa-copy"
-                      focusable="false"
-                    />
-                  </span>
+                  <i
+                    class="fa-solid fa-copy mr-1"
+                  />
                   <span
                     class="animate__animated animate__fadeIn"
                   >
@@ -814,19 +807,12 @@ Object {
               data-testid="user-copy-container"
             >
               <button
-                aria-label="edit profile"
-                class="chakra-button mx-0 border css-wzdeq1"
+                class="chakra-button border css-pp6qdb"
                 type="button"
               >
-                <span
-                  class="chakra-button__icon css-1wh2kri"
-                >
-                  <i
-                    aria-hidden="true"
-                    class="fa-solid fa-copy"
-                    focusable="false"
-                  />
-                </span>
+                <i
+                  class="fa-solid fa-copy mr-1"
+                />
                 <span
                   class="animate__animated animate__fadeIn"
                 >

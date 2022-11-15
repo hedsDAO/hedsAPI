@@ -3,12 +3,12 @@ import { Dispatch } from '@/store';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { IconBrandTwitter } from '@tabler/icons';
 import { Fragment } from 'react';
-import { selectProfileTwitterHandle } from '../../store/selectors';
+import { selectUserTwitterHandle } from '@/pages/user/store/selectors';
 import { LinkButton } from '@/common/buttons';
 
 const VerifyTwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const twitterHandle = useSelector(selectProfileTwitterHandle);
+  const twitterHandle = useSelector(selectUserTwitterHandle);
   return (
     <Fragment>
       {!twitterHandle?.length && (
