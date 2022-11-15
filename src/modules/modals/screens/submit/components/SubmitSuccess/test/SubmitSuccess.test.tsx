@@ -24,7 +24,7 @@ describe('SubmitSuccess Unit', () => {
     const successHeader = screen.getByRole('heading');
     expect(successHeader).toHaveTextContent(SUCCESS_TITLE);
   })
-  it('renders text and anon ', () => {
+  it('renders text and anon id', () => {
     const anonIdName = screen.getByTestId("submit-anon-name")
     const successText = screen.getAllByText(SUCCESS_MESSAGE_TEXT);
     const anonText = screen.getAllByText(ANON_ID_TEXT);

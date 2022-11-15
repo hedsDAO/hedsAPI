@@ -2,22 +2,9 @@ import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { storage } from '@/App';
-import { User } from '@/models/common';
 import { getCurrentImagePath } from '@/utils';
-
-class SettingsModalState {
-  profileChanges: User;
-  loading = false;
-  error = '';
-  bannerFile: File;
-  bannerFileType: string;
-  bannerPreview: string;
-  profilePictureFile: File;
-  profilePictureFileType: string;
-  profilePicturePreview: string;
-  descCharacters: number;
-  nameCharacters: number;
-}
+import { SettingsModalState } from './common';
+import { User } from '@/models/common';
 
 export const settingsModel = createModel<RootModel>()({
   state: {} as SettingsModalState,
@@ -36,12 +23,12 @@ export const settingsModel = createModel<RootModel>()({
     setProfilePictureFileType: (state, profilePictureFileType: string) => ({ ...state, profilePictureFileType }),
     setProfilePicturePreview: (state, profilePicturePreview) => ({ ...state, profilePicturePreview }),
     setError: (state, error: string) => ({ ...state, error }),
-    setLoading: (state, loading: boolean) => ({ ...state, loading }),
+    setIsLoading: (state, loading: boolean) => ({ ...state, loading }),
     clearProfileModalState: (state) => new SettingsModalState(),
   },
   effects: (dispatch) => ({
     async handleSubmit([prevProfileData, profileModalState]: [User, SettingsModalState]) {
-      this.setLoading(true);
+      this.setIsLoading(true);
       this.setError('');
       const { bannerFile, bannerFileType, bannerPreview, profilePictureFile, profilePictureFileType, profilePicturePreview } = profileModalState;
       const newProfileData = { ...profileModalState.profileChanges };
@@ -63,7 +50,7 @@ export const settingsModel = createModel<RootModel>()({
         }
       }
       await dispatch.profileModel.updateUserData([prevProfileData?.wallet, newProfileData]);
-      this.setLoading(false);
+      this.setIsLoading(false);
       dispatch.modalModel.setModalOpen(false);
     },
     async handleProfilePictureUpload(e: React.ChangeEvent<HTMLInputElement>) {

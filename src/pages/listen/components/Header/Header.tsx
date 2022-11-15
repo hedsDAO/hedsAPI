@@ -36,17 +36,19 @@ const Header = () => {
           rounded="sm"
           src={cover}
         />
-        <Button
-          rounded="sm"
-          textColor={'gray.700'}
-          border={'solid 1px'}
-          borderColor={'green.200'}
-          bg="green.100"
-          leftIcon={<i className="fa-solid fa-layer-plus"></i>}
-          size={'xs'}
-        >
-          Add to Queue
-        </Button>
+        {currentTape?.tracks?.length && (
+          <Button
+            rounded="sm"
+            textColor={'gray.700'}
+            border={'solid 1px'}
+            borderColor={'green.200'}
+            bg="green.100"
+            leftIcon={<i className="fa-solid fa-layer-plus"></i>}
+            size={'xs'}
+          >
+            Add to Queue
+          </Button>
+        )}
       </Stack>
       <Stack direction={'column'} width={'full'} alignItems={'start'} justifyContent="center">
         <Text fontWeight={'semibold'} fontSize={'4xl'}>

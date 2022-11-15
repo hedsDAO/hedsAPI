@@ -5,6 +5,7 @@ import { Button, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { selectUserWallet } from '@/pages/user/store/selectors';
 import { RootState } from '@/store';
+import SecondaryButton from '../SecondaryButton/SecondaryButton';
 
 const CopyWalletButton = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -13,15 +14,8 @@ const CopyWalletButton = () => {
   return (
     <Flex alignItems={'center'} data-testid="user-copy-container">
       {!loading && (
-        <Button
-          onClick={() => handleCopy(setIsCopied, wallet)}
-          size="xs"
-          bg={'gray.50'}
-          borderColor={'gray.200'}
-          className="mx-0 border"
-          aria-label="edit profile"
-          leftIcon={<i className="fa-solid fa-copy" />}
-        >
+        <SecondaryButton size="xs" onClick={() => handleCopy(setIsCopied, wallet)}>
+          <i className="fa-solid fa-copy mr-1" />
           {isCopied ? (
             <Transition
               show={isCopied}
@@ -37,7 +31,7 @@ const CopyWalletButton = () => {
           ) : (
             <span className="animate__animated animate__fadeIn">{wallet?.length && formatWallet(wallet)}</span>
           )}
-        </Button>
+        </SecondaryButton>
       )}
     </Flex>
   );
