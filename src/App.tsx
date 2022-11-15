@@ -11,6 +11,7 @@ import { Collab } from '@/pages/collab/page/Collab';
 import { User } from '@/pages/user/page/User';
 import { Listen } from '@/pages/listen/page/Listen';
 import { Profile } from '@/pages/profile/page/Profile';
+import { Landing } from '@pages/landing/page/Landing';
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,
@@ -31,6 +32,7 @@ const App = (): JSX.Element => {
     <Fragment>
       <Navigation />
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/artists" element={<Artists />} />
