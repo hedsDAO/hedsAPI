@@ -3,30 +3,8 @@ import { createModel } from '@rematch/core';
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
 import { User } from '@/models/common';
+import { TwitterModalState, TwitterStep } from './common';
 const TWITTER_AUTH_CLOUD_FN = 'https://us-central1-heds-34ac0.cloudfunctions.net/twitterAuth/';
-
-export enum TwitterStep {
-  GENERATE_HASH = 0,
-  COPY_TWEET,
-  TWEET_HASH,
-  VERIFY_TWEET,
-  LINK_ACCOUNT,
-  COMPLETE,
-  ERROR,
-}
-
-class TwitterModalState {
-  currentStep: TwitterStep = TwitterStep.GENERATE_HASH;
-  loading = false;
-  tweetUrl = '';
-  twitterHandle = '';
-  userHash = '';
-  hashedTweet = '';
-  error = '';
-  copied = false;
-  pastedTweetUrl = '';
-  windowParams: [string, string, string];
-}
 
 export const twitterModel = createModel<RootModel>()({
   state: {

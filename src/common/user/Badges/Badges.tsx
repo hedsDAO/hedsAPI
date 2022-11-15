@@ -15,7 +15,7 @@ const Badges = () => {
   return (
     <Skeleton rounded="md" mt={3} height="10px" fadeDuration={2} isLoaded={!loading}>
       <Stack data-testid="user-badge-container" direction="row">
-        {userBadges &&
+        {!loading && userBadges &&
           Object.entries(userBadges).map(([id, badge]) => (
             <Badge data-testid="user-badge" variant="outline" colorScheme={colorMapping(badge.name)} key={id}>
               {badge.name}
