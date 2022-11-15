@@ -4,7 +4,6 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { Navigation, Footer } from '@/common/navs';
-import { About } from '@/pages/about/page/About';
 import { Explore } from '@/pages/explore/pages/Explore';
 import { Artists } from '@/pages/artists/page/Artists';
 import { Tapes } from '@/pages/tapes/page/Tapes';
@@ -34,7 +33,6 @@ const App = (): JSX.Element => {
       <Routes>
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/about" element={<About />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/collab" element={<Collab />} />

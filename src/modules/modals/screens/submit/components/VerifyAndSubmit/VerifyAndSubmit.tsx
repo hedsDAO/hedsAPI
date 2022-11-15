@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { WaveformPlayer } from '@/modules/audio/components';
-import { selectProfileDisplayName, selectProfileSubmissionsBySpaceTapeId, selectProfileWallet } from '@/pages/profile/store/selectors';
+import { selectUserDisplayName, selectUserSubmissionsBySpaceTapeId, selectUserWallet } from '@/pages/user/store/selectors';
 import { selectHedstapeByNameById, selectHedstapeCoverById, selectSpaceTapeId } from '@/pages/tapes/store/selectors';
 import { Dispatch, RootState } from '@/store';
 import { isEmpty } from '@/utils';
@@ -15,9 +15,9 @@ const VerifyAndSubmit = () => {
   const [space, tape, id] = useSelector(selectSpaceTapeId);
   const name = useSelector((state: RootState) => selectHedstapeByNameById(state, id));
   const cover = useSelector((state: RootState) => selectHedstapeCoverById(state, id));
-  const wallet = useSelector(selectProfileWallet);
-  const artist = useSelector(selectProfileDisplayName);
-  const prevSub = useSelector((state: RootState) => selectProfileSubmissionsBySpaceTapeId(state, [space, tape, id]));
+  const wallet = useSelector(selectUserWallet);
+  const artist = useSelector(selectUserDisplayName);
+  const prevSub = useSelector((state: RootState) => selectUserSubmissionsBySpaceTapeId(state, [space, tape, id]));
 
   return (
     <Flex data-testid="submit-verify" px={2} direction={'column'}>

@@ -13,7 +13,7 @@ const DisplayName = () => {
     <Fragment>
       {wallet && (
         <Skeleton rounded="md" h="fit-content" fadeDuration={2} isLoaded={!loading}>
-          <Heading size={'lg'} data-testid="user-display-name">
+          <Heading size={'lg'} data-testid="user-display-name" px={1} pt={2}>
             {displayName?.length ? displayName : formatWallet(wallet)}
           </Heading>
         </Skeleton>
