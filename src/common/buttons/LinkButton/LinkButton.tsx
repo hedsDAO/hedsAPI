@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const PrimaryButton = ({
+const LinkButton = ({
   isLoading,
   size,
   disabled,
@@ -18,9 +18,9 @@ const PrimaryButton = ({
       isLoading={isLoading}
       onClick={() => onClick()}
       disabled={disabled}
-      _hover={{ bg: 'green.300', borderColor: 'green.400' }}
-      bg="green.200"
-      borderColor={'green.300'}
+      _hover={{ bg: 'blue.300', borderColor: 'blue.400' }}
+      bg="blue.200"
+      borderColor={'blue.300'}
       className={'border'}
       size={size || 'sm'}
       rounded="md"
@@ -30,4 +30,4 @@ const PrimaryButton = ({
   );
 };
 
-export default PrimaryButton;
+export default LinkButton;

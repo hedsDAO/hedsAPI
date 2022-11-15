@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Flex, Stack, StackDivider } from '@chakra-ui/react';
+import { Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState } from '@/store';
-import { Dialog } from '@headlessui/react';
 import { DescriptionForm, ProfilePictureForm, BannerForm } from '@/modules/modals/screens/settings/components';
-import { ModalContainer } from '@/modules/modals/components';
+import { ModalContainer, ModalHeader } from '@/modules/modals/components';
+import { IconPencil } from '@tabler/icons';
+import { PrimaryButton, SecondaryButton } from '@/common/buttons';
+import { BACK_BUTTON_TEXT, SAVE_BUTTON_TEXT, SETTINGS_MODAL_TITLE } from '../models/constants';
 
 const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const userData = useSelector((state: RootState) => state.userModel);
-  const { profileChanges, loading } = useSelector((state: RootState) => state.settingsModel);
+  const { profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
   const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
     if (userData) dispatch.settingsModel.setProfileModelData(userData);
@@ -20,30 +22,23 @@ const SettingsModal = () => {
   }, []);
 
   return (
-    <ModalContainer isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
-      <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-gray-100 p-6 text-left align-middle shadow-xl transition-all">
-        <Dialog.Title as="h2" className="text-2xl font-semibold text-gray-900 mb-6">
-          Edit Profile
-        </Dialog.Title>
-        <Stack spacing="5" divider={<StackDivider />}>
-          <DescriptionForm />
-          <ProfilePictureForm />
-          <BannerForm />
-          <Flex gap={2} className="mt-6">
-            <Button onClick={() => dispatch.modalModel.setModalOpen(false)} bg="gray.200">
-              Back
-            </Button>
-            <Button
-              isLoading={loading}
-              onClick={() => dispatch.settingsModel.handleSubmit([userData, profileModalData])}
-              disabled={JSON.stringify(userData) === JSON.stringify(profileChanges)}
-              bg="green.200"
-            >
-              Save
-            </Button>
-          </Flex>
-        </Stack>
-      </Dialog.Panel>
+    <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
+      <ModalHeader Icon={IconPencil} title={SETTINGS_MODAL_TITLE} />
+      <Stack spacing="4" divider={<StackDivider />}>
+        <ProfilePictureForm />
+        <BannerForm />
+        <DescriptionForm />
+        <Flex gap={2}>
+          <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
+          <PrimaryButton
+            isLoading={isLoading}
+            onClick={() => dispatch.settingsModel.handleSubmit([userData, profileModalData])}
+            disabled={JSON.stringify(userData) === JSON.stringify(profileChanges)}
+          >
+            {SAVE_BUTTON_TEXT}
+          </PrimaryButton>
+        </Flex>
+      </Stack>
     </ModalContainer>
   );
 };
