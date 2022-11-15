@@ -1,4 +1,4 @@
-import { TwitterStep } from '@/modules/modals/screens/twitter/models/twitterModel';
+import { TwitterStep } from '@/modules/modals/screens/twitter/models/common';
 import { Dispatch, RootState } from '@/store';
 import { Button, Flex, FormControl, FormLabel, Stack } from '@chakra-ui/react';
 import { IconKey } from '@tabler/icons';

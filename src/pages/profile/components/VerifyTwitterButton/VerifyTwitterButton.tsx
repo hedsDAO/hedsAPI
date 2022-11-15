@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@/store';
-import { Button, Flex } from '@chakra-ui/react';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { IconBrandTwitter } from '@tabler/icons';
 import { Fragment } from 'react';
 import { selectProfileTwitterHandle } from '../../store/selectors';
+import { LinkButton } from '@/common/buttons';
 
 const VerifyTwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -12,20 +12,16 @@ const VerifyTwitterButton = () => {
   return (
     <Fragment>
       {!twitterHandle?.length && (
-        <Flex alignItems={'center'} data-testid="verify-twitter-container">
-          <Button
-            onClick={() => {
-              dispatch.modalModel.setModal(Modals.TWITTER_MODAL);
-              dispatch.modalModel.setModalOpen(true);
-            }}
-            size="xs"
-            className="mx-0"
-            aria-label="edit profile"
-            leftIcon={<IconBrandTwitter className="text-gray-700" width={16} height={16} />}
-          >
-            Verify
-          </Button>
-        </Flex>
+        <LinkButton
+          onClick={() => {
+            dispatch.modalModel.setModal(Modals.TWITTER_MODAL);
+            dispatch.modalModel.setModalOpen(true);
+          }}
+          size="xs"
+        >
+          <IconBrandTwitter className="text-gray-700 mr-1" width={12} height={12} />
+          Verify
+        </LinkButton>
       )}
     </Fragment>
   );
