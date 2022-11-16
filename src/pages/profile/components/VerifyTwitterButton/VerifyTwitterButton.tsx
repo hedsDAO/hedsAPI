@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from '@/store';
+import { Dispatch, store } from '@/store';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { IconBrandTwitter } from '@tabler/icons';
 import { Fragment } from 'react';
-import { selectUserTwitterHandle } from '@/pages/user/store/selectors';
 import { LinkButton } from '@/common/buttons';
 
 const VerifyTwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const twitterHandle = useSelector(selectUserTwitterHandle);
+  const twitterHandle = useSelector(store.select.userModel.selectCurrentUserTwitterHandle);
   return (
     <Fragment>
       {!twitterHandle?.length && (

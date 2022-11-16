@@ -6,8 +6,8 @@ import { Heading, Skeleton } from '@chakra-ui/react';
 
 const DisplayName = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const displayName = useSelector(store.select.userModel.selectConnectedUserDisplayName);
-  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
+  const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   return (
     <Fragment>
       {wallet && (

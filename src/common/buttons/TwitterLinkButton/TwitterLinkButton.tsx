@@ -6,7 +6,7 @@ import { Fragment } from 'react';
 
 const TwitterLinkButton = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const twitterHandle = useSelector(store.select.userModel.selectConnectedUserTwitterHandle);
+  const twitterHandle = useSelector(store.select.userModel.selectCurrentUserTwitterHandle);
   return (
     <Fragment>
       {twitterHandle?.length ? (

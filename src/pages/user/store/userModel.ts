@@ -21,45 +21,85 @@ export const userModel = createModel<RootModel>()({
       return slice((userModel) => userModel.connectedUser);
     },
     selectConnectedUserSubmissions() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.submissions?.heds?.hedstape || {});
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.submissions?.heds?.hedstape || {});
     },
     selectConnectedUserBadges() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.badges || []);
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.badges || []);
     },
     selectConnectedUserTracks() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.tracks?.heds?.hedstape || {});
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.tracks?.heds?.hedstape || {});
     },
     selectConnectedUserSamples() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.samples?.heds?.hedstape || {});
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.samples?.heds?.hedstape || {});
     },
     selectConnectedUserDisplayName() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.displayName || '');
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.displayName || '');
     },
     selectConnectedUserBanner() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.banner || '');
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.banner || '');
     },
     selectConnectedUserWallet() {
       return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.wallet || '');
     },
     selectConnectedUserDescription() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.description || '');
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.description || '');
     },
     selectConnectedUserTwitterHandle() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.twitterHandle || '');
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.twitterHandle || '');
     },
     selectConnectedUserProfilePicture() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.profilePicture || '');
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.profilePicture || '');
     },
     selectConnectedUserCollection() {
-      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.collection || {});
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.collection || {});
     },
     selectConnectedUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
-      return slice( (userModel) => userModel.connectedUser.submissions?.[space]?.[tape]?.[id]);
+      return slice((userModel) => userModel.connectedUser.submissions?.[space]?.[tape]?.[id]);
     }),
-
+    /** Current User Selectors */
+    selectCurrentUser() {
+      return slice((userModel) => userModel.currentUser);
+    },
+    selectCurrentUserSubmissions() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.submissions?.heds?.hedstape || {});
+    },
+    selectCurrentUserBadges() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.badges || []);
+    },
+    selectCurrentUserTracks() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.tracks?.heds?.hedstape || {});
+    },
+    selectCurrentUserSamples() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.samples?.heds?.hedstape || {});
+    },
+    selectCurrentUserDisplayName() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.displayName || '');
+    },
+    selectCurrentUserBanner() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.banner || '');
+    },
+    selectCurrentUserWallet() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.wallet || '');
+    },
+    selectCurrentUserDescription() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.description || '');
+    },
+    selectCurrentUserTwitterHandle() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.twitterHandle || '');
+    },
+    selectCurrentUserProfilePicture() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.profilePicture || '');
+    },
+    selectCurrentUserCollection() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.collection || {});
+    },
+    selectCurrentUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
+      return slice((userModel) => userModel.currentUser.submissions?.[space]?.[tape]?.[id]);
+    }),
   }),
   reducers: {
     setUserData: (state, payload) => ({ ...state, ...payload }),
+    setCurrentUserData: (state, currentUser: User) => ({ ...state, currentUser }),
     setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),
     clearUserState: (state) => emptyUserState(state),
   },
@@ -72,6 +112,13 @@ export const userModel = createModel<RootModel>()({
       } else {
         dispatch.modalModel.setModal(Modals.NAME_MODAL);
         dispatch.modalModel.setModalOpen(true);
+      }
+    },
+    async getCurrentUserData(wallet: string) {
+      const docRef = doc(db, 'users', wallet.toLowerCase());
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        this.setCurrentUserData(docSnap.data());
       }
     },
     async createNewUser([wallet, displayName]: [string, string]) {
@@ -88,7 +135,7 @@ export const userModel = createModel<RootModel>()({
         this.setUserData(docSnap.data());
       }
     },
-    async updateUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
+    async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
       const collection = formatUserCollection(data, hedsTapes);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
@@ -96,7 +143,17 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, collection });
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, collection });
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
-      this.setUserData({ ...userData, collection });
+      this.setCurrentUserData({ ...userData, collection });
+    },
+    async updateConnectedUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
+      const collection = formatUserCollection(data, hedsTapes);
+      const docSnap = await getDoc(doc(db, 'users', wallet));
+      const userData = docSnap.exists() ? docSnap.data() : null;
+      const { role } = userData;
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, collection });
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, collection });
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
+      this.setConnectedUserData({ ...userData, collection });
     },
   }),
 });

@@ -1,38 +1,41 @@
-import { selectUserCollection, selectUserWallet } from '@/pages/user/store/selectors';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { formatReadContractArgs, isEmpty } from '@/utils';
 import { Button } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useContractReads } from 'wagmi';
+import { Result } from 'ethers/lib/utils';
+import { useLocation } from 'react-router-dom';
 
 const RefreshCollectionButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const hedsTapes = useSelector((state: RootState) => state.tapesModel.hedsTapes);
-  const collection = useSelector(selectUserCollection);
-  const wallet = useSelector(selectUserWallet);
+  const hedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
+  const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
+  const { pathname } = useLocation();
   const { data, refetch } = useContractReads({
     contracts: formatReadContractArgs(wallet, hedsTapes),
     allowFailure: true,
+    cacheOnBlock: true,
+    staleTime: 5000000,
     enabled: false,
     structuralSharing: (prev, next) => (prev === next ? prev : next),
     onSuccess(data) {
-      handleUpdateCollection();
+      handleUpdateCollection(data);
     },
-    onSettled() {
-      setIsFetching(false);
-    },
-    onError(err) {
-      console.log(err);
-    },
+    onSettled() {},
+    onError(err) {},
   });
 
-  const handleUpdateCollection = useCallback(() => {
-    if (data?.length) dispatch.userModel.updateUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
-  }, [data]);
+  const handleUpdateCollection = useCallback(
+    (data: Result[]) => {
+      if (data?.length && !isEmpty(hedsTapes)) {
+        if (pathname.includes('/u')) dispatch.userModel.updateCurrentUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
+        else if (pathname.includes('/profile')) dispatch.userModel.updateConnectedUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
+      }
+    },
+    [data],
+  );
 
   return (
     <Button
@@ -41,7 +44,7 @@ const RefreshCollectionButton = () => {
       size="sm"
       disabled={!isEmpty(hedsTapes) && !wallet?.length}
       color="blackAlpha.900"
-      onClick={() => refetch()}
+      onClick={() => refetch().then(() => refetch())}
     >
       <IconRefresh className="hover:rotate-180 ease-in-out" height={14} width={14} />
     </Button>

@@ -9,7 +9,7 @@ import SecondaryButton from '../SecondaryButton/SecondaryButton';
 const CopyWalletButton = () => {
   const [isCopied, setIsCopied] = useState(false);
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   return (
     <Flex alignItems={'center'} data-testid="user-copy-container">
       {!loading && (

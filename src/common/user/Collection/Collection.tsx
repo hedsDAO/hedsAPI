@@ -6,7 +6,7 @@ import { RootState, store } from '@/store';
 
 const Collection = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const collection = useSelector(store.select.userModel.selectConnectedUserCollection);
+  const collection = useSelector(store.select.userModel.selectCurrentUserCollection);
   
   return (
     <Stack data-testid="user-collection-container">

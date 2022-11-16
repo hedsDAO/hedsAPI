@@ -5,7 +5,7 @@ import { Skeleton, Text } from '@chakra-ui/react';
 
 const UserDescription = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const description = useSelector(store.select.userModel.selectConnectedUserDescription);
+  const description = useSelector(store.select.userModel.selectCurrentUserDescription);
 
   return (
     <Fragment>
