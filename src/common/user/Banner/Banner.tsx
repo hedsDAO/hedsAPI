@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import DEFAULT_BANNER_PICTURE from '/public/banner.jpg';
 
 const Banner = () => {
-  const banner = useSelector(store.select.userModel.selectConnectedUserBanner);
+  const banner = useSelector(store.select.userModel.selectCurrentUserBanner);
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
     <Skeleton minHeight={'48'} maxHeight={'48'} minW="fit-content" speed={2} isLoaded={!loading}>

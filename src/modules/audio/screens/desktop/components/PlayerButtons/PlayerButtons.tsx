@@ -3,7 +3,6 @@ import { Flex } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { selectUserWallet } from '@/pages/user/store/selectors';
 
 const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();

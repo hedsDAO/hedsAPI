@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem, IconButton } from '@chakra-ui/react';
 import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/screens/desktop/components';
 import { Transition } from '@headlessui/react';
-import { selectUserWallet } from '@/pages/user/store/selectors';
 
 const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();

@@ -1,6 +1,6 @@
-import { Dispatch, RootState } from '@/store';
+import { Dispatch } from '@/store';
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 
@@ -9,18 +9,14 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
   const { address } = useAccount();
-  const { isConnected, isDisconnected } = useAccount({});
+  const { isConnected, isDisconnected, status } = useAccount({});
   const wallet = pathname?.includes('/u') ? pathname?.split('/u')[1] : undefined;
-  
+
   const handleFetchUserData = useCallback(() => {
-    if (wallet?.length && pathname.includes('/u')) {
-      return dispatch.userModel.getConnectedUserData(wallet);
-    } else if (isConnected && address && pathname === '/profile') {
-      return dispatch.userModel.getConnectedUserData(address);
-    } else if (isDisconnected && pathname === '/profile') {
-      return dispatch.userModel.clearUserState(), navigate('/');
-    }
-  }, [pathname, wallet, address]);
+    if (isConnected && address) dispatch.userModel.getConnectedUserData(address);
+    if (pathname.includes('/u') && wallet?.length) dispatch.userModel.getCurrentUserData(wallet);
+    if (isConnected && address && pathname === '/profile') dispatch.userModel.getCurrentUserData(address);
+  }, [pathname, wallet, status]);
 
   useEffect(() => {
     handleFetchUserData();
@@ -30,7 +26,11 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   }, [pathname]);
 
   useEffect(() => {
-  }, [isConnected])
+    if (status === 'disconnected' && pathname === '/profile') {
+      dispatch.userModel.clearUserState();
+      navigate('/');
+    }
+  }, [status]);
 
   return <>{children}</>;
 };

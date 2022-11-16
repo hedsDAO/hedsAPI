@@ -10,8 +10,8 @@ const Submissions = () => {
   const dispatch = useDispatch<Dispatch>();
   const { pathname } = useLocation();
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userData = useSelector(store.select.userModel.selectConnectedUser);
-  const userSubmissions = useSelector(store.select.userModel.selectConnectedUserSubmissions);
+  const userData = useSelector(store.select.userModel.selectCurrentUser);
+  const userSubmissions = useSelector(store.select.userModel.selectCurrentUserSubmissions);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
     dispatch.audioModel.setActiveTrack(submission);

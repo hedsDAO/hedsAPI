@@ -10,7 +10,7 @@ const formatUserCollection = (data: Result, hedsTapes: HedsTapes) => {
   const userCollectionTank: UserCollection = {};
   Object.keys(collectionData).map((key: string, index: number) => {
     if (data?.[index] !== null) {
-      if (data?.[index].toNumber() !== 0) {
+      if (data?.[index]?.toNumber() !== 0) {
         userCollectionTank[key] = {
           ...collectionData[key],
           quantity: data[index].toNumber(),

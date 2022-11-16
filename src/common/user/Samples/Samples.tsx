@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Samples = () => {
   const dispatch = useDispatch<Dispatch>();
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const samples = useSelector(store.select.userModel.selectConnectedUserSamples);
+  const samples = useSelector(store.select.userModel.selectCurrentUserSamples);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setActiveTrack(submission);
   };

@@ -5,8 +5,8 @@ import { RootState, store } from '@/store';
 
 const ProfilePicture = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const profilePicture = useSelector(store.select.userModel.selectConnectedUserProfilePicture);
-  const displayName = useSelector(store.select.userModel.selectConnectedUserDisplayName);
+  const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
+  const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   return (
     <>
       <Skeleton

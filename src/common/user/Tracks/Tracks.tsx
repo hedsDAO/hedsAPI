@@ -6,7 +6,7 @@ import { isEmpty } from '@/utils';
 
 const Tracks = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userTracks = useSelector(store.select.userModel.selectConnectedUserTracks);
+  const userTracks = useSelector(store.select.userModel.selectCurrentUserTracks);
 
   return (
     <Fragment>

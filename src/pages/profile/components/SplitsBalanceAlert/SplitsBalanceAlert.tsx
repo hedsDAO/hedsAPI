@@ -4,11 +4,11 @@ import { BellIcon } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 import { getSplitsBalance } from '@/utils/graphql/getSplitsBalance';
 import { ethers } from 'ethers';
-import { selectUserWallet } from '@/pages/user/store/selectors';
+import { store } from '@/store';
 
 const SplitsBalanceAlert = () => {
   const [balance, setBalance] = useState<string>('');
-  const wallet = useSelector(selectUserWallet);
+  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   useEffect(() => {
     if (wallet) getUserBalance(wallet);
   }, [wallet]);
