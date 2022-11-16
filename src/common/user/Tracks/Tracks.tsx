@@ -1,13 +1,12 @@
 import { Fragment } from 'react';
 import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { selectUserTracks } from '@/pages/user/store/selectors';
+import { RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 
 const Tracks = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userTracks = useSelector(selectUserTracks);
+  const userTracks = useSelector(store.select.userModel.selectConnectedUserTracks);
 
   return (
     <Fragment>

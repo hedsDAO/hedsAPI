@@ -16,7 +16,7 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
   const isQueueEmpty = useSelector(store.select.audioModel.selectIsQueueEmpty);
   const isShowingPlayer = useSelector(store.select.audioModel.selectIsShowingPlayer);
   const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
-  const walletId = useSelector(selectUserWallet);
+  const walletId = useSelector(store.select.userModel.selectConnectedUserWallet);
 
 
   useEffect(() => {

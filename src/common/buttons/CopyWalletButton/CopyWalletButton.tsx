@@ -3,14 +3,13 @@ import { Transition } from '@headlessui/react';
 import { formatWallet, handleCopy } from '@/utils';
 import { Button, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { selectUserWallet } from '@/pages/user/store/selectors';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import SecondaryButton from '../SecondaryButton/SecondaryButton';
 
 const CopyWalletButton = () => {
   const [isCopied, setIsCopied] = useState(false);
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const wallet = useSelector(selectUserWallet);
+  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   return (
     <Flex alignItems={'center'} data-testid="user-copy-container">
       {!loading && (

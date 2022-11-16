@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { formatTwitterUrl } from '@/utils';
 import { Link, Skeleton, Flex, Button } from '@chakra-ui/react';
-import { selectUserTwitterHandle } from '@/pages/user/store/selectors';
 import { Fragment } from 'react';
 
 const TwitterLinkButton = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const twitterHandle = useSelector(selectUserTwitterHandle);
+  const twitterHandle = useSelector(store.select.userModel.selectConnectedUserTwitterHandle);
   return (
     <Fragment>
       {twitterHandle?.length ? (

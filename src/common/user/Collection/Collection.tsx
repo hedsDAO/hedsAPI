@@ -1,14 +1,13 @@
 import { Divider, Flex, Grid, GridItem, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { RefreshCollectionButton } from '@/common/user';
-import { User } from '@/models/common';
 import { isEmpty } from '@/utils';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { selectUserCollection } from '@/pages/user/store/selectors';
+import { RootState, store } from '@/store';
 
 const Collection = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const collection = useSelector(selectUserCollection);
+  const collection = useSelector(store.select.userModel.selectConnectedUserCollection);
+  
   return (
     <Stack data-testid="user-collection-container">
       <Flex justifyContent={'space-between'} alignItems="center">

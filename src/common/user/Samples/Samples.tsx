@@ -1,6 +1,5 @@
-import { TrackMetadata, User, UserRoles } from '@/models/common';
-import { selectUserSamples } from '@/pages/user/store/selectors';
-import { Dispatch, RootState } from '@/store';
+import { TrackMetadata } from '@/models/common';
+import { Dispatch, RootState, store } from '@/store';
 import { formatTime, isEmpty } from '@/utils';
 import { Heading, Stack, Skeleton, Divider, Image, IconButton } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Samples = () => {
   const dispatch = useDispatch<Dispatch>();
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const samples = useSelector(selectUserSamples);
+  const samples = useSelector(store.select.userModel.selectConnectedUserSamples);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setActiveTrack(submission);
   };
