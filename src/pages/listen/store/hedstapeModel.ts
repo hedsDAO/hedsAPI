@@ -43,6 +43,20 @@ export interface HedstapeState {
 
 export const hedstapeModel = createModel<RootModel>()({
   state: {} as HedstapeState,
+  selectors: (slice, createSelector, hasProps) => ({
+    selectTapeTimeline() {
+      return slice((hedstapeModel) => hedstapeModel.timeline);
+    },
+    selectMint() {
+      return createSelector(this.selectTapeTimeline, (timeline: { [key: string]: TimelineItem }) => timeline.mint);
+    },
+    selectSubmit() {
+      return createSelector(this.selectTapeTimeline, (timeline: { [key: string]: TimelineItem }) => timeline.submit);
+    },
+    selectVote() {
+      return createSelector(this.selectTapeTimeline, (timeline: { [key: string]: TimelineItem }) => timeline.vote);
+    },
+  }),
   reducers: {
     setTapeTimeline: (state, timeline) => ({ ...state, timeline }),
     setActiveStep: (state, activeStep) => ({ ...state, activeStep }),

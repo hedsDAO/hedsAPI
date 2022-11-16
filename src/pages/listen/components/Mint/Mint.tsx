@@ -1,5 +1,5 @@
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, store } from '@/store';
 import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 import { DateTime } from 'luxon';
@@ -11,7 +11,7 @@ import { Modals } from '@/modules/modals/store/modalModel';
 const Mint = () => {
   const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
-  const { mint } = useSelector((state: RootState) => state.hedstapeModel?.timeline);
+  const mint  = useSelector(store.select.hedstapeModel.selectMint);
   const start = DateTime.fromMillis(mint.start, zone);
   const end = DateTime.fromMillis(mint.end, zone);
   return (
