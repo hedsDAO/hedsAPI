@@ -10,8 +10,8 @@ import { MINTED_LABEL, PRICE_LABEL, PRICE_VALUE, TOKEN_LABEL, TOKEN_VALUE } from
 const MintDetails = () => {
   const contract = useSelector(selectCurrentTapeContract);
   const { data, isLoading, refetch, isRefetching } = useContractRead({
-    addressOrName: contract,
-    contractInterface: erc721ABI,
+    address: contract,
+    abi: erc721ABI,
     functionName: 'totalSupply',
   });
   return (

@@ -1,12 +1,12 @@
-import { Stack, Flex, Divider } from '@chakra-ui/react';
-import { ProfileWrapper } from '@/common/wrappers';
+import { Stack, Flex } from '@chakra-ui/react';
 import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
 import { SettingsButton, VerifyTwitterButton, SplitsBalanceAlert } from '@/pages/profile/components';
 import { Badges, Collection, Description, DisplayName, ProfilePicture, Samples, Submissions, Tracks, Banner } from '@/common/user';
+import { Fragment } from 'react';
 
 export const Profile = () => {
   return (
-    <ProfileWrapper>
+    <Fragment>
       <Banner />
       <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={[2, 4, 8, 10]} px={[12, 8, 4, 2]} py={2}>
         <Stack direction={'column'}>
@@ -25,12 +25,12 @@ export const Profile = () => {
         </Stack>
         <Stack mt={{ base: '0', md: '40' }} direction={'column'} spacing="10" width={'full'}>
           <SplitsBalanceAlert />
-          <Submissions />
           <Tracks />
           <Collection />
           <Samples />
+          <Submissions />
         </Stack>
       </Flex>
-    </ProfileWrapper>
+    </Fragment>
   );
 };
