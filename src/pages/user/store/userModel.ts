@@ -128,13 +128,6 @@ export const userModel = createModel<RootModel>()({
         this.setConnectedUserData(newUserData);
       });
     },
-    async getUserData(wallet: string) {
-      const docRef = doc(db, 'users', wallet.toLowerCase());
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        this.setUserData(docSnap.data());
-      }
-    },
     async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
       const collection = formatUserCollection(data, hedsTapes);
       const docSnap = await getDoc(doc(db, 'users', wallet));
