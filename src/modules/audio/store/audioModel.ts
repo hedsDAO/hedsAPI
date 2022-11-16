@@ -1,11 +1,12 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '../../../models';
-import { TrackMetadata, TrackStats } from '../../../models/common';
+import { UserListeningHistory, TrackMetadata, TrackStats } from '../../../models/common';
 import { collection, doc, DocumentData, getDoc, getDocs, getFirestore, updateDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { DateTime } from 'luxon';
 
 export interface AudioState {
   queue?: TrackMetadata[];
-  history?: TrackMetadata[];
+  history?: UserListeningHistory[];
   activeTrack?: TrackMetadata;
   currentTapeId?: any;
   currentTape?: string;
@@ -19,6 +20,11 @@ export interface AudioState {
   timerSeconds: number;
   duration?: number;
   isShowingPlayer: boolean;
+};
+
+const updateUserListeningHistory = (listeningHistory: UserListeningHistory[], lastListened: string, track: TrackMetadata): UserListeningHistory[] =>  {
+  listeningHistory.unshift({ lastListened, track});
+  return [...listeningHistory];
 };
 
 export const audioModel = createModel<RootModel>()({
@@ -46,8 +52,14 @@ export const audioModel = createModel<RootModel>()({
     selectActiveTrack() {
       return slice((audioModel) => audioModel.activeTrack);
     },
+    selectActiveTrackAudio() {
+      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack.audio);
+    },
     selectActiveTrackStats() {
-      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack?.stats);
+      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack.stats);
+    },
+    selectListeningHistory () {
+      return slice((audioModel) => audioModel.history)
     },
     selectIsShowingQueue() {
       return slice((audioModel) => audioModel.isShowingQueue);
@@ -99,6 +111,16 @@ export const audioModel = createModel<RootModel>()({
       return { ...state, queue: newQueue };
     },
     clearQueue: (state, track: TrackMetadata) => ({ ...state, queue: [] }),
+    setListeningHistory: (state, trackListenedTo: UserListeningHistory) => {
+    const newHistory =  state.history ? [...state.history] : [];
+    if (history.length === 5) {
+      newHistory.shift();
+      newHistory.push(trackListenedTo);
+    } else {
+      newHistory.push(trackListenedTo);
+    }
+    return {...state, history: newHistory}
+    },
     setActiveTrack: (state, activeTrack) => ({ ...state, activeTrack}),
     setIsShowingPlayer: (state, isShowingPlayer) => ({ ...state, isShowingPlayer }),
     setIsShowingQueue: (state, isShowingQueue: boolean) => ({ ...state, isShowingQueue }),
@@ -110,7 +132,7 @@ export const audioModel = createModel<RootModel>()({
     setDuration: (state, duration: number) => ({ ...state, duration }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     clearAudioState: (state) => {
-      const newState: AudioState = { isPlaying: false, isLoading: false, isShowingQueue: false, isShowingPlayer: false, volume: 100, timerSeconds: 0, countPlayThreshold: 0, queue: [] };
+      const newState: AudioState = { isPlaying: false, isLoading: false, isShowingQueue: false, isShowingPlayer: false, volume: 100, timerSeconds: 0, countPlayThreshold: 0, history: [], queue: [] };
       return newState;
     },
   },
@@ -152,19 +174,20 @@ export const audioModel = createModel<RootModel>()({
     },
     async updaterUserListeningHistory({track, walletId}: {track: TrackMetadata, walletId: string}) {
       const db = getFirestore();
-      const userRef = doc(db, "users", walletId);
+      console.log(walletId)
+      const userRef = doc(db, "users", "0x6402fe3af805fcee00e9b4b635e689dc0d1fffbf");
       const userSnap = await (await getDoc(userRef)).data();
       console.log(userSnap)
 
       if (userSnap) {
-				const updatedUserData = { 
-          ...userSnap,
-          history: [track],
-        };
-        console.log(updatedUserData)
+        const lastListened = DateTime.now().toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS);
+        const newHistory: UserListeningHistory[] = userSnap.history ? updateUserListeningHistory(userSnap.history, lastListened, track) : [{ lastListened, track}];
+				const updatedUserData = { history: newHistory };
+
         try {
+          console.log(updatedUserData)
           // await updateDoc(userRef, updatedUserData);
-          // await dispatch.userModel.getUserData(walletId);
+          dispatch.audioModel.setListeningHistory({ lastListened, track});
         } catch (e) {
           return {
             erorr: e,
