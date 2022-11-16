@@ -1,5 +1,4 @@
 import { Flex, Stack } from '@chakra-ui/react';
-import { UserWrapper } from '@/common/wrappers';
 import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
 import { Tracks, Submissions, ProfilePicture, DisplayName, Description, Collection, Badges, Samples, Banner } from '@/common/user';
 

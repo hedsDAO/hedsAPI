@@ -2,9 +2,9 @@ import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { TrackMetadata, User, UserRoles } from '@/models/common';
-import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 import { emptyUserState } from '@/models/utils';
+import { Modals } from '@/modules/modals/store/modalModel';
 
 export const profileModel = createModel<RootModel>()({
   state: {} as User,
@@ -18,10 +18,12 @@ export const profileModel = createModel<RootModel>()({
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) this.setProfileData(docSnap.data());
       else {
-        const newProfileData = populateNewUser(wallet);
-        await setDoc(docRef, newProfileData).then(() => {
-          this.setProfileData(newProfileData);
-        });
+        dispatch.modalModel.setModal(Modals.NAME_MODAL);
+        dispatch.modalModel.setModalOpen(true);
+        // const newProfileData = populateNewUser(wallet);
+        // await setDoc(docRef, newProfileData).then(() => {
+        //   this.setProfileData(newProfileData);
+        // });
       }
     },
     async updateUserData([wallet, newUserData]: [string, User]) {
@@ -32,7 +34,7 @@ export const profileModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
       this.setProfileData(newUserData);
-      dispatch.userModel.setUserData(newUserData);
+      // dispatch.userModel.setUserData(newUserData);
     },
     async updateSubmissionVisibility([submission, userData]: [TrackMetadata, User]) {
       const newUserData = { ...userData };
@@ -47,7 +49,7 @@ export const profileModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
       this.setProfileData(newUserData);
-      dispatch.userModel.setUserData(newUserData);
+      // dispatch.userModel.setUserData(newUserData);
     },
     async newUserSubmission([submission, [space, tape, id]]: [TrackMetadata, [string, string, string]]) {
       const { wallet } = submission;
@@ -72,7 +74,7 @@ export const profileModel = createModel<RootModel>()({
         if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), newUserData);
         if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), newUserData);
         this.setProfileData(newUserData);
-        dispatch.userModel.setUserData(newUserData);
+        // dispatch.userModel.setUserData(newUserData);
       }
     },
   }),
