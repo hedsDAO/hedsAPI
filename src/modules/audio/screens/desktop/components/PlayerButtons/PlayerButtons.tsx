@@ -14,7 +14,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   const countPlayThreshold = useSelector(store.select.audioModel.selectCountPlayThreshold);
   const activeTrack = useSelector(store.select.audioModel.selectActiveTrack);
   const activeTrackStats = useSelector(store.select.audioModel.selectActiveTrackStats);
-  const userWallet = useSelector(selectUserWallet);
+  const userWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
 
   useEffect(() => {
     let interval: NodeJS.Timer;

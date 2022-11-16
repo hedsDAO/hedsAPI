@@ -1,9 +1,8 @@
 import { TrackMetadata } from '@/models/common';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { formatTime, isEmpty } from '@/utils';
 import { Stack, Skeleton, Heading, Divider, Image, IconButton } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserSubmissions } from '@/pages/user/store/selectors';
 import { useLocation } from 'react-router-dom';
 import { Fragment } from 'react';
 
@@ -11,8 +10,8 @@ const Submissions = () => {
   const dispatch = useDispatch<Dispatch>();
   const { pathname } = useLocation();
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userData = useSelector((state: RootState) => state.userModel).connectedUser;
-  const userSubmissions = useSelector(selectUserSubmissions);
+  const userData = useSelector(store.select.userModel.selectConnectedUser);
+  const userSubmissions = useSelector(store.select.userModel.selectConnectedUserSubmissions);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
     dispatch.audioModel.setActiveTrack(submission);

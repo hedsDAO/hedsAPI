@@ -1,12 +1,11 @@
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { Skeleton, Text } from '@chakra-ui/react';
-import { selectUserDescription } from '@/pages/user/store/selectors';
 
 const UserDescription = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const description = useSelector(selectUserDescription);
+  const description = useSelector(store.select.userModel.selectConnectedUserDescription);
 
   return (
     <Fragment>

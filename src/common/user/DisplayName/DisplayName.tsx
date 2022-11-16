@@ -1,14 +1,13 @@
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { formatWallet } from '@/utils';
 import { Heading, Skeleton } from '@chakra-ui/react';
-import { selectUserDisplayName, selectUserWallet } from '@/pages/user/store/selectors';
 
 const DisplayName = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const displayName = useSelector(selectUserDisplayName);
-  const wallet = useSelector(selectUserWallet);
+  const displayName = useSelector(store.select.userModel.selectConnectedUserDisplayName);
+  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   return (
     <Fragment>
       {wallet && (

@@ -15,6 +15,49 @@ export interface userModelState {
 
 export const userModel = createModel<RootModel>()({
   state: {} as userModelState,
+  selectors: (slice, createSelector, hasProps) => ({
+    /** Connected User Selectors */
+    selectConnectedUser() {
+      return slice((userModel) => userModel.connectedUser);
+    },
+    selectConnectedUserSubmissions() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.submissions?.heds?.hedstape || {});
+    },
+    selectConnectedUserBadges() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.badges || []);
+    },
+    selectConnectedUserTracks() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.tracks?.heds?.hedstape || {});
+    },
+    selectConnectedUserSamples() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.samples?.heds?.hedstape || {});
+    },
+    selectConnectedUserDisplayName() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.displayName || '');
+    },
+    selectConnectedUserBanner() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.banner || '');
+    },
+    selectConnectedUserWallet() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.wallet || '');
+    },
+    selectConnectedUserDescription() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.description || '');
+    },
+    selectConnectedUserTwitterHandle() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.twitterHandle || '');
+    },
+    selectConnectedUserProfilePicture() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.profilePicture || '');
+    },
+    selectConnectedUserCollection() {
+      return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser.collection || {});
+    },
+    selectConnectedUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
+      return slice( (userModel) => userModel.connectedUser.submissions?.[space]?.[tape]?.[id]);
+    }),
+
+  }),
   reducers: {
     setUserData: (state, payload) => ({ ...state, ...payload }),
     setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),

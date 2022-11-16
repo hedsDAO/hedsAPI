@@ -1,11 +1,10 @@
-import { selectUserBanner } from '@/pages/user/store/selectors';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { Image, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import DEFAULT_BANNER_PICTURE from '/public/banner.jpg';
 
 const Banner = () => {
-  const banner = useSelector(selectUserBanner);
+  const banner = useSelector(store.select.userModel.selectConnectedUserBanner);
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
     <Skeleton minHeight={'48'} maxHeight={'48'} minW="fit-content" speed={2} isLoaded={!loading}>
