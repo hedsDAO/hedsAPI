@@ -15,10 +15,10 @@ const Badges = () => {
   return (
     <Skeleton px={1} rounded="md" mt={3} height="10px" fadeDuration={2} isLoaded={!loading}>
       <Stack data-testid="user-badge-container" direction="row">
-        {!loading && userBadges &&
+        {!loading && userBadges?.length &&
           Object.entries(userBadges).map(([id, badge]) => (
-            <Badge data-testid="user-badge" variant="outline" colorScheme={colorMapping(badge.name)} key={id}>
-              {badge.name}
+            <Badge data-testid="user-badge" variant="outline" colorScheme={colorMapping(badge?.name)} key={id}>
+              {badge?.name}
             </Badge>
           ))}
       </Stack>

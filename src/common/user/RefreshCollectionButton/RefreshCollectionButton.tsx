@@ -3,7 +3,7 @@ import { Dispatch, RootState } from '@/store';
 import { formatReadContractArgs, isEmpty } from '@/utils';
 import { Button } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useContractReads } from 'wagmi';
 
@@ -14,35 +14,34 @@ const RefreshCollectionButton = () => {
   const hedsTapes = useSelector((state: RootState) => state.tapesModel.hedsTapes);
   const collection = useSelector(selectUserCollection);
   const wallet = useSelector(selectUserWallet);
-
-  const { isLoading } = useContractReads({
-    contracts: (!loading && formatReadContractArgs(wallet, hedsTapes)) || [],
+  const { data, refetch } = useContractReads({
+    contracts: formatReadContractArgs(wallet, hedsTapes),
     allowFailure: true,
-    enabled: isFetching,
+    enabled: false,
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
     onSuccess(data) {
-      if (data?.length) dispatch.userModel.updateUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
+      handleUpdateCollection();
     },
     onSettled() {
       setIsFetching(false);
     },
+    onError(err) {
+      console.log(err);
+    },
   });
 
-  useEffect(() => {
-    if (!isEmpty(collection)) setIsFetching(false);
-    return () => setIsFetching(false);
-  }, [collection]);
-
-  useEffect(() => {
-    return () => setIsFetching(false);
-  }, []);
+  const handleUpdateCollection = useCallback(() => {
+    if (data?.length) dispatch.userModel.updateUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
+  }, [data]);
 
   return (
     <Button
       bg={'transparent'}
       className="bg-transparent hover:rotate-180 ease-in-out duration-500 delay-75"
       size="sm"
+      disabled={!isEmpty(hedsTapes) && !wallet?.length}
       color="blackAlpha.900"
-      onClick={() => setIsFetching(true)}
+      onClick={() => refetch()}
     >
       <IconRefresh className="hover:rotate-180 ease-in-out" height={14} width={14} />
     </Button>
