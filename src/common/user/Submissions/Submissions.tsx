@@ -11,7 +11,7 @@ const Submissions = () => {
   const dispatch = useDispatch<Dispatch>();
   const { pathname } = useLocation();
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userData = useSelector((state: RootState) => state.userModel);
+  const userData = useSelector((state: RootState) => state.userModel).connectedUser;
   const userSubmissions = useSelector(selectUserSubmissions);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);

@@ -10,6 +10,7 @@ import { settingsModel } from '@/modules/modals/screens/settings/models/settings
 import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
 import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
 import { submitModel } from '@/modules/modals/screens/submit/models/submitModel';
+import { exploreModel } from '@/pages/explore/store/exploreModel';
 
 export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;
@@ -23,6 +24,7 @@ export interface RootModel extends Models<RootModel> {
   hedstapeModel: typeof hedstapeModel;
   sampleModel: typeof sampleModel;
   submitModel: typeof submitModel;
+  exploreModel: typeof exploreModel;
 }
 
 export const models: RootModel = {
@@ -37,4 +39,5 @@ export const models: RootModel = {
   hedstapeModel,
   sampleModel,
   submitModel,
+  exploreModel,
 };
