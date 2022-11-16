@@ -3,16 +3,23 @@ import TextBlock from '@pages/landing/components/TextBlock';
 
 export const Landing = () => {
   return (
-    <Parallax pages={3} style={{ top: '0', left: '0', height: '100vh' }}>
+    <Parallax pages={4} style={{ top: '0', left: '0', height: '100vh' }}>
       <ParallaxLayer
-        offset={1.8}
+        offset={2}
         style={{
           backgroundColor: '#e3e2d4',
         }}
       ></ParallaxLayer>
       <ParallaxLayer
-        offset={2}
+        offset={2.2}
         speed={1}
+        style={{
+          backgroundColor: '#493e68',
+        }}
+      ></ParallaxLayer>
+      <ParallaxLayer
+        offset={3}
+        speed={-0.2}
         style={{
           backgroundColor: '#493e68',
         }}
@@ -51,7 +58,7 @@ export const Landing = () => {
       </ParallaxLayer>
 
       <ParallaxLayer
-        offset={1.5}
+        offset={1.4}
         speed={0.2}
         style={{
           display: 'block',
@@ -71,6 +78,10 @@ export const Landing = () => {
 
       <ParallaxLayer offset={1.1} speed={0.2} style={{ width: '70%', marginLeft: '55%' }}>
         <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
+      </ParallaxLayer>
+
+      <ParallaxLayer offset={2.2} speed={-0.1}>
+        <img src="/hedspin.gif" />
       </ParallaxLayer>
     </Parallax>
   );
