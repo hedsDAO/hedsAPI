@@ -6,7 +6,7 @@ import { RootState } from '@/store';
 
 const ProfilePicture = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
-  const userData = useSelector((state: RootState) => state.userModel);
+  const { connectedUser: userData } = useSelector((state: RootState) => state.userModel);
   return (
     <>
       <Skeleton

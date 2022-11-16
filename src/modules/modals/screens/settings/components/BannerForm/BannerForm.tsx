@@ -9,7 +9,7 @@ import { PrimaryButton, WarningButton } from '@/common/buttons';
 const BannerForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
-  const userData = useSelector((state: RootState) => state.userModel);
+  const { connectedUser: userData } = useSelector((state: RootState) => state.userModel);
   const { bannerPreview, bannerFile, profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
   const handleClick = () => inputRef.current.click();
   return (
@@ -20,7 +20,13 @@ const BannerForm = () => {
           {BANNER_DESCRIPTION}
         </Text>
       </FormLabel>
-      <Flex data-testid="banner-form" justifyContent={{ base: 'center', md: 'start' }} direction={{ base: 'column', sm: 'column' }} gap={2} alignItems={'start'}>
+      <Flex
+        data-testid="banner-form"
+        justifyContent={{ base: 'center', md: 'start' }}
+        direction={{ base: 'column', sm: 'column' }}
+        gap={2}
+        alignItems={'start'}
+      >
         <Image h="16" width={'lg'} borderRadius={'md'} objectFit={'fill'} src={bannerPreview || profileChanges?.banner || userData?.banner} />
         <Flex pt={1.5} width={{ base: 'full', sm: 'auto' }} gap={2}>
           <input ref={inputRef} onChange={(e) => dispatch.settingsModel.handleBannerUpload(e)} type="file" className="hidden" />

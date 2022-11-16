@@ -11,11 +11,11 @@ import { BACK_BUTTON_TEXT, SAVE_BUTTON_TEXT, SETTINGS_MODAL_TITLE } from '../mod
 const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
-  const userData = useSelector((state: RootState) => state.userModel);
+  const { connectedUser } = useSelector((state: RootState) => state.userModel);
   const { profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
   const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
-    if (userData) dispatch.settingsModel.setProfileModelData(userData);
+    if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
     return () => {
       dispatch.settingsModel.clearProfileModalState();
     };
@@ -32,8 +32,8 @@ const SettingsModal = () => {
           <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
           <PrimaryButton
             isLoading={isLoading}
-            onClick={() => dispatch.settingsModel.handleSubmit([userData, profileModalData])}
-            disabled={JSON.stringify(userData) === JSON.stringify(profileChanges)}
+            onClick={() => dispatch.settingsModel.handleSubmit([connectedUser, profileModalData])}
+            disabled={JSON.stringify(connectedUser) === JSON.stringify(profileChanges)}
           >
             {SAVE_BUTTON_TEXT}
           </PrimaryButton>
