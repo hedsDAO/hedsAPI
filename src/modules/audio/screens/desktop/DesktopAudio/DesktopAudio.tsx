@@ -6,14 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem, IconButton } from '@chakra-ui/react';
 import { VolumeSlider, TrackDetails, PlayerButtons, DesktopQueue } from '@/modules/audio/screens/desktop/components';
 import { Transition } from '@headlessui/react';
+import { selectUserWallet } from '@/pages/user/store/selectors';
 
 const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
   const waveformRef = useRef<HTMLDivElement | null>(null);
-  const { audio} = useSelector(store.select.audioModel.selectActiveTrack);
+  const audio = useSelector(store.select.audioModel.selectActiveTrackAudio);
+  const track = useSelector(store.select.audioModel.selectActiveTrack);
   const isQueueEmpty = useSelector(store.select.audioModel.selectIsQueueEmpty);
   const isShowingPlayer = useSelector(store.select.audioModel.selectIsShowingPlayer);
   const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
+  const walletId = useSelector(selectUserWallet);
 
 
   useEffect(() => {
@@ -25,11 +28,12 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
       if (options) wavesurfer.current = WaveSurfer.create(options);
       wavesurfer?.current?.load(audio);
       wavesurfer?.current?.on('ready', () => {
-        dispatch.audioModel.setIsLoading(false);
         const duration = Math.ceil(wavesurfer.current.getDuration());
+        dispatch.audioModel.setIsLoading(false);
         dispatch.audioModel.setDuration(duration);
         dispatch.audioModel.setCountPlayThreshold(duration);
         dispatch.audioModel.setTimerSeconds(0);
+        dispatch.audioModel.updaterUserListeningHistory({track, walletId})
       });
       wavesurfer?.current?.on('finish', () => {
         dispatch.audioModel.setIsPlaying(false);

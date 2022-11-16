@@ -1,3 +1,5 @@
+import { FieldValue } from "firebase/firestore";
+
 /**
  * @name Global
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
@@ -40,7 +42,7 @@ export interface User {
   tracks?: TrackMetadataMapping;
   submissions?: TrackMetadataMapping;
   collection?: UserCollection;
-  history?: Array<TrackMetadata>;
+  history?: UserListeningHistory[];
 }
 
 export interface TrackMetadataMapping {
@@ -76,6 +78,11 @@ export interface TrackMetadata {
 export interface TrackStats {
   favorites: number;
   plays: number; 
+}
+
+export interface UserListeningHistory {
+  lastListened: string;
+  track: TrackMetadata;
 }
 
 export interface UserCollection {
