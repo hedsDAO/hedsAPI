@@ -7,7 +7,7 @@ import { infuraProvider } from 'wagmi/providers/infura';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { ChakraProvider } from '@chakra-ui/react';
-import { TapeWrapper } from '@/common/wrappers';
+import { TapeWrapper, UserWrapper } from '@/common/wrappers';
 import { ModalWrapper } from '@/modules/modals/components';
 import { AudioWrapper } from '@/modules/audio/components';
 import { store } from './store';
@@ -39,15 +39,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
     <RematchProvider store={store}>
       <ChakraProvider>
-        <TapeWrapper>
-          <AudioWrapper>
-            <BrowserRouter>
-              <ModalWrapper>
-                <App />
-              </ModalWrapper>
-            </BrowserRouter>
-          </AudioWrapper>
-        </TapeWrapper>
+        <BrowserRouter>
+          <UserWrapper>
+            <TapeWrapper>
+              <AudioWrapper>
+                <ModalWrapper>
+                  <App />
+                </ModalWrapper>
+              </AudioWrapper>
+            </TapeWrapper>
+          </UserWrapper>
+        </BrowserRouter>
       </ChakraProvider>
     </RematchProvider>
   </WagmiConfig>,
