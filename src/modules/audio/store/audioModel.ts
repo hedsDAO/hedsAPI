@@ -22,7 +22,7 @@ export interface AudioState {
   isShowingPlayer: boolean;
 };
 
-const updateUserListeningHistory = (listeningHistory: UserListeningHistory[], lastListened: string, track: TrackMetadata): UserListeningHistory[] =>  {
+const updateUserListeningHistory = (listeningHistory: UserListeningHistory[], lastListened: number, track: TrackMetadata): UserListeningHistory[] =>  {
   listeningHistory.unshift({ lastListened, track});
   return [...listeningHistory];
 };
@@ -180,7 +180,7 @@ export const audioModel = createModel<RootModel>()({
       console.log(userSnap)
 
       if (userSnap) {
-        const lastListened = DateTime.now().toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS);
+        const lastListened = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();
         const newHistory: UserListeningHistory[] = userSnap.history ? updateUserListeningHistory(userSnap.history, lastListened, track) : [{ lastListened, track}];
 				const updatedUserData = { history: newHistory };
 

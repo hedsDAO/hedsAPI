@@ -81,7 +81,7 @@ export interface TrackStats {
 }
 
 export interface UserListeningHistory {
-  lastListened: string;
+  lastListened: number;
   track: TrackMetadata;
 }
 

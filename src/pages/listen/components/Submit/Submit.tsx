@@ -1,4 +1,4 @@
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
@@ -11,7 +11,7 @@ import { IconDownload } from '@tabler/icons';
 const Submit = () => {
   const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
-  const { submit } = useSelector((state: RootState) => state.hedstapeModel?.timeline);
+  const submit = useSelector(store.select.hedstapeModel.selectSubmit);
   const start = DateTime.fromMillis(submit.start, zone);
   const end = DateTime.fromMillis(submit.end, zone);
   return (

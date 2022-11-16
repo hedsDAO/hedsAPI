@@ -1,5 +1,5 @@
-import { Dispatch, RootState } from '@/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { store } from '@/store';
+import { useSelector } from 'react-redux';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
 import { Modals } from '@/modules/modals/store/modalModel';
@@ -11,8 +11,7 @@ import { EyeIcon } from '@heroicons/react/24/solid';
 
 const Vote = () => {
   const zone = { zone: 'GMT' };
-  const dispatch = useDispatch<Dispatch>();
-  const { vote } = useSelector((state: RootState) => state.hedstapeModel?.timeline);
+  const vote = useSelector(store.select.hedstapeModel.selectVote);
   const start = DateTime.fromMillis(vote.start, zone);
   const end = DateTime.fromMillis(vote.end, zone);
   return (
