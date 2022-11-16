@@ -34,7 +34,14 @@ const NameModal = () => {
       </VStack>
       <Divider my={5} />
       <Flex gap={2}>
-        <PrimaryButton onClick={() => dispatch.userModel.createNewUser([address.toLowerCase(), displayName])}>Confirm</PrimaryButton>
+        <PrimaryButton
+          onClick={() => {
+            dispatch.userModel.createNewUser([address.toLowerCase(), displayName]);
+            dispatch.modalModel.setModalOpen(false);
+          }}
+        >
+          Confirm
+        </PrimaryButton>
       </Flex>
     </ModalContainer>
   );
