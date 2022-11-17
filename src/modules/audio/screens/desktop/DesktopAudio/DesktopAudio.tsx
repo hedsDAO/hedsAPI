@@ -17,7 +17,6 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
   const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
   const walletId = useSelector(store.select.userModel.selectConnectedUserWallet);
 
-
   useEffect(() => {
     if (audio || !isQueueEmpty) {
       dispatch.audioModel.setIsLoading(true);
@@ -32,7 +31,7 @@ const DesktopAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
         dispatch.audioModel.setDuration(duration);
         dispatch.audioModel.setCountPlayThreshold(duration);
         dispatch.audioModel.setTimerSeconds(0);
-        dispatch.audioModel.updaterUserListeningHistory({track, walletId})
+        dispatch.audioModel.updaterUserListeningHistory({ track, walletId });
       });
       wavesurfer?.current?.on('finish', () => {
         dispatch.audioModel.setIsPlaying(false);

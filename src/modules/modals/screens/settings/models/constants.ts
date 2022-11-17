@@ -36,7 +36,7 @@ export const BANNER_DESCRIPTION = 'Update your profile banner image.';
 
 export const DESCRIPTION_FORM_TITLE = 'Description';
 export const DESCRIPTION_FORM_DESCRIPTION = 'Edit your profile description.';
-export const CHARS_REMAINING = 'remaining.'
+export const CHARS_REMAINING = 'remaining.';
 
 /**
  * @common

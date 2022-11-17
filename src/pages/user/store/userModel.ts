@@ -56,6 +56,7 @@ export const userModel = createModel<RootModel>()({
     selectConnectedUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
       return slice((userModel) => userModel.connectedUser.submissions?.[space]?.[tape]?.[id]);
     }),
+
     /** Current User Selectors */
     selectCurrentUser() {
       return slice((userModel) => userModel.currentUser);
@@ -96,6 +97,14 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
       return slice((userModel) => userModel.currentUser.submissions?.[space]?.[tape]?.[id]);
     }),
+
+    selectIsOwnPage() {
+      return createSelector(
+        this.selectConnectedUserWallet,
+        this.selectCurrentUserWallet,
+        (connectedWallet: string, currentWallet: string) => connectedWallet === currentWallet,
+      );
+    },
   }),
   reducers: {
     setUserData: (state, payload) => ({ ...state, ...payload }),

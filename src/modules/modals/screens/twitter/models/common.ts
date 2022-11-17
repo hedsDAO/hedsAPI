@@ -4,7 +4,7 @@
  */
 
 /**
- * @const {enum} TwitterStep : Steps for twitter verification modal 
+ * @const {enum} TwitterStep : Steps for twitter verification modal
  * @const {class} TwitterModalState : twitter model state.
  */
 

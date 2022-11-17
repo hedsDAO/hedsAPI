@@ -61,20 +61,19 @@ export const tapesModel = createModel<RootModel>()({
 
     // HedsTape Data
     selectHedsTapeById: hasProps(function (models, id) {
-      return slice((tapesModel) => tapesModel.hedsTapes?.[id])
+      return slice((tapesModel) => tapesModel.hedsTapes?.[id]);
     }),
     selectHedstapeByNameById: hasProps(function (models, id) {
-      return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.name)
+      return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.name);
     }),
     selectHedstapeByCoverById: hasProps(function (models, id) {
-      return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.image)
+      return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.image);
     }),
 
     // GLobal: get all hHdsTapes
     selectAllHedsTapes() {
       return slice((tapesModel) => tapesModel.hedsTapes);
     },
-
   }),
   reducers: {
     setAllTapes: (state, allTapes) => ({ ...state, allTapes }),

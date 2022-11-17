@@ -38,7 +38,9 @@ const PasteTweetForm = () => {
           <IconAlertCircle className="text-red-500" height={16} width={16} />
           <Text color="red.300">{error}</Text>
         </Flex>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
     </FormControl>
   );
 };

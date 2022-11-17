@@ -3,7 +3,7 @@
  * @const MINT_MODAL_TITLE : static title for mint modal.
  */
 
-export const MINT_MODAL_TITLE = "Mint the Collection"
+export const MINT_MODAL_TITLE = 'Mint the Collection';
 
 /**
  * @component <MintDetails/>
@@ -14,9 +14,8 @@ export const MINT_MODAL_TITLE = "Mint the Collection"
  * @const MINTED_LABEL : Label for number of minted tokens.
  */
 
-
-export const PRICE_LABEL = "Price";
-export const PRICE_VALUE = "0.1 ETH"
-export const TOKEN_LABEL = "ERC";
-export const TOKEN_VALUE = "721"
-export const MINTED_LABEL = "Minted";
+export const PRICE_LABEL = 'Price';
+export const PRICE_VALUE = '0.1 ETH';
+export const TOKEN_LABEL = 'ERC';
+export const TOKEN_VALUE = '721';
+export const MINTED_LABEL = 'Minted';
