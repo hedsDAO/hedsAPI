@@ -26,10 +26,10 @@ export const selectHedstapeByNameById = (state: RootState, id: string) => state.
 export const selectHedstapeCoverById = (state: RootState, id: string) => state.tapesModel.hedsTapes?.[id]?.image;
 export const selectHedsTapeById = (state: RootState, id: string) => state.tapesModel?.hedsTapes?.[id];
 export const selectLastestTape = (state: RootState) => {
-    const hedsTapes = { ...state.tapesModel.hedsTapes };
-    const latest = Object.keys(hedsTapes)[Object.keys(hedsTapes).length - 1];
-    return hedsTapes[latest];
-  };
+  const hedsTapes = { ...state.tapesModel.hedsTapes };
+  const latest = Object.keys(hedsTapes)[Object.keys(hedsTapes).length - 1];
+  return hedsTapes[latest];
+};
 
 // Global
 export const selectAllHedsTapes = (state: RootState): { [key: string]: TapeData } => state.tapesModel.allTapes || {};

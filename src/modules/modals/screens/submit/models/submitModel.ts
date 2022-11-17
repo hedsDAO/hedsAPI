@@ -21,7 +21,7 @@ export const submitModel = createModel<RootModel>()({
     setFile: (state, file: File) => ({ ...state, file }),
     setIpfsHash: (state, ipfsHash) => ({ ...state, ipfsHash }),
     setHasPrevSubmitted: (state, hasPrevSubmitted) => ({ ...state, hasPrevSubmitted }),
-    setSubmission: (state, submission: TrackMetadata) => ({ ...state, submission })
+    setSubmission: (state, submission: TrackMetadata) => ({ ...state, submission }),
   },
   effects: (dispatch) => ({
     async validateSubmission(file: File) {

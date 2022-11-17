@@ -1,8 +1,6 @@
 import { HedsTapes, UserCollection } from '@/models/common';
 import { erc721ABI } from 'wagmi';
 
-
-
 const formatReadContractArgs = (wallet: string, hedsTapes: HedsTapes): any => {
   if (wallet && hedsTapes) {
     const collectionData =

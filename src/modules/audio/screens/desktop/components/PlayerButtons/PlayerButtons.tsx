@@ -20,8 +20,12 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
     if (isTrackPlaying) {
       interval = setInterval(() => {
         if (timerSeconds === countPlayThreshold) {
-          dispatch.audioModel.updateTrackMetadataStats({track: activeTrack, walletId: activeTrack.wallet, newStats: {...activeTrackStats, plays: activeTrackStats ? activeTrackStats.plays + 1 : 1}})
-          setTimeout(() => dispatch.audioModel.updaterUserListeningHistory({track: activeTrack, walletId: userWallet}),500)
+          dispatch.audioModel.updateTrackMetadataStats({
+            track: activeTrack,
+            walletId: activeTrack.wallet,
+            newStats: { ...activeTrackStats, plays: activeTrackStats ? activeTrackStats.plays + 1 : 1 },
+          });
+          setTimeout(() => dispatch.audioModel.updaterUserListeningHistory({ track: activeTrack, walletId: userWallet }), 500);
         }
         dispatch.audioModel.setTimerSeconds(timerSeconds + 1);
       }, 1000);
@@ -31,17 +35,23 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
     };
   }, [isTrackPlaying]);
 
-
   const resetTrack = () => {
     dispatch.audioModel.setIsPlaying(false);
     wavesurfer?.current?.stop();
     wavesurfer?.current?.play(0);
     wavesurfer?.current?.playPause();
-  }
-  
+  };
+
   return (
     <Flex height="100%" gap={2} justifyContent="center" alignItems={'center'}>
-      <IconButton _hover={{ bg: 'gray.200' }} onClick={() => { resetTrack()}} aria-label="previous track" icon={<i className="fa-solid fa-backward-step"></i>} />
+      <IconButton
+        _hover={{ bg: 'gray.200' }}
+        onClick={() => {
+          resetTrack();
+        }}
+        aria-label="previous track"
+        icon={<i className="fa-solid fa-backward-step"></i>}
+      />
       {isLoading ? (
         <IconButton _hover={{ bg: 'gray.200' }} aria-label="loading" isLoading={true} />
       ) : isTrackPlaying && wavesurfer?.current?.isPlaying() ? (
@@ -65,17 +75,17 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
           icon={<i className="fa-solid fa-play"></i>}
         />
       )}
-      <IconButton 
+      <IconButton
         _hover={{ bg: 'gray.200' }}
         onClick={() => {
-        dispatch.audioModel.setIsPlaying(false);
-        wavesurfer?.current?.playPause();
+          dispatch.audioModel.setIsPlaying(false);
+          wavesurfer?.current?.playPause();
 
-        !isQueueEmpty ?
-        dispatch.audioModel.skipToNextTrack() :
-        resetTrack();
+          !isQueueEmpty ? dispatch.audioModel.skipToNextTrack() : resetTrack();
         }}
-        aria-label="next track" icon={<i className="fa-solid fa-forward-step"></i>} />
+        aria-label="next track"
+        icon={<i className="fa-solid fa-forward-step"></i>}
+      />
     </Flex>
   );
 };

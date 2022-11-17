@@ -43,14 +43,14 @@ describe('VerifyAndSubmit Unit', () => {
   });
   it('disables button when uploading', async () => {
     await act(() => {
-        store.dispatch.submitModel.setIsUploading(true);
-    })
+      store.dispatch.submitModel.setIsUploading(true);
+    });
     const buttons = screen.getAllByRole('button');
     const continueButton = buttons[2];
     expect(continueButton).toBeDisabled();
     await act(() => {
-        store.dispatch.submitModel.setIsUploading(false);
-    })
+      store.dispatch.submitModel.setIsUploading(false);
+    });
     expect(continueButton).not.toBeDisabled();
   });
 });

@@ -23,15 +23,15 @@ describe('SubmitSuccess Unit', () => {
   it('renders title', () => {
     const successHeader = screen.getByRole('heading');
     expect(successHeader).toHaveTextContent(SUCCESS_TITLE);
-  })
+  });
   it('renders text and anon id', () => {
-    const anonIdName = screen.getByTestId("submit-anon-name")
+    const anonIdName = screen.getByTestId('submit-anon-name');
     const successText = screen.getAllByText(SUCCESS_MESSAGE_TEXT);
     const anonText = screen.getAllByText(ANON_ID_TEXT);
-    expect(successText).toBeTruthy()
-    expect(anonText).toBeTruthy()
+    expect(successText).toBeTruthy();
+    expect(anonText).toBeTruthy();
     expect(anonIdName).toHaveTextContent(mockSubmission.track);
-  })
+  });
   it('renders buttons', () => {
     const backButton = screen.getByRole('button');
     expect(backButton).toHaveTextContent(BACK_TO_TAPE_BUTTON_TEXT);

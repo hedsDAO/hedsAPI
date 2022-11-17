@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const VolumeSlider = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSurfer> }) => {
   const dispatch = useDispatch<Dispatch>();
-  const volume = useSelector(store.select.audioModel.selectAudioVolume)
+  const volume = useSelector(store.select.audioModel.selectAudioVolume);
   return (
     <Flex h="full" alignItems={'center'} gap={2} px={9}>
       {volume < 25 ? (
@@ -33,4 +33,4 @@ const VolumeSlider = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
   );
 };
 
-export default(VolumeSlider);
+export default VolumeSlider;

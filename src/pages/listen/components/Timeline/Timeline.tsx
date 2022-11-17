@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Mint, Submit, Vote } from '@/pages/listen/components';
 
 const Timeline = () => {
-  const {currentTape} = useSelector((state: RootState) => state.tapesModel)
+  const { currentTape } = useSelector((state: RootState) => state.tapesModel);
   return (
     <Fragment>
       {currentTape && (
