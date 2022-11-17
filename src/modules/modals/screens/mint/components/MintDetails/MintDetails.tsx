@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 import { LabelBadge } from '@/common/badges';
-import { selectCurrentTapeContract } from '@/pages/tapes/store/selectors';
 import { Button, Divider, Flex } from '@chakra-ui/react';
 import { IconRefresh } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 import { erc721ABI, useContractRead } from 'wagmi';
 import { MINTED_LABEL, PRICE_LABEL, PRICE_VALUE, TOKEN_LABEL, TOKEN_VALUE } from '../../models/constants';
+import { store } from '@/store';
 
 const MintDetails = () => {
-  const contract = useSelector(selectCurrentTapeContract);
+  const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
   const { data, isLoading, refetch, isRefetching } = useContractRead({
     address: contract,
     abi: erc721ABI,

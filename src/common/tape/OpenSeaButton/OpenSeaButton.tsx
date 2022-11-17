@@ -1,9 +1,9 @@
-import { selectCurrentTapeOpenSeaLink } from '@/pages/tapes/store/selectors';
+import { store } from '@/store';
 import { Button, Link } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const OpenSeaButton = () => {
-  const opensea = useSelector(selectCurrentTapeOpenSeaLink);
+  const opensea = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   return (
     <Button
       as={Link}

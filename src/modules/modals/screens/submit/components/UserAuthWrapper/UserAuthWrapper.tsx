@@ -1,9 +1,8 @@
 import { Fragment, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { Button, Divider, Flex, Text } from '@chakra-ui/react';
-import { selectSpaceTapeId } from '@/pages/tapes/store/selectors';
 import { SubmitSteps } from '@modals/screens/submit/models/common';
 import { ConnectButton } from '@/common/buttons';
 import { IconBrandTwitter } from '@tabler/icons';
@@ -13,7 +12,7 @@ import { CONNECT_WALLET_TEXT, VERIFY_TWITTER_TEXT, VERIFY_BUTTON_TEXT } from '..
 const UserAuthWrapper = ({ children }: { children: any }) => {
   const dispatch = useDispatch<Dispatch>();
   const profileData = useSelector((state: RootState) => state.profileModel);
-  const [space, tape, id] = useSelector(selectSpaceTapeId);
+  const [space, tape, id] = useSelector(store.select.tapesModel.selectCurrentTapeSpaceTapeId);
   const { isConnected, address } = useAccount();
 
   useEffect(() => {

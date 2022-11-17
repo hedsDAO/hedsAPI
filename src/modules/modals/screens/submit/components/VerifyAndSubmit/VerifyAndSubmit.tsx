@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { WaveformPlayer } from '@/modules/audio/components';
-import { selectHedstapeByNameById, selectHedstapeCoverById, selectSpaceTapeId } from '@/pages/tapes/store/selectors';
 import { Dispatch, RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 import { Divider, Flex, Text } from '@chakra-ui/react';
@@ -11,9 +10,9 @@ import { BACK_TO_UPLOAD_BUTTON_TEXT, CONFIRM_AND_UPLOAD_BUTTON_TEXT, IPFS_LOADIN
 const VerifyAndSubmit = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isLoading, isUploading, file, hasPrevSubmitted } = useSelector((state: RootState) => state.submitModel);
-  const [space, tape, id] = useSelector(selectSpaceTapeId);
-  const name = useSelector((state: RootState) => selectHedstapeByNameById(state, id));
-  const cover = useSelector((state: RootState) => selectHedstapeCoverById(state, id));
+  const [space, tape, id] = useSelector(store.select.tapesModel.selectCurrentTapeSpaceTapeId);
+  const name = useSelector(store.select.tapesModel.selectHedstapeByNameById(id));
+  const cover = useSelector(store.select.tapesModel.selectHedstapeByCoverById(id));
   const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const artist = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const prevSub = useSelector(store.select.userModel.selectConnectedUserSubmissionsBySpaceTapeId([space, tape, id]));

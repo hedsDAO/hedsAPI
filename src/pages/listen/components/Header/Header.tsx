@@ -1,7 +1,6 @@
 import { EtherscanButton, OpenSeaButton } from '@/common/tape';
 import { Modals } from '@/modules/modals/store/modalModel';
-import { selectCurrentTapeCover, selectCurrentTapeDescription, selectCurrentTapeName } from '@/pages/tapes/store/selectors';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { Avatar, Button, Flex, IconButton, Image, Stack, Text } from '@chakra-ui/react';
 import { IconDownload } from '@tabler/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,9 +10,9 @@ import { useParams } from 'react-router-dom';
 const Header = () => {
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
-  const cover = useSelector(selectCurrentTapeCover);
-  const description = useSelector(selectCurrentTapeDescription);
-  const name = useSelector(selectCurrentTapeName);
+  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
+  const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
+  const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const { currentTape } = useSelector((state: RootState) => state.tapesModel);
   return (
     <Flex

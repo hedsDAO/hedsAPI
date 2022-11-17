@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
-import { selectCurrentTapeBpm } from '@/pages/tapes/store/selectors';
+import { Dispatch, RootState, store } from '@/store';
 import { LabelBadge } from '@/common/badges';
 import { CheckBoxDisclaimer } from '@/common/forms';
 import { Divider, Flex, Heading, VStack } from '@chakra-ui/react';
@@ -22,7 +21,7 @@ import {
 
 const ReqsAndDisclaimer = () => {
   const dispatch = useDispatch<Dispatch>();
-  const bpm = useSelector(selectCurrentTapeBpm);
+  const bpm = useSelector(store.select.tapesModel.selectCurrentTapeBpm);
   const { isDisclaimerChecked, isRequirementsChecked } = useSelector((state: RootState) => state.submitModel);
   const nextStep = () => dispatch.submitModel.setCurrentStep(SubmitSteps.UPLOAD_SUBMISSION);
 

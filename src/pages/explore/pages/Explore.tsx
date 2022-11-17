@@ -1,9 +1,8 @@
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { Box, Container, Divider, Heading } from '@chakra-ui/react';
 import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDollars } from '@/utils';
-import { selectLastestTape } from '@/pages/tapes/store/selectors';
 
 export const Explore = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -11,7 +10,7 @@ export const Explore = () => {
     dispatch.exploreModel.getExploreStats();
   }, []);
   const { stats } = useSelector((state: RootState) => state.exploreModel);
-  const latestTape = useSelector(selectLastestTape);
+  const latestTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
 
   return (
     <Fragment>

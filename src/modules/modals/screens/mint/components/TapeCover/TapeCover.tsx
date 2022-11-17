@@ -1,11 +1,10 @@
-import { selectCurrentTapeCover } from '@/pages/tapes/store/selectors';
+import { store } from '@/store';
 import { AspectRatio, Divider, Flex, Image } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 const TapeCover = () => {
-  const cover = useSelector(selectCurrentTapeCover);
-
+  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
   return (
     <Fragment>
       <Flex maxW="md" direction={'column'}>

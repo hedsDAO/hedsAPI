@@ -1,7 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
-import { TapeAndTrackData, AllTapes, HedsTapes, CollabTapes, ArtistMapping, TapeData } from '@/models/common';
+import { TapeAndTrackData, AllTapes, HedsTapes, CollabTapes, ArtistMapping, TapeData, User, Timeline } from '@/models/common';
 import { db } from '@/App';
 
 export interface TapeState {
@@ -17,6 +17,9 @@ export const tapesModel = createModel<RootModel>()({
   state: {} as TapeState,
   selectors: (slice, createSelector, hasProps) => ({
     // Selectors for Space, Tape, and Id
+    selectCurrentTapeSpaceTapeId() {
+      return slice((tapesModel) => tapesModel?.spaceTapeId || ['heds', '', '']);
+    },
     selectCurrentTapeSpace() {
       return slice((tapesModel) => tapesModel?.spaceTapeId?.[0] || 'heds');
     },
@@ -32,31 +35,34 @@ export const tapesModel = createModel<RootModel>()({
       return slice((tapesModel) => tapesModel?.currentTape);
     },
     selectCurrentTapeBpm() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.bpm || 0);
+      return createSelector(this.selectCurrentTape, (tape): number => tape.bpm || 0);
     },
     selectCurrentTapeCurator() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.curator);
+      return createSelector(this.selectCurrentTape, (tape): User => tape.curator);
     },
     selectCurrentTapeTimeline() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.timeline);
+      return createSelector(this.selectCurrentTape, (tape): Timeline => tape.timeline);
     },
     selectCurrentTapeName() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.name || '');
+      return createSelector(this.selectCurrentTape, (tape): string => tape.name || '');
     },
     selectCurrentTapeDescription() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.description || '');
+      return createSelector(this.selectCurrentTape, (tape): string => tape.description || '');
     },
     selectCurrentTapeCover() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.cover || '');
+      return createSelector(this.selectCurrentTape, (tape): string => tape.cover || '');
     },
     selectCurrentTapeEtherscanLink() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.etherscan || '');
+      return createSelector(this.selectCurrentTape, (tape): string => tape.etherscan || '');
     },
     selectCurrentTapeOpenseaLink() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.opensea || '');
+      return createSelector(this.selectCurrentTape, (tape): string => tape.opensea || '');
+    },
+    selectCurrentTapeContract() {
+      return createSelector(this.selectCurrentTape, (tape): string => tape.contract || '');
     },
     selectCurrentTapeTracks() {
-      return createSelector(this.selectCurrentTape, (tape) => tape.tracks || []);
+      return createSelector(this.selectCurrentTape, (tape): Array<User> => tape.tracks || []);
     },
 
     // HedsTape Data
@@ -69,8 +75,14 @@ export const tapesModel = createModel<RootModel>()({
     selectHedstapeByCoverById: hasProps(function (models, id) {
       return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.image);
     }),
+    selectLatestHedsTape() {
+      return slice((tapesModel): TapeData => {
+        const lastIndex = [Object.keys(tapesModel.hedsTapes)?.length - 1].toString();
+        return tapesModel.hedsTapes?.[lastIndex];
+      });
+    },
 
-    // GLobal: get all hHdsTapes
+    // Global: get all hHdsTapes
     selectAllHedsTapes() {
       return slice((tapesModel) => tapesModel.hedsTapes);
     },
