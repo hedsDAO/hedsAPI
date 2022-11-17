@@ -8,7 +8,7 @@ import { userModelState } from './userModel';
  * prevent unused variable ts error in UserModal.
  */
 
-export const emptyUserState = (state: userModelState): userModelState => {
+export const clearUserState = (state: userModelState): userModelState => {
   const empty: User = {
     profilePicture: '',
     banner: '',
@@ -26,6 +26,35 @@ export const emptyUserState = (state: userModelState): userModelState => {
   return {
     connectedUser: empty,
     currentUser: empty,
+  };
+};
+
+/**
+ * @function clearConnectedUserState
+ * @summary Function to clear and return a typed user state.
+ * @note state is recieved as an argument, spread and overwritten to
+ * prevent unused variable ts error in UserModal.
+ */
+
+export const clearConnectedUserState = (state: userModelState): userModelState => {
+  const newState = { ...state };
+  const currentUserState = newState.currentUser;
+  return {
+    currentUser: currentUserState,
+    connectedUser: {
+      profilePicture: '',
+      banner: '',
+      twitterHandle: '',
+      badges: [],
+      description: '',
+      displayName: '',
+      role: 0,
+      wallet: '',
+      samples: {},
+      tracks: {},
+      submissions: {},
+      collection: {},
+    },
   };
 };
 

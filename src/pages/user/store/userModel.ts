@@ -2,7 +2,7 @@ import type { RootModel } from '@/models';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { emptyUserState, populateNewUser } from './utils';
+import { clearUserState, clearConnectedUserState, populateNewUser } from './utils';
 import { db } from '@/App';
 import { UserRoles, User, HedsTapes } from '@/models/common';
 import { formatUserCollection } from '@/utils';
@@ -101,7 +101,8 @@ export const userModel = createModel<RootModel>()({
     setUserData: (state, payload) => ({ ...state, ...payload }),
     setCurrentUserData: (state, currentUser: User) => ({ ...state, currentUser }),
     setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),
-    clearUserState: (state) => emptyUserState(state),
+    clearUserState: (state) => clearUserState(state),
+    clearConnectedUserState: (state) => clearConnectedUserState(state),
   },
   effects: (dispatch) => ({
     async getConnectedUserData(wallet: string) {
@@ -127,6 +128,18 @@ export const userModel = createModel<RootModel>()({
       await setDoc(docRef, newUserData).then(() => {
         this.setConnectedUserData(newUserData);
       });
+    },
+    async updateConnectedUserTwitterHandle([wallet, newUserData]: [string, User]) {
+      if (wallet.toLowerCase() === newUserData?.wallet.toLowerCase()) {
+        const docRef = doc(db, 'users', wallet.toLowerCase());
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          await setDoc(docRef, newUserData).then(() => {
+            this.setConnectedUserData(newUserData);
+            this.setCurrentUserData(newUserData);
+          });
+        }
+      }
     },
     async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
       const collection = formatUserCollection(data, hedsTapes);

@@ -1,7 +1,6 @@
 import { Models } from '@rematch/core';
 import { userModel } from '@/pages/user/store/userModel';
 import { modalModel } from '@/modules/modals/store/modalModel';
-import { profileModel } from '@/pages/profile/store/profileModel';
 import { artistModel } from '@/pages/artists/store/artistModel';
 import { tapesModel } from '@/pages/tapes/store/tapesModel';
 import { hedstapeModel } from '@/pages/listen/store/hedstapeModel';
@@ -15,7 +14,6 @@ import { exploreModel } from '@/pages/explore/store/exploreModel';
 export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;
   modalModel: typeof modalModel;
-  profileModel: typeof profileModel;
   artistModel: typeof artistModel;
   tapesModel: typeof tapesModel;
   audioModel: typeof audioModel;
@@ -30,7 +28,6 @@ export interface RootModel extends Models<RootModel> {
 export const models: RootModel = {
   userModel,
   modalModel,
-  profileModel,
   artistModel,
   tapesModel,
   audioModel,

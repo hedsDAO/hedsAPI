@@ -5,12 +5,16 @@ import { useSelector } from 'react-redux';
 import { getSplitsBalance } from '@/utils/graphql/getSplitsBalance';
 import { ethers } from 'ethers';
 import { store } from '@/store';
+import { useParams } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 
 const SplitsBalanceAlert = () => {
   const [balance, setBalance] = useState<string>('');
-  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const { wallet } = useParams();
+  const { address } = useAccount();
+
   useEffect(() => {
-    if (wallet) getUserBalance(wallet);
+    if (wallet?.toLowerCase() === address?.toLowerCase()) getUserBalance(wallet);
   }, [wallet]);
 
   const getUserBalance = async (wallet: string) => {
@@ -23,7 +27,7 @@ const SplitsBalanceAlert = () => {
   };
   return (
     <Fragment>
-      {balance && +balance > 0 && (
+      {balance && +balance > 0 && wallet?.toLowerCase() === address?.toLowerCase() ? (
         <Container
           mt={{ base: 4, sm: 0 }}
           maxW="full"
@@ -58,6 +62,8 @@ const SplitsBalanceAlert = () => {
             </Box>
           </Flex>
         </Container>
+      ) : (
+        <></>
       )}
     </Fragment>
   );
