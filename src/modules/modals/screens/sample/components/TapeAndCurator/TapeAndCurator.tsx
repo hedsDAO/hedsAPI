@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
-import { selectCurrentTapeCover, selectCurrentTapeCurator, selectCurrentTapeName } from '@/pages/tapes/store/selectors';
 import { Avatar, AvatarGroup, Flex, Text } from '@chakra-ui/react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { store } from '@/store';
 
 const TapeAndCurator = () => {
-  const tapeName = useSelector(selectCurrentTapeName);
-  const tapeCover = useSelector(selectCurrentTapeCover);
-  const curator = useSelector(selectCurrentTapeCurator);
+  const tapeName = useSelector(store.select.tapesModel.selectCurrentTapeName);
+  const tapeCover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
+  const curator = useSelector(store.select.tapesModel.selectCurrentTapeCurator);
   return (
     <Flex data-testid="sample-tape-curator" direction={'row'} alignItems={'center'} w={{ base: 'full', lg: 'unset' }} gap={3}>
       <AvatarGroup size={{ base: 'sm', lg: 'md' }} max={2}>

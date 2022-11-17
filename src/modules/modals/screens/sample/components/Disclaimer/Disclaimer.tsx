@@ -2,8 +2,7 @@ import { Fragment } from 'react';
 import { LabelBadge } from '@/common/badges';
 import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, Divider, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
-import { Dispatch, RootState } from '@/store';
-import { selectCurrentTapeBpm, selectCurrentTapeTimeline } from '@/pages/tapes/store/selectors';
+import { Dispatch, RootState, store } from '@/store';
 import { PrimaryAlert, WarningAlert } from '@/common/alerts';
 import { DateTime } from 'luxon';
 import {
@@ -23,15 +22,15 @@ const Disclaimer = () => {
   const now = DateTime.now().setZone('utc').toMillis();
   const loading = useSelector((state: RootState) => state.loading.models.sampleModel);
   const { isChecked } = useSelector((state: RootState) => state.sampleModel);
-  const { end } = useSelector(selectCurrentTapeTimeline).submit;
-  const bpm = useSelector(selectCurrentTapeBpm);
+  const { submit } = useSelector(store.select.tapesModel.selectCurrentTapeTimeline);
+  const bpm = useSelector(store.select.tapesModel.selectCurrentTapeBpm);
 
   return (
     <Flex data-testid="sample-disclaimer" direction={'column'}>
-      {!loading && now < end ? (
+      {!loading && now < submit?.end ? (
         <Fragment>
           <Divider my={5} />
-          <PrimaryAlert countdown={end}>{COUNTDOWN_TEXT}</PrimaryAlert>
+          <PrimaryAlert countdown={submit?.end}>{COUNTDOWN_TEXT}</PrimaryAlert>
           <Flex mt={5} px={2} direction={'column'}>
             <Text fontSize="xl" textColor={'blackAlpha.800'} fontWeight={'bold'}>
               {SAMPLE_REQUIREMENTS_TITLE}

@@ -1,9 +1,9 @@
-import { selectCurrentTapeEtherscanLink } from '@/pages/tapes/store/selectors';
+import { store } from '@/store';
 import { Button, Link } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const EtherscanButton = () => {
-  const etherscan = useSelector(selectCurrentTapeEtherscanLink);
+  const etherscan = useSelector(store.select.tapesModel.selectCurrentTapeEtherscanLink);
   return (
     <Button
       as={Link}

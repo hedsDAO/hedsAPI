@@ -1,11 +1,11 @@
-import { selectCurrentTapeCover, selectCurrentTapeCurator, selectCurrentTapeName } from '@/pages/tapes/store/selectors';
+import { store } from '@/store';
 import { Avatar, AvatarGroup, Box, Container, Divider, Heading, HStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const TapeNameAndCurator = () => {
-  const cover = useSelector(selectCurrentTapeCover);
-  const name = useSelector(selectCurrentTapeName);
-  const curator = useSelector(selectCurrentTapeCurator);
+  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
+  const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
+  const curator = useSelector(store.select.tapesModel.selectCurrentTapeCurator);
   return (
     <Box bg="bg-surface">
       <Container>

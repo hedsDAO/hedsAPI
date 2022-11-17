@@ -1,7 +1,6 @@
-import { selectCurrentTapeTracks } from '@/pages/tapes/store/selectors';
 import { TrackMetadata } from '@/models/common';
 import { formatTime } from '@/utils';
-import { Dispatch } from '@/store';
+import { Dispatch, store } from '@/store';
 import { Avatar, Container, Flex, Heading, IconButton, Stack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { Fragment } from 'react';
 const Tracks = () => {
   const dispatch = useDispatch<Dispatch>();
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
-  const tracks = useSelector(selectCurrentTapeTracks);
+  const tracks = useSelector(store.select.tapesModel.selectCurrentTapeTracks);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
     dispatch.audioModel.setActiveTrack(submission);
