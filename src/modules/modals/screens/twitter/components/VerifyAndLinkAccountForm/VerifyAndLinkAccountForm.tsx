@@ -1,11 +1,13 @@
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { formatWallet } from '@/utils';
 import { Avatar, Flex, FormControl, FormLabel, Tag, TagLabel, Text } from '@chakra-ui/react';
 import { IconAlertCircle, IconLink } from '@tabler/icons';
 import { useSelector } from 'react-redux';
 
 const VerifyAndLinkAccountForm = () => {
-  const profileData = useSelector((state: RootState) => state.profileModel);
+  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const displayName = useSelector(store.select.userModel.selectConnectedUserDisplayName);
+  const profilePicture = useSelector(store.select.userModel.selectConnectedUserProfilePicture);
   const { twitterHandle } = useSelector((state: RootState) => state.twitterModel);
 
   return (
@@ -22,14 +24,8 @@ const VerifyAndLinkAccountForm = () => {
       </Flex>
       <Flex alignItems={'center'} my={5} gap={4} direction={'row'}>
         <Tag size="lg" colorScheme="blue" borderRadius="full">
-          <Avatar
-            src={profileData?.profilePicture}
-            size="2xs"
-            name={profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}
-            ml={-1}
-            mr={2}
-          />
-          <TagLabel> {profileData?.displayName ? profileData?.displayName : profileData?.wallet ? formatWallet(profileData?.wallet) : ''}</TagLabel>
+          <Avatar src={profilePicture} size="2xs" name={displayName ? displayName : wallet ? formatWallet(wallet) : ''} ml={-1} mr={2} />
+          <TagLabel> {displayName ? displayName : wallet ? formatWallet(wallet) : ''}</TagLabel>
         </Tag>
         <IconLink height={20} width={20} />
         <Tag py={1} size="lg" colorScheme="blue" borderRadius="full">

@@ -1,7 +1,7 @@
 import { Dispatch } from '@/store';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 
 const UserWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -9,28 +9,25 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
   const { address } = useAccount();
-  const { isConnected, isDisconnected, status } = useAccount({});
-  const wallet = pathname?.includes('/u') ? pathname?.split('/u')[1] : undefined;
+  const { isDisconnected, status } = useAccount({});
+  const wallet = pathname?.split('/u/')?.[1];
+  const isOnOwnPage = wallet?.toLowerCase() === address?.toLowerCase() || false;
 
   const handleFetchUserData = useCallback(() => {
-    if (isConnected && address) dispatch.userModel.getConnectedUserData(address);
-    if (pathname.includes('/u') && wallet?.length) dispatch.userModel.getCurrentUserData(wallet);
-    if (isConnected && address && pathname === '/profile') dispatch.userModel.getCurrentUserData(address);
-  }, [pathname, wallet, status]);
+    if (wallet) dispatch.userModel.getCurrentUserData(wallet.toLowerCase());
+    if (wallet?.toLowerCase() === address?.toLowerCase()) dispatch.userModel.getConnectedUserData(wallet);
+  }, [wallet, pathname, status]);
 
   useEffect(() => {
     handleFetchUserData();
-    return () => {
-      dispatch.userModel.clearUserState();
-    };
-  }, [pathname]);
+  }, [pathname, address, status]);
 
   useEffect(() => {
-    if (status === 'disconnected' && pathname === '/profile') {
-      dispatch.userModel.clearUserState();
+    if (isDisconnected && isOnOwnPage) {
+      dispatch.userModel.clearConnectedUserState();
       navigate('/');
     }
-  }, [status]);
+  }, [isDisconnected]);
 
   return <>{children}</>;
 };

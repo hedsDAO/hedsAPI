@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { CopyTweetForm, GenerateHashForm, PasteTweetForm, TweetHashForm, VerifyAndLinkAccountForm } from '../components';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { TwitterStep } from '@/modules/modals/screens/twitter/models/common';
@@ -13,7 +13,8 @@ const TwitterModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, nextModal } = useSelector((state: RootState) => state.modalModel);
   const { currentStep, loading, twitterHandle } = useSelector((state: RootState) => state.twitterModel);
-  const profileData = useSelector((state: RootState) => state.profileModel);
+  const userData = useSelector(store.select.userModel.selectConnectedUser);
+  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   useEffect(() => {
     return () => {
       dispatch.twitterModel.clearTwitterModalState();
@@ -39,7 +40,7 @@ const TwitterModal = () => {
             disabled={loading}
             isLoading={loading}
             onClick={async () => {
-              await dispatch.twitterModel.linkTwitterHandleToUser([profileData.wallet, profileData, twitterHandle]);
+              await dispatch.twitterModel.linkTwitterHandleToUser([wallet, userData, twitterHandle]);
               if (nextModal) dispatch.modalModel.setModal(nextModal);
               else dispatch.modalModel.setModalOpen(false);
             }}

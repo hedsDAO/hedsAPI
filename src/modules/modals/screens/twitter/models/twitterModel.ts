@@ -70,7 +70,7 @@ export const twitterModel = createModel<RootModel>()({
       this.setLoading(true);
       if (wallet?.length && userData && twitterHandle?.length) {
         const newUserData = { ...userData, twitterHandle };
-        dispatch.profileModel.updateUserData([wallet, newUserData]);
+        dispatch.userModel.updateConnectedUserTwitterHandle([wallet, newUserData]);
       }
       setTimeout(() => {
         this.setLoading(false);

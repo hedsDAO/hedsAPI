@@ -17,7 +17,7 @@ const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
     <Flex gap={1}>
       <button
         onClick={() => {
-          if (isConnected) navigate('/profile');
+          if (isConnected) navigate(`/u/${address}`);
           else {
             if (nextModal) dispatch.modalModel.setNextModal(nextModal);
             dispatch.modalModel.setModal(Modals.CONNECT_MODAL);

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { Avatar, Divider, Flex, FormControl, FormLabel, Text } from '@chakra-ui/react';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { PROFILE_PICTURE_TITLE, PROFILE_PICTURE_DESCRIPTION, UPLOAD_BUTTON_TEXT } from '../../models/constants';
@@ -9,7 +9,7 @@ import { PrimaryButton, WarningButton } from '@/common/buttons';
 const ProfilePictureForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
-  const { connectedUser: userData } = useSelector((state: RootState) => state.userModel);
+  const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
   const { profilePicturePreview, profilePictureFile, profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
   const handleClick = () => inputRef.current.click();
   return (
@@ -21,7 +21,7 @@ const ProfilePictureForm = () => {
         </Text>
       </FormLabel>
       <Flex data-testid="profile-picture-form" justifyContent={'space-between'} direction={'row'} gap={2} alignItems={'center'}>
-        <Avatar borderRadius={'lg'} size={'md'} src={profilePicturePreview || profileChanges?.profilePicture || userData?.profilePicture} />
+        <Avatar borderRadius={'lg'} size={'md'} src={profilePicturePreview || profileChanges?.profilePicture || profilePicture} />
         <Divider borderColor="blackAlpha.300" />
         <Flex justifyContent={'center'} width={{ base: 'full', sm: 'auto' }} gap={2}>
           <input ref={inputRef} onChange={(e) => dispatch.settingsModel.handleProfilePictureUpload(e)} type="file" className="hidden" />

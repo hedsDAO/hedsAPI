@@ -1,12 +1,12 @@
 import { TwitterStep } from '@/modules/modals/screens/twitter/models/common';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { Button, Flex, FormControl, FormLabel, Stack } from '@chakra-ui/react';
 import { IconKey } from '@tabler/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 const GenerateHashForm = () => {
   const dispatch = useDispatch<Dispatch>();
-  const profileData = useSelector((state: RootState) => state.profileModel);
+  const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const { currentStep, loading } = useSelector((state: RootState) => state.twitterModel);
 
   return (
@@ -20,7 +20,7 @@ const GenerateHashForm = () => {
             disabled={currentStep !== TwitterStep.GENERATE_HASH}
             leftIcon={<IconKey height={16} width={16} />}
             size={'sm'}
-            onClick={() => dispatch.twitterModel.generateHash(profileData?.wallet)}
+            onClick={() => dispatch.twitterModel.generateHash(wallet)}
             bg="gray.200"
           >
             Generate hash
