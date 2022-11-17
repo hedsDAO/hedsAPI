@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 import { HedsTape } from '@/pages/listen/screens/HedsTape/HedsTape';
 
@@ -10,6 +10,7 @@ export const Listen = () => {
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
   const { hedsTapes } = useSelector((state: RootState) => state.tapesModel);
   const { artistMapping } = useSelector((state: RootState) => state.artistModel);
+  const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
 
   useEffect(() => {
     if (!isEmpty(hedsTapes) && tape && id && !isEmpty(artistMapping)) {
@@ -19,5 +20,5 @@ export const Listen = () => {
     }
   }, [hedsTapes, space, tape, id]);
 
-  return <div className="">{tape === 'hedstape' && <HedsTape />}</div>;
+  return <div className="">{tape === 'hedstape' && currentTape && <HedsTape />}</div>;
 };
