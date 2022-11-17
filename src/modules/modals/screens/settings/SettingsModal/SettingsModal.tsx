@@ -12,7 +12,9 @@ const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const { connectedUser } = useSelector((state: RootState) => state.userModel);
-  const { profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
+  const isSettingsLoading = useSelector((state: RootState) => state.loading.models.settingsModel);
+  const isUserLoading = useSelector((state: RootState) => state.loading.models.userModel);
+  const { profileChanges } = useSelector((state: RootState) => state.settingsModel);
   const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
@@ -31,9 +33,9 @@ const SettingsModal = () => {
         <Flex gap={2}>
           <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
           <PrimaryButton
-            isLoading={isLoading}
+            isLoading={isUserLoading || isSettingsLoading}
             onClick={() => dispatch.settingsModel.handleSubmit([connectedUser, profileModalData])}
-            disabled={JSON.stringify(connectedUser) === JSON.stringify(profileChanges)}
+            disabled={JSON.stringify(connectedUser) === JSON.stringify(profileChanges) || isUserLoading || isSettingsLoading}
           >
             {SAVE_BUTTON_TEXT}
           </PrimaryButton>

@@ -49,7 +49,7 @@ export const settingsModel = createModel<RootModel>()({
           );
         }
       }
-      await dispatch.profileModel.updateUserData([prevProfileData?.wallet, newProfileData]);
+      await dispatch.userModel.updateConnectedUserData([prevProfileData?.wallet, newProfileData]);
       this.setIsLoading(false);
       dispatch.modalModel.setModalOpen(false);
     },

@@ -129,7 +129,7 @@ export const userModel = createModel<RootModel>()({
         this.setConnectedUserData(newUserData);
       });
     },
-    async updateConnectedUserTwitterHandle([wallet, newUserData]: [string, User]) {
+    async updateConnectedUserData([wallet, newUserData]: [string, User]) {
       if (wallet.toLowerCase() === newUserData?.wallet.toLowerCase()) {
         const docRef = doc(db, 'users', wallet.toLowerCase());
         const docSnap = await getDoc(docRef);
