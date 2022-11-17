@@ -13,7 +13,8 @@ const Header = () => {
   const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
-  const { currentTape } = useSelector((state: RootState) => state.tapesModel);
+  const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
+  // const { currentTape } = useSelector((state: RootState) => state.tapesModel);
   return (
     <Flex
       justifyContent={'center'}

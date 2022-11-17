@@ -115,28 +115,34 @@ export const userModel = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     async getConnectedUserData(wallet: string) {
-      const docRef = doc(db, 'users', wallet.toLowerCase());
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        this.setConnectedUserData(docSnap.data());
-      } else {
-        dispatch.modalModel.setModal(Modals.NAME_MODAL);
-        dispatch.modalModel.setModalOpen(true);
+      if (wallet?.length) {
+        const docRef = doc(db, 'users', wallet.toLowerCase());
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          this.setConnectedUserData(docSnap.data());
+        } else {
+          dispatch.modalModel.setModal(Modals.NAME_MODAL);
+          dispatch.modalModel.setModalOpen(true);
+        }
       }
     },
     async getCurrentUserData(wallet: string) {
-      const docRef = doc(db, 'users', wallet.toLowerCase());
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        this.setCurrentUserData(docSnap.data());
+      if (wallet?.length) {
+        const docRef = doc(db, 'users', wallet.toLowerCase());
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          this.setCurrentUserData(docSnap.data());
+        }
       }
     },
     async createNewUser([wallet, displayName]: [string, string]) {
-      const docRef = doc(db, 'users', wallet.toLowerCase());
-      const newUserData = populateNewUser(wallet, displayName);
-      await setDoc(docRef, newUserData).then(() => {
-        this.setConnectedUserData(newUserData);
-      });
+      if (wallet?.length) {
+        const docRef = doc(db, 'users', wallet.toLowerCase());
+        const newUserData = populateNewUser(wallet, displayName);
+        await setDoc(docRef, newUserData).then(() => {
+          this.setConnectedUserData(newUserData);
+        });
+      }
     },
     async updateConnectedUserData([wallet, newUserData]: [string, User]) {
       if (wallet.toLowerCase() === newUserData?.wallet.toLowerCase()) {

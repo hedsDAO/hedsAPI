@@ -50,7 +50,7 @@ export const tapesModel = createModel<RootModel>()({
       return createSelector(this.selectCurrentTape, (tape): string => tape.description || '');
     },
     selectCurrentTapeCover() {
-      return createSelector(this.selectCurrentTape, (tape): string => tape.cover || '');
+      return createSelector(this.selectCurrentTape, (tape): string => tape.image || '');
     },
     selectCurrentTapeEtherscanLink() {
       return createSelector(this.selectCurrentTape, (tape): string => tape.etherscan || '');
