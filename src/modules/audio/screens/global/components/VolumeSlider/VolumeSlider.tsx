@@ -6,7 +6,7 @@ const VolumeSlider = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveS
   const dispatch = useDispatch<Dispatch>();
   const volume = useSelector(store.select.audioModel.selectAudioVolume);
   return (
-    <Flex h="full" alignItems={'center'} gap={2} px={9}>
+    <Flex display={{ base: 'none', md: 'flex' }} h="full" alignItems={'center'} gap={2} px={9}>
       {volume < 25 ? (
         <i className="fa-sharp fa-solid fa-volume-off max-w-[2ch] min-w-[2ch]"></i>
       ) : volume < 50 ? (

@@ -14,6 +14,8 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   const activeTrack = useSelector(store.select.audioModel.selectActiveTrack);
   const activeTrackStats = useSelector(store.select.audioModel.selectActiveTrackStats);
   const userWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
+  const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
 
   useEffect(() => {
     let interval: NodeJS.Timer;
@@ -43,9 +45,27 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   };
 
   return (
-    <Flex height="100%" gap={2} justifyContent="center" alignItems={'center'}>
+    <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'center' }} alignItems={'center'} px={4}>
       <IconButton
-        _hover={{ bg: 'gray.200' }}
+        disabled={isQueueEmpty && !connectedWallet?.length}
+        onClick={() => dispatch.audioModel.setIsShowingQueue(!isShowingQueue)}
+        aria-label="queue"
+        icon={<i className="fa-solid fa-layer-group"></i>}
+        className="hover:scale-125"
+        size="sm"
+        rounded="sm"
+        bg="transparent"
+        border="1px"
+        borderColor={'gray.500'}
+        _hover={{ bg: 'gray.50', borderColor: 'gray.600' }}
+      />
+      <IconButton
+        size="sm"
+        border="1px"
+        borderColor={'gray.500'}
+        _hover={{ bg: 'gray.200', borderColor: 'gray.600' }}
+        bg={'transparent'}
+        rounded="sm"
         onClick={() => {
           resetTrack();
         }}
@@ -53,10 +73,15 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         icon={<i className="fa-solid fa-backward-step"></i>}
       />
       {isLoading ? (
-        <IconButton _hover={{ bg: 'gray.200' }} aria-label="loading" isLoading={true} />
+        <IconButton size="sm" _hover={{ bg: 'gray.100' }} bg={'transparent'} rounded="sm" aria-label="loading" isLoading={true} />
       ) : isTrackPlaying && wavesurfer?.current?.isPlaying() ? (
         <IconButton
-          _hover={{ bg: 'gray.200' }}
+          size="sm"
+          border="1px"
+          borderColor={'gray.500'}
+          _hover={{ bg: 'gray.100', borderColor: 'gray.600' }}
+          bg={'transparent'}
+          rounded="sm"
           onClick={() => {
             dispatch.audioModel.setIsPlaying(false);
             wavesurfer?.current?.playPause();
@@ -66,7 +91,12 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         />
       ) : (
         <IconButton
-          _hover={{ bg: 'gray.200' }}
+          size="sm"
+          border="1px"
+          borderColor={'gray.500'}
+          _hover={{ bg: 'gray.100', borderColor: 'gray.600' }}
+          bg={'transparent'}
+          rounded="sm"
           onClick={() => {
             dispatch.audioModel.setIsPlaying(true);
             wavesurfer?.current?.playPause();
@@ -76,7 +106,12 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         />
       )}
       <IconButton
-        _hover={{ bg: 'gray.200' }}
+        size="sm"
+        border="1px"
+        borderColor={'gray.500'}
+        _hover={{ bg: 'gray.100', borderColor: 'gray.600' }}
+        bg={'transparent'}
+        rounded="sm"
         onClick={() => {
           dispatch.audioModel.setIsPlaying(false);
           wavesurfer?.current?.playPause();
