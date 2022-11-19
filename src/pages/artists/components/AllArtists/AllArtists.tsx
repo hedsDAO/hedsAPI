@@ -1,16 +1,17 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, RootState, store } from '@/store';
 import { Container, Flex, Heading, Image, Skeleton, Text } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const AllArtists = () => {
   const navigate = useNavigate();
-  const [numOfArtists, setNumOfArtists] = useState<number>(6);
+  const dispatch = useDispatch<Dispatch>();
   const loading = useSelector((state: RootState) => state.loading.models.artistModel);
-  const { allArtists } = useSelector((state: RootState) => state.artistModel);
+  const allArtists = useSelector(store.select.artistModel.selectAllArtists);
+  const totalArtists = useSelector(store.select.artistModel.selectTotalArtists);
+  const scrollDataMax = useSelector(store.select.artistModel.selectScrollDataMax)
   return (
     <Container maxW="7xl" className="mx-auto">
       <div className="mx-auto w-full px-4 lg:px-1">
@@ -19,14 +20,14 @@ const AllArtists = () => {
         </Heading>
       </div>
       <InfiniteScroll
-        dataLength={numOfArtists}
-        next={() => setNumOfArtists((prev) => (prev += 6))}
-        hasMore={numOfArtists < allArtists.length}
+        dataLength={scrollDataMax}
+        next={() => dispatch.artistModel.setScrollDataMax(scrollDataMax)}
+        hasMore={scrollDataMax < totalArtists}
         loader={<h4></h4>}
       >
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 px-3">
           {allArtists?.length &&
-            allArtists.slice(0, numOfArtists).map((artist) => {
+            allArtists.slice(0, scrollDataMax).map((artist) => {
               return (
                 <div
                   role="button"

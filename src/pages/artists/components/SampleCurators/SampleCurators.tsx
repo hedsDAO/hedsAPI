@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { RootState, store } from '@/store';
 import { useNavigate } from 'react-router-dom';
 import { Container, Flex, Heading, Image, Skeleton, Text } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
@@ -7,7 +7,7 @@ import Marquee from 'react-fast-marquee';
 
 const SampleCurators = () => {
   const loading = useSelector((state: RootState) => state.loading.models.artistModel);
-  const { allCurators } = useSelector((state: RootState) => state.artistModel);
+  const allCurators  = useSelector(store.select.artistModel.selectAllCurators);
   const navigate = useNavigate();
   return (
     <Container maxW="7xl" className="mx-auto pb-5">

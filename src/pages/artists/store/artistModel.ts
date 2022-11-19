@@ -10,15 +10,31 @@ export interface ArtistState {
   allCurators: Array<User>;
   artistMapping: ArtistMapping;
   totalArtists: number;
+  scrollDataMax: number;
 }
 
 export const artistModel = createModel<RootModel>()({
   state: {} as ArtistState,
+  selectors: (slice, createSelector, hasProps) => ({
+    selectAllCurators() {
+      return slice((artistModel) => artistModel.allCurators);
+    },
+    selectAllArtists() {
+      return slice((artistModel) => artistModel.allArtists);
+    },
+    selectTotalArtists() {
+      return slice((artistModel) => artistModel.totalArtists);
+    },
+    selectScrollDataMax() {
+      return slice((artistModel) => artistModel.scrollDataMax);
+    },
+  }),
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),
     setAllArtists: (state, allArtists: any) => ({ ...state, allArtists }),
     setAllCurators: (state, allCurators: any) => ({ ...state, allCurators }),
     setArtistMapping: (state, artistMapping: any) => ({ ...state, artistMapping }),
+    setScrollDataMax: (state, scrollDataMax: number) => ({ ...state, scrollDataMax: scrollDataMax + 6 }),
     setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
   },
   effects: () => ({
@@ -35,6 +51,7 @@ export const artistModel = createModel<RootModel>()({
       const artistMapping: { [key: string]: User } = {};
       const artistSnapshot = await getDocs(query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)));
       this.setTotalArtists(artistSnapshot.size);
+      this.setScrollDataMax(6);
       artistSnapshot.forEach((res: DocumentData) => {
         const currentArtist: User = res.data();
         artistMapping[res.id] = res.data();
