@@ -91,7 +91,8 @@ export const audioModel = createModel<RootModel>()({
     skipToNextTrack: (state) => {
       const newQueue = [...state.queue];
       const newActiveTrack = newQueue.shift();
-      return { ...state, activeTrack: newActiveTrack, queue: newQueue };
+      if (newQueue?.length === 0) return { ...state, activeTrack: newActiveTrack, queue: newQueue, isShowingQueue: false };
+      else return { ...state, activeTrack: newActiveTrack, queue: newQueue };
     },
     skipToPreviousTrack: (state) => {
       const newQueue = [...state.queue];

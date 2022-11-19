@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
-import { WaveformPlayer } from '@/modules/audio/components';
 import { Dispatch, RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 import { Divider, Flex, Text } from '@chakra-ui/react';
 import { SubmitSteps } from '@modals/screens/submit/models/common';
+import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 import { BACK_TO_UPLOAD_BUTTON_TEXT, CONFIRM_AND_UPLOAD_BUTTON_TEXT, IPFS_LOADING_TEXT, PREVIEW_SUBMISSION_TEXT } from '../../models/constants';
 
 const VerifyAndSubmit = () => {
