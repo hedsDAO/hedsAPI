@@ -50,7 +50,7 @@ export const Landing = () => {
           alignItems: 'center',
           fontSize: '20px',
           fontWeight: '100',
-          color: '#718096',
+          color: 'white',
         }}
       >
         <div style={{ width: '50%', textAlign: 'center' }}>
@@ -106,7 +106,7 @@ export const Landing = () => {
         <img src="/hedspin.gif" />
       </ParallaxLayer>
 
-      <ParallaxLayer offset={3.5} style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+      <ParallaxLayer offset={3.3} style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
         <Number inputNum={52} />
         <Number inputNum={420} />
       </ParallaxLayer>
