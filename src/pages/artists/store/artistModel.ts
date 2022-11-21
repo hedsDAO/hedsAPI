@@ -2,7 +2,6 @@ import { createModel } from '@rematch/core';
 import { collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
 import type { RootModel } from '@/models';
 import { User, ArtistMapping, UserRoles } from '../../../models/common';
-import { populateNewUser } from '@/utils';
 import { db } from '@/App';
 
 export interface ArtistState {
@@ -28,11 +27,6 @@ export const artistModel = createModel<RootModel>()({
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         this.setUserData(docSnap.data());
-      } else {
-        const newUserData = populateNewUser(wallet);
-        await setDoc(docRef, newUserData).then(() => {
-          this.setUserData(newUserData);
-        });
       }
     },
     async getAllArtists() {

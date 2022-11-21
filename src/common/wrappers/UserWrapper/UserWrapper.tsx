@@ -11,17 +11,16 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   const { isConnected, isDisconnected } = useAccount({});
   const wallet = pathname?.includes('/u') ? pathname?.split('/u')[1] : undefined;
-  const userData = useSelector((state: RootState) => state.userModel);
-
+  
   const handleFetchUserData = useCallback(() => {
     if (wallet?.length && pathname.includes('/u')) {
-      return dispatch.userModel.getUserData(wallet);
+      return dispatch.userModel.getConnectedUserData(wallet);
     } else if (isConnected && address && pathname === '/profile') {
-      return dispatch.userModel.getUserData(address);
+      return dispatch.userModel.getConnectedUserData(address);
     } else if (isDisconnected && pathname === '/profile') {
       return dispatch.userModel.clearUserState(), navigate('/');
     }
-  }, [pathname, userData]);
+  }, [pathname, wallet, address]);
 
   useEffect(() => {
     handleFetchUserData();
@@ -29,6 +28,9 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
       dispatch.userModel.clearUserState();
     };
   }, [pathname]);
+
+  useEffect(() => {
+  }, [isConnected])
 
   return <>{children}</>;
 };

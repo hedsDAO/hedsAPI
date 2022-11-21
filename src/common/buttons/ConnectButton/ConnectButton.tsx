@@ -18,9 +18,9 @@ const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
       <button
         onClick={() => {
           if (isConnected) navigate('/profile');
-          if (!isConnected) {
-            dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
+          else {
             if (nextModal) dispatch.modalModel.setNextModal(nextModal);
+            dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
             dispatch.modalModel.setModalOpen(true);
           }
         }}
@@ -28,7 +28,7 @@ const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
           isConnected ? 'bg-black' : 'gradient'
         } hover:bg-neutral-900 ease-linear`}
       >
-        {isConnected && !isLoading ? data || address : 'connect'}
+        {isConnected && !isLoading ? data || address.slice(0, 5) + '...' : 'connect'}
       </button>
       {isConnected ? (
         <button onClick={() => disconnect()} className={`px-2.5 text-white inline-flex items-center rounded-full tracking-widest text-sm py-1 bg-black`}>
