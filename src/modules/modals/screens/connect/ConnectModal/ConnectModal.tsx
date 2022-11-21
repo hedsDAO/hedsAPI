@@ -10,15 +10,17 @@ import { useEffect } from 'react';
 const ConnectModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, nextModal } = useSelector((state: RootState) => state.modalModel);
-  const { connector: activeConnector, isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
 
   useEffect(() => {
     if (isConnected) {
+      dispatch.userModel.getConnectedUserData(address.toLowerCase());
       if (nextModal) dispatch.modalModel.setModal(nextModal);
       else dispatch.modalModel.setModalOpen(false);
     }
   }, [isConnected]);
+
   return (
     <ModalContainer size="sm" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
       <ModalHeader title={'Connect Wallet'} Icon={IconLink} />

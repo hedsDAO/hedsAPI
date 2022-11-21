@@ -15,6 +15,67 @@ export interface TapeState {
 
 export const tapesModel = createModel<RootModel>()({
   state: {} as TapeState,
+  selectors: (slice, createSelector, hasProps) => ({
+    // Selectors for Space, Tape, and Id
+    selectCurrentTapeSpace() {
+      return slice((tapesModel) => tapesModel?.spaceTapeId?.[0] || 'heds');
+    },
+    selectCurrentTapeTape() {
+      return slice((tapesModel) => tapesModel?.spaceTapeId?.[1]);
+    },
+    selectCurrentTapeId() {
+      return slice((tapesModel) => tapesModel?.spaceTapeId?.[2]);
+    },
+
+    // Current Tape Data
+    selectCurrentTape() {
+      return slice((tapesModel) => tapesModel?.currentTape);
+    },
+    selectCurrentTapeBpm() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.bpm || 0);
+    },
+    selectCurrentTapeCurator() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.curator);
+    },
+    selectCurrentTapeTimeline() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.timeline);
+    },
+    selectCurrentTapeName() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.name || '');
+    },
+    selectCurrentTapeDescription() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.description || '');
+    },
+    selectCurrentTapeCover() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.cover || '');
+    },
+    selectCurrentTapeEtherscanLink() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.etherscan || '');
+    },
+    selectCurrentTapeOpenseaLink() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.opensea || '');
+    },
+    selectCurrentTapeTracks() {
+      return createSelector(this.selectCurrentTape, (tape) => tape.tracks || []);
+    },
+
+    // HedsTape Data
+    selectHedsTapeById: hasProps(function (models, id) {
+      return slice((tapesModel) => tapesModel.hedsTapes?.[id])
+    }),
+    selectHedstapeByNameById: hasProps(function (models, id) {
+      return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.name)
+    }),
+    selectHedstapeByCoverById: hasProps(function (models, id) {
+      return slice((tapesModel) => tapesModel.hedsTapes?.[id]?.image)
+    }),
+
+    // GLobal: get all hHdsTapes
+    selectAllHedsTapes() {
+      return slice((tapesModel) => tapesModel.hedsTapes);
+    },
+
+  }),
   reducers: {
     setAllTapes: (state, allTapes) => ({ ...state, allTapes }),
     setTapeTypes: (state, tapeTypes) => ({ ...state, tapeTypes }),
