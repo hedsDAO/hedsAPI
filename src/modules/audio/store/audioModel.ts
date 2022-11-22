@@ -170,7 +170,7 @@ export const audioModel = createModel<RootModel>()({
         };
 
         try {
-          console.log(updatedUserData);
+          // console.log(updatedUserData);
           // await updateDoc(userRef, updatedUserData);
           // await dispatch.userModel.getUserData(walletId);
         } catch (e) {
@@ -184,10 +184,10 @@ export const audioModel = createModel<RootModel>()({
     },
     async updaterUserListeningHistory({ track, walletId }: { track: TrackMetadata; walletId: string }) {
       const db = getFirestore();
-      console.log(walletId);
+      // console.log(walletId);
       const userRef = doc(db, 'users', '0x6402fe3af805fcee00e9b4b635e689dc0d1fffbf');
       const userSnap = await (await getDoc(userRef)).data();
-      console.log(userSnap);
+      // console.log(userSnap);
 
       if (userSnap) {
         const lastListened = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();

@@ -12,7 +12,7 @@ interface ModalContainerProps {
 const ModalContainer = ({ isOpen, setModalOpen, size, focus, children }: ModalContainerProps) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setModalOpen(false)}>
+      <Dialog as="div" className="relative z-50" onClose={() => setModalOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

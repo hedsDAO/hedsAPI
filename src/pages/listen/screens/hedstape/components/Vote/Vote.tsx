@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
 import { Modals } from '@/modules/modals/store/modalModel';
-import { TimelineStatus } from '@/pages/listen/store/hedstapeModel';
+import { TimelineStatus } from '@/pages/listen/screens/hedstape/models/common';
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { LockClosedIcon } from '@heroicons/react/24/outline';
