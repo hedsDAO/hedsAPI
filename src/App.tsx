@@ -37,6 +37,7 @@ const App = (): JSX.Element => {
     <Fragment>
       <Navigation />
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/artists" element={<Artists />} />
