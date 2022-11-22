@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -27,11 +27,16 @@ export const db = getFirestore();
 export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 
 const App = (): JSX.Element => {
+  const location = useLocation();
+
+  // return location.pathname === '/' ? (
+  //   <Landing />
+  // ) :
+
   return (
     <Fragment>
       <Navigation />
       <Routes>
-        {/* <Route path="/" element={<Landing />} /> */}
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/artists" element={<Artists />} />

@@ -10,7 +10,7 @@ interface TextBlockProps {
   artistTag: string;
 }
 
-const TextBlock = ({ tapeName, tapeTag, artistName, artistTag }: TextBlockProps) => {
+export const TextBlock = ({ tapeName, tapeTag, artistName, artistTag }: TextBlockProps) => {
   return (
     <>
       <div className="flex flex-col items-end md:items-start mt-5">
@@ -32,5 +32,3 @@ const TextBlock = ({ tapeName, tapeTag, artistName, artistTag }: TextBlockProps)
     </>
   );
 };
-
-export default TextBlock;
