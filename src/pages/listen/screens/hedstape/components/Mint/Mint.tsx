@@ -4,7 +4,7 @@ import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 import { DateTime } from 'luxon';
 import { useDispatch, useSelector } from 'react-redux';
-import { TimelineStatus } from '@/pages/listen/store/hedstapeModel';
+import { TimelineStatus } from '@/pages/listen/screens/hedstape/models/common';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { Modals } from '@/modules/modals/store/modalModel';
 

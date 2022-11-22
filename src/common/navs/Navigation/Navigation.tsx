@@ -11,7 +11,6 @@ const navigation = [
   { name: 'Tapes', href: '/tapes' },
   { name: 'Collabs', href: '/collab' },
   { name: 'Artists', href: '/artists' },
-  { name: 'About', href: '/about' },
 ];
 
 const Navigation = () => {
@@ -62,12 +61,12 @@ const Navigation = () => {
               </div>
             </ul>
           </div>
-          <div className="flex flex-col items-end sm:-mb-4 -mb-2">
+          <div className="flex flex-col items-end sm:-mb-5 -mb-2">
             <ConnectButton />
           </div>
         </div>
       </div>
-      <Transition.Root show={isOpen} as={Fragment}>
+      {/* <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="md:hidden relative z-10" onClose={setIsOpen}>
           <div className="fixed inset-0" />
           <div className="fixed inset-0 overflow-hidden">
@@ -112,7 +111,7 @@ const Navigation = () => {
             </div>
           </div>
         </Dialog>
-      </Transition.Root>
+      </Transition.Root> */}
     </Disclosure>
   );
 };

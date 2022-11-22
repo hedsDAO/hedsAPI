@@ -1,7 +1,7 @@
 import { RootState } from '@/store';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { Mint, Submit, Vote } from '@/pages/listen/components';
+import { Mint, Submit, Vote } from '@/pages/listen/screens/hedstape/components';
 
 const Timeline = () => {
   const { currentTape } = useSelector((state: RootState) => state.tapesModel);

@@ -9,7 +9,7 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
   const { address } = useAccount();
-  const { isDisconnected, status } = useAccount({});
+  const { isDisconnected, status, isReconnecting } = useAccount({});
   const wallet = pathname?.split('/u/')?.[1];
   const isOnOwnPage = wallet?.toLowerCase() === address?.toLowerCase() || false;
 
@@ -28,6 +28,10 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
       navigate('/');
     }
   }, [isDisconnected]);
+
+  useEffect(() => {
+    if (address && isReconnecting) dispatch.userModel.getConnectedUserData(address.toLowerCase())
+  }, [isReconnecting])
 
   return <>{children}</>;
 };

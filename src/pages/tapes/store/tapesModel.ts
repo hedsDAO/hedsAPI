@@ -1,3 +1,4 @@
+import { TrackMetadata } from './../../../models/common';
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';
@@ -10,6 +11,8 @@ export interface TapeState {
   currentTape: TapeAndTrackData;
   hedsTapes: HedsTapes;
   collabTapes: CollabTapes;
+  currentCollabTape: TapeAndTrackData;
+  latestCollabTape: TapeAndTrackData;
   spaceTapeId: [string, string, string];
 }
 
@@ -29,7 +32,6 @@ export const tapesModel = createModel<RootModel>()({
     selectCurrentTapeId() {
       return slice((tapesModel) => tapesModel?.spaceTapeId?.[2]);
     },
-
     // Current Tape Data
     selectCurrentTape() {
       return slice((tapesModel) => tapesModel?.currentTape);
@@ -82,20 +84,60 @@ export const tapesModel = createModel<RootModel>()({
       });
     },
 
-    // Global: get all hHdsTapes
+    // CollabTape Data
+    selectCurrentCollabTape() {
+      return slice((collabModel) => collabModel?.currentCollabTape);
+    },
+    selectLatestCollabTape() {
+      return slice((collabModel) => collabModel?.latestCollabTape);
+    },
+    // Current CollabTape
+    selectCurrentCollabTapeCurator() {
+      return createSelector(this.selectCurrentCollabTape, (tape): User => tape.curator);
+    },
+    selectCurrentCollabTapeName() {
+      return createSelector(this.selectCurrentCollabTape, (tape): string => tape.name || '');
+    },
+    selectCurrentCollabTapeDescription() {
+      return createSelector(this.selectCurrentCollabTape, (tape): string => tape.description || '');
+    },
+    selectCurrentCollabTapeCover() {
+      return createSelector(this.selectCurrentCollabTape, (tape): string => tape.image || '');
+    },
+    selectCurrentCollabTapeEtherscanLink() {
+      return createSelector(this.selectCurrentCollabTape, (tape): string => tape.etherscan || '');
+    },
+    selectCurrentCollabTapeOpenseaLink() {
+      return createSelector(this.selectCurrentCollabTape, (tape): string => tape.opensea || '');
+    },
+    selectCurrentCollabTapeContract() {
+      return createSelector(this.selectCurrentCollabTape, (tape): string => tape.contract || '');
+    },
+    selectCurrentCollabTapeTracks() {
+      return createSelector(this.selectCurrentCollabTape, (tape): User[] => tape.tracks || []);
+    },
+    selectCurrentCollabTapeTimeline() {
+      return createSelector(this.selectCurrentCollabTape, (tape): Timeline => tape.timeline);
+    },
+    // Global
     selectAllHedsTapes() {
       return slice((tapesModel) => tapesModel.hedsTapes);
+    },
+    selectAllCollabTapes() {
+      return slice((tapesModel) => tapesModel.collabTapes);
     },
   }),
   reducers: {
     setAllTapes: (state, allTapes) => ({ ...state, allTapes }),
     setTapeTypes: (state, tapeTypes) => ({ ...state, tapeTypes }),
     setHedsTapes: (state, hedsTapes) => ({ ...state, hedsTapes }),
-    setCollabTapes: (state, collabTapes) => ({ ...state, collabTapes }),
+    setCollabTapes: (state, collabTapes: CollabTapes) => ({ ...state, collabTapes }),
+    setCurrentCollabTape: (state, currentCollabTape) => ({ ...state, currentCollabTape }),
+    setLatestCollabTape: (state, latestCollabTape) => ({ ...state, latestCollabTape }),
     setCurrentTape: (state, currentTape) => ({ ...state, currentTape }),
     setSpaceTapeId: (state, [space, tape, id]: [string, string, string]) => ({ ...state, spaceTapeId: [space, tape, id] }),
   },
-  effects: () => ({
+  effects: (dispatch) => ({
     async getHedsTapes() {
       const docRef = doc(db, 'tapes', 'hedstape');
       const docSnap = await getDoc(docRef);
@@ -104,7 +146,11 @@ export const tapesModel = createModel<RootModel>()({
     async getCollabTapes() {
       const docRef = doc(db, 'tapes', 'collabtape');
       const docSnap = await getDoc(docRef);
-      docSnap.exists() ? this.setCollabTapes(docSnap.data()) : null;
+      if (docSnap.exists()) {
+        const latestCollabTape = Object.values(docSnap.data())[Object.keys(docSnap.data()).length - 1];
+        this.setCollabTapes(docSnap.data());
+        this.setLatestCollabTape(latestCollabTape);
+      }
     },
     async getHedsTapeArtists([hedsTape, artistMapping]: [TapeData, ArtistMapping]) {
       if (hedsTape?.tracks?.length) {
@@ -116,6 +162,5 @@ export const tapesModel = createModel<RootModel>()({
         this.setCurrentTape({ ...hedsTape, curator: curator, tracks: [] });
       }
     },
-    // async getCollabTapeTracks() {},
   }),
 });

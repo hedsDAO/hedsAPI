@@ -112,7 +112,7 @@ export interface HedsTapes {
 }
 
 export interface CollabTapes {
-  [tapeId: string]: TapeData;
+  [tapeId: string]: TapeAndTrackData;
 }
 
 export interface TapeData {
@@ -172,6 +172,10 @@ export interface Timeline {
     end: number;
   };
   mint: {
+    start: number;
+    end: number;
+  };
+  premint?: {
     start: number;
     end: number;
   };

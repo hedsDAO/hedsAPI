@@ -8,7 +8,7 @@ const formWaveSurferOptions = (ref: HTMLDivElement): WaveSurferParams => ({
   barWidth: 1,
   barRadius: 0,
   responsive: true,
-  height: 40,
+  height: 60,
   normalize: true,
   hideScrollbar: true,
 });

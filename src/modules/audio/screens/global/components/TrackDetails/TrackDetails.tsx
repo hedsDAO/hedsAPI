@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 const TrackDetails = () => {
   const { artist, cover, tape, track } = useSelector(store.select.audioModel.selectActiveTrack);
   return (
-    <Flex px={4} h="full" alignItems={'center'} justifyContent={'start'}>
-      <Center w={{ base: '50px', md: '60px' }}>
+    <Flex px={{base: 3, lg: 5}} h="full" alignItems={'center'} justifyContent={'start'}>
+      <Center w={{ base: '70px', md: '80px' }}>
         <Image
           shadow="lg"
           my="auto"

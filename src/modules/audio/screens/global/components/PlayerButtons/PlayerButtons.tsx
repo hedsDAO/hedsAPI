@@ -45,7 +45,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   };
 
   return (
-    <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'center' }} alignItems={'center'} px={4}>
+    <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'end' }} alignItems={'center'} px={4}>
       <IconButton
         disabled={isQueueEmpty && !connectedWallet?.length}
         onClick={() => dispatch.audioModel.setIsShowingQueue(!isShowingQueue)}
@@ -54,7 +54,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         className="hover:scale-125"
         size="sm"
         rounded="sm"
-        bg="transparent"
+        bg="white"
         border="1px"
         borderColor={'gray.500'}
         _hover={{ bg: 'gray.50', borderColor: 'gray.600' }}
@@ -64,7 +64,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         border="1px"
         borderColor={'gray.500'}
         _hover={{ bg: 'gray.200', borderColor: 'gray.600' }}
-        bg={'transparent'}
+        bg={'white'}
         rounded="sm"
         onClick={() => {
           resetTrack();
@@ -73,14 +73,14 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         icon={<i className="fa-solid fa-backward-step"></i>}
       />
       {isLoading ? (
-        <IconButton size="sm" _hover={{ bg: 'gray.100' }} bg={'transparent'} rounded="sm" aria-label="loading" isLoading={true} />
+        <IconButton size="sm" _hover={{ bg: 'gray.100' }} bg={'white'} rounded="sm" aria-label="loading" isLoading={true} />
       ) : isTrackPlaying && wavesurfer?.current?.isPlaying() ? (
         <IconButton
           size="sm"
           border="1px"
           borderColor={'gray.500'}
           _hover={{ bg: 'gray.100', borderColor: 'gray.600' }}
-          bg={'transparent'}
+          bg={'white'}
           rounded="sm"
           onClick={() => {
             dispatch.audioModel.setIsPlaying(false);
@@ -95,7 +95,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
           border="1px"
           borderColor={'gray.500'}
           _hover={{ bg: 'gray.100', borderColor: 'gray.600' }}
-          bg={'transparent'}
+          bg={'white'}
           rounded="sm"
           onClick={() => {
             dispatch.audioModel.setIsPlaying(true);
@@ -110,7 +110,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         border="1px"
         borderColor={'gray.500'}
         _hover={{ bg: 'gray.100', borderColor: 'gray.600' }}
-        bg={'transparent'}
+        bg={'white'}
         rounded="sm"
         onClick={() => {
           dispatch.audioModel.setIsPlaying(false);

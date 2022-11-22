@@ -1,5 +1,5 @@
 import { Divider, Container } from '@chakra-ui/react';
-import { Header, Timeline, Tracks } from '@/pages/listen/components';
+import { Header, Timeline, Tracks } from '@/pages/listen/screens/hedstape/components';
 import { ViewTapesButton } from '@/common/buttons';
 
 export const HedsTape = () => {
