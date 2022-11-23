@@ -197,7 +197,7 @@ export const audioModel = createModel<RootModel>()({
         const updatedUserData = { history: newHistory };
 
         try {
-          console.log(updatedUserData);
+          // console.log(updatedUserData);
           // await updateDoc(userRef, updatedUserData);
           dispatch.audioModel.setListeningHistory({ lastListened, track });
         } catch (e) {

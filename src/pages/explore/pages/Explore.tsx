@@ -10,7 +10,7 @@ export const Explore = () => {
     dispatch.exploreModel.getExploreStats();
   }, []);
   const { stats } = useSelector((state: RootState) => state.exploreModel);
-  const latestTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
+  // const latestTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
 
   return (
     <Fragment>
@@ -43,17 +43,17 @@ export const Explore = () => {
           </div>
         </Box>
       )}
-      {latestTape && (
+      {/* {latestTape && (
         <Container maxW="7xl">
           <div>
             <div className="mx-auto w-full px-4 lg:px-1">
               <Heading fontWeight={'bold'} letterSpacing={'tight'} size={['lg', 'xl']} color={'gray.800'} mt={{ base: 5, lg: 10 }} mb={3} p={1}>
-                {latestTape.name}
+                {latestTape?.name}
               </Heading>
             </div>
           </div>
         </Container>
-      )}
+      )} */}
     </Fragment>
   );
 };
