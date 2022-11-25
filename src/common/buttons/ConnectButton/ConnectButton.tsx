@@ -14,7 +14,7 @@ const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
   return (
     <Flex gap={2}>
       {isConnected && profilePicture ? (
-        <Flex alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
+        <Flex pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
           <Avatar
             className="hover:scale-105 ease-in-out transition-all cursor-pointer"
             onClick={() => navigate(`/u/${address}`)}
@@ -47,7 +47,7 @@ const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
               dispatch.modalModel.setModalOpen(true);
             }
           }}
-          className={`px-6 text-white inline-flex items-center rounded-full tracking-widest text-sm py-1 ${
+          className={`mr-2 px-5 lg:px-6 text-white inline-flex items-center rounded-full tracking-widest text-xs lg:text-sm py-1 ${
             isConnected ? 'bg-black' : 'gradient'
           } hover:bg-neutral-900 ease-linear`}
         >

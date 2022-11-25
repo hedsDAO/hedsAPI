@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ConnectButton } from '@/common/buttons';
 import { Disclosure } from '@headlessui/react';
 import { Box, Flex } from '@chakra-ui/react';
-import { Logo, NavItem, NavLinkContainer, MobileNavButton, MobileNavDropdown, MobileNavItem } from '../../components';
+import { Logo, NavItem, NavLinkContainer, MobileNavButton, MobileNavDropdown, MobileNavItem, AudioSwitch } from '../../components';
 
 const navigation = [
   { name: 'Explore', href: '/explore' },
@@ -25,7 +25,8 @@ const Navbar = () => {
               ))}
             </NavLinkContainer>
           </Flex>
-          <Box display={{ base: 'none', lg: 'flex' }}>
+          <Box alignSelf={'center'} alignItems={'center'} gap={5} display={{ base: 'none', lg: 'flex' }}>
+            <AudioSwitch />
             <ConnectButton />
           </Box>
         </Flex>
@@ -34,7 +35,10 @@ const Navbar = () => {
             <MobileNavButton setIsOpen={setIsOpen} isOpen={isOpen} />
             <Logo text={'heds'} />
           </Flex>
-          <ConnectButton />
+          <Flex gap={4} alignItems={'center'} alignSelf={'center'}>
+            <AudioSwitch />
+            <ConnectButton />
+          </Flex>
         </Flex>
       </Box>
       <MobileNavDropdown isOpen={isOpen}>

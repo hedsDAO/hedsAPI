@@ -25,9 +25,9 @@ export const User = () => {
         <Stack mt={{ base: '0', md: '36' }} direction={'column'} spacing="10" width={'full'}>
           <SplitsBalanceAlert />
           <Tracks />
+          <Submissions />
           <Collection />
           <Samples />
-          <Submissions />
         </Stack>
       </Flex>
     </div>

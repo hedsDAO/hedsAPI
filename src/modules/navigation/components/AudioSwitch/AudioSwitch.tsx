@@ -15,17 +15,21 @@ const AudioSwitch = () => {
         <Switch
           checked={isShowingPlayer}
           onChange={() => dispatch.audioModel.setIsShowingPlayer(!isShowingPlayer)}
-          className={`${isShowingPlayer && !isEmpty(activeTrack) ? 'bg-blue-300' : 'bg-neutral-200'} relative inline-flex h-7 w-12 items-center rounded-sm`}
+          className={`${
+            isShowingPlayer && !isEmpty(activeTrack) ? 'bg-neutral-300' : 'bg-neutral-200'
+          } relative inline-flex h-6 w-11 lg:h-7 lg:w-12 items-center rounded-full`}
         >
           <span
             className={`${
-              isShowingPlayer && !isEmpty(activeTrack) ? 'translate-x-6 bg-blue-100' : 'translate-x-1 bg-neutral-50'
-            } flex items-center text-center justify-center h-5 w-5 transform rounded-sm transition`}
+              isShowingPlayer && !isEmpty(activeTrack) ? 'translate-x-6 bg-neutral-100' : 'translate-x-1 bg-neutral-50'
+            } flex items-center text-center justify-center h-4 w-4 lg:h-5 lg:w-5 transform rounded-full transition`}
           >
-            <i className="fa-solid fa-waveform text-xs my-auto" />
+            <i className="fa-solid fa-music-note text-xs lg:text-xs my-auto" />
           </span>
         </Switch>
       )}
     </Fragment>
   );
 };
+
+export default AudioSwitch;
