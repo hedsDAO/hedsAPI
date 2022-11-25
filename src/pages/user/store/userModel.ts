@@ -5,7 +5,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser } from './utils';
 import { db } from '@/App';
 import { UserRoles, User, HedsTapes } from '@/models/common';
-import { formatUserCollection } from '@/utils';
+import { formatUserCollection, isEmpty } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
 export interface userModelState {
