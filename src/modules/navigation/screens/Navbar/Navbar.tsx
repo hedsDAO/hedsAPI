@@ -43,7 +43,7 @@ const Navbar = () => {
       </Box>
       <MobileNavDropdown isOpen={isOpen}>
         {navigation.map((item) => {
-          return <MobileNavItem key={item.name} item={item} />;
+          return <MobileNavItem key={item.name} item={item} setIsOpen={setIsOpen} />;
         })}
       </MobileNavDropdown>
     </Disclosure>
