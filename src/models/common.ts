@@ -86,11 +86,13 @@ export interface UserListeningHistory {
 }
 
 export interface UserCollection {
-  [key: string]: {
-    name: string;
-    image: string;
-    quantity: number;
-  };
+  [key: string]: UserCollectionItem;
+}
+
+export interface UserCollectionItem {
+  name: string;
+  image: string;
+  quantity: number;
 }
 
 /**
