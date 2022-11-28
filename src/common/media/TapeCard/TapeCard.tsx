@@ -7,7 +7,7 @@ const TapeCard = ({ item, loading }: { item: UserCollectionItem; loading: boolea
     <Stack divider={<Divider />} border={'1px'} borderColor={'gray.200'} rounded="lg" p={2} shadow="md">
       <Skeleton w="full" h="fit-content" rounded="lg" isLoaded={!loading} fadeDuration={1}>
         <div className="relative">
-          <img src={item?.image} className="object-cover aspect-square rounded-lg object-center hover:opacity-75 shadow-md" />
+          <img src={item?.image} className="object-cover aspect-square rounded-lg object-center shadow-md" />
           <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-70 rounded-l-lg">x{item.quantity}</div>
         </div>
       </Skeleton>
