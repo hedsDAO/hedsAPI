@@ -1,4 +1,4 @@
-import { FieldValue } from "firebase/firestore";
+import { FieldValue } from 'firebase/firestore';
 
 /**
  * @name Global
@@ -77,7 +77,7 @@ export interface TrackMetadata {
 
 export interface TrackStats {
   favorites: number;
-  plays: number; 
+  plays: number;
 }
 
 export interface UserListeningHistory {
@@ -116,7 +116,7 @@ export interface CollabTapes {
 }
 
 export interface TapeData {
-  bpm: number,
+  bpm: number;
   contract: string;
   curator: string;
   description: string;
@@ -130,7 +130,7 @@ export interface TapeData {
 }
 
 export interface TapeAndTrackData {
-  bpm: number,
+  bpm: number;
   contract: string;
   curator: User;
   description: string;
