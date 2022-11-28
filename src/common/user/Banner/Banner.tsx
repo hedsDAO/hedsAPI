@@ -7,14 +7,14 @@ const Banner = () => {
   const banner = useSelector(store.select.userModel.selectCurrentUserBanner);
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
-    <Skeleton minHeight={'48'} maxHeight={'48'} minW="fit-content" speed={2} isLoaded={!loading}>
+    <Skeleton startColor='gray.50' endColor='blackAlpha.200' minHeight={'40'} maxHeight={'40'} minW="fit-content" fadeDuration={1} speed={0.5} isLoaded={!loading}>
       <Image
         data-testid="user-banner"
         shadow={'lg'}
         loading="eager"
         src={banner?.length && !loading ? banner : DEFAULT_BANNER_PICTURE}
-        className="object-fit object-cover w-screen -mb-32 bg-gray-600 shadow-sm"
-        h="48"
+        className="object-fit object-cover w-screen -mb-20 bg-gray-600 shadow-sm"
+        h="40"
       />
     </Skeleton>
   );

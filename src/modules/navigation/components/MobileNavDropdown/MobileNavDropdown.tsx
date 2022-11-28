@@ -15,7 +15,7 @@ const MobileNavDropdown = ({ isOpen, children }: { isOpen: boolean; children: Re
       leaveTo="opacity-0 scale-95 "
     >
       <Disclosure.Panel className="lg:hidden bg-transparent border-t">
-        <div className="space-y-1 py-2 mx-2">{children}</div>
+        <div className="space-y-1 py-3 mx-2">{children}</div>
       </Disclosure.Panel>
     </Transition>
   );

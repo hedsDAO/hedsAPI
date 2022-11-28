@@ -30,7 +30,7 @@ const Navbar = () => {
             <ConnectButton />
           </Box>
         </Flex>
-        <Flex py={7} px={4} display={{ base: 'flex', lg: 'none' }} alignItems={'center'} justify={'space-between'}>
+        <Flex py={5} px={4} display={{ base: 'flex', lg: 'none' }} alignItems={'center'} justify={'space-between'}>
           <Flex alignItems={'center'}>
             <MobileNavButton setIsOpen={setIsOpen} isOpen={isOpen} />
             <Logo text={'heds'} />
