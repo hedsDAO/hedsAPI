@@ -45,7 +45,7 @@ const App = (): JSX.Element => {
         <Route path="/collab" element={<Collab />} />
         <Route path="/listen/:space/:tape/:id" element={<Listen />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Fragment>
   );
 };
