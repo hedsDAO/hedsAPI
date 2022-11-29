@@ -1,10 +1,9 @@
 import { Dispatch, store } from '@/store';
 import { formatWallet } from '@/utils';
-import { Avatar, Button, Flex, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import { Badges } from '../';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconSettings } from '@tabler/icons';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 const UserCard = () => {
@@ -20,25 +19,29 @@ const UserCard = () => {
       <VStack minW={'64'} maxW="64">
         {connectedWallet === wallet ? (
           <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture}>
-            <IconButton
+            <Button
+              shadow="md"
               size="sm"
               ml="24"
               mt="20"
+              mr={0}
               position={'absolute'}
               rounded="full"
               border="2px"
               borderColor="white"
               _hover={{ bg: 'gray.50', color: 'gray.500' }}
-              bg="gray.100"
-              textColor={'gray.400'}
-              as={IconSettings}
+              bg="white"
+              textColor={'gray.600'}
+              justifyContent={'center'}
               p={1}
               onClick={() => {
                 dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
                 dispatch.modalModel.setModalOpen(true);
               }}
               aria-label="settings"
-            ></IconButton>
+            >
+              <i className="fa-sharp fa-solid fa-gear"></i>
+            </Button>
           </Avatar>
         ) : (
           <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture} />

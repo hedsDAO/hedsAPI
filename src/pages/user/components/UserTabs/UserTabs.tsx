@@ -2,7 +2,7 @@ import { Dispatch, store } from '@/store';
 import { Box, Container, Divider, Stack, Tab, TabList, Tabs, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Collection, Submissions, Tracks } from '../';
+import { Collection, Submissions, Tracks, Samples } from '../';
 
 const UserTabs = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -15,13 +15,13 @@ const UserTabs = () => {
             <Stack>
               <Tabs defaultIndex={currentTab} onChange={(e) => dispatch.userModel.setCurrentTab(e)} size="sm" variant="with-line">
                 <TabList fontWeight={'medium'} gap={5}>
-                  {['Collection', 'Submissions', 'Tracks'].map((text: string, index: number) =>
+                  {['Collection', 'Submissions', 'Tracks', 'Samples'].map((text: string, index: number) =>
                     currentTab === index ? (
-                      <Tab textColor={'white'} rounded={'full'} bg="blackAlpha.800">
+                      <Tab key={text + index} textColor={'white'} rounded={'full'} bg="blackAlpha.800">
                         {text}
                       </Tab>
                     ) : (
-                      <Tab _hover={{ bg: 'blackAlpha.800', textColor: 'white' }} rounded={'full'}>
+                      <Tab key={text + index} _hover={{ bg: 'blackAlpha.800', textColor: 'white' }} rounded={'full'}>
                         {text}
                       </Tab>
                     ),
@@ -34,7 +34,7 @@ const UserTabs = () => {
 
         <Stack direction={'column'} spacing="2" width={'full'}>
           <Divider border={'1px'} size="md" />
-          {currentTab === 0 ? <Collection /> : currentTab === 1 ? <Submissions /> : <Tracks />}
+          {currentTab === 0 ? <Collection /> : currentTab === 1 ? <Submissions /> : currentTab === 2 ? <Tracks /> : <Samples />}
         </Stack>
       </VStack>
     </Stack>
