@@ -15,7 +15,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Disclosure as={'nav'}>
-      <Box bg={'white'} position={'relative'} zIndex={'20'}>
+      <Box position={'relative'} zIndex={'20'}>
         <Flex py={'16'} px={{ base: 2, lg: 10 }} maxW="6xl" mx="auto" justify={'space-between'} alignItems={'end'} display={{ base: 'none', lg: 'flex' }}>
           <Flex display={{ base: 'none', lg: 'flex' }} alignItems={'baseline'}>
             <Logo text={'heds'} />

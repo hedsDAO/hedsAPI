@@ -5,16 +5,17 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser, clearCurrentUserState } from './utils';
 import { db } from '@/App';
 import { UserRoles, User, HedsTapes } from '@/models/common';
-import { formatUserCollection, isEmpty } from '@/utils';
+import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
 export interface userModelState {
   connectedUser: User;
   currentUser: User;
+  currentTab: number;
 }
 
 export const userModel = createModel<RootModel>()({
-  state: {} as userModelState,
+  state: { currentTab: 0 } as userModelState,
   selectors: (slice, createSelector, hasProps) => ({
     /** Connected User Selectors */
     selectConnectedUser() {
@@ -105,11 +106,16 @@ export const userModel = createModel<RootModel>()({
         (connectedWallet: string, currentWallet: string) => connectedWallet === currentWallet,
       );
     },
+
+    selectCurrentTab() {
+      return slice((userModel): number => userModel.currentTab);
+    },
   }),
   reducers: {
     setUserData: (state, payload) => ({ ...state, ...payload }),
     setCurrentUserData: (state, currentUser: User) => ({ ...state, currentUser }),
     setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),
+    setCurrentTab: (state, currentTab: number) => ({ ...state, currentTab }),
     clearUserState: (state) => clearUserState(state),
     clearConnectedUserState: (state) => clearConnectedUserState(state),
     clearCurrentUserState: (state) => clearCurrentUserState(state),

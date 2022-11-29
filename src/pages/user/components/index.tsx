@@ -5,3 +5,7 @@ export { default as UserCard } from './UserCard/UserCard';
 export { default as Submissions } from './Submissions/Submissions';
 export { default as Collection } from './Collection/Collection';
 export { default as Tracks } from './Tracks/Tracks';
+export { default as Banner } from './Banner/Banner';
+export { default as UserTabs } from './UserTabs/UserTabs';
+export { default as Badges } from './Badges/Badges';
+export { default as RefreshCollectionButton } from './RefreshCollectionButton/RefreshCollectionButton';

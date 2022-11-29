@@ -1,9 +1,9 @@
-import { Dispatch, RootState, store } from '@/store';
+import { Dispatch, store } from '@/store';
 import { formatWallet } from '@/utils';
-import { Avatar, AvatarBadge, Button, Flex, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
+import { Badges } from '../';
 import { useDispatch, useSelector } from 'react-redux';
-import { Badges } from '@/common/user';
 import { IconSettings } from '@tabler/icons';
 import { Modals } from '@/modules/modals/store/modalModel';
 

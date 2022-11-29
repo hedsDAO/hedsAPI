@@ -1,9 +1,9 @@
 import { Flex, Grid, GridItem, Stack, Text } from '@chakra-ui/react';
-import { RefreshCollectionButton } from '@/common/user';
 import { formatWallet, isEmpty } from '@/utils';
 import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { TapeCard } from '@/common/media';
+import { RefreshCollectionButton } from '../';
 
 const Collection = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);

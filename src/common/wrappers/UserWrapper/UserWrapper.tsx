@@ -16,6 +16,7 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   const handleFetchUserData = useCallback(() => {
     if (wallet) dispatch.userModel.getCurrentUserData(wallet.toLowerCase());
     if (wallet?.toLowerCase() === address?.toLowerCase()) dispatch.userModel.getConnectedUserData(wallet);
+    if (!pathname.includes('/u')) dispatch.userModel.clearCurrentUserState();
   }, [wallet, pathname, status]);
 
   useEffect(() => {
@@ -30,8 +31,8 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   }, [isDisconnected]);
 
   useEffect(() => {
-    if (address && isReconnecting) dispatch.userModel.getConnectedUserData(address.toLowerCase())
-  }, [isReconnecting])
+    if (address && isReconnecting) dispatch.userModel.getConnectedUserData(address.toLowerCase());
+  }, [isReconnecting]);
 
   return <>{children}</>;
 };
