@@ -1,8 +1,7 @@
 import { Dispatch, store } from '@/store';
-import { formatWallet } from '@/utils';
 import { Avatar, Button, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
-import { Badges } from '../';
+import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modals } from '@/modules/modals/store/modalModel';
 
@@ -10,14 +9,12 @@ const UserCard = () => {
   const dispatch = useDispatch<Dispatch>();
   const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
   const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
-  const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
-  const twitterHandle = useSelector(store.select.userModel.selectCurrentUserTwitterHandle);
   const description = useSelector(store.select.userModel.selectCurrentUserDescription);
-  const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   return (
     <Fragment>
       <VStack minW={'64'} maxW="64">
-        {connectedWallet === wallet ? (
+        {isOwnPage ? (
           <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture}>
             <Button
               shadow="md"
@@ -55,13 +52,9 @@ const UserCard = () => {
           </Text>
           <Badges />
         </Flex>
-        <Flex pt={6} gap={1} alignItems={'center'} direction="column">
-          <Button leftIcon={<i className="fa-solid fa-copy text-xs"></i>} variant="outline" fontWeight={'light'} size="xs">
-            {formatWallet(wallet)}
-          </Button>
-          <Button leftIcon={<i className="fa-brands fa-twitter text-xs"></i>} variant="outline" fontWeight={'light'} size="xs">
-            @{twitterHandle}
-          </Button>
+        <Flex pt={6} gap={1} alignItems={'center'} justifyContent="center" direction="column">
+          <WalletButton />
+          <TwitterButton />
         </Flex>
       </VStack>
     </Fragment>

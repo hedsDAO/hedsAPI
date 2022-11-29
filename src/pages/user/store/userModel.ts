@@ -155,9 +155,9 @@ export const userModel = createModel<RootModel>()({
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;
-      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { userData, ...newUserData });
-      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { userData, ...newUserData });
-      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { userData, ...newUserData });
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, ...newUserData });
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, ...newUserData });
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, ...newUserData });
       this.setCurrentUserData({ ...userData, ...newUserData });
     },
     async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {

@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, VStack } from '@chakra-ui/react';
 import { UserCard, UserTabs, Banner } from '../components';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,7 @@ export const User = () => {
         px={{ base: '5', lg: '2' }}
         alignItems={{ base: 'center', lg: 'normal' }}
         direction={{ base: 'column', lg: 'row' }}
-        gap={10}
+        gap={{ lg: 10 }}
         mx={'auto'}
         maxW={'6xl'}
       >
