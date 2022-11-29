@@ -7,7 +7,7 @@ import { Box, Divider, HStack, StackDivider } from '@chakra-ui/react';
 
 export const Landing = () => {
   return (
-    <Parallax pages={4} style={{ top: '0', left: '0', height: '100vh' }}>
+    <Parallax pages={5} style={{ top: '0', left: '0', height: '100vh' }}>
       <ParallaxLayer
         offset={0}
         style={{
@@ -17,7 +17,6 @@ export const Landing = () => {
       <ParallaxLayer offset={0}>
         <video playsInline autoPlay muted loop src="/hedsbackground.mp4" />
       </ParallaxLayer>
-
       <ParallaxLayer
         offset={1}
         speed={-0.1}
@@ -25,22 +24,27 @@ export const Landing = () => {
           backgroundColor: 'black',
         }}
       />
-
       <ParallaxLayer
         offset={2}
         style={{
           backgroundColor: '#e3e2d4',
+          height: '20%',
         }}
-      ></ParallaxLayer>
-
+      />
       <ParallaxLayer
-        offset={2.2}
-        speed={1}
+        offset={2.35}
+        speed={0.5}
         style={{
           backgroundColor: '#493e68',
-          height: '160%',
+          height: '80%',
         }}
-      ></ParallaxLayer>
+      />
+      <ParallaxLayer
+        offset={3}
+        style={{
+          backgroundColor: 'black',
+        }}
+      />
 
       <ParallaxLayer
         offset={0}
@@ -110,28 +114,26 @@ export const Landing = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           alignItems: 'center',
+          height: '20%',
+          marginTop: '3em',
         }}
       >
-        <div className="flex flex-row">
+        <div className="flex flex-row mt-20em">
           <p>THE</p>
           <p className="text-9xl font-bold">hedsTAPE</p>
           <p className="mt-auto">SERIES</p>
         </div>
         <p>curated samples from world renowned creatives</p>
-      </ParallaxLayer>
-
-      <ParallaxLayer offset={2.5} speed={-0.1} style={{ display: 'flex', justifyContent: 'center' }}>
         <div className="w-6/12">
           <img src="/hedspin.gif" />
         </div>
       </ParallaxLayer>
 
-      <ParallaxLayer offset={3.3}>
-        <Divider colorScheme="gray.200" />
-        <HStack divider={<StackDivider borderColor="gray.200" />} h="100%">
-          <Box w="50%" h="100%" padding="5em">
+      <ParallaxLayer offset={2.6}>
+        <Divider />
+        <HStack divider={<StackDivider borderColor="gray.400" />} h="40%">
+          <Box w="50%" h="100%" padding="5em" alignItems="center">
             <HStack spacing="2px">
               <Box paddingLeft="5em">
                 <Number inputNum={56} />
@@ -145,7 +147,7 @@ export const Landing = () => {
           </Box>
           <Box w="50%" h="100%" padding="5em">
             <Number inputNum={420} />
-            <p>average artist earnings per tape</p>
+            <Box>average artist earnings per tape</Box>
           </Box>
         </HStack>
       </ParallaxLayer>

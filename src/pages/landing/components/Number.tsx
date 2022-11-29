@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSpring, animated, config } from 'react-spring';
 import { Waypoint } from 'react-waypoint';
+import { Center } from '@chakra-ui/react';
 
 interface OwnProps {
   inputNum: number;
@@ -20,9 +21,9 @@ export const Number = ({ inputNum }: OwnProps) => {
 
   return (
     <Waypoint onEnter={() => setInView(true)}>
-      <div className="flex justify-center w-2/4">
+      <Center>
         <animated.p style={{ fontSize: '8em', fontWeight: 'bold', color: 'white' }}>{number.to((num) => Math.round(num))}</animated.p>
-      </div>
+      </Center>
     </Waypoint>
   );
 };
