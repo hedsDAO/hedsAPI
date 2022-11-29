@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { useSpring, animated } from 'react-spring';
+import { Divider } from '@chakra-ui/react';
 
 export const Landing = () => {
-  const props = useSpring({ to: { opacity: 1 }, from: { opacity: 0 }, delay: 800 });
-
   return (
     <Parallax pages={4} style={{ top: '0', left: '0', height: '100vh' }}>
       <ParallaxLayer
@@ -107,34 +105,49 @@ export const Landing = () => {
       </ParallaxLayer>
 
       <ParallaxLayer
-        offset={2}
-        speed={1.5}
+        offset={1.9}
+        speed={0.2}
         style={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          fontSize: '20px',
-          fontWeight: '100',
-          color: 'white',
         }}
       >
-        <p>the hedstape series.</p>
+        <div className="flex flex-row">
+          <p>THE</p>
+          <p className="text-9xl font-bold">hedsTAPE</p>
+          <p className="mt-auto">SERIES</p>
+        </div>
+
+        <p>curated samples from world renowned creatives</p>
       </ParallaxLayer>
 
-      <ParallaxLayer offset={2.2} speed={-0.1}>
-        <img src="/hedspin.gif" />
+      <ParallaxLayer offset={2.2} speed={-0.1} style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="w-6/12">
+          <img src="/hedspin.gif" />
+        </div>
       </ParallaxLayer>
 
-      <ParallaxLayer offset={3.3} style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-        <Number inputNum={56} />
-        <p>unique artists</p>
-        <p>
-          heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to experiment
-          freely.
-        </p>
-        <p>average artist earnings per tape</p>
-        <Number inputNum={420} />
+      <ParallaxLayer offset={3}>
+        <Divider />
+      </ParallaxLayer>
+
+      <ParallaxLayer offset={3.3}>
+        <div>
+          <Number inputNum={56} />
+          <p>unique artists</p>
+        </div>
+        <div>
+          <p>
+            heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
+            experiment freely.
+          </p>
+        </div>
+        <div>
+          <Number inputNum={420} />
+          <p>average artist earnings per tape</p>
+        </div>
       </ParallaxLayer>
     </Parallax>
   );
