@@ -26,7 +26,7 @@ body {
 .navbar-parent li {
   display: inline-block;
   list-style: outside none none;
-  margin: 0 1em;
+  margin: 0 0.9em;
   padding: 0;
 }
 .navbar-parent a {

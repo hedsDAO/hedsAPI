@@ -57,6 +57,28 @@ export const clearConnectedUserState = (state: userModelState): userModelState =
     },
   };
 };
+export const clearCurrentUserState = (state: userModelState): userModelState => {
+  const empty: User = {
+    profilePicture: '',
+    banner: '',
+    twitterHandle: '',
+    badges: [],
+    description: '',
+    displayName: '',
+    role: 0,
+    wallet: '',
+    samples: {},
+    tracks: {},
+    submissions: {},
+    collection: {},
+  };
+  const newState = { ...state };
+  const connectedUserState = newState.connectedUser;
+  return {
+    currentUser: empty,
+    connectedUser: connectedUserState,
+  };
+};
 
 /**
  * @function populateNewUser
