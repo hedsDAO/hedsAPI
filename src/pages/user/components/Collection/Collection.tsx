@@ -12,17 +12,21 @@ const Collection = () => {
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   return (
     <Stack data-testid="user-collection-container">
-      <Flex py={2} justifyContent={'space-between'}>
-        <Flex px={2}>
-          <Text fontWeight={'medium'} fontStyle="italic" letterSpacing={'tight'} textColor={'gray.700'}>
-            {displayName || formatWallet(wallet)}
-          </Text>
-          <Text fontWeight={'light'} fontStyle="italic" letterSpacing={'tight'} textColor={'gray.700'}>
-            's collection
-          </Text>
-        </Flex>
+      {/* <Flex py={2} justifyContent={'space-between'}>
+         {displayName || wallet ? (
+          <Flex px={2}>
+            <Text fontWeight={'medium'} fontStyle="italic" letterSpacing={'tight'} textColor={'gray.700'}>
+              {displayName || formatWallet(wallet)}
+            </Text>
+            <Text fontWeight={'light'} fontStyle="italic" letterSpacing={'tight'} textColor={'gray.700'}>
+              's collection
+            </Text>
+          </Flex>
+        ) : (
+          <></>
+        )} 
         <RefreshCollectionButton />
-      </Flex>
+      </Flex> */}
       {!isEmpty(collection) ? (
         <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)' }} gap={2}>
           {Object.values(collection).map((collectionItem, i) => {
