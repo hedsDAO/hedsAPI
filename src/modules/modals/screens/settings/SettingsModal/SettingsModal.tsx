@@ -19,7 +19,7 @@ const SettingsModal = () => {
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
     return () => {
-      dispatch.userModel.getConnectedUserData(connectedUser.wallet);
+      if (JSON.stringify(profileChanges) !== JSON.stringify(connectedUser)) dispatch.userModel.getConnectedUserData(connectedUser.wallet);
       dispatch.settingsModel.clearProfileModalState();
     };
   }, []);
