@@ -51,6 +51,7 @@ const UserModal = () => {
         <IconButton
           onClick={() => {
             disconnect();
+            dispatch.userModel.clearConnectedUserState()
             dispatch.modalModel.setModalOpen(false);
           }}
           as={IconPower}

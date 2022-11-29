@@ -47,7 +47,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   return (
     <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'end' }} alignItems={'center'} px={4}>
       <IconButton
-        disabled={isQueueEmpty && !connectedWallet?.length}
+        disabled={isQueueEmpty || !connectedWallet?.length}
         onClick={() => dispatch.audioModel.setIsShowingQueue(!isShowingQueue)}
         aria-label="queue"
         icon={<i className="fa-solid fa-layer-group"></i>}

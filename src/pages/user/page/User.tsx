@@ -33,7 +33,9 @@ export const User = () => {
                             {text}
                           </Tab>
                         ) : (
-                          <Tab>{text}</Tab>
+                          <Tab _hover={{ bg: 'blackAlpha.800', textColor: 'white' }} rounded={'full'}>
+                            {text}
+                          </Tab>
                         ),
                       )}
                     </TabList>
@@ -49,30 +51,3 @@ export const User = () => {
     </Box>
   );
 };
-
-{
-  /* <Flex maxWidth={'7xl'} mx={'auto'} flexDirection={['column', 'column', 'row', 'row']} gap={[2, 4, 8, 12]} px={[12, 8, 4, 2]} py={2}>
-        <Stack direction={'column'}>
-
-          <ProfilePicture />
-          <SettingsButton />
-          <Flex flexDirection={'column'} gap={6} pt={2} alignItems={'start'}>
-            <Badges />
-            <DisplayName />
-          </Flex>
-          <Description />
-          <Flex alignItems={'end'} direction={'row'} gap={2} pt={2}>
-            <TwitterLinkButton />
-            <CopyWalletButton />
-            <VerifyTwitterButton />
-          </Flex>
-        </Stack>
-        <Stack mt={{ base: '0', md: '28' }} direction={'column'} spacing="10" width={'full'}>
-          <SplitsBalanceAlert />
-          <Tracks />
-          <Submissions />
-          <Collection />
-          <Samples />
-        </Stack>
-      </Flex> */
-}
