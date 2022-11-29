@@ -7,7 +7,7 @@ interface OwnProps {
 }
 
 export const Number = ({ inputNum }: OwnProps) => {
-  const [inView, setInview] = useState(false);
+  const [inView, setInView] = useState(false);
 
   const { number } = useSpring({
     number: inputNum,
@@ -19,7 +19,7 @@ export const Number = ({ inputNum }: OwnProps) => {
   });
 
   return (
-    <Waypoint onEnter={() => setInview(true)}>
+    <Waypoint onEnter={() => setInView(true)}>
       <div className="flex justify-center w-2/4">
         <animated.p style={{ fontSize: '12em', fontWeight: 'bold', color: 'white' }}>{number.to((num) => Math.round(num))}</animated.p>
       </div>
