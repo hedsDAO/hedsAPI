@@ -2,10 +2,18 @@ import { Box, Container, Divider, Flex, Stack, Tab, TabList, Tabs, VStack } from
 import { CopyWalletButton, TwitterLinkButton } from '@/common/buttons';
 import { SettingsButton, VerifyTwitterButton, SplitsBalanceAlert, UserCard, Submissions, Collection, Tracks } from '../components';
 import { ProfilePicture, DisplayName, Description, Badges, Samples, Banner } from '@/common/user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from '@/store';
 
 export const User = () => {
+  const dispatch = useDispatch<Dispatch>();
   const [currentTab, setCurrentTab] = useState<number>(0);
+  useEffect(() => {
+    return () => {
+      dispatch.userModel.clearCurrentUserState();
+    };
+  }, []);
   return (
     <Box>
       <Banner />
