@@ -158,7 +158,7 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { userData, ...newUserData });
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { userData, ...newUserData });
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { userData, ...newUserData });
-      this.setCurrentUserData({ userData, ...newUserData });
+      this.setCurrentUserData({ ...userData, ...newUserData });
     },
     async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
       const collection = formatUserCollection(data, hedsTapes);

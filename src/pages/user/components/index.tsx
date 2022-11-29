@@ -9,3 +9,4 @@ export { default as Banner } from './Banner/Banner';
 export { default as UserTabs } from './UserTabs/UserTabs';
 export { default as Badges } from './Badges/Badges';
 export { default as RefreshCollectionButton } from './RefreshCollectionButton/RefreshCollectionButton';
+export { default as Samples } from './Samples/Samples';
