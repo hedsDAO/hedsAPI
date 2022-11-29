@@ -10,12 +10,6 @@ const Collection = () => {
 
   return (
     <Stack data-testid="user-collection-container">
-      <Flex justifyContent={'space-between'} alignItems="center">
-        <Heading color={'gray.700'} fontSize={'3xl'}>
-          Collection
-        </Heading>
-        <RefreshCollectionButton />
-      </Flex>
       <Divider pt={0} mt={0} border={'1px'} size="md" />
       {!isEmpty(collection) ? (
         <Grid className="py-2" templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }} gap={4}>

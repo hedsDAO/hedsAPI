@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { Navigation, Footer } from '@/common/navs';
 import { Explore } from '@/pages/explore/pages/Explore';
 import { Artists } from '@/pages/artists/page/Artists';
 import { Tapes } from '@/pages/tapes/page/Tapes';
@@ -11,6 +10,7 @@ import { Collab } from '@/pages/collab/page/Collab';
 import { User } from '@/pages/user/page/User';
 import { Listen } from '@/pages/listen/page/Listen';
 import { Landing } from '@pages/landing/page/Landing';
+import { Navbar, Footer } from './modules/navigation/screens';
 
 const firebaseConfig = {
   apiKey: process.env.FB_DEV_API,
@@ -33,9 +33,9 @@ const App = (): JSX.Element => {
     <Landing />
   ) : (
     <Fragment>
-      <Navigation />
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        {/* <Route path="/" element={<Landing />} /> */}
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/artists" element={<Artists />} />
