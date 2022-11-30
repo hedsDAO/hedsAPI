@@ -8,9 +8,14 @@ interface OwnProps {
 
 export const FadeOutDown = ({ text }: OwnProps) => {
   const [inView, setInView] = useState<boolean>(true);
-  const props = useSpring({ from: { opacity: 1 }, to: { opacity: 0 }, delay: 500, reset: true, reverse: inView, onRest: () => setInView(!inView) });
+  const [styles, api] = useSpring(() => ({ opacity: 1 }));
+  api.start({ opacity: inView ? 1 : 0 });
+  // api.stop();
+  // console.log(inView);
+
+  const props = useSpring({ from: { opacity: 1 }, to: { opacity: 0 }, reset: true, reverse: inView, onRest: () => setInView(!inView) });
   return (
-    // <Waypoint onLeave={() => setInView(!inView)}>
+    // <Waypoint onPositionChange={() => console.log('changed')}>
     <animated.p style={props}>{text}</animated.p>
     // </Waypoint>
   );
