@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { TwitterModal, SettingsModal, NameModal, SampleModal, SubmitModal, MintModal, ConnectModal, UserModal } from '@/modules/modals/screens';
 
-const ModalWrapper = ({ children }: { children: JSX.Element }) => {
+const ModalWrapper = ({ children }: { children: React.ReactNode }) => {
   const { currentModal, isOpen } = useSelector((state: RootState) => state.modalModel);
   useEffect(() => {}, [isOpen, currentModal]);
   return (

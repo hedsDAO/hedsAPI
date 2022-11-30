@@ -1,68 +1,54 @@
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { Dispatch, RootState, store } from '@/store';
-import { Container, Flex, IconButton } from '@chakra-ui/react';
+import { Avatar, Button, color, Container, Divider, Flex, Heading, HStack, IconButton, Text, useColorMode } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconHomeCog, IconPower } from '@tabler/icons';
 import { formatWallet } from '@/utils';
-import { useDisconnect } from 'wagmi';
+import { useAccount, useDisconnect, useEnsName } from 'wagmi';
 import { Switch } from '@headlessui/react';
-import { useEffect, useState } from 'react';
 
 const UserModal = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
-  const [enabled, setEnabled] = useState<boolean>(false);
   const { disconnect } = useDisconnect();
-  const toggleTheme = () => {
-    setEnabled(!enabled);
-    if (localStorage.getItem('color-theme')) {
-      if (localStorage.getItem('color-theme') === 'light') {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-      }
-    } else {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (!localStorage.getItem('color-theme')) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('color-theme', 'light');
-    } else if (localStorage.getItem('color-theme') === 'light') {
-      setEnabled(false);
-    } else setEnabled(true);
-  }, []);
+  const { address } = useAccount();
+  const { data: ensName } = useEnsName({ address: address });
 
   return (
     <ModalContainer size={'sm'} isOpen={isOpen} setModalOpen={(isOpen: boolean) => dispatch.modalModel.setModalOpen(isOpen)}>
-      <ModalHeader Icon={IconHomeCog} title={formatWallet(wallet)} />
+      <ModalHeader Icon={IconHomeCog} title={'Account'} />
       <Flex direction={'column'} alignItems={'center'} justifyContent="center">
-        <IconButton
+        <Heading mb={2} fontSize={'md'}>
+          Connected:
+        </Heading>
+        <Text mb={4}>{ensName || formatWallet(address)}</Text>
+        <Button
+          size="sm"
+          variant={'outline'}
           onClick={() => {
             disconnect();
-            dispatch.userModel.clearConnectedUserState()
+            dispatch.userModel.clearConnectedUserState();
             dispatch.modalModel.setModalOpen(false);
           }}
-          as={IconPower}
+          leftIcon={<IconPower height="18" width="18" />}
           aria-label="disconnect"
-        />
-        <Switch checked={enabled} onChange={() => toggleTheme()} className={`relative inline-flex h-6 w-11 lg:h-7 lg:w-12 items-center rounded-full`}>
-          <span
-            className={`${
-              enabled ? 'translate-x-6 bg-neutral-900' : 'translate-x-1 bg-neutral-900'
-            } flex items-center text-center justify-center h-4 w-4 lg:h-5 lg:w-5 transform rounded-full transition`}
-          ></span>
+        >
+          disconnect
+        </Button>
+        <Divider my={5} />
+        <Heading mb={2} fontSize={'md'}>
+          Experimental:
+        </Heading>
+        <Text mb={4}>{'dark mode'}</Text>
+        <Switch
+          checked={colorMode === 'dark'}
+          onChange={toggleColorMode}
+          className={`${colorMode === 'dark' ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+        >
+          <span className="sr-only">Enable notifications</span>
+          <span className={`${colorMode === 'dark' ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`} />
         </Switch>
       </Flex>
     </ModalContainer>

@@ -6,11 +6,12 @@ import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 import { TapeWrapper, UserWrapper } from '@/common/wrappers';
 import { ModalWrapper } from '@/modules/modals/components';
 import { AudioWrapper } from '@/modules/audio/components';
 import { store } from './store';
+import { theme } from './theme';
 import App from '@/App';
 
 import 'animate.css';
@@ -38,12 +39,13 @@ const client = createClient({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
     <RematchProvider store={store}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <BrowserRouter>
           <UserWrapper>
             <TapeWrapper>
               <AudioWrapper>
                 <ModalWrapper>
+                  <ColorModeScript initialColorMode={theme.config.initialColorMode} />
                   <App />
                 </ModalWrapper>
               </AudioWrapper>

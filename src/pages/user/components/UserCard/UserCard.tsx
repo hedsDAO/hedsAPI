@@ -1,44 +1,44 @@
-import { Dispatch, RootState, store } from '@/store';
-import { formatWallet } from '@/utils';
-import { Avatar, AvatarBadge, Button, Flex, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Dispatch, store } from '@/store';
+import { Avatar, Button, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
+import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
-import { Badges } from '@/common/user';
-import { IconSettings } from '@tabler/icons';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 const UserCard = () => {
   const dispatch = useDispatch<Dispatch>();
   const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
   const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
-  const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
-  const twitterHandle = useSelector(store.select.userModel.selectCurrentUserTwitterHandle);
   const description = useSelector(store.select.userModel.selectCurrentUserDescription);
-  const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   return (
     <Fragment>
       <VStack minW={'64'} maxW="64">
-        {connectedWallet === wallet ? (
+        {isOwnPage ? (
           <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture}>
-            <IconButton
+            <Button
+              shadow="md"
               size="sm"
               ml="24"
               mt="20"
+              mr={0}
               position={'absolute'}
               rounded="full"
               border="2px"
               borderColor="white"
               _hover={{ bg: 'gray.50', color: 'gray.500' }}
-              bg="gray.100"
-              textColor={'gray.400'}
-              as={IconSettings}
+              bg="white"
+              textColor={'gray.600'}
+              justifyContent={'center'}
               p={1}
               onClick={() => {
                 dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
                 dispatch.modalModel.setModalOpen(true);
               }}
               aria-label="settings"
-            ></IconButton>
+            >
+              <i className="fa-sharp fa-solid fa-gear"></i>
+            </Button>
           </Avatar>
         ) : (
           <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture} />
@@ -52,13 +52,9 @@ const UserCard = () => {
           </Text>
           <Badges />
         </Flex>
-        <Flex pt={6} gap={1} alignItems={'center'} direction="column">
-          <Button leftIcon={<i className="fa-solid fa-copy text-xs"></i>} variant="outline" fontWeight={'light'} size="xs">
-            {formatWallet(wallet)}
-          </Button>
-          <Button leftIcon={<i className="fa-brands fa-twitter text-xs"></i>} variant="outline" fontWeight={'light'} size="xs">
-            @{twitterHandle}
-          </Button>
+        <Flex pt={6} gap={1} alignItems={'center'} justifyContent="center" direction="column">
+          <WalletButton />
+          <TwitterButton />
         </Flex>
       </VStack>
     </Fragment>

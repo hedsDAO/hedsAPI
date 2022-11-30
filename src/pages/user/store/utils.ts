@@ -26,6 +26,7 @@ export const clearUserState = (state: userModelState): userModelState => {
   return {
     connectedUser: empty,
     currentUser: empty,
+    currentTab: 0,
   };
 };
 
@@ -55,6 +56,7 @@ export const clearConnectedUserState = (state: userModelState): userModelState =
       submissions: {},
       collection: {},
     },
+    currentTab: 0,
   };
 };
 export const clearCurrentUserState = (state: userModelState): userModelState => {
@@ -77,6 +79,7 @@ export const clearCurrentUserState = (state: userModelState): userModelState => 
   return {
     currentUser: empty,
     connectedUser: connectedUserState,
+    currentTab: 0,
   };
 };
 
