@@ -4,6 +4,7 @@ import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
 import { Box, Center, Container, Divider, Grid, GridItem, HStack, StackDivider } from '@chakra-ui/react';
+import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 
 export const Landing = () => {
   return (
@@ -27,7 +28,6 @@ export const Landing = () => {
       </ParallaxLayer>
       <ParallaxLayer
         offset={1}
-        speed={-0.1}
         style={{
           backgroundColor: 'black',
         }}
@@ -127,12 +127,7 @@ export const Landing = () => {
           marginTop: '3em',
         }}
       >
-        <div className="flex flex-row mt-20em">
-          <p>THE</p>
-          <p className="text-9xl font-bold">hedsTAPE</p>
-          <p className="mt-auto">SERIES</p>
-        </div>
-        <p>curated samples from world renowned creatives</p>
+        <HedsTapeTitle />
         <Container maxW="40%">
           <img src="/hedspin.gif" />
         </Container>
@@ -140,14 +135,14 @@ export const Landing = () => {
 
       <ParallaxLayer offset={2.6}>
         <Divider />
-        <HStack divider={<StackDivider borderColor="gray.400" />} h="40%">
-          <Box w="50%" h="100%" padding="5em" alignItems="center" fontFamily="mono" color="white">
+        <HStack divider={<StackDivider borderColor="gray.400" />} h="30%">
+          <Box w="50%" h="100%" padding="5em" alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
                 <Number inputNum={56} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize="sm">
+                <Center h="100%" fontSize="sm">
                   heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
                   experiment freely.
                 </Center>
@@ -157,10 +152,10 @@ export const Landing = () => {
               </GridItem>
             </Grid>
           </Box>
-          <Box w="50%" h="100%" padding="5em" fontFamily="mono" color="white">
+          <Box w="50%" h="100%" padding="5em" paddingTop="3em" fontFamily="mono" color="white">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={420} />
+                <Number inputNum={420} dollar />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
                 <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize="md">
@@ -175,6 +170,21 @@ export const Landing = () => {
             </Grid>
           </Box>
         </HStack>
+        <Center marginTop="1rem">
+          <Box
+            as="button"
+            p={4}
+            color="white"
+            fontWeight="bold"
+            borderRadius="lg"
+            bgGradient="linear(to-l, #572682, #FFB9AB)"
+            _hover={{
+              bgGradient: 'linear(to-l, #581394, #FF8269)',
+            }}
+          >
+            <Link to="/artists">explore</Link>
+          </Box>
+        </Center>
       </ParallaxLayer>
     </Parallax>
   );

@@ -5,9 +5,10 @@ import { Center } from '@chakra-ui/react';
 
 interface OwnProps {
   inputNum: number;
+  dollar?: boolean;
 }
 
-export const Number = ({ inputNum }: OwnProps) => {
+export const Number = ({ inputNum, dollar }: OwnProps) => {
   const [inView, setInView] = useState(false);
 
   const { number } = useSpring({
@@ -21,8 +22,9 @@ export const Number = ({ inputNum }: OwnProps) => {
 
   return (
     <Waypoint onEnter={() => setInView(true)}>
-      <Center>
-        <animated.p style={{ fontSize: '8em', fontWeight: 'bold', color: 'white' }}>{number.to((num) => Math.round(num))}</animated.p>
+      <Center fontSize="8rem" fontWeight="bold" color="white">
+        {dollar && <p>$</p>}
+        <animated.p>{number.to((num) => Math.round(num))}</animated.p>
       </Center>
     </Waypoint>
   );
