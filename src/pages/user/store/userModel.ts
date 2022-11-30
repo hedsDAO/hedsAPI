@@ -5,16 +5,17 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser, clearCurrentUserState } from './utils';
 import { db } from '@/App';
 import { UserRoles, User, HedsTapes } from '@/models/common';
-import { formatUserCollection, isEmpty } from '@/utils';
+import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
 export interface userModelState {
   connectedUser: User;
   currentUser: User;
+  currentTab: number;
 }
 
 export const userModel = createModel<RootModel>()({
-  state: {} as userModelState,
+  state: { currentTab: 0 } as userModelState,
   selectors: (slice, createSelector, hasProps) => ({
     /** Connected User Selectors */
     selectConnectedUser() {
@@ -105,11 +106,16 @@ export const userModel = createModel<RootModel>()({
         (connectedWallet: string, currentWallet: string) => connectedWallet === currentWallet,
       );
     },
+
+    selectCurrentTab() {
+      return slice((userModel): number => userModel.currentTab);
+    },
   }),
   reducers: {
     setUserData: (state, payload) => ({ ...state, ...payload }),
     setCurrentUserData: (state, currentUser: User) => ({ ...state, currentUser }),
     setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),
+    setCurrentTab: (state, currentTab: number) => ({ ...state, currentTab }),
     clearUserState: (state) => clearUserState(state),
     clearConnectedUserState: (state) => clearConnectedUserState(state),
     clearCurrentUserState: (state) => clearCurrentUserState(state),
@@ -149,10 +155,10 @@ export const userModel = createModel<RootModel>()({
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;
-      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { userData, ...newUserData });
-      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { userData, ...newUserData });
-      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { userData, ...newUserData });
-      this.setCurrentUserData({ userData, ...newUserData });
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, ...newUserData });
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, ...newUserData });
+      if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, ...newUserData });
+      this.setCurrentUserData({ ...userData, ...newUserData });
     },
     async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
       const collection = formatUserCollection(data, hedsTapes);
