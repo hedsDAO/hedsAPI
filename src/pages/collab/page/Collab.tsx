@@ -17,12 +17,12 @@ export const Collab = () => {
   return (
     <div className="">
       <Header />
-      <div className="max-w-6xl mx-auto w-full lg:px-3 px-5 mt-5 lg:mt-10">
+      <div className=" mx-auto w-full px-5 lg:px-10 mt-5 lg:mt-10">
         <Heading fontWeight={'semibold'} size={{ base: 'lg', lg: 'xl' }} color={'blackAlpha.900'}>
           Collaborations
         </Heading>
         <Divider mt={3} mb={5} />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
           {collabTapes &&
             Object.values(collabTapes)
               ?.reverse()
