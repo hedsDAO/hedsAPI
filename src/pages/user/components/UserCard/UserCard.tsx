@@ -47,7 +47,7 @@ const UserCard = () => {
           <Heading textAlign={'center'} fontWeight={'semibold'} fontSize="2xl">
             {displayName}
           </Heading>
-          <Text textAlign={'center'} height="fit-content" maxW="48" fontWeight={'light'} fontSize="sm" overflowWrap={'normal'}>
+          <Text mb={3} textAlign={'center'} height="fit-content" maxW="48" fontWeight={'light'} fontSize="sm" overflowWrap={'normal'}>
             {description}
           </Text>
           <Badges />

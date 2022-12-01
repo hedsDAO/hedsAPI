@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { Divider, Flex, FormControl, FormHelperText, FormLabel, Heading, Input, Stack, StackDivider, Text, VStack } from '@chakra-ui/react';
 import { IconPencil } from '@tabler/icons';
@@ -13,6 +13,7 @@ const NameModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { address } = useAccount();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
+  const isOnOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   return (
     <ModalContainer focus="100" size="sm" isOpen={isOpen} setModalOpen={false ? () => dispatch.modalModel.setModalOpen(!isOpen) : () => {}}>
       <ModalHeader title={NAME_MODAL_TEXT} Icon={IconPencil} />
@@ -36,8 +37,9 @@ const NameModal = () => {
       <Flex gap={2}>
         <PrimaryButton
           onClick={() => {
-            dispatch.userModel.createNewUser([address.toLowerCase(), displayName]);
+            dispatch.userModel.createNewUser([address.toLowerCase(), displayName, isOnOwnPage]);
             dispatch.modalModel.setModalOpen(false);
+
           }}
         >
           Confirm

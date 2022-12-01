@@ -43,6 +43,7 @@ export interface User {
   submissions?: TrackMetadataMapping;
   collection?: UserCollection;
   history?: UserListeningHistory[];
+  likes?: [];
 }
 
 export interface TrackMetadataMapping {
@@ -73,11 +74,19 @@ export interface TrackMetadata {
   wallet: string;
   public: boolean;
   stats?: TrackStats;
+  type?: TrackType;
 }
 
 export interface TrackStats {
-  favorites: number;
+  likes: number;
+  likedBy: { [key: string]: boolean };
   plays: number;
+}
+
+export enum TrackType {
+  SUBMISSION = 0,
+  TRACK,
+  SAMPLE,
 }
 
 export interface UserListeningHistory {
