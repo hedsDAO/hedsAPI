@@ -5,6 +5,7 @@ import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
 import { Box, Center, Container, Divider, Grid, GridItem, HStack, StackDivider } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
+import { Stepper } from '@pages/landing/components/Stepper';
 
 export const Landing = () => {
   return (
@@ -50,7 +51,7 @@ export const Landing = () => {
       <ParallaxLayer
         offset={3}
         style={{
-          backgroundColor: 'black',
+          backgroundColor: 'white',
         }}
       />
 
@@ -185,6 +186,9 @@ export const Landing = () => {
             <Link to="/artists">explore</Link>
           </Box>
         </Center>
+      </ParallaxLayer>
+      <ParallaxLayer offset={3}>
+        <Stepper />
       </ParallaxLayer>
     </Parallax>
   );
