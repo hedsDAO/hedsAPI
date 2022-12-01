@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Divider, HStack, StackDivider } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, HStack, StackDivider } from '@chakra-ui/react';
+import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 
 export const Landing = () => {
   return (
@@ -14,12 +15,19 @@ export const Landing = () => {
           backgroundColor: 'black',
         }}
       />
+
+      {/* <ParallaxLayer offset={0} speed={0} style={{ height: '50%' }}>
+        <video playsInline autoPlay muted loop src="/hedspinning-beige.mp4" />
+      </ParallaxLayer>
+      <ParallaxLayer offset={0} speed={2} style={{ height: '50%' }}>
+        <video playsInline autoPlay muted loop src="/hedspinning-purple.mp4" />
+      </ParallaxLayer> */}
+
       <ParallaxLayer offset={0}>
         <video playsInline autoPlay muted loop src="/hedsbackground.mp4" />
       </ParallaxLayer>
       <ParallaxLayer
         offset={1}
-        speed={-0.1}
         style={{
           backgroundColor: 'black',
         }}
@@ -66,7 +74,7 @@ export const Landing = () => {
       </ParallaxLayer>
 
       <ParallaxLayer
-        offset={1}
+        offset={1.1}
         speed={0.5}
         style={{
           position: 'fixed',
@@ -119,38 +127,68 @@ export const Landing = () => {
           marginTop: '3em',
         }}
       >
-        <div className="flex flex-row mt-20em">
-          <p>THE</p>
-          <p className="text-9xl font-bold">hedsTAPE</p>
-          <p className="mt-auto">SERIES</p>
-        </div>
-        <p>curated samples from world renowned creatives</p>
-        <div className="w-6/12">
+        <HedsTapeTitle />
+        <Container maxW="40%">
           <img src="/hedspin.gif" />
-        </div>
+        </Container>
       </ParallaxLayer>
 
       <ParallaxLayer offset={2.6}>
         <Divider />
-        <HStack divider={<StackDivider borderColor="gray.400" />} h="40%">
-          <Box w="50%" h="100%" padding="5em" alignItems="center">
-            <HStack spacing="2px">
-              <Box paddingLeft="5em">
+        <HStack divider={<StackDivider borderColor="gray.400" />} h="30%">
+          <Box w="50%" h="100%" padding="5em" alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
+            <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
+              <GridItem rowSpan={1} colSpan={1}>
                 <Number inputNum={56} />
-                <p>unique artists</p>
-              </Box>
-              <Box>
-                heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
-                experiment freely.
-              </Box>
-            </HStack>
+              </GridItem>
+              <GridItem rowSpan={2} colSpan={1}>
+                <Center h="100%" fontSize="sm">
+                  heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
+                  experiment freely.
+                </Center>
+              </GridItem>
+              <GridItem rowSpan={1} colSpan={1}>
+                <Center h="100%">unique artists</Center>
+              </GridItem>
+            </Grid>
           </Box>
-          <Box w="50%" h="100%" padding="5em">
-            <Number inputNum={420} />
-            <Box>average artist earnings per tape</Box>
+          <Box w="50%" h="100%" padding="5em" paddingTop="3em" fontFamily="mono" color="white">
+            <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
+              <GridItem rowSpan={1} colSpan={1}>
+                <Number inputNum={420} dollar />
+              </GridItem>
+              <GridItem rowSpan={2} colSpan={1}>
+                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize="md">
+                  SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
+                </Center>
+              </GridItem>
+              <GridItem rowSpan={1} colSpan={1}>
+                <Center h="100%" fontSize="sm">
+                  average artist earnings per tape
+                </Center>
+              </GridItem>
+            </Grid>
           </Box>
         </HStack>
+        <Center marginTop="1rem">
+          <Box
+            as="button"
+            p={4}
+            color="white"
+            fontWeight="bold"
+            borderRadius="lg"
+            bgGradient="linear(to-l, #572682, #FFB9AB)"
+            _hover={{
+              bgGradient: 'linear(to-l, #581394, #FF8269)',
+            }}
+          >
+            <Link to="/artists">explore</Link>
+          </Box>
+        </Center>
       </ParallaxLayer>
     </Parallax>
   );
 };
+
+// steps page
+// link to explore page
