@@ -12,7 +12,7 @@ const RefreshCollectionButton = () => {
   const hedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
-  const { data, refetch } = useContractReads({
+  const { data, refetch, isLoading, isFetching, isRefetching } = useContractReads({
     contracts: formatReadContractArgs(wallet, hedsTapes),
     allowFailure: true,
     cacheOnBlock: true,
@@ -39,13 +39,14 @@ const RefreshCollectionButton = () => {
   return (
     <Button
       bg={'transparent'}
-      className="bg-transparent hover:rotate-180 ease-in-out duration-500 delay-75"
+      className="bg-transparent hover:scale-110 ease-in-out duration-500 delay-75"
       size="sm"
       disabled={!isEmpty(hedsTapes) && !wallet?.length}
+      isLoading={isFetching || isRefetching || isLoading}
       color="blackAlpha.900"
       onClick={() => refetch().then(() => refetch())}
     >
-      <IconRefresh className="hover:rotate-180 ease-in-out" height={14} width={14} />
+      <IconRefresh className="hover:scale-110 ease-in-out" height={14} width={14} />
     </Button>
   );
 };

@@ -4,7 +4,7 @@ import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser, clearCurrentUserState } from './utils';
 import { db } from '@/App';
-import { UserRoles, User, HedsTapes } from '@/models/common';
+import { UserRoles, User, HedsTapes, TrackMetadata } from '@/models/common';
 import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
@@ -98,7 +98,9 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
       return slice((userModel) => userModel.currentUser.submissions?.[space]?.[tape]?.[id]);
     }),
-
+    selectHasConnectedUserLikedTrack: hasProps(function (models, track) {
+      return slice((userModel) => (track?.stats?.likedBy && userModel.connectedUser.wallet in track?.stats?.likedBy) || false);
+    }),
     selectIsOwnPage() {
       return createSelector(
         this.selectConnectedUserWallet,
@@ -106,7 +108,6 @@ export const userModel = createModel<RootModel>()({
         (connectedWallet: string, currentWallet: string) => connectedWallet === currentWallet,
       );
     },
-
     selectCurrentTab() {
       return slice((userModel): number => userModel.currentTab);
     },
@@ -142,12 +143,13 @@ export const userModel = createModel<RootModel>()({
         }
       }
     },
-    async createNewUser([wallet, displayName]: [string, string]) {
+    async createNewUser([wallet, displayName, isOnOwnPage]: [string, string, boolean]) {
       if (wallet?.length) {
         const docRef = doc(db, 'users', wallet.toLowerCase());
         const newUserData = populateNewUser(wallet, displayName);
         await setDoc(docRef, newUserData).then(() => {
           this.setConnectedUserData(newUserData);
+          if (isOnOwnPage) this.setCurrentUserData(newUserData);
         });
       }
     },

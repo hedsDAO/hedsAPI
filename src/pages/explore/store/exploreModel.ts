@@ -1,3 +1,4 @@
+
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { doc, getDoc } from 'firebase/firestore';

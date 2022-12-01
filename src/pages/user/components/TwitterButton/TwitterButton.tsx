@@ -6,11 +6,12 @@ import { Modals } from '@/modules/modals/store/modalModel';
 
 const TwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const twitterHandle = useSelector(store.select.userModel.selectConnectedUserTwitterHandle);
+  const twitterHandle = useSelector(store.select.userModel.selectCurrentUserTwitterHandle);
   const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   const isLoading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
-    <Skeleton isLoaded={!isLoading} minW="5ch" rounded="md">
+    // <Skeleton isLoaded={!isLoading} minW="5ch" rounded="md">
+    <>
       {!twitterHandle && isOwnPage ? (
         <Button
           onClick={() => {
@@ -38,7 +39,8 @@ const TwitterButton = () => {
           <Text>@{twitterHandle}</Text>
         </Button>
       )}
-    </Skeleton>
+    </>
+    // </Skeleton>
   );
 };
 
