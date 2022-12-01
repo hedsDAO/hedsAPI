@@ -20,8 +20,10 @@ export const Step = (props: StepProps) => {
   return (
     <Stack spacing="4" direction="row" {...stackProps}>
       <Stack spacing="0" align="center">
+        {/* <Waypoint onEnter={() => setInView(true)}> */}
         <StepCircle isCompleted={isCompleted} />
         <Divider orientation="vertical" borderWidth="1px" borderColor={isCompleted ? 'accent' : isLastStep ? 'transparent' : 'inherit'} />
+        {/* </Waypoint> */}
       </Stack>
       <Stack spacing="0.5" pb={isLastStep ? '0' : '8'}>
         <Text color="emphasized" fontWeight="medium">
