@@ -1,3 +1,4 @@
+import { TrackMetadataMapping } from './../../../models/common';
 import type { RootModel } from '@/models';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { createModel } from '@rematch/core';
@@ -68,6 +69,12 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserBadges() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.badges || []);
     },
+    selectCurrentUserAllTracks() {
+      return createSelector(
+        this.selectCurrentUser,
+        (currentUser: User): { [key: string]: { [key: string]: TrackMetadata } } => currentUser?.tracks?.heds || {},
+      );
+    },
     selectCurrentUserTracks() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.tracks?.heds?.hedstape || {});
     },
@@ -85,6 +92,9 @@ export const userModel = createModel<RootModel>()({
     },
     selectCurrentUserDescription() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.description || '');
+    },
+    selectCurrentUserJoined() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.joined || 0);
     },
     selectCurrentUserTwitterHandle() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.twitterHandle || '');

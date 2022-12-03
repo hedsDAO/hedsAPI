@@ -44,7 +44,7 @@ export const submitModel = createModel<RootModel>()({
       formData.append('pinataMetadata', JSON.stringify({ ...options.pinataMetadata }));
       const res = await uploadFileToPinata(formData);
       const audio = PINATA_IPFS_URL + res.IpfsHash;
-      const newSub: TrackMetadata = { track, audio, artist, duration, wallet, cover, tape: name, public: false };
+      const newSub: TrackMetadata = { track, audio, artist, duration, wallet, cover, album: name, public: false, space, tape, id };
       await dispatch.profileModel.newUserSubmission([newSub, [space, tape, id]]);
       this.setSubmission(newSub);
       this.setIsUploading(false);

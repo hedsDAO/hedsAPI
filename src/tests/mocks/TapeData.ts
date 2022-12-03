@@ -1,6 +1,6 @@
 import { TapeAndTrackData } from './../../models/common';
 
-const tapeData: TapeAndTrackData = {
+const tapeData = {
   timeline: {
     mint: {
       start: 1669032000000,

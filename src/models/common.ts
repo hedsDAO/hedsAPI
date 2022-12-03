@@ -44,6 +44,7 @@ export interface User {
   collection?: UserCollection;
   history?: UserListeningHistory[];
   likes?: [];
+  joined: number;
 }
 
 export interface TrackMetadataMapping {
@@ -70,11 +71,14 @@ export interface TrackMetadata {
   track: string;
   artist: string;
   cover: string;
-  tape: string;
+  album: string;
   wallet: string;
   public: boolean;
   stats?: TrackStats;
   type?: TrackType;
+  space: string;
+  tape:string;
+  id: string;
 }
 
 export interface TrackStats {
