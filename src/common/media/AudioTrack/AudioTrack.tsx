@@ -5,6 +5,7 @@ import { Center, Flex, IconButton, Image, Skeleton, Text } from '@chakra-ui/reac
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const AudioTrack = ({ track }: { track: TrackMetadata }) => {
   const connectedWallet = useSelector(store?.select.userModel.selectConnectedUserWallet);
@@ -66,7 +67,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
           <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'sm', md: 'md' }} fontWeight={'bold'}>
             {track.track}
           </Text>
-          <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'sm' }} fontWeight={'semibold'}>
+          <Text as={Link} to={`${track.space + track.tape + track.id}`} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'sm' }} fontWeight={'semibold'}>
             {track.tape}
           </Text>
           <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'xs' }} fontWeight="light">

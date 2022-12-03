@@ -19,6 +19,8 @@
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@fontsource/noto-sans-mono": "^4.5.12",
+    "@fontsource/roboto-mono": "^4.5.8",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^2.0.8",
     "@react-spring/parallax": "^9.5.5",

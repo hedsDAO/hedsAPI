@@ -15,9 +15,8 @@ const UserTabs = () => {
   const currentUserWallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const currentTab = useSelector(store.select.userModel.selectCurrentTab);
   const samples = useSelector(store.select.userModel.selectCurrentUserSamples);
-  const tracks = useSelector(store.select.userModel.selectCurrentUserTracks);
+  const allTracks = useSelector(store.select.userModel.selectCurrentUserAllTracks);
   const submissions = useSelector(store.select.userModel.selectCurrentUserSubmissions);
-
   useEffect(() => {
     let tabContainer = [];
     let elementContainer = [];
@@ -31,13 +30,13 @@ const UserTabs = () => {
       tabContainer.push('Samples');
       elementContainer.push(<Samples />);
     }
-    if (!isEmpty(tracks)) {
+    if (!isEmpty(allTracks)) {
       tabContainer.push('Tracks');
       elementContainer.push(<Tracks />);
     }
     setTabs(tabContainer);
     setElements(elementContainer);
-  }, [samples, tracks, submissions, currentUserWallet]);
+  }, [samples, allTracks, submissions, currentUserWallet]);
 
   useEffect(() => {
     if (tabs?.length > currentTab) dispatch.userModel.setCurrentTab(0);
@@ -51,10 +50,11 @@ const UserTabs = () => {
             <Stack>
               <Tabs onChange={(e) => dispatch.userModel.setCurrentTab(e)} size="sm" variant="with-line">
                 <TabList fontWeight={'medium'} gap={5}>
+                {currentTab === 0 && <RefreshCollectionButton />}
                   {tabs?.length &&
                     tabs.map((text: string, index: number) =>
                       currentTab === index ? (
-                        <Tab key={index} textColor={'white'} rounded={'full'} background="blackAlpha.800">
+                        <Tab gap={-1} key={index} textColor={'white'} rounded={'full'} background="blackAlpha.800">
                           {text}
                         </Tab>
                       ) : (
@@ -103,12 +103,6 @@ const UserTabs = () => {
           </Flex>
         </Box>
         <Stack px={2} key={currentTab + 'ref'} direction={'column'} spacing="2" width={'full'}>
-          {currentTab === 0 && (
-            <Flex alignItems={'center'}>
-              <Divider border={'1px'} size="md" />
-              <RefreshCollectionButton />
-            </Flex>
-          )}
           {currentTab !== 0 && <Divider className="my-[15px]" border={'1px'} size="md" />}
           {elements[currentTab]}
         </Stack>

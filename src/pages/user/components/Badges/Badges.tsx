@@ -16,7 +16,7 @@ const Badges = () => {
     <Stack data-testid="user-badge-container" direction="row">
       {badges?.length &&
         Object.entries(badges).map(([id, badge]) => (
-          <Badge data-testid="user-badge" variant="outline" colorScheme={colorMapping(badge?.name)} key={id}>
+          <Badge data-testid="user-badge" variant="outline" className='bs-preset-1' colorScheme={colorMapping(badge?.name)} key={id}>
             {badge?.name}
           </Badge>
         ))}

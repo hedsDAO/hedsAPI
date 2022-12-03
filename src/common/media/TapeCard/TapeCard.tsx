@@ -8,7 +8,7 @@ const TapeCard = ({ item, loading }: { item: UserCollectionItem; loading: boolea
   const color = useColorModeValue('white', 'gray.800');
   const generateUrl = (str: string) => 'http://localhost:8090/listen/heds/' + str.split(' ')[0].toLowerCase() + `/${Math.floor(+str.split(' ')[1])}`;
   return (
-    <Stack divider={<Divider />} border={'1px'} borderColor={color} rounded="lg" p={2} shadow="md">
+    <Stack bg="whiteAlpha.100" divider={<Divider />} border={'1px'} borderColor={color} rounded="lg" p={2} shadow="sm">
       <Skeleton w="full" h="fit-content" rounded="lg" isLoaded={!loading} fadeDuration={1}>
         <div className="relative">
           <a href={generateUrl(item.name)}>

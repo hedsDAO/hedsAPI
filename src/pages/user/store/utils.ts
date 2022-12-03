@@ -1,4 +1,5 @@
 import { User, BadgeData } from '@/models/common';
+import { DateTime } from 'luxon';
 import { userModelState } from './userModel';
 
 /**
@@ -22,6 +23,7 @@ export const clearUserState = (state: userModelState): userModelState => {
     tracks: {},
     submissions: {},
     collection: {},
+    joined: null,
   };
   return {
     connectedUser: empty,
@@ -55,6 +57,7 @@ export const clearConnectedUserState = (state: userModelState): userModelState =
       tracks: {},
       submissions: {},
       collection: {},
+      joined: null,
     },
     currentTab: 0,
   };
@@ -73,6 +76,7 @@ export const clearCurrentUserState = (state: userModelState): userModelState => 
     tracks: {},
     submissions: {},
     collection: {},
+    joined: null,
   };
   const newState = { ...state };
   const connectedUserState = newState.connectedUser;
@@ -106,6 +110,7 @@ export const populateNewUser = (wallet: string, displayName: string): User => {
     wallet: wallet.toLowerCase(),
     collection: {},
     role: 0,
+    joined: DateTime.now().toMillis(),
   };
   return newUserData;
 };
