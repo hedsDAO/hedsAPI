@@ -1,12 +1,12 @@
-import { HedsTapes, UserCollection } from '@/models/common';
+import { TapeData, UserCollection } from '@/models/common';
 import { erc721ABI } from 'wagmi';
 
-const formatReadContractArgs = (wallet: string, hedsTapes: HedsTapes): any => {
-  if (wallet && hedsTapes) {
+const formatReadContractArgs = (wallet: string, allTapeData: TapeData[]): any => {
+  if (wallet && allTapeData) {
     const collectionData =
-      Object.values(hedsTapes)
+      allTapeData
         .filter((tape) => tape?.contract?.length)
-        .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name } }), {}) || {};
+        .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name, space: cur.space, tape: cur.tape, id: cur.id } }), {}) || {};
     return Object.keys(collectionData).map((key) => ({
       address: key.toLowerCase(),
       functionName: 'balanceOf',

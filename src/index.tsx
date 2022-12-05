@@ -17,6 +17,8 @@ import App from '@/App';
 import 'animate.css';
 import './index.css';
 import '../build/app/output.css';
+import "@fontsource/roboto-mono"; 
+import "@fontsource/noto-sans-mono"
 
 const { chains, provider } = configureChains(
   [chain.mainnet],

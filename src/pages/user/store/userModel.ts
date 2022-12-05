@@ -1,10 +1,11 @@
+import { TrackMetadataMapping } from './../../../models/common';
 import type { RootModel } from '@/models';
 import { Modals } from '@/modules/modals/store/modalModel';
 import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser, clearCurrentUserState } from './utils';
 import { db } from '@/App';
-import { UserRoles, User, HedsTapes } from '@/models/common';
+import { UserRoles, User, TapeData, TrackMetadata } from '@/models/common';
 import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
@@ -68,6 +69,12 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserBadges() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.badges || []);
     },
+    selectCurrentUserAllTracks() {
+      return createSelector(
+        this.selectCurrentUser,
+        (currentUser: User): { [key: string]: { [key: string]: TrackMetadata } } => currentUser?.tracks?.heds || {},
+      );
+    },
     selectCurrentUserTracks() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.tracks?.heds?.hedstape || {});
     },
@@ -86,6 +93,9 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserDescription() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.description || '');
     },
+    selectCurrentUserJoined() {
+      return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.joined || 0);
+    },
     selectCurrentUserTwitterHandle() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.twitterHandle || '');
     },
@@ -98,7 +108,9 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
       return slice((userModel) => userModel.currentUser.submissions?.[space]?.[tape]?.[id]);
     }),
-
+    selectHasConnectedUserLikedTrack: hasProps(function (models, track) {
+      return slice((userModel) => (track?.stats?.likedBy && userModel.connectedUser.wallet in track?.stats?.likedBy) || false);
+    }),
     selectIsOwnPage() {
       return createSelector(
         this.selectConnectedUserWallet,
@@ -106,7 +118,6 @@ export const userModel = createModel<RootModel>()({
         (connectedWallet: string, currentWallet: string) => connectedWallet === currentWallet,
       );
     },
-
     selectCurrentTab() {
       return slice((userModel): number => userModel.currentTab);
     },
@@ -142,12 +153,13 @@ export const userModel = createModel<RootModel>()({
         }
       }
     },
-    async createNewUser([wallet, displayName]: [string, string]) {
+    async createNewUser([wallet, displayName, isOnOwnPage]: [string, string, boolean]) {
       if (wallet?.length) {
         const docRef = doc(db, 'users', wallet.toLowerCase());
         const newUserData = populateNewUser(wallet, displayName);
         await setDoc(docRef, newUserData).then(() => {
           this.setConnectedUserData(newUserData);
+          if (isOnOwnPage) this.setCurrentUserData(newUserData);
         });
       }
     },
@@ -160,8 +172,8 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, ...newUserData });
       this.setCurrentUserData({ ...userData, ...newUserData });
     },
-    async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
-      const collection = formatUserCollection(data, hedsTapes);
+    async updateCurrentUserCollection([wallet, data, allTapeData]: [string, Result[], TapeData[]]) {
+      const collection = formatUserCollection(data, allTapeData);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;
@@ -170,8 +182,8 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
       this.setCurrentUserData({ ...userData, collection });
     },
-    async updateConnectedUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
-      const collection = formatUserCollection(data, hedsTapes);
+    async updateConnectedUserCollection([wallet, data, allTapeData]: [string, Result[], TapeData[]]) {
+      const collection = formatUserCollection(data, allTapeData);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;

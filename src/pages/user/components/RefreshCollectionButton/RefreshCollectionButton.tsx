@@ -10,10 +10,11 @@ import { Result } from 'ethers/lib/utils';
 const RefreshCollectionButton = () => {
   const dispatch = useDispatch<Dispatch>();
   const hedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
+  const allTapeData = useSelector(store.select.tapesModel.selectAllTapeData);
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
-  const { data, refetch } = useContractReads({
-    contracts: formatReadContractArgs(wallet, hedsTapes),
+  const { data, refetch, isLoading, isFetching, isRefetching } = useContractReads({
+    contracts: formatReadContractArgs(wallet, allTapeData),
     allowFailure: true,
     cacheOnBlock: true,
     staleTime: 5000000,
@@ -28,9 +29,9 @@ const RefreshCollectionButton = () => {
 
   const handleUpdateCollection = useCallback(
     (data: Result[]) => {
-      if (data?.length && !isEmpty(hedsTapes)) {
-        if (wallet === connectedWallet) dispatch.userModel.updateConnectedUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
-        dispatch.userModel.updateCurrentUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
+      if (data?.length && !isEmpty(allTapeData)) {
+        if (wallet === connectedWallet) dispatch.userModel.updateConnectedUserCollection([wallet?.toLowerCase(), data, allTapeData]);
+        dispatch.userModel.updateCurrentUserCollection([wallet?.toLowerCase(), data, allTapeData]);
       }
     },
     [data],
@@ -39,13 +40,14 @@ const RefreshCollectionButton = () => {
   return (
     <Button
       bg={'transparent'}
-      className="bg-transparent hover:rotate-180 ease-in-out duration-500 delay-75"
+      className="bg-transparent hover:scale-110 ease-in-out duration-500 delay-75"
       size="sm"
       disabled={!isEmpty(hedsTapes) && !wallet?.length}
+      isLoading={isFetching || isRefetching || isLoading}
       color="blackAlpha.900"
       onClick={() => refetch().then(() => refetch())}
     >
-      <IconRefresh className="hover:rotate-180 ease-in-out" height={14} width={14} />
+      <IconRefresh className="hover:scale-110 ease-in-out" height={14} width={14} />
     </Button>
   );
 };

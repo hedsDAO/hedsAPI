@@ -5,9 +5,8 @@ import { useDispatch } from 'react-redux';
 const TapeWrapper = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
+    dispatch.tapesModel.getAllTapes();
     dispatch.artistModel.getAllArtists();
-    dispatch.tapesModel.getHedsTapes();
-    dispatch.tapesModel.getCollabTapes();
   }, []);
 
   return <Fragment>{children}</Fragment>;
