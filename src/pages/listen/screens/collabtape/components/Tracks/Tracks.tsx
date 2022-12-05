@@ -9,7 +9,7 @@ import { Fragment } from 'react';
 const Tracks = () => {
   const dispatch = useDispatch<Dispatch>();
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
-  const tracks = useSelector(store.select.tapesModel.selectCurrentCollabTapeTracks);
+  const tracks = useSelector(store.select.tapesModel.selectCurrentTapeTracks);
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
     dispatch.audioModel.setActiveTrack(submission);

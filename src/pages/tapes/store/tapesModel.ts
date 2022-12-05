@@ -1,7 +1,7 @@
 import { TrackMetadata } from './../../../models/common';
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { TapeAndTrackData, AllTapes, HedsTapes, CollabTapes, ArtistMapping, TapeData, User, Timeline } from '@/models/common';
 import { db } from '@/App';
 
@@ -121,10 +121,13 @@ export const tapesModel = createModel<RootModel>()({
     },
     // Global
     selectAllHedsTapes() {
-      return slice((tapesModel) => tapesModel.hedsTapes);
+      return slice((tapesModel) => tapesModel.allTapes?.hedstape);
     },
     selectAllCollabTapes() {
-      return slice((tapesModel) => tapesModel.collabTapes);
+      return slice((tapesModel) => tapesModel.allTapes?.collabtape);
+    },
+    selectAllTapes() {
+      return slice((tapesModel) => tapesModel.allTapes);
     },
   }),
   reducers: {
@@ -138,28 +141,19 @@ export const tapesModel = createModel<RootModel>()({
     setSpaceTapeId: (state, [space, tape, id]: [string, string, string]) => ({ ...state, spaceTapeId: [space, tape, id] }),
   },
   effects: (dispatch) => ({
-    async getHedsTapes() {
-      const docRef = doc(db, 'tapes', 'hedstape');
-      const docSnap = await getDoc(docRef);
-      docSnap.exists() ? this.setHedsTapes(docSnap.data()) : null;
+    async getAllTapes() {
+      const tapeSnap = await getDocs(query(collection(db, 'tapes')));
+      const allTapesTank: { [key: string]: DocumentData } = {};
+      tapeSnap.forEach((tape) => (allTapesTank[tape.id] = tape.data()));
+      this.setAllTapes(allTapesTank);
     },
-    async getCollabTapes() {
-      const docRef = doc(db, 'tapes', 'collabtape');
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const latestCollabTape = Object.values(docSnap.data())[Object.keys(docSnap.data()).length - 1];
-        this.setCollabTapes(docSnap.data());
-        this.setLatestCollabTape(latestCollabTape);
-      }
-    },
-    async getHedsTapeArtists([hedsTape, artistMapping]: [TapeData, ArtistMapping]) {
-      if (hedsTape?.tracks?.length) {
-        const artistAddresses = [hedsTape?.curator, ...hedsTape?.tracks];
-        const populatedArtists = artistAddresses.map((address: string) => artistMapping[address]);
-        this.setCurrentTape({ ...hedsTape, curator: populatedArtists.shift(), tracks: populatedArtists });
-      } else {
-        const curator = artistMapping[hedsTape?.curator];
-        this.setCurrentTape({ ...hedsTape, curator: curator, tracks: [] });
+    async getTapeArtists([tape, artistMapping]: [TapeData, ArtistMapping]) {
+      if (tape?.tracks?.length && artistMapping) {
+        const artistAddresses = [...tape.tracks];
+        const curatorData = artistMapping[tape.curator];
+        const artistsData = artistAddresses.map((address: string) => artistMapping[address]);
+        const currentTape: TapeAndTrackData = { ...tape, curator: curatorData, tracks: artistsData };
+        this.setCurrentTape(currentTape);
       }
     },
   }),

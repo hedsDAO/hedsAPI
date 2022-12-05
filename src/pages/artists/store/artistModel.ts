@@ -49,7 +49,7 @@ export const artistModel = createModel<RootModel>()({
       const curatorTank: Array<User> = [];
       const artistTank: Array<User> = [];
       const artistMapping: { [key: string]: User } = {};
-      const artistSnapshot = await getDocs(query(collection(db, 'artists'), orderBy('displayName', 'asc'), limit(10000)));
+      const artistSnapshot = await getDocs(query(collection(db, 'artists'), orderBy('displayName', 'asc')));
       this.setTotalArtists(artistSnapshot.size);
       this.setScrollDataMax(6);
       artistSnapshot.forEach((res: DocumentData) => {

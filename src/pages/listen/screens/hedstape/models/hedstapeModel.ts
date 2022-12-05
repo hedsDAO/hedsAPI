@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { TapeData } from '@/models/common';
+import { TapeAndTrackData } from '@/models/common';
 import { DateTime } from 'luxon';
 import { compareTimestamps } from '@/utils';
 import { HedstapeState, TimelineItem, TimelineNames, TimelineDescriptions, TimelineStatus, TimelineSteps } from './common';
@@ -26,7 +26,7 @@ export const hedstapeModel = createModel<RootModel>()({
     setActiveStep: (state, activeStep) => ({ ...state, activeStep }),
   },
   effects: () => ({
-    async getTapeTimeline(hedsTape: TapeData) {
+    async getTapeTimeline(hedsTape: TapeAndTrackData) {
       const timelineTank: { [key: string]: TimelineItem } = {};
       const now = DateTime.now().setZone('utc').toMillis();
       const submitTimes = hedsTape.timeline.submit;

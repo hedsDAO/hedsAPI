@@ -77,7 +77,7 @@ export interface TrackMetadata {
   stats?: TrackStats;
   type?: TrackType;
   space: string;
-  tape:string;
+  tape: string;
   id: string;
 }
 
@@ -119,7 +119,7 @@ export interface UserCollectionItem {
  */
 
 export interface AllTapes {
-  [tapeId: string]: TapeData;
+  [tapeId: string]: { [tapeId: string]: TapeData };
 }
 
 export interface HedsTapes {
