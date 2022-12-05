@@ -45,30 +45,35 @@ const UserTabs = () => {
   return (
     <Stack spacing={1} direction={'column'} w={'full'}>
       <VStack alignItems={'start'} mt={{ base: '10', lg: '20' }}>
-        <Box display={{ base: 'none', lg: 'inline' }} as="section">
-          <Container px={0} pt={{ base: '5', md: '10' }} pb={{ base: '2', md: '3' }}>
-            <Stack>
-              <Tabs onChange={(e) => dispatch.userModel.setCurrentTab(e)} size="sm" variant="with-line">
-                <TabList fontWeight={'medium'} gap={5}>
-                {currentTab === 0 && <RefreshCollectionButton />}
-                  {tabs?.length &&
-                    tabs.map((text: string, index: number) =>
-                      currentTab === index ? (
-                        <Tab gap={-1} key={index} textColor={'white'} rounded={'full'} background="blackAlpha.800">
-                          {text}
-                        </Tab>
-                      ) : (
-                        <Tab key={index} _hover={{ background: 'blackAlpha.800', textColor: 'white' }} rounded={'full'}>
-                          {text}
-                        </Tab>
-                      ),
-                    )}
-                </TabList>
-              </Tabs>
-            </Stack>
-          </Container>
-        </Box>
-        <Box display={{ base: 'flex', lg: 'none' }} px={2} justifyContent="space-between" alignItems={'end'} as="section" width={'full'}>
+        <Container
+          display={{ base: 'none', lg: 'flex' }}
+          mx={2}
+          minW="full"
+          as={Flex}
+          justifyContent={'space-between'}
+          px={{ lg: 2 }}
+          pt={{ base: '5', md: '10' }}
+          pb={{ base: '2', md: '3' }}
+        >
+          <Tabs onChange={(e) => dispatch.userModel.setCurrentTab(e)} size="sm" variant="with-line">
+            <TabList fontWeight={'medium'} gap={5}>
+              {tabs?.length &&
+                tabs.map((text: string, index: number) =>
+                  currentTab === index ? (
+                    <Tab gap={-1} key={index} textColor={'white'} rounded={'full'} background="blackAlpha.800">
+                      {text}
+                    </Tab>
+                  ) : (
+                    <Tab key={index} _hover={{ background: 'blackAlpha.800', textColor: 'white' }} rounded={'full'}>
+                      {text}
+                    </Tab>
+                  ),
+                )}
+            </TabList>
+          </Tabs>
+          {currentTab === 0 && <RefreshCollectionButton />}
+        </Container>
+        <Box display={{ base: 'flex', lg: 'none' }} px={5} justifyContent="space-between" alignItems={'end'} as="section" width={'full'}>
           <Text fontWeight={'semibold'} key={currentTab}>
             {tabs?.[currentTab]}
           </Text>
@@ -102,8 +107,7 @@ const UserTabs = () => {
             </Menu>
           </Flex>
         </Box>
-        <Stack px={2} key={currentTab + 'ref'} direction={'column'} spacing="2" width={'full'}>
-          {currentTab !== 0 && <Divider className="my-[15px]" border={'1px'} size="md" />}
+        <Stack px={{ base: 4, lg: 2 }} direction={'column'} spacing="2" width={'full'}>
           {elements[currentTab]}
         </Stack>
       </VStack>
