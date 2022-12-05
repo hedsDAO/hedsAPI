@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactChild } from 'react';
 import { Button } from '@chakra-ui/react';
 
 // can be moved to constants folder
@@ -17,7 +17,7 @@ const COLORS = {
   },
 };
 
-type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 type ButtonType = 'primary' | 'secondary' | 'warning' | 'link';
 
 interface OwnProps {
@@ -26,7 +26,7 @@ interface OwnProps {
   disabled?: boolean;
   onClick?: () => void;
   type?: ButtonType;
-  children: JSX.Element;
+  children: ReactChild;
 }
 
 export const HedsButton: FC<OwnProps> = ({ isLoading = false, size = 'sm', disabled = false, onClick, type = 'primary', children }) => {
