@@ -28,6 +28,9 @@ export const artistModel = createModel<RootModel>()({
     selectScrollDataMax() {
       return slice((artistModel) => artistModel.scrollDataMax);
     },
+    selectArtistMapping() {
+      return slice((artistModel) => artistModel.artistMapping);
+    },
   }),
   reducers: {
     setUserData: (state, payload: ArtistState) => ({ ...state, ...payload }),

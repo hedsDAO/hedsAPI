@@ -106,6 +106,9 @@ export interface UserCollectionItem {
   name: string;
   image: string;
   quantity: number;
+  space: string;
+  tape: string;
+  id: string;
 }
 
 /**
@@ -122,14 +125,6 @@ export interface AllTapes {
   [tapeId: string]: { [tapeId: string]: TapeData };
 }
 
-export interface HedsTapes {
-  [tapeId: string]: TapeData;
-}
-
-export interface CollabTapes {
-  [tapeId: string]: TapeAndTrackData;
-}
-
 export interface TapeData {
   bpm: number;
   contract: string;
@@ -142,6 +137,9 @@ export interface TapeData {
   route: string;
   tracks: Array<string>;
   timeline: Timeline;
+  space: string;
+  tape: string;
+  id: string;
 }
 
 export interface TapeAndTrackData {
