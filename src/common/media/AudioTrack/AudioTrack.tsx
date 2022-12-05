@@ -67,7 +67,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
           <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'sm', md: 'md' }} fontWeight={'bold'}>
             {track.track}
           </Text>
-          <Text as={Link} to={`${track.space + track.tape + track.id}`} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'sm' }} fontWeight={'semibold'}>
+          <Text as={Link} to={`/listen/${track.space}/${track.tape}/${track.id}`} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'sm' }} fontWeight={'semibold'}>
             {track.tape}
           </Text>
           <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'xs' }} fontWeight="light">

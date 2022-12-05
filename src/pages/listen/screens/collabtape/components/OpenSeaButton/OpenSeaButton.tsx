@@ -3,7 +3,7 @@ import { Button, Link } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const OpenSeaButton = () => {
-  const opensea = useSelector(store.select.tapesModel.selectCurrentCollabTapeOpenseaLink);
+  const opensea = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   return (
     <Button
       as={Link}

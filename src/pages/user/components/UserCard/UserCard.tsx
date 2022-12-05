@@ -1,5 +1,5 @@
 import { Dispatch, store } from '@/store';
-import { Avatar, Button, Divider, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Button, Divider, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,8 @@ const UserCard = () => {
     <Fragment>
       <VStack minW={'64'} maxW="64">
         {isOwnPage ? (
-          <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture}>
+          <>
+          <Avatar variant={'user'} shadow={'md'} border={'2px'} size="2xl" src={profilePicture}>
             <Button
               shadow="md"
               size="sm"
@@ -42,6 +43,7 @@ const UserCard = () => {
               <i className="fa-sharp fa-solid fa-gear"></i>
             </Button>
           </Avatar>
+          </>
         ) : (
           <Avatar shadow={'md'} border={'2px'} size="2xl" src={profilePicture} />
         )}

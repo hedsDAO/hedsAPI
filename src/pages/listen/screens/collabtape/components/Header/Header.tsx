@@ -5,9 +5,9 @@ import { Button, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-  const cover = useSelector(store.select.tapesModel.selectCurrentCollabTapeCover);
-  const description = useSelector(store.select.tapesModel.selectCurrentCollabTapeDescription);
-  const name = useSelector(store.select.tapesModel.selectCurrentCollabTapeName);
+  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
+  const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
+  const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
   return (
     <Flex
