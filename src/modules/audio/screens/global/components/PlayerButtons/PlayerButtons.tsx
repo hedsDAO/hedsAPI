@@ -44,6 +44,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
     wavesurfer?.current?.playPause();
   };
 
+
   return (
     <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'end' }} alignItems={'center'} px={4}>
       <IconButton

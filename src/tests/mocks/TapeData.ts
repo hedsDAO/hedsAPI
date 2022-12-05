@@ -1,6 +1,6 @@
 import { TapeAndTrackData } from './../../models/common';
 
-const tapeData: TapeAndTrackData = {
+const tapeData = {
   timeline: {
     mint: {
       start: 1669032000000,
@@ -46,6 +46,7 @@ const tapeData: TapeAndTrackData = {
               'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/samples%2FHT7.mp3?alt=media&token=d5c879ec-913d-474a-9b2d-a2d16c501abb',
             wallet: '0xbcefc4906b443e4db64e2b00b9af2c39e76c785c',
             track: '0',
+            type: 2,
           },
         },
       },
@@ -91,6 +92,7 @@ const tapeData: TapeAndTrackData = {
               audio: 'https://www.heds.cloud/ipfs/QmSG83toPshEyRGNh6cBEbsyuLkL1idJhnxh88Be7WB1yj',
               track: 'mixed dingo',
               public: true,
+              type: 1,
             },
             '7': {
               track: 'limping steer',
@@ -102,6 +104,7 @@ const tapeData: TapeAndTrackData = {
               duration: 61.818186,
               artist: 'skinny atlas',
               wallet: '0xe32730fa8a8f9592fa7dc3cc0e7262a49c271578',
+              type: 1,
             },
             '8': {
               track: 'greasy capybara',
@@ -113,6 +116,7 @@ const tapeData: TapeAndTrackData = {
                 'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F8.png?alt=media&token=85033672-edfe-42ce-9987-fa293b3a1bcd',
               public: true,
               artist: 'skinny atlas',
+              type: 0, 
             },
           },
         },
@@ -145,6 +149,7 @@ const tapeData: TapeAndTrackData = {
               artist: 'skinny atlas',
               public: true,
               wallet: '0xe32730fa8a8f9592fa7dc3cc0e7262a49c271578',
+              type: 1,
             },
             '7': {
               public: true,
@@ -156,6 +161,7 @@ const tapeData: TapeAndTrackData = {
               artist: 'skinny atlas',
               track: '1',
               tape: 'hedsTAPE 07',
+              type: 1,
             },
           },
         },

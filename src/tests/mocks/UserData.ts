@@ -1,6 +1,6 @@
 import { User } from '@/models/common';
 
-const userData: User = {
+const userData = {
   wallet: '0xde5bc302fc6d899eab4334602dd15efb20cd745f',
   displayName: 'Alexander Lewis',
   banner:
@@ -43,9 +43,12 @@ const userData: User = {
     heds: {
       hedstape: {
         '3': {
+          space: 'heds',
+          tape: 'hedstape',
+          id: '3',
           track: 'witty donkey',
           duration: 77,
-          tape: 'hedsTAPE 03',
+          album: 'hedsTAPE 03',
           artist: 'alexander lewis',
           audio:
             'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/tapes%2F3%2Faudio%2F5_aj.mp3?alt=media&token=9d848cdf-1397-4fd7-8673-7b4b3f03bea4',
@@ -55,6 +58,9 @@ const userData: User = {
           wallet: '0xde5bc302fc6d899eab4334602dd15efb20cd745f',
         },
         '5': {
+          space: 'heds',
+          tape: 'hedstape',
+          id: '5',
           track: 'fretful dormouse',
           wallet: '0xde5bc302fc6d899eab4334602dd15efb20cd745f',
           artist: 'alexander lewis',
@@ -62,7 +68,7 @@ const userData: User = {
           cover:
             'https://firebasestorage.googleapis.com/v0/b/hedsdev.appspot.com/o/covers%2Fhedstape%2F5.png?alt=media&token=3a94898c-e05a-4c06-8b1b-11150bfd0c98',
           public: true,
-          tape: 'hedsTAPE 05',
+          album: 'hedsTAPE 05',
           duration: 73.6,
         },
       },

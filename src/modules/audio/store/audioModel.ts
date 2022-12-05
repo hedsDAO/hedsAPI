@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '../../../models';
-import { UserListeningHistory, TrackMetadata, TrackStats } from '../../../models/common';
-import { collection, doc, DocumentData, getDoc, getDocs, getFirestore, updateDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { UserListeningHistory, TrackMetadata, TrackStats, TrackType } from '../../../models/common';
+import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
 import { DateTime } from 'luxon';
 
 export interface AudioState {
@@ -154,25 +154,84 @@ export const audioModel = createModel<RootModel>()({
       const userRef = doc(db, 'users', walletId);
       const userSnap = await (await getDoc(userRef)).data();
       const tapeNumber = parseInt(track.tape.slice(-2));
-
+      const userSubmissions = userSnap?.submissions || {};
+      const userTracks = userSnap?.tracks || {};
+      const userSamples = userSnap?.samples || {};
+      let updatedSubmissionStats = {};
+      let updatedTrackStats = {};
+      let updatedSampleStats = {};
       if (userSnap) {
-        const updatedUserData = {
-          ...userSnap,
-          submissions: {
-            heds: {
-              hedstape: {
-                [tapeNumber]: {
-                  stats: newStats,
+        if (track.type === TrackType.SAMPLE) {
+          updatedSampleStats = {
+            ...userSnap,
+            samples: {
+              ...userSamples,
+              heds: {
+                ...(userSamples?.heds || {}),
+                hedstape: {
+                  ...(userSamples?.heds?.hedstape || {}),
+                  [tapeNumber]: {
+                    ...userSnap?.samples?.heds?.hedstape?.[tapeNumber],
+                    stats: newStats,
+                  },
                 },
               },
             },
-          },
-        };
+          };
+        } else if (track.type === TrackType.TRACK) {
+          updatedTrackStats = {
+            ...userSnap,
+            tracks: {
+              ...userTracks,
+              heds: {
+                ...(userTracks?.heds || {}),
+                hedstape: {
+                  ...(userTracks?.heds?.hedstape || {}),
+                  [tapeNumber]: {
+                    ...userSnap?.tracks?.heds?.hedstape?.[tapeNumber],
+                    stats: newStats,
+                  },
+                },
+              },
+            },
+            submissions: {
+              ...userSubmissions,
+              heds: {
+                ...(userSubmissions?.heds || {}),
+                hedstape: {
+                  ...(userSubmissions?.heds?.hedstape || {}),
+                  [tapeNumber]: {
+                    ...userSnap?.submissions?.heds?.hedstape?.[tapeNumber],
+                    stats: newStats,
+                  },
+                },
+              },
+            },
+          };
+        } else {
+          updatedSubmissionStats = {
+            ...userSnap,
+            submissions: {
+              ...userSubmissions,
+              heds: {
+                ...(userSubmissions?.heds || {}),
+                hedstape: {
+                  ...(userSubmissions?.heds?.hedstape || {}),
+                  [tapeNumber]: {
+                    ...userSnap?.submissions?.heds?.hedstape?.[tapeNumber],
+                    stats: newStats,
+                  },
+                },
+              },
+            },
+          };
+        }
 
         try {
-          // console.log(updatedUserData);
-          // await updateDoc(userRef, updatedUserData);
-          // await dispatch.userModel.getUserData(walletId);
+          if (track?.type === TrackType.SAMPLE) await updateDoc(userRef, updatedSampleStats);
+          else if (track?.type === TrackType.SUBMISSION) await updateDoc(userRef, updatedSubmissionStats);
+          else if (track?.type === TrackType.TRACK) await updateDoc(userRef, updatedTrackStats);
+          await dispatch.userModel.getCurrentUserData(walletId);
         } catch (e) {
           return {
             erorr: e,
@@ -184,21 +243,16 @@ export const audioModel = createModel<RootModel>()({
     },
     async updaterUserListeningHistory({ track, walletId }: { track: TrackMetadata; walletId: string }) {
       const db = getFirestore();
-      // console.log(walletId);
-      const userRef = doc(db, 'users', '0x6402fe3af805fcee00e9b4b635e689dc0d1fffbf');
+      const userRef = doc(db, 'users', walletId);
       const userSnap = await (await getDoc(userRef)).data();
-      // console.log(userSnap);
-
       if (userSnap) {
         const lastListened = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();
-        const newHistory: UserListeningHistory[] = userSnap.history
+        const newHistory: UserListeningHistory[] = userSnap?.history
           ? updateUserListeningHistory(userSnap.history, lastListened, track)
           : [{ lastListened, track }];
         const updatedUserData = { history: newHistory };
-
         try {
-          // console.log(updatedUserData);
-          // await updateDoc(userRef, updatedUserData);
+          await updateDoc(userRef, updatedUserData);
           dispatch.audioModel.setListeningHistory({ lastListened, track });
         } catch (e) {
           return {

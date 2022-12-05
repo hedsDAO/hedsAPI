@@ -3,7 +3,7 @@ import { Button, Link } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const EtherscanButton = () => {
-  const etherscan = useSelector(store.select.tapesModel.selectCurrentCollabTapeEtherscanLink);
+  const etherscan = useSelector(store.select.tapesModel.selectCurrentTapeEtherscanLink);
   return (
     <Button
       as={Link}
