@@ -11,8 +11,8 @@ const VerifyAndSubmit = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isLoading, isUploading, file, hasPrevSubmitted } = useSelector((state: RootState) => state.submitModel);
   const [space, tape, id] = useSelector(store.select.tapesModel.selectCurrentTapeSpaceTapeId);
-  const name = useSelector(store.select.tapesModel.selectHedstapeByNameById(id));
-  const cover = useSelector(store.select.tapesModel.selectHedstapeByCoverById(id));
+  const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
+  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
   const wallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const artist = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const prevSub = useSelector(store.select.userModel.selectConnectedUserSubmissionsBySpaceTapeId([space, tape, id]));

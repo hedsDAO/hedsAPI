@@ -5,7 +5,7 @@ import { createModel } from '@rematch/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser, clearCurrentUserState } from './utils';
 import { db } from '@/App';
-import { UserRoles, User, HedsTapes, TrackMetadata } from '@/models/common';
+import { UserRoles, User, TapeData, TrackMetadata } from '@/models/common';
 import { formatUserCollection } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 
@@ -172,8 +172,8 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, ...newUserData });
       this.setCurrentUserData({ ...userData, ...newUserData });
     },
-    async updateCurrentUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
-      const collection = formatUserCollection(data, hedsTapes);
+    async updateCurrentUserCollection([wallet, data, allTapeData]: [string, Result[], TapeData[]]) {
+      const collection = formatUserCollection(data, allTapeData);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;
@@ -182,8 +182,8 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, collection });
       this.setCurrentUserData({ ...userData, collection });
     },
-    async updateConnectedUserCollection([wallet, data, hedsTapes]: [string, Result[], HedsTapes]) {
-      const collection = formatUserCollection(data, hedsTapes);
+    async updateConnectedUserCollection([wallet, data, allTapeData]: [string, Result[], TapeData[]]) {
+      const collection = formatUserCollection(data, allTapeData);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
       const { role } = userData;

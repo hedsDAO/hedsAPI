@@ -10,10 +10,11 @@ import { Result } from 'ethers/lib/utils';
 const RefreshCollectionButton = () => {
   const dispatch = useDispatch<Dispatch>();
   const hedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
+  const allTapeData = useSelector(store.select.tapesModel.selectAllTapeData);
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const { data, refetch, isLoading, isFetching, isRefetching } = useContractReads({
-    contracts: formatReadContractArgs(wallet, hedsTapes),
+    contracts: formatReadContractArgs(wallet, allTapeData),
     allowFailure: true,
     cacheOnBlock: true,
     staleTime: 5000000,
@@ -28,9 +29,9 @@ const RefreshCollectionButton = () => {
 
   const handleUpdateCollection = useCallback(
     (data: Result[]) => {
-      if (data?.length && !isEmpty(hedsTapes)) {
-        if (wallet === connectedWallet) dispatch.userModel.updateConnectedUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
-        dispatch.userModel.updateCurrentUserCollection([wallet?.toLowerCase(), data, hedsTapes]);
+      if (data?.length && !isEmpty(allTapeData)) {
+        if (wallet === connectedWallet) dispatch.userModel.updateConnectedUserCollection([wallet?.toLowerCase(), data, allTapeData]);
+        dispatch.userModel.updateCurrentUserCollection([wallet?.toLowerCase(), data, allTapeData]);
       }
     },
     [data],

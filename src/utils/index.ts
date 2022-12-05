@@ -1,4 +1,3 @@
-export { default as artistMapping } from './artistMapping';
 export { default as classNames } from './classNames';
 export { default as formatTime } from './formatTime';
 export { default as formatWallet } from './formatWallet';
