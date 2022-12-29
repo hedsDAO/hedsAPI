@@ -6,7 +6,11 @@ export const HedsLogo = () => {
   const [inView, setInView] = useState(false);
 
   return (
-    <Waypoint>
+    <Waypoint
+      onPositionChange={({ event }) => {
+        console.log(event);
+      }}
+    >
       <img src="/hedslogo.png" />
     </Waypoint>
   );

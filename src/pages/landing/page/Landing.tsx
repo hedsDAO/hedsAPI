@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Center, Container, Divider, Grid, GridItem, HStack, Icon, StackDivider } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, HStack, StackDivider } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
+import { HedsLogo } from '@pages/landing/components/HedsLogo';
 import { Stepper } from '@pages/landing/components/Stepper';
 import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
 
@@ -72,7 +73,7 @@ export const Landing = () => {
         }}
       >
         <div style={{ width: '50%', textAlign: 'center' }}>
-          <img src="/hedslogo.png" />
+          <HedsLogo />
           <FadeOutDown text={'WELCOME TO THE FUTURE OF CURATION.'} />
         </div>
       </ParallaxLayer>
