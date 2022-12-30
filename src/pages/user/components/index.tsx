@@ -10,3 +10,4 @@ export { default as RefreshCollectionButton } from './RefreshCollectionButton/Re
 export { default as Samples } from './Samples/Samples';
 export { default as WalletButton } from './WalletButton/WalletButton';
 export { default as TwitterButton } from './TwitterButton/TwitterButton';
+export { default as Likes } from './Likes/Likes';

@@ -1,46 +1,67 @@
-import { useSelector } from 'react-redux';
-import { RootState, store } from '@/store';
-import { useNavigate } from 'react-router-dom';
-import { Heading, Image, AspectRatio, Skeleton, Divider, Text, Flex, Avatar, Container } from '@chakra-ui/react';
-import { DateTime } from 'luxon';
-import { Fragment } from 'react';
 import { TapeCard } from '@/common/media';
+import { TapesTab } from '@/modules/wrappers/store/tapesModel';
+import { Dispatch, store } from '@/store';
+import { Box, Grid, Heading, Flex, Text } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Tapes = () => {
-  const navigate = useNavigate();
-  const hedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
-  const { artistMapping } = useSelector((state: RootState) => state.artistModel);
-  const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
-
+  const dispatch = useDispatch<Dispatch>();
+  const allHedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
+  const allCollabTapes = useSelector(store.select.tapesModel.selectAllCollabTapes);
+  const tapeTabs = useSelector(store.select.tapesModel.selectTapeTabs);
+  const currentTab = useSelector(store.select.tapesModel.selectCurrentTab);
   return (
-    <div className="">
-      {allTapes && (
-        <div className="mx-auto w-full px-5 lg:px-10">
-          <Heading
-            className="animate__animated animate__fadeInUp"
-            fontWeight={'bold'}
-            letterSpacing={'tight'}
-            size={['xl', '2xl']}
-            color={'gray.800'}
-            mt={{ base: 5, lg: 10 }}
-            mb={3}
-            p={1}
-          >
-            Releases
-          </Heading>
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
-            {hedsTapes && artistMapping && (
-              <Fragment>
-                {Object.values(hedsTapes)
-                  ?.reverse()
-                  ?.map((tape, index) => {
-                    return <TapeCard key={tape.contract + index} tape={tape} />;
-                  })}
-              </Fragment>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    <Box minW="100vw" minH="100vh">
+      <Flex px={6} bg="whiteAlpha.100" pt={5} alignItems={'center'} justifyContent="space-between">
+        <Heading
+          px={{ base: 0, lg: 2 }}
+          className="animate__animated animate__fadeIn"
+          fontWeight={'semibold'}
+          letterSpacing={'widest'}
+          size={['sm', 'md']}
+          color={'gray.900'}
+        >
+          RELEASES
+        </Heading>
+        {/* TODO: remove tailwind styles, add chakra comps */}
+        {tapeTabs?.length && (
+          <Flex px={{ base: 0, lg: 2 }} gap={4}>
+            {tapeTabs.map((tab, index) => (
+              <Text
+                fontSize={{ base: '2xs', lg: 'sm' }}
+                fontFamily={'"Space Mono", monospace'}
+                role="button"
+                fontWeight={'light'}
+                className={`${
+                  index === currentTab ? 'underline underline-offset-[4.5px] decoration-1' : 'hover-underline-animation text-gray-500'
+                } tracking-widest font-semibold`}
+                onClick={() => dispatch.tapesModel.setCurrentTab(index)}
+                key={tab + index}
+              >
+                {tab}
+              </Text>
+            ))}
+          </Flex>
+        )}
+      </Flex>
+      <Grid pt={6} px={5} templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(5, 1fr)' }} gap={3}>
+        {allHedsTapes &&
+          Object.keys(allHedsTapes)?.length &&
+          currentTab === TapesTab.HEDSTAPE &&
+          Object.values(allHedsTapes)
+            ?.reverse()
+            ?.map((tape, index) => {
+              return <TapeCard key={tape.contract + index} tape={tape} />;
+            })}
+        {allCollabTapes &&
+          Object.keys(allCollabTapes)?.length &&
+          currentTab === TapesTab.COLLABTAPE &&
+          Object.values(allCollabTapes)
+            ?.reverse()
+            ?.map((tape, index) => {
+              return <TapeCard key={tape.contract + index} tape={tape} />;
+            })}
+      </Grid>
+    </Box>
   );
 };

@@ -11,7 +11,7 @@ export const Artists = () => {
       {allArtists && (
         <Fragment>
           <SampleCurators />
-          <Divider my={3} />
+          <Divider maxW="8xl" mx="auto" borderColor="gray.600" mt={{ base: 2, lg: 7 }} mb={{ base: 4, lg: 7 }} />
           <AllArtists />
         </Fragment>
       )}

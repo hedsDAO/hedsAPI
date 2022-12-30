@@ -2,7 +2,7 @@ import { Dispatch, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Fade, Flex, Text } from '@chakra-ui/react';
 import { TimelineStatus } from '../../models/common';
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { DateTime } from 'luxon';
@@ -21,7 +21,9 @@ const PreMint = () => {
         <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{premint.name}</Text>
         {premint.status === TimelineStatus.CLOSED ? <ClosedBadge /> : premint.status === TimelineStatus.OPEN ? <OpenBadge /> : <UpcomingBadge />}
       </Flex>
-      <Text className="mt-2 text-sm tracking-tight text-gray-500">{premint.description}</Text>
+      <Fade>
+        <Text className="mt-2 text-sm tracking-tight text-gray-500">{premint.description}</Text>
+      </Fade>
       {premint.status === TimelineStatus.CLOSED ? (
         <ClosedDateBox start={start} end={end} />
       ) : premint.status === TimelineStatus.OPEN ? (

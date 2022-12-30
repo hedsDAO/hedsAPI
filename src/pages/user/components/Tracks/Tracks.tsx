@@ -7,7 +7,7 @@ import { AudioTrack } from '@/common/media';
 const Tracks = () => {
   const allTracks = useSelector(store.select.userModel.selectCurrentUserAllTracks);
   return (
-    <Stack py={2}>
+    <Stack pt={2}>
       {!isEmpty(allTracks) &&
         Object.entries(allTracks).map(([text, track]) => {
           return Object.values(track).map((track) => <AudioTrack key={track.audio} track={track} />);
