@@ -37,6 +37,7 @@ const Submit = () => {
           border={'solid 1px'}
           borderColor="blue.100"
           bg="blue.50"
+          rounded="sm"
           leftIcon={<IconDownload height="14" width="14" />}
           size={'sm'}
           pr={3}
@@ -52,6 +53,7 @@ const Submit = () => {
             border={'solid 1px'}
             borderColor="green.200"
             bg="green.100"
+            rounded="sm"
             leftIcon={<i className="fa-sharp fa-solid fa-arrow-up-from-bracket text-xs"></i>}
             size={'sm'}
             pr={3}

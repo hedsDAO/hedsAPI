@@ -1,6 +1,6 @@
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { Dispatch, RootState, store } from '@/store';
-import { Avatar, Button, color, Container, Divider, Flex, Heading, HStack, IconButton, Text, useColorMode } from '@chakra-ui/react';
+import { Button, Divider, Flex, Heading, Text, useColorMode } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconHomeCog, IconPower } from '@tabler/icons';
 import { formatWallet } from '@/utils';
@@ -25,6 +25,8 @@ const UserModal = () => {
         </Heading>
         <Text mb={4}>{ensName || formatWallet(address)}</Text>
         <Button
+          bg="blackAlpha.800"
+          color="white"
           size="sm"
           variant={'outline'}
           onClick={() => {
@@ -37,7 +39,8 @@ const UserModal = () => {
         >
           disconnect
         </Button>
-        <Divider my={5} />
+        {/* TODO: add dark mode feature (stretch) */}
+        {/* <Divider my={5} />
         <Heading mb={2} fontSize={'md'}>
           Experimental:
         </Heading>
@@ -49,7 +52,7 @@ const UserModal = () => {
         >
           <span className="sr-only">Enable notifications</span>
           <span className={`${colorMode === 'dark' ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`} />
-        </Switch>
+        </Switch> */}
       </Flex>
     </ModalContainer>
   );

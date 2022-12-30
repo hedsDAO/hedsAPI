@@ -6,27 +6,28 @@ import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 
-const WaveformPlayer = ({ audio }: { audio?: File }) => {
+const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
   const dispatch = useDispatch<Dispatch>();
-  const { isLoading } = useSelector((state: RootState) => state.submitModel);
+  const { isLoading } = useSelector((state: RootState) => state.voteModel);
   const [isPlaying, setIsPlaying] = useState(false);
   const waveformRef = useRef<HTMLDivElement | null>(null);
   const wavesurfer = useRef<WaveSurfer | null>();
 
   useEffect(() => {
     if (audio) {
-      dispatch.submitModel.setIsLoading(true);
+      dispatch.voteModel.setIsLoading(true);
       var options; // wavesurfer params
       if (waveformRef.current) options = formWaveSurferOptions(waveformRef.current);
       if (options) wavesurfer.current = WaveSurfer.create(options);
-      if (audio) wavesurfer?.current?.loadBlob(audio);
-      wavesurfer?.current?.on('ready', () => dispatch.submitModel.setIsLoading(false));
+      if (audio instanceof File) wavesurfer?.current?.loadBlob(audio);
+      else if (typeof audio === 'string') wavesurfer?.current?.load(audio);
+      wavesurfer?.current?.on('ready', () => dispatch.voteModel.setIsLoading(false));
       wavesurfer?.current?.on('finish', () => {});
     }
     return () => {
       if (wavesurfer?.current) {
-        wavesurfer.current.destroy();
-        waveformRef.current = null;
+        wavesurfer?.current?.destroy();
+        // waveformRef.current = null;
       }
     };
   }, [audio]);
@@ -45,7 +46,7 @@ const WaveformPlayer = ({ audio }: { audio?: File }) => {
             setIsPlaying(!isPlaying);
           }}
         >
-          {isLoading ? (
+          {isLoading && wavesurfer?.current ? (
             <i className="fas fa-circle-notch fa-spin text-black" />
           ) : isPlaying ? (
             <PauseIcon height={'12'} width={'12'} />

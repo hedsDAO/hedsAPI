@@ -1,51 +1,33 @@
-
-import type { RootModel } from '@/models';
+import { getOpenseaEvents } from '@/utils';
 import { createModel } from '@rematch/core';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/App';
+import type { RootModel } from '@/models';
 
-interface Earnings {
-  primary: {
-    eth: number;
-    usd: number;
-  };
-  secondary: {
-    eth: number;
-    usd: number;
-  };
-}
-
-interface Submissions {
-  total: number;
-  unique: number;
-}
-
-interface Tapes {
-  total: number;
-  unique: number;
-}
-
-interface Stats {
-  earnings: Earnings;
-  submissions: Submissions;
-  tapes: Tapes;
-}
-
-interface ExploreState {
-  stats: Stats;
+export interface ExploreState {
+  secondaryListings: any[];
 }
 
 export const exploreModel = createModel<RootModel>()({
   state: {} as ExploreState,
+  selectors: (slice, createSelector, hasProps) => ({
+    selectLatestSecondaryListings() {
+      return slice((artistModel) => artistModel.secondaryListings);
+    },
+  }),
   reducers: {
-    setExploreStats: (state, stats: Stats) => ({ ...state, stats }),
+    setLatestSecondaryListings: (state, secondaryListings: any[]) => ({ ...state, secondaryListings }),
   },
   effects: () => ({
-    async getExploreStats() {
-      const docRef = doc(db, 'explore', 'stats');
-      const docSnap = await getDoc(docRef);
-      console.log();
-      docSnap.exists() ? this.setExploreStats(docSnap.data()) : null;
+    async getLatestSecondaryListings() {
+      const secondaryListingsTank: any[] = [];
+      const allTapeSlugs = ['hedstape-10', 'hedstape-9'];
+      allTapeSlugs.forEach((slug) => {
+        setTimeout(() => {
+          getOpenseaEvents(slug).then((res) => {
+            secondaryListingsTank.push(res);
+            this.setLatestSecondaryListings(secondaryListingsTank);
+          });
+        }, 1000);
+      });
     },
   }),
 });

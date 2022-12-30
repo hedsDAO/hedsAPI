@@ -13,7 +13,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   const countPlayThreshold = useSelector(store.select.audioModel.selectCountPlayThreshold);
   const activeTrack = useSelector(store.select.audioModel.selectActiveTrack);
   const activeTrackStats = useSelector(store.select.audioModel.selectActiveTrackStats);
-  const userWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  // const userWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const isShowingQueue = useSelector(store.select.audioModel.selectIsShowingQueue);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
 
@@ -21,13 +21,12 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
     let interval: NodeJS.Timer;
     if (isTrackPlaying) {
       interval = setInterval(() => {
-        if (timerSeconds === countPlayThreshold) {
+        if (wavesurfer.current.getDuration() >= countPlayThreshold) {
           dispatch.audioModel.updateTrackMetadataStats({
             track: activeTrack,
             walletId: activeTrack.wallet,
-            newStats: { ...activeTrackStats, plays: activeTrackStats ? activeTrackStats.plays + 1 : 1 },
+            newStats: { ...activeTrackStats, plays: activeTrackStats?.plays ? activeTrackStats.plays + 1 : 1 },
           });
-          setTimeout(() => dispatch.audioModel.updaterUserListeningHistory({ track: activeTrack, walletId: userWallet }), 500);
         }
         dispatch.audioModel.setTimerSeconds(timerSeconds + 1);
       }, 1000);
@@ -43,7 +42,6 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
     wavesurfer?.current?.play(0);
     wavesurfer?.current?.playPause();
   };
-
 
   return (
     <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'end' }} alignItems={'center'} px={4}>

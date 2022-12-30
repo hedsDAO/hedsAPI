@@ -1,5 +1,5 @@
-import { RootState, store } from '@/store';
-import { Badge, Skeleton, Stack } from '@chakra-ui/react';
+import { store } from '@/store';
+import { Badge, Stack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 const colorMapping = (name: string) => {
@@ -9,19 +9,16 @@ const colorMapping = (name: string) => {
 };
 
 const Badges = () => {
-  const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const badges = useSelector(store.select.userModel.selectCurrentUserBadges);
   return (
-    // <Skeleton px={1} rounded="md" mt={3} height="10px" fadeDuration={2} isLoaded={!loading}>
-    <Stack data-testid="user-badge-container" direction="row">
+    <Stack data-testid="user-badge-container" direction={'row'}>
       {badges?.length &&
         Object.entries(badges).map(([id, badge]) => (
-          <Badge data-testid="user-badge" variant="outline" className='bs-preset-1' colorScheme={colorMapping(badge?.name)} key={id}>
+          <Badge letterSpacing={'wider'} fontFamily={'heading'} data-testid="user-badge" variant="outline" colorScheme={colorMapping(badge?.name)} key={id}>
             {badge?.name}
           </Badge>
         ))}
     </Stack>
-    // </Skeleton>
   );
 };
 

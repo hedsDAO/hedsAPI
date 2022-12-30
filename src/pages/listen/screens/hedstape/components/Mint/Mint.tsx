@@ -31,10 +31,10 @@ const Mint = () => {
       <Flex mt={4} gap={2}>
         {mint.status === TimelineStatus.CLOSED ? (
           <>
-            <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+            <Button rounded={'sm'} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
               Mint Closed
             </Button>
-            <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<i className="fak fa-opensea text-xs" />} size={'sm'} pr={3}>
+            <Button rounded={'sm'} border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<i className="fak fa-opensea text-xs" />} size={'sm'} pr={3}>
               OpenSea
             </Button>
           </>

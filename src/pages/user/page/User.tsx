@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import { UserCard, UserTabs, Banner } from '../components';
 import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,20 +15,26 @@ export const User = () => {
   return (
     <Fragment>
       {currentUser && (
-        <Box>
+        <Fragment>
           <Banner />
-          <Flex
-            px={{ base: '5', lg: '2' }}
-            alignItems={{ base: 'center', lg: 'normal' }}
-            direction={{ base: 'column', lg: 'row' }}
-            gap={{ lg: 10 }}
-            mx={'auto'}
-            maxW={'6xl'}
+          <Grid
+            gap={5}
+            px={{ base: '5', lg: '8' }}
+            justifyContent="center"
+            alignItems={{ base: 'center', lg: 'unset' }}
+            maxW="7xl"
+            mx="auto"
+            w="full"
+            templateColumns={'repeat(12, 1fr)'}
           >
-            <UserCard />
-            <UserTabs />
-          </Flex>
-        </Box>
+            <GridItem colSpan={{ base: 12, lg: 3 }}>
+              <UserCard />
+            </GridItem>
+            <GridItem colSpan={{ base: 12, lg: 9 }}>
+              <UserTabs />
+            </GridItem>
+          </Grid>
+        </Fragment>
       )}
     </Fragment>
   );

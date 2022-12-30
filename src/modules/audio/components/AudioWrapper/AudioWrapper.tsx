@@ -14,7 +14,7 @@ const AudioWrapper = ({ children }: { children: JSX.Element }) => {
   return (
     <Fragment>
       {children}
-      {audioData?.isShowingPlayer ? (
+      {audioData?.isShowingPlayer || audioData?.isClosingPlayer ? (
         <div className="bottom-0 fixed z-50 w-screen">
           <GlobalAudio wavesurfer={wavesurfer} />
         </div>
