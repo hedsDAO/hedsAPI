@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '../../../models';
-import { UserListeningHistory, TrackMetadata, TrackStats, TrackType } from '../../../models/common';
+import { UserListeningHistory, TrackMetadata, TrackStats, TrackType, UserRoles } from '@/models/common';
 import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
 import { DateTime } from 'luxon';
 
@@ -20,6 +20,7 @@ export interface AudioState {
   timerSeconds: number;
   duration?: number;
   isShowingPlayer: boolean;
+  isClosingPlayer: boolean;
 }
 
 const updateUserListeningHistory = (listeningHistory: UserListeningHistory[], lastListened: number, track: TrackMetadata): UserListeningHistory[] => {
@@ -33,9 +34,10 @@ export const audioModel = createModel<RootModel>()({
     isLoading: false,
     isShowingQueue: false,
     isShowingPlayer: false,
+    isClosingPlayer: false,
     volume: 100,
     timerSeconds: 0,
-    countPlayThreshold: 0,
+    countPlayThreshold: 10,
     queue: [],
     history: [],
   } as AudioState,
@@ -45,6 +47,9 @@ export const audioModel = createModel<RootModel>()({
     },
     selectIsShowingPlayer() {
       return slice((audioModel) => audioModel.isShowingPlayer);
+    },
+    selectIsClosingPlayer() {
+      return slice((audioModel) => audioModel.isClosingPlayer);
     },
     selectIsTrackPlaying() {
       return slice((audioModel) => audioModel.isPlaying);
@@ -131,12 +136,14 @@ export const audioModel = createModel<RootModel>()({
     setCountPlayThreshold: (state, duration: number) => ({ ...state, countPlayThreshold: Math.ceil(duration / 4) }),
     setDuration: (state, duration: number) => ({ ...state, duration }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
+    setIsClosingPlayer: (state, isClosingPlayer: boolean) => ({...state, isClosingPlayer: isClosingPlayer}),
     clearAudioState: (state) => {
       const newState: AudioState = {
         isPlaying: false,
         isLoading: false,
         isShowingQueue: false,
         isShowingPlayer: false,
+        isClosingPlayer: false,
         volume: 100,
         timerSeconds: 0,
         countPlayThreshold: 0,
@@ -148,102 +155,36 @@ export const audioModel = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     async updateTrackMetadataStats({ track, walletId, newStats }: { track: TrackMetadata; walletId: string; newStats: TrackStats }) {
-      //TODO: Make this check in the component
-      if (track.stats === newStats) return 'Stats are identical, an update will not be performed';
+      console.log('here')
       const db = getFirestore();
       const userRef = doc(db, 'users', walletId);
       const userSnap = await (await getDoc(userRef)).data();
-      const tapeNumber = parseInt(track.tape.slice(-2));
-      const userSubmissions = userSnap?.submissions || {};
-      const userTracks = userSnap?.tracks || {};
-      const userSamples = userSnap?.samples || {};
-      let updatedSubmissionStats = {};
-      let updatedTrackStats = {};
-      let updatedSampleStats = {};
+      const updatedUserData = { ...userSnap };
+      const { space, tape, id, type } = track;
       if (userSnap) {
-        if (track.type === TrackType.SAMPLE) {
-          updatedSampleStats = {
-            ...userSnap,
-            samples: {
-              ...userSamples,
-              heds: {
-                ...(userSamples?.heds || {}),
-                hedstape: {
-                  ...(userSamples?.heds?.hedstape || {}),
-                  [tapeNumber]: {
-                    ...userSnap?.samples?.heds?.hedstape?.[tapeNumber],
-                    stats: newStats,
-                  },
-                },
-              },
-            },
-          };
-        } else if (track.type === TrackType.TRACK) {
-          updatedTrackStats = {
-            ...userSnap,
-            tracks: {
-              ...userTracks,
-              heds: {
-                ...(userTracks?.heds || {}),
-                hedstape: {
-                  ...(userTracks?.heds?.hedstape || {}),
-                  [tapeNumber]: {
-                    ...userSnap?.tracks?.heds?.hedstape?.[tapeNumber],
-                    stats: newStats,
-                  },
-                },
-              },
-            },
-            submissions: {
-              ...userSubmissions,
-              heds: {
-                ...(userSubmissions?.heds || {}),
-                hedstape: {
-                  ...(userSubmissions?.heds?.hedstape || {}),
-                  [tapeNumber]: {
-                    ...userSnap?.submissions?.heds?.hedstape?.[tapeNumber],
-                    stats: newStats,
-                  },
-                },
-              },
-            },
-          };
-        } else {
-          updatedSubmissionStats = {
-            ...userSnap,
-            submissions: {
-              ...userSubmissions,
-              heds: {
-                ...(userSubmissions?.heds || {}),
-                hedstape: {
-                  ...(userSubmissions?.heds?.hedstape || {}),
-                  [tapeNumber]: {
-                    ...userSnap?.submissions?.heds?.hedstape?.[tapeNumber],
-                    stats: newStats,
-                  },
-                },
-              },
-            },
-          };
+        if (type === TrackType.SUBMISSION) {
+          updatedUserData.submissions[space][tape][id] = { ...track, stats: newStats };
+        } else if (type === TrackType.TRACK) {
+          updatedUserData.tracks[space][tape][id] = { ...track, stats: newStats };
+        } else if (type === TrackType.COLLAB) {
+          updatedUserData.tracks[space][tape][id] = { ...track, stats: newStats };
+        } else if (type === TrackType.SAMPLE) {
+          updatedUserData.samples[space][tape][id] = { ...track, stats: newStats };
         }
-
+        console.log(updatedUserData, 'updated')
         try {
-          if (track?.type === TrackType.SAMPLE) await updateDoc(userRef, updatedSampleStats);
-          else if (track?.type === TrackType.SUBMISSION) await updateDoc(userRef, updatedSubmissionStats);
-          else if (track?.type === TrackType.TRACK) await updateDoc(userRef, updatedTrackStats);
-          await dispatch.userModel.getCurrentUserData(walletId);
+          const { role } = updatedUserData;
+          if (role >= UserRoles.USER) await updateDoc(doc(db, 'users', walletId), { ...updatedUserData });
+          if (role >= UserRoles.ARTIST) await updateDoc(doc(db, 'artists', walletId), { ...updatedUserData });
+          if (role >= UserRoles.ARTIST) dispatch.artistModel.getAllArtists();
         } catch (e) {
-          return {
-            erorr: e,
-            message: e.message,
-            memo: 'Call to update user failed',
-          };
+          return { message: e.message, memo: 'Call to update user failed' };
         }
       }
     },
     async updaterUserListeningHistory({ track, walletId }: { track: TrackMetadata; walletId: string }) {
       const db = getFirestore();
-      const userRef = doc(db, 'users', walletId);
+      const userRef = doc(db, 'users', walletId.toLowerCase());
       const userSnap = await (await getDoc(userRef)).data();
       if (userSnap) {
         const lastListened = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();
@@ -262,6 +203,13 @@ export const audioModel = createModel<RootModel>()({
           };
         }
       }
+    },
+    async updateIsClosingPlayer() {
+      this.setIsClosingPlayer(true);
+      setTimeout(() => {
+        this.setIsShowingPlayer(false);
+        this.setIsClosingPlayer(false);
+      }, 1000);
     },
   }),
 });

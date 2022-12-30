@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const TrackDetails = () => {
   const { artist, cover, tape, track } = useSelector(store.select.audioModel.selectActiveTrack);
   return (
-    <Flex px={{base: 3, lg: 5}} h="full" alignItems={'center'} justifyContent={'start'}>
+    <Flex px={{ base: 3, lg: 5 }} h="full" alignItems={'center'} justifyContent={'start'}>
       <Center w={{ base: '70px', md: '80px' }}>
         <Image
           shadow="lg"
@@ -20,13 +20,13 @@ const TrackDetails = () => {
         />
       </Center>
       <Flex w="full" justifySelf={'start'} className="-space-y-1" px={3} direction={'column'} gap={0.5}>
-        <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{base: 'sm', md:"md"}} fontWeight={'bold'}>
+        <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'sm', md: 'md' }} fontWeight={'bold'}>
           {track}
         </Text>
-        <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{base: 'xs', md:'sm'}} fontWeight={'semibold'}>
+        <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'sm' }} fontWeight={'semibold'}>
           {tape}
         </Text>
-        <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{base: 'xs', md:'xs'}} fontWeight="light">
+        <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'xs' }} fontWeight="light">
           {artist}
         </Text>
       </Flex>

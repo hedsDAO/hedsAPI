@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Barlow', 'sans-serif'],
-      serif: ['DM Mono', 'monospace'],
+      serif: ['Space Mono', 'monospace'],
     },
     extend: {
       gridTemplateColumns: {

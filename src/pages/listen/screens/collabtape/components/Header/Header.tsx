@@ -13,7 +13,7 @@ const Header = () => {
     <Flex
       justifyContent={'center'}
       alignItems={{ base: 'start', lg: 'center' }}
-      maxWidth={'7xl'}
+      maxWidth={'6xl'}
       mx={'auto'}
       flexDirection={['column', 'column', 'column', 'row']}
       gap={8}

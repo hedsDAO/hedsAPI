@@ -8,8 +8,11 @@ import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { LockClosedIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/solid';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Vote = () => {
+  const { space, tape, id } = useParams();
+  const navigate = useNavigate();
   const zone = { zone: 'GMT' };
   const vote = useSelector(store.select.hedstapeModel.selectVote);
   const start = DateTime.fromMillis(vote.start, zone);
@@ -30,15 +33,25 @@ const Vote = () => {
       )}
       <Flex mt={4} gap={2}>
         {vote.status === TimelineStatus.CLOSED ? (
-          <Button border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<EyeIcon height="14" width="14" />} size={'sm'} pr={3}>
+          <Button
+            onClick={() => navigate(`/vote/${space}/${tape}/${id}`)}
+            rounded="sm"
+            border={'solid 1px'}
+            borderColor="blue.100"
+            bg="blue.50"
+            leftIcon={<EyeIcon height="14" width="14" />}
+            size={'sm'}
+            pr={3}
+          >
             View Results
           </Button>
         ) : vote.status === TimelineStatus.OPEN ? (
           <Button
-            onClick={() => {}}
+            onClick={() => navigate(`/vote/${space}/${tape}/${id}`)}
             border={'solid 1px'}
             borderColor="green.200"
             bg="green.100"
+            rounded="sm"
             leftIcon={<i className="fa-sharp fa-solid fa-xmark-to-slot"></i>}
             size={'sm'}
             pr={3}

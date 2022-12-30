@@ -1,5 +1,6 @@
+import { isEmpty } from '@/utils';
 import { createModel } from '@rematch/core';
-import { collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc } from 'firebase/firestore';
+import { collection, doc, DocumentData, getDoc, getDocs, orderBy, query } from 'firebase/firestore';
 import type { RootModel } from '@/models';
 import { User, ArtistMapping, UserRoles } from '../../../models/common';
 import { db } from '@/App';
@@ -11,11 +12,15 @@ export interface ArtistState {
   artistMapping: ArtistMapping;
   totalArtists: number;
   scrollDataMax: number;
+  mostFeaturedArtists: Array<User>;
 }
 
 export const artistModel = createModel<RootModel>()({
   state: {} as ArtistState,
   selectors: (slice, createSelector, hasProps) => ({
+    selectMostFeaturedArtists() {
+      return slice((artistModel) => artistModel.mostFeaturedArtists);
+    },
     selectAllCurators() {
       return slice((artistModel) => artistModel.allCurators);
     },
@@ -39,6 +44,13 @@ export const artistModel = createModel<RootModel>()({
     setArtistMapping: (state, artistMapping: any) => ({ ...state, artistMapping }),
     setScrollDataMax: (state, scrollDataMax: number) => ({ ...state, scrollDataMax: scrollDataMax + 6 }),
     setTotalArtists: (state, totalArtists: number) => ({ ...state, totalArtists }),
+    setMostFeaturedArtists: (state, mostFeaturedArtists: Array<User>) => ({ ...state, mostFeaturedArtists }),
+    updateArtistMapping: (state, updatedArtist) => {
+      const newState = { ...state };
+      const { wallet } = updatedArtist;
+      newState.artistMapping[wallet] = updatedArtist;
+      return newState;
+    },
   },
   effects: () => ({
     async getArtistData(wallet: string) {
@@ -59,12 +71,19 @@ export const artistModel = createModel<RootModel>()({
         const currentArtist: User = res.data();
         artistMapping[res.id] = res.data();
         artistTank.push(res.data());
-        if (currentArtist.role === UserRoles.CURATOR) curatorTank.push(res.data());
+        if (!isEmpty(currentArtist?.samples)) curatorTank.push(res.data());
       });
       artistTank.sort((a, b) => a.displayName.localeCompare(b.displayName));
       this.setArtistMapping(artistMapping);
       this.setAllCurators(curatorTank);
       this.setAllArtists(artistTank);
+    },
+    async getMostFeaturedArtists([allArtists, limit]: [Array<User>, number]) {
+      const featuredArtists = allArtists
+        .filter((artist) => artist?.tracks?.['heds']?.['hedstape'])
+        .sort((a, b) => Object.keys(b?.tracks?.['heds']?.['hedstape'])?.length - Object.keys(a?.tracks?.['heds']?.['hedstape'])?.length)
+        .slice(0, limit);
+      this.setMostFeaturedArtists(featuredArtists);
     },
   }),
 });

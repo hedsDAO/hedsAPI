@@ -10,13 +10,17 @@ const WalletButton = () => {
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const isLoading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
-    // <Skeleton isLoaded={!isLoading} width="10ch" rounded="md">
       <Button
         onClick={() => handleCopy(setIsCopied, wallet)}
         leftIcon={<i className="fa-solid fa-copy text-xs"></i>}
-        variant="outline"
         fontWeight={'light'}
+        bg="purple.50"
+        border={'1px'}
+        borderColor="purple.100"
+        rounded="sm"
         size="xs"
+        width={{base: '24ch', lg: '24ch'}}
+        fontFamily={'Space Mono'}
       >
         {isCopied ? (
           <Fade in={isCopied}>
@@ -29,7 +33,6 @@ const WalletButton = () => {
           <Text>{formatWallet(wallet)}</Text>
         )}
       </Button>
-    // </Skeleton>
   );
 };
 
