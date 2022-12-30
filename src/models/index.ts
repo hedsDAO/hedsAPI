@@ -1,43 +1,44 @@
 import { Models } from '@rematch/core';
-import { userModel } from '@/pages/user/store/userModel';
-import { modalModel } from '@/modules/modals/store/modalModel';
+import { navigationModel } from '@/modules/navigation/store/navigationModel';
+import { tapesModel } from '@/modules/wrappers/store/tapesModel';
 import { artistModel } from '@/pages/artists/store/artistModel';
-import { tapesModel } from '@/pages/tapes/store/tapesModel';
+import { userModel } from '@/modules/wrappers/store/userModal';
 import { hedstapeModel } from '@/pages/listen/screens/hedstape/models/hedstapeModel';
-import { audioModel } from '@/modules/audio/store/audioModel';
-import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
-import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
-import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
-import { submitModel } from '@/modules/modals/screens/submit/models/submitModel';
-import { exploreModel } from '@/pages/explore/store/exploreModel';
 import { collabModel } from '@/pages/listen/screens/collabtape/models/collabModel';
+import { audioModel } from '@/modules/audio/store/audioModel';
+import { voteModel } from '@/pages/vote/store/voteModel';
+import { exploreModel } from '@/pages/explore/store/exploreModel';
+
+// Modals
+import { modalModel } from '@/modules/modals/store/modalModel';
+import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
 
 export interface RootModel extends Models<RootModel> {
-  userModel: typeof userModel;
-  modalModel: typeof modalModel;
-  artistModel: typeof artistModel;
+  navigationModel: typeof navigationModel;
   tapesModel: typeof tapesModel;
+  artistModel: typeof artistModel;
   audioModel: typeof audioModel;
-  settingsModel: typeof settingsModel;
-  twitterModel: typeof twitterModel;
-  hedstapeModel: typeof hedstapeModel;
-  sampleModel: typeof sampleModel;
-  submitModel: typeof submitModel;
-  exploreModel: typeof exploreModel;
+  userModel: typeof userModel;
   collabModel: typeof collabModel;
+  hedstapeModel: typeof hedstapeModel;
+  voteModel: typeof voteModel;
+  exploreModel: typeof exploreModel;
+  // modals
+  modalModel: typeof modalModel;
+  settingsModel: typeof settingsModel;
 }
 
 export const models: RootModel = {
-  userModel,
-  modalModel,
-  artistModel,
+  navigationModel,
   tapesModel,
-  audioModel,
-  settingsModel,
-  twitterModel,
-  hedstapeModel,
-  sampleModel,
-  submitModel,
-  exploreModel,
+  artistModel,
+  modalModel,
+  userModel,
   collabModel,
+  hedstapeModel,
+  audioModel,
+  exploreModel,
+  // modals
+  settingsModel,
+  voteModel,
 };

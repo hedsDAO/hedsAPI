@@ -1,20 +1,17 @@
-import { EtherscanButton, OpenSeaButton } from '@/common/tape';
-import { Modals } from '@/modules/modals/store/modalModel';
-import { Dispatch, store } from '@/store';
-import { Avatar, Button, Flex, IconButton, Image, Stack, Text } from '@chakra-ui/react';
-import { IconDownload } from '@tabler/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { AudioTrack, TapeCard } from '@/common/media';
+import { store } from '@/store';
+import { Button, Flex, Stack, Text, Link as ChakraLink } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 const Header = () => {
   const { space, tape, id } = useParams();
-  const dispatch = useDispatch<Dispatch>();
-  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
-  // const { currentTape } = useSelector((state: RootState) => state.tapesModel);
+  const opensea = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
+  const etherscan = useSelector(store.select.tapesModel.selectCurrentTapeEtherscanLink);
+
   return (
     <Flex
       justifyContent={'center'}
@@ -26,67 +23,47 @@ const Header = () => {
       px={[4, 2, 3, 1]}
       py={4}
     >
-      <Stack direction={'column'}>
-        <Image
-          className="bs-preset-1"
-          maxH={{ base: 'full', lg: '20rem' }}
-          maxW={{ base: 'full', lg: '20rem' }}
-          minH={{ base: 'full', lg: '20rem' }}
-          minW={{ base: 'full', lg: '20rem' }}
-          rounded="sm"
-          src={cover}
-        />
-        {currentTape?.tracks?.length && (
-          <Button
-            rounded="sm"
-            textColor={'gray.700'}
-            border={'solid 1px'}
-            borderColor={'green.200'}
-            bg="green.100"
-            leftIcon={<i className="fa-solid fa-layer-plus"></i>}
-            size={'xs'}
-          >
-            Add to Queue
-          </Button>
-        )}
+      <Stack maxW="lg" direction={'column'}>
+        <TapeCard tape={currentTape} />
       </Stack>
       <Stack direction={'column'} width={'full'} alignItems={'start'} justifyContent="center">
-        <Text fontWeight={'semibold'} fontSize={'4xl'}>
+        <Text fontFamily={'"Space Mono", monospace'} fontWeight={'semibold'} fontSize={'4xl'}>
           {name}
         </Text>
-        <Flex pb={3} gap={2}>
-          <OpenSeaButton />
-          <EtherscanButton />
+        <Flex  pb={{ base: 8, lg: 3 }} gap={2}>
+          <Button
+            as={ChakraLink}
+            href={opensea}
+            target="_blank"
+            bg={'blue.50'}
+            border={'solid 1px'}
+            borderColor="blue.100"
+            rounded="sm"
+            size={'xs'}
+            leftIcon={<i className="fak fa-opensea text-xs" />}
+          >
+            OpenSea
+          </Button>
+          <Button
+            as={ChakraLink}
+            href={etherscan}
+            target="_blank"
+            bg={'gray.50'}
+            border={'solid 1px'}
+            borderColor="gray.100"
+            rounded="sm"
+            size={'xs'}
+            leftIcon={<i className="fak fa-etherscan text-xs" />}
+          >
+            Etherscan
+          </Button>
         </Flex>
         {currentTape && (
-          <Flex w={{ base: 'full', lg: 'unset' }} pb={2} gap={1} direction={'column'}>
-            <Text px={1} fontWeight={'bold'} fontSize="sm">
-              The Sample
-            </Text>
-            <Flex justify={'space-between'} className={`text-sm text-gray-600 rounded-md border-green-200/60 border`} px={2} py={2} gap={2}>
-              <Flex minW={{ lg: 'sm' }} alignItems={'center'} gap={2}>
-                <Avatar to={`/u/${currentTape.curator.wallet}`} as={Link} borderRadius="full" boxSize="25px" src={currentTape.curator?.profilePicture} />
-                <div className="text-xs text-neutral-800 -mr-1">{currentTape.curator?.samples?.[space][tape][id]?.track}.</div>
-                <span className="text-xs font-medium whitespace-nowrap">{currentTape.curator?.displayName}</span>
-              </Flex>
-              <Flex pl={{ base: 12, lg: 0 }} alignItems={'center'} gap={2}>
-                <IconButton bg="blue.200" size="xs" aria-label="play" icon={<i className="fa-solid fa-play"></i>} className="flex-shrink-0" />
-                <IconButton
-                  onClick={() => {
-                    dispatch.modalModel.setModal(Modals.SAMPLE_MODAL);
-                    dispatch.modalModel.setModalOpen(true);
-                  }}
-                  bg="green.200"
-                  size="xs"
-                  aria-label="play"
-                  icon={<IconDownload height="14" width="14" />}
-                  className="flex-shrink-0"
-                />
-              </Flex>
-            </Flex>
+          <Flex w={{ base: 'full', lg: 'full' }} pb={2} gap={1} direction={'column'}>
+            <AudioTrack track={currentTape?.curator?.samples?.[space]?.[tape]?.[id]} />
           </Flex>
         )}
-        <Flex px={1} mt={4} direction={'column'}>
+        <Flex px={1} pt={4} direction={'column'}>
           <Text fontWeight={'bold'} fontSize="xs">
             About The Tape
           </Text>

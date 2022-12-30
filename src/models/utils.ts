@@ -1,4 +1,4 @@
-import { User } from './common';
+import { User, UserCollection } from './common';
 
 export const emptyUserState = (state: User): User => {
   return {
@@ -13,6 +13,6 @@ export const emptyUserState = (state: User): User => {
     samples: {},
     tracks: {},
     submissions: {},
-    collection: {},
+    collection: {} as UserCollection,
   };
 };

@@ -1,2 +1,1 @@
-export { default as CheckBoxDisclaimer } from './CheckBoxDisclaimer/CheckBoxDisclaimer';
-export { default as FileDropzone } from './FileDropzone/FileDropzone';
+export { default as Switch } from './Switch/Switch';

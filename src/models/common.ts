@@ -1,5 +1,3 @@
-import { FieldValue } from 'firebase/firestore';
-
 /**
  * @name Global
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
@@ -43,8 +41,9 @@ export interface User {
   submissions?: TrackMetadataMapping;
   collection?: UserCollection;
   history?: UserListeningHistory[];
-  likes?: [];
+  likes?: TrackMetadata[];
   joined: number;
+  no?: number;
 }
 
 export interface TrackMetadataMapping {
@@ -79,6 +78,9 @@ export interface TrackMetadata {
   space: string;
   tape: string;
   id: string;
+  no?: number;
+  subId?: string;
+  subImage?: string;
 }
 
 export interface TrackStats {
@@ -91,6 +93,7 @@ export enum TrackType {
   SUBMISSION = 0,
   TRACK,
   SAMPLE,
+  COLLAB,
 }
 
 export interface UserListeningHistory {
@@ -99,7 +102,8 @@ export interface UserListeningHistory {
 }
 
 export interface UserCollection {
-  [key: string]: UserCollectionItem;
+  items: { [key: string]: UserCollectionItem };
+  lastUpdated: number;
 }
 
 export interface UserCollectionItem {
@@ -135,6 +139,8 @@ export interface TapeData {
   name: string;
   opensea: string;
   route: string;
+  proposalId?: string;
+  splits?: TapeSplits;
   tracks: Array<string>;
   timeline: Timeline;
   space: string;
@@ -152,8 +158,13 @@ export interface TapeAndTrackData {
   name: string;
   opensea: string;
   route: string;
+  proposalId?: string;
+  splits?: TapeSplits;
   tracks?: Array<User>;
   timeline: Timeline;
+  space: string;
+  tape: string;
+  id: string;
 }
 
 export interface TrackArtistMetadata {
@@ -192,4 +203,9 @@ export interface Timeline {
     start: number;
     end: number;
   };
+}
+
+export interface TapeSplits {
+  primary: string;
+  secondary: string;
 }

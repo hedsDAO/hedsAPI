@@ -14,6 +14,7 @@ const GlobalAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSu
   const audio = useSelector(store.select.audioModel.selectActiveTrackAudio);
   const track = useSelector(store.select.audioModel.selectActiveTrack);
   const isShowingPlayer = useSelector(store.select.audioModel.selectIsShowingPlayer);
+  const isClosingPlayer = useSelector(store.select.audioModel.selectIsClosingPlayer);
   const walletId = useSelector(store.select.userModel.selectConnectedUserWallet);
   const isQueueEmpty = useSelector(store.select.audioModel.selectIsQueueEmpty);
 
@@ -31,6 +32,9 @@ const GlobalAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSu
         dispatch.audioModel.setDuration(duration);
         dispatch.audioModel.setCountPlayThreshold(duration);
         dispatch.audioModel.setTimerSeconds(0);
+        if (walletId && track) dispatch.audioModel.updaterUserListeningHistory({ track, walletId });
+      });
+      wavesurfer?.current?.on('play', () => {
         dispatch.audioModel.updaterUserListeningHistory({ track, walletId });
       });
       wavesurfer?.current?.on('finish', () => {
@@ -56,7 +60,7 @@ const GlobalAudio = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<WaveSu
   return (
     <>
       <Transition
-        show={isShowingPlayer}
+        show={isShowingPlayer && !isClosingPlayer}
         enter="transform transition ease-in-out duration-500 sm:duration-700"
         enterFrom="translate-y-20"
         enterTo="translate-y-full"

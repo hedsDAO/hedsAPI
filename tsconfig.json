@@ -17,7 +17,8 @@
       "@utils/*": ["src/utils/*"],
       "@common/*": ["src/common/*"],
       "@models/*": ["src/models/*"],
-      "@modals/*": ["src/modules/modals/*"]
+      "@modules/modals/*": ["src/modules/modals/*"],
+      "@modules/navigation/*": ["src/modules/navigation/*"]
     }
   },
   "exclude": ["node_modules", "build", "ipfs-http-client"]

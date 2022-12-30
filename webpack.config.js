@@ -16,7 +16,8 @@ module.exports = {
       '@common': path.resolve(__dirname, 'src/common/'),
       '@utils': path.resolve(__dirname, 'src/utils/'),
       '@models': path.resolve(__dirname, 'src/models/'),
-      '@modals': path.resolve(__dirname, 'src/modules/modals')
+      '@modules/modals': path.resolve(__dirname, 'src/modules/modals'),
+      '@modules/navigation': path.resolve(__dirname, 'src/modules/navigation')
     },
   },
   output: {
@@ -27,7 +28,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.ts$|tsx/,
         exclude: /node_modules/,
         loader: 'ts-loader',
       },

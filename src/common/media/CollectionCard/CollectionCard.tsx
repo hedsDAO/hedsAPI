@@ -1,28 +1,37 @@
 import { UserCollectionItem } from '@/models/common';
-import { Divider, Skeleton, Stack } from '@chakra-ui/react';
+import { Center, Divider, Image, Skeleton, Stack, useBoolean } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 const CollectionCard = ({ item, loading }: { item: UserCollectionItem; loading: boolean }) => {
+  const [isImageLoaded, setIsImageLoaded] = useBoolean();
   return (
     <Stack
       as={Link}
+      className="group transition-all ease-in-out bs-preset-1"
       to={`/listen/${item.space}/${item.tape}/${item.id}`}
-      bg="whiteAlpha.100"
+      bg="gray.50"
+      _hover={{ bg: 'white', borderColor: 'gray.800' }}
       divider={<Divider />}
       border={'1px'}
-      borderColor={'gray.300'}
-      rounded="lg"
-      p={2}
-      shadow="sm"
+      borderColor={'gray.700'}
+      rounded="sm"
+      p={3}
     >
-      <Skeleton w="full" h="fit-content" rounded="lg" isLoaded={!loading} fadeDuration={1}>
-        <div className="relative">
-          <img src={item?.image} className="object-cover aspect-square rounded-lg object-center shadow-md" />
-          <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-70 rounded-l-lg">x{item.quantity}</div>
+      <Skeleton startColor="gray.100" endColor="gray.500" w="full" minH="11rem" rounded="lg" isLoaded={isImageLoaded && !loading}>
+        <div className="relative mb-2">
+          <img
+            onLoad={setIsImageLoaded.on}
+            loading="eager"
+            src={item?.image}
+            className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-md object-center shadow-md outline-neutral-900 outline-1 outline"
+          />
+          {item && (
+            <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
+              x{item.quantity}
+            </div>
+          )}
         </div>
-      </Skeleton>
-      <Skeleton mt={1} rounded="lg" h="25px" isLoaded={!loading} fadeDuration={1}>
-        <span className="px-1 tracking-tight text-xs text-gray-600 font-medium">{item.name}</span>
+        <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{item.name}</span>
       </Skeleton>
     </Stack>
   );

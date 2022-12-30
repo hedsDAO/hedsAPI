@@ -1,102 +1,224 @@
-import { TrackMetadata } from '@/models/common';
-import { Dispatch, RootState, store } from '@/store';
-import { isEmpty } from '@/utils';
-import { Center, Flex, IconButton, Image, Skeleton, Text } from '@chakra-ui/react';
-import { PlayIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { TrackMetadata, TrackType } from '@/models/common';
+import { Dispatch, store } from '@/store';
+import { Center, Flex, Heading, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { PlayIcon } from '@heroicons/react/24/solid';
+import { IconTextPlus, IconEye, IconMusic, IconEyeOff } from '@tabler/icons';
+import { formatSubId, isEmpty } from '@/utils';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const AudioTrack = ({ track }: { track: TrackMetadata }) => {
+  const { space, tape, id } = useParams();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [isImageLoaded, setIsImageLoaded] = useBoolean();
+  const [isHeartFilled, setIsHeartFilled] = useBoolean();
+  const [isConfirmingLiked, setIsConfirmingLike] = useBoolean();
   const connectedWallet = useSelector(store?.select.userModel.selectConnectedUserWallet);
-  const hasConnectedUserLikedTrack = connectedWallet ? useSelector(store?.select?.userModel?.selectHasConnectedUserLikedTrack(track)) : false;
+  const currentWallet = useSelector(store?.select.userModel.selectCurrentUserWallet);
+  const allTapes = useSelector(store?.select.tapesModel.selectAllTapes);
+  const currentTape = useSelector(store?.select.tapesModel.selectCurrentTape);
+  // const queue = useSelector(store?.select.audioModel.selectQueue);
   const dispatch = useDispatch<Dispatch>();
-
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
     dispatch.audioModel.setActiveTrack(submission);
   };
-  const likeTrack = () => {
+  const likeTrack = async () => {
     const updatedStats = {
       likes: track?.stats?.likes ? track?.stats?.likes + 1 : 1,
-      likedBy: isEmpty(track?.stats?.likedBy) ? { [connectedWallet]: true } : { ...track?.stats?.likedBy, [connectedWallet]: true },
+      likedBy: isEmpty(track?.stats?.likedBy) ? { [connectedWallet]: true } : { ...track.stats.likedBy, [connectedWallet]: true },
       plays: track?.stats?.plays || track?.stats?.likes || 1,
     };
-    dispatch.audioModel.updateTrackMetadataStats({
-      track: track,
-      walletId: track.wallet,
-      newStats: updatedStats,
-    });
+    await dispatch.audioModel.updateTrackMetadataStats({ track: track, walletId: track.wallet, newStats: updatedStats });
+    await dispatch.userModel.addUserLike([connectedWallet, currentWallet, { ...track, stats: updatedStats }]);
+    if (pathname.includes('/u')) dispatch.userModel.getCurrentUserData(currentWallet);
+    if (pathname.includes('/listen')) dispatch.tapesModel.getTapeArtists([allTapes[tape][id]]);
+    await dispatch.userModel.getConnectedUserData(connectedWallet);
   };
 
-  const unlikeTrack = () => {
+  const unlikeTrack = async () => {
     const updatedLikedBy = { ...track?.stats?.likedBy };
     delete updatedLikedBy[connectedWallet];
-    console.log(updatedLikedBy)
     const updatedStats = {
       likes: track?.stats?.likes ? track?.stats?.likes - 1 : 0,
       likedBy: updatedLikedBy || {},
       plays: track?.stats?.plays || track?.stats?.likes || 1,
     };
-    dispatch.audioModel.updateTrackMetadataStats({
-      track: track,
-      walletId: track.wallet,
-      newStats: updatedStats,
-    });
+    await dispatch.audioModel.updateTrackMetadataStats({ track: track, walletId: track.wallet, newStats: updatedStats });
+    await dispatch.userModel.removeUserLike([connectedWallet, currentWallet, { ...track, stats: updatedStats }]);
+    if (pathname.includes('/u')) dispatch.userModel.getCurrentUserData(currentWallet);
+    if (pathname.includes('/listen')) dispatch.tapesModel.getTapeArtists([allTapes[tape][id]]);
+    await dispatch.userModel.getConnectedUserData(connectedWallet);
   };
 
+  const addToQueue = async () => {
+    dispatch.audioModel.pushTrackToQueue(track);
+  };
   return (
-    <div className="flex justify-between items-center gap-x-2 w-full hover:bg-gray-50 border border-neutral-300 px-2 py-2 rounded-md group">
-      <Flex h="full" alignItems={'center'} justifyContent={'start'}>
-        <Center role="button" onClick={() => handlePlay(track)} className="pointer-events-auto" w={{ base: '70px', md: '80px' }}>
+    <Flex
+      p={2}
+      rounded="sm"
+      border={'1px'}
+      borderColor={track?.public ? 'purple.800' : 'gray.300'}
+      _hover={track?.public ? { borderColor: 'gray.400', bg: 'gray.50' } : {}}
+      className="group"
+    >
+      <Skeleton opacity={track?.public ? '' : '60%'} isLoaded={isImageLoaded} minW="60px" minH="60px">
+        <Center shadow="sm" role="button" onClick={() => handlePlay(track)} className="pointer-events-auto">
           <Image
-            shadow="lg"
-            my="auto"
-            maxW={{ base: '50px', md: '60px' }}
-            minH={{ base: '50px', md: '60px' }}
-            maxH={{ base: '50px', md: '60px' }}
-            minW={{ base: '50px', md: '60px' }}
-            rounded="md"
-            src={track.cover}
+            height="60px"
+            width="60px"
+            onLoad={setIsImageLoaded.on}
+            _hover={{ opacity: 0 }}
+            className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all outline outline-1"
+            src={
+              track.type === TrackType.SUBMISSION
+                ? track.subImage
+                : pathname.includes('/u')
+                ? track.cover
+                : track.type === TrackType.SAMPLE
+                ? track.cover
+                : currentTape?.tracks.filter((artist) => artist?.wallet === track?.wallet)?.[0]?.profilePicture || ''
+            }
             objectFit="cover"
-            className="group-hover:opacity-40 ease-in-out transition-all"
+            rounded="sm"
           />
-          <PlayIcon className="opacity-0 group-hover:opacity-100 ease-in-out transition-all text-gray-800 absolute w-[15px] h-[15px] md:h-[20px] md:w-[20px] z-10" />
+          <PlayIcon className="opacity-0 group-hover:opacity-100 ease-in-out transition-all absolute w-[12px] h-[12px] md:h-[15px] md:w-[15px] z-10" />
         </Center>
-        <Flex w="full" justifySelf={'start'} className="-space-y-1" px={3} direction={'column'} gap={0.5}>
-          <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'sm', md: 'md' }} fontWeight={'bold'}>
-            {track.track}
-          </Text>
-          <Text as={Link} to={`/listen/${track.space}/${track.tape}/${track.id}`} whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'sm' }} fontWeight={'semibold'}>
-            {track.tape}
-          </Text>
-          <Text whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={{ base: 'xs', md: 'xs' }} fontWeight="light">
-            {track.artist}
-          </Text>
+      </Skeleton>
+      <Flex opacity={track?.public ? '' : '60%'} direction={'column'} justifyContent={'space-evenly'} ml={'12px'}>
+        <Flex mb={0.5} gap={1} alignItems={'baseline'}>
+          {(track?.type === TrackType.TRACK || track?.type >= TrackType.COLLAB) && (
+            <Heading className="font-sans" whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'}>
+              {track.no}.
+            </Heading>
+          )}
+          <Heading className="truncate md:max-w-[30ch] font-sans max-w-[20ch]" fontSize={'sm'}>
+            {track.type === TrackType.COLLAB
+              ? track.track
+              : track.type === TrackType.SUBMISSION
+              ? track.subId
+              : track.type === TrackType.SAMPLE
+              ? track.track
+              : formatSubId(track.track)}
+          </Heading>
         </Flex>
+        {pathname.includes('/listen') ? (
+          <Text className="font-serif" fontSize="xs" color="blue.900">
+            {track.album}
+          </Text>
+        ) : (
+          <Link className="text-xs" to={`/listen/${track.space}/${track.tape}/${track.id}`}>
+            <Text className="font-serif hover-underline-animation" fontSize="xs" color="blue.900">
+              {track.album}
+            </Text>
+          </Link>
+        )}
+        {track.wallet === currentWallet ? (
+          <Text fontWeight={'light'} fontSize="xs" color={'gray.800'}>
+            <>{track.artist}</>
+          </Text>
+        ) : (
+          <Link className="text-xs" to={`/u/${track.wallet}`}>
+            <Text className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
+              {track.artist}
+            </Text>
+          </Link>
+        )}
       </Flex>
-      <Flex px={2} gap={2} alignItems={'center'}>
-        <IconButton
-          size="xs"
-          variant="outline"
-          aria-label="add to queue"
-          icon={<i className="fa-solid fa-layer-plus"></i>}
-          // onClick={}
-          className="flex-shrink-0"
-        />
-        <IconButton
-          disabled={!connectedWallet}
-          size="xs"
-          variant={hasConnectedUserLikedTrack ? 'solid' : 'outline'}
-          aria-label="play"
-          colorScheme={hasConnectedUserLikedTrack ? 'red' : 'gray'}
-          icon={<i className="fa-solid fa-heart"></i>}
-          onClick={hasConnectedUserLikedTrack ? () => unlikeTrack() : () => likeTrack()}
-          className="flex-shrink-0"
-        />
-        {/* <span className="mx-1 sm:mx-2 whitespace-nowrap text-sm">{formatTime(track.duration)}</span> */}
-      </Flex>
-    </div>
+      <Stack alignItems={'end'} ml="auto">
+        {!isConfirmingLiked ? (
+          <IconButton
+            disabled={!connectedWallet}
+            size="xs"
+            aria-label="play"
+            textColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'gray.300'}
+            bg={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'red.500' : 'gray.50'}
+            icon={<i className="fa-solid fa-heart"></i>}
+            onClick={
+              track.stats.likedBy[connectedWallet]
+                ? () => setIsConfirmingLike.on()
+                : () => {
+                    setIsHeartFilled.on();
+                    likeTrack();
+                  }
+            }
+            _hover={{
+              bg: track.stats.likedBy[connectedWallet] || isHeartFilled ? 'gray.200' : 'gray.50',
+              textColor: track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'red.300',
+            }}
+            borderColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'red.500' : 'gray.300'}
+            className="flex-shrink-0"
+            border={'1px'}
+          />
+        ) : (
+          <Flex gap={1} alignItems={'center'}>
+            <IconButton
+              onClick={() => {
+                setIsHeartFilled.on();
+                setIsConfirmingLike.off();
+              }}
+              size="xs"
+              aria-label="like"
+              textColor={'white'}
+              bg={'gray.200'}
+              _hover={{ bg: 'gray.300' }}
+              icon={<i className="fa-solid fa-rotate-left"></i>}
+            />
+            <IconButton
+              onClick={() => {
+                unlikeTrack();
+                setIsHeartFilled.off();
+                setIsConfirmingLike.off();
+              }}
+              size="xs"
+              aria-label="like"
+              textColor={'white'}
+              bg={'red.500'}
+              icon={<i className="fa-solid fa-xmark"></i>}
+            />
+          </Flex>
+        )}
+
+        <Menu direction="rtl">
+          <MenuButton
+            border={'1px'}
+            borderColor={'gray.500'}
+            bg={'gray.50'}
+            _hover={{ bg: 'gray.100' }}
+            size="xs"
+            as={IconButton}
+            aria-label="Options"
+            icon={<i className="fa-solid fa-ellipsis"></i>}
+            width={'20px'}
+          />
+          <MenuList>
+            {/* {queue?.length && queue?.includes(track) ? (
+              <></>
+            ) : (
+              <MenuItem onClick={() => addToQueue()} fontSize={'sm'} icon={<IconTextPlus height="20px" />}>
+                Add to Queue
+              </MenuItem>
+            )}
+            {track?.wallet === connectedWallet && track.type === TrackType.SUBMISSION && (
+              <MenuItem
+                onClick={() => dispatch.userModel.updateConnectedUserSubmissionStatus([track, connectedWallet])}
+                fontSize={'sm'}
+                icon={track?.public ? <IconEyeOff height={'20px'} /> : <IconEye height="20px" />}
+              >
+                {track?.public ? 'Hide Track' : 'Make Public'}
+              </MenuItem>
+            )} */}
+            <MenuItem onClick={() => navigate(`/listen/${track.space}/${track.tape}/${track.id}`)} fontSize={'sm'} icon={<IconMusic height="20px" />}>
+              View Tape
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Stack>
+    </Flex>
   );
 };
+
 export default AudioTrack;

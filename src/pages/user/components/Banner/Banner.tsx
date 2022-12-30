@@ -1,22 +1,24 @@
-import { RootState, store } from '@/store';
-import { Image, Skeleton } from '@chakra-ui/react';
+import { store } from '@/store';
+import { GridItem, Image, Skeleton, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import DEFAULT_BANNER_PICTURE from '/public/banner.jpg';
 
 const Banner = () => {
+  const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const banner = useSelector(store.select.userModel.selectCurrentUserBanner);
-  const loading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
-    // <Skeleton startColor='gray.50' endColor='blackAlpha.200' minHeight={'40'} maxHeight={'40'} minW="fit-content" isLoaded={!loading && !!banner}>
-    <Image
-      data-testid="user-banner"
-      shadow={'lg'}
-      loading="eager"
-      src={banner?.length && !loading ? banner : DEFAULT_BANNER_PICTURE}
-      className="object-fit object-cover w-screen -mb-20 bg-gray-600 shadow-sm"
-      h="40"
-    />
-    // </Skeleton>
+
+      <Skeleton startColor="purple.100" endColor="purple.200" minHeight={'40'} maxHeight={'40'} isLoaded={isImageLoaded} fadeDuration={2}>
+        <Image
+          onLoad={setIsImageLoaded.on}
+          data-testid="user-banner"
+          shadow={'lg'}
+          loading="eager"
+          src={banner?.length ? banner : DEFAULT_BANNER_PICTURE}
+          className="object-fit object-cover w-screen mx-auto -mb-20 bg-gray-600 shadow-sm"
+          h="40"
+        />
+      </Skeleton>
   );
 };
 
