@@ -9,9 +9,11 @@ import { audioModel } from '@/modules/audio/store/audioModel';
 import { voteModel } from '@/pages/vote/store/voteModel';
 import { exploreModel } from '@/pages/explore/store/exploreModel';
 
-// Modals
+// modals
 import { modalModel } from '@/modules/modals/store/modalModel';
+import { submitModel } from '@/modules/modals/screens/submit/models/submitModel';
 import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
+import { mintModel } from '@/modules/modals/screens/mint/models/mintModel';
 
 export interface RootModel extends Models<RootModel> {
   navigationModel: typeof navigationModel;
@@ -26,6 +28,8 @@ export interface RootModel extends Models<RootModel> {
   // modals
   modalModel: typeof modalModel;
   settingsModel: typeof settingsModel;
+  submitModel: typeof submitModel;
+  mintModel: typeof mintModel;
 }
 
 export const models: RootModel = {
@@ -39,6 +43,8 @@ export const models: RootModel = {
   audioModel,
   exploreModel,
   // modals
+  mintModel,
   settingsModel,
   voteModel,
+  submitModel,
 };
