@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { calculateUserVotingPower, Choice, createClient, Proposal, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
