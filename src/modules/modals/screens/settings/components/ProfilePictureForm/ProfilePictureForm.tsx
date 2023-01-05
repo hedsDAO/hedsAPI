@@ -9,7 +9,7 @@ import { PrimaryButton, WarningButton } from '@/common/buttons';
 const ProfilePictureForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
-  const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
+  const profilePicture = useSelector(store.select.userModel.selectConnectedUserProfilePicture);
   const { profilePicturePreview, profilePictureFile, profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
   const handleClick = () => inputRef.current.click();
   return (

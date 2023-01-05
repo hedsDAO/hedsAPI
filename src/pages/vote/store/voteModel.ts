@@ -54,7 +54,7 @@ export const voteModel = createModel<RootModel>()({
         if (!proposal.strategies) return 0;
         const { strategies } = proposal;
         console.log(strategies);
-        return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
+        // return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
       });
     },
   }),
@@ -81,7 +81,7 @@ export const voteModel = createModel<RootModel>()({
     async createProposal(proposal: Proposal) {
       const { createProposal } = createClient();
       try {
-        const proposalCreated = await (await createProposal(proposal)).data;
+        const proposalCreated = await (await createProposal('heds', proposal)).data;
         const { choices, method, votes } = proposalCreated;
         this.setProposal(proposalCreated);
         this.setChoices(choices);
@@ -93,7 +93,7 @@ export const voteModel = createModel<RootModel>()({
       const { deleteProposal } = createClient();
       try {
         await (
-          await deleteProposal(proposalAddress)
+          await deleteProposal('heds', proposalAddress)
         ).status;
       } catch (error) {
         console.log(error);
@@ -103,7 +103,7 @@ export const voteModel = createModel<RootModel>()({
       const { getProposal } = createClient();
       if (proposalAddress?.length) {
         try {
-          const proposal = await (await getProposal(proposalAddress)).data;
+          const proposal = await (await getProposal('heds', proposalAddress)).data;
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);
@@ -124,7 +124,7 @@ export const voteModel = createModel<RootModel>()({
     async getAllProposals() {
       const { getAllProposals } = createClient();
       try {
-        const allProposals = await (await getAllProposals()).data;
+        const allProposals = await (await getAllProposals('heds')).data;
         this.setAllProposals(allProposals);
       } catch (error) {
         console.log(error);
