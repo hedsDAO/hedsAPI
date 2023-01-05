@@ -93,11 +93,7 @@ export const voteModel = createModel<RootModel>()({
       const { deleteProposal } = createClient();
       try {
         await (
-<<<<<<< HEAD
-          await deleteProposal('heds', proposalAddress)
-=======
           await deleteProposal('proposals', proposalAddress)
->>>>>>> f24cfff3832029cdb24543154ca9dfe474488f9c
         ).status;
       } catch (error) {
         console.log(error);
@@ -107,11 +103,7 @@ export const voteModel = createModel<RootModel>()({
       const { getProposal } = createClient();
       if (proposalAddress?.length) {
         try {
-<<<<<<< HEAD
-          const proposal = await (await getProposal('heds', proposalAddress)).data;
-=======
           const proposal = await (await getProposal('proposals', proposalAddress)).data;
->>>>>>> f24cfff3832029cdb24543154ca9dfe474488f9c
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);
@@ -132,12 +124,8 @@ export const voteModel = createModel<RootModel>()({
     async getAllProposals() {
       const { getAllProposals } = createClient();
       try {
-<<<<<<< HEAD
-        const allProposals = await (await getAllProposals('heds')).data;
-=======
         const allProposals = await (await getAllProposals('proposals')).data;
         console.log('all proposals', allProposals);
->>>>>>> f24cfff3832029cdb24543154ca9dfe474488f9c
         this.setAllProposals(allProposals);
       } catch (error) {
         console.log(error);
