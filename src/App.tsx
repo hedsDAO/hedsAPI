@@ -31,9 +31,10 @@ export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 const App = (): JSX.Element => {
   const location = useLocation();
 
-  return location.pathname === '/' ? (
-    <Landing />
-  ) : (
+  // return location.pathname === '/' ? (
+  //   <Landing />
+  // ) :
+  return (
     <Fragment>
       <Navbar />
       <Routes>
