@@ -10,7 +10,7 @@ import { Stepper } from '@pages/landing/components/Stepper';
 // export const Landing = () => <div>hello world</div>;
 export const Landing = () => {
   return (
-    <Parallax pages={5} style={{ top: '0', left: '0', height: '100vh' }}>
+    <Parallax className="top-div" pages={5} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }}>
       <ParallaxLayer
         offset={0}
         style={{
