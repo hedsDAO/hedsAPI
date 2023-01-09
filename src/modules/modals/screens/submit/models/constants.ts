@@ -1,4 +1,28 @@
 /**
+ * @global
+ * @const GENERATE_ID_FUNCTION : cloud function to generate unique id.
+ * @const SUB_ART_FUNCTION : cloud function to generate sub art.
+ * @const PIN_LINK_TO_GATEWAY_FUNCTION : cloud function to pin hash to pinata gateway.
+ * @const PINATA_URL_PREFIX : heds prefix for pinata gateway.
+ */
+
+export const GENERATE_ID_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/generateId';
+export const SUB_ART_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/openaiGetGeneratedImage/';
+export const PIN_LINK_TO_GATEWAY_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/pinLinkToGateway';
+export const PINATA_URL_PREFIX = 'https://www.heds.cloud/ipfs/';
+
+/**
+ * @component <UserAuthWrapper/>
+ * @const CONNECT_WALLET_TEXT : Heading for connected users.
+ * @const VERIFY_TWITTER_TEXT : Heading for unverified twitter users.
+ * @const VERIFY_BUTTON_TEXT : Twitter verification button.
+ */
+
+export const CONNECT_WALLET_TEXT = 'Connect your wallet';
+export const VERIFY_TWITTER_TEXT = 'Verify with twitter';
+export const VERIFY_BUTTON_TEXT = 'Verify';
+
+/**
  * @component <SubmitModal/>
  * @const SUBMIT_MODAL_TITLE : Heading for submit modal.
  * @const SAVE_BUTTON_TEXT : settings save button text.

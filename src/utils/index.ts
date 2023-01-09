@@ -10,6 +10,9 @@ export { default as compareTimestamps } from './compareTimestamps';
 export { default as formWaveSurferOptions } from './formWavesurferOptions';
 export { default as getCurrentImagePath } from './getCurrentImagePath';
 export { default as computeLength } from './computeLength';
+export { default as handlePinataMetadata } from './handlePinataMetadata';
+export { default as generateSampleLink } from './generateSampleLink';
 
 // API
 export { default as getOpenseaEvents } from './api/getOpenseaEvents';
+export { default as uploadFileToPinata } from './api/uploadFileToPinata';
