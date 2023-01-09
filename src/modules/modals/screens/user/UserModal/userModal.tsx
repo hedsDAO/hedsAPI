@@ -40,7 +40,7 @@ const UserModal = () => {
           disconnect
         </Button>
         {/* TODO: add dark mode feature (stretch) */}
-        <Divider my={5} />
+        {/* <Divider my={5} />
         <Heading mb={2} fontSize={'md'}>
           Experimental:
         </Heading>
@@ -52,7 +52,7 @@ const UserModal = () => {
         >
           <span className="sr-only">Enable notifications</span>
           <span className={`${colorMode === 'dark' ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`} />
-        </Switch>
+        </Switch> */}
       </Flex>
     </ModalContainer>
   );

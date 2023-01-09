@@ -59,7 +59,7 @@ export const userModel = createModel<RootModel>()({
       return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.collection || { items: {}, lastUpdated: 0 });
     },
     selectConnectedUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
-      return slice((userModel) => userModel.connectedUser.submissions?.[space]?.[tape]?.[id]);
+      return slice((userModel) => userModel.connectedUser?.submissions?.[space]?.[tape]?.[id]);
     }),
     selectConnectedUserLikes() {
       return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.likes || []);
@@ -245,7 +245,7 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), { ...userData, ...newUserData });
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, ...newUserData });
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, ...newUserData });
-      this.setCurrentUserData({ ...userData, ...newUserData });
+      this.setConnectedUserData({ ...userData, ...newUserData });
     },
     async updateUserTrackMetadataStats([wallet, newUserData]) {
       const docSnap = await getDoc(doc(db, 'users', wallet));
@@ -302,6 +302,37 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), updatedUserData);
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), updatedUserData);
       this.setCurrentUserData(updatedUserData);
+    },
+    async newUserSubmission([track, wallet]: [TrackMetadata, string]) {
+      const docSnap = await getDoc(doc(db, 'users', wallet.toLowerCase()));
+      const userData = docSnap.exists() ? docSnap.data() : null;
+      const { role } = userData;
+      const { space, tape, id } = track;
+      const updatedUserData = { ...userData };
+      updatedUserData.submissions = {
+        [space]: {
+          ...(updatedUserData?.['submissions']?.[space] && updatedUserData.submissions[space]),
+          [tape]: {
+            ...(updatedUserData?.['submissions']?.[space]?.[tape] && updatedUserData.submissions[space][tape]),
+            [id]: { ...track, public: false },
+          },
+        },
+      };
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), updatedUserData);
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), updatedUserData);
+      this.setConnectedUserData(updatedUserData);
+    },
+    async deletePreviousSubmission([track, wallet]) {
+      const docSnap = await getDoc(doc(db, 'users', wallet.toLowerCase()));
+      const userData = docSnap.exists() ? docSnap.data() : null;
+      const { role } = userData;
+      const { space, tape, id } = track;
+      const updatedUserData = { ...userData };
+      delete updatedUserData.submissions[space][tape][id];
+      updatedUserData.submissions = {} as TrackMetadataMapping;
+      if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), updatedUserData);
+      if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), updatedUserData);
+      this.setConnectedUserData(updatedUserData);
     },
   }),
 });

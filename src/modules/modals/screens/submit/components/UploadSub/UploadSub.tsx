@@ -5,7 +5,7 @@ import { Fragment, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MAX_FILES, VALID_FILE_EXT } from '../../models/constants';
 
-const UploadSubmission = () => {
+const UploadSub = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
   const isLoading = useSelector(store.select.submitModel.selectIsLoading);
@@ -44,4 +44,4 @@ const UploadSubmission = () => {
     </AccordionItem>
   );
 };
-export default UploadSubmission;
+export default UploadSub;

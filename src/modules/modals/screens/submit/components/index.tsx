@@ -1,5 +1,6 @@
-export { default as SubmissionRequirements } from './SubmissionRequirements/SubmissionRequirements';
-export { default as UploadSubmission } from './UploadSubmission/UploadSubmission';
+export { default as SubmissionReqs } from './SubmissionReqs/SubmissionReqs';
+export { default as UploadSub } from './UploadSub/UploadSub';
 export { default as PreviewAndSubmit } from './PreviewAndSubmit/PreviewAndSubmit';
-export { default as GenerateSubmission } from './GenerateSubmission/GenerateSubmission';
-export { default as PreviouslySubmitted} from "./PreviouslySubmitted/PreviouslySubmitted"
+export { default as PreviouslySubmitted } from './PreviouslySubmitted/PreviouslySubmitted';
+export { default as WarningPrompt } from './WarningPrompt/WarningPrompt';
+export { default as AuthWrapper } from './AuthWrapper/AuthWrapper';

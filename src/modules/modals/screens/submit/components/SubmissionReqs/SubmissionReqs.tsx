@@ -3,7 +3,7 @@ import { AccordionButton, AccordionItem, AccordionPanel, Box, Checkbox, Flex, St
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const SubmissionRequirements = () => {
+const SubmissionRs = () => {
   const dispatch = useDispatch<Dispatch>();
   const bpm = useSelector(store.select.tapesModel.selectCurrentTapeBpm);
   const hasAcceptedTerms = useSelector(store.select.submitModel.selectHasAcceptedTerms);
@@ -52,4 +52,4 @@ const SubmissionRequirements = () => {
   );
 };
 
-export default SubmissionRequirements;
+export default SubmissionRs;
