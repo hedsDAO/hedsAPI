@@ -64,7 +64,7 @@ export const Landing = () => {
         }}
       >
         <div style={{ width: '50%', textAlign: 'center' }}>
-          <img src="/hedslogo.png" />
+          <img src="/heds_logo.svg" />
           <FadeOutDown text={'WELCOME TO THE FUTURE OF CURATION.'} />
         </div>
       </ParallaxLayer>
