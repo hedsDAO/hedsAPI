@@ -9,7 +9,6 @@ import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
 import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
 
-// export const Landing = () => <div>hello world</div>;
 export const Landing = () => {
   return (
     <Parallax className="top-div" pages={5} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }}>
@@ -199,6 +198,3 @@ export const Landing = () => {
     </Parallax>
   );
 };
-
-// steps page
-// link to explore page
