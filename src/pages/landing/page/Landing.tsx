@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Center, Container, Divider, Grid, GridItem, HStack, StackDivider } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, HStack, Icon, StackDivider } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
+import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
+import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
 
 // export const Landing = () => <div>hello world</div>;
 export const Landing = () => {
@@ -182,6 +184,16 @@ export const Landing = () => {
         </Center>
       </ParallaxLayer>
       <ParallaxLayer offset={3}>
+        <Grid h="100%" padding="5rem" templateRows="repeat(2, 1fr)" templateColumns="repeat(3, 1fr)" gap={4}>
+          <GridItemImage num={207} text="unique minters" icon={IconUsers} />
+          <GridItemImage num={59} text="curated artists" icon={IconHeadphones} />
+          <GridItemImage num={162} text="unique submissions" icon={IconIcons} />
+          <GridItemImage num={734} text="tapes minted" icon={IconDeviceAudioTape} />
+          <GridItemImage num={231} text="verified wallets" icon={IconWallet} />
+          <GridItemImage num={438} text="total submission" icon={IconTicket} />
+        </Grid>
+      </ParallaxLayer>
+      <ParallaxLayer offset={4}>
         <Stepper />
       </ParallaxLayer>
     </Parallax>
