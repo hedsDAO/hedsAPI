@@ -18,13 +18,6 @@ export const Landing = () => {
         }}
       />
 
-      {/* <ParallaxLayer offset={0} speed={0} style={{ height: '50%' }}>
-        <video playsInline autoPlay muted loop src="/hedspinning-beige.mp4" />
-      </ParallaxLayer>
-      <ParallaxLayer offset={0} speed={2} style={{ height: '50%' }}>
-        <video playsInline autoPlay muted loop src="/hedspinning-purple.mp4" />
-      </ParallaxLayer> */}
-
       <ParallaxLayer offset={0}>
         <video playsInline autoPlay muted loop src="/hedsbackground.mp4" />
       </ParallaxLayer>
