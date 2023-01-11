@@ -2,7 +2,7 @@ import {beforeAll, describe, jest, test, expect, beforeEach} from "@jest/globals
 import * as admin from "firebase-admin";
 import * as serviceAccount from "../../../service_key.json";
 import {Response, Request, NextFunction} from "express";
-import {generateId} from "../../../src/services/utils/generateId";
+import {generateId} from "../../../src/controllers/utils/generateId";
 import * as dotenv from "dotenv";
 import * as randomData from "../../../src/data/randomData";
 
