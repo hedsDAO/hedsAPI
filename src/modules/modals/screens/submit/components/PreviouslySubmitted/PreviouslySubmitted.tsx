@@ -17,7 +17,9 @@ const PreviouslySubmitted = () => {
         <VStack>
           <VStack mb={5}>
             <Heading>Success</Heading>
-            <Text textAlign={'center'} fontSize="sm">Your track has been submitted for {currentTapeName}.</Text>
+            <Text textAlign={'center'} fontSize="sm">
+              Your track has been submitted for {currentTapeName}.
+            </Text>
           </VStack>
           <Skeleton rounded="lg" h="256px" w="256px" isLoaded={hasImageLoaded}>
             <Image shadow="md" rounded="lg" onLoad={setHasImageLoaded.on} src={generatedSubmission?.subImage || previousSubmission?.subImage} />
@@ -43,11 +45,11 @@ const PreviouslySubmitted = () => {
       ) : (
         <Spinner size="md" />
       )}
-      {/* {!isLoading && (
+      {!isLoading && (
         <VStack pt={5}>
           <WaveformPlayer audio={generatedSubmission?.audio || previousSubmission?.audio} />
         </VStack>
-      )} */}
+      )}
     </VStack>
   );
 };

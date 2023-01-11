@@ -1,16 +1,7 @@
 import { TrackMetadata, TrackType } from '@/models/common';
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
-import {
-  MAX_FILE_SIZE,
-  MAX_LENGTH,
-  VALID_FILE_TYPES,
-  MIN_LENGTH,
-  GENERATE_ID_FUNCTION,
-  SUB_ART_FUNCTION,
-  PIN_LINK_TO_GATEWAY_FUNCTION,
-  PINATA_URL_PREFIX,
-} from './constants';
+import { MAX_FILE_SIZE, MAX_LENGTH, VALID_FILE_TYPES, MIN_LENGTH, SUB_ART_FUNCTION, UNPIN_HASH_FUNCTION, PINATA_URL_PREFIX } from './constants';
 import { computeLength, formatSubId, handlePinataMetadata, uploadFileToPinata } from '@/utils';
 import axios from 'axios';
 
@@ -106,14 +97,24 @@ export const submitModel = createModel<RootModel>()({
     },
     async deletePreviousSubmission([sub, wallet]) {
       this.setIsLoading(true);
-      dispatch.userModel.deletePreviousSubmission([sub, wallet]);
-      this.setIsLoading(false);
-      this.clearModalState();
+      const { subImage, audio } = sub;
+      const subImageHash = subImage.split(PINATA_URL_PREFIX)[1];
+      const audioHash = audio.split(PINATA_URL_PREFIX)[1];
+      try {
+        await axios.delete(`${UNPIN_HASH_FUNCTION}/${subImageHash}`);
+        await axios.delete(`${UNPIN_HASH_FUNCTION}/${audioHash}`);
+        this.setIsLoading(false);
+        dispatch.userModel.deletePreviousSubmission([sub, wallet]);
+        this.clearModalState();
+      } catch (err) {
+        console.log(err);
+        this.setIsLoading(false);
+      }
     },
     async uploadSubmissions([space, tape, id, wallet, artist, album, cover, file]: [string, string, string, string, string, string, string, File]) {
       this.setIsUploading(true);
       this.setIsLoading(true);
-      const testURL = `https://us-central1-hedsdev.cloudfunctions.net/newSubmissionArt/${space}/${tape}/${id}/${wallet}`;
+      const testURL = `${SUB_ART_FUNCTION}/${space}/${tape}/${id}/${wallet}`;
       const { subId, subArtIpfsHash } = await axios.get(testURL).then((res) => res.data);
       const { duration } = await computeLength(file);
       const options = handlePinataMetadata(wallet, artist, subId, space, tape, id, duration);
