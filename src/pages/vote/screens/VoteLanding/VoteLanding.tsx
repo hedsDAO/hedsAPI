@@ -9,7 +9,6 @@ const VoteLanding = () => {
   const allHedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
   const latestHedsTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
 
-  console.log(!isEmpty(allHedsTapes) && Object.values(allHedsTapes));
   return (
     <Container minW="full">
       <Box>
