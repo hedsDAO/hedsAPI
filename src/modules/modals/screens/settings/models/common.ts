@@ -7,7 +7,7 @@ import { User } from '@/models/common';
  */
 
 export class SettingsModalState {
-  profileChanges: User;
+  profileChanges: User = {} as User;
   isLoading = false;
   error = '';
   bannerFile: File;

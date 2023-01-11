@@ -28,7 +28,7 @@ const TwitterButton = () => {
           width={{base: '24ch', lg: 'auto'}}
           fontFamily={'"Space Mono", monospace'}
         >
-          <Text>Verify</Text>
+          <Text>verify</Text>
         </Button>
       ) : (
         <Button
@@ -36,15 +36,13 @@ const TwitterButton = () => {
           isExternal
           href={formatTwitterUrl(twitterHandle)}
           leftIcon={<i className="fa-brands fa-twitter text-xs"></i>}
-          bg="blue.50"
+          bg="blue.100"
           border={'1px'}
-          borderColor="blue.100"
+          borderColor="blue.400"
+          rounded='sm'
           fontWeight={'light'}
-          rounded="sm"
           size="xs"
-          width={{base: '24ch', lg: '24ch'}}
-          textAlign="left"
-
+          width={{base: '24ch', lg: 'auto'}}
           fontFamily={'"Space Mono", monospace'}
         >
           <Text>@{twitterHandle}</Text>

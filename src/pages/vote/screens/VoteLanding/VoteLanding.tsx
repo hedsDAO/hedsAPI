@@ -14,7 +14,7 @@ const VoteLanding = () => {
   useEffect(() => {
     dispatch.voteModel.getAllProposals();
   }, []);
-  // console.log(!isEmpty(allHedsTapes) && Object.values(allHedsTapes));
+  console.log(!isEmpty(allHedsTapes) && Object.values(allHedsTapes));
   return (
     <Container minW="full">
       <Box>
