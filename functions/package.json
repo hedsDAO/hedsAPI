@@ -9,12 +9,12 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test": "jest --detectOpenHandles ./test/*.test.ts --watchAll --no-cache"
+    "test": "jest --detectOpenHandles ./test/**/*.test.ts --watchAll --no-cache"
   },
   "engines": {
     "node": "16"
   },
-  "main": "lib/index.js",
+  "main": "lib/src/index.js",
   "dependencies": {
     "@firebase/rules-unit-testing": "^2.0.5",
     "@types/cors": "^2.8.13",

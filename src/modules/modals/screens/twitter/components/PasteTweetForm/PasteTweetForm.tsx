@@ -1,5 +1,5 @@
 import { TwitterStep } from '@/modules/modals/screens/twitter/models/common';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { Button, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Stack, Text } from '@chakra-ui/react';
 import { IconAlertCircle } from '@tabler/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const PasteTweetForm = () => {
   const dispatch = useDispatch<Dispatch>();
   const { currentStep, error, loading, pastedTweetUrl, userHash } = useSelector((state: RootState) => state.twitterModel);
+  const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   return (
     <FormControl isDisabled={currentStep !== TwitterStep.VERIFY_TWEET} id="paste-tweet">
       <Stack gap={2} spacing={-0.5} direction={'column'} alignItems="baseline" justifyContent={'start'}>
@@ -26,7 +27,7 @@ const PasteTweetForm = () => {
               bg="green.200"
               h="1.75rem"
               size="sm"
-              onClick={() => dispatch.twitterModel.verifyTweet([pastedTweetUrl, userHash])}
+              onClick={() => dispatch.twitterModel.verifyTweet([pastedTweetUrl, userHash, connectedWallet])}
             >
               Verify
             </Button>

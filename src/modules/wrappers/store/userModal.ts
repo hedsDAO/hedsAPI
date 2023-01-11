@@ -171,8 +171,11 @@ export const userModel = createModel<RootModel>()({
       if (wallet?.length) {
         const docRef = doc(db, 'users', wallet.toLowerCase());
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) this.setConnectedUserData(docSnap.data());
-        else {
+        if (docSnap.exists() && docSnap.data()?.displayName) this.setConnectedUserData(docSnap.data());
+        else if (docSnap.exists() && !docSnap.data()?.displayName?.length) {
+          dispatch.modalModel.setModal(Modals.NAME_MODAL);
+          dispatch.modalModel.setModalOpen(true);
+        } else {
           dispatch.modalModel.setModal(Modals.NAME_MODAL);
           dispatch.modalModel.setModalOpen(true);
         }
@@ -246,6 +249,7 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), { ...userData, ...newUserData });
       if (role >= UserRoles.CURATOR) await setDoc(doc(db, 'curators', wallet), { ...userData, ...newUserData });
       this.setConnectedUserData({ ...userData, ...newUserData });
+      this.setCurrentUserData({ ...userData, ...newUserData });
     },
     async updateUserTrackMetadataStats([wallet, newUserData]) {
       const docSnap = await getDoc(doc(db, 'users', wallet));
@@ -329,7 +333,7 @@ export const userModel = createModel<RootModel>()({
       const { space, tape, id } = track;
       const updatedUserData = { ...userData };
       delete updatedUserData.submissions[space][tape][id];
-      updatedUserData.submissions = {} as TrackMetadataMapping;
+      if (isEmpty(updatedUserData.submissions[space][tape])) updatedUserData.submissions = {};
       if (role >= UserRoles.USER) await setDoc(doc(db, 'users', wallet), updatedUserData);
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), updatedUserData);
       this.setConnectedUserData(updatedUserData);

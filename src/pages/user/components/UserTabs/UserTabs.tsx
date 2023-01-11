@@ -43,7 +43,7 @@ const UserTabs = () => {
         {audioTabs?.[audioTabIndex] === 'submissions' && <Submissions />}
         {audioTabs?.[audioTabIndex] === 'tracks' && <Tracks />}
         {audioTabs?.[audioTabIndex] === 'samples' && <Samples />}
-        {audioTabs?.length && <Divider />}
+        {audioTabs?.length && <Divider pt={2} />}
         <Flex pt={audioTabs?.length ? 10 : 0} gap={3} mt={{ base: '12', lg: '20' }} w="full" justifyContent={'space-between'}>
           {engagementTabs?.length && (
             <Flex gap={2}>

@@ -113,11 +113,8 @@ export const submitModel = createModel<RootModel>()({
     async uploadSubmissions([space, tape, id, wallet, artist, album, cover, file]: [string, string, string, string, string, string, string, File]) {
       this.setIsUploading(true);
       this.setIsLoading(true);
-      const subId = await axios.get(GENERATE_ID_FUNCTION).then((res) => res.data);
-      const sourceUrl = await axios.get(SUB_ART_FUNCTION + subId).then((res) => res.data);
-      const subArtId = id + '-' + 'ai' + '-' + wallet.toLowerCase();
-      const subArtOptions = { sourceUrl, pinataMetadata: { name: subArtId, keyvalues: { id, space, tape } } };
-      const subArtIpfsHash = await axios.post(PIN_LINK_TO_GATEWAY_FUNCTION, { options: subArtOptions }).then((res) => PINATA_URL_PREFIX + res.data?.IpfsHash);
+      const testURL = `https://us-central1-hedsdev.cloudfunctions.net/newSubmissionArt/${space}/${tape}/${id}/${wallet}`;
+      const { subId, subArtIpfsHash } = await axios.get(testURL).then((res) => res.data);
       const { duration } = await computeLength(file);
       const options = handlePinataMetadata(wallet, artist, subId, space, tape, id, duration);
       const formData = new FormData();
@@ -128,7 +125,7 @@ export const submitModel = createModel<RootModel>()({
         track: formatSubId(subId),
         audio: subAudioIpfsHash,
         subId: formatSubId(subId),
-        subImage: subArtIpfsHash,
+        subImage: PINATA_URL_PREFIX + subArtIpfsHash,
         artist,
         duration,
         wallet,

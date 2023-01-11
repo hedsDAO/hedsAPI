@@ -1,4 +1,4 @@
-const {transform} = require('@babel/core');
+const { transform } = require('@babel/core');
 const jestPreset = require('babel-preset-jest');
 
 module.exports = {

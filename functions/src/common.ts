@@ -17,3 +17,6 @@ export interface Options {
     };
   };
 }
+
+// creates prompt for openai
+export const generatePrompt = (string: string) => `a pixel art album cover of a small ${string} in the center with a white background`;
