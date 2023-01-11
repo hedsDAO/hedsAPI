@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Stack, StackDivider } from '@chakra-ui/react';
-import { Dispatch, RootState } from '@/store';
+import { Dispatch, RootState, store } from '@/store';
 import { DescriptionForm, ProfilePictureForm, BannerForm } from '@/modules/modals/screens/settings/components';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { IconPencil } from '@tabler/icons';
@@ -11,11 +11,11 @@ import { BACK_BUTTON_TEXT, SAVE_BUTTON_TEXT, SETTINGS_MODAL_TITLE } from '../mod
 const SettingsModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
-  const { connectedUser } = useSelector((state: RootState) => state.userModel);
+  const connectedUser = useSelector(store.select.userModel.selectConnectedUser);
   const isSettingsLoading = useSelector((state: RootState) => state.loading.models.settingsModel);
   const isUserLoading = useSelector((state: RootState) => state.loading.models.userModel);
   const { profileChanges } = useSelector((state: RootState) => state.settingsModel);
-  const profileModalData = useSelector((state: RootState) => state.settingsModel);
+  const profileModalData = useSelector((state: RootState) => state.settingsModel);  
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
     return () => {
@@ -23,6 +23,10 @@ const SettingsModal = () => {
       dispatch.settingsModel.clearProfileModalState();
     };
   }, []);
+
+  useEffect(() => {
+    if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
+  }, [connectedUser])
 
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>

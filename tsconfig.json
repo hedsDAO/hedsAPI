@@ -21,5 +21,5 @@
       "@modules/navigation/*": ["src/modules/navigation/*"]
     }
   },
-  "exclude": ["node_modules", "build", "ipfs-http-client"]
+  "exclude": ["node_modules", "build", "ipfs-http-client", "functions"]
 }
