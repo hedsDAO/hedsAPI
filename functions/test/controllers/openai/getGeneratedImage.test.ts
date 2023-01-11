@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 import * as serviceAccount from "../../../service_key.json";
 import {Request, Response, NextFunction} from "express";
 import * as dotenv from "dotenv";
-import {getGeneratedImage} from "../../../src/services/openai/getGeneratedImage";
+import {getGeneratedImage} from "../../../src/controllers/openai/getGeneratedImage";
 
 jest.setTimeout(50000);
 

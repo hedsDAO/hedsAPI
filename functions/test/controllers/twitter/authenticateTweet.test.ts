@@ -1,7 +1,7 @@
 import {beforeAll, beforeEach, describe, jest, expect, test} from "@jest/globals";
 import * as admin from "firebase-admin";
 import * as serviceAccount from "../../../service_key.json";
-import {authenticateTweet} from "../../../src/services/twitter/authenticateTweet";
+import {authenticateTweet} from "../../../src/controllers/twitter/authenticateTweet";
 import * as dotenv from "dotenv";
 import {NextFunction, Request, Response} from "express";
 

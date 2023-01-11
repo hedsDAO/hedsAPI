@@ -5,17 +5,32 @@ import { Divider, Flex, FormControl, FormHelperText, FormLabel, Heading, Input, 
 import { IconPencil } from '@tabler/icons';
 import { NAME_MODAL_LABEL, NAME_MODAL_TEXT } from '../models/constants';
 import { PrimaryButton } from '@/common/buttons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
 const NameModal = () => {
-  const [displayName, setDisplayName] = useState<string>('');
+  const displayName = useSelector(store.select.nameModel.selectDisplayName);
+  const isLoading = useSelector(store.select.nameModel.selectIsLoading);
+  const error = useSelector(store.select.nameModel.selectError);
   const dispatch = useDispatch<Dispatch>();
   const { address } = useAccount();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const isOnOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   const connectedUserData = useSelector(store.select.userModel.selectConnectedUser);
-  const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+
+  useEffect(() => {
+    if (error?.length) {
+      setTimeout(() => {
+        dispatch.nameModel.setError('');
+      }, 2500);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    return () => {
+      dispatch.userModel.getCurrentUserData(address.toLowerCase());
+    };
+  }, []);
   return (
     <ModalContainer focus="100" size="sm" isOpen={isOpen} setModalOpen={false ? () => dispatch.modalModel.setModalOpen(!isOpen) : () => {}}>
       <ModalHeader title={NAME_MODAL_TEXT} Icon={IconPencil} />
@@ -29,28 +44,38 @@ const NameModal = () => {
         <Stack w="full" divider={<StackDivider />}>
           <FormControl>
             <FormLabel whiteSpace={'nowrap'}>{NAME_MODAL_LABEL}</FormLabel>
-            <Input onChange={(e) => setDisplayName(e.target.value)} max={15} min={4} />
-            <FormHelperText fontSize={'xs'}>{15 - displayName.length} characters remaining.</FormHelperText>
-            {/* <FormHelperText fontSize={'xs'}>Your username can only contain letters, numbers and '_'</FormHelperText> */}
+            <Input
+              type="text"
+              value={displayName}
+              onChange={(e) => {
+                if (e.target.value?.length > 15) return;
+                else if (e.target.value?.length > displayName?.length - 1) {
+                  var reg = /^[a-zA-Z ]*$/;
+                  if (reg.test(e.target.value)) {
+                    dispatch.nameModel.setDisplayName(e.target.value);
+                  }
+                } else {
+                  dispatch.nameModel.setDisplayName(e.target.value);
+                }
+              }}
+            />
+            {error ? (
+              <FormHelperText px={1} textColor="red.500" fontSize={'xs'}>
+                {error}
+              </FormHelperText>
+            ) : (
+              <FormHelperText px={1} fontSize={'xs'}>{15 - displayName.length} characters remaining.</FormHelperText>
+            )}
           </FormControl>
         </Stack>
       </VStack>
       <Divider my={5} />
       <Flex gap={2}>
         <PrimaryButton
-          disabled={displayName.length < 4 || displayName.length > 15}
+          isLoading={isLoading}
+          disabled={displayName.length < 4 || displayName.length > 15 || !!error?.length}
           onClick={() => {
-            if (connectedUserData) {
-              const newUserData = {
-                ...connectedUserData,
-                displayName: displayName,
-              };
-              dispatch.userModel.updateConnectedUserData([connectedUserWallet, newUserData]);
-              dispatch.userModel.setCurrentUserData(newUserData);
-            } else {
-              dispatch.userModel.createNewUser([address.toLowerCase(), displayName, isOnOwnPage]);
-              dispatch.modalModel.setModalOpen(false);
-            }
+            dispatch.nameModel.validateDisplayName([displayName, address, isOnOwnPage, connectedUserData]);
           }}
         >
           Confirm

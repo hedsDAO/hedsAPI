@@ -22,7 +22,7 @@ const TwitterModal = () => {
   }, []);
 
   return (
-    <ModalContainer size={'md'} isOpen={isOpen} setModalOpen={(isOpen: boolean) => dispatch.modalModel.setModalOpen(isOpen)}>
+    <ModalContainer size={'md'} isOpen={isOpen} setModalOpen={currentStep > 0 ? () => {} : (isOpen: boolean) => dispatch.modalModel.setModalOpen(isOpen)}>
       <ModalHeader Icon={IconBrandTwitter} title={TWITTER_MODAL_TITLE} />
       <Stack spacing="5">
         {currentStep !== TwitterStep.LINK_ACCOUNT && (

@@ -2,8 +2,8 @@ import * as cors from "cors";
 import * as express from "express";
 import * as functions from "firebase-functions";
 import * as bodyParser from "body-parser";
-import {validateTwitterHandle} from "../../services/utils/validateTwitterHandle";
-import {authenticateTweet} from "../../services/twitter/authenticateTweet";
+import {validateTwitterHandle} from "../../controllers/utils/validateTwitterHandle";
+import {authenticateTweet} from "../../controllers/twitter/authenticateTweet";
 
 // The express instance
 const app = express.default();
