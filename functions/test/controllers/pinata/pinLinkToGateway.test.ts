@@ -3,7 +3,7 @@ import {Request, Response} from "express";
 import * as admin from "firebase-admin";
 import {beforeAll, beforeEach, describe, expect, jest, test} from "@jest/globals";
 import * as serviceAccount from "../../../service_key.json";
-import {pinLinkToGateway} from "../../../src/services/pinata/pinLinkToGateway";
+import {pinLinkToGateway} from "../../../src/controllers/pinata/pinLinkToGateway";
 
 jest.setTimeout(10000);
 

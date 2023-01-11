@@ -16,6 +16,7 @@ import { settingsModel } from '@/modules/modals/screens/settings/models/settings
 import { mintModel } from '@/modules/modals/screens/mint/models/mintModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/TwitterModel';
 import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
+import { nameModel } from '@modules/modals/screens/name/models/nameModel';
 
 export interface RootModel extends Models<RootModel> {
   navigationModel: typeof navigationModel;
@@ -34,6 +35,7 @@ export interface RootModel extends Models<RootModel> {
   mintModel: typeof mintModel;
   twitterModel: typeof twitterModel;
   sampleModel: typeof sampleModel;
+  nameModel: typeof nameModel;
 }
 
 export const models: RootModel = {
@@ -53,4 +55,5 @@ export const models: RootModel = {
   submitModel,
   twitterModel,
   sampleModel,
+  nameModel,
 };
