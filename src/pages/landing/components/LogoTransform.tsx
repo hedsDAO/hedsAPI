@@ -12,7 +12,7 @@ export const LogoTransform = ({ parallaxRef }: any) => {
       style={{
         width: scrollYProgress.to((scrollP) => {
           console.log(scrollP);
-          return window.innerWidth - scrollP * 10000;
+          return window.innerWidth - scrollP * 100000;
         }),
       }}
     />
