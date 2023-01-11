@@ -1,4 +1,11 @@
 /**
+ * @api
+ * @const VALIDATE_TWITTER_URL: cloud function for twitter verification and validation.
+ */
+
+export const VALIDATE_TWITTER_URL = 'https://us-central1-hedsdev.cloudfunctions.net/twitterAuth';
+
+/**
  * @component <SampleModel/> :
  * @const TWITTER_MODAL_TITLE : Twitter modal title.
  * @const CONFIRM_BUTTON_TEXT : Confirm twitter verification button.

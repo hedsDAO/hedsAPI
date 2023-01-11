@@ -3,8 +3,10 @@ import { createModel } from '@rematch/core';
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
 import { User } from '@/models/common';
+import { doc, DocumentData, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/App';
 import { TwitterModalState, TwitterStep } from './common';
-const TWITTER_AUTH_CLOUD_FN = 'https://us-central1-heds-34ac0.cloudfunctions.net/twitterAuth/';
+import { VALIDATE_TWITTER_URL } from './constants';
 
 export const twitterModel = createModel<RootModel>()({
   state: {
@@ -39,25 +41,24 @@ export const twitterModel = createModel<RootModel>()({
         this.setCurrentStep(TwitterStep.COPY_TWEET);
       }, 1000);
     },
-    async verifyTweet([pastedTweetUrl, userHash]: [string, string]) {
+    async verifyTweet([pastedTweetUrl, userHash, wallet]: [string, string, string]) {
       this.setError('');
       this.setLoading(true);
       const urlTank = pastedTweetUrl.split('/');
       let tweetId = urlTank[urlTank.length - 1];
-      const twitterHandle = urlTank[3];
+      let twitterHandle = urlTank[3];
       tweetId = tweetId.slice(0, 19);
+      const url = `${VALIDATE_TWITTER_URL}/${wallet}/${tweetId}/${twitterHandle}/${userHash}`;
       axios
-        .get(TWITTER_AUTH_CLOUD_FN + tweetId)
+        .get(url)
         .then((res) => {
-          if (res?.data?.data?.[0]?.text?.split('HDS')[1] === userHash) {
+          console.log(res);
+          if (res.data.validated) {
             this.setTwitterHandle(twitterHandle);
             setTimeout(() => {
               this.setLoading(false);
               this.setCurrentStep(TwitterStep.LINK_ACCOUNT);
             }, 1000);
-          } else {
-            this.setLoading(false);
-            this.setError('there was a problem verifying your tweet');
           }
         })
         .catch(() => {
@@ -71,6 +72,7 @@ export const twitterModel = createModel<RootModel>()({
       if (wallet?.length && userData && twitterHandle?.length) {
         const newUserData = { ...userData, twitterHandle };
         dispatch.userModel.updateConnectedUserData([wallet, newUserData]);
+        await setDoc(doc(db, 'twitter', twitterHandle), { wallet: wallet });
       }
       setTimeout(() => {
         this.setLoading(false);
