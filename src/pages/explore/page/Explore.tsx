@@ -1,50 +1,151 @@
+import { CuratorCard } from '@/common/media';
+import { TapeData, User } from '@/models/common';
 import { Dispatch, store } from '@/store';
+import {
+  Avatar,
+  AvatarGroup,
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  Icon,
+  Image,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+  useBoolean,
+  useBreakpointValue,
+} from '@chakra-ui/react';
+import { IconWaveSine } from '@tabler/icons';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SecondaryListings } from '@/pages/explore/components';
-import { Box, Container } from '@chakra-ui/react';
-import MostFeaturedArtists from '../components/MostFeaturedArtists/MostFeaturedArtists';
 
 export const Explore = () => {
   const dispatch = useDispatch<Dispatch>();
+  const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const latestHedsTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
+  const allArtistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
   const allArtists = useSelector(store.select.artistModel.selectAllArtists);
-  //   console.log(latestHedsTape);
+  const mostFeaturedArtists = useSelector(store.select.artistModel.selectMostFeaturedArtists);
+  const stats = [
+    { label: 'Tapes Minted', value: '300' },
+    { label: 'Holders', value: '400' },
+    { label: 'Artist Payout', value: '$123,123,123' },
+    { label: 'Artists', value: '59' },
+  ];
+  const numOfTapes = useBreakpointValue({
+    base: 3,
+    md: 8,
+  });
+
   useEffect(() => {
-    if (allArtists?.length) dispatch.artistModel.getMostFeaturedArtists([allArtists, 5]);
-    if (latestHedsTape) dispatch.exploreModel.getLatestSecondaryListings();
-  }, [allArtists, latestHedsTape]);
+    if (allArtists) {
+      dispatch.artistModel.getMostFeaturedArtists([allArtists, 4]);
+    }
+  }, [allArtists]);
   return (
     <Box minH="100vh">
-      <Box display={{ base: 'none', lg: 'block' }} bgColor={'blackAlpha.900'} pt={{ base: '8', sm: '12' }}>
-        <div className="bg-[#FAF9F6]">
-          <div className="relative">
-            <Box inset={0} h={'50%'} pos={'absolute'} bgColor={'blackAlpha.900'} />
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-2xl">
-                <dl className="rounded-lg bg-white shadow-md sm:grid sm:grid-cols-3">
-                  <div className="flex flex-col border-b border-gray-100 px-2 py-3 text-center sm:border-0 sm:border-r">
-                    <dt className="order-2 mt-2 text-sm font-medium leading-6 text-gray-500">Value Generated</dt>
-                    <dd className="order-1 text-2xl font-bold tracking-tight text-neutral-800">${'132,324.20'}</dd>
-                  </div>
-                  <div className="flex flex-col border-t border-b border-gray-100 px-2 py-3 text-center sm:border-0 sm:border-l sm:border-r">
-                    <dt className="order-2 mt-2 text-sm font-medium leading-6 text-gray-500">Total Submissions</dt>
-                    <dd className="order-1 text-2xl font-bold tracking-tight text-neutral-800">{400}</dd>
-                  </div>
-                  <div className="flex flex-col border-t border-gray-100 px-2 py-3 text-center sm:border-0 sm:border-l">
-                    <dt className="order-2 mt-2 text-sm font-medium leading-6 text-gray-500">Tapes Minted</dt>
-                    <dd className="order-1 text-2xl font-bold tracking-tight text-neutral-800">{300}</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
+      <Box bg="purple.800" py={{ base: 20, lg: 12 }}>
+        <HStack justifyContent={'space-between'} alignItems={'center'} gap={2} mx="auto" px={{ base: 10, lg: 14 }} maxW="5xl">
+          <Box display={{ base: 'none', lg: 'flex' }}>
+            <Text fontWeight={'semibold'} letterSpacing={'widest'} fontSize="2xl" color="white">
+              LATEST TAPE
+            </Text>
+          </Box>
+          <Flex justifyContent={'center'} gap={{ base: 7, lg: 12 }}>
+            <Skeleton shadow="sm" minW={{ base: '8rem', lg: '12rem' }} minH={{ base: '8rem', lg: '12rem' }} rounded="lg" isLoaded={isImageLoaded}>
+              <Image
+                rounded={'lg'}
+                shadow="sm"
+                onLoad={setIsImageLoaded.on}
+                loading="eager"
+                src={latestHedsTape?.image}
+                maxH={{ base: '8rem', lg: '12rem' }}
+                maxW={{ base: '8rem', lg: '12rem' }}
+                minW={{ base: '8rem', lg: '12rem' }}
+                minH={{ base: '8rem', lg: '12rem' }}
+              />
+            </Skeleton>
+            <Stack justifyContent={'center'}>
+              <Text fontSize={{ base: 'md', lg: 'xl' }} fontFamily={"'Space Mono', monospace"} textColor={'white'}>
+                {latestHedsTape?.name}
+              </Text>
+              <HStack pb={{ base: 4, lg: 6 }}>
+                <Icon h="3" w="3" color="white" as={IconWaveSine} />
+                <Avatar src={allArtistsMapping?.[latestHedsTape?.curator]?.profilePicture} size={{ base: '2xs', lg: 'xs' }} />
+                <Text fontSize={{ base: 'xs', lg: 'sm' }} textColor={'white'}>
+                  {allArtistsMapping?.[latestHedsTape?.curator]?.displayName}
+                </Text>
+              </HStack>
+              <Button variant={'outline'} rounded="sm" size={{ base: 'xs', lg: 'sm' }}>
+                <Text fontSize={{ base: 'xs', lg: 'sm' }} fontWeight={'light'} textColor={'white'}>
+                  View Tape
+                </Text>
+              </Button>
+            </Stack>
+          </Flex>
+        </HStack>
       </Box>
-      <Container maxW="7xl" w="full" mx="auto">
-        {/* <SecondaryListings /> */}
-        <MostFeaturedArtists />
-      </Container>
+      <Box bg="" py={{ base: '4', md: '8' }}>
+        <Container maxW="4xl">
+          <SimpleGrid columns={{ base: 2, md: 4 }} gap={{ base: '5', md: '6' }}>
+            {stats.map(({ label, value }) => (
+              <Box px={{ base: '3', md: '5' }} py={{ base: '3', md: '3' }} bg="purple.700" borderRadius="lg" boxShadow={'sm'} key={label}>
+                <Stack>
+                  <Text fontSize={{ base: 'xs', lg: 'sm' }} color="white">
+                    {label}
+                  </Text>
+                  <Heading color="white" fontSize={{ base: 'sm', md: 'md', xl: 'lg' }}>
+                    {value}
+                  </Heading>
+                </Stack>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Container>
+      </Box>
+      <Box bg="purple.800" px={{ base: 10, lg: 14 }} py={{ base: 10, lg: 16 }}>
+        <Container maxW="6xl">
+          <Text textAlign={'center'} mb={14} fontWeight={'semibold'} letterSpacing={'widest'} fontSize="xl" color="white">
+            FEATURED ARTISTS
+          </Text>
+          <Stack maxW="5xl" mx="auto" mb={6} gap={{ base: '5', md: '6' }}>
+            {mostFeaturedArtists?.length &&
+              mostFeaturedArtists.map((artist: User, index: number) => {
+                return (
+                  <HStack justifyContent={'space-between'} gap={2} key={artist.wallet}>
+                    <Flex gap={3} alignItems={'center'}>
+                      <Text fontSize={{ base: 'xs', lg: 'sm' }} textColor={'white'}>
+                        {index + 1}.
+                      </Text>
+                      <Avatar src={artist.profilePicture} size={{ base: 'xs', lg: 'sm' }} />
+                      <Text fontFamily={"'Space Mono', monospace"} fontSize={{ base: 'xs', lg: 'sm' }} textColor={'white'}>
+                        {artist?.displayName}
+                      </Text>
+                    </Flex>
+                    <Box>
+                      <AvatarGroup size={'sm'} max={numOfTapes}>
+                        {Object.values(artist?.tracks?.['heds']?.['hedstape']).map((track) => (
+                          <Avatar key={track.audio} size={'sm'} name={track.album} src={track.cover} />
+                        ))}
+                      </AvatarGroup>
+                    </Box>
+                  </HStack>
+                );
+              })}
+          </Stack>
+        </Container>
+      </Box>
+      <Box bg="purple.900" px={{ base: 10, lg: 14 }} py={{ base: 10, lg: 16 }}>
+        <Container maxW="6xl">
+          <Text textAlign={'center'} mb={14} fontWeight={'semibold'} letterSpacing={'widest'} fontSize="xl" color="white">
+            RECENT LISTINGS
+          </Text>
+        </Container>
+      </Box>
     </Box>
   );
 };
