@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Center, Container, Divider, grid, Grid, GridItem, HStack, Icon, StackDivider } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, HStack, Icon, StackDivider } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
@@ -67,13 +67,16 @@ export const Landing = () => {
           color: 'white',
         }}
       >
-        <LogoTransform parallaxRef={parallaxRef} />
         <div
           style={{
-            width: '50%',
+            width: '100%',
             textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'start',
           }}
         >
+          <LogoTransform parallaxRef={parallaxRef} />
           <FadeOutDown text={'WELCOME TO THE FUTURE OF CURATION.'} />
         </div>
       </ParallaxLayer>
