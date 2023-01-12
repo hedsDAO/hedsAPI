@@ -58,31 +58,20 @@ export const Landing = () => {
         offset={0}
         speed={1}
         style={{
-          // display: 'flex',
-          // flexDirection: 'column',
-          // justifyContent: 'center',
-          // alignItems: 'center',
-          display: 'grid',
-          gridTemplateRows: 'repeat(2, auto)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
           fontSize: '20px',
           fontWeight: '100',
           color: 'white',
         }}
       >
-        <LogoTransform
-          parallaxRef={parallaxRef}
-          style={{
-            display: 'flex',
-            justifySelf: 'start',
-            alignSelf: 'end',
-          }}
-        />
+        <LogoTransform parallaxRef={parallaxRef} />
         <div
           style={{
             width: '50%',
             textAlign: 'center',
-            justifySelf: 'center',
-            alignSelf: 'start',
           }}
         >
           <FadeOutDown text={'WELCOME TO THE FUTURE OF CURATION.'} />

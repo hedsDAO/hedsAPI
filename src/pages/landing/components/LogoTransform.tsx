@@ -11,8 +11,7 @@ export const LogoTransform = ({ parallaxRef }: any) => {
       src="/heds_logo.svg"
       style={{
         width: scrollYProgress.to((scrollP) => {
-          console.log(scrollP);
-          return window.innerWidth - scrollP * 100000;
+          return window.innerWidth / 2 - scrollP * 15000;
         }),
       }}
     />
