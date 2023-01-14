@@ -53,6 +53,7 @@
     "react-test-renderer": "18.0.0",
     "react-waypoint": "^10.3.0",
     "redux": "^4.2.0",
+    "swiper": "^8.4.5",
     "wagmi": "^0.7.2",
     "wavesurfer.js": "^6.3.0"
   },
