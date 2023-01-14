@@ -16,11 +16,11 @@ export const Explore = () => {
     <Box maxW="full">
       <ExploreHeader />
       <Divider mx="auto" w="80%" my={5} />
-      <Stats />
-      <Divider mx="auto" w="80%" my={5} />
       <NewestTape />
       <Divider mx="auto" w="80%" my={5} />
       <MostAppearances />
+      <Divider mx="auto" w="80%" my={5} />
+      <Stats />
       <Divider mx="auto" w="80%" my={5} />
       <ActiveListings />
     </Box>
