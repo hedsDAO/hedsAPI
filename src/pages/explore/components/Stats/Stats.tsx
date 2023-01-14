@@ -3,7 +3,7 @@ import { STATS_DATA } from '@/pages/explore/store/constants';
 
 const Stats = () => {
   return (
-    <Box bg="" py={{ base: '4', md: '8' }}>
+    <Box bg="" px={{ base: 4, lg: 10 }} py={{ base: 4, md: 10 }}>
       <Container maxW="4xl" mx="auto">
         <SimpleGrid columns={{ base: 2, md: 4 }} gap={{ base: '5', md: '6' }}>
           {STATS_DATA.map(({ label, value }) => (

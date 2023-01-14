@@ -9,14 +9,14 @@ import { IconArrowRight } from '@tabler/icons';
 const MostAppearances = () => {
   const mostFeaturedArtists = useSelector(store.select.artistModel.selectMostFeaturedArtists);
   return (
-    <Box px={{ base: 5, lg: 10 }} pt={10} pb={10} mx={{ lg: 'auto' }} maxW="7xl">
+    <Box px={{ base: 8, lg: 10 }} py={{ base: 6, lg: 10 }} mx={{ lg: 'auto' }} maxW="7xl">
       <Heading color={'gray.600'} fontSize={{ base: 'lg', lg: 'xl' }} fontFamily="'Space Mono', monospace">
         {MOST_AP_TITLE}
       </Heading>
       <Text fontFamily="'Space Mono', monospace" mt={2} color={'gray.600'} fontSize="xs">
         {MOST_AP_DESC}
       </Text>
-      <Flex mt={{ base: 2, lg: 0 }} w="full" justifyContent={'end'}>
+      <Flex mt={{ base: 5, lg: 0 }} w="full" justifyContent={'end'}>
         <Flex alignItems="center" gap={2}>
           <Text className="hover-underline-animation" fontSize="xs" textColor={'gray.600'} as={Link} to={'/artists'} role="link">
             {MOST_AP_BUTTON}
