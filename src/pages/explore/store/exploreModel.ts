@@ -1,52 +1,34 @@
+import { ethers } from 'ethers';
+import { DateTime } from 'luxon';
+import { ExploreState, HedsTapeListing } from '@/pages/explore/store/common';
+import { ALL_TAPE_SLUGS } from '@/pages/explore/store/constants';
 import { getOpenseaEvents } from '@/utils';
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
-import { DateTime } from 'luxon';
-import { ethers } from 'ethers';
-
-const allTapeSlugs = [
-  'hedstape-1',
-  'hedstape-2',
-  'hedstape-3',
-  'hedstape-4',
-  'hedstape-5',
-  'hedstape-6',
-  'hedstape-7',
-  'hedstape-8',
-  'hedstape-9',
-  'hedstape-10',
-];
-
-export interface HedsTapeListing {
-  market: any;
-  tokenId: any;
-  price: any;
-  name: any;
-  image: any;
-  listed: any;
-  link: any;
-  seller: string;
-}
-
-export interface ExploreState {
-  secondaryListings: any[];
-}
 
 export const exploreModel = createModel<RootModel>()({
   state: {} as ExploreState,
-  selectors: (slice, createSelector, hasProps) => ({
-    selectLatestSecondaryListings() {
-      return slice((artistModel) => artistModel.secondaryListings);
-    },
-  }),
   reducers: {
     setLatestSecondaryListings: (state, secondaryListings: HedsTapeListing[]) => ({ ...state, secondaryListings }),
+    setHasFetchedAllListings: (state, hasFetchedAllListings: boolean) => ({ ...state, hasFetchedAllListings }),
+    setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
   },
+  selectors: (slice) => ({
+    selectLatestSecondaryListings() {
+      return slice((exploreModel) => exploreModel.secondaryListings);
+    },
+    selectHasFetchedAllListings() {
+      return slice((exploreModel) => exploreModel.hasFetchedAllListings);
+    },
+    selectIsLoading() {
+      return slice((exploreModel) => exploreModel.isLoading);
+    },
+  }),
   effects: () => ({
-    async getLatestSecondaryListings() {
+    async getLatestSecondaryListings(fetchAll?: boolean) {
       const now = DateTime.now().toMillis();
       const secondaryListingsTank: any[] = [];
-      function waitforme(slug: string) {
+      function apiTimer(slug: string) {
         return new Promise((resolve) => {
           setTimeout(() => {
             getOpenseaEvents(slug).then((res) => {
@@ -58,7 +40,6 @@ export const exploreModel = createModel<RootModel>()({
               liveEvents
                 .filter((item: any) => item !== undefined)
                 .map((item: any): HedsTapeListing => {
-                  console.log(item)
                   const value = ethers.BigNumber.from(item.starting_price);
                   return {
                     market: 'opensea',
@@ -79,10 +60,18 @@ export const exploreModel = createModel<RootModel>()({
           }, 1000);
         });
       }
-      for (let i = 0; i < allTapeSlugs.length; ++i) {
-        await waitforme(allTapeSlugs[i]);
-        console.log(i);
+      this.setIsLoading(true);
+      if (fetchAll) {
+        for (let i = 0; i < ALL_TAPE_SLUGS.length; ++i) {
+          await apiTimer(ALL_TAPE_SLUGS[i]);
+        }
+      } else {
+        for (let i = ALL_TAPE_SLUGS.length - 4; i < ALL_TAPE_SLUGS.length; ++i) {
+          await apiTimer(ALL_TAPE_SLUGS[i]);
+        }
       }
+      this.setIsLoading(false);
+      if (fetchAll) this.setHasFetchedAllListings(true);
       this.setLatestSecondaryListings(secondaryListingsTank);
     },
   }),
