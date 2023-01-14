@@ -82,6 +82,6 @@ export const MOST_AP_BUTTON = 'all artists';
  * @const LISTINGS_BUTTON : view all listings button text.
  */
 
-export const LISTINGS_TITLE = 'Most Appearances';
-export const LISTINGS_DESC = 'these artists have been voted on to multiple hedsTAPES via our curation community.';
+export const LISTINGS_TITLE = 'Active Listings';
+export const LISTINGS_DESC = 'available heds projects to add to your collection.';
 export const LISTINGS_BUTTON = 'see all';

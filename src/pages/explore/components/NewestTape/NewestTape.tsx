@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { BOX_ONE_DATE, BOX_ONE_DESC, BOX_ONE_TITLE, BOX_TWO_DESC, NEWEST_TAPE_ARTIST, NEWEST_TAPE_HEADING } from '@/pages/explore/store/constants';
 import { store } from '@/store';
-import { Box, Button, Container, Flex, Icon, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 
 const NewestTape = () => {
+  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
   const navigate = useNavigate();
   return (
@@ -18,49 +19,58 @@ const NewestTape = () => {
           </Text>
           <Flex justifyContent={'space-evenly'} pt={14} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
             <Box>
-              <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
-                <Button
-                  onClick={() => navigate(`/u/${NEWEST_TAPE_ARTIST}`)}
-                  justifySelf={'start'}
-                  py="4"
+              <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
+                <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
+                  <Button
+                    onClick={() => {
+                      window.scroll(0, 0);
+                      navigate(`/u/${NEWEST_TAPE_ARTIST}`);
+                    }}
+                    justifySelf={'start'}
+                    py="4"
+                    border="1px"
+                    borderColor="black"
+                    size={{ base: 'xs', lg: 'sm' }}
+                    px="12"
+                    rounded="full"
+                    bg="white"
+                  >
+                    <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
+                      / {artistsMapping?.[NEWEST_TAPE_ARTIST]?.displayName.toUpperCase()}
+                    </Text>
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      window.scroll(0, 0);
+                      navigate(`/u/${NEWEST_TAPE_ARTIST}`);
+                    }}
+                    py="4"
+                    border="1px"
+                    borderColor="black"
+                    size="sm"
+                    rounded="full"
+                    bg="white"
+                    zIndex={'30'}
+                  >
+                    <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
+                  </Button>
+                </Flex>
+                <Image
+                  onLoad={setHasImageLoaded.on}
                   border="1px"
-                  borderColor="black"
-                  size={{ base: 'xs', lg: 'sm' }}
-                  px="12"
-                  rounded="full"
-                  bg="white"
-                >
-                  <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
-                    / {artistsMapping?.[NEWEST_TAPE_ARTIST]?.displayName.toUpperCase()}
-                  </Text>
-                </Button>
-                <Button
-                  onClick={() => navigate(`/u/${NEWEST_TAPE_ARTIST}`)}
-                  py="4"
-                  border="1px"
-                  borderColor="black"
-                  size="sm"
-                  rounded="full"
-                  bg="white"
-                  zIndex={'30'}
-                >
-                  <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
-                </Button>
-              </Flex>
-              <Image
-                border="1px"
-                borderColor={'black'}
-                inset={'1'}
-                rounded="3xl"
-                minW={{ base: 'full', xl: '30rem' }}
-                minH="11rem"
-                h="11rem"
-                objectFit={'cover'}
-                src={artistsMapping?.[NEWEST_TAPE_ARTIST]?.profilePicture}
-              />
-              <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
-                <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={IN} />
-              </Box>
+                  borderColor={'black'}
+                  inset={'1'}
+                  rounded="3xl"
+                  minW={{ base: 'full', xl: '30rem' }}
+                  minH="11rem"
+                  h="11rem"
+                  objectFit={'cover'}
+                  src={artistsMapping?.[NEWEST_TAPE_ARTIST]?.profilePicture}
+                />
+                <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
+                  <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={IN} />
+                </Box>
+              </Skeleton>
             </Box>
           </Flex>
           <Flex alignItems={'center'} pt={{ base: 5, lg: 10 }} gap={10} direction={{ base: 'column', lg: 'row' }} maxW="4xl" mx="auto">

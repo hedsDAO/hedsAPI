@@ -11,7 +11,7 @@ const ActiveListings = () => {
   const hasFetchedAllListings = useSelector(store.select.exploreModel.selectHasFetchedAllListings);
   const isLoading = useSelector(store.select.exploreModel.selectIsLoading);
   return (
-    <Box px={{ base: 5, lg: 10 }} pt={10} pb={10} mx={{ lg: 'auto' }} maxW="7xl">
+    <Box px={{ base: 8, lg: 10 }} py={{ base: 6, lg: 10 }} mx={'auto'} maxW="7xl">
       <Heading color={'gray.600'} fontSize={{ base: 'lg', lg: 'xl' }} fontFamily="'Space Mono', monospace">
         {LISTINGS_TITLE}
       </Heading>
@@ -20,7 +20,7 @@ const ActiveListings = () => {
       </Text>
       {latestSecondaryListings && !isLoading ? (
         <>
-          <SimpleGrid justifyItems={{ base: 'start', lg: 'center' }} gap={4} mt={4} columns={{ base: 2, xl: 5 }}>
+          <SimpleGrid justifyItems={{ base: 'start', lg: 'center' }} gap={4} my={8} columns={{ base: 2, xl: 5 }}>
             {latestSecondaryListings.flat().map((listing) => {
               return (
                 <Box key={listing.name + listing.tokenId} border="1px" borderColor="black" p={4} rounded="lg" w="full">
@@ -63,7 +63,7 @@ const ActiveListings = () => {
             })}
           </SimpleGrid>
           {!hasFetchedAllListings ? (
-            <Flex mt={{ base: 4, lg: 2 }} w="full" justifyContent={'end'}>
+            <Flex mt={{ lg: 2 }} w="full" justifyContent={'end'}>
               <Flex alignItems="center" gap={2}>
                 <Text
                   className="hover-underline-animation"
