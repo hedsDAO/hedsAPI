@@ -1,16 +1,16 @@
 import { store } from '@/store';
-import { Avatar, Box, Divider, Flex, HStack, Stack, Text } from '@chakra-ui/react';
-import { QuadraticVote, SingleChoiceVote } from 'hedsvote';
-import { Fragment, useEffect, useState } from 'react';
+import { Avatar, Box, Flex, HStack, Stack, Text } from '@chakra-ui/react';
+import { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
-export function percentageOfTotal(i: any, values: any, total: any) {
-  const reducedTotal: any = total.reduce((a: any, b: any) => a + b, 0);
-  const percent = (values[i] / reducedTotal) * 100;
-  return isNaN(percent) ? 0 : percent;
-}
-export function quadraticMath(i: any, choice: any, vp: any) {
-  return Math.sqrt((percentageOfTotal(i + 1, choice, Object.values(choice)) / 100) * vp);
-}
+
+// export function percentageOfTotal(i: any, values: any, total: any) {
+//   const reducedTotal: any = total.reduce((a: any, b: any) => a + b, 0);
+//   const percent = (values[i] / reducedTotal) * 100;
+//   return isNaN(percent) ? 0 : percent;
+// }
+// export function quadraticMath(i: any, choice: any, vp: any) {
+//   return Math.sqrt((percentageOfTotal(i + 1, choice, Object.values(choice)) / 100) * vp);
+// }
 
 const VoteDistribution = () => {
   const [voteData, setVoteData] = useState<any>();
@@ -21,8 +21,8 @@ const VoteDistribution = () => {
 
   function round(num: number, decimalPlaces = 0): number {
     if (num < 0) return -round(-num, decimalPlaces);
-    var p = Math.pow(10, decimalPlaces);
-    var n = (num * p).toPrecision(15);
+    const p = Math.pow(10, decimalPlaces);
+    const n = (num * p).toPrecision(15);
     return Math.round(+n) / p;
   }
   const resultsByPercentage = (results: Array<number>) => {
@@ -32,15 +32,15 @@ const VoteDistribution = () => {
     });
   };
 
-  const resultsByUserBalance = () => {
-    const results = choices
-      // @ts-ignore
-      .map((choice: any, i: number) =>
-        votes.map((vote: any) => vote?.voter?.toLowerCase() === connectedWallet && quadraticMath(i, vote.choice, vote.vp)).reduce((a: any, b: any) => a + b, 0),
-      )
-      .map((sqrt: number) => sqrt * sqrt);
-    return results;
-  };
+  // const resultsByUserBalance = () => {
+  //   const results = choices
+  //     // @ts-ignore
+  //     .map((choice: Choice, i: number) =>
+  //       votes.map((vote: any) => vote?.voter?.toLowerCase() === connectedWallet && quadraticMath(i, vote.choice, vote.vp)).reduce((a: any, b: any) => a + b, 0),
+  //     )
+  //     .map((sqrt: number) => sqrt * sqrt);
+  //   return results;
+  // };
 
   return (
     <Stack my={3}>

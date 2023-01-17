@@ -111,11 +111,9 @@ export const voteModel = createModel<RootModel>()({
           const currentTrack: Choice = proposal?.choices?.[0];
           if (currentTrack) this.setCurrentTrack(currentTrack);
           if (method === VoteMethod.QUADRATIC && votes) {
-            console.log('quad');
             const quadraticVotes = Array.from(votes as QuadraticVote[]);
             this.setQuadraticVotes(quadraticVotes);
           } else if (method === VoteMethod.SINGLE_CHOICE && votes) {
-            console.log('single');
             const singleChoiceVotes = Array.from(votes as SingleChoiceVote[]);
             this.setSingleChoiceVotes(singleChoiceVotes);
           }
