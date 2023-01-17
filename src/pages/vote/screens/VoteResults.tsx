@@ -4,7 +4,7 @@ import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner,
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { VoteChoices, VoteDistribution } from '../../components';
+import { VoteChoices, VoteDistribution } from '../components';
 import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 import { VoteAudioTrack } from '@/common/media';
 
@@ -27,10 +27,6 @@ const VoteResults = () => {
       dispatch.voteModel.getProposal(currentTape?.proposalId);
     }
   }, [space, tape, id, allTapes]);
-
-  useEffect(() => {
-    if (proposal) dispatch.voteModel.setCurrentTrack(proposal?.choices?.[0]);
-  }, [proposal]);
 
   return (
     <Box minH="100vh">

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
-import { Center, Flex, Image, Skeleton, Text, useBoolean } from '@chakra-ui/react';
+import { Center, Flex, Image, Skeleton, Text, useBoolean, VStack } from '@chakra-ui/react';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Choice } from 'hedsvote';
