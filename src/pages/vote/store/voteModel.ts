@@ -40,14 +40,14 @@ export const voteModel = createModel<RootModel>()({
     },
     selectQuadraticVoteScores() {
       return createSelector(this.selectProposal, this.selectQuadraticVotes, (proposal: Proposal, votes: QuadraticVote[]) => {
-        if (votes) {
-          const { choices } = proposal;
-          const strategies = Object.values(proposal.strategies);
-          const { getScores } = quadratic({ choices, votes, strategies });
-          return getScores();
-        } else {
-          return null;
-        }
+        // if (votes) {
+        //   const { choices } = proposal;
+        //   const strategies = Object.values(proposal.strategies);
+        //   const { getScores } = quadratic({ choices, votes, strategies });
+        //   return getScores();
+        // } else {
+        //   return null;
+        // }
       });
     },
     selectUserVotingPower() {
@@ -70,69 +70,69 @@ export const voteModel = createModel<RootModel>()({
   },
   effects: () => ({
     async castVote(vote: VoteObject) {
-      const { castVote } = createClient();
-      try {
-        await (
-          await castVote(vote)
-        ).data;
-      } catch (error) {
-        console.log(error);
-      }
+      // const { castVote } = createClient();
+      // try {
+      //   await (
+      //     await castVote(vote)
+      //   ).data;
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
     async createProposal(proposal: Proposal) {
-      const { createProposal } = createClient();
-      try {
-        const proposalCreated = await (await createProposal('proposals', proposal)).data;
-        const { choices, method, votes } = proposalCreated;
-        this.setProposal(proposalCreated);
-        this.setChoices(choices);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async deleteProposal(proposalAddress: string) {
-      const { deleteProposal } = createClient();
-      try {
-        await (
-          await deleteProposal('proposals', proposalAddress)
-        ).status;
-      } catch (error) {
-        console.log(error);
-      }
+    //   const { createProposal } = createClient();
+    //   try {
+    //     const proposalCreated = await (await createProposal('proposals', proposal)).data;
+    //     const { choices, method, votes } = proposalCreated;
+    //     this.setProposal(proposalCreated);
+    //     this.setChoices(choices);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    // async deleteProposal(proposalAddress: string) {
+    //   const { deleteProposal } = createClient();
+    //   try {
+    //     await (
+    //       await deleteProposal('proposals', proposalAddress)
+    //     ).status;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
     },
     async getProposal(proposalAddress: string) {
-      const { getProposal } = createClient();
-      if (proposalAddress?.length) {
-        try {
-          const proposal = await (await getProposal('proposals', proposalAddress)).data;
-          const { choices, method, votes } = proposal;
-          this.setProposal(proposal);
-          this.setChoices(choices);
-          const currentTrack: Choice = proposal?.choices?.[0];
-          if (currentTrack) this.setCurrentTrack(currentTrack);
-          if (method === VoteMethod.QUADRATIC && votes) {
-            console.log('quad');
-            const quadraticVotes = Array.from(votes as QuadraticVote[]);
-            this.setQuadraticVotes(quadraticVotes);
-          } else if (method === VoteMethod.SINGLE_CHOICE && votes) {
-            console.log('single');
-            const singleChoiceVotes = Array.from(votes as SingleChoiceVote[]);
-            this.setSingleChoiceVotes(singleChoiceVotes);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      // const { getProposal } = createClient();
+      // if (proposalAddress?.length) {
+      //   try {
+      //     const proposal = await (await getProposal('proposals', proposalAddress)).data;
+      //     const { choices, method, votes } = proposal;
+      //     this.setProposal(proposal);
+      //     this.setChoices(choices);
+      //     const currentTrack: Choice = proposal?.choices?.[0];
+      //     if (currentTrack) this.setCurrentTrack(currentTrack);
+      //     if (method === VoteMethod.QUADRATIC && votes) {
+      //       console.log('quad');
+      //       const quadraticVotes = Array.from(votes as QuadraticVote[]);
+      //       this.setQuadraticVotes(quadraticVotes);
+      //     } else if (method === VoteMethod.SINGLE_CHOICE && votes) {
+      //       console.log('single');
+      //       const singleChoiceVotes = Array.from(votes as SingleChoiceVote[]);
+      //       this.setSingleChoiceVotes(singleChoiceVotes);
+      //     }
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // }
     },
     async getAllProposals() {
-      const { getAllProposals } = createClient();
-      try {
-        const allProposals = await (await getAllProposals('proposals')).data;
-        console.log('all proposals', allProposals);
-        this.setAllProposals(allProposals);
-      } catch (error) {
-        console.log(error);
-      }
+      // const { getAllProposals } = createClient();
+      // try {
+      //   const allProposals = await (await getAllProposals('proposals')).data;
+      //   console.log('all proposals', allProposals);
+      //   this.setAllProposals(allProposals);
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
   }),
 });

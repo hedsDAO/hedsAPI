@@ -24,7 +24,7 @@ const firebaseConfig = {
 };
 
 // TODO: add conditional for dev/prod
-const app = initializeApp(process.env.NODE_ENV === 'development' && firebaseConfig);
+const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 

@@ -1,17 +1,16 @@
 import { IN } from 'country-flag-icons/react/3x2';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { BOX_ONE_DATE, BOX_ONE_DESC, BOX_ONE_TITLE, BOX_TWO_DESC, NEWEST_TAPE_ARTIST, NEWEST_TAPE_HEADING } from '@/pages/explore/store/constants';
 import { store } from '@/store';
 import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
+import { Link } from 'react-router-dom';
 
 const NewestTape = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
-  const navigate = useNavigate();
   return (
-    <Box w="full">
+    <Box data-testid="explore-newest-tape" w="full">
       <Container px={{ base: 10, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'center'}>
           <Text fontFamily={'"Space Mono", monospace'} color={'gray.500'} letterSpacing={'tight'} fontSize={{ base: 'xl', lg: '5xl' }} fontWeight={'normal'}>
@@ -22,10 +21,9 @@ const NewestTape = () => {
               <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
                 <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
                   <Button
-                    onClick={() => {
-                      window.scroll(0, 0);
-                      navigate(`/u/${NEWEST_TAPE_ARTIST}`);
-                    }}
+                    data-testid='newest-tape-artist-button'
+                    as={Link}
+                    to={`/u/${NEWEST_TAPE_ARTIST}`}
                     justifySelf={'start'}
                     py="4"
                     border="1px"
@@ -39,26 +37,13 @@ const NewestTape = () => {
                       / {artistsMapping?.[NEWEST_TAPE_ARTIST]?.displayName.toUpperCase()}
                     </Text>
                   </Button>
-                  <Button
-                    onClick={() => {
-                      window.scroll(0, 0);
-                      navigate(`/u/${NEWEST_TAPE_ARTIST}`);
-                    }}
-                    py="4"
-                    border="1px"
-                    borderColor="black"
-                    size="sm"
-                    rounded="full"
-                    bg="white"
-                    zIndex={'30'}
-                  >
+                  <Button as={Link} to={`/u/${NEWEST_TAPE_ARTIST}`} py="4" border="1px" borderColor="black" size="sm" rounded="full" bg="white" zIndex={'30'}>
                     <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
                   </Button>
                 </Flex>
                 <Image
                   onLoad={setHasImageLoaded.on}
-                  border="1px"
-                  borderColor={'black'}
+                  outline="solid"
                   inset={'1'}
                   rounded="3xl"
                   minW={{ base: 'full', xl: '30rem' }}

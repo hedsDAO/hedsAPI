@@ -11,7 +11,7 @@ const VoteChoiceCard = ({ choice, onClick }: { choice: Choice; onClick: Function
     <GridItem
       onClick={() => onClick(choice)}
       className="group transition-all ease-in-out bs-preset-1"
-      bg={currentTrack?.media === choice?.media ? 'white' : 'blackAlpha.100'}
+      // bg={currentTrack?.media === choice?.media ? 'white' : 'blackAlpha.100'}
       _hover={{ bg: 'white', borderColor: 'gray.800' }}
       border={'1px'}
       borderColor={'gray.600'}

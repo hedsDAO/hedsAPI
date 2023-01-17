@@ -16,7 +16,7 @@ import { settingsModel } from '@/modules/modals/screens/settings/models/settings
 import { mintModel } from '@/modules/modals/screens/mint/models/mintModel';
 import { twitterModel } from '@/modules/modals/screens/twitter/models/TwitterModel';
 import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
-import { nameModel } from '@modules/modals/screens/name/models/nameModel';
+import { nameModel } from '@/modules/modals/screens/name/models/nameModel';
 
 export interface RootModel extends Models<RootModel> {
   navigationModel: typeof navigationModel;

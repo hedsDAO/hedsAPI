@@ -44,7 +44,7 @@ const VoteDistribution = () => {
 
   return (
     <Stack my={3}>
-      {voteResults &&
+      {/* {voteResults &&
         choices &&
         choices
           .sort((a, b) => +round(resultsByPercentage(voteResults)[b.id], 2) - +round(resultsByPercentage(voteResults)[a.id], 2))
@@ -86,7 +86,7 @@ const VoteDistribution = () => {
                 </Flex>
               </Flex>
             );
-          })}
+          })} */}
     </Stack>
   );
 };

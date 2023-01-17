@@ -11,7 +11,7 @@ const ActiveListings = () => {
   const hasFetchedAllListings = useSelector(store.select.exploreModel.selectHasFetchedAllListings);
   const isLoading = useSelector(store.select.exploreModel.selectIsLoading);
   return (
-    <Box px={{ base: 8, lg: 10 }} py={{ base: 6, lg: 10 }} mx={'auto'} maxW="7xl">
+    <Box data-testid="explore-listings" px={{ base: 8, lg: 10 }} py={{ base: 6, lg: 10 }} mx={'auto'} maxW="7xl">
       <Heading color={'gray.600'} fontSize={{ base: 'lg', lg: 'xl' }} fontFamily="'Space Mono', monospace">
         {LISTINGS_TITLE}
       </Heading>
@@ -20,12 +20,12 @@ const ActiveListings = () => {
       </Text>
       {latestSecondaryListings && !isLoading ? (
         <>
-          <SimpleGrid justifyItems={{ base: 'start', lg: 'center' }} gap={4} my={8} columns={{ base: 2, xl: 5 }}>
-            {latestSecondaryListings.flat().map((listing) => {
+          <SimpleGrid data-testid="explore-listings-container" justifyItems={{ base: 'start', lg: 'center' }} gap={4} my={8} columns={{ base: 2, xl: 5 }}>
+            {latestSecondaryListings.flat().map((listing, index) => {
               return (
                 <Box key={listing.name + listing.tokenId} border="1px" borderColor="black" p={4} rounded="lg" w="full">
                   <Box pos={'relative'}>
-                    <Image border="1px" borderColor="black" rounded="lg" src={listing.image} />
+                    <Image data-testid={`explore-listing-image-${index}`} border="1px" borderColor="black" rounded="lg" src={listing.image} />
                     {listing.market === 'opensea' && (
                       <Flex justifyContent={'space-between'} zIndex={'50'} top="2" right="2" position={'absolute'}>
                         <IconButton
