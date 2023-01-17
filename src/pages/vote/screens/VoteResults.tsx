@@ -1,14 +1,21 @@
-import { Dispatch, RootState, store } from '@/store';
-import { formatWallet, isEmpty } from '@/utils';
-import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner, Square, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { VoteChoices, VoteDistribution } from '../components';
-import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
+
+// Utils
+import { Dispatch, RootState, store } from '@/store';
+import { formatWallet, isEmpty } from '@/utils';
+
+// Components
+import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner, Square, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { VoteChoices } from '../components/VoteChoices';
+import { VoteDistribution } from '../components/VoteDistribution';
 import { VoteAudioTrack } from '@/common/media';
 
-const VoteResults = () => {
+// Models
+import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
+
+export const VoteResults = () => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean(false);
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
@@ -147,5 +154,3 @@ const VoteResults = () => {
     </Box>
   );
 };
-
-export default VoteResults;

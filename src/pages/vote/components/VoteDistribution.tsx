@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 //   return Math.sqrt((percentageOfTotal(i + 1, choice, Object.values(choice)) / 100) * vp);
 // }
 
-const VoteDistribution = () => {
+export const VoteDistribution = () => {
   const [voteData, setVoteData] = useState<any>();
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const voteResults = useSelector(store.select.voteModel.selectQuadraticVoteScores);
@@ -90,5 +90,3 @@ const VoteDistribution = () => {
     </Stack>
   );
 };
-
-export default VoteDistribution;
