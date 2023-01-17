@@ -4,9 +4,11 @@ import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner,
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { VoteChoices, VoteDistribution } from '../components';
+import { VoteChoices } from '../components/VoteChoices';
+import { VoteDistribution } from '../components/VoteDistribution';
 import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 import { VoteAudioTrack } from '@/common/media';
+import styled from 'styled-components';
 
 export const TapeDetails = () => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean(false);
@@ -89,16 +91,9 @@ export const TapeDetails = () => {
 
       {currentTrack?.media?.length && !isLoadingProposal ? (
         <Container mb={5} py={5} w="full" maxW="6xl">
-          <Heading
-            px={{ base: 0, lg: 2 }}
-            className="animate__animated animate__fadeIn"
-            fontWeight={'semibold'}
-            letterSpacing={'widest'}
-            size={['xs', 'sm']}
-            color={'gray.900'}
-          >
+          <StyledHeading px={{ base: 0, lg: 2 }} className="animate__animated animate__fadeIn" size={['xs', 'sm']}>
             NOW PLAYING
-          </Heading>
+          </StyledHeading>
           <Divider my={3} borderColor="transparent" w="full" />
           <VoteAudioTrack choice={currentTrack} />
           <Divider my={5} borderColor="transparent" w="full" />
@@ -107,18 +102,6 @@ export const TapeDetails = () => {
       ) : (
         <></>
       )}
-      <Container pt={5} maxW="7xl">
-        <Heading
-          px={{ base: 0, lg: 2 }}
-          className="animate__animated animate__fadeIn"
-          fontWeight={'semibold'}
-          letterSpacing={'widest'}
-          size={['xs', 'sm']}
-          color={'gray.900'}
-        >
-          SUBMISSIONS
-        </Heading>
-      </Container>
 
       {proposal?.signature ? (
         <>
@@ -132,19 +115,18 @@ export const TapeDetails = () => {
       )}
       {proposal?.votes && (
         <Container pt={5} maxW="7xl">
-          <Heading
-            px={{ base: 0, lg: 2 }}
-            className="animate__animated animate__fadeIn"
-            fontWeight={'semibold'}
-            letterSpacing={'widest'}
-            size={['xs', 'sm']}
-            color={'gray.900'}
-          >
+          <StyledHeading px={{ base: 0, lg: 2 }} className="animate__animated animate__fadeIn" size={['xs', 'sm']}>
             RESULTS
-          </Heading>
+          </StyledHeading>
           <VoteDistribution />
         </Container>
       )}
     </Box>
   );
 };
+
+const StyledHeading = styled(Heading)`
+  font-weight: 'semibold';
+  letter-spacing: 'widest';
+  color: 'gray.900';
+`;
