@@ -9,7 +9,7 @@ import { IconArrowRight } from '@tabler/icons';
 const MostAppearances = () => {
   const mostFeaturedArtists = useSelector(store.select.artistModel.selectMostFeaturedArtists);
   return (
-    <Box px={{ base: 8, lg: 10 }} py={{ base: 6, lg: 10 }} mx={{ lg: 'auto' }} maxW="7xl">
+    <Box data-testid="explore-most-ap" px={{ base: 8, lg: 10 }} py={{ base: 6, lg: 10 }} mx={{ lg: 'auto' }} maxW="7xl">
       <Heading color={'gray.600'} fontSize={{ base: 'lg', lg: 'xl' }} fontFamily="'Space Mono', monospace">
         {MOST_AP_TITLE}
       </Heading>

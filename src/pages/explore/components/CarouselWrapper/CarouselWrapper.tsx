@@ -1,27 +1,29 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/pagination';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { Box } from '@chakra-ui/react';
 
-const CarouselWrapper = ({ slides }: { slides: Array<JSX.Element> }) => {
+const CarouselWrapper = ({ slides }: { slides?: Array<JSX.Element> }) => {
+  var settings = {
+    dots: true,
+    autoplay: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   return (
-    <>
+    <Box data-testid="explore-wrapper" pb={10}>
       {slides?.length ? (
-        <Swiper
-          loop={true}
-          autoplay={{ delay: 8000, disableOnInteraction: true }}
-          pagination={{ dynamicBullets: true, clickable: true }}
-          modules={[Pagination, Autoplay]}
-          className="mySwiper"
-        >
+        <Slider {...settings}>
           {slides.map((slide, i) => (
-            <SwiperSlide key={i + 'explore_slides'}>{slide}</SwiperSlide>
+            <div key={i}>{slide}</div>
           ))}
-        </Swiper>
+        </Slider>
       ) : (
         <></>
       )}
-    </>
+    </Box>
   );
 };
 export default CarouselWrapper;

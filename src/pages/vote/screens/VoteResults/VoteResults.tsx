@@ -29,12 +29,12 @@ const VoteResults = () => {
   }, [space, tape, id, allTapes]);
 
   useEffect(() => {
-    if (proposal) dispatch.voteModel.setCurrentTrack(proposal?.choices?.[0]);
+    // if (proposal) dispatch.voteModel.setCurrentTrack(proposal?.choices?.[0]);
   }, [proposal]);
 
   return (
     <Box minH="100vh">
-      {!isEmpty(allTapes) && (
+      {/* {!isEmpty(allTapes) && (
         <Container justifyContent={'center'} py={{ base: '2', md: '8' }}>
           <HStack gap={2}>
             <Divider borderColor="gray.700" w="full" />
@@ -147,7 +147,7 @@ const VoteResults = () => {
           </Heading>
           <VoteDistribution />
         </Container>
-      )}
+      )} */}
     </Box>
   );
 };

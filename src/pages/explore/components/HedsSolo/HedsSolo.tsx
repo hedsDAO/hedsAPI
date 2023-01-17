@@ -4,14 +4,13 @@ import { AR } from 'country-flag-icons/react/3x2';
 import { HEDS_SOLO_HEADING, HEDS_SOLO_TITLE, HEDS_SOLO_DESC, HEDS_SOLO_ARTIST } from '@/pages/explore/store/constants';
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const HedsSolo = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
-  const navigate = useNavigate();
   return (
-    <Box w="full">
+    <Box data-testid="explore-hedsolo" w="full">
       <Container px={{ base: 10, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'start'}>
           <Text color={'gray.500'} fontFamily={'"Space Mono", monospace'}>
@@ -29,10 +28,9 @@ const HedsSolo = () => {
             <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
               <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
                 <Button
-                  onClick={() => {
-                    window.scroll(0, 0);
-                    navigate(`/u/${HEDS_SOLO_ARTIST}`);
-                  }}
+                  data-testid="hedsolo-artist-button"
+                  as={Link}
+                  to={`/u/${HEDS_SOLO_ARTIST}`}
                   justifySelf={'start'}
                   py="4"
                   border="1px"
@@ -46,26 +44,13 @@ const HedsSolo = () => {
                     / {artistsMapping?.[HEDS_SOLO_ARTIST]?.displayName.toUpperCase()}
                   </Text>
                 </Button>
-                <Button
-                  onClick={() => {
-                    window.scroll(0, 0);
-                    navigate(`/u/${HEDS_SOLO_ARTIST}`);
-                  }}
-                  py="4"
-                  border="1px"
-                  borderColor="black"
-                  size="sm"
-                  rounded="full"
-                  bg="white"
-                  zIndex={'30'}
-                >
+                <Button as={Link} to={`/u/${HEDS_SOLO_ARTIST}`} py="4" border="1px" borderColor="black" size="sm" rounded="full" bg="white" zIndex={'30'}>
                   <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
                 </Button>
               </Flex>
               <Image
                 onLoad={setHasImageLoaded.on}
-                border="1px"
-                borderColor={'black'}
+                outline="solid"
                 inset={'1'}
                 rounded="3xl"
                 h="11rem"
