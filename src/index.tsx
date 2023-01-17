@@ -12,6 +12,7 @@ import { ModalWrapper } from '@/modules/modals/components';
 import { AudioWrapper } from './modules/audio/components';
 import { store } from './store';
 import { theme } from './theme/theme';
+import ReactGA from 'react-ga4';
 import App from '@/App';
 
 import 'animate.css';
@@ -20,6 +21,8 @@ import '../build/app/output.css';
 import '@fontsource/roboto-mono';
 import '@fontsource/noto-sans-mono';
 import '@fontsource/space-mono';
+
+ReactGA.initialize('G-EWK413GWSB');
 
 const { chains, provider } = configureChains(
   [chain.mainnet],
