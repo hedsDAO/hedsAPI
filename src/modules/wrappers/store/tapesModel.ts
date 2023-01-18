@@ -70,7 +70,7 @@ export const tapesModel = createModel<RootModel>()({
       return slice((tapesModel) => {
         const currentTape = tapesModel?.allTapes?.[tape]?.[id];
         const now = DateTime.now().setZone('utc').toMillis();
-        if (currentTape?.timeline?.vote?.end > now) return true;
+        if (currentTape?.timeline?.vote?.end < now) return true;
         else return false;
       });
     }),
