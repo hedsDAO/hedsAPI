@@ -33,12 +33,12 @@ describe('MostAppearances Unit', () => {
       expect(mostAppearanceContainer).toHaveTextContent(textValue);
     });
   });
-  it('navigates to artists page', async () => {
+  it('navigates to artists page', () => {
     const artistButton = screen.getByText(MOST_AP_BUTTON);
-    await act(() => artistButton.click());
+    act(() => artistButton.click());
     expect(history.push).toHaveBeenCalledWith({ hash: '', pathname: '/artists', search: '' }, undefined);
   });
-  it('displays artists card when top artists load', async () => {
+  it('displays artists card when top artists load', () => {
     const tapeCountContainer = screen.getAllByRole('group')[0];
     expect(tapeCountContainer).toBeInTheDocument();
   });

@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "lint:fix": "esline . --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
-    "test": "jest --config=jest.config.js",
+    "test": "jest --config=jest.config.js --runInBand --detectOpenHandles --forceExit",
     "test:watch": "jest --config=jest.config.js --watch"
   },
   "dependencies": {
@@ -39,7 +39,7 @@
     "firebase": "^9.9.3",
     "firebase-tools": "^11.19.0",
     "framer-motion": "^6.5.1",
-    "hedsvote": "^0.0.104",
+    "hedsvote": "^0.0.111",
     "jest": "27.5.1",
     "js-sha256": "^0.9.0",
     "luxon": "^3.0.4",

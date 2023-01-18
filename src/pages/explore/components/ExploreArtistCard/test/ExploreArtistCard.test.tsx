@@ -33,10 +33,10 @@ describe('ExploreArtistCard Unit', () => {
     expect(artistCard).toHaveTextContent(displayName);
     expect(artistImage).toHaveAttribute('src', profilePicture);
   });
-  it('navigates to artists page', async () => {
+  it('navigates to artists page', () => {
     const { wallet } = mockArtist;
     const seeAllArtistsButton = screen.getByTestId('explore-artist-card-button');
-    await act(() => seeAllArtistsButton.click());
+    act(() => seeAllArtistsButton.click());
     expect(history.push).toHaveBeenCalledWith({ hash: '', pathname: `/u/${wallet}`, search: '' }, undefined);
   });
 });

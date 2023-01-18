@@ -32,9 +32,9 @@ describe('HedsSolo Unit', () => {
       expect(newestTapeContainer).toHaveTextContent(text);
     });
   });
-  it('navigates to artists page', async () => {
+  it('navigates to artists page', () => {
     const seeAllArtistsButton = screen.getByTestId('hedsolo-artist-button');
-    await act(() => seeAllArtistsButton.click());
+    act(() => seeAllArtistsButton.click());
     expect(history.push).toHaveBeenCalledWith({ hash: '', pathname: `/u/${HEDS_SOLO_ARTIST}`, search: '' }, undefined);
   });
 });
