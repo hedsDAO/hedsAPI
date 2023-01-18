@@ -3,6 +3,7 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/**/*.{ts, tsx}'],
   roots: ['<rootDir>'],
   moduleNameMapper: {
+    '^axios$': require.resolve('axios'),
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
@@ -19,5 +20,6 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
-  modulePathIgnorePatterns: ["<rootDir>/functions/"]
+  modulePathIgnorePatterns: ["<rootDir>/functions/"],
+
 };
