@@ -1,7 +1,10 @@
-// @ts-nocheck
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { calculateUserVotingPower, Choice, createClient, Proposal, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
+
+export interface SubmissionChoice extends Choice {
+  score: number;
+}
 
 export interface VoteModelState {
   choices: Choice[];
@@ -13,6 +16,7 @@ export interface VoteModelState {
   allProposals: Proposal[];
   currentTrack: Choice;
   isLoading: boolean;
+  selectedSubmissions: SubmissionChoice[];
 }
 
 export const voteModel = createModel<RootModel>()({
@@ -67,6 +71,7 @@ export const voteModel = createModel<RootModel>()({
     setQuadraticVotes: (state, quadraticVotes: QuadraticVote[]) => ({ ...state, quadraticVotes }),
     setSingleChoiceVotes: (state, singleChoiceVotes: SingleChoiceVote[]) => ({ ...state, singleChoiceVotes }),
     setAllProposals: (state, allProposals: Proposal[]) => ({ ...state, allProposals }),
+    setSelectedSubmissions: (state, selectedSubmission: SubmissionChoice) => ({ ...state, selectedSubmission }),
   },
   effects: () => ({
     async castVote(vote: VoteObject) {
