@@ -1,5 +1,5 @@
 // Components
-import { Avatar, Box, Flex, Grid, GridItem, HStack, Stack, Text, IconButton } from '@chakra-ui/react';
+import { Avatar, Box, Grid, GridItem, HStack, Stack, Text, IconButton } from '@chakra-ui/react';
 import { IconX, IconPlus, IconMinus } from '@tabler/icons';
 
 // Models
@@ -13,7 +13,7 @@ interface OwnProps {
 
 export const SelectedSubmission = ({ choice, handleRemoveSubmission, handleScoreChange }: OwnProps) => {
   return (
-    <Box p={2} border="1px" rounded="sm" shadow="sm" borderColor="gray.500" w="full" minW="full" key={choice.name}>
+    <Box p={2} border="1px" rounded="md" shadow="sm" borderColor="gray.500" w="full" minW="full" key={choice.name}>
       <Grid templateColumns="repeat(3, 1fr)" gap="5">
         <GridItem>
           <Stack spacing="1">
@@ -23,6 +23,7 @@ export const SelectedSubmission = ({ choice, handleRemoveSubmission, handleScore
             </Text>
           </Stack>
         </GridItem>
+
         <GridItem alignSelf="center">
           <HStack justifyContent="center">
             <IconButton aria-label="Subtract" icon={<IconMinus />} onClick={() => handleScoreChange(choice, 'subtract')} />
@@ -30,6 +31,7 @@ export const SelectedSubmission = ({ choice, handleRemoveSubmission, handleScore
             <IconButton aria-label="Add" icon={<IconPlus />} onClick={() => handleScoreChange(choice, 'add')} />
           </HStack>
         </GridItem>
+
         <GridItem justifySelf="flex-end">
           <IconButton aria-label="Remove Submission" size="xs" colorScheme="red" icon={<IconX />} onClick={() => handleRemoveSubmission(choice)} />
         </GridItem>
