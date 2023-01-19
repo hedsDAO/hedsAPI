@@ -18,9 +18,9 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
 
   useEffect(() => {
-    let interval: NodeJS.Timer;
+    let timeout: NodeJS.Timeout;
     if (isTrackPlaying) {
-      interval = setInterval(() => {
+      timeout = setTimeout(() => {
         if (wavesurfer.current.getDuration() >= countPlayThreshold) {
           dispatch.audioModel.updateTrackMetadataStats({
             track: activeTrack,
@@ -32,7 +32,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
       }, 1000);
     }
     return () => {
-      return clearInterval(interval);
+      return clearTimeout(timeout);
     };
   }, [isTrackPlaying]);
 

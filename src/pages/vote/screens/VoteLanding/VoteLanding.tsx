@@ -1,20 +1,14 @@
-import { useEffect } from 'react';
-import { Dispatch, store } from '@/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { store } from '@/store';
+import { useSelector } from 'react-redux';
 import { Box, Container, Divider, Grid, HStack, Stack, Text } from '@chakra-ui/react';
 import { isEmpty } from '@/utils';
 import { VoteCard } from '@/common/media';
 import ImageWithOverlay from '../../components/ImageWithOverlay/ImageWithOverlay';
 
 const VoteLanding = () => {
-  const dispatch = useDispatch<Dispatch>();
   const allHedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
   const latestHedsTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
 
-  useEffect(() => {
-    dispatch.voteModel.getAllProposals();
-  }, []);
-  // console.log(!isEmpty(allHedsTapes) && Object.values(allHedsTapes));
   return (
     <Container minW="full">
       <Box>

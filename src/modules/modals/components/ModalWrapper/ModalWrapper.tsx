@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 import { Modals } from '@/modules/modals/store/modalModel';
-import { ConnectModal, UserModal, SettingsModal } from '@/modules/modals/screens';
+import { ConnectModal, UserModal, SettingsModal, SubmitModal, MintModal, TwitterModal, NameModal, SampleModal } from '@/modules/modals/screens';
 
 const ModalWrapper = ({ children }: { children: React.ReactNode }) => {
   const { currentModal, isOpen } = useSelector((state: RootState) => state.modalModel);
@@ -13,12 +13,11 @@ const ModalWrapper = ({ children }: { children: React.ReactNode }) => {
       {isOpen && currentModal === Modals.CONNECT_MODAL && <ConnectModal />}
       {isOpen && currentModal === Modals.USER_MODAL && <UserModal />}
       {isOpen && currentModal === Modals.SETTINGS_MODAL && <SettingsModal />}
-      {/* {isOpen && currentModal === Modals.TWITTER_MODAL && <TwitterModal />} */}
-      {/* {isOpen && currentModal === Modals.NAME_MODAL && <NameModal />} */}
-      {/* {isOpen && currentModal === Modals.SAMPLE_MODAL && <SampleModal />} */}
-      {/* {isOpen && currentModal === Modals.SUBMIT_MODAL && <SubmitModal />} */}
-      {/* {isOpen && currentModal === Modals.MINT_MODAL && <MintModal />} */}
-      
+      {isOpen && currentModal === Modals.SUBMIT_MODAL && <SubmitModal />}
+      {isOpen && currentModal === Modals.MINT_MODAL && <MintModal />}
+      {isOpen && currentModal === Modals.TWITTER_MODAL && <TwitterModal />}
+      {isOpen && currentModal === Modals.NAME_MODAL && <NameModal />}
+      {isOpen && currentModal === Modals.SAMPLE_MODAL && <SampleModal />}
       {children}
     </Fragment>
   );

@@ -1,6 +1,6 @@
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { Dispatch, store } from '@/store';
-import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, IconButton, Link, Text } from '@chakra-ui/react';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 import { DateTime } from 'luxon';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ const Mint = () => {
   const mint = useSelector(store.select.hedstapeModel.selectMint);
   const start = DateTime.fromMillis(mint.start, zone);
   const end = DateTime.fromMillis(mint.end, zone);
+  const openSeaLink = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
@@ -34,7 +35,18 @@ const Mint = () => {
             <Button rounded={'sm'} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
               Mint Closed
             </Button>
-            <Button rounded={'sm'} border={'solid 1px'} borderColor="blue.100" bg="blue.50" leftIcon={<i className="fak fa-opensea text-xs" />} size={'sm'} pr={3}>
+            <Button
+              target="_blank"
+              as={Link}
+              href={openSeaLink?.length > 0 && openSeaLink}
+              rounded={'sm'}
+              border={'solid 1px'}
+              borderColor="blue.100"
+              bg="blue.50"
+              leftIcon={<i className="fak fa-opensea text-xs" />}
+              size={'sm'}
+              pr={3}
+            >
               OpenSea
             </Button>
           </>

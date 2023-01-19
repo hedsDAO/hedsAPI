@@ -19,6 +19,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
   const currentWallet = useSelector(store?.select.userModel.selectCurrentUserWallet);
   const allTapes = useSelector(store?.select.tapesModel.selectAllTapes);
   const currentTape = useSelector(store?.select.tapesModel.selectCurrentTape);
+  const isTapeVoteComplete = useSelector(store?.select?.tapesModel?.selectIsTapeVoteCompleteBySpaceTapeId([space, tape, id]));
   // const queue = useSelector(store?.select.audioModel.selectQueue);
   const dispatch = useDispatch<Dispatch>();
   const handlePlay = (submission: TrackMetadata) => {
@@ -131,7 +132,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
       <Stack alignItems={'end'} ml="auto">
         {!isConfirmingLiked ? (
           <IconButton
-            disabled={!connectedWallet}
+            disabled={!connectedWallet || !isTapeVoteComplete}
             size="xs"
             aria-label="play"
             textColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'gray.300'}

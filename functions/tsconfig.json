@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "types": []
+  },
+  "compileOnSave": true,
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "jest.config.js"
+  ],
+  "exclude": [
+    "node_modules", "../node_modules/**/*", "../node_modules/@types/**/*"
+  ],
+  
+}
