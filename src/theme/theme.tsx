@@ -1,9 +1,9 @@
 import { extendTheme } from '@chakra-ui/react';
-import { avatarTheme } from './custom';
+import { avatarTheme, buttonTheme } from './custom';
 import { underlineHoverAnimationStyles, boxShadowStyles, gradientAnimationStyles, navbarStyles } from './styles';
 
 export const theme = extendTheme({
-  components: { Avatar: avatarTheme },
+  components: { Avatar: avatarTheme, Button: buttonTheme },
   styles: {
     global: (props: any) => ({
       'html, body': {

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { store } from '@/store';
 import { useSelector } from 'react-redux';
 import { Divider } from '@chakra-ui/react';
@@ -6,6 +6,9 @@ import { AllArtists, SampleCurators } from '@/pages/artists/components';
 
 export const Artists = () => {
   const allArtists = useSelector(store.select.artistModel.selectAllArtists);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   return (
     <>
       {allArtists && (

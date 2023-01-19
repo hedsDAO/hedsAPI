@@ -44,8 +44,8 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
   };
 
   return (
-    <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'end' }} alignItems={'center'} px={4}>
-      <IconButton
+    <Flex height="100%" gap={2} justifyContent={{ base: 'end', md: 'center' }} alignItems={'center'} px={4}>
+      {/* <IconButton
         disabled={isQueueEmpty || !connectedWallet?.length}
         onClick={() => dispatch.audioModel.setIsShowingQueue(!isShowingQueue)}
         aria-label="queue"
@@ -57,7 +57,7 @@ const PlayerButtons = ({ wavesurfer }: { wavesurfer: React.MutableRefObject<Wave
         border="1px"
         borderColor={'gray.500'}
         _hover={{ bg: 'gray.50', borderColor: 'gray.600' }}
-      />
+      /> */}
       <IconButton
         size="sm"
         border="1px"
