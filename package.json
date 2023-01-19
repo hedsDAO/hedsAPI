@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
+    "@chakra-ui/pro-theme": "^0.0.57",
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -35,6 +36,7 @@
     "connect": "^3.7.0",
     "ethers": "^5.7.0",
     "firebase": "^9.9.3",
+    "firebase-tools": "^11.19.0",
     "framer-motion": "^6.5.1",
     "hedsvote": "^0.0.102",
     "jest": "27.5.1",

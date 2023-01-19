@@ -41,7 +41,7 @@ const Collection = () => {
           <Grid display={{ base: 'none', sm: 'grid' }} templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)' }} gap={2}>
             {['', '', '', '', ''].map((_, i) => {
               return (
-                <GridItem rounded="sm" border={'1px'} borderColor={'gray.700'} colSpan={1} data-testid={`user-collection-${i}`} key={i + 'empty-collection'}>
+                <GridItem rounded="md" border={'1px'} borderColor={'gray.500'} colSpan={1} data-testid={`user-collection-${i}`} key={i + 'empty-collection'}>
                   <Stack bg="gray.100" opacity={'20%'} divider={<Divider />} rounded="sm" p={2} shadow="sm">
                     <div className="relative">
                       <div className="object-cover aspect-square rounded-lg object-center shadow-md" />
@@ -55,7 +55,7 @@ const Collection = () => {
           <Grid display={{ base: 'grid', sm: 'none' }} templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)' }} gap={2}>
             {['', ''].map((_, i) => {
               return (
-                <GridItem border={'1px'} borderColor={'gray.700'} rounded="sm" colSpan={1} data-testid={`user-collection-${i}`} key={i + 'empty-collection'}>
+                <GridItem border={'1px'} borderColor={'gray.500'} rounded="md" colSpan={1} data-testid={`user-collection-${i}`} key={i + 'empty-collection'}>
                   <Stack bg="gray.100" opacity={'20%'} divider={<Divider />} rounded="sm" p={2} shadow="sm">
                     <div className="relative">
                       <div className="object-cover aspect-square rounded-lg object-center shadow-md" />

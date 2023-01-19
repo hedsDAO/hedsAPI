@@ -5,6 +5,7 @@ import { db } from '@/App';
 import { AllTapes, TapeAndTrackData, TapeData } from '@/models/common';
 import { createModel } from '@rematch/core';
 import { isEmpty } from '@/utils';
+import { DateTime } from 'luxon';
 
 export enum TapesTab {
   HEDSTAPE = 0,
@@ -16,6 +17,7 @@ export interface TapesState {
   currentTab: TapesTab;
   tapeTabs: string[];
   currentTape: TapeAndTrackData;
+  spaceTapeId: [string, string, string];
 }
 
 export const tapesModel = createModel<RootModel>()({
@@ -28,8 +30,12 @@ export const tapesModel = createModel<RootModel>()({
     setIsOpen: (state, isOpen: boolean) => ({ ...state, isOpen }),
     setCurrentTab: (state, currentTab: TapesTab) => ({ ...state, currentTab }),
     setCurrentTape: (state, currentTape: TapeAndTrackData) => ({ ...state, currentTape }),
+    setSpaceTapeId: (state, spaceTapeId: [string, string, string]) => ({ ...state, spaceTapeId }),
   },
-  selectors: (slice, createSelector) => ({
+  selectors: (slice, createSelector, hasProps) => ({
+    selectSpaceTapeId() {
+      return slice((tapesModel): [string, string, string] => tapesModel?.spaceTapeId);
+    },
     selectAllTapes() {
       return slice((tapesModel) => tapesModel.allTapes);
     },
@@ -60,6 +66,17 @@ export const tapesModel = createModel<RootModel>()({
         }
       });
     },
+    selectIsTapeVoteCompleteBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
+      return slice((tapesModel) => {
+        const currentTape = tapesModel?.allTapes?.[tape]?.[id];
+        const now = DateTime.now().setZone('utc').toMillis();
+        if (currentTape?.timeline?.vote?.end > now) return true;
+        else return false;
+      });
+    }),
+
+    // const now = DateTime.now().setZone('utc').toMillis();
+
     selectCurrentTape() {
       return slice((tapesModel) => tapesModel.currentTape);
     },
