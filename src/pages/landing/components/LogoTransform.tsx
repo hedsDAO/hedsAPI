@@ -1,4 +1,5 @@
 import { animated, useSpring, useScroll } from 'react-spring';
+import { Link } from 'react-router-dom';
 
 export const LogoTransform = ({ parallaxRef }: any) => {
   const [props, api] = useSpring(() => ({ width: '600px', transform: 'translateY(0%)' }));
@@ -12,5 +13,9 @@ export const LogoTransform = ({ parallaxRef }: any) => {
       }
     },
   });
-  return <animated.img style={props} src="/heds_logo.svg" />;
+  return (
+    <Link to="/explore">
+      <animated.img style={props} src="/heds_logo.svg" />
+    </Link>
+  );
 };
