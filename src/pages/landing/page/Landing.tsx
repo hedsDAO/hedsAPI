@@ -10,6 +10,7 @@ import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
 import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
 import { LogoTransform } from '@/pages/landing/components/LogoTransform';
+import { StickyLogo } from '@/pages/landing/components/StickyLogo';
 
 export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
@@ -54,6 +55,10 @@ export const Landing = () => {
         }}
       />
 
+      <ParallaxLayer offset={0} speed={1} sticky={{ start: 0, end: 5 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
+        <StickyLogo parallaxRef={parallaxRef} />
+      </ParallaxLayer>
+
       <ParallaxLayer
         offset={0}
         speed={1}
@@ -69,14 +74,15 @@ export const Landing = () => {
       >
         <div
           style={{
-            width: '100%',
+            // width: '100%',
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'start',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <LogoTransform parallaxRef={parallaxRef} />
+          {/* <LogoTransform parallaxRef={parallaxRef} /> */}
           <FadeOutDown text={'WELCOME TO THE FUTURE OF CURATION.'} />
         </div>
       </ParallaxLayer>

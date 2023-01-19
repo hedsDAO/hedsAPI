@@ -1,6 +1,5 @@
-import { animated, useScroll } from '@react-spring/web';
+import { animated, useScroll, useSpring } from '@react-spring/web';
 
-//TODO: specify argument type away from any
 export const LogoTransform = ({ parallaxRef }: any) => {
   const { scrollYProgress } = useScroll({
     container: parallaxRef.current.container,
@@ -11,7 +10,14 @@ export const LogoTransform = ({ parallaxRef }: any) => {
       src="/heds_logo.svg"
       style={{
         width: scrollYProgress.to((scrollP) => {
-          return window.innerWidth - scrollP * 15000;
+          const calc = 1 - scrollP / 0.065;
+          console.log(calc, scrollP);
+
+          // return scrollP >= 0.05 ? '100px' : `${window.innerWidth - scrollP * 10 * window.innerWidth}px`;
+          const result = window.innerWidth * calc;
+          console.log(result);
+          return `${result < 100 ? 100 : result}px`;
+          // return `${window.innerWidth - scrollP * 10 * window.innerWidth}px`;
         }),
       }}
     />
