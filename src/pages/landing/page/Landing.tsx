@@ -16,6 +16,7 @@ export const Landing = () => {
 
   return (
     <Parallax className="top-div" pages={5} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>
+      {/* Section 1 */}
       <ParallaxLayer
         offset={0}
         style={{
@@ -85,6 +86,7 @@ export const Landing = () => {
         </div>
       </ParallaxLayer>
 
+      {/* Section 2 */}
       <ParallaxLayer
         offset={1.1}
         speed={0.5}
@@ -128,6 +130,7 @@ export const Landing = () => {
         </button>
       </ParallaxLayer>
 
+      {/* Section 3 */}
       <ParallaxLayer
         offset={2}
         speed={0.2}
@@ -145,6 +148,7 @@ export const Landing = () => {
         </Container>
       </ParallaxLayer>
 
+      {/* Section 4 */}
       <ParallaxLayer offset={2.6}>
         <Divider />
         <HStack divider={<StackDivider borderColor="gray.400" />} h="30%">
@@ -198,6 +202,8 @@ export const Landing = () => {
           </Box>
         </Center>
       </ParallaxLayer>
+
+      {/* Section 5 */}
       <ParallaxLayer offset={3}>
         <Grid h="100%" padding="5rem" templateRows="repeat(2, 1fr)" templateColumns="repeat(3, 1fr)" gap={4}>
           <GridItemImage num={207} text="unique minters" icon={IconUsers} />
@@ -208,6 +214,8 @@ export const Landing = () => {
           <GridItemImage num={438} text="total submission" icon={IconTicket} />
         </Grid>
       </ParallaxLayer>
+
+      {/* Section 6 */}
       <ParallaxLayer offset={4}>
         <Stepper />
       </ParallaxLayer>
