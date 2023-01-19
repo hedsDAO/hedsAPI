@@ -1,10 +1,11 @@
 import { AudioTrack, TapeCard } from '@/common/media';
 import { store } from '@/store';
-import { Button, Flex, Stack, Text, Link as ChakraLink } from '@chakra-ui/react';
+import { Button, Flex, Stack, Text, Link as ChakraLink, GridItem, Skeleton, useBoolean, Image } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 const Header = () => {
+  const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
@@ -16,21 +17,40 @@ const Header = () => {
     <Flex
       justifyContent={'center'}
       alignItems={{ base: 'start', lg: 'center' }}
-      maxWidth={'7xl'}
+      maxWidth={'6xl'}
       mx={'auto'}
       flexDirection={['column', 'column', 'column', 'row']}
       gap={8}
       px={[4, 2, 3, 1]}
       py={4}
     >
-      <Stack maxW="lg" direction={'column'}>
-        <TapeCard tape={currentTape} />
+      <Stack direction={'column'}>
+        <Skeleton
+          startColor="gray.100"
+          endColor="gray.500"
+          w="full"
+          minW={{ base: 'full', lg: '20rem' }}
+          minH={{ base: 'full', lg: '20rem' }}
+          rounded="lg"
+          isLoaded={isImageLoaded}
+        >
+          <Image
+            onLoad={setIsImageLoaded.on}
+            className="bs-preset-1"
+            maxH={{ base: 'full', lg: '20rem' }}
+            maxW={{ base: 'full', lg: '20rem' }}
+            minH={{ base: 'full', lg: '20rem' }}
+            minW={{ base: 'full', lg: '20rem' }}
+            rounded="lg"
+            src={currentTape?.image}
+          />
+        </Skeleton>
       </Stack>
       <Stack direction={'column'} width={'full'} alignItems={'start'} justifyContent="center">
-        <Text fontFamily={'"Space Mono", monospace'} fontWeight={'semibold'} fontSize={'4xl'}>
+        <Text fontWeight={'semibold'} fontSize={'4xl'}>
           {name}
         </Text>
-        <Flex  pb={{ base: 8, lg: 3 }} gap={2}>
+        <Flex pb={{ base: 8, lg: 3 }} gap={2}>
           <Button
             as={ChakraLink}
             href={opensea}
@@ -59,11 +79,11 @@ const Header = () => {
           </Button>
         </Flex>
         {currentTape && (
-          <Flex w={{ base: 'full', lg: 'full' }} pb={2} gap={1} direction={'column'}>
+          <Flex w={{ base: 'full', lg: 'lg' }} pb={2} gap={1} direction={'column'}>
             <AudioTrack track={currentTape?.curator?.samples?.[space]?.[tape]?.[id]} />
           </Flex>
         )}
-        <Flex px={1} pt={4} direction={'column'}>
+        <Flex px={1} mt={4} direction={'column'}>
           <Text fontWeight={'bold'} fontSize="xs">
             About The Tape
           </Text>
