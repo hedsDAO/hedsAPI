@@ -8,7 +8,7 @@ export const StickyLogo = ({ parallaxRef }: any) => {
       if (scrollYProgress > 0.005) {
         api.start({ transform: 'translateY(0%)', width: '100px' });
       } else {
-        api.start({ transform: 'translateY(50%)' });
+        api.start({ transform: 'translateY(50%)', width: '600px' });
       }
     },
   });
