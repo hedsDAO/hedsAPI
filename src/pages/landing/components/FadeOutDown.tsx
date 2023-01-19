@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { useSpring, animated } from 'react-spring';
-import { Waypoint } from 'react-waypoint';
+import { animated, useInView } from 'react-spring';
 
 interface OwnProps {
   text: string;
 }
 
 export const FadeOutDown = ({ text }: OwnProps) => {
-  const [inView, setInView] = useState<boolean>(true);
-  const [styles, api] = useSpring(() => ({ opacity: 1 }));
-  api.start({ opacity: inView ? 1 : 0 });
-  // api.stop();
-  // console.log(inView);
+  const [ref, props] = useInView(() => ({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+  }));
 
-  const props = useSpring({ from: { opacity: 1 }, to: { opacity: 0 }, reset: true, reverse: inView, onRest: () => setInView(!inView) });
   return (
-    // <Waypoint onPositionChange={() => console.log('changed')}>
-    <animated.p style={props}>{text}</animated.p>
-    // </Waypoint>
+    <animated.p ref={ref} style={props}>
+      {text}
+    </animated.p>
   );
 };
