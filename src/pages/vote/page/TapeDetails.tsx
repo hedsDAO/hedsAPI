@@ -76,7 +76,7 @@ export const TapeDetails = () => {
                       <Avatar src={allTapes?.[tape]?.[id]?.image} />
                     </Square>
                     <Box fontSize="sm">
-                      <Text color="empahsized" fontWeight="medium">
+                      <Text color="emphasized" fontWeight="medium">
                         {proposal?.author && formatWallet(proposal?.author)}
                       </Text>
                       <Badge colorScheme={'red'}>{proposal?.state}</Badge>

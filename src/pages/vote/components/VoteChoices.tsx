@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
-import { VoteChoiceCard } from '@/common/media';
+import { VoteChoiceCard } from './VoteChoiceCard';
 import { Container, Flex, Grid, Heading, Stack } from '@chakra-ui/react';
 import { SubmissionCard } from './SubmissionCard';
 import { SelectedSubmission } from './SelectedSubmission';
