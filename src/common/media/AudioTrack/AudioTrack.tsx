@@ -9,7 +9,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const AudioTrack = ({ track }: { track: TrackMetadata }) => {
-  const { space, tape, id } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
@@ -19,7 +18,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
   const currentWallet = useSelector(store?.select.userModel.selectCurrentUserWallet);
   const allTapes = useSelector(store?.select.tapesModel.selectAllTapes);
   const currentTape = useSelector(store?.select.tapesModel.selectCurrentTape);
-  const isTapeVoteComplete = useSelector(store?.select?.tapesModel?.selectIsTapeVoteCompleteBySpaceTapeId([space, tape, id]));
+  const isTapeVoteComplete = useSelector(store?.select?.tapesModel?.selectIsTapeVoteCompleteBySpaceTapeId([track?.space, track?.tape, track?.id]));
   // const queue = useSelector(store?.select.audioModel.selectQueue);
   const dispatch = useDispatch<Dispatch>();
   const handlePlay = (submission: TrackMetadata) => {
@@ -35,7 +34,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
     await dispatch.audioModel.updateTrackMetadataStats({ track: track, walletId: track.wallet, newStats: updatedStats });
     await dispatch.userModel.addUserLike([connectedWallet, currentWallet, { ...track, stats: updatedStats }]);
     if (pathname.includes('/u')) dispatch.userModel.getCurrentUserData(currentWallet);
-    if (pathname.includes('/listen')) dispatch.tapesModel.getTapeArtists([allTapes[tape][id]]);
+    if (pathname.includes('/listen')) dispatch.tapesModel.getTapeArtists([allTapes[track?.tape][track?.id]]);
     await dispatch.userModel.getConnectedUserData(connectedWallet);
   };
 
@@ -50,7 +49,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
     await dispatch.audioModel.updateTrackMetadataStats({ track: track, walletId: track.wallet, newStats: updatedStats });
     await dispatch.userModel.removeUserLike([connectedWallet, currentWallet, { ...track, stats: updatedStats }]);
     if (pathname.includes('/u')) dispatch.userModel.getCurrentUserData(currentWallet);
-    if (pathname.includes('/listen')) dispatch.tapesModel.getTapeArtists([allTapes[tape][id]]);
+    if (pathname.includes('/listen')) dispatch.tapesModel.getTapeArtists([allTapes[track?.tape][track?.id]]);
     await dispatch.userModel.getConnectedUserData(connectedWallet);
   };
 
@@ -129,61 +128,62 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
           </Link>
         )}
       </Flex>
-      <Stack alignItems={'end'} ml="auto">
-        {!isConfirmingLiked ? (
-          <IconButton
-            disabled={!connectedWallet || !isTapeVoteComplete}
-            size="xs"
-            aria-label="play"
-            textColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'gray.300'}
-            bg={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'red.500' : 'gray.50'}
-            icon={<i className="fa-solid fa-heart"></i>}
-            onClick={
-              track.stats.likedBy[connectedWallet]
-                ? () => setIsConfirmingLike.on()
-                : () => {
-                    setIsHeartFilled.on();
-                    likeTrack();
-                  }
-            }
-            _hover={{
-              bg: track.stats.likedBy[connectedWallet] || isHeartFilled ? 'gray.200' : 'gray.50',
-              textColor: track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'red.300',
-            }}
-            borderColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'red.500' : 'gray.300'}
-            className="flex-shrink-0"
-            border={'1px'}
-          />
-        ) : (
-          <Flex gap={1} alignItems={'center'}>
+      {connectedWallet && (isTapeVoteComplete || track.type === TrackType.COLLAB) && (
+        <Stack alignItems={'end'} ml="auto">
+          {!isConfirmingLiked ? (
             <IconButton
-              onClick={() => {
-                setIsHeartFilled.on();
-                setIsConfirmingLike.off();
-              }}
               size="xs"
-              aria-label="like"
-              textColor={'white'}
-              bg={'gray.200'}
-              _hover={{ bg: 'gray.300' }}
-              icon={<i className="fa-solid fa-rotate-left"></i>}
-            />
-            <IconButton
-              onClick={() => {
-                unlikeTrack();
-                setIsHeartFilled.off();
-                setIsConfirmingLike.off();
+              aria-label="play"
+              textColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'gray.300'}
+              bg={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'red.500' : 'gray.50'}
+              icon={<i className="fa-solid fa-heart"></i>}
+              onClick={
+                track.stats.likedBy[connectedWallet]
+                  ? () => setIsConfirmingLike.on()
+                  : () => {
+                      setIsHeartFilled.on();
+                      likeTrack();
+                    }
+              }
+              _hover={{
+                bg: track.stats.likedBy[connectedWallet] || isHeartFilled ? 'gray.200' : 'gray.50',
+                textColor: track.stats.likedBy[connectedWallet] || isHeartFilled ? 'white' : 'red.300',
               }}
-              size="xs"
-              aria-label="like"
-              textColor={'white'}
-              bg={'red.500'}
-              icon={<i className="fa-solid fa-xmark"></i>}
+              borderColor={track.stats.likedBy[connectedWallet] || isHeartFilled ? 'red.500' : 'gray.300'}
+              className="flex-shrink-0"
+              border={'1px'}
             />
-          </Flex>
-        )}
-
-        <Menu direction="rtl">
+          ) : (
+            <Flex gap={1} alignItems={'center'}>
+              <IconButton
+                onClick={() => {
+                  setIsHeartFilled.on();
+                  setIsConfirmingLike.off();
+                }}
+                size="xs"
+                aria-label="like"
+                textColor={'white'}
+                bg={'gray.200'}
+                _hover={{ bg: 'gray.300' }}
+                icon={<i className="fa-solid fa-rotate-left"></i>}
+              />
+              <IconButton
+                onClick={() => {
+                  unlikeTrack();
+                  setIsHeartFilled.off();
+                  setIsConfirmingLike.off();
+                }}
+                size="xs"
+                aria-label="like"
+                textColor={'white'}
+                bg={'red.500'}
+                icon={<i className="fa-solid fa-xmark"></i>}
+              />
+            </Flex>
+          )}
+        </Stack>
+      )}
+      {/* <Menu direction="rtl">
           <MenuButton
             border={'1px'}
             borderColor={'gray.500'}
@@ -195,8 +195,8 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
             icon={<i className="fa-solid fa-ellipsis"></i>}
             width={'20px'}
           />
-          <MenuList>
-            {/* {queue?.length && queue?.includes(track) ? (
+          <MenuList> */}
+      {/* {queue?.length && queue?.includes(track) ? (
               <></>
             ) : (
               <MenuItem onClick={() => addToQueue()} fontSize={'sm'} icon={<IconTextPlus height="20px" />}>
@@ -211,13 +211,12 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
               >
                 {track?.public ? 'Hide Track' : 'Make Public'}
               </MenuItem>
-            )} */}
-            <MenuItem onClick={() => navigate(`/listen/${track.space}/${track.tape}/${track.id}`)} fontSize={'sm'} icon={<IconMusic height="20px" />}>
+            )} 
+              <MenuItem onClick={() => navigate(`/listen/${track.space}/${track.tape}/${track.id}`)} fontSize={'sm'} icon={<IconMusic height="20px" />}>
               View Tape
             </MenuItem>
           </MenuList>
-        </Menu>
-      </Stack>
+        </Menu> */}
     </Flex>
   );
 };
