@@ -1,25 +1,16 @@
-import { animated, useScroll, useSpring } from '@react-spring/web';
+import { animated, useSpring, useScroll } from 'react-spring';
 
 export const LogoTransform = ({ parallaxRef }: any) => {
+  const [props, api] = useSpring(() => ({ width: '600px', transform: 'translateY(0%)' }));
   const { scrollYProgress } = useScroll({
     container: parallaxRef.current.container,
+    onChange: ({ value: { scrollYProgress } }) => {
+      if (scrollYProgress > 0.005) {
+        api.start({ transform: 'translateY(0%)', width: '100px' });
+      } else {
+        api.start({ transform: 'translateY(50%)', width: '600px' });
+      }
+    },
   });
-
-  return (
-    <animated.img
-      src="/heds_logo.svg"
-      style={{
-        width: scrollYProgress.to((scrollP) => {
-          const calc = 1 - scrollP / 0.065;
-          console.log(calc, scrollP);
-
-          // return scrollP >= 0.05 ? '100px' : `${window.innerWidth - scrollP * 10 * window.innerWidth}px`;
-          const result = window.innerWidth * calc;
-          console.log(result);
-          return `${result < 100 ? 100 : result}px`;
-          // return `${window.innerWidth - scrollP * 10 * window.innerWidth}px`;
-        }),
-      }}
-    />
-  );
+  return <animated.img style={props} src="/heds_logo.svg" />;
 };
