@@ -11,34 +11,11 @@ import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
+import firebaseConfig from '../firebase/firebaseConfig';
 
-const stagingFirebaseConfig = (): FirebaseOptions => ({
-  apiKey: process.env.FB_STAGING_API,
-  authDomain: process.env.FB_STAGING_AUTHDOMAIN,
-  projectId: process.env.FB_STAGING_PROJECT_ID,
-  storageBucket: process.env.FB_STAGING_STORAGE,
-  messagingSenderId: process.env.FB_STAGING_MSG_SENDER_ID,
-  appId: process.env.FB_STAGING_APP_ID,
-  measurementId: process.env.FB_STAGING_MEASUREMENT_ID,
-});
-
-const prodFirebaseConfig = (): FirebaseOptions => ({
-  apiKey: process.env.FB_PROD_API,
-  authDomain: process.env.FB_PROD_AUTHDOMAIN,
-  projectId: process.env.FB_PROD_PROJECT_ID,
-  storageBucket: process.env.FB_PROD_STORAGE,
-  messagingSenderId: process.env.FB_PROD_MSG_SENDER_ID,
-  appId: process.env.FB_PROD_APP_ID,
-  measurementId: process.env.FB_PROD_MEASUREMENT_ID,
-});
-
-const prodApp: FirebaseApp = initializeApp(prodFirebaseConfig());
-const stagingApp: FirebaseApp = initializeApp(stagingFirebaseConfig(), 'staging');
-const prodDb: Firestore = getFirestore(prodApp);
-const stagingDB: Firestore = getFirestore(stagingApp);
-
-export const db: Firestore = process.env.NODE_ENV === 'production' ? prodDb : stagingDB;
-export const storage: FirebaseStorage = getStorage(prodApp, `gs://${process.env.FB_PROD_STORAGE}`);
+const app: FirebaseApp = initializeApp(firebaseConfig);
+export const db: Firestore = getFirestore(app);;
+export const storage: FirebaseStorage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 
 const App = (): JSX.Element => {
   const location = useLocation();
