@@ -13,6 +13,9 @@ import { VoteDistribution } from '../components/VoteDistribution';
 import { VoteAudioTrack } from '@/common/media';
 import { TapeDescription } from '../components/TapeDescription';
 
+// Models
+import { ProposalState } from 'hedsvote';
+
 export const TapeDetails = () => {
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
@@ -65,7 +68,7 @@ export const TapeDetails = () => {
           <Spinner size={'lg'} />
         </Flex>
       )}
-      {proposal?.votes && <VoteDistribution />}
+      {proposal?.votes && proposal?.state === ProposalState.CLOSED && <VoteDistribution />}
     </Box>
   );
 };

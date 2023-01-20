@@ -1,17 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { formWaveSurferOptions, isEmpty } from '@/utils';
+import { formWaveSurferOptions } from '@/utils';
 import WaveSurfer from 'wavesurfer.js';
 import { Button, Grid, GridItem } from '@chakra-ui/react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 
-interface OwnProps {
-  audio?: File | string;
-  // handlePlay: () => void;
-}
-
-const WaveformPlayer = ({ audio }: OwnProps) => {
+const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
   const dispatch = useDispatch<Dispatch>();
   const { isLoading } = useSelector((state: RootState) => state.voteModel);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -38,7 +33,7 @@ const WaveformPlayer = ({ audio }: OwnProps) => {
   }, [audio]);
 
   return (
-    <Grid w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)">
+    <Grid gap={2} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)">
       <GridItem colSpan={1} justifySelf="center">
         <Button
           rounded={'full'}
