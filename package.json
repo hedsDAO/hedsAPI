@@ -12,8 +12,8 @@
     "tw": "tailwindcss -i ./src/index.css -o ./build/app/output.css --watch",
     "tw-prod": "tailwindcss -i ./src/index.css -o ./build/app/output.css",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
-    "swap-prod": "cp firebase/prod.firebase.json firebase.json && cp firebase/prod.firebaseConfig.js firebase/firebaseConfig.js",
-    "swap-staging": "cp firebase/staging.firebase.json firebase.json && cp firebase/staging.firebaseConfig.js firebase/firebaseConfig.js"
+    "swap-prod": "cp ./firebase/prod.firebase.json firebase.json && cp firebase/prod.firebaseConfig.js firebase/firebaseConfig.js",
+    "swap-staging": "cp ./firebase/staging.firebase.json firebase.json && cp firebase/staging.firebaseConfig.js firebase/firebaseConfig.js"
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
