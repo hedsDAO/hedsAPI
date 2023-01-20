@@ -7,10 +7,9 @@ import { Dispatch, RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 
 // Components
-import { Box, Container, Divider, Flex, Heading, HStack, Spinner, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Container, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
 import { VoteChoices } from '../components/VoteChoices';
 import { VoteDistribution } from '../components/VoteDistribution';
-import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 import { VoteAudioTrack } from '@/common/media';
 import { TapeDescription } from '../components/TapeDescription';
 
@@ -54,22 +53,7 @@ export const TapeDetails = () => {
 
       <TapeDescription proposal={proposal} tapeImage={allTapes?.[tape]?.[id]?.image} />
 
-      {currentTrack?.media?.length && !isLoadingProposal && (
-        <Container mb={5} py={5} w="full" maxW="6xl">
-          <Heading
-            px={{ base: 0, lg: 2 }}
-            className="animate__animated animate__fadeIn"
-            fontWeight={'semibold'}
-            letterSpacing={'widest'}
-            size={['xs', 'sm']}
-            color={'gray.900'}
-          >
-            NOW PLAYING
-          </Heading>
-          <Divider my={3} borderColor="transparent" w="full" />
-          <VoteAudioTrack choice={currentTrack} />
-        </Container>
-      )}
+      {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack choice={currentTrack} />}
 
       {proposal?.signature ? (
         <>
