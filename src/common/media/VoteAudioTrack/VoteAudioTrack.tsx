@@ -16,7 +16,7 @@ const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
   const allTapes = useSelector(store?.select.tapesModel.selectAllTapes);
 
   return (
-    <Container mb={5} py={5} w="full" maxW="6xl">
+    <Container mx="auto" py={5} maxW="7xl">
       <Heading
         px={{ base: 0, lg: 2 }}
         className="animate__animated animate__fadeIn"
