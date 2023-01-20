@@ -1,5 +1,5 @@
 import { store } from '@/store';
-import { Avatar, Box, Flex, HStack, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Box, Container, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/react';
 import { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -43,50 +43,62 @@ export const VoteDistribution = () => {
   // };
 
   return (
-    <Stack my={3}>
-      {voteResults &&
-        choices &&
-        choices
-          .sort((a, b) => +round(resultsByPercentage(voteResults)[b.id], 2) - +round(resultsByPercentage(voteResults)[a.id], 2))
-          .map((choice, i) => {
-            return (
-              <Flex
-                p={2}
-                border="1px"
-                rounded="sm"
-                shadow="sm"
-                borderColor="gray.500"
-                justifyContent={'space-between'}
-                w="full"
-                minW="full"
-                gap={2}
-                alignItems="center"
-                key={choice.name}
-              >
-                <HStack w={{ base: '50%', lg: '40%' }}>
-                  <Avatar size="xs" src={choice.image} />
-                  <Text textColor={'gray.800'} fontSize={'xs'}>
-                    {choice.name}
-                  </Text>
-                </HStack>
-                <Flex alignItems={'center'} gap={2} pr={2} w={{ base: '50%', lg: '60%' }}>
-                  <Flex alignItems={'center'} w={{ base: '60%', lg: '80%' }}>
-                    {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
-                      <Fragment>
-                        <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
-                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" roundedRight="full" />
-                      </Fragment>
-                    ) : (
-                      <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" rounded="full" />
-                    )}
+    <Container pt={5} maxW="7xl">
+      <Heading
+        px={{ base: 0, lg: 2 }}
+        className="animate__animated animate__fadeIn"
+        fontWeight={'semibold'}
+        letterSpacing={'widest'}
+        size={['xs', 'sm']}
+        color={'gray.900'}
+      >
+        RESULTS
+      </Heading>
+      <Stack my={3}>
+        {voteResults &&
+          choices &&
+          choices
+            .sort((a, b) => +round(resultsByPercentage(voteResults)[b.id], 2) - +round(resultsByPercentage(voteResults)[a.id], 2))
+            .map((choice, i) => {
+              return (
+                <Flex
+                  p={2}
+                  border="1px"
+                  rounded="sm"
+                  shadow="sm"
+                  borderColor="gray.500"
+                  justifyContent={'space-between'}
+                  w="full"
+                  minW="full"
+                  gap={2}
+                  alignItems="center"
+                  key={choice.name}
+                >
+                  <HStack w={{ base: '50%', lg: '40%' }}>
+                    <Avatar size="xs" src={choice.image} />
+                    <Text textColor={'gray.800'} fontSize={'xs'}>
+                      {choice.name}
+                    </Text>
+                  </HStack>
+                  <Flex alignItems={'center'} gap={2} pr={2} w={{ base: '50%', lg: '60%' }}>
+                    <Flex alignItems={'center'} w={{ base: '60%', lg: '80%' }}>
+                      {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
+                        <Fragment>
+                          <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
+                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" roundedRight="full" />
+                        </Fragment>
+                      ) : (
+                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" rounded="full" />
+                      )}
+                    </Flex>
+                    <Text textAlign={'right'} w={{ base: '40%', lg: '20%' }} textColor={'gray.500'} fontSize={'xs'}>
+                      {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
+                    </Text>
                   </Flex>
-                  <Text textAlign={'right'} w={{ base: '40%', lg: '20%' }} textColor={'gray.500'} fontSize={'xs'}>
-                    {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
-                  </Text>
                 </Flex>
-              </Flex>
-            );
-          })}
-    </Stack>
+              );
+            })}
+      </Stack>
+    </Container>
   );
 };
