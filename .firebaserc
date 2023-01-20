@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "hedsdev",
-    "heds-v3": "hedsdev"
+    "heds-v3": "hedsdev",
+    "heds-staging-v3": "heds-staging-v3"
   }
 }

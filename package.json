@@ -11,6 +11,8 @@
     "lint": "eslint .",
     "lint:fix": "esline . --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
+    "swap-prod": "NODE_ENV=production cp prod.firebase.json firebase.json",
+    "swap-staging": "NODE_ENV=development cp staging.firebase.json firebase.json",
     "test": "jest --config=jest.config.js --runInBand --detectOpenHandles --forceExit",
     "test:watch": "jest --config=jest.config.js --watch"
   },
