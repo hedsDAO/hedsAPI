@@ -5,15 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 // Components
 import { VoteChoiceCard } from './VoteChoiceCard';
 import { Container, Flex, Grid, Heading, Stack } from '@chakra-ui/react';
-import { SubmissionCard } from './SubmissionCard';
 import { SelectedSubmission } from './SelectedSubmission';
 
 // Models
 import { Choice, ProposalState } from 'hedsvote';
 import { SubmissionChoice } from '../store/voteModel';
-
-// Styles
-import styled from 'styled-components';
 
 export const VoteChoices = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -23,10 +19,13 @@ export const VoteChoices = () => {
   const [voteOptions, setVoteOptions] = useState<SubmissionChoice[]>([]);
 
   const handleSelectedSubmission = (choice: Choice) => {
-    if (!voteOptions.find((c) => c.id === choice.id)) {
-      const choiceWithScore = { ...choice, score: 0 };
-      setVoteOptions([...voteOptions, choiceWithScore]);
+    if (proposalState === ProposalState.CLOSED) {
+      if (!voteOptions.find((c) => c.id === choice.id)) {
+        const choiceWithScore = { ...choice, score: 0 };
+        setVoteOptions([...voteOptions, choiceWithScore]);
+      }
     }
+    dispatch.voteModel.setCurrentTrack(choice);
   };
 
   const handleScoreChange = (choice: SubmissionChoice, type: string) => {
@@ -53,21 +52,35 @@ export const VoteChoices = () => {
       ) : (
         <Flex>
           <Container>
-            <StyledHeading px={{ base: 0, lg: 2 }} className="animate__animated animate__fadeIn" size={['xs', 'sm']}>
+            <Heading
+              px={{ base: 0, lg: 2 }}
+              className="animate__animated animate__fadeIn"
+              fontWeight={'semibold'}
+              letterSpacing={'widest'}
+              size={['xs', 'sm']}
+              color={'gray.900'}
+            >
               SUBMISSIONS
-            </StyledHeading>
+            </Heading>
             <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={3}>
               {choices &&
                 choices?.map((choice: Choice) => {
-                  return <SubmissionCard onClick={() => handleSelectedSubmission(choice)} key={choice.name + choice.image} choice={choice} />;
+                  return <VoteChoiceCard onClick={() => handleSelectedSubmission(choice)} key={choice.name + choice.image} choice={choice} />;
                 })}
             </Grid>
           </Container>
 
           <Container>
-            <StyledHeading px={{ base: 0, lg: 2 }} className="animate__animated animate__fadeIn" size={['xs', 'sm']}>
+            <Heading
+              px={{ base: 0, lg: 2 }}
+              className="animate__animated animate__fadeIn"
+              fontWeight={'semibold'}
+              letterSpacing={'widest'}
+              size={['xs', 'sm']}
+              color={'gray.900'}
+            >
               SELECTED SUBMISSIONS
-            </StyledHeading>
+            </Heading>
             <Stack pt={3} my={3}>
               {voteOptions.map((choice: SubmissionChoice) => {
                 return (
@@ -86,9 +99,3 @@ export const VoteChoices = () => {
     </Container>
   );
 };
-
-const StyledHeading = styled(Heading)`
-  font-weight: 'semibold';
-  letter-spacing: 'widest';
-  color: 'gray.900';
-`;
