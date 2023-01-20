@@ -15,7 +15,8 @@
       ]
     }
   ],
-  "hosting": {
+  "hosting":
+    {
     "public": "build/app",
     "headers": [
       {
