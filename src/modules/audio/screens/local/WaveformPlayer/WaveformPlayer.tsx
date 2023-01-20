@@ -6,7 +6,12 @@ import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 
-const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
+interface OwnProps {
+  audio?: File | string;
+  // handlePlay: () => void;
+}
+
+const WaveformPlayer = ({ audio }: OwnProps) => {
   const dispatch = useDispatch<Dispatch>();
   const { isLoading } = useSelector((state: RootState) => state.voteModel);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -33,8 +38,8 @@ const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
   }, [audio]);
 
   return (
-    <Grid gap={2} alignItems={'center'} templateColumns="repeat(12, 1fr)">
-      <GridItem colSpan={1}>
+    <Grid w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)">
+      <GridItem colSpan={1} justifySelf="center">
         <Button
           rounded={'full'}
           bg="transparent"

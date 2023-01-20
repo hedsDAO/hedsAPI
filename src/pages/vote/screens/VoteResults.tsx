@@ -107,7 +107,7 @@ export const VoteResults = () => {
             NOW PLAYING
           </Heading>
           <Divider my={3} borderColor="transparent" w="full" />
-          <VoteAudioTrack choice={currentTrack} />
+          {/* <VoteAudioTrack choice={currentTrack} /> */}
           <Divider my={5} borderColor="transparent" w="full" />
           <WaveformPlayer audio={currentTrack?.media} />
         </Container>

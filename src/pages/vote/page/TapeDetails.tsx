@@ -15,7 +15,6 @@ import { VoteAudioTrack } from '@/common/media';
 import { TapeDescription } from '../components/TapeDescription';
 
 export const TapeDetails = () => {
-  const [isImageLoaded, setIsImageLoaded] = useBoolean(false);
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
@@ -55,7 +54,7 @@ export const TapeDetails = () => {
 
       <TapeDescription proposal={proposal} tapeImage={allTapes?.[tape]?.[id]?.image} />
 
-      {currentTrack?.media?.length && !isLoadingProposal ? (
+      {currentTrack?.media?.length && !isLoadingProposal && (
         <Container mb={5} py={5} w="full" maxW="6xl">
           <Heading
             px={{ base: 0, lg: 2 }}
@@ -69,11 +68,7 @@ export const TapeDetails = () => {
           </Heading>
           <Divider my={3} borderColor="transparent" w="full" />
           <VoteAudioTrack choice={currentTrack} />
-          <Divider my={5} borderColor="transparent" w="full" />
-          <WaveformPlayer audio={currentTrack?.media} />
         </Container>
-      ) : (
-        <></>
       )}
 
       {proposal?.signature ? (
