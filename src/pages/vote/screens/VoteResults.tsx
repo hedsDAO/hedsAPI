@@ -7,16 +7,14 @@ import { Dispatch, RootState, store } from '@/store';
 import { formatWallet, isEmpty } from '@/utils';
 
 // Components
-import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner, Square, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner, Square, Stack, Text } from '@chakra-ui/react';
 import { VoteChoices } from '../components/VoteChoices';
 import { VoteDistribution } from '../components/VoteDistribution';
-import { VoteAudioTrack } from '@/common/media';
 
 // Models
 import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 
 export const VoteResults = () => {
-  const [isImageLoaded, setIsImageLoaded] = useBoolean(false);
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
