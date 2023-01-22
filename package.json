@@ -4,7 +4,7 @@
   "description": "heds",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack serve --mode development --open --hot --config ./webpack.config.js",
+    "start": "npm run swap-staging && NODE_ENV=development webpack serve --mode development --open --hot --config ./webpack.config.js",
     "build:prod": "npm run swap-prod && NODE_ENV=production webpack --mode production --config ./webpack.config.js",
     "build:staging": "npm run swap-staging && NODE_ENV=development webpack --mode production --config ./webpack.config.js",
     "test": "NODE_ENV=development jest --config=jest.config.js --runInBand --detectOpenHandles --forceExit",
