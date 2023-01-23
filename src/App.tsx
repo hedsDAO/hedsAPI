@@ -11,7 +11,6 @@ import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
-import firebaseConfig from '../firebase/firebaseConfig';
 
 const firebaseConfig = {
   apiKey: process.env.FB_PROD_API,
