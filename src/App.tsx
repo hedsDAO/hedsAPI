@@ -14,16 +14,15 @@ import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
 
 const firebaseConfig = {
-  apiKey: process.env.FB_DEV_API,
-  authDomain: process.env.FB_DEV_AUTHDOMAIN,
-  projectId: process.env.FB_DEV_PROJECT_ID,
-  storageBucket: process.env.FB_DEV_STORAGE,
-  messagingSenderId: process.env.FB_DEV_MSG_SENDER_ID,
-  appId: process.env.FB_DEV_APP_ID,
-  measurementId: process.env.FB_DEV_MESUREMENT_ID,
+  apiKey: process.env.FB_PROD_API,
+  authDomain: process.env.FB_PROD_AUTHDOMAIN,
+  projectId: process.env.FB_PROD_PROJECT_ID,
+  storageBucket: process.env.FB_PROD_STORAGE,
+  messagingSenderId: process.env.FB_PROD_MSG_SENDER_ID,
+  appId: process.env.FB_PROD_APP_ID,
+  measurementId: process.env.FB_PROD_MESUREMENT_ID,
 };
 
-// TODO: add conditional for dev/prod
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
