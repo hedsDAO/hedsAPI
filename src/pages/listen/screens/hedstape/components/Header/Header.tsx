@@ -1,22 +1,26 @@
-import { AudioTrack, TapeCard } from '@/common/media';
+import { AudioTrack } from '@/common/media';
 import { store } from '@/store';
-import { Button, Flex, Stack, Text, Link as ChakraLink, GridItem, Skeleton, useBoolean, Image } from '@chakra-ui/react';
+import { Button, Flex, Stack, Text, Link as ChakraLink, IconButton, useBoolean, Skeleton, Center, Image, Box } from '@chakra-ui/react';
+import { PlayIcon } from '@heroicons/react/24/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import ReactPlayer from 'react-player/lazy';
 
 const Header = () => {
-  const [isImageLoaded, setIsImageLoaded] = useBoolean();
+  const [isPlayingVideo, setIsPlayingVideo] = useBoolean();
+  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
   const opensea = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   const etherscan = useSelector(store.select.tapesModel.selectCurrentTapeEtherscanLink);
+  const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
 
   return (
     <Flex
       justifyContent={'center'}
-      alignItems={{ base: 'start', lg: 'center' }}
+      alignItems={{ base: 'start', md: 'center', lg: 'center' }}
       maxWidth={'6xl'}
       mx={'auto'}
       flexDirection={['column', 'column', 'column', 'row']}
@@ -24,29 +28,44 @@ const Header = () => {
       px={[4, 2, 3, 1]}
       py={4}
     >
-      <Stack direction={'column'}>
+      <Stack className="group ease-in-out" direction={'column'}>
         <Skeleton
-          startColor="gray.100"
-          endColor="gray.500"
-          w="full"
-          minW={{ base: 'full', lg: '20rem' }}
-          minH={{ base: 'full', lg: '20rem' }}
-          rounded="lg"
-          isLoaded={isImageLoaded}
+          mb={2}
+          display={isPlayingVideo ? 'none' : 'inherit'}
+          isLoaded={hasImageLoaded}
+          minH={{ md: '22rem', lg: '20rem' }}
+          minW={{ md: '22rem', lg: '20rem' }}
         >
-          <Image
-            onLoad={setIsImageLoaded.on}
-            className="bs-preset-1"
-            maxH={{ base: 'full', lg: '20rem' }}
-            maxW={{ base: 'full', lg: '20rem' }}
-            minH={{ base: 'full', lg: '20rem' }}
-            minW={{ base: 'full', lg: '20rem' }}
-            rounded="lg"
-            src={currentTape?.image}
-          />
+          <Center shadow="sm" className="pointer-events-auto">
+            <Image
+              height={{ md: '22rem', lg: '20rem' }}
+              width={{ md: '22rem', lg: '20rem' }}
+              onLoad={setHasImageLoaded.on}
+              _hover={{ opacity: 0 }}
+              className="group-hover:opacity-50 ease-in-out transition-all outline outline-1"
+              src={cover}
+              objectFit="cover"
+              rounded="sm"
+            />
+            <PlayIcon role="button" onClick={setIsPlayingVideo.toggle} className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10" />
+          </Center>
         </Skeleton>
+        <Box height={{ md: '22rem', lg: '20rem' }} width={{ md: '22rem', lg: '20rem' }} display={isPlayingVideo ? 'inherit' : 'none'}>
+          <ReactPlayer
+            controls
+            width="full"
+            height="full"
+            onEnded={setIsPlayingVideo.off}
+            playing={isPlayingVideo}
+            url={currentTape?.video}
+            // Disable right click
+            onContextMenu={(e: Event) => e.preventDefault()}
+            // Disable download
+            config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+          />
+        </Box>
       </Stack>
-      <Stack direction={'column'} width={'full'} alignItems={'start'} justifyContent="center">
+      <Stack direction={'column'} width={'full'} alignItems={{md: 'center', lg:'start'}} justifyContent="center">
         <Text fontWeight={'semibold'} fontSize={'4xl'}>
           {name}
         </Text>
@@ -79,7 +98,7 @@ const Header = () => {
           </Button>
         </Flex>
         {currentTape && (
-          <Flex w={{ base: 'full', lg: 'lg' }} pb={2} gap={1} direction={'column'}>
+          <Flex w={{ base: 'full', md: 'md', lg: 'lg' }} pb={{md: 8, lg:2}} gap={1} direction={'column'}>
             <AudioTrack track={currentTape?.curator?.samples?.[space]?.[tape]?.[id]} />
           </Flex>
         )}
@@ -87,7 +106,7 @@ const Header = () => {
           <Text fontWeight={'bold'} fontSize="xs">
             About The Tape
           </Text>
-          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={'md'}>
+          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={{md: 'sm', lg:'md'}}>
             {description}
           </Text>
         </Flex>

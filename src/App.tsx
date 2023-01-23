@@ -11,11 +11,20 @@ import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
-import firebaseConfig from '../firebase/firebaseConfig';
 
-const app: FirebaseApp = initializeApp(firebaseConfig);
-export const db: Firestore = getFirestore(app);;
-export const storage: FirebaseStorage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
+const firebaseConfig = {
+  apiKey: process.env.FB_PROD_API,
+  authDomain: process.env.FB_PROD_AUTHDOMAIN,
+  projectId: process.env.FB_PROD_PROJECT_ID,
+  storageBucket: process.env.FB_PROD_STORAGE,
+  messagingSenderId: process.env.FB_PROD_MSG_SENDER_ID,
+  appId: process.env.FB_PROD_APP_ID,
+  measurementId: process.env.FB_PROD_MESUREMENT_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore();
+export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 
 const App = (): JSX.Element => {
   const location = useLocation();
