@@ -36,18 +36,18 @@ const Header = () => {
           minH={{ md: '22rem', lg: '20rem' }}
           minW={{ md: '22rem', lg: '20rem' }}
         >
-          <Center shadow="sm" role="button" className="pointer-events-auto">
+          <Center shadow="sm" className="pointer-events-auto">
             <Image
               height={{ md: '22rem', lg: '20rem' }}
               width={{ md: '22rem', lg: '20rem' }}
               onLoad={setHasImageLoaded.on}
               _hover={{ opacity: 0 }}
-              className="pointer-events-auto group-hover:opacity-50 ease-in-out transition-all outline outline-1"
+              className="group-hover:opacity-50 ease-in-out transition-all outline outline-1"
               src={cover}
               objectFit="cover"
               rounded="sm"
             />
-            <PlayIcon onClick={setIsPlayingVideo.toggle} className="absolute w-[15px] h-[15px] md:h-[18px] md:w-[18px] z-10" />
+            <PlayIcon role="button" onClick={setIsPlayingVideo.toggle} className="pointer-events-auto absolute w-[15px] h-[15px] md:h-[18px] md:w-[18px] z-10" />
           </Center>
         </Skeleton>
         <Box height={{ md: '22rem', lg: '20rem' }} width={{ md: '22rem', lg: '20rem' }} display={isPlayingVideo ? 'inherit' : 'none'}>
@@ -56,7 +56,6 @@ const Header = () => {
             width="full"
             height="full"
             onEnded={setIsPlayingVideo.off}
-            onPause={setIsPlayingVideo.off}
             playing={isPlayingVideo}
             url={currentTape?.video}
             // Disable right click
