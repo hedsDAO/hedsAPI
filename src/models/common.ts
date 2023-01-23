@@ -146,7 +146,7 @@ export interface TapeData {
   space: string;
   tape: string;
   id: string;
-  video?: string;
+  video: string;
 }
 
 export interface TapeAndTrackData {
@@ -166,7 +166,7 @@ export interface TapeAndTrackData {
   space: string;
   tape: string;
   id: string;
-  video?: string;
+  video: string;
 }
 
 export interface TrackArtistMetadata {
