@@ -1,10 +1,9 @@
-import { Fragment } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
+import { Firestore, getFirestore } from 'firebase/firestore';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
-import { Footer, Navbar } from './modules/navigation';
+import { NavbarFooterWrapper } from './modules/navigation';
 import { User } from './pages/user/page/User';
 import { Tapes } from './pages/tapes/page/Tapes';
 import { Artists } from './pages/artists/page/Artists';
@@ -12,6 +11,7 @@ import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
+import firebaseConfig from '../firebase/firebaseConfig';
 
 const firebaseConfig = {
   apiKey: process.env.FB_PROD_API,
@@ -29,13 +29,11 @@ export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
 
 const App = (): JSX.Element => {
   const location = useLocation();
-
-  return location.pathname === '/' ? (
-    <Landing />
-  ) : (
-    <Fragment>
-      <Navbar />
-      <Routes>
+  const isLanding = location?.pathname === '/';
+  return (
+    <Routes>
+      <Route index element={<Landing />} />
+      <Route element={!isLanding ? <NavbarFooterWrapper /> : <></>}>
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/u/:wallet" element={<User />} />
@@ -43,9 +41,8 @@ const App = (): JSX.Element => {
         <Route path="/vote/:space/:tape/:id" element={<Vote />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/explore" element={<Explore />} />
-      </Routes>
-      <Footer />
-    </Fragment>
+      </Route>
+    </Routes>
   );
 };
 
