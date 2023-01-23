@@ -1,11 +1,12 @@
-import { AudioTrack, TapeCard } from '@/common/media';
+import { AudioTrack } from '@/common/media';
 import { store } from '@/store';
-import { Button, Flex, Stack, Text, Link as ChakraLink, GridItem, Skeleton, useBoolean, Image } from '@chakra-ui/react';
+import { Button, Flex, Stack, Text, Link as ChakraLink } from '@chakra-ui/react';
+import { PlayIcon } from '@heroicons/react/24/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import ReactPlayer from 'react-player/lazy';
 
 const Header = () => {
-  const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
@@ -25,26 +26,18 @@ const Header = () => {
       py={4}
     >
       <Stack direction={'column'}>
-        <Skeleton
-          startColor="gray.100"
-          endColor="gray.500"
-          w="full"
-          minW={{ base: 'full', lg: '20rem' }}
-          minH={{ base: 'full', lg: '20rem' }}
-          rounded="lg"
-          isLoaded={isImageLoaded}
-        >
-          <Image
-            onLoad={setIsImageLoaded.on}
-            className="bs-preset-1"
-            maxH={{ base: 'full', lg: '20rem' }}
-            maxW={{ base: 'full', lg: '20rem' }}
-            minH={{ base: 'full', lg: '20rem' }}
-            minW={{ base: 'full', lg: '20rem' }}
-            rounded="lg"
-            src={currentTape?.image}
-          />
-        </Skeleton>
+        <ReactPlayer
+          controls
+          playing
+          width="320px"
+          height="320px"
+          url={currentTape?.video}
+          light={currentTape?.image}
+          playIcon={<PlayIcon style={{ height: '50px', width: '50px', color: '#FAF9F6'}} />}
+          // Disable right click
+          onContextMenu={(e: Event) => e.preventDefault()}
+          // Disable download
+          config={{ file: { attributes: { controlsList: 'nodownload' }}}} />
       </Stack>
       <Stack direction={'column'} width={'full'} alignItems={'start'} justifyContent="center">
         <Text fontWeight={'semibold'} fontSize={'4xl'}>
