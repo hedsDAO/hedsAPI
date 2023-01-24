@@ -1,7 +1,7 @@
 import { TrackMetadata, TrackType } from '@/models/common';
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
-import { MAX_FILE_SIZE, MAX_LENGTH, VALID_FILE_TYPES, MIN_LENGTH, SUB_ART_FUNCTION, UNPIN_HASH_FUNCTION, PINATA_URL_PREFIX } from './constants';
+import { MAX_FILE_SIZE, MAX_LENGTH, VALID_FILE_TYPES, MIN_LENGTH, SUB_ART_FUNCTION, PINATA_URL_PREFIX } from './constants';
 import { computeLength, formatSubId, handlePinataMetadata, uploadFileToPinata } from '@/utils';
 import axios from 'axios';
 
@@ -101,8 +101,8 @@ export const submitModel = createModel<RootModel>()({
       const subImageHash = subImage.split(PINATA_URL_PREFIX)[1];
       const audioHash = audio.split(PINATA_URL_PREFIX)[1];
       try {
-        await axios.delete(`${UNPIN_HASH_FUNCTION}/${subImageHash}`);
-        await axios.delete(`${UNPIN_HASH_FUNCTION}/${audioHash}`);
+        await axios.delete(`${SUB_ART_FUNCTION}/${subImageHash}`);
+        await axios.delete(`${SUB_ART_FUNCTION}/${audioHash}`);
         this.setIsLoading(false);
         dispatch.userModel.deletePreviousSubmission([sub, wallet]);
         this.clearModalState();

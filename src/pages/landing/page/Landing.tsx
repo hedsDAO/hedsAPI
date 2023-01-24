@@ -1,5 +1,6 @@
-import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax';
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
@@ -8,10 +9,13 @@ import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
 import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
+import { LogoTransform } from '@/pages/landing/components/LogoTransform';
 
 export const Landing = () => {
+  const parallaxRef = useRef<IParallax>(null);
+
   return (
-    <Parallax className="top-div" pages={5} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }}>
+    <Parallax className="top-div" pages={5} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>
       <ParallaxLayer
         offset={0}
         style={{
@@ -50,6 +54,10 @@ export const Landing = () => {
         }}
       />
 
+      <ParallaxLayer offset={0} speed={1} sticky={{ start: 0, end: 5 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
+        <LogoTransform parallaxRef={parallaxRef} />
+      </ParallaxLayer>
+
       <ParallaxLayer
         offset={0}
         speed={1}
@@ -63,8 +71,16 @@ export const Landing = () => {
           color: 'white',
         }}
       >
-        <div style={{ width: '50%', textAlign: 'center' }}>
-          <img src="/hedslogo.png" />
+        <div
+          style={{
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: '20rem',
+          }}
+        >
           <FadeOutDown text={'WELCOME TO THE FUTURE OF CURATION.'} />
         </div>
       </ParallaxLayer>
