@@ -11,3 +11,4 @@ node_modules/
 # env variables
 .env
 service_key.json
+lib/service_key.json
