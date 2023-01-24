@@ -12,10 +12,10 @@ interface OwnProps {
 export const GridItemImage: FC<OwnProps> = ({ num, text, icon }) => {
   return (
     <Center borderColor="black" border="1px" borderRadius="0.3rem" borderStyle="dotted">
-      <GridItem>
+      <GridItem padding="3px">
         <VStack textAlign="center">
           <>
-            <Number inputNum={num} color="black" size="3rem" />
+            <Number inputNum={num} color="black" size={['2rem', null, '3rem', null, null]} />
             {text}
             <Icon as={icon} boxSize={[10, null, 20, null, null]} />
           </>

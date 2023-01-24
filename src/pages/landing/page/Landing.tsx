@@ -208,7 +208,7 @@ export const Landing = () => {
         <Grid
           h={['80%', null, '100%', null, null]}
           width="100%"
-          padding={['2rem', null, '5rem', null, null]}
+          padding={['1rem', null, '5rem', null, null]}
           templateRows="repeat(2, 1fr)"
           templateColumns="repeat(3, 1fr)"
           gap={[1, 2, null, 4, null]}

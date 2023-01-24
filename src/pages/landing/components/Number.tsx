@@ -7,7 +7,7 @@ interface OwnProps {
   inputNum: number;
   dollar?: boolean;
   color?: string;
-  size?: string;
+  size?: string | Array<string>;
 }
 
 export const Number = ({ inputNum, dollar, color = 'white', size = '8rem' }: OwnProps) => {
