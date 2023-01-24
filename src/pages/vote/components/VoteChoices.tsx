@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { VoteChoiceCard } from './VoteChoiceCard';
 import { Container, Flex, Grid, Heading, Stack } from '@chakra-ui/react';
 import { SelectedSubmission } from './SelectedSubmission';
+import { VoteDistribution } from '../components/VoteDistribution';
 
 // Models
 import { Choice, ProposalState } from 'hedsvote';
@@ -42,24 +43,7 @@ export const VoteChoices = () => {
   return (
     <Container mx="auto" maxW="7xl">
       {proposalState === ProposalState.CLOSED ? (
-        <Flex direction="column">
-          <Heading
-            px={{ base: 0, lg: 2 }}
-            className="animate__animated animate__fadeIn"
-            fontWeight={'semibold'}
-            letterSpacing={'widest'}
-            size={['xs', 'sm']}
-            color={'gray.900'}
-          >
-            SUBMISSIONS
-          </Heading>
-          <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(10, 1fr)' }} gap={3}>
-            {choices &&
-              choices?.map((choice: Choice) => {
-                return <VoteChoiceCard onClick={() => dispatch.voteModel.setCurrentTrack(choice)} key={choice.name + choice.image} choice={choice} />;
-              })}
-          </Grid>
-        </Flex>
+        <VoteDistribution handleScoreChange={handleSelectedSubmission} />
       ) : (
         <Flex>
           <Container>

@@ -9,12 +9,8 @@ import { isEmpty } from '@/utils';
 // Components
 import { Box, Container, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
 import { VoteChoices } from '../components/VoteChoices';
-import { VoteDistribution } from '../components/VoteDistribution';
 import { VoteAudioTrack } from '@/common/media';
 import { TapeDescription } from '../components/TapeDescription';
-
-// Models
-import { ProposalState } from 'hedsvote';
 
 export const TapeDetails = () => {
   const { space, tape, id } = useParams();
@@ -32,6 +28,7 @@ export const TapeDetails = () => {
     if (space && tape && id && allTapes?.[tape]?.[id]?.proposalId && !isLoadingProposal) {
       const currentTape = allTapes[tape][id];
       dispatch.voteModel.getProposal(currentTape?.proposalId);
+      // dispatch.tapesModel.
     }
   }, [space, tape, id, allTapes]);
 
@@ -59,16 +56,13 @@ export const TapeDetails = () => {
       {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack choice={currentTrack} />}
 
       {proposal?.signature ? (
-        <>
-          <VoteChoices />
-          <Divider py={10} borderColor="gray.300" w="8xl" mx="auto" />
-        </>
+        <VoteChoices />
       ) : (
+        // <Divider py={10} borderColor="gray.300" w="8xl" mx="auto" />
         <Flex minH="50vh" pt="5" justifyContent={'center'} align="center">
           <Spinner size={'lg'} />
         </Flex>
       )}
-      {proposal?.votes && proposal?.state === ProposalState.CLOSED && <VoteDistribution />}
     </Box>
   );
 };

@@ -146,7 +146,7 @@ export const VoteResults = () => {
           >
             RESULTS
           </Heading>
-          <VoteDistribution />
+          {/* <VoteDistribution /> */}
         </Container>
       )}
     </Box>
