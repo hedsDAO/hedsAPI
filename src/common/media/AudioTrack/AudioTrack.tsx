@@ -56,6 +56,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
   const addToQueue = async () => {
     dispatch.audioModel.pushTrackToQueue(track);
   };
+
   return (
     <Flex
       p={2}
