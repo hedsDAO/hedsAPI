@@ -12,6 +12,7 @@ module.exports = {
     '^@models/(.*)$': '<rootDir>/src/models/$1',
     '^@modals/modals/(.*)$': '<rootDir>/src/modules/modals/$1',
     '^@modals/navigation/(.*)$': '<rootDir>/src/modules/navigation/$1',
+    '^@public/(.*)$': '<rootDir>/src/public/$1',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy',
   },
   testEnvironment: 'jsdom',

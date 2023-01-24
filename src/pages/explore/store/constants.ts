@@ -36,7 +36,7 @@ export const HEDS_IMG_PROPS = {
   position: 'absolute',
   objectFit: 'contain',
   style: { filter: 'invert(0.75)' },
-  src: '/heddot.png',
+  src: '@public/heddot.png',
 } as ChakraProps;
 
 /**

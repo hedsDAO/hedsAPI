@@ -17,7 +17,8 @@ module.exports = {
       '@utils': path.resolve(__dirname, 'src/utils/'),
       '@models': path.resolve(__dirname, 'src/models/'),
       '@modules/modals': path.resolve(__dirname, 'src/modules/modals'),
-      '@modules/navigation': path.resolve(__dirname, 'src/modules/navigation')
+      '@modules/navigation': path.resolve(__dirname, 'src/modules/navigation'),
+      '@public': path.resolve(__dirname, 'src/public'),
     },
   },
   output: {
