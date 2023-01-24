@@ -85,20 +85,25 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   border="1px"
                   rounded="sm"
                   shadow="sm"
-                  borderColor="gray.500"
-                  backgroundColor={selectedTracks.has(choice.walletId) ? '#edc24a' : 'white'}
+                  borderColor={selectedTracks.has(choice.walletId) ? 'purple.500' : 'gray.500'}
+                  backgroundColor={selectedTracks.has(choice.walletId) ? 'purple.200' : 'white'}
                   justifyContent={'space-between'}
                   w="full"
                   minW="full"
                   gap={2}
                   alignItems="center"
                   key={choice.name}
+                  borderRadius="sm"
                   onClick={() => handleScoreChange(choice)}
-                  _hover={{ cursor: 'pointer' }}
+                  _hover={
+                    selectedTracks.has(choice.walletId)
+                      ? { borderColor: 'purple.800', bg: 'purple.100', cursor: 'pointer' }
+                      : { borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }
+                  }
                 >
                   <HStack w={{ base: '50%', lg: '40%' }}>
                     <Avatar size="xs" src={choice.image} />
-                    <Text textColor={'gray.800'} fontSize={'xs'}>
+                    <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'xs'}>
                       {choice.name}
                     </Text>
                   </HStack>
@@ -113,7 +118,12 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                         <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" rounded="full" />
                       )}
                     </Flex>
-                    <Text textAlign={'right'} w={{ base: '40%', lg: '20%' }} textColor={'gray.500'} fontSize={'xs'}>
+                    <Text
+                      textAlign={'right'}
+                      w={{ base: '40%', lg: '20%' }}
+                      textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
+                      fontSize={'xs'}
+                    >
                       {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
                     </Text>
                   </Flex>
