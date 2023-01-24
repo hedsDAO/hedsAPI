@@ -13,18 +13,18 @@ import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
 
 const firebaseConfig = {
-  apiKey: process.env.FB_PROD_API,
-  authDomain: process.env.FB_PROD_AUTHDOMAIN,
-  projectId: process.env.FB_PROD_PROJECT_ID,
-  storageBucket: process.env.FB_PROD_STORAGE,
-  messagingSenderId: process.env.FB_PROD_MSG_SENDER_ID,
-  appId: process.env.FB_PROD_APP_ID,
-  measurementId: process.env.FB_PROD_MESUREMENT_ID,
+  apiKey: 'AIzaSyC2i_t3Bw5_dlsYRlXgRFXqjPdsOYgafUQ',
+  authDomain: 'heds-104d8.firebaseapp.com',
+  projectId: 'heds-104d8',
+  storageBucket: 'heds-104d8.appspot.com',
+  messagingSenderId: '559705662876',
+  appId: '1:559705662876:web:08251d640d268052479459',
+  measurementId: 'G-R2DC94DDT0',
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
-export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
+export const storage = getStorage(app, 'gs://heds-104d8.appspot.com');
 
 const App = (): JSX.Element => {
   const location = useLocation();
