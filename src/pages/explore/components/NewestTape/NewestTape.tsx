@@ -11,9 +11,9 @@ const NewestTape = () => {
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
   return (
     <Box data-testid="explore-newest-tape" w="full">
-      <Container px={{ base: 10, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
+      <Container px={{ base: 8, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'center'}>
-          <Text fontFamily={'"Space Mono", monospace'} color={'gray.500'} letterSpacing={'tight'} fontSize={{ base: 'xl', lg: '5xl' }} fontWeight={'normal'}>
+          <Text fontFamily={'"Space Mono", monospace'} color={'gray.500'} letterSpacing={'tight'} fontSize={{ base: '3xl', lg: '5xl' }} fontWeight={'normal'}>
             {NEWEST_TAPE_HEADING}
           </Text>
           <Flex justifyContent={'space-evenly'} pt={14} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
