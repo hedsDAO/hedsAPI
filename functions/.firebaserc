@@ -1,7 +1,6 @@
 {
   "projects": {
-    "v2": "heds-34ac0",
-    "v3": "hedsdev"
+    "heds": "heds-104d8"
   },
   "targets": {},
   "etags": {}

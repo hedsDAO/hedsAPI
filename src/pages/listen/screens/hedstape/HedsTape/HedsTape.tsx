@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Header, Timeline, Tracks } from '@/pages/listen/screens/hedstape/components';
+import { Header, Timeline, Tracks, ViewTapesButton } from '@/pages/listen/screens/hedstape/components';
 import { Dispatch, store } from '@/store';
 import { Container, Divider, Flex } from '@chakra-ui/react';
 
@@ -14,9 +14,8 @@ export const HedsTape = () => {
   }, []);
   return (
     <Container minW="full" px={{ base: 4, lg: 2 }}>
-      <Flex mx="auto" px={0} maxW="5xl" py={3}>
-        <Header />
-      </Flex>
+      <ViewTapesButton />
+      <Header />
       <Divider my={5} />
       {timeline && <Timeline />}
       <Divider my={5} />

@@ -1,10 +1,9 @@
-import { Fragment } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
+import { Firestore, getFirestore } from 'firebase/firestore';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
-import { Footer, Navbar } from './modules/navigation';
+import { NavbarFooterWrapper } from './modules/navigation';
 import { User } from './pages/user/page/User';
 import { Tapes } from './pages/tapes/page/Tapes';
 import { Artists } from './pages/artists/page/Artists';
@@ -14,29 +13,26 @@ import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
 
 const firebaseConfig = {
-  apiKey: process.env.FB_DEV_API,
-  authDomain: process.env.FB_DEV_AUTHDOMAIN,
-  projectId: process.env.FB_DEV_PROJECT_ID,
-  storageBucket: process.env.FB_DEV_STORAGE,
-  messagingSenderId: process.env.FB_DEV_MSG_SENDER_ID,
-  appId: process.env.FB_DEV_APP_ID,
-  measurementId: process.env.FB_DEV_MESUREMENT_ID,
+  apiKey: 'AIzaSyC2i_t3Bw5_dlsYRlXgRFXqjPdsOYgafUQ',
+  authDomain: 'heds-104d8.firebaseapp.com',
+  projectId: 'heds-104d8',
+  storageBucket: 'heds-104d8.appspot.com',
+  messagingSenderId: '559705662876',
+  appId: '1:559705662876:web:08251d640d268052479459',
+  measurementId: 'G-R2DC94DDT0',
 };
 
-// TODO: add conditional for dev/prod
-const app = initializeApp(process.env.NODE_ENV === 'development' && firebaseConfig);
+const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
-export const storage = getStorage(app, `gs://${process.env.FB_PROD_STORAGE}`);
+export const storage = getStorage(app, 'gs://heds-104d8.appspot.com');
 
 const App = (): JSX.Element => {
   const location = useLocation();
-
-  return location.pathname === '/' ? (
-    <Landing />
-  ) : (
-    <Fragment>
-      <Navbar />
-      <Routes>
+  const isLanding = location?.pathname === '/';
+  return (
+    <Routes>
+      <Route index element={<Landing />} />
+      <Route element={!isLanding ? <NavbarFooterWrapper /> : <></>}>
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/u/:wallet" element={<User />} />
@@ -44,9 +40,8 @@ const App = (): JSX.Element => {
         <Route path="/vote/:space/:tape/:id" element={<Vote />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/explore" element={<Explore />} />
-      </Routes>
-      <Footer />
-    </Fragment>
+      </Route>
+    </Routes>
   );
 };
 

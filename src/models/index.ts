@@ -14,9 +14,9 @@ import { modalModel } from '@/modules/modals/store/modalModel';
 import { submitModel } from '@/modules/modals/screens/submit/models/submitModel';
 import { settingsModel } from '@/modules/modals/screens/settings/models/settingsModel';
 import { mintModel } from '@/modules/modals/screens/mint/models/mintModel';
-import { twitterModel } from '@/modules/modals/screens/twitter/models/TwitterModel';
+import { twitterModel } from '@/modules/modals/screens/twitter/models/twitterModel';
 import { sampleModel } from '@/modules/modals/screens/sample/models/sampleModel';
-import { nameModel } from '@modules/modals/screens/name/models/nameModel';
+import { nameModel } from '@/modules/modals/screens/name/models/nameModel';
 
 export interface RootModel extends Models<RootModel> {
   navigationModel: typeof navigationModel;
