@@ -1,9 +1,20 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { calculateUserVotingPower, Choice, createClient, Proposal, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
+import { calculateUserVotingPower, Choice, createClient, Proposal, quadratic, QuadraticVote, SingleChoiceVote, VoteObject } from 'hedsvote';
 
 export interface SubmissionChoice extends Choice {
   score: number;
+}
+
+export enum ProposalState {
+  PENDING = 0,
+  OPEN = 1,
+  CLOSED = 2,
+}
+
+export enum VoteMethod {
+  QUADRATIC = 0,
+  SINGLE_CHOICE = 1,
 }
 
 export interface VoteModelState {
