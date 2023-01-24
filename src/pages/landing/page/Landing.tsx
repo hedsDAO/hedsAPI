@@ -204,14 +204,21 @@ export const Landing = () => {
       </ParallaxLayer>
 
       {/* Section 5 */}
-      <ParallaxLayer offset={3}>
-        <Grid h="100%" padding="5rem" templateRows="repeat(2, 1fr)" templateColumns="repeat(3, 1fr)" gap={4}>
+      <ParallaxLayer offset={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Grid
+          h="100%"
+          width={[null, '100vw', null, null, null]}
+          padding="5rem"
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(3, 1fr)"
+          gap={[1, 2, null, 4, null]}
+        >
           <GridItemImage num={207} text="unique minters" icon={IconUsers} />
           <GridItemImage num={59} text="curated artists" icon={IconHeadphones} />
           <GridItemImage num={162} text="unique submissions" icon={IconIcons} />
           <GridItemImage num={734} text="tapes minted" icon={IconDeviceAudioTape} />
           <GridItemImage num={231} text="verified wallets" icon={IconWallet} />
-          <GridItemImage num={438} text="total submission" icon={IconTicket} />
+          <GridItemImage num={438} text="total submissions" icon={IconTicket} />
         </Grid>
       </ParallaxLayer>
 
