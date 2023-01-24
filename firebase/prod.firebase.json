@@ -1,7 +1,7 @@
 {
-  "hosting": 
+  "hosting":
     {
-    "target": "staging",
+    "target": "prod",
     "public": "build/app",
     "headers": [
       {

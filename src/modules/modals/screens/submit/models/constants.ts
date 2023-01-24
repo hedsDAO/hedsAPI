@@ -6,11 +6,8 @@
  * @const PINATA_URL_PREFIX : heds prefix for pinata gateway.
  */
 
-export const GENERATE_ID_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/generateId';
-export const SUB_ART_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/newSubmissionArt';
-export const PIN_LINK_TO_GATEWAY_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/pinLinkToGateway';
+export const SUB_ART_FUNCTION = 'https://us-central1-heds-104d8.cloudfunctions.net/newSubmissionArt';
 export const PINATA_URL_PREFIX = 'https://www.heds.cloud/ipfs/';
-export const UNPIN_HASH_FUNCTION = 'https://us-central1-hedsdev.cloudfunctions.net/newSubmissionArt';
 
 /**
  * @component <UserAuthWrapper/>
