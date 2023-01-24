@@ -206,9 +206,9 @@ export const Landing = () => {
       {/* Section 5 */}
       <ParallaxLayer offset={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Grid
-          h="100%"
-          width={[null, '100vw', null, null, null]}
-          padding="5rem"
+          h={['80%', null, '100%', null, null]}
+          width="100%"
+          padding={['2rem', null, '5rem', null, null]}
           templateRows="repeat(2, 1fr)"
           templateColumns="repeat(3, 1fr)"
           gap={[1, 2, null, 4, null]}
