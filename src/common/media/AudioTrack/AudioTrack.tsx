@@ -90,22 +90,17 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
         </Center>
       </Skeleton>
       <Flex opacity={track?.public ? '' : '60%'} direction={'column'} justifyContent={'space-evenly'} ml={'12px'}>
-        <Flex mb={0.5} gap={1} alignItems={'baseline'}>
-          {(track?.type === TrackType.TRACK || track?.type >= TrackType.COLLAB) && (
-            <Heading className="font-sans" whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'sm'}>
-              {track.no}.
-            </Heading>
-          )}
-          <Heading className="truncate md:max-w-[30ch] font-sans max-w-[20ch]" fontSize={'sm'}>
-            {track.type === TrackType.COLLAB
-              ? track.track
-              : track.type === TrackType.SUBMISSION
-              ? track.subId
-              : track.type === TrackType.SAMPLE
-              ? track.track
-              : formatSubId(track.track)}
+        {track.wallet === currentWallet ? (
+          <Heading fontWeight={'semibold'} fontSize="sm" color={'gray.800'}>
+            <>{track.artist}</>
           </Heading>
-        </Flex>
+        ) : (
+          <Link className="text-base" to={`/u/${track.wallet}`}>
+            <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
+              {track.artist}
+            </Heading>
+          </Link>
+        )}
         {pathname.includes('/listen') ? (
           <Text className="font-serif" fontSize="xs" color="blue.900">
             {track.album}
@@ -117,17 +112,22 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
             </Text>
           </Link>
         )}
-        {track.wallet === currentWallet ? (
-          <Text fontWeight={'light'} fontSize="xs" color={'gray.800'}>
-            <>{track.artist}</>
-          </Text>
-        ) : (
-          <Link className="text-xs" to={`/u/${track.wallet}`}>
-            <Text className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
-              {track.artist}
+        <Flex gap={1} alignItems={'baseline'}>
+          {(track?.type === TrackType.TRACK || track?.type >= TrackType.COLLAB) && (
+            <Text className="font-sans" whiteSpace={'nowrap'} letterSpacing={'tight'} fontSize={'xs'}>
+              {track.no}.
             </Text>
-          </Link>
-        )}
+          )}
+          <Text className="truncate md:max-w-[30ch] font-sans max-w-[20ch]" fontSize={'xs'}>
+            {track.type === TrackType.COLLAB
+              ? track.track
+              : track.type === TrackType.SUBMISSION
+              ? track.subId
+              : track.type === TrackType.SAMPLE
+              ? track.track
+              : formatSubId(track.track)}
+          </Text>
+        </Flex>
       </Flex>
       {connectedWallet && (isTapeVoteComplete || track.type === TrackType.COLLAB) && (
         <Stack alignItems={'end'} ml="auto">

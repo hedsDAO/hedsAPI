@@ -25,9 +25,14 @@ export const ALL_TAPE_SLUGS = SLUG_TANK.map((_: null, i: number) => 'hedstape-' 
 export const MAX_TOP_ARTISTS = 4;
 export const HEDS_IMG_PROPS = {
   opacity: '50%',
+  zIndex: '10',
   top: '24',
   left: '72%',
   maxH: '50rem',
+  display: {
+    lg: 'block',
+    base: 'none',
+  },
   position: 'absolute',
   objectFit: 'contain',
   style: { filter: 'invert(0.75)' },
@@ -46,6 +51,7 @@ export const HEDS_SOLO_HEADING = 'introducing';
 export const HEDS_SOLO_TITLE = 'hedSOLO';
 export const HEDS_SOLO_DESC = 'a new look into the worldwide heds community, featuring solo releases from artists representing the future of music.';
 export const HEDS_SOLO_ARTIST = '0xd4a1b8f85e4df6afb1c66e54250ae9e216fc388d';
+export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/dabow-wanna-be';
 
 /**
  * @component <NewestTape/>
