@@ -4,6 +4,7 @@ import { Dispatch, store } from '@/store';
 import { Box, Divider, Image } from '@chakra-ui/react';
 import { ActiveListings, CarouselWrapper, HedsSolo, MostAppearances, NewestTape, Stats } from '@/pages/explore/components';
 import { HEDS_IMG_PROPS, MAX_TOP_ARTISTS } from '@/pages/explore/store/constants';
+import hedImage from '../../../public/heddot.png';
 
 export const Explore = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -16,7 +17,7 @@ export const Explore = () => {
   return (
     <Box>
       <CarouselWrapper slides={[<HedsSolo />, <NewestTape />]} />
-      <Image {...HEDS_IMG_PROPS} />
+      <Image src={hedImage} {...HEDS_IMG_PROPS} />
       <MostAppearances />
       <Divider mx="auto" w="80%" my={5} />
       <Stats />
