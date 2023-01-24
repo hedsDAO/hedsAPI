@@ -74,6 +74,9 @@ export const tapesModel = createModel<RootModel>()({
         else return false;
       });
     }),
+    selectCurrentVoteTape: hasProps(function (models, [tape, id]) {
+      return slice((tapesModel) => tapesModel?.allTapes?.[tape]?.[id]);
+    }),
 
     // const now = DateTime.now().setZone('utc').toMillis();
 
