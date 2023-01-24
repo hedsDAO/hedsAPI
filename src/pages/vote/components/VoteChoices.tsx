@@ -9,8 +9,8 @@ import { SelectedSubmission } from './SelectedSubmission';
 import { VoteDistribution } from '../components/VoteDistribution';
 
 // Models
-import { Choice, ProposalState } from 'hedsvote';
-import { SubmissionChoice } from '../store/voteModel';
+import { Choice } from 'hedsvote';
+import { SubmissionChoice, ProposalState } from '../store/voteModel';
 
 export const VoteChoices = () => {
   const dispatch = useDispatch<Dispatch>();
