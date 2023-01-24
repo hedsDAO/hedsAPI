@@ -102,8 +102,8 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   }
                 >
                   <HStack w={{ base: '50%', lg: '40%' }}>
-                    <Avatar size="sm" src={choice.image} />
-                    <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'sm'}>
+                    <Avatar size="xs" src={choice.image} />
+                    <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'xs'}>
                       {choice.name}
                     </Text>
                   </HStack>
@@ -112,17 +112,17 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                       {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
                         <Fragment>
                           <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
-                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" roundedRight="full" />
+                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" roundedRight="full" />
                         </Fragment>
                       ) : (
-                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" rounded="full" />
+                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" rounded="full" />
                       )}
                     </Flex>
                     <Text
                       textAlign={'right'}
                       w={{ base: '40%', lg: '20%' }}
                       textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
-                      fontSize={'sm'}
+                      fontSize={'xs'}
                     >
                       {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
                     </Text>
