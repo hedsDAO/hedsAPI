@@ -3,9 +3,7 @@ import { Avatar, Box, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/reac
 import { Fragment, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-
 import { Choice } from 'hedsvote';
-
 // export function percentageOfTotal(i: any, values: any, total: any) {
 //   const reducedTotal: any = total.reduce((a: any, b: any) => a + b, 0);
 //   const percent = (values[i] / reducedTotal) * 100;
@@ -14,22 +12,18 @@ import { Choice } from 'hedsvote';
 // export function quadraticMath(i: any, choice: any, vp: any) {
 //   return Math.sqrt((percentageOfTotal(i + 1, choice, Object.values(choice)) / 100) * vp);
 // }
-
 interface OwnProps {
   handleScoreChange: (choice: Choice) => void;
 }
-
 export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
   const { tape, id } = useParams();
   const [selectedTracks, setSelectedTracks] = useState(new Set([]));
-
   const [voteData, setVoteData] = useState<any>();
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const voteResults = useSelector(store.select.voteModel.selectQuadraticVoteScores);
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
-
   function round(num: number, decimalPlaces = 0): number {
     if (num < 0) return -round(-num, decimalPlaces);
     const p = Math.pow(10, decimalPlaces);
@@ -42,7 +36,6 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
       return (votes / totalVoteBalance) * 100;
     });
   };
-
   // const resultsByUserBalance = () => {
   //   const results = choices
   //     // @ts-ignore
@@ -52,15 +45,12 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
   //     .map((sqrt: number) => sqrt * sqrt);
   //   return results;
   // };
-
   useEffect(() => {
     if (currentTape) {
       setSelectedTracks(new Set(currentTape.tracks));
     }
   }, [tape, id]);
 
-  console.log(selectedTracks);
-  console.log(choices);
   return (
     <>
       <Heading
@@ -102,8 +92,8 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   }
                 >
                   <HStack w={{ base: '50%', lg: '40%' }}>
-                    <Avatar size="xs" src={choice.image} />
-                    <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'xs'}>
+                    <Avatar size="sm" src={choice.image} />
+                    <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'sm'}>
                       {choice.name}
                     </Text>
                   </HStack>
@@ -112,17 +102,17 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                       {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
                         <Fragment>
                           <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
-                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" roundedRight="full" />
+                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" roundedRight="full" />
                         </Fragment>
                       ) : (
-                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.300" h="2" rounded="full" />
+                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" rounded="full" />
                       )}
                     </Flex>
                     <Text
                       textAlign={'right'}
                       w={{ base: '40%', lg: '20%' }}
                       textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
-                      fontSize={'xs'}
+                      fontSize={'sm'}
                     >
                       {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
                     </Text>
