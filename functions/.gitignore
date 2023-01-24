@@ -1,6 +1,8 @@
 # Compiled JavaScript files
+lib/**/*.json
 lib/**/*.js
 lib/**/*.js.map
+
 
 # TypeScript v1 declaration files
 typings/
@@ -11,4 +13,3 @@ node_modules/
 # env variables
 .env
 service_key.json
-lib/service_key.json
