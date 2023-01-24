@@ -1,7 +1,7 @@
 import { store } from '@/store';
 import { GridItem, Image, Skeleton, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import DEFAULT_BANNER_PICTURE from '/public/banner.jpg';
+import DEFAULT_BANNER_PICTURE from '../../../../public/banner.jpg';
 
 const Banner = () => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();

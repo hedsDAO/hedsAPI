@@ -4,7 +4,7 @@
   "description": "heds",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development --open --hot --config ./webpack.config.js",
+    "start": "firebase use hedsdev && npm run swap-dev && webpack serve --mode development --open --hot --config ./webpack.config.js",
     "build:prod": "npm run swap-prod && NODE_ENV=production webpack --mode production --config ./webpack.config.js",
     "build:staging": "npm run swap-staging && NODE_ENV=production webpack --mode production --config ./webpack.config.js",
     "test": "NODE_ENV=development jest --config=jest.config.js --runInBand --detectOpenHandles --forceExit",
@@ -12,8 +12,9 @@
     "tw": "tailwindcss -i ./src/index.css -o ./build/app/output.css --watch",
     "tw-prod": "tailwindcss -i ./src/index.css -o ./build/app/output.css",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
-    "swap-prod": "cp ./firebase/prod.firebase.json firebase.json",
-    "swap-staging": "cp ./firebase/staging.firebase.json firebase.json"
+    "swap-prod": "cp ./firebase/prod.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts firebaseConfig.ts",
+    "swap-staging": "cp ./firebase/staging.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts firebaseConfig.ts",
+    "swap-dev": "cp ./firebase/dev.firebaseConfig.ts firebaseConfig.ts"
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
