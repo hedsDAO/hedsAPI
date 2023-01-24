@@ -28,7 +28,6 @@ export const TapeDetails = () => {
     if (space && tape && id && allTapes?.[tape]?.[id]?.proposalId && !isLoadingProposal) {
       const currentTape = allTapes[tape][id];
       dispatch.voteModel.getProposal(currentTape?.proposalId);
-      // dispatch.tapesModel.
     }
   }, [space, tape, id, allTapes]);
 

@@ -1,7 +1,8 @@
 import { store } from '@/store';
-import { Avatar, Box, Container, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/react';
-import { Fragment, useState } from 'react';
+import { Avatar, Box, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/react';
+import { Fragment, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { Choice } from 'hedsvote';
 
@@ -19,11 +20,15 @@ interface OwnProps {
 }
 
 export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
+  const { tape, id } = useParams();
+  const [selectedTracks, setSelectedTracks] = useState(new Set([]));
+
   const [voteData, setVoteData] = useState<any>();
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const voteResults = useSelector(store.select.voteModel.selectQuadraticVoteScores);
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
+  const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
 
   function round(num: number, decimalPlaces = 0): number {
     if (num < 0) return -round(-num, decimalPlaces);
@@ -48,6 +53,14 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
   //   return results;
   // };
 
+  useEffect(() => {
+    if (currentTape) {
+      setSelectedTracks(new Set(currentTape.tracks));
+    }
+  }, [tape, id]);
+
+  console.log(selectedTracks);
+  console.log(choices);
   return (
     <>
       <Heading
@@ -73,6 +86,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   rounded="sm"
                   shadow="sm"
                   borderColor="gray.500"
+                  backgroundColor={selectedTracks.has(choice.walletId) ? '#edc24a' : 'white'}
                   justifyContent={'space-between'}
                   w="full"
                   minW="full"
@@ -80,6 +94,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   alignItems="center"
                   key={choice.name}
                   onClick={() => handleScoreChange(choice)}
+                  _hover={{ cursor: 'pointer' }}
                 >
                   <HStack w={{ base: '50%', lg: '40%' }}>
                     <Avatar size="xs" src={choice.image} />
