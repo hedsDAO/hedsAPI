@@ -11,20 +11,11 @@ import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
 import { Landing } from './pages/landing/page/Landing';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyC2i_t3Bw5_dlsYRlXgRFXqjPdsOYgafUQ',
-  authDomain: 'heds-104d8.firebaseapp.com',
-  projectId: 'heds-104d8',
-  storageBucket: 'heds-104d8.appspot.com',
-  messagingSenderId: '559705662876',
-  appId: '1:559705662876:web:08251d640d268052479459',
-  measurementId: 'G-R2DC94DDT0',
-};
+import firebaseConfig from './firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
-export const storage = getStorage(app, 'gs://heds-104d8.appspot.com');
+export const storage = getStorage(app, firebaseConfig.storageBucket);
 
 const App = (): JSX.Element => {
   const location = useLocation();

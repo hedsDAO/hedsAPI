@@ -2,7 +2,7 @@
   "projects": {
     "default": "heds-104d8",
     "heds": "heds-104d8",
-    "heds-staging-v3": "heds-staging-v3"
+    "heds-dev": "heds-dev"
   },
   "targets": {
     "heds-104d8": {

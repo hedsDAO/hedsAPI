@@ -62,7 +62,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      favicon: "./public/favicon.png",
+      favicon: "./src/public/favicon.png",
     }),
     new Dotenv()
   ],
