@@ -3,6 +3,8 @@ import { Avatar, Box, Container, Flex, Heading, HStack, Stack, Text } from '@cha
 import { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Choice } from 'hedsvote';
+
 // export function percentageOfTotal(i: any, values: any, total: any) {
 //   const reducedTotal: any = total.reduce((a: any, b: any) => a + b, 0);
 //   const percent = (values[i] / reducedTotal) * 100;
@@ -12,7 +14,11 @@ import { useSelector } from 'react-redux';
 //   return Math.sqrt((percentageOfTotal(i + 1, choice, Object.values(choice)) / 100) * vp);
 // }
 
-export const VoteDistribution = () => {
+interface OwnProps {
+  handleScoreChange: (choice: Choice) => void;
+}
+
+export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
   const [voteData, setVoteData] = useState<any>();
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const voteResults = useSelector(store.select.voteModel.selectQuadraticVoteScores);
@@ -43,7 +49,7 @@ export const VoteDistribution = () => {
   // };
 
   return (
-    <Container pt={5} maxW="7xl">
+    <>
       <Heading
         px={{ base: 0, lg: 2 }}
         className="animate__animated animate__fadeIn"
@@ -73,6 +79,7 @@ export const VoteDistribution = () => {
                   gap={2}
                   alignItems="center"
                   key={choice.name}
+                  onClick={() => handleScoreChange(choice)}
                 >
                   <HStack w={{ base: '50%', lg: '40%' }}>
                     <Avatar size="xs" src={choice.image} />
@@ -99,6 +106,6 @@ export const VoteDistribution = () => {
               );
             })}
       </Stack>
-    </Container>
+    </>
   );
 };
