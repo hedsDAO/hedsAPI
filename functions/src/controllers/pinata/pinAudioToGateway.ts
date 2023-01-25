@@ -8,7 +8,7 @@ export const pinAudioToGateway = async (req: express.Request, res: express.Respo
   functions.logger.log(req.params?.space, req.params?.tape, req.params?.id, req.params?.wallet, "params: space, tape, id, wallet");
   functions.logger.log(req.params?.audioRef, "params: audioRef");
   try {
-    const tempFile = await admin.storage().bucket("gs://heds-104d8.appspot.com").file(req.params.audioRef).get();
+    const tempFile = await admin.storage().bucket("gs://heds-104d8.appspot.com").file("temp/" + req.params.audioRef).get();
     const filePath = await tempFile[0].getMetadata().then((res) => res[0].name.split("temp/")[1]);
     const fileStream = tempFile[0].createReadStream();
     const data = new FormData();
