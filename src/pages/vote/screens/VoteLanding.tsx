@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Box, Container, Divider, Grid, HStack, Stack, Text } from '@chakra-ui/react';
 import { isEmpty } from '@/utils';
 import { VoteCard } from '@/common/media';
-import ImageWithOverlay from '../../components/ImageWithOverlay/ImageWithOverlay';
+import { ImageWithOverlay } from '../components/ImageWithOverlay';
 
 const VoteLanding = () => {
   const allHedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);

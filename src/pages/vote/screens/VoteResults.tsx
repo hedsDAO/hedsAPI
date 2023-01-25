@@ -1,15 +1,20 @@
-import { Dispatch, RootState, store } from '@/store';
-import { formatWallet, isEmpty } from '@/utils';
-import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner, Square, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { VoteChoices, VoteDistribution } from '../../components';
-import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
-import { VoteAudioTrack } from '@/common/media';
 
-const VoteResults = () => {
-  const [isImageLoaded, setIsImageLoaded] = useBoolean(false);
+// Utils
+import { Dispatch, RootState, store } from '@/store';
+import { formatWallet, isEmpty } from '@/utils';
+
+// Components
+import { Avatar, Badge, Box, Container, Divider, Flex, Heading, HStack, Spinner, Square, Stack, Text } from '@chakra-ui/react';
+import { VoteChoices } from '../components/VoteChoices';
+import { VoteDistribution } from '../components/VoteDistribution';
+
+// Models
+import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
+
+export const VoteResults = () => {
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
@@ -27,10 +32,6 @@ const VoteResults = () => {
       dispatch.voteModel.getProposal(currentTape?.proposalId);
     }
   }, [space, tape, id, allTapes]);
-
-  useEffect(() => {
-    if (proposal) dispatch.voteModel.setCurrentTrack(proposal?.choices?.[0]);
-  }, [proposal]);
 
   return (
     <Box minH="100vh">
@@ -104,7 +105,7 @@ const VoteResults = () => {
             NOW PLAYING
           </Heading>
           <Divider my={3} borderColor="transparent" w="full" />
-          <VoteAudioTrack choice={currentTrack} />
+          {/* <VoteAudioTrack choice={currentTrack} /> */}
           <Divider my={5} borderColor="transparent" w="full" />
           <WaveformPlayer audio={currentTrack?.media} />
         </Container>
@@ -145,11 +146,9 @@ const VoteResults = () => {
           >
             RESULTS
           </Heading>
-          <VoteDistribution />
+          {/* <VoteDistribution /> */}
         </Container>
       )}
     </Box>
   );
 };
-
-export default VoteResults;
