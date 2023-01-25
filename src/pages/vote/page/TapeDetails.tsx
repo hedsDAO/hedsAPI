@@ -35,17 +35,11 @@ export const TapeDetails = () => {
   return (
     <Box minH="100vh">
       <Container maxW="6xl">
-        <VStack spacing="24px" align="stretch">
+        <VStack spacing="36px" align="stretch">
           {!isEmpty(allTapes) && <TapeHeader />}
-          <TapeDescription proposal={proposal} tapeImage={allTapes?.[tape]?.[id]?.image} />
+          <TapeDescription tapeImage={allTapes?.[tape]?.[id]?.image} />
           {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack />}
-          {proposal?.signature ? (
-            <VoteChoices />
-          ) : (
-            <Flex minH="50vh" pt="5" justifyContent={'center'} align="center">
-              <Spinner size={'lg'} />
-            </Flex>
-          )}
+          {proposal?.signature && <VoteChoices />}
         </VStack>
       </Container>
     </Box>
