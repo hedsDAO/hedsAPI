@@ -1,6 +1,20 @@
 {
   "projects": {
-    "default": "hedsdev",
-    "heds-v3": "hedsdev"
-  }
+    "default": "heds-104d8",
+    "heds": "heds-104d8",
+    "heds-dev": "heds-dev"
+  },
+  "targets": {
+    "heds-104d8": {
+      "hosting": {
+        "prod": [
+          "heds-104d8"
+        ],
+        "staging": [
+          "heds-staging"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
