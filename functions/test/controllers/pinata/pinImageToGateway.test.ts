@@ -1,16 +1,17 @@
 import * as dotenv from "dotenv";
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import * as admin from "firebase-admin";
 import {beforeAll, beforeEach, describe, expect, jest, test} from "@jest/globals";
 import * as serviceAccount from "../../../service_key.json";
-import {pinLinkToGateway} from "../../../src/controllers/pinata/pinLinkToGateway";
+import {pinImageToGateway} from "../../../src/controllers/pinata/pinImageToGateway";
 
 jest.setTimeout(10000);
 
-describe("pinLinkToGateway", () => {
+describe("pinImageToGateway", () => {
   const mockIpfsHash = "QmeLZ4HQc9JSDwc36CJr8PXt69P8mNYCwPL3Qf1XCTGk84";
   let mockRequest = Object as unknown as Request;
   let mockResponse = Object as unknown as Response;
+  const nextFunction: NextFunction = jest.fn();
   beforeEach(() => {
     mockRequest = {params: {wallet: "0x000000", space: "test", tape: "test", id: "test"}} as unknown as Request;
     mockResponse = {
@@ -28,13 +29,13 @@ describe("pinLinkToGateway", () => {
 
   describe("GET /", () => {
     test("returns a pinned, pinata hyperlink for the media url requested", async () => {
-      await pinLinkToGateway(mockRequest, mockResponse);
+      await pinImageToGateway(mockRequest, mockResponse, nextFunction);
       expect(mockResponse.locals.subArtIpfsHash).toEqual(mockIpfsHash);
-      expect(mockResponse.status).toBeCalled();
+      expect(nextFunction).toBeCalled();
     });
     test("returns no hash without media url", async () => {
-      await pinLinkToGateway(Object as unknown as Request, mockResponse);
-      expect(mockResponse.status).toBeCalled();
+      await pinImageToGateway(Object as unknown as Request, mockResponse, nextFunction);
+      expect(nextFunction).not.toBeCalled();
       expect(mockResponse.locals.subArtIpfsHash).toBeUndefined();
     });
   });
