@@ -8,5 +8,9 @@ import twitterAuth from "./servers/authentication";
 // SUBMISSIONS CONTROLLER
 import newSubmissionArt from "./servers/submissions";
 
+// OPENSEA CONTROLLER
+import activeListings from "./servers/opensea";
+
 exports.twitterAuth = twitterAuth;
 exports.newSubmissionArt = newSubmissionArt;
+exports.activeListings = activeListings;
