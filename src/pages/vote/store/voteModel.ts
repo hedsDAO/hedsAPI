@@ -73,7 +73,7 @@ export const voteModel = createModel<RootModel>()({
     setAllProposals: (state, allProposals: Proposal[]) => ({ ...state, allProposals }),
     setSelectedSubmissions: (state, selectedSubmission: SubmissionChoice) => ({ ...state, selectedSubmission }),
   },
-  effects: () => ({
+  effects: (dispatch) => ({
     async castVote(vote: VoteObject) {
       const { castVote } = createClient();
       try {

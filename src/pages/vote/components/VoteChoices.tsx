@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { VoteChoiceCard } from './VoteChoiceCard';
-import { Container, Flex, Grid, Heading, Stack } from '@chakra-ui/react';
+import { Box, Container, Flex, Grid, Heading, Stack } from '@chakra-ui/react';
 import { SelectedSubmission } from './SelectedSubmission';
 import { VoteDistribution } from '../components/VoteDistribution';
 
@@ -41,7 +41,7 @@ export const VoteChoices = () => {
   };
 
   return (
-    <Container mx="auto" maxW="7xl">
+    <Box mx="auto">
       {proposalState === ProposalState.CLOSED ? (
         <VoteDistribution handleScoreChange={handleSelectedSubmission} />
       ) : (
@@ -91,6 +91,6 @@ export const VoteChoices = () => {
           </Container>
         </Flex>
       )}
-    </Container>
+    </Box>
   );
 };

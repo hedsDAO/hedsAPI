@@ -1,22 +1,17 @@
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { store } from '@/store';
 
 // Components
-import { Box, Container, Center, Divider, Flex, Heading, Image, Skeleton, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Center, Divider, Flex, Heading, Image, Skeleton, Text, useBoolean } from '@chakra-ui/react';
 import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 
 // Models
-import { Choice } from 'hedsvote';
-
-export const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
-  const { tape, id } = useParams();
+export const VoteAudioTrack = () => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const currentTrack = useSelector(store.select.voteModel.selectCurrentTrack);
-  const allTapes = useSelector(store?.select.tapesModel.selectAllTapes);
 
   return (
-    <Container mx="auto" py={5} maxW="7xl">
+    <Box mx="auto">
       <Heading
         px={{ base: 0, lg: 2 }}
         className="animate__animated animate__fadeIn"
@@ -28,7 +23,15 @@ export const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
         NOW PLAYING
       </Heading>
       <Divider my={3} borderColor="transparent" w="full" />
-      <Flex p={2} rounded="sm" border={'1px'} borderColor={'purple.800'} _hover={{ borderColor: 'gray.400', bg: 'gray.50' }} className="group">
+      <Flex
+        p={4}
+        rounded="sm"
+        border={'1px'}
+        borderColor={'purple.800'}
+        _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
+        className="group"
+        borderRadius="lg"
+      >
         <Box>
           <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px">
             <Center shadow="sm" role="button" className="pointer-events-auto">
@@ -38,7 +41,7 @@ export const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
                 onLoad={setIsImageLoaded.on}
                 _hover={{ opacity: 0 }}
                 className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all outline outline-1"
-                src={choice?.image}
+                src={currentTrack?.image}
                 objectFit="cover"
                 rounded="sm"
               />
@@ -47,15 +50,12 @@ export const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
           </Skeleton>
           <Flex direction={'column'} justifyContent={'space-evenly'} ml={'12px'}>
             <Text className="font-serif" fontSize="xs" color="blue.900">
-              {choice.name}
-            </Text>
-            <Text className="font-serif hover-underline-animation" fontSize="xs" color="blue.900">
-              {allTapes?.[tape]?.[id]?.name}
+              {currentTrack.name}
             </Text>
           </Flex>
         </Box>
         <WaveformPlayer audio={currentTrack?.media} />
       </Flex>
-    </Container>
+    </Box>
   );
 };
