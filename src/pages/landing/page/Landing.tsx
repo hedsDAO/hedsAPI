@@ -149,10 +149,10 @@ export const Landing = () => {
       </ParallaxLayer>
 
       {/* Section 4 */}
-      <ParallaxLayer offset={2.6}>
+      <ParallaxLayer offset={2.6} style={{ border: '2px solid red' }}>
         <Divider />
         <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h="30%">
-          <Box w="50%" h="100%" padding="5em" alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
+          <Box w={['100%', '50%']} h="100%" padding={[null, '5em']} alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
                 <Number inputNum={56} size={['2rem', '8rem']} />
@@ -168,13 +168,13 @@ export const Landing = () => {
               </GridItem>
             </Grid>
           </Box>
-          <Box w="50%" h="100%" padding="5em" paddingTop="3em" fontFamily="mono" color="white">
+          <Box w={['100%', '50%']} h="100%" padding={[null, '5em']} paddingTop={[null, '3em']} fontFamily="mono" color="white">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
                 <Number inputNum={420} dollar size={['2rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize={['xs', null, 'md']}>
+                <Center h="100%" marginLeft={[null, '5rem']} textAlign="right" w="50%" fontSize={['xs', null, 'md']}>
                   SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
                 </Center>
               </GridItem>
