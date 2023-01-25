@@ -155,10 +155,10 @@ export const Landing = () => {
           <Box w="50%" h="100%" padding="5em" alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={56} />
+                <Number inputNum={56} size={['2rem', '8rem', null, null, null]} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" fontSize="sm">
+                <Center h="100%" fontSize={['xs', null, 'md', null, null]}>
                   heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
                   experiment freely.
                 </Center>
@@ -171,10 +171,10 @@ export const Landing = () => {
           <Box w="50%" h="100%" padding="5em" paddingTop="3em" fontFamily="mono" color="white">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={420} dollar />
+                <Number inputNum={420} dollar size={['2rem', '8rem', null, null, null]} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize="md">
+                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize={['xs', null, 'md', null, null]}>
                   SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
                 </Center>
               </GridItem>
