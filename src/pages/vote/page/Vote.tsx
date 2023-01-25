@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { VoteLanding, VoteResults } from '../screens';
+import { VoteLanding } from '../screens';
+import { TapeDetails } from './TapeDetails';
 
 export const Vote = () => {
   const { space, tape, id } = useParams();
-  return <Fragment>{space && tape && id ? <VoteResults /> : <VoteLanding />}</Fragment>;
+  return <Fragment>{space && tape && id ? <TapeDetails /> : <VoteLanding />}</Fragment>;
 };

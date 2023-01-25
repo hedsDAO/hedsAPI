@@ -2,8 +2,8 @@ import { ChakraProps } from '@chakra-ui/react';
 
 /**
  * @global
- * @const ALL_TAPE_SLUGS : creates array of url slugs to fetch opensea events:
  * @const STATS_DATA : data for stats section on explore page.
+ * @const OPENSEA_EVENTS_CLOUD_FUNCTION : url for opensea events cloud function.
  */
 
 export const STATS_DATA = [
@@ -13,8 +13,8 @@ export const STATS_DATA = [
   { label: 'Unique Minters', value: '207' },
 ];
 
-const SLUG_TANK = Array.apply(null, { length: 10 });
-export const ALL_TAPE_SLUGS = SLUG_TANK.map((_: null, i: number) => 'hedstape-' + (i + 1));
+export const OPENSEA_EVENTS_CLOUD_FUNCTION = `https://us-central1-heds-104d8.cloudfunctions.net/activeListings`
+export const OPENSEA_LIMIT = 2;
 
 /**
  * @component <Explore/>
@@ -25,13 +25,17 @@ export const ALL_TAPE_SLUGS = SLUG_TANK.map((_: null, i: number) => 'hedstape-' 
 export const MAX_TOP_ARTISTS = 4;
 export const HEDS_IMG_PROPS = {
   opacity: '50%',
+  zIndex: '10',
   top: '24',
   left: '72%',
   maxH: '50rem',
+  display: {
+    lg: 'block',
+    base: 'none',
+  },
   position: 'absolute',
   objectFit: 'contain',
-  style: { filter: 'invert(0.75)' },
-  src: '/heddot.png',
+  style: { filter: 'invert(0.75)' }
 } as ChakraProps;
 
 /**
@@ -46,6 +50,7 @@ export const HEDS_SOLO_HEADING = 'introducing';
 export const HEDS_SOLO_TITLE = 'hedSOLO';
 export const HEDS_SOLO_DESC = 'a new look into the worldwide heds community, featuring solo releases from artists representing the future of music.';
 export const HEDS_SOLO_ARTIST = '0xd4a1b8f85e4df6afb1c66e54250ae9e216fc388d';
+export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/dabow-wanna-be';
 
 /**
  * @component <NewestTape/>

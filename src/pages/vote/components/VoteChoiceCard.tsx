@@ -1,10 +1,14 @@
 import { store } from '@/store';
 import { GridItem, Skeleton, Text, useBoolean } from '@chakra-ui/react';
-import { Action } from '@rematch/core';
 import { Choice } from 'hedsvote';
 import { useSelector } from 'react-redux';
 
-const VoteChoiceCard = ({ choice, onClick }: { choice: Choice; onClick: Function }) => {
+interface OwnProps {
+  choice: Choice;
+  onClick: (choice: Choice) => void;
+}
+
+export const VoteChoiceCard = ({ choice, onClick }: OwnProps) => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const currentTrack = useSelector(store.select.voteModel.selectCurrentTrack);
   return (
@@ -37,5 +41,3 @@ const VoteChoiceCard = ({ choice, onClick }: { choice: Choice; onClick: Function
     </GridItem>
   );
 };
-
-export default VoteChoiceCard;

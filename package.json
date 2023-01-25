@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
+    "@chakra-ui/icons": "^2.0.16",
     "@chakra-ui/pro-theme": "^0.0.57",
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.10.4",
@@ -59,6 +60,7 @@
     "react-waypoint": "^10.3.0",
     "redux": "^4.2.0",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^5.3.6",
     "swiper": "^7.4.1",
     "wagmi": "^0.7.2",
     "wavesurfer.js": "^6.3.0"
