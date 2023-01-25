@@ -3,6 +3,7 @@ import * as functions from "firebase-functions";
 import axios from "axios";
 import * as luxon from "luxon";
 import {openseaSlugs} from "../../data/openseaSlugs";
+import * as ethers from "ethers";
 
 export const getOpenseaActiveListings = async (req: express.Request, res: express.Response) => {
   functions.logger.log("conditional limit param", req.params?.limit);
@@ -31,10 +32,11 @@ export const getOpenseaActiveListings = async (req: express.Request, res: expres
               liveEvents
                   ?.filter((item: any) => item !== undefined)
                   ?.map((item: any): any => {
+                    const bigNum = ethers.BigNumber.from(item.starting_price);
                     return {
                       market: "opensea",
                       tokenId: +item.asset.token_id,
-                      price: item.starting_price,
+                      price: ethers.utils.formatEther(bigNum),
                       name: item.asset.asset_contract.name,
                       image: item.asset.asset_contract.image_url,
                       listed: luxon.DateTime.fromISO(item.listing_time).toMillis(),
@@ -47,9 +49,7 @@ export const getOpenseaActiveListings = async (req: express.Request, res: expres
               secondaryListingsTank.push(Object.values(filterTank));
               resolve("");
             })
-            .catch((err) => {
-              return res.status(400);
-            });
+            .catch(() => res.status(400));
       }, 1000);
     });
   }
