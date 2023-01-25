@@ -83,7 +83,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   gap={2}
                   alignItems="center"
                   key={choice.name}
-                  borderRadius="sm"
+                  borderRadius="lg"
                   onClick={() => handleScoreChange(choice)}
                   _hover={
                     selectedTracks.has(choice.walletId)
