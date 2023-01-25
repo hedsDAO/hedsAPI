@@ -143,7 +143,7 @@ export const Landing = () => {
         }}
       >
         <HedsTapeTitle />
-        <Container maxW="40%">
+        <Container maxW={['60%', '50%', '40%', null, null]}>
           <img src="/hedspin.gif" />
         </Container>
       </ParallaxLayer>
