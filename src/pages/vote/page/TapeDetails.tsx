@@ -7,7 +7,7 @@ import { Dispatch, RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 
 // Components
-import { Box, Container, Divider, Flex, Spinner, VStack } from '@chakra-ui/react';
+import { Box, Container, Flex, Spinner, VStack } from '@chakra-ui/react';
 import { VoteChoices } from '../components/VoteChoices';
 import { VoteAudioTrack } from '../components/VoteAudioTrack';
 import { TapeDescription } from '../components/TapeDescription';
