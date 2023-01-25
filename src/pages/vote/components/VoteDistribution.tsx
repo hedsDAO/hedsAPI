@@ -52,7 +52,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
   }, [tape, id]);
 
   return (
-    <>
+    <Box mx="auto">
       <Heading
         px={{ base: 0, lg: 2 }}
         className="animate__animated animate__fadeIn"
@@ -121,6 +121,6 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
               );
             })}
       </Stack>
-    </>
+    </Box>
   );
 };
