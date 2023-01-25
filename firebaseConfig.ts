@@ -1,9 +1,9 @@
 export default {
-    apiKey: "AIzaSyAooTUjBN2EaCg9X6w0sYbRz2ba9_6mdYw",
-    authDomain: "hedsdev.firebaseapp.com",
-    projectId: "hedsdev",
-    storageBucket: "hedsdev.appspot.com",
-    messagingSenderId: "1071073703557",
-    appId: "1:1071073703557:web:4ed7423ed84d6fe1205bec",
-    measurementId: "G-J3NSZFZDS3"
+    apiKey: 'AIzaSyC2i_t3Bw5_dlsYRlXgRFXqjPdsOYgafUQ',
+    authDomain: 'heds-104d8.firebaseapp.com',
+    projectId: 'heds-104d8',
+    storageBucket: 'heds-104d8.appspot.com',
+    messagingSenderId: '559705662876',
+    appId: '1:559705662876:web:08251d640d268052479459',
+    measurementId: 'G-R2DC94DDT0',
   };
