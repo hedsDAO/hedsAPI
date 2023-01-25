@@ -2,8 +2,8 @@ import { ChakraProps } from '@chakra-ui/react';
 
 /**
  * @global
- * @const ALL_TAPE_SLUGS : creates array of url slugs to fetch opensea events:
  * @const STATS_DATA : data for stats section on explore page.
+ * @const OPENSEA_EVENTS_CLOUD_FUNCTION : url for opensea events cloud function.
  */
 
 export const STATS_DATA = [
@@ -13,8 +13,8 @@ export const STATS_DATA = [
   { label: 'Unique Minters', value: '207' },
 ];
 
-const SLUG_TANK = Array.apply(null, { length: 10 });
-export const ALL_TAPE_SLUGS = SLUG_TANK.map((_: null, i: number) => 'hedstape-' + (i + 1));
+export const OPENSEA_EVENTS_CLOUD_FUNCTION = `https://us-central1-heds-104d8.cloudfunctions.net/activeListings`
+export const OPENSEA_LIMIT = 2;
 
 /**
  * @component <Explore/>
