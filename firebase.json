@@ -1,7 +1,7 @@
 {
-  "hosting": 
+  "hosting":
     {
-    "target": "staging",
+    "target": "prod",
     "public": "build/app",
     "headers": [
       {
@@ -13,7 +13,7 @@
           },
           {
             "key": "Cache-Control",
-            "value": "max-age=0"
+            "value": "max-age=300"
           }
         ]
       },
