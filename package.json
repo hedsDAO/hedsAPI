@@ -41,7 +41,7 @@
     "firebase": "^9.9.3",
     "firebase-tools": "^11.19.0",
     "framer-motion": "^6.5.1",
-    "hedsvote": "^0.0.111",
+    "hedsvote": "^0.0.121",
     "jest": "27.5.1",
     "js-sha256": "^0.9.0",
     "luxon": "^3.0.4",

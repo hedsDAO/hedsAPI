@@ -4,6 +4,7 @@ import { createModel } from '@rematch/core';
 import { calculateUserVotingPower, Choice, createClient, Proposal, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
 
 export interface VoteModelState {
+  scores?: number[];
   choices: Choice[];
   proposal: Proposal;
   //! RE-UPLOAD VOTES AS QUADRATIC VOTES IN FB
@@ -32,14 +33,21 @@ export const voteModel = createModel<RootModel>()({
     selectCurrentTrack() {
       return slice((voteModel) => voteModel?.currentTrack);
     },
+    selectScores() {
+      return slice((voteModel) => voteModel?.scores);
+    },
     selectProposalChoices() {
-      return slice((voteModel) => voteModel?.choices || []);
+      return slice((voteModel) => {
+        const choices = voteModel?.choices || []
+        return choices ? choices.sort((a,b) => a.id - b.id) : [];
+     });
     },
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
     selectQuadraticVoteScores() {
-      return createSelector(this.selectProposal, this.selectQuadraticVotes, (proposal: Proposal, votes: QuadraticVote[]) => {
+      return createSelector(this.selectProposal, this.selectQuadraticVotes, this.selectScores, (proposal: Proposal, votes: QuadraticVote[], scores: number[]) => {
+        if (scores) return scores;
         if (votes) {
           const { choices } = proposal;
           const strategies = Object.values(proposal.strategies);
@@ -64,6 +72,7 @@ export const voteModel = createModel<RootModel>()({
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
     setChoices: (state, choices: Choice[]) => ({ ...state, choices }),
+    setScores: (state, scores: number[]) => ({ ...state, scores }),
     setQuadraticVotes: (state, quadraticVotes: QuadraticVote[]) => ({ ...state, quadraticVotes }),
     setSingleChoiceVotes: (state, singleChoiceVotes: SingleChoiceVote[]) => ({ ...state, singleChoiceVotes }),
     setAllProposals: (state, allProposals: Proposal[]) => ({ ...state, allProposals }),
@@ -108,6 +117,7 @@ export const voteModel = createModel<RootModel>()({
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);
+          if (proposal.scores) this.setScores(proposal.scores);
           const currentTrack: Choice = proposal?.choices?.[0];
           if (currentTrack) this.setCurrentTrack(currentTrack);
           if (method === VoteMethod.QUADRATIC && votes) {
