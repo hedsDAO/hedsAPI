@@ -15,9 +15,9 @@ export const GridItemImage: FC<OwnProps> = ({ num, text, icon }) => {
       <GridItem padding="3px">
         <VStack textAlign="center">
           <>
-            <Number inputNum={num} color="black" size={['2rem', null, '3rem', null, null]} />
+            <Number inputNum={num} color="black" size={['2rem', null, '3rem']} />
             {text}
-            <Icon as={icon} boxSize={[10, null, 20, null, null]} />
+            <Icon as={icon} boxSize={[10, null, 20]} />
           </>
         </VStack>
       </GridItem>

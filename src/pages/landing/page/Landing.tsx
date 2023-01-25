@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Center, Container, Divider, Grid, GridItem, HStack, Icon, StackDivider } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, Stack, Icon, StackDivider } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
@@ -143,7 +143,7 @@ export const Landing = () => {
         }}
       >
         <HedsTapeTitle />
-        <Container maxW={['60%', '50%', '40%', null, null]}>
+        <Container maxW={['60%', '50%', '40%']}>
           <img src="/hedspin.gif" />
         </Container>
       </ParallaxLayer>
@@ -151,14 +151,14 @@ export const Landing = () => {
       {/* Section 4 */}
       <ParallaxLayer offset={2.6}>
         <Divider />
-        <HStack divider={<StackDivider borderColor="gray.400" />} h="30%">
+        <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h="30%">
           <Box w="50%" h="100%" padding="5em" alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={56} size={['2rem', '8rem', null, null, null]} />
+                <Number inputNum={56} size={['2rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" fontSize={['xs', null, 'md', null, null]}>
+                <Center h="100%" fontSize={['xs', null, 'md']}>
                   heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
                   experiment freely.
                 </Center>
@@ -171,10 +171,10 @@ export const Landing = () => {
           <Box w="50%" h="100%" padding="5em" paddingTop="3em" fontFamily="mono" color="white">
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={420} dollar size={['2rem', '8rem', null, null, null]} />
+                <Number inputNum={420} dollar size={['2rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize={['xs', null, 'md', null, null]}>
+                <Center h="100%" marginLeft="5rem" textAlign="right" w="50%" fontSize={['xs', null, 'md']}>
                   SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
                 </Center>
               </GridItem>
@@ -185,7 +185,7 @@ export const Landing = () => {
               </GridItem>
             </Grid>
           </Box>
-        </HStack>
+        </Stack>
         <Center marginTop="1rem">
           <Box
             as="button"
@@ -206,12 +206,12 @@ export const Landing = () => {
       {/* Section 5 */}
       <ParallaxLayer offset={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Grid
-          h={['80%', null, '100%', null, null]}
+          h={['80%', null, '100%']}
           width="100%"
-          padding={['1rem', null, '5rem', null, null]}
+          padding={['1rem', null, '5rem']}
           templateRows="repeat(2, 1fr)"
           templateColumns="repeat(3, 1fr)"
-          gap={[1, 2, null, 4, null]}
+          gap={[1, 2, null, 4]}
         >
           <GridItemImage num={207} text="unique minters" icon={IconUsers} />
           <GridItemImage num={59} text="curated artists" icon={IconHeadphones} />
