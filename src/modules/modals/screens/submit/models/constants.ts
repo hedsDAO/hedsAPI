@@ -1,12 +1,12 @@
 /**
  * @global
  * @const GENERATE_ID_FUNCTION : cloud function to generate unique id.
- * @const SUB_ART_FUNCTION : cloud function to generate sub art.
+ * @const SUB_CLOUD_FUNCTION : cloud function to generate sub art.
  * @const PIN_LINK_TO_GATEWAY_FUNCTION : cloud function to pin hash to pinata gateway.
  * @const PINATA_URL_PREFIX : heds prefix for pinata gateway.
  */
 
-export const SUB_ART_FUNCTION = 'https://us-central1-heds-104d8.cloudfunctions.net/newSubmissionArt';
+export const SUB_CLOUD_FUNCTION = 'https://us-central1-heds-104d8.cloudfunctions.net/newSubmission';
 export const PINATA_URL_PREFIX = 'https://www.heds.cloud/ipfs/';
 
 /**

@@ -1,8 +1,10 @@
+import { storage } from '@/App';
+import { uploadBytes, ref } from 'firebase/storage';
 import { TrackMetadata, TrackType } from '@/models/common';
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
-import { MAX_FILE_SIZE, MAX_LENGTH, VALID_FILE_TYPES, MIN_LENGTH, SUB_ART_FUNCTION, PINATA_URL_PREFIX } from './constants';
-import { computeLength, formatSubId, handlePinataMetadata, uploadFileToPinata } from '@/utils';
+import { MAX_FILE_SIZE, MAX_LENGTH, VALID_FILE_TYPES, MIN_LENGTH, SUB_CLOUD_FUNCTION, PINATA_URL_PREFIX } from './constants';
+import { computeLength, formatSubId, handlePinataMetadata } from '@/utils';
 import axios from 'axios';
 
 export interface SubmitState {
@@ -101,8 +103,8 @@ export const submitModel = createModel<RootModel>()({
       const subImageHash = subImage.split(PINATA_URL_PREFIX)[1];
       const audioHash = audio.split(PINATA_URL_PREFIX)[1];
       try {
-        await axios.delete(`${SUB_ART_FUNCTION}/${subImageHash}`);
-        await axios.delete(`${SUB_ART_FUNCTION}/${audioHash}`);
+        await axios.delete(`${SUB_CLOUD_FUNCTION}/${subImageHash}`);
+        await axios.delete(`${SUB_CLOUD_FUNCTION}/${audioHash}`);
         this.setIsLoading(false);
         dispatch.userModel.deletePreviousSubmission([sub, wallet]);
         this.clearModalState();
@@ -114,37 +116,39 @@ export const submitModel = createModel<RootModel>()({
     async uploadSubmissions([space, tape, id, wallet, artist, album, cover, file]: [string, string, string, string, string, string, string, File]) {
       this.setIsUploading(true);
       this.setIsLoading(true);
-      const testURL = `${SUB_ART_FUNCTION}/${space}/${tape}/${id}/${wallet}`;
-      const { subId, subArtIpfsHash } = await axios.get(testURL).then((res) => res.data);
+      const fileExt = file.type === 'audio/mpeg' ? '.mp3' : '.wav';
+      const audioRef = await uploadBytes(ref(storage, `temp/${id}-${wallet}${fileExt}`), file).then((snapshot) => snapshot.ref.fullPath);
+      const newSubmissionUrl = `${SUB_CLOUD_FUNCTION}/${space}/${tape}/${id}/${wallet}/${audioRef}`;
+      const { subId, subArtIpfsHash, audioLinkIpfsHash } = await axios.get(newSubmissionUrl).then((res) => res.data);
       const { duration } = await computeLength(file);
-      const options = handlePinataMetadata(wallet, artist, subId, space, tape, id, duration);
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('pinataMetadata', JSON.stringify({ ...options.pinataMetadata }));
-      const subAudioIpfsHash = await uploadFileToPinata(formData).then((res) => PINATA_URL_PREFIX + res.IpfsHash);
-      const newSub: TrackMetadata = {
-        track: formatSubId(subId),
-        audio: subAudioIpfsHash,
-        subId: formatSubId(subId),
-        subImage: PINATA_URL_PREFIX + subArtIpfsHash,
-        artist,
-        duration,
-        wallet,
-        cover,
-        album,
-        public: false,
-        space,
-        tape,
-        id,
-        type: TrackType.SUBMISSION,
-        stats: {
-          likes: 0,
-          likedBy: {},
-          plays: 0,
-        },
-      };
-      await dispatch.userModel.newUserSubmission([newSub, wallet]);
-      return this.setIsLoading(false), this.setIsUploading(false);
+      if (subId && subArtIpfsHash && audioLinkIpfsHash) {
+        const newSub: TrackMetadata = {
+          track: formatSubId(subId),
+          audio: PINATA_URL_PREFIX + audioLinkIpfsHash,
+          subId: formatSubId(subId),
+          subImage: PINATA_URL_PREFIX + subArtIpfsHash,
+          artist,
+          duration,
+          wallet,
+          cover,
+          album,
+          public: false,
+          space,
+          tape,
+          id,
+          type: TrackType.SUBMISSION,
+          stats: {
+            likes: 0,
+            likedBy: {},
+            plays: 0,
+          },
+        };
+        await dispatch.userModel.newUserSubmission([newSub, wallet]);
+        return this.setIsLoading(false), this.setIsUploading(false);
+      } else {
+        this.setIsLoading(false);
+        this.setIsUploading(false);
+      }
     },
   }),
 });
