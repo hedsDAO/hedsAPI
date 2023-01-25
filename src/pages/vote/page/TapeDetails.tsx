@@ -9,7 +9,7 @@ import { isEmpty } from '@/utils';
 // Components
 import { Box, Container, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
 import { VoteChoices } from '../components/VoteChoices';
-import { VoteAudioTrack } from '@/common/media';
+import { VoteAudioTrack } from '../components/VoteAudioTrack';
 import { TapeDescription } from '../components/TapeDescription';
 
 export const TapeDetails = () => {
@@ -44,7 +44,6 @@ export const TapeDetails = () => {
                 </Text>
               </Flex>
             )}
-
             <Divider borderColor="gray.700" w="full" />
           </HStack>
         </Container>
@@ -57,7 +56,6 @@ export const TapeDetails = () => {
       {proposal?.signature ? (
         <VoteChoices />
       ) : (
-        // <Divider py={10} borderColor="gray.300" w="8xl" mx="auto" />
         <Flex minH="50vh" pt="5" justifyContent={'center'} align="center">
           <Spinner size={'lg'} />
         </Flex>

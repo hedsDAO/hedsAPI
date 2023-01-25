@@ -9,7 +9,7 @@ import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/Wavefor
 // Models
 import { Choice } from 'hedsvote';
 
-const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
+export const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
   const { tape, id } = useParams();
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const currentTrack = useSelector(store.select.voteModel.selectCurrentTrack);
@@ -59,5 +59,3 @@ const VoteAudioTrack = ({ choice }: { choice: Choice }) => {
     </Container>
   );
 };
-
-export default VoteAudioTrack;

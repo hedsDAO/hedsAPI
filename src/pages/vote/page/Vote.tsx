@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { VoteLanding } from '../screens';
+import { VoteLanding } from './VoteLanding';
 import { TapeDetails } from './TapeDetails';
 
 export const Vote = () => {
