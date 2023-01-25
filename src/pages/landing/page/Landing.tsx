@@ -149,7 +149,7 @@ export const Landing = () => {
       </ParallaxLayer>
 
       {/* Section 4 */}
-      <ParallaxLayer offset={2.6} style={{ border: '2px solid red' }}>
+      <ParallaxLayer offset={2.6}>
         <Divider />
         <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h="30%">
           <Box w={['100%', '50%']} h="100%" padding={[null, '5em']} alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
