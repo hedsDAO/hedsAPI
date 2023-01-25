@@ -6,11 +6,11 @@ admin.initializeApp();
 import twitterAuth from "./servers/authentication";
 
 // SUBMISSIONS CONTROLLER
-import newSubmissionArt from "./servers/submissions";
+import newSubmission from "./servers/submissions";
 
 // OPENSEA CONTROLLER
 import activeListings from "./servers/opensea";
 
 exports.twitterAuth = twitterAuth;
-exports.newSubmissionArt = newSubmissionArt;
+exports.newSubmission = newSubmission;
 exports.activeListings = activeListings;

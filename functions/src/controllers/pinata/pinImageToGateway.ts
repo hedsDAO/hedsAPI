@@ -4,11 +4,11 @@ import FormData from "form-data";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 
-export const pinLinkToGateway = async (req: express.Request, res: express.Response) => {
+export const pinImageToGateway = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   functions.logger.log(req.params?.space, req.params?.tape, req.params?.id, "params: space, tape, id, wallet");
   functions.logger.log(req.params?.wallet, "params: wallet");
   if (req.params?.space && req.params?.tape && req.params?.id && req.params?.wallet) {
-    const {imageUrl, subId} = res.locals;
+    const {imageUrl} = res.locals;
     const data = new FormData();
     const pinataMetadata = {
       name: `${req.params.id}-ai-${req.params.wallet}`,
@@ -37,7 +37,7 @@ export const pinLinkToGateway = async (req: express.Request, res: express.Respon
         })
         .then((response) => {
           res.locals.subArtIpfsHash = response.data?.IpfsHash;
-          return res.status(201).json({subId, subArtIpfsHash: response.data?.IpfsHash});
+          next();
         })
         .catch(() => res.status(400));
   }
