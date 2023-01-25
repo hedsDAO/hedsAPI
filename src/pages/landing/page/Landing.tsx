@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Center, Container, Divider, Grid, GridItem, Stack, Icon, StackDivider } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, Stack, Icon, StackDivider, Flex } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
@@ -123,11 +123,22 @@ export const Landing = () => {
         />
       </ParallaxLayer>
 
-      <ParallaxLayer offset={1.1} speed={0.2} style={{ width: '70%', marginLeft: '55%' }}>
-        <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
-        <button>
-          <Link to="/artists">VIEW TAPE</Link>
-        </button>
+      <ParallaxLayer
+        offset={1.1}
+        speed={0.2}
+        //  style={{ width: '70%', marginLeft: '55%' }}
+        style={{ width: '100%' }}
+      >
+        <Flex
+          direction="column"
+          align="end"
+          // w={[null, '70%']} ml={[null, '55%']}
+        >
+          <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
+          <button>
+            <Link to="/artists">VIEW TAPE</Link>
+          </button>
+        </Flex>
       </ParallaxLayer>
 
       {/* Section 3 */}
