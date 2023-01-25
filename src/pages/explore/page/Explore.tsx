@@ -11,8 +11,11 @@ export const Explore = () => {
   const allArtists = useSelector(store.select.artistModel.selectAllArtists);
   useEffect(() => {
     if (allArtists) dispatch.artistModel.getMostFeaturedArtists([allArtists, MAX_TOP_ARTISTS]);
-    dispatch.exploreModel.getLatestSecondaryListings();
   }, [allArtists]);
+
+  useEffect(() => {
+    dispatch.exploreModel.getLatestSecondaryListings();
+  }, []);
 
   return (
     <Box>
