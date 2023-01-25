@@ -117,8 +117,8 @@ export const submitModel = createModel<RootModel>()({
       this.setIsUploading(true);
       this.setIsLoading(true);
       const fileExt = file.type === 'audio/mpeg' ? '.mp3' : '.wav';
-      const audioRef = await uploadBytes(ref(storage, `temp/${id}-${wallet}${fileExt}`), file).then((snapshot) => snapshot.ref.fullPath);
-      const newSubmissionUrl = `${SUB_CLOUD_FUNCTION}/${space}/${tape}/${id}/${wallet}/${audioRef}`;
+      await uploadBytes(ref(storage, `temp/${id}-${wallet}${fileExt}`), file);
+      const newSubmissionUrl = `${SUB_CLOUD_FUNCTION}/${space}/${tape}/${id}/${wallet}/${id}-${wallet}${fileExt}`;
       const { subId, subArtIpfsHash, audioLinkIpfsHash } = await axios.get(newSubmissionUrl).then((res) => res.data);
       const { duration } = await computeLength(file);
       if (subId && subArtIpfsHash && audioLinkIpfsHash) {
