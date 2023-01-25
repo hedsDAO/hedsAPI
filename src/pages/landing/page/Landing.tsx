@@ -124,11 +124,13 @@ export const Landing = () => {
       </ParallaxLayer>
 
       <ParallaxLayer offset={1.1} speed={0.2} style={{ width: '100%' }}>
-        <Flex direction="column" align="end">
-          <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
-          <button>
-            <Link to="/artists">VIEW TAPE</Link>
-          </button>
+        <Flex justify="end">
+          <Flex direction="column" align="start">
+            <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
+            <button>
+              <Link to="/artists">VIEW TAPE</Link>
+            </button>
+          </Flex>
         </Flex>
       </ParallaxLayer>
 
