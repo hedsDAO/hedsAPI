@@ -4,6 +4,7 @@ import { Dispatch, store } from '@/store';
 import { Box, Button, Flex, Heading, Icon, IconButton, Image, Link, SimpleGrid, Spinner, Stack, Text } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { LISTINGS_BUTTON, LISTINGS_DESC, LISTINGS_TITLE } from '@/pages/explore/store/constants';
+import { ethers } from 'ethers';
 
 const ActiveListings = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -48,7 +49,7 @@ const ActiveListings = () => {
                     </Text>
                     <Flex justifyContent={'space-between'}>
                       <Text letterSpacing={'tight'} fontFamily={"'Space Mono', monospace"} fontSize="lg" color="gray.600">
-                        {listing.price} Ξ
+                        {ethers.utils.formatEther(ethers.BigNumber.from(listing.price))} Ξ
                       </Text>
                       <Button as={Link} href={listing.link} target="_blank" px={2} variant={'explore'} size="xs">
                         <Icon color="gray.600" h="4" w="4" as={IconArrowRight}></Icon>
