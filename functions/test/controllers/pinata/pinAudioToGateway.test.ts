@@ -17,14 +17,13 @@ describe("pinAudioToGateway", () => {
         space: "test",
         tape: "test",
         id: "test",
-        audioRef: "temp/temp.mp3",
+        audioRef: "test.mp3",
       },
     } as unknown as Request;
     mockResponse = {
       locals: {imageUrl: "https://avatars.githubusercontent.com/u/98577422?s=200&v=4", subId: "test"},
-      body: {},
-      statusCode: 0,
       status: jest.fn(),
+      json: jest.fn(),
     } as unknown as Response;
   });
 
@@ -36,7 +35,8 @@ describe("pinAudioToGateway", () => {
   describe("GET /", () => {
     test("returns a pinned, pinata hyperlink for the media url requested", async () => {
       await pinAudioToGateway(mockRequest, mockResponse);
-      expect(mockResponse.status).toBeCalled();
+      expect(mockResponse.status).toBeCalledWith(201);
+      expect(mockResponse.json).toBeCalled();
     });
     test("returns no hash without media url", async () => {
       await pinAudioToGateway(Object as unknown as Request, mockResponse);

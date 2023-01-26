@@ -8,16 +8,21 @@ export const pinAudioToGateway = async (req: express.Request, res: express.Respo
   functions.logger.log(req.params?.space, req.params?.tape, req.params?.id, req.params?.wallet, "params: space, tape, id, wallet");
   functions.logger.log(req.params?.audioRef, "params: audioRef");
   try {
-    const tempFile = await admin.storage().bucket("gs://heds-104d8.appspot.com").file("temp/" + req.params.audioRef).get();
+    const {space, tape, id, wallet, audioRef} = req.params;
+    const tempFile = await admin
+        .storage()
+        .bucket("gs://heds-104d8.appspot.com")
+        .file("temp/" + audioRef)
+        .get();
     const filePath = await tempFile[0].getMetadata().then((res) => res[0].name.split("temp/")[1]);
     const fileStream = tempFile[0].createReadStream();
     const data = new FormData();
     const pinataMetadata = {
-      name: `${req.params.id}-${req.params.wallet}`,
+      name: `${id}-${wallet}`,
       keyvalues: {
-        id: req.params.id,
-        tape: req.params.tape,
-        space: req.params.space,
+        id: id,
+        tape: tape,
+        space: space,
       },
     };
     data.append("pinataMetadata", JSON.stringify({...pinataMetadata}));
@@ -36,7 +41,7 @@ export const pinAudioToGateway = async (req: express.Request, res: express.Respo
         .then(async (response) => {
           functions.logger.log(response.data?.IpfsHash, "response.data.IpfsHash");
           res.locals.audioLinkHash = response.data?.IpfsHash;
-          await tempFile[0].delete();
+          if (audioRef !== "test.mp3") await tempFile[0].delete();
           return res.status(201), res.json({subId: res.locals.subId, subArtIpfsHash: res.locals?.subArtIpfsHash, audioLinkIpfsHash: response.data?.IpfsHash});
         })
         .catch(() => res.status(400));
