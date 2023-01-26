@@ -5,10 +5,9 @@ import FormData from "form-data";
 import axios from "axios";
 
 export const pinAudioToGateway = async (req: express.Request, res: express.Response) => {
-  functions.logger.log(req.params?.space, req.params?.tape, req.params?.id, req.params?.wallet, "params: space, tape, id, wallet");
-  functions.logger.log(req.params?.audioRef, "params: audioRef");
+  const {space, tape, id, wallet, audioRef} = req.params;
+  functions.logger.log(space, tape, id, wallet, audioRef, "params: space, tape, id, wallet, audioRef");
   try {
-    const {space, tape, id, wallet, audioRef} = req.params;
     const tempFile = await admin
         .storage()
         .bucket("gs://heds-104d8.appspot.com")
