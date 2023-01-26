@@ -15,9 +15,9 @@ import hedsBackground from '@/public/hedsbackground.mp4';
 
 export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
-  const widthBreakpoint: boolean = window.innerWidth < 400;
+  const widthBreakpoint: boolean = window.innerWidth < 500;
   const heightBreakpoint: boolean = window.innerHeight < 700;
-  const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.5 : 5;
+  const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.7 : 5;
 
   return (
     <Parallax className="top-div" pages={parallaxPages} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>

@@ -9,6 +9,6 @@ export const HedsTapeTitle = () => (
       </Text>
       <Text className="mt-auto">SERIES</Text>
     </Flex>
-    <Text>curated samples from world renowned creatives</Text>
+    <Text textAlign="center">curated samples from world renowned creatives</Text>
   </>
 );
