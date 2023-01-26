@@ -1,5 +1,6 @@
 import { animated, useSpring, useScroll } from 'react-spring';
 import { Link } from 'react-router-dom';
+import hedsLogo from '@/public/heds_logo.svg';
 
 export const LogoTransform = ({ parallaxRef }: any) => {
   const [props, api] = useSpring(() => ({ width: '600px', transform: 'translateY(0%)' }));
@@ -15,7 +16,7 @@ export const LogoTransform = ({ parallaxRef }: any) => {
   });
   return (
     <Link to="/explore">
-      <animated.img style={props} src="/heds_logo.svg" />
+      <animated.img style={props} src={hedsLogo} />
     </Link>
   );
 };

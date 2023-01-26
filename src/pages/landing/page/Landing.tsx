@@ -1,6 +1,6 @@
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
@@ -10,6 +10,8 @@ import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
 import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
 import { LogoTransform } from '@/pages/landing/components/LogoTransform';
+import hedspin from '@/public/hedspin.gif';
+import hedsBackground from '@/public/hedsbackground.mp4';
 
 export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
@@ -25,7 +27,7 @@ export const Landing = () => {
       />
 
       <ParallaxLayer offset={0}>
-        <video playsInline autoPlay muted loop src="/hedsbackground.mp4" />
+        <video playsInline autoPlay muted loop src={hedsBackground} />
       </ParallaxLayer>
       <ParallaxLayer
         offset={1}
@@ -148,7 +150,7 @@ export const Landing = () => {
       >
         <HedsTapeTitle />
         <Container maxW={['60%', '50%', '40%']}>
-          <img src="/hedspin.gif" />
+          <img src={hedspin} />
         </Container>
       </ParallaxLayer>
 
