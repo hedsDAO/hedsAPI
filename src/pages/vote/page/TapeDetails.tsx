@@ -7,10 +7,11 @@ import { Dispatch, RootState, store } from '@/store';
 import { isEmpty } from '@/utils';
 
 // Components
-import { Box, Container, Divider, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
+import { Box, Container, VStack } from '@chakra-ui/react';
 import { VoteChoices } from '../components/VoteChoices';
-import { VoteAudioTrack } from '@/common/media';
+import { VoteAudioTrack } from '../components/VoteAudioTrack';
 import { TapeDescription } from '../components/TapeDescription';
+import { TapeHeader } from '../components/TapeHeader';
 
 export const TapeDetails = () => {
   const { space, tape, id } = useParams();
@@ -33,35 +34,14 @@ export const TapeDetails = () => {
 
   return (
     <Box minH="100vh">
-      {!isEmpty(allTapes) && (
-        <Container justifyContent={'center'} py={{ base: '2', md: '8' }}>
-          <HStack gap={2}>
-            <Divider borderColor="gray.700" w="full" />
-            {allTapes?.[tape]?.[id]?.name && (
-              <Flex gap={3} alignItems={'baseline'}>
-                <Text fontFamily={"'Space Mono', monospace"} fontSize="lg" fontWeight="semibold" whiteSpace="nowrap" letterSpacing={'widest'}>
-                  {allTapes?.[tape]?.[id]?.name}
-                </Text>
-              </Flex>
-            )}
-
-            <Divider borderColor="gray.700" w="full" />
-          </HStack>
-        </Container>
-      )}
-
-      <TapeDescription proposal={proposal} tapeImage={allTapes?.[tape]?.[id]?.image} />
-
-      {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack choice={currentTrack} />}
-
-      {proposal?.signature ? (
-        <VoteChoices />
-      ) : (
-        // <Divider py={10} borderColor="gray.300" w="8xl" mx="auto" />
-        <Flex minH="50vh" pt="5" justifyContent={'center'} align="center">
-          <Spinner size={'lg'} />
-        </Flex>
-      )}
+      <Container maxW="6xl">
+        <VStack spacing="36px" align="stretch">
+          {!isEmpty(allTapes) && <TapeHeader />}
+          <TapeDescription tapeImage={allTapes?.[tape]?.[id]?.image} />
+          {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack />}
+          {proposal?.signature && <VoteChoices />}
+        </VStack>
+      </Container>
     </Box>
   );
 };
