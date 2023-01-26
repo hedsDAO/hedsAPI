@@ -39,7 +39,9 @@ describe("pinAudioToGateway", () => {
       expect(mockResponse.json).toBeCalled();
     });
     test("returns no hash without media url", async () => {
-      await pinAudioToGateway(Object as unknown as Request, mockResponse);
+      const invalidRequest = mockRequest;
+      invalidRequest.params.audioRef = "";
+      await pinAudioToGateway(invalidRequest, mockResponse);
       expect(mockResponse.status).toBeCalledWith(400);
       expect(mockResponse.locals.subArtIpfsHash).toBeUndefined();
     });
