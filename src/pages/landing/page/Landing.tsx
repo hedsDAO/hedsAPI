@@ -15,9 +15,12 @@ import hedsBackground from '@/public/hedsbackground.mp4';
 
 export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
+  const widthBreakpoint = window.innerWidth < 400;
+  const heightBreakpoint = window.innerHeight < 700;
+  const parallaxPages = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.5 : 5;
 
   return (
-    <Parallax className="top-div" pages={5} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>
+    <Parallax className="top-div" pages={parallaxPages} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>
       {/* Section 1 */}
       <ParallaxLayer
         offset={0}
@@ -26,8 +29,8 @@ export const Landing = () => {
         }}
       />
 
-      <ParallaxLayer offset={0}>
-        <video playsInline autoPlay muted loop src={hedsBackground} />
+      <ParallaxLayer offset={0} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <video style={{ width: '200vw', overflow: 'hidden' }} playsInline autoPlay muted loop src={hedsBackground} />
       </ParallaxLayer>
       <ParallaxLayer
         offset={1}
@@ -47,7 +50,7 @@ export const Landing = () => {
         speed={0.5}
         style={{
           backgroundColor: '#493e68',
-          height: '80%',
+          height: widthBreakpoint ? '100%' : '80%',
         }}
       />
       <ParallaxLayer
@@ -57,7 +60,12 @@ export const Landing = () => {
         }}
       />
 
-      <ParallaxLayer offset={0} speed={1} sticky={{ start: 0, end: 5 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
+      <ParallaxLayer
+        offset={0}
+        speed={1}
+        sticky={{ start: 0, end: 5 }}
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'start', height: '0%' }}
+      >
         <LogoTransform parallaxRef={parallaxRef} />
       </ParallaxLayer>
 
