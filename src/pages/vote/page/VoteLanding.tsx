@@ -5,7 +5,7 @@ import { isEmpty } from '@/utils';
 import { VoteCard } from '@/common/media';
 import { ImageWithOverlay } from '../components/ImageWithOverlay';
 
-const VoteLanding = () => {
+export const VoteLanding = () => {
   const allHedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
   const latestHedsTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
 
@@ -75,5 +75,3 @@ const VoteLanding = () => {
     </Container>
   );
 };
-
-export default VoteLanding;

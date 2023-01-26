@@ -52,7 +52,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
   }, [tape, id]);
 
   return (
-    <>
+    <Box mx="auto">
       <Heading
         px={{ base: 0, lg: 2 }}
         className="animate__animated animate__fadeIn"
@@ -83,7 +83,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                   gap={2}
                   alignItems="center"
                   key={choice.name}
-                  borderRadius="sm"
+                  borderRadius="lg"
                   onClick={() => handleScoreChange(choice)}
                   _hover={
                     selectedTracks.has(choice.walletId)
@@ -121,6 +121,6 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
               );
             })}
       </Stack>
-    </>
+    </Box>
   );
 };
