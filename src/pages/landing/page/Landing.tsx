@@ -15,9 +15,9 @@ import hedsBackground from '@/public/hedsbackground.mp4';
 
 export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
-  const widthBreakpoint = window.innerWidth < 400;
-  const heightBreakpoint = window.innerHeight < 700;
-  const parallaxPages = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.5 : 5;
+  const widthBreakpoint: boolean = window.innerWidth < 400;
+  const heightBreakpoint: boolean = window.innerHeight < 700;
+  const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.5 : 5;
 
   return (
     <Parallax className="top-div" pages={parallaxPages} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>
@@ -39,14 +39,14 @@ export const Landing = () => {
         }}
       />
       <ParallaxLayer
-        offset={2}
+        offset={widthBreakpoint ? 1.8 : 2}
         style={{
           backgroundColor: '#e3e2d4',
           height: '20%',
         }}
       />
       <ParallaxLayer
-        offset={2.35}
+        offset={widthBreakpoint ? 2 : 2.35}
         speed={0.5}
         style={{
           backgroundColor: '#493e68',
@@ -146,7 +146,7 @@ export const Landing = () => {
 
       {/* Section 3 */}
       <ParallaxLayer
-        offset={2}
+        offset={widthBreakpoint ? 1.9 : 2}
         speed={0.2}
         style={{
           display: 'flex',
@@ -163,16 +163,25 @@ export const Landing = () => {
       </ParallaxLayer>
 
       {/* Section 4 */}
-      <ParallaxLayer offset={2.6}>
+      <ParallaxLayer offset={widthBreakpoint ? 2.3 : 2.6}>
         <Divider />
-        <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h="30%">
-          <Box w={['100%', '50%']} h="100%" padding={[null, '5em']} alignItems="center" fontFamily="mono" color="white" paddingTop="3em">
+        <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h={['70%', '30%']} w="100vw">
+          <Box
+            w={['100%', '50%']}
+            h="100%"
+            padding={['1em', '2em', '5em']}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            fontFamily="mono"
+            color="white"
+          >
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={56} size={['2rem', '8rem']} />
+                <Number inputNum={56} size={['2rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" fontSize={['xs', null, 'md']}>
+                <Center h="100%" fontSize={['xs', 'sm', 'md']}>
                   heds offers access without genre restrictions. every tape cycle is open to the public. allowing those new to the digital creative space to
                   experiment freely.
                 </Center>
@@ -182,25 +191,34 @@ export const Landing = () => {
               </GridItem>
             </Grid>
           </Box>
-          <Box w={['100%', '50%']} h="100%" padding={[null, '5em']} paddingTop={[null, '3em']} fontFamily="mono" color="white">
+          <Box
+            w={['100%', '50%']}
+            h="100%"
+            padding={['1em', '2em', '5em']}
+            fontFamily="mono"
+            color="white"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
               <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={420} dollar size={['2rem', '8rem']} />
+                <Number inputNum={420} dollar size={['2rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" marginLeft={[null, '5rem']} textAlign="right" w="50%" fontSize={['xs', null, 'md']}>
+                <Center h="100%" textAlign={[null, 'right']} fontSize={['xs', 'sm', 'md']}>
                   SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
                 </Center>
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
-                <Center h="100%" fontSize="sm">
+                <Center h="100%" fontSize="sm" textAlign="center">
                   average artist earnings per tape
                 </Center>
               </GridItem>
             </Grid>
           </Box>
         </Stack>
-        <Center marginTop="1rem">
+        <Center marginTop={['-2rem', '1rem']}>
           <Box
             as="button"
             p={4}
