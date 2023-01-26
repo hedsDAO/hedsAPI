@@ -164,13 +164,13 @@ export const Landing = () => {
       </ParallaxLayer>
 
       {/* Section 4 */}
-      <ParallaxLayer offset={widthBreakpoint ? 2.3 : 2.5}>
+      <ParallaxLayer offset={widthBreakpoint ? 2.2 : 2.5} speed={0.2}>
         <Divider />
         <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h={['70%', '30%']} w="100vw">
           <Box
             w={['100%', '50%']}
             h="100%"
-            padding={['1em', '2em', '5em']}
+            padding={[null, '2em', '5em']}
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -178,8 +178,8 @@ export const Landing = () => {
             color="white"
           >
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-              <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={56} size={['2rem', null, '4rem', '8rem']} />
+              <GridItem rowSpan={1} colSpan={1} display="flex" justifyContent="center" alignItems="end">
+                <Number inputNum={56} size={['3rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
                 <Center h="100%" fontSize={['xs', 'sm', 'md']}>
@@ -188,14 +188,16 @@ export const Landing = () => {
                 </Center>
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
-                <Center h="100%">unique artists</Center>
+                <Flex display="flex" justify="center" align={['start', 'center']} h={[null, '100%']}>
+                  unique artists
+                </Flex>
               </GridItem>
             </Grid>
           </Box>
           <Box
             w={['100%', '50%']}
             h="100%"
-            padding={['1em', '2em', '5em']}
+            padding={[null, '2em', '5em']}
             fontFamily="mono"
             color="white"
             display="flex"
@@ -203,8 +205,8 @@ export const Landing = () => {
             alignItems="center"
           >
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-              <GridItem rowSpan={1} colSpan={1}>
-                <Number inputNum={420} dollar size={['2rem', null, '4rem', '8rem']} />
+              <GridItem rowSpan={1} colSpan={1} display="flex" justifyContent="center" alignItems="end">
+                <Number inputNum={420} dollar size={['3rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
                 <Center h="100%" textAlign={[null, 'right']} fontSize={['xs', 'sm', 'md']}>
@@ -212,9 +214,9 @@ export const Landing = () => {
                 </Center>
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
-                <Center h="100%" fontSize="sm" textAlign="center">
+                <Flex display="flex" justify="center" align={['start', 'center']} h={[null, '100%']} textAlign="center" fontSize="sm">
                   average artist earnings per tape
-                </Center>
+                </Flex>
               </GridItem>
             </Grid>
           </Box>
@@ -242,8 +244,8 @@ export const Landing = () => {
           h={['80%', null, '100%']}
           width="100%"
           padding={['1rem', null, '5rem']}
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(3, 1fr)"
+          templateRows={['repeat(3, 1fr)', 'repeat(2, 1fr)']}
+          templateColumns={['repeat(2, 1fr)', 'repeat(3, 1fr)']}
           gap={[1, 2, null, 4]}
         >
           <GridItemImage num={207} text="unique minters" icon={IconUsers} />
