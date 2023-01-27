@@ -14,9 +14,9 @@ const WalletButton = () => {
         onClick={() => handleCopy(setIsCopied, wallet)}
         leftIcon={<i className="fa-solid fa-copy text-xs"></i>}
         fontWeight={'light'}
-        bg="purple.50"
+        bg="gray.100"
         border={'1px'}
-        borderColor="purple.100"
+        borderColor="gray.800"
         rounded="sm"
         size="xs"
         width={{base: '24ch', lg: '24ch'}}

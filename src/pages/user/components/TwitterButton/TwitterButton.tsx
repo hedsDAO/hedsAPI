@@ -19,13 +19,13 @@ const TwitterButton = () => {
             dispatch.modalModel.setModalOpen(true);
           }}
           leftIcon={<i className="fa-brands fa-twitter text-xs"></i>}
-          bg="blue.100"
+          bg="gray.100"
           border={'1px'}
-          borderColor="blue.400"
+          borderColor="gray.800"
           rounded='sm'
           fontWeight={'light'}
           size="xs"
-          width={{base: '24ch', lg: 'auto'}}
+          width={'24ch'}
           fontFamily={'"Space Mono", monospace'}
         >
           <Text>verify</Text>
@@ -36,13 +36,13 @@ const TwitterButton = () => {
           isExternal
           href={formatTwitterUrl(twitterHandle)}
           leftIcon={<i className="fa-brands fa-twitter text-xs"></i>}
-          bg="blue.100"
+          bg="gray.100"
           border={'1px'}
-          borderColor="blue.400"
+          borderColor="gray.800"
           rounded='sm'
           fontWeight={'light'}
           size="xs"
-          width={{base: '24ch', lg: 'auto'}}
+          width={'24ch'}
           fontFamily={'"Space Mono", monospace'}
         >
           <Text>@{twitterHandle}</Text>

@@ -31,7 +31,7 @@ const UserTabs = () => {
                 role="button"
                 className={`${
                   index === audioTabIndex ? 'underline underline-offset-[5px] decoration-1' : 'hover-underline-animation text-gray-500'
-                } uppercase tracking-widest text-xs lg:text-sm font-semibold`}
+                } uppercase tracking-widest text-sm lg:text-md font-semibold`}
                 onClick={() => dispatch.userModel.setAudioTabIndex(index)}
                 key={tab + index}
               >
