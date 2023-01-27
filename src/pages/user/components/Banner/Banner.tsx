@@ -7,8 +7,9 @@ const Banner = () => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const banner = useSelector(store.select.userModel.selectCurrentUserBanner);
   return (
-    <Skeleton startColor="purple.100" endColor="purple.200" minHeight={'40'} maxHeight={'40'} isLoaded={isImageLoaded} fadeDuration={2}>
+    <Skeleton minHeight={'40'} maxHeight={'40'} isLoaded={isImageLoaded}>
       <Image
+        borderY={'1px'}
         onLoad={setIsImageLoaded.on}
         data-testid="user-banner"
         shadow={'lg'}
