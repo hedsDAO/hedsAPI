@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { TrackMetadata, TrackType } from '@/models/common';
 import { Dispatch, store } from '@/store';
-import { Center, Flex, Heading, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Badge, Center, Flex, Heading, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { IconTextPlus, IconEye, IconMusic, IconEyeOff } from '@tabler/icons';
 import { formatSubId, isEmpty } from '@/utils';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const AudioTrack = ({ track }: { track: TrackMetadata }) => {
@@ -19,7 +19,7 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
   const allTapes = useSelector(store?.select.tapesModel.selectAllTapes);
   const currentTape = useSelector(store?.select.tapesModel.selectCurrentTape);
   const isTapeVoteComplete = useSelector(store?.select?.tapesModel?.selectIsTapeVoteCompleteBySpaceTapeId([track?.space, track?.tape, track?.id]));
-  // const queue = useSelector(store?.select.audioModel.selectQueue);
+  const queue = useSelector(store?.select.audioModel.selectQueue);
   const dispatch = useDispatch<Dispatch>();
   const handlePlay = (submission: TrackMetadata) => {
     dispatch.audioModel.setIsShowingPlayer(true);
@@ -184,8 +184,10 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
           )}
         </Stack>
       )}
-      {/* <Menu direction="rtl">
+      {pathname !== `/listen/${track.space}/${track.tape}/${track.id}` && isTapeVoteComplete && (
+        <Menu direction="rtl">
           <MenuButton
+            ml={1}
             border={'1px'}
             borderColor={'gray.500'}
             bg={'gray.50'}
@@ -196,12 +198,17 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
             icon={<i className="fa-solid fa-ellipsis"></i>}
             width={'20px'}
           />
-          <MenuList> */}
-      {/* {queue?.length && queue?.includes(track) ? (
+          <MenuList>
+            {queue?.length && queue?.includes(track) ? (
               <></>
             ) : (
-              <MenuItem onClick={() => addToQueue()} fontSize={'sm'} icon={<IconTextPlus height="20px" />}>
-                Add to Queue
+              <MenuItem isDisabled fontSize={'sm'} icon={<IconTextPlus height="20px" />}>
+                <Flex gap={2} alignItems={'center'}>
+                  Add to Queue
+                  <Badge variant={'outline'} fontSize="2xs">
+                    beta
+                  </Badge>
+                </Flex>
               </MenuItem>
             )}
             {track?.wallet === connectedWallet && track.type === TrackType.SUBMISSION && (
@@ -212,12 +219,13 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
               >
                 {track?.public ? 'Hide Track' : 'Make Public'}
               </MenuItem>
-            )} 
-              <MenuItem onClick={() => navigate(`/listen/${track.space}/${track.tape}/${track.id}`)} fontSize={'sm'} icon={<IconMusic height="20px" />}>
+            )}
+            <MenuItem onClick={() => navigate(`/listen/${track.space}/${track.tape}/${track.id}`)} fontSize={'sm'} icon={<IconMusic height="20px" />}>
               View Tape
             </MenuItem>
           </MenuList>
-        </Menu> */}
+        </Menu>
+      )}
     </Flex>
   );
 };
