@@ -17,7 +17,7 @@ const PrimaryButton = ({
     <Button
       isLoading={isLoading}
       onClick={() => onClick()}
-      disabled={disabled}
+      isDisabled={disabled}
       _hover={{ bg: 'green.300', borderColor: 'green.400' }}
       bg="green.200"
       borderColor={'green.300'}
