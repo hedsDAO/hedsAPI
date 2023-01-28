@@ -8,6 +8,7 @@ export const User = () => {
   const dispatch = useDispatch<Dispatch>();
   const currentUser = useSelector(store.select.userModel.selectCurrentUser);
   useEffect(() => {
+    window.scrollTo(0, 0);
     return () => {
       dispatch.userModel.clearCurrentUserState();
     };

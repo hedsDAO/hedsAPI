@@ -26,7 +26,7 @@ const HedsSolo = () => {
         <Flex pt={{ base: 20, lg: 20 }} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
           <Box>
             <Skeleton rounded="3xl" minW={'20rem'} h="11rem" isLoaded={hasImageLoaded}>
-              <Flex mb={'-12'} mx={{base: 6, lg: 5}} position={'relative'} justifyContent={'space-between'}>
+              <Flex mb={'-12'} mx={{base: 4, lg: 5}} position={'relative'} justifyContent={'space-between'}>
                 <Button
                   data-testid="hedsolo-artist-button"
                   as={Link}
@@ -53,6 +53,8 @@ const HedsSolo = () => {
                 outline="solid"
                 inset={'1'}
                 rounded="3xl"
+                minW={{ base: 'full', xl: '30rem' }}
+                minH="11rem"
                 h="11rem"
                 objectFit={'cover'}
                 src={artistsMapping?.[HEDS_SOLO_ARTIST]?.profilePicture}
