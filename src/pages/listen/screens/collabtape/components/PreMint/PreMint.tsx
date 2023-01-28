@@ -21,9 +21,7 @@ const PreMint = () => {
         <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{premint.name}</Text>
         {premint.status === TimelineStatus.CLOSED ? <ClosedBadge /> : premint.status === TimelineStatus.OPEN ? <OpenBadge /> : <UpcomingBadge />}
       </Flex>
-      <Fade>
-        <Text className="mt-2 text-sm tracking-tight text-gray-500">{premint.description}</Text>
-      </Fade>
+      <Text className="mt-2 text-sm tracking-tight text-gray-500">{premint.description}</Text>
       {premint.status === TimelineStatus.CLOSED ? (
         <ClosedDateBox start={start} end={end} />
       ) : premint.status === TimelineStatus.OPEN ? (
