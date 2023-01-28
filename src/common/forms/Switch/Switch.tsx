@@ -8,8 +8,8 @@ const Switch = () => {
   const isClosingPlayer = useSelector(store.select.audioModel.selectIsClosingPlayer);
   return (
     <ChakraSwitch
+      size="sm"
       disabled={isClosingPlayer}
-      colorScheme={'twitter'}
       isChecked={isShowingPlayer && !isClosingPlayer}
       onChange={() => (isShowingPlayer ? dispatch.audioModel.updateIsClosingPlayer() : dispatch.audioModel.setIsShowingPlayer(!isShowingPlayer))}
     />
