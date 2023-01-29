@@ -17,7 +17,7 @@ const GenerateHashForm = () => {
           <Button
             isLoading={loading && currentStep === TwitterStep.GENERATE_HASH}
             loadingText="Generating"
-            disabled={currentStep !== TwitterStep.GENERATE_HASH}
+            isDisabled={currentStep !== TwitterStep.GENERATE_HASH}
             leftIcon={<IconKey height={16} width={16} />}
             size={'sm'}
             onClick={() => dispatch.twitterModel.generateHash(wallet)}

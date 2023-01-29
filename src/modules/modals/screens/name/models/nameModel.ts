@@ -41,13 +41,14 @@ export const nameModel = createModel<RootModel>()({
               ...connectedUserData,
               displayName: displayName,
             };
+            await setDoc(docRef, { wallet: connectedUserWallet.toLowerCase() });
             dispatch.userModel.updateConnectedUserData([connectedUserWallet.toLowerCase(), newUserData]);
             dispatch.userModel.setConnectedUserData(newUserData);
           } else {
+            await setDoc(docRef, { wallet: connectedUserWallet.toLowerCase() });
             dispatch.userModel.createNewUser([connectedUserWallet.toLowerCase(), displayName, isOnOwnPage]);
             dispatch.modalModel.setModalOpen(false);
           }
-          await setDoc(docRef, { wallet: connectedUserWallet.toLowerCase() });
           dispatch.modalModel.setModalOpen(false);
           return this.setIsLoading(false);
         }
