@@ -48,7 +48,9 @@ const SubmitModal = () => {
         <Divider borderColor={'gray.300'} my={5} />
         {isConfirmingReplacement && <WarningPrompt />}
         <Flex gap={2}>
-          <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{hasSubmitted ? 'Exit' : 'Back'}</SecondaryButton>
+          <SecondaryButton disabled={isLoading} onClick={() => dispatch.modalModel.setModalOpen(false)}>
+            {hasSubmitted ? 'Exit' : 'Back'}
+          </SecondaryButton>
           {!isConfirmingReplacement && hasAcceptedPreview && hasAcceptedTerms && file && !hasSubmitted && !hasPreviouslySubmitted && (
             <PrimaryButton
               isLoading={isLoading}
