@@ -37,7 +37,7 @@ const TwitterModal = () => {
         <Flex mb={2} gap={2}>
           <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
           <PrimaryButton
-            disabled={loading}
+            disabled={loading || currentStep !== TwitterStep.LINK_ACCOUNT}
             isLoading={loading}
             onClick={async () => {
               await dispatch.twitterModel.linkTwitterHandleToUser([wallet, userData, twitterHandle]);
