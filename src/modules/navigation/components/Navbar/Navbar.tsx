@@ -28,12 +28,13 @@ const Navbar = (): JSX.Element => {
             <Flex alignItems={'end'} gap={4} mr={1}>
               <Link to="/">
                 <Text
+                  fontFamily={"'Space Mono', monospace"}
                   color={'gray.900'}
                   fontSize={{ base: '2xl', lg: '4xl' }}
                   fontWeight={'medium'}
                   letterSpacing="wide"
                   position={'relative'}
-                  bottom={{ lg: '3px' }}
+                  bottom={{ lg: '3.5px' }}
                 >
                   {brandText}
                 </Text>
@@ -79,11 +80,12 @@ const Navbar = (): JSX.Element => {
                   borderColor="black"
                   minW="fit-content"
                   borderRadius="full"
+                  bg="white"
                   boxSize="2em"
                   alignSelf={'end'}
                   className="-ml-[20%] aspect-square"
                   as={IconButton}
-                  icon={<EllipsisHorizontalIcon className="text-neutral-700 " height="14" width="14" />}
+                  icon={<EllipsisHorizontalIcon height="14" width="14" />}
                 />
               </Flex>
             ) : (
@@ -119,7 +121,14 @@ const Navbar = (): JSX.Element => {
             </Button>
             <Flex alignItems={'end'} gap={4} mr={1}>
               <Link to="/">
-                <Text color={'gray.900'} fontSize={{ base: 'xl', lg: '4xl' }} fontWeight={'medium'} letterSpacing="wide" className="relative lg:bottom-[3px]">
+                <Text
+                  color={'gray.900'}
+                  fontFamily={"'Space Mono', monospace"}
+                  fontSize={{ base: 'xl', lg: '4xl' }}
+                  fontWeight={'medium'}
+                  letterSpacing="wide"
+                  className="relative bottom-[0.5px] lg:bottom-[3.5px]"
+                >
                   {brandText}
                 </Text>
               </Link>
@@ -145,11 +154,12 @@ const Navbar = (): JSX.Element => {
                   borderColor="black"
                   minW="fit-content"
                   borderRadius="full"
+                  bg="white"
                   boxSize="2em"
                   alignSelf={'end'}
                   className="-ml-[20%] aspect-square"
                   as={IconButton}
-                  icon={<EllipsisHorizontalIcon className="text-neutral-700 " height="14" width="14" />}
+                  icon={<EllipsisHorizontalIcon height="14" width="14" />}
                 />
               </Flex>
             ) : (
