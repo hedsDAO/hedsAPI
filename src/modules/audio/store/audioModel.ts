@@ -43,46 +43,46 @@ export const audioModel = createModel<RootModel>()({
   } as AudioState,
   selectors: (slice, createSelector, hasProps) => ({
     selectIsLoading() {
-      return slice((audioModel) => audioModel.isLoading);
+      return slice((audioModel) => audioModel?.isLoading);
     },
     selectIsShowingPlayer() {
-      return slice((audioModel) => audioModel.isShowingPlayer);
+      return slice((audioModel) => audioModel?.isShowingPlayer);
     },
     selectIsClosingPlayer() {
-      return slice((audioModel) => audioModel.isClosingPlayer);
+      return slice((audioModel) => audioModel?.isClosingPlayer);
     },
     selectIsTrackPlaying() {
-      return slice((audioModel) => audioModel.isPlaying);
+      return slice((audioModel) => audioModel?.isPlaying);
     },
     selectActiveTrack() {
-      return slice((audioModel) => audioModel.activeTrack);
+      return slice((audioModel) => audioModel?.activeTrack);
     },
     selectActiveTrackAudio() {
-      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack.audio);
+      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack?.audio);
     },
     selectActiveTrackStats() {
-      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack.stats);
+      return createSelector(this.selectActiveTrack, (activeTrack: TrackMetadata) => activeTrack?.stats);
     },
     selectListeningHistory() {
-      return slice((audioModel) => audioModel.history);
+      return slice((audioModel) => audioModel?.history);
     },
     selectIsShowingQueue() {
-      return slice((audioModel) => audioModel.isShowingQueue);
+      return slice((audioModel) => audioModel?.isShowingQueue);
     },
     selectQueue() {
-      return slice((audioModel) => audioModel.queue);
+      return slice((audioModel) => audioModel?.queue);
     },
     selectIsQueueEmpty() {
       return createSelector(this.selectQueue, (queue: TrackMetadata[]) => (queue.length ? false : true));
     },
     selectAudioVolume() {
-      return slice((audioModel) => audioModel.volume);
+      return slice((audioModel) => audioModel?.volume);
     },
     selectTimerSeconds() {
-      return slice((audioModel) => audioModel.timerSeconds);
+      return slice((audioModel) => audioModel?.timerSeconds);
     },
     selectCountPlayThreshold() {
-      return slice((audioModel) => audioModel.countPlayThreshold);
+      return slice((audioModel) => audioModel?.countPlayThreshold);
     },
   }),
   reducers: {
@@ -136,7 +136,7 @@ export const audioModel = createModel<RootModel>()({
     setCountPlayThreshold: (state, duration: number) => ({ ...state, countPlayThreshold: Math.ceil(duration / 4) }),
     setDuration: (state, duration: number) => ({ ...state, duration }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
-    setIsClosingPlayer: (state, isClosingPlayer: boolean) => ({...state, isClosingPlayer: isClosingPlayer}),
+    setIsClosingPlayer: (state, isClosingPlayer: boolean) => ({ ...state, isClosingPlayer: isClosingPlayer }),
     clearAudioState: (state) => {
       const newState: AudioState = {
         isPlaying: false,
@@ -155,7 +155,7 @@ export const audioModel = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     async updateTrackMetadataStats({ track, walletId, newStats }: { track: TrackMetadata; walletId: string; newStats: TrackStats }) {
-      console.log('here')
+      console.log('here');
       const db = getFirestore();
       const userRef = doc(db, 'users', walletId);
       const userSnap = await (await getDoc(userRef)).data();
@@ -171,7 +171,7 @@ export const audioModel = createModel<RootModel>()({
         } else if (type === TrackType.SAMPLE) {
           updatedUserData.samples[space][tape][id] = { ...track, stats: newStats };
         }
-        console.log(updatedUserData, 'updated')
+        console.log(updatedUserData, 'updated');
         try {
           const { role } = updatedUserData;
           if (role >= UserRoles.USER) await updateDoc(doc(db, 'users', walletId), { ...updatedUserData });
