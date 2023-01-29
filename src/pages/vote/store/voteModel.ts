@@ -34,6 +34,9 @@ export const voteModel = createModel<RootModel>()({
     selectProposal() {
       return slice((voteModel) => voteModel?.proposal);
     },
+    selectAllProposals() {
+      return slice((voteModel) => voteModel?.allProposals);
+    },
     selectCurrentTrack() {
       return slice((voteModel) => voteModel?.currentTrack);
     },
@@ -141,7 +144,6 @@ export const voteModel = createModel<RootModel>()({
       const { getAllProposals } = createClient();
       try {
         const allProposals = await (await getAllProposals('proposals')).data;
-        console.log('all proposals', allProposals);
         this.setAllProposals(allProposals);
       } catch (error) {
         console.log(error);
