@@ -98,7 +98,7 @@ export const settingsModel = createModel<RootModel>()({
     },
     async deleteBanner([banner, bannerPreview]: [string, string]) {
       if (banner) {
-        const defaultImageRef = ref(storage, 'banners/' + getCurrentImagePath('.jpg', `0x${'0'.repeat(30)}`));
+        const defaultImageRef = ref(storage, 'banners/' + getCurrentImagePath('.png', `0x${'0'.repeat(30)}`));
         const defaultImageUrl = await getDownloadURL(defaultImageRef);
         this.setBanner(defaultImageUrl);
         this.setBannerPreview(defaultImageUrl);

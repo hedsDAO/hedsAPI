@@ -11,12 +11,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import hedImage from '../../../public/heddot.png';
 
-const VoteLandingMock = () => {
+export const VoteLanding = () => {
   const dispatch = useDispatch<Dispatch>();
   const allHedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
   const allProposals = useSelector(store.select.voteModel.selectAllProposals);
   var settings = { dots: true, autoplay: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1 };
-  
+
   useEffect(() => {
     dispatch.voteModel.getAllProposals();
   }, []);
@@ -58,4 +58,3 @@ const VoteLandingMock = () => {
     </Fragment>
   );
 };
-export default VoteLandingMock;

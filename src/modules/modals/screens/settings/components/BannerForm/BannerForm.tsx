@@ -27,13 +27,14 @@ const BannerForm = () => {
         gap={2}
         alignItems={'start'}
       >
-        <Image h="16" width={'lg'} borderRadius={'md'} objectFit={'fill'} src={bannerPreview || profileChanges?.banner || banner} />
+        <Image border="1px" h="16" width={'lg'} borderRadius={'md'} objectFit={'fill'} src={bannerPreview || profileChanges?.banner || banner} />
         <Flex pt={1.5} width={{ base: 'full', sm: 'auto' }} gap={2}>
           <input ref={inputRef} onChange={(e) => dispatch.settingsModel.handleBannerUpload(e)} type="file" className="hidden" />
           <PrimaryButton disabled={isLoading} isLoading={isLoading} onClick={() => handleClick()} size="xs">
             {UPLOAD_BUTTON_TEXT}
           </PrimaryButton>
           <WarningButton
+            disabled={profileChanges.banner?.includes(`0x${'0'.repeat(30)}`)}
             size="xs"
             onClick={() => {
               if (bannerFile) inputRef.current.value = '';

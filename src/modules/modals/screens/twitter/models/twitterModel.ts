@@ -52,7 +52,6 @@ export const twitterModel = createModel<RootModel>()({
       axios
         .get(url)
         .then((res) => {
-          console.log(res);
           if (res.data.validated) {
             this.setTwitterHandle(twitterHandle);
             setTimeout(() => {
@@ -62,7 +61,6 @@ export const twitterModel = createModel<RootModel>()({
           }
         })
         .catch(() => {
-          console.log('here');
           this.setLoading(false);
           this.setError('there was a problem verifying your tweet');
         });
