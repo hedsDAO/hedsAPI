@@ -155,7 +155,6 @@ export const audioModel = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     async updateTrackMetadataStats({ track, walletId, newStats }: { track: TrackMetadata; walletId: string; newStats: TrackStats }) {
-      console.log('here');
       const db = getFirestore();
       const userRef = doc(db, 'users', walletId);
       const userSnap = await (await getDoc(userRef)).data();
@@ -171,7 +170,6 @@ export const audioModel = createModel<RootModel>()({
         } else if (type === TrackType.SAMPLE) {
           updatedUserData.samples[space][tape][id] = { ...track, stats: newStats };
         }
-        console.log(updatedUserData, 'updated');
         try {
           const { role } = updatedUserData;
           if (role >= UserRoles.USER) await updateDoc(doc(db, 'users', walletId), { ...updatedUserData });

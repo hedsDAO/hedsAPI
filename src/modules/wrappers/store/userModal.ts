@@ -263,7 +263,6 @@ export const userModel = createModel<RootModel>()({
       this.setCurrentUserData({ ...updatedUser });
     },
     async updateCurrentUserCollection([wallet, data, allTapeData]: [string, Result[], TapeData[]]) {
-      console.log(wallet, data, 'here');
       const collection = formatUserCollection(data, allTapeData);
       const docSnap = await getDoc(doc(db, 'users', wallet));
       const userData = docSnap.exists() ? docSnap.data() : null;
