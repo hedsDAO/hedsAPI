@@ -61,7 +61,7 @@ const Navbar = (): JSX.Element => {
             </UnorderedList>
           </Flex>
           <Box alignSelf={'center'} alignItems={'center'} gap={5} display={{ base: 'none', lg: 'flex' }}>
-            {isConnected && <Switch />}
+            <Switch />
             {/* TODO: add user / wallet state logic and functionality  */}
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
@@ -135,7 +135,7 @@ const Navbar = (): JSX.Element => {
             </Flex>
           </Flex>
           <Flex gap={4} alignItems={'center'} alignSelf={'center'}>
-            {isConnected && <Switch />}
+           <Switch />
             {/* TODO: add user / wallet state logic and functionality  */}
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
