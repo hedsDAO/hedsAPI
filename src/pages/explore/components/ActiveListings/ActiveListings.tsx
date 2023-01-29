@@ -21,7 +21,7 @@ const ActiveListings = () => {
       </Text>
       {latestSecondaryListings && !isLoading ? (
         <>
-          <SimpleGrid data-testid="explore-listings-container" justifyItems={{ base: 'start', lg: 'center' }} gap={4} my={8} columns={{ base: 2, xl: 5 }}>
+          <SimpleGrid data-testid="explore-listings-container" justifyItems={{ base: 'start', lg: 'center' }} gap={4} my={8} columns={{ base: 2, lg: 5 }}>
             {latestSecondaryListings
               .flat()
               .slice(0, amountOfListings)
