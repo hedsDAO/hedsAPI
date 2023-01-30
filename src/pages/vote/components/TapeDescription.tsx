@@ -3,12 +3,14 @@ import { store } from '@/store';
 import { ProposalState } from 'hedsvote';
 import { formatWallet } from '@/utils';
 import { Avatar, Box, Badge, Divider, Flex, HStack, Stack, Square, Text } from '@chakra-ui/react';
+import { OLD_TAPES, HOW_VOTING_WORKS, ABOUT_VOTING, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
 
 interface OwnProps {
   tapeImage: string;
+  tapeId?: string;
 }
 
-export const TapeDescription = ({ tapeImage }: OwnProps) => {
+export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
   const proposal = useSelector(store.select.voteModel.selectProposal);
 
   const handleProposalState = (state: ProposalState) => {
@@ -16,6 +18,8 @@ export const TapeDescription = ({ tapeImage }: OwnProps) => {
     if (state === ProposalState.CLOSED) return <Badge colorScheme={'red'}>CLOSED</Badge>;
     return <Badge colorScheme={'yellow'}>PENDING</Badge>;
   };
+
+  const isOldTape = OLD_TAPES.includes(tapeId);
 
   return (
     <Flex w="100%" flexDirection={{ base: 'column', md: 'row' }} justifyContent="space-evenly">
@@ -67,12 +71,11 @@ export const TapeDescription = ({ tapeImage }: OwnProps) => {
         mt={{ base: '16px', md: '0' }}
       >
         <Text fontSize="lg" fontWeight="medium">
-          How voting works
+          {HOW_VOTING_WORKS}
         </Text>
         <Divider borderColor="gray.700" w="full" py={{ base: '1', md: '2' }} />
         <Text fontSize="xs" color="muted" pt="2">
-          The community votes on their favorite submissions. Voting power is determined from hedsTAPE(s) ownership. hedsTAPE(s) with a higher ratio of owners to
-          tapes minted in the specific collection will have a higher voting power.
+          {isOldTape ? ABOUT_VOTING_OLD_TAPES : ABOUT_VOTING}
         </Text>
       </Box>
     </Flex>
