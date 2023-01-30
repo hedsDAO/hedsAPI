@@ -24,8 +24,8 @@ export const connectWalletConnectSuccess = () => ReactGA.event({ category: 'Conn
 
 // Explore
 
-export const clickFirstFeatureCardLink = () => ReactGA.event({ category: 'Explore', action: 'Click First Feature Card Link' });
-export const clickSecondFeatureCardLink = () => ReactGA.event({ category: 'Explore', action: 'Click Second Feature Card Link' });
+export const clickHedsSoloFeatureLink = () => ReactGA.event({ category: 'Explore', action: 'Click Heds Solo Feature Card Link' });
+export const clickNewestTapeFeatureLink = () => ReactGA.event({ category: 'Explore', action: 'Click Newest Tape Feature Card Link' });
 export const clickSeeAllArtist = () => ReactGA.event({ category: 'Explore', action: 'Click See All Artist' });
 export const clickLinkToArtistFromMostAppearancesCard = () => ReactGA.event({ category: 'Explore', action: 'Click Link To Artist From Most Appearances Card' });
 export const clickLinkToTapeFromMostAppearancesCard = () => ReactGA.event({ category: 'Explore', action: 'Click Link To Tape From Most Appearances Card' });
