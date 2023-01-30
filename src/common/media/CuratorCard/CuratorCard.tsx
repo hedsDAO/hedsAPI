@@ -14,10 +14,10 @@ const CuratorCard = ({ curator }: { curator: User }) => {
       role="button"
       onClick={() => navigate('/u/' + curator.wallet)}
       key={curator.wallet + curator.banner}
-      className="group bg-gray-50 border border-neutral-900 relative col-span-1 rounded-sm bs-preset-1 m-2"
+      className="group bg-fuchsia-50 border border-neutral-900 relative col-span-1 rounded-sm bs-preset-1 m-2"
     >
       <Flex direction={'column'} className="col-span-1">
-        <Skeleton rounded="sm" m={2} fadeDuration={3} className="col-span-1" isLoaded={!isLoading && isImageLoaded}>
+        <Skeleton rounded="sm" m={2} className="col-span-1" isLoaded={!isLoading && isImageLoaded}>
           <Image
             onLoad={() => setIsImageLoaded.on()}
             maxH={{ base: '10rem', lg: '10rem' }}
