@@ -1,6 +1,7 @@
 import { TapeData } from '@/models/common';
 import { Grid, useBoolean, Flex, Heading, GridItem, Skeleton, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 export const LandingAllVotes = ({ allHedsTapes }: { allHedsTapes: { [tapeId: string]: TapeData } }) => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
@@ -26,6 +27,7 @@ export const LandingAllVotes = ({ allHedsTapes }: { allHedsTapes: { [tapeId: str
             ?.map((tape, index) => {
               return (
                 <GridItem
+                  onClick={() => gaEvents.clickVoteCardFromVoteLanding(tape.name)}
                   key={tape.contract + index}
                   as={Link}
                   className="group transition-all ease-in-out bs-preset-1"
