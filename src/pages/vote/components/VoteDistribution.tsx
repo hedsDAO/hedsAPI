@@ -4,6 +4,8 @@ import { Fragment, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Choice } from 'hedsvote';
+import { OLD_TAPES } from '@pages/vote/store/constants';
+
 // export function percentageOfTotal(i: any, values: any, total: any) {
 //   const reducedTotal: any = total.reduce((a: any, b: any) => a + b, 0);
 //   const percent = (values[i] / reducedTotal) * 100;
@@ -63,64 +65,97 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
       >
         RESULTS
       </Heading>
-      <Stack my={3}>
-        {voteResults &&
-          choices &&
-          choices
-            .sort((a, b) => +round(resultsByPercentage(voteResults)[b.id], 2) - +round(resultsByPercentage(voteResults)[a.id], 2))
-            .map((choice, i) => {
-              return (
-                <Flex
-                  p={2}
-                  border="1px"
-                  rounded="sm"
-                  shadow="sm"
-                  borderColor={selectedTracks.has(choice.walletId) ? 'purple.500' : 'gray.500'}
-                  backgroundColor={selectedTracks.has(choice.walletId) ? 'purple.200' : 'white'}
-                  justifyContent={'space-between'}
-                  w="full"
-                  minW="full"
-                  gap={2}
-                  alignItems="center"
-                  key={choice.name}
-                  borderRadius="lg"
-                  onClick={() => handleScoreChange(choice)}
-                  _hover={
-                    selectedTracks.has(choice.walletId)
-                      ? { borderColor: 'purple.800', bg: 'purple.100', cursor: 'pointer' }
-                      : { borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }
-                  }
-                >
-                  <HStack w={{ base: '50%', lg: '40%' }}>
-                    <Avatar size="sm" src={choice.image} />
-                    <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'sm'}>
-                      {choice.name}
-                    </Text>
-                  </HStack>
-                  <Flex alignItems={'center'} gap={2} pr={2} w={{ base: '50%', lg: '60%' }}>
-                    <Flex alignItems={'center'} w={{ base: '60%', lg: '80%' }}>
-                      {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
-                        <Fragment>
-                          <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
-                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" roundedRight="full" />
-                        </Fragment>
-                      ) : (
-                        <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" rounded="full" />
-                      )}
+      {OLD_TAPES.includes(id) ? (
+        <Stack my={3}>
+          {choices.map((choice, i) => {
+            return (
+              <Flex
+                p={2}
+                border="1px"
+                rounded="sm"
+                shadow="sm"
+                borderColor={'gray.500'}
+                backgroundColor={'white'}
+                justifyContent={'space-between'}
+                w="full"
+                minW="full"
+                gap={2}
+                alignItems="center"
+                key={choice.name}
+                borderRadius="lg"
+                onClick={() => handleScoreChange(choice)}
+                _hover={{ borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }}
+              >
+                <HStack w={{ base: '50%', lg: '40%' }}>
+                  <Avatar size="sm" src={choice.image} />
+                  <Text textColor={'gray.800'} fontSize={'sm'}>
+                    {choice.name}
+                  </Text>
+                </HStack>
+              </Flex>
+            );
+          })}
+        </Stack>
+      ) : (
+        <Stack my={3}>
+          {voteResults &&
+            choices &&
+            choices
+              .sort((a, b) => +round(resultsByPercentage(voteResults)[b.id], 2) - +round(resultsByPercentage(voteResults)[a.id], 2))
+              .map((choice, i) => {
+                return (
+                  <Flex
+                    p={2}
+                    border="1px"
+                    rounded="sm"
+                    shadow="sm"
+                    borderColor={selectedTracks.has(choice.walletId) ? 'purple.500' : 'gray.500'}
+                    backgroundColor={selectedTracks.has(choice.walletId) ? 'purple.200' : 'white'}
+                    justifyContent={'space-between'}
+                    w="full"
+                    minW="full"
+                    gap={2}
+                    alignItems="center"
+                    key={choice.name}
+                    borderRadius="lg"
+                    onClick={() => handleScoreChange(choice)}
+                    _hover={
+                      selectedTracks.has(choice.walletId)
+                        ? { borderColor: 'purple.800', bg: 'purple.100', cursor: 'pointer' }
+                        : { borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }
+                    }
+                  >
+                    <HStack w={{ base: '50%', lg: '40%' }}>
+                      <Avatar size="sm" src={choice.image} />
+                      <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'sm'}>
+                        {choice.name}
+                      </Text>
+                    </HStack>
+                    <Flex alignItems={'center'} gap={2} pr={2} w={{ base: '50%', lg: '60%' }}>
+                      <Flex alignItems={'center'} w={{ base: '60%', lg: '80%' }}>
+                        {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
+                          <Fragment>
+                            <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
+                            <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" roundedRight="full" />
+                          </Fragment>
+                        ) : (
+                          <Box w={`${100 - round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="gray.200" h="2" rounded="full" />
+                        )}
+                      </Flex>
+                      <Text
+                        textAlign={'right'}
+                        w={{ base: '40%', lg: '20%' }}
+                        textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
+                        fontSize={'sm'}
+                      >
+                        {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
+                      </Text>
                     </Flex>
-                    <Text
-                      textAlign={'right'}
-                      w={{ base: '40%', lg: '20%' }}
-                      textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
-                      fontSize={'sm'}
-                    >
-                      {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
-                    </Text>
                   </Flex>
-                </Flex>
-              );
-            })}
-      </Stack>
+                );
+              })}
+        </Stack>
+      )}
     </Box>
   );
 };

@@ -39,7 +39,7 @@ export const TapeDetails = () => {
           {!isEmpty(allTapes) && <TapeHeader />}
           <TapeDescription tapeImage={allTapes?.[tape]?.[id]?.image} tapeId={id} />
           {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack />}
-          {proposal?.signature && proposal?.scores && <VoteChoices />}
+          {proposal?.signature && <VoteChoices />}
         </VStack>
       </Container>
     </Box>
