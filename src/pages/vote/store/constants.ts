@@ -1,3 +1,10 @@
+/**
+ * @component <TapeHeader/>
+ * @const OLD_TAPES : Tapes 1-3 that does not contain historical voting data.
+ * @const HOW_VOTING_WORKS : header for voting process.
+ * @const ABOUT_VOTING : description for voting process.
+ * @const ABOUT_VOTING_OLD_TAPES : description for voting process for old tapes.
+ */
 export const OLD_TAPES = ['1', '2', '3'];
 
 export const HOW_VOTING_WORKS = 'How voting works';
