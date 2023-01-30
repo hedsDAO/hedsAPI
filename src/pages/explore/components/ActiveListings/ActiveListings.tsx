@@ -4,6 +4,7 @@ import { Dispatch, store } from '@/store';
 import { Box, Button, Flex, Heading, Icon, IconButton, Image, Link, SimpleGrid, Spinner, Stack, Text, useBreakpointValue } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { LISTINGS_BUTTON, LISTINGS_DESC, LISTINGS_TITLE } from '@/pages/explore/store/constants';
+import * as gaEvents from '@/events';
 
 const ActiveListings = () => {
   const amountOfListings = useBreakpointValue({ base: 4, lg: 5 });
@@ -54,7 +55,7 @@ const ActiveListings = () => {
                         <Text letterSpacing={'tight'} fontFamily={"'Space Mono', monospace"} fontSize="lg" color="gray.600">
                           {listing.price} Ξ
                         </Text>
-                        <Button as={Link} href={listing.link} target="_blank" px={2} variant={'explore'} size="xs">
+                        <Button onClick={() => gaEvents.clickSeeAllActiveListings()} as={Link} href={listing.link} target="_blank" px={2} variant={'explore'} size="xs">
                           <Icon color="gray.600" h="4" w="4" as={IconArrowRight}></Icon>
                         </Button>
                       </Flex>
@@ -73,7 +74,10 @@ const ActiveListings = () => {
                   className="hover-underline-animation"
                   fontSize="xs"
                   textColor={'gray.600'}
-                  onClick={() => dispatch.exploreModel.getLatestSecondaryListings(true)}
+                  onClick={() => {
+                    dispatch.exploreModel.getLatestSecondaryListings(true);
+                    gaEvents.clickSeeAllActiveListings();
+                  }}
                   role="button"
                 >
                   {LISTINGS_BUTTON}

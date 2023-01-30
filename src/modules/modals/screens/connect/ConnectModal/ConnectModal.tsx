@@ -4,7 +4,7 @@ import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { WalletConnectIcon, MetamaskIcon } from '@/common/icons';
 import { useAccount, useConnect } from 'wagmi';
 import { IconLink } from '@tabler/icons';
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Text, useBoolean } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import * as gaEvents from '@/events';
 
@@ -12,13 +12,19 @@ const ConnectModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, nextModal } = useSelector((state: RootState) => state.modalModel);
   const { isConnected, address } = useAccount();
+  const [ isMetaMask, setIsMetaMask] = useBoolean(true)
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
 
   useEffect(() => {
     if (isConnected) {
       dispatch.userModel.getConnectedUserData(address.toLowerCase());
-      if (nextModal) dispatch.modalModel.setModal(nextModal);
-      else dispatch.modalModel.setModalOpen(false);
+      if (nextModal) { 
+        dispatch.modalModel.setModal(nextModal);
+      }
+      else {
+        dispatch.modalModel.setModalOpen(false);
+        isMetaMask ? gaEvents.connectMetamaskSuccess() : gaEvents.connectWalletConnectSuccess();
+      };
     }
   }, [isConnected]);
 
@@ -34,7 +40,13 @@ const ConnectModal = () => {
               disabled={!connector.ready || isLoading}
               onClick={() => {
                 connect({ connector });
-                connector.name === 'MetaMask' ? gaEvents.connectMetamask() : gaEvents.connectWalletConnect();
+                if (connector.name === 'MetaMask') {
+                  gaEvents.connectMetamask();
+                  setIsMetaMask.on();
+                 } else {
+                  gaEvents.connectWalletConnect();
+                  setIsMetaMask.off();
+                 } 
               }}
             >
               <Flex gap={2}>
