@@ -45,25 +45,30 @@ export const voteModel = createModel<RootModel>()({
     },
     selectProposalChoices() {
       return slice((voteModel) => {
-        const choices = voteModel?.choices || []
-        return choices ? choices.sort((a,b) => a.id - b.id) : [];
-     });
+        const choices = voteModel?.choices || [];
+        return choices ? choices.sort((a, b) => a.id - b.id) : [];
+      });
     },
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
     selectQuadraticVoteScores() {
-      return createSelector(this.selectProposal, this.selectQuadraticVotes, this.selectScores, (proposal: Proposal, votes: QuadraticVote[], scores: number[]) => {
-        if (scores) return scores;
-        if (votes) {
-          const { choices } = proposal;
-          const strategies = Object.values(proposal.strategies);
-          const { getScores } = quadratic({ choices, votes, strategies });
-          return getScores();
-        } else {
-          return null;
-        }
-      });
+      return createSelector(
+        this.selectProposal,
+        this.selectQuadraticVotes,
+        this.selectScores,
+        (proposal: Proposal, votes: QuadraticVote[], scores: number[]) => {
+          if (scores) return scores;
+          if (votes) {
+            const { choices } = proposal;
+            const strategies = Object.values(proposal.strategies);
+            const { getScores } = quadratic({ choices, votes, strategies });
+            return getScores();
+          } else {
+            return null;
+          }
+        },
+      );
     },
     selectUserVotingPower() {
       return createSelector(this.selectProposal, (proposal: Proposal) => {
