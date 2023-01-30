@@ -21,6 +21,5 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
-  modulePathIgnorePatterns: ["<rootDir>/functions/"],
-
+  modulePathIgnorePatterns: ['<rootDir>/functions/'],
 };
