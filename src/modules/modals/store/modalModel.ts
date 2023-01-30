@@ -27,5 +27,10 @@ export const modalModel = createModel<RootModel>()({
     setModalOpen: (state, isOpen: boolean) => ({ ...state, isOpen }),
     setNextModal: (state, nextModal: Modals) => ({ ...state, nextModal }),
   },
+  selectors: (slice) => ({
+    selectModal: () => slice((state) => state.currentModal),
+    selectModalOpen: () => slice((state) => state.isOpen),
+    selectNextModal: () => slice((state) => state.nextModal),
+  }),
   effects: () => ({}),
 });

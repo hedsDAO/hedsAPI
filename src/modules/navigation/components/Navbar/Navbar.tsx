@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
-
+import { ConnectKitButton } from 'connectkit';
 import { Switch } from '@/common/forms';
 import { Dispatch, store } from '@/store';
 import { Avatar, Badge, Box, Button, Container, Divider, Flex, IconButton, ListItem, ScaleFade, Text, UnorderedList } from '@chakra-ui/react';
 import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import { NavLink } from '@modules/navigation/store/navigationModel';
 import { Modals } from '@/modules/modals/store/modalModel';
+import { useEffect } from 'react';
 
 const Navbar = (): JSX.Element => {
   const { isConnected, address } = useAccount();
@@ -18,7 +19,15 @@ const Navbar = (): JSX.Element => {
   const brandText: string = useSelector(store.select.navigationModel.selectBrandText);
   const navLinks: NavLink[] = useSelector(store.select.navigationModel.selectAllNavLinks);
   const profilePicture: string = useSelector(store.select.userModel.selectConnectedUserProfilePicture);
-  const isShowingPlayer = useSelector(store.select.audioModel.selectIsShowingPlayer);
+  const nextModal = useSelector(store.select.modalModel.selectNextModal);
+
+  useEffect(() => {
+    if (isConnected) {
+      dispatch.userModel.getConnectedUserData(address.toLowerCase());
+      if (nextModal) dispatch.modalModel.setModal(nextModal);
+      else dispatch.modalModel.setModalOpen(false);
+    }
+  }, [isConnected]);
 
   return (
     <Container minW="100vw">
@@ -62,7 +71,6 @@ const Navbar = (): JSX.Element => {
           </Flex>
           <Box alignSelf={'center'} alignItems={'center'} gap={5} display={{ base: 'none', lg: 'flex' }}>
             <Switch />
-            {/* TODO: add user / wallet state logic and functionality  */}
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
                 <Avatar
@@ -89,20 +97,24 @@ const Navbar = (): JSX.Element => {
                 />
               </Flex>
             ) : (
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
+              <ConnectKitButton.Custom>
+                {({ isConnected, isConnecting, show, hide, address, ensName }) => {
+                  return (
+                    <Button
+                      onClick={show}
+                      isLoading={isConnecting}
+                      rounded="full"
+                      px={{ base: 4, lg: 5 }}
+                      size="sm"
+                      color="white"
+                      bg={isConnected ? 'unset' : 'black'}
+                      className={isConnected && 'gradient'}
+                    >
+                      connect
+                    </Button>
+                  );
                 }}
-                rounded="full"
-                px={{ base: 4, lg: 5 }}
-                size="sm"
-                color="white"
-                bg={isConnected ? 'unset' : 'black'}
-                className={isConnected && 'gradient'}
-              >
-                connect
-              </Button>
+              </ConnectKitButton.Custom>
             )}
           </Box>
         </Flex>
@@ -136,7 +148,6 @@ const Navbar = (): JSX.Element => {
           </Flex>
           <Flex gap={4} alignItems={'center'} alignSelf={'center'}>
             <Switch />
-            {/* TODO: add user / wallet state logic and functionality  */}
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
                 <Avatar
@@ -163,23 +174,24 @@ const Navbar = (): JSX.Element => {
                 />
               </Flex>
             ) : (
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
+              <ConnectKitButton.Custom>
+                {({ isConnected, isConnecting, show, hide, address, ensName }) => {
+                  return (
+                    <Button
+                      onClick={show}
+                      isLoading={isConnecting}
+                      rounded="full"
+                      px={{ base: 4, lg: 5 }}
+                      size="sm"
+                      color="white"
+                      bg={isConnected ? 'unset' : 'black'}
+                      className={isConnected && 'gradient'}
+                    >
+                      connect
+                    </Button>
+                  );
                 }}
-                rounded="full"
-                px={{ base: 4, lg: 5 }}
-                size="sm"
-                fontSize={{ base: 'xs', lg: 'sm' }}
-                fontWeight={{ base: 'normal', lg: 'medium' }}
-                letterSpacing={'wide'}
-                color="white"
-                bg={isConnected ? 'unset' : 'black'}
-                className={isConnected && 'gradient'}
-              >
-                connect
-              </Button>
+              </ConnectKitButton.Custom>
             )}
           </Flex>
         </Flex>
