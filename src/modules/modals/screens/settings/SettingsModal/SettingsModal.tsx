@@ -15,7 +15,7 @@ const SettingsModal = () => {
   const isSettingsLoading = useSelector((state: RootState) => state.loading.models.settingsModel);
   const isUserLoading = useSelector((state: RootState) => state.loading.models.userModel);
   const { profileChanges } = useSelector((state: RootState) => state.settingsModel);
-  const profileModalData = useSelector((state: RootState) => state.settingsModel);  
+  const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
     return () => {
@@ -26,7 +26,7 @@ const SettingsModal = () => {
 
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
-  }, [connectedUser])
+  }, [connectedUser]);
 
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>

@@ -22,7 +22,7 @@ const TwitterButton = () => {
           bg="gray.100"
           border={'1px'}
           borderColor="gray.800"
-          rounded='sm'
+          rounded="sm"
           fontWeight={'light'}
           size="xs"
           width={'24ch'}
@@ -39,7 +39,7 @@ const TwitterButton = () => {
           bg="gray.100"
           border={'1px'}
           borderColor="gray.800"
-          rounded='sm'
+          rounded="sm"
           fontWeight={'light'}
           size="xs"
           width={'24ch'}

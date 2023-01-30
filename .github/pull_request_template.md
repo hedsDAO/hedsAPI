@@ -1,6 +1,5 @@
 #### [HED-0] : Title
 
-__Description:__ 
+**Description:**
 
-
-#### Screens (if applicable): 
+#### Screens (if applicable):
