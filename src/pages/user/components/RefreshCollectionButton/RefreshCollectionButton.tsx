@@ -24,7 +24,7 @@ const RefreshCollectionButton = () => {
     watch: true,
     enabled: false,
     structuralSharing: true,
-    onSuccess(data) {
+    onSuccess(data: Result[]) {
       handleUpdateCollection(data);
     },
     onError(err) {},
