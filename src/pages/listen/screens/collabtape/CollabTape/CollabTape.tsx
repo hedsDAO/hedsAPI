@@ -13,7 +13,7 @@ export const CollabTape = () => {
     dispatch.collabModel.getTapeTimeline(currentTape);
   }, []);
   return (
-    <Container maxW="8xl" pt={3}>
+    <Container maxW="8xl">
       <ViewTapesButton />
       <Header />
       <Divider my={5} />
