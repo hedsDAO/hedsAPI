@@ -8,6 +8,7 @@ import { Box, Divider, Flex, HStack, Text } from '@chakra-ui/react';
 export const TapeHeader = () => {
   const { tape, id } = useParams();
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
+  console.log('currentTape', currentTape.name);
 
   return (
     <Box justifyContent={'center'}>
