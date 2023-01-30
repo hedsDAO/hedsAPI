@@ -6,6 +6,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { TapeWrapper, UserWrapper } from '@/modules/wrappers';
 import { ModalWrapper } from '@/modules/modals/components';
@@ -24,13 +25,11 @@ import '@fontsource/space-mono';
 
 ReactGA.initialize('G-EWK413GWSB');
 
-const { chains, provider } = configureChains(
-  [chain.mainnet],
-  [infuraProvider({ apiKey: process.env.INFURA_PROVIDER_KEY, priority: 0 }), publicProvider({ priority: 1 })],
-);
+const INFURA_PROVIDER_KEY = 'fa2c8890fadd90f1516231c1831cdcff';
+const { chains, provider } = configureChains([chain.mainnet], [infuraProvider({ apiKey: INFURA_PROVIDER_KEY, priority: 0 }), publicProvider({ priority: 1 })]);
 const client = createClient({
   connectors: [
-    new InjectedConnector({ chains }),
+    window && window?.ethereum ? new InjectedConnector({ chains }) : new MetaMaskConnector({ chains }),
     new WalletConnectConnector({
       chains,
       options: {
