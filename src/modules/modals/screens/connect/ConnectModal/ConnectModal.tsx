@@ -6,6 +6,7 @@ import { useAccount, useConnect } from 'wagmi';
 import { IconLink } from '@tabler/icons';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import * as gaEvents from '@/events';
 
 const ConnectModal = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -31,7 +32,10 @@ const ConnectModal = () => {
               isLoading={isLoading && pendingConnector?.id === connector.id}
               key={connector.id}
               disabled={!connector.ready || isLoading}
-              onClick={() => connect({ connector })}
+              onClick={() => {
+                connect({ connector });
+                connector.name === 'MetaMask' ? gaEvents.connectMetamask() : gaEvents.connectWalletConnect();
+              }}
             >
               <Flex gap={2}>
                 {connector.name === 'MetaMask' && <MetamaskIcon />}

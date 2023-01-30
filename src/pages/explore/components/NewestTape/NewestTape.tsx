@@ -21,7 +21,7 @@ const NewestTape = () => {
               <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
                 <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
                   <Button
-                    data-testid='newest-tape-artist-button'
+                    data-testid="newest-tape-artist-button"
                     as={Link}
                     to={`/u/${NEWEST_TAPE_ARTIST}`}
                     justifySelf={'start'}

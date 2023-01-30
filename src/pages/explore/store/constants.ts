@@ -13,7 +13,7 @@ export const STATS_DATA = [
   { label: 'Unique Minters', value: '207' },
 ];
 
-export const OPENSEA_EVENTS_CLOUD_FUNCTION = `https://us-central1-heds-104d8.cloudfunctions.net/activeListings`
+export const OPENSEA_EVENTS_CLOUD_FUNCTION = `https://us-central1-heds-104d8.cloudfunctions.net/activeListings`;
 export const OPENSEA_LIMIT = 2;
 
 /**
@@ -35,7 +35,7 @@ export const HEDS_IMG_PROPS = {
   },
   position: 'absolute',
   objectFit: 'contain',
-  style: { filter: 'invert(0.75)' }
+  style: { filter: 'invert(0.75)' },
 } as ChakraProps;
 
 /**
