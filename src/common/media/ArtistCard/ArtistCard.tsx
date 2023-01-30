@@ -18,7 +18,7 @@ const ArtistCard = ({ artist }: { artist: User }) => {
       className="group border border-neutral-900 bg-gray-50 relative col-span-1 rounded-sm bs-preset-1 m-1"
     >
       <Flex direction={'column'} className="col-span-1">
-        <Skeleton m={2} fadeDuration={3} className="col-span-1 aspect-square" isLoaded={!isLoading && isImageLoaded}>
+        <Skeleton m={2} className="col-span-1 aspect-square" isLoaded={!isLoading && isImageLoaded}>
           <Image
             onLoad={() => setIsImageLoaded.on()}
             w="full"
