@@ -26,7 +26,7 @@ const HedsSolo = () => {
         <Flex pt={{ base: 20, lg: 20 }} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
           <Box>
             <Skeleton rounded="3xl" minW={'20rem'} h="11rem" isLoaded={hasImageLoaded}>
-              <Flex mb={'-12'} mx={{base: 4, lg: 5}} position={'relative'} justifyContent={'space-between'}>
+              <Flex mb={'-12'} mx={{ base: 4, lg: 5 }} position={'relative'} justifyContent={'space-between'}>
                 <Button
                   data-testid="hedsolo-artist-button"
                   as={Link}
@@ -44,13 +44,25 @@ const HedsSolo = () => {
                     / {artistsMapping?.[HEDS_SOLO_ARTIST]?.displayName.toUpperCase()}
                   </Text>
                 </Button>
-                <Button role="link" as={ChakraLink} href={HEDS_SOLO_SOUND_LINK} target="_blank" py="4" border="1px" borderColor="black" size="sm" rounded="full" bg="white" zIndex={'30'}>
+                <Button
+                  role="link"
+                  as={ChakraLink}
+                  href={HEDS_SOLO_SOUND_LINK}
+                  target="_blank"
+                  py="4"
+                  border="1px"
+                  borderColor="black"
+                  size="sm"
+                  rounded="full"
+                  bg="white"
+                  zIndex={'30'}
+                >
                   <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
                 </Button>
               </Flex>
               <Image
                 onLoad={setHasImageLoaded.on}
-                outline="solid"
+                border="1px"
                 inset={'1'}
                 rounded="3xl"
                 minW={{ base: 'full', xl: '30rem' }}

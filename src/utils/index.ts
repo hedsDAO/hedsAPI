@@ -11,4 +11,3 @@ export { default as formWaveSurferOptions } from './formWavesurferOptions';
 export { default as getCurrentImagePath } from './getCurrentImagePath';
 export { default as computeLength } from './computeLength';
 export { default as handlePinataMetadata } from './handlePinataMetadata';
-

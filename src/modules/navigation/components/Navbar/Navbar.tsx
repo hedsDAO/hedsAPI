@@ -135,7 +135,7 @@ const Navbar = (): JSX.Element => {
             </Flex>
           </Flex>
           <Flex gap={4} alignItems={'center'} alignSelf={'center'}>
-           <Switch />
+            <Switch />
             {/* TODO: add user / wallet state logic and functionality  */}
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
