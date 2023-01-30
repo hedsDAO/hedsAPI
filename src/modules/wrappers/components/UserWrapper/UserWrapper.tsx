@@ -10,7 +10,7 @@ const UserWrapper = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   const { status, isReconnecting } = useAccount({});
   const wallet = pathname?.split('/u/')?.[1];
-  
+
   const handleFetchUserData = useCallback(() => {
     if (wallet) dispatch.userModel.getCurrentUserData(wallet.toLowerCase());
     if (wallet?.toLowerCase() === address?.toLowerCase()) dispatch.userModel.getConnectedUserData(wallet);

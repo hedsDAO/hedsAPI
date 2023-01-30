@@ -64,7 +64,9 @@ const NameModal = () => {
                 {error}
               </FormHelperText>
             ) : (
-              <FormHelperText px={1} fontSize={'xs'}>{15 - displayName.length} characters remaining.</FormHelperText>
+              <FormHelperText px={1} fontSize={'xs'}>
+                {15 - displayName.length} characters remaining.
+              </FormHelperText>
             )}
           </FormControl>
         </Stack>

@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 const Likes = () => {
   const userLikes = useSelector(store.select.userModel.selectCurrentUserLikes);
   return (
-    <Stack minW='full' w='full' py={2}>
-      {userLikes && userLikes?.length &&
+    <Stack minW="full" w="full" py={2}>
+      {userLikes &&
+        userLikes?.length &&
         userLikes.map((track) => {
           return <AudioTrack key={track.audio} track={track} />;
         })}
