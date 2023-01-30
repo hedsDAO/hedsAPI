@@ -5,12 +5,7 @@ import { Dispatch, RootState } from '@/store';
 import { Flex } from '@chakra-ui/react';
 import { IconDisc } from '@tabler/icons';
 import { MINT_MODAL_TITLE } from '../models/constants';
-import { 
-  MintDetails, 
-  TapeCover, 
-  TapeNameAndCurator, 
-  TransactionProgress 
-} from '../components';
+import { MintDetails, TapeCover, TapeNameAndCurator, TransactionProgress } from '../components';
 
 const MintModal = () => {
   const dispatch = useDispatch<Dispatch>();

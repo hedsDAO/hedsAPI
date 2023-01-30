@@ -1,7 +1,7 @@
 const connectButtonStyles = {
-    '.connect-button': {
-        marginRight: '0.5rem',
-    }
+  '.connect-button': {
+    marginRight: '0.5rem',
+  },
 };
 
 export default connectButtonStyles;

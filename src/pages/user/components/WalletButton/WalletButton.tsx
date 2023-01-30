@@ -10,29 +10,29 @@ const WalletButton = () => {
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const isLoading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
-      <Button
-        onClick={() => handleCopy(setIsCopied, wallet)}
-        leftIcon={<i className="fa-solid fa-copy text-xs"></i>}
-        fontWeight={'light'}
-        bg="gray.100"
-        border={'1px'}
-        borderColor="gray.800"
-        rounded="sm"
-        size="xs"
-        width={{base: '24ch', lg: '24ch'}}
-        fontFamily={'Space Mono'}
-      >
-        {isCopied ? (
-          <Fade in={isCopied}>
-            <Flex gap={1.5} alignItems={'center'}>
-              <Text size="xs">copied</Text>
-              <IconCheck height="10" width="10" />
-            </Flex>
-          </Fade>
-        ) : (
-          <Text>{formatWallet(wallet)}</Text>
-        )}
-      </Button>
+    <Button
+      onClick={() => handleCopy(setIsCopied, wallet)}
+      leftIcon={<i className="fa-solid fa-copy text-xs"></i>}
+      fontWeight={'light'}
+      bg="gray.100"
+      border={'1px'}
+      borderColor="gray.800"
+      rounded="sm"
+      size="xs"
+      width={{ base: '24ch', lg: '24ch' }}
+      fontFamily={'Space Mono'}
+    >
+      {isCopied ? (
+        <Fade in={isCopied}>
+          <Flex gap={1.5} alignItems={'center'}>
+            <Text size="xs">copied</Text>
+            <IconCheck height="10" width="10" />
+          </Flex>
+        </Fade>
+      ) : (
+        <Text>{formatWallet(wallet)}</Text>
+      )}
+    </Button>
   );
 };
 
