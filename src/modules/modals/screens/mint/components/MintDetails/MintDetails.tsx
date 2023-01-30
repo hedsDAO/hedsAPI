@@ -10,7 +10,7 @@ import { store } from '@/store';
 const MintDetails = () => {
   const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
   const { data, isLoading, refetch, isRefetching } = useContractRead({
-    address: contract,
+    address: contract as `0x${string}`,
     abi: erc721ABI,
     functionName: 'totalSupply',
   });
