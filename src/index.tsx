@@ -22,7 +22,7 @@ import '@fontsource/roboto-mono';
 import '@fontsource/noto-sans-mono';
 import '@fontsource/space-mono';
 
-ReactGA.initialize('G-EWK413GWSB');
+ReactGA.initialize('G-EES6VXHESQ');
 
 const { chains, provider } = configureChains(
   [chain.mainnet],
