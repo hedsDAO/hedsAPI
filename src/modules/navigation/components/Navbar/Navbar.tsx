@@ -148,7 +148,6 @@ const Navbar = (): JSX.Element => {
           </Flex>
           <Flex gap={4} alignItems={'center'} alignSelf={'center'}>
             <Switch />
-
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
                 <Avatar
