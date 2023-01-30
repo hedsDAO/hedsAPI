@@ -43,7 +43,7 @@ const NewestTape = () => {
                 </Flex>
                 <Image
                   onLoad={setHasImageLoaded.on}
-                  outline="solid"
+                  border="1px"
                   inset={'1'}
                   rounded="3xl"
                   minW={{ base: 'full', xl: '30rem' }}

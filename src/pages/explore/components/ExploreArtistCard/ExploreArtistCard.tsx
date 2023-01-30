@@ -12,7 +12,7 @@ const ExploreArtistCard = ({ artist }: { artist: User }) => {
           <Image
             data-testid="explore-artist-card-image"
             onLoad={setHasImageLoaded.on}
-            outline={'solid 2px'}
+            border="1px"
             rounded="2xl"
             minW={'full'}
             maxH={{ base: '7rem', lg: '10rem' }}
