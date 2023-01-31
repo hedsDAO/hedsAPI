@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState, store } from '@/store';
@@ -31,10 +31,14 @@ const SettingsModal = () => {
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
       <ModalHeader Icon={IconPencil} title={SETTINGS_MODAL_TITLE} />
-      <Stack spacing="4" divider={<StackDivider />}>
-        <ProfilePictureForm />
-        <BannerForm />
-        <DescriptionForm />
+      <Stack gap={4} divider={<StackDivider />}>
+        {!!connectedUser && !!profileChanges && (
+          <Fragment>
+            <ProfilePictureForm />
+            <BannerForm />
+            <DescriptionForm />
+          </Fragment>
+        )}
         <Flex gap={2}>
           <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
           <PrimaryButton
