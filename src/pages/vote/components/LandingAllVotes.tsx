@@ -43,7 +43,7 @@ export const LandingAllVotes = ({ allHedsTapes }: { allHedsTapes: { [tapeId: str
                   <Skeleton
                     w="full"
                     minH={!isImageLoaded ? { base: 'full', sm: '6rem', lg: '11rem', xl: '18.5rem', '2xl': '21rem' } : { base: 'full' }}
-                    rounded="lg"
+                    rounded="sm"
                     isLoaded={isImageLoaded}
                   >
                     <div className="relative mb-2">
@@ -51,7 +51,7 @@ export const LandingAllVotes = ({ allHedsTapes }: { allHedsTapes: { [tapeId: str
                         onLoad={setIsImageLoaded.on}
                         loading="eager"
                         src={tape?.image}
-                        className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-sm object-center shadow-sm"
+                        className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-sm object-center outline-neutral-600 outline-1 outline shadow-sm"
                       />
                     </div>
                     <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{tape.name}</span>
