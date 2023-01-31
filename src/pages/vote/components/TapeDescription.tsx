@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import { store } from '@/store';
 import { ProposalState } from 'hedsvote';
 import { formatWallet } from '@/utils';
@@ -11,6 +12,7 @@ interface OwnProps {
 }
 
 export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
+  const { space, tape, id } = useParams();
   const proposal = useSelector(store.select.voteModel.selectProposal);
 
   const handleProposalState = (state: ProposalState) => {
@@ -25,7 +27,6 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
     <Flex w="100%" flexDirection={{ base: 'column', md: 'row' }} justifyContent="space-evenly">
       <Box
         bg={'blackAlpha.100'}
-        _hover={{ bg: 'white', borderColor: 'gray.800' }}
         border={'1px'}
         borderColor={'gray.600'}
         rounded="sm"
@@ -43,7 +44,17 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
               {proposal?.description}
             </Text>
           </Stack>
-          <Box bg="white" border="1px" borderColor="gray.800" borderWidth={'1px'} p={{ base: '3', md: '4' }} borderRadius="lg">
+          <Box
+            bg="white"
+            border="1px"
+            borderColor="gray.800"
+            borderWidth={'1px'}
+            p={{ base: '3', md: '4' }}
+            borderRadius="lg"
+            as={Link}
+            to={`/listen/${space}/${tape}/${id}`}
+            _hover={{ bg: 'gray.200', borderColor: 'gray.800' }}
+          >
             <Stack justify="space-between" direction={{ base: 'column', md: 'row' }} spacing="5">
               <HStack spacing="3">
                 <Square borderRadius="lg">
@@ -51,7 +62,7 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
                 </Square>
                 <Box fontSize="sm">
                   <Text color="emphasized" fontWeight="medium">
-                    {proposal?.author && formatWallet(proposal?.author)}
+                    View Tape
                   </Text>
                   {handleProposalState(proposal?.state)}
                 </Box>
