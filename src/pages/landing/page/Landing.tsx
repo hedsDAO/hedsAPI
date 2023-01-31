@@ -140,7 +140,7 @@ export const Landing = () => {
       </ParallaxLayer>
 
       <ParallaxLayer offset={1.1} speed={0.2} style={{ width: '100%' }}>
-        <Flex justify="end">
+        <Flex justify="flex-end">
           <Flex direction="column" align="start">
             <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
             <button>
@@ -183,7 +183,7 @@ export const Landing = () => {
             color="white"
           >
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-              <GridItem rowSpan={1} colSpan={1} display="flex" justifyContent="center" alignItems="end">
+              <GridItem rowSpan={1} colSpan={1} display="flex" justifyContent="center" alignItems="flex-end">
                 <Number inputNum={56} size={['3rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
@@ -210,7 +210,7 @@ export const Landing = () => {
             alignItems="center"
           >
             <Grid h="60%" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-              <GridItem rowSpan={1} colSpan={1} display="flex" justifyContent="center" alignItems="end">
+              <GridItem rowSpan={1} colSpan={1} display="flex" justifyContent="center" alignItems="flex-end">
                 <Number inputNum={420} dollar size={['3rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
