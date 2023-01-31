@@ -5,6 +5,7 @@ import { MOST_AP_BUTTON, MOST_AP_DESC, MOST_AP_TITLE } from '@/pages/explore/sto
 import { store } from '@/store';
 import { Box, Flex, Heading, Icon, SimpleGrid, Text } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
+import * as gaEvents from '@/events';
 
 const MostAppearances = () => {
   const mostFeaturedArtists = useSelector(store.select.artistModel.selectMostFeaturedArtists);
@@ -18,7 +19,7 @@ const MostAppearances = () => {
       </Text>
       <Flex mt={{ base: 5, lg: 0 }} w="full" justifyContent={'end'}>
         <Flex alignItems="center" gap={2}>
-          <Text className="hover-underline-animation" fontSize="xs" textColor={'gray.600'} as={Link} to={'/artists'} role="link">
+          <Text onClick={() => gaEvents.clickSeeAllArtist() } className="hover-underline-animation" fontSize="xs" textColor={'gray.600'} as={Link} to={'/artists'} role="link">
             {MOST_AP_BUTTON}
           </Text>
           <Icon color={'gray.600'} h="3" w="3" as={IconArrowRight} />

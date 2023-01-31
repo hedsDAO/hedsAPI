@@ -1,12 +1,14 @@
 import { TapeAndTrackData, TapeData } from '@/models/common';
 import { GridItem, Skeleton, useBoolean } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const TapeCard = ({ tape }: { tape: TapeData | TapeAndTrackData }) => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   // TODO: remove tailwind styles, add chakra components.
   return (
     <GridItem
+      onClick={() => gaEvents.clickTapeCard(tape.name)}
       as={Link}
       className="group transition-all ease-in-out bs-preset-1"
       to={`/listen/${tape.space}/${tape.tape}/${tape.id}`}

@@ -13,6 +13,7 @@ import { AudioWrapper } from './modules/audio/components';
 import { store } from './store';
 import { theme } from './theme/theme';
 import ReactGA from 'react-ga4';
+import * as gaEvents from './events';
 import App from '@/App';
 
 import 'animate.css';
@@ -22,7 +23,8 @@ import '@fontsource/roboto-mono';
 import '@fontsource/noto-sans-mono';
 import '@fontsource/space-mono';
 
-ReactGA.initialize('G-EWK413GWSB');
+gaEvents.initGA();
+gaEvents.setPageViewEvents();
 
 const INFURA_PROVIDER_KEY = 'b8453c72aa7c484fb1efee0eed133fe6';
 const { provider } = configureChains([mainnet], [infuraProvider({ apiKey: INFURA_PROVIDER_KEY, priority: 0 }), publicProvider({ priority: 1 })]);

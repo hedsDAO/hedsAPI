@@ -5,6 +5,7 @@ import { HEDS_SOLO_HEADING, HEDS_SOLO_TITLE, HEDS_SOLO_DESC, HEDS_SOLO_ARTIST, H
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
 import { Link } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const HedsSolo = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
@@ -28,6 +29,7 @@ const HedsSolo = () => {
             <Skeleton rounded="3xl" minW={'20rem'} h="11rem" isLoaded={hasImageLoaded}>
               <Flex mb={'-12'} mx={{ base: 4, lg: 5 }} position={'relative'} justifyContent={'space-between'}>
                 <Button
+                  onClick={() => gaEvents.clickHedsSoloFeatureLink()}
                   data-testid="hedsolo-artist-button"
                   as={Link}
                   to={`/u/${HEDS_SOLO_ARTIST}`}
