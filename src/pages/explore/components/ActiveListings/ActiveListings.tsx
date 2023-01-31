@@ -55,7 +55,7 @@ const ActiveListings = () => {
                         <Text letterSpacing={'tight'} fontFamily={"'Space Mono', monospace"} fontSize="lg" color="gray.600">
                           {listing.price} Ξ
                         </Text>
-                        <Button onClick={() => gaEvents.clickSeeAllActiveListings()} as={Link} href={listing.link} target="_blank" px={2} variant={'explore'} size="xs">
+                        <Button onClick={() => gaEvents.clickLinkToSecondaryListing()} as={Link} href={listing.link} target="_blank" px={2} variant={'explore'} size="xs">
                           <Icon color="gray.600" h="4" w="4" as={IconArrowRight}></Icon>
                         </Button>
                       </Flex>
