@@ -34,7 +34,7 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
         p={{ base: '2', md: '4' }}
         w={{ base: '100%', md: '45%' }}
       >
-        <Stack p={2} spacing="5">
+        <Stack p={3} spacing="5">
           <Stack spacing="1">
             <Text fontSize="lg" fontWeight="medium">
               Details
@@ -43,7 +43,7 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
               {proposal?.description}
             </Text>
           </Stack>
-          <Box bg="white" border="1px" borderColor="gray.800" borderWidth={'1px'} p={{ base: '2', md: '4' }} borderRadius="lg">
+          <Box bg="white" border="1px" borderColor="gray.800" borderWidth={'1px'} p={{ base: '3', md: '4' }} borderRadius="lg">
             <Stack justify="space-between" direction={{ base: 'column', md: 'row' }} spacing="5">
               <HStack spacing="3">
                 <Square borderRadius="lg">
@@ -65,7 +65,7 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
         border="1px"
         borderColor="gray.800"
         borderWidth={'1px'}
-        p={{ base: '2', md: '4' }}
+        p={{ base: '5', md: '4' }}
         borderRadius="lg"
         w={{ base: '100%', md: '45%' }}
         mt={{ base: '16px', md: '0' }}

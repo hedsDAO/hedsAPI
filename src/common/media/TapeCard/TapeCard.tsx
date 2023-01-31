@@ -33,7 +33,7 @@ const TapeCard = ({ tape }: { tape: TapeData | TapeAndTrackData }) => {
             onLoad={setIsImageLoaded.on}
             loading="eager"
             src={tape?.image}
-            className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-md object-center shadow-md outline-neutral-600 outline-1 outline"
+            className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-sm object-center shadow-sm outline-neutral-600 outline-1 outline"
           />
         </div>
         <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{tape.name}</span>

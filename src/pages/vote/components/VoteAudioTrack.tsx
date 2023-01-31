@@ -33,22 +33,22 @@ export const VoteAudioTrack = () => {
         borderRadius="lg"
       >
         <Box>
-          <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px">
-            <Center shadow="sm" role="button" className="pointer-events-auto">
+          <Skeleton mb={2} isLoaded={isImageLoaded} minW="60px" minH="60px" maxW='60px'>
+            <Center role="button" className="pointer-events-auto">
               <Image
                 height="60px"
                 width="60px"
+                border='1px'
                 onLoad={setIsImageLoaded.on}
                 _hover={{ opacity: 0 }}
-                className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all outline outline-1"
+                className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all"
                 src={currentTrack?.image}
                 objectFit="cover"
-                rounded="sm"
+                rounded="md"
               />
-              {/* <PlayIcon className="opacity-0 group-hover:opacity-100 ease-in-out transition-all absolute w-[12px] h-[12px] md:h-[15px] md:w-[15px] z-10" /> */}
             </Center>
           </Skeleton>
-          <Flex direction={'column'} justifyContent={'space-evenly'} ml={'12px'}>
+          <Flex direction={'column'} justifyContent={'space-evenly'}>
             <Text className="font-serif" fontSize="xs" color="blue.900">
               {currentTrack.name}
             </Text>
