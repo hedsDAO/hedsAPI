@@ -9,6 +9,8 @@ import { store } from '@/store';
 
 const MintDetails = () => {
   const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
+  const tapeId = useSelector(store.select.tapesModel.selectCurrentTapeId);
+  const premintStatus = useSelector(store.select.tapesModel.selectCurrentTapePreMintStatus);
   const { data, isLoading, refetch, isRefetching } = useContractRead({
     address: contract as `0x${string}`,
     abi: erc721ABI,
@@ -17,7 +19,13 @@ const MintDetails = () => {
   return (
     <Fragment>
       <Flex justifyContent={'center'} mt={2} gap={2} direction={'row'} alignItems={'center'}>
-        <LabelBadge label={PRICE_LABEL} text={PRICE_VALUE} textColor={'green.600'} />
+        {tapeId === 'secretgarden' && premintStatus ? (
+          <LabelBadge label={PRICE_LABEL} text={'0.03'} textColor={'green.600'} />
+        ) : tapeId === 'secretgarden' && !premintStatus ? (
+          <LabelBadge label={PRICE_LABEL} text={'0.05'} textColor={'green.600'} />
+        ) : (
+          <LabelBadge label={PRICE_LABEL} text={PRICE_VALUE} textColor={'green.600'} />
+        )}
         <LabelBadge label={TOKEN_LABEL} text={TOKEN_VALUE} textColor={'orange.600'} />
         <LabelBadge label={MINTED_LABEL} text={isRefetching ? '...' : data?._isBigNumber ? data?.toNumber().toString() : '0'} textColor={'blue.600'} />
         <Button
