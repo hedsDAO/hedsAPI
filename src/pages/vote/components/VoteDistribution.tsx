@@ -38,15 +38,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
       return (votes / totalVoteBalance) * 100;
     });
   };
-  // const resultsByUserBalance = () => {
-  //   const results = choices
-  //     // @ts-ignore
-  //     .map((choice: Choice, i: number) =>
-  //       votes.map((vote: any) => vote?.voter?.toLowerCase() === connectedWallet && quadraticMath(i, vote.choice, vote.vp)).reduce((a: any, b: any) => a + b, 0),
-  //     )
-  //     .map((sqrt: number) => sqrt * sqrt);
-  //   return results;
-  // };
+
   useEffect(() => {
     if (currentTape) {
       setSelectedTracks(new Set(currentTape.tracks));
