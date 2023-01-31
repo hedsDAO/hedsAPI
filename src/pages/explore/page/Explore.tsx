@@ -25,7 +25,7 @@ export const Explore = () => {
       <Divider mx="auto" w="80%" my={5} />
       <Stats />
       <Divider mx="auto" w="80%" my={5} />
-      <ActiveListings />
+      {/* <ActiveListings /> */}
     </Box>
   );
 };
