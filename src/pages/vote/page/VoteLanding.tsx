@@ -32,7 +32,7 @@ export const VoteLanding = () => {
                 .reverse()
                 .map((tape) => {
                   const currentProposal = allProposals?.filter((proposal) => (proposal.ipfs.IpfsHash === tape.proposalId ? proposal : null));
-                  if (currentProposal?.length) return <LandingTapeCovers tape={tape} proposal={currentProposal[0]} />;
+                  if (currentProposal?.length) return <LandingTapeCovers key={tape.contract + tape.proposalId} tape={tape} proposal={currentProposal[0]} />;
                 })}
             </Slider>
           ) : (
