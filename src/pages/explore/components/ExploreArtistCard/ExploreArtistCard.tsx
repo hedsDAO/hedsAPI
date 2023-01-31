@@ -2,6 +2,7 @@ import { User } from '@/models/common';
 import { Avatar, AvatarGroup, Box, Button, Container, Flex, Icon, Image, Skeleton, useBoolean } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { Link } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const ExploreArtistCard = ({ artist }: { artist: User }) => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
@@ -20,7 +21,7 @@ const ExploreArtistCard = ({ artist }: { artist: User }) => {
             src={artist?.profilePicture}
           />
           <Flex justifyContent={'space-between'} zIndex={'50'} top="2" left="2" position={'absolute'}>
-            <Button as={Link} to={`/u/${artist.wallet}`} variant={'explore'} size="xs">
+            <Button onClick={() => gaEvents.clickLinkToArtistFromMostAppearancesCard()} as={Link} to={`/u/${artist.wallet}`} variant={'explore'} size="xs">
               / {artist?.displayName}
             </Button>
           </Flex>
@@ -34,6 +35,7 @@ const ExploreArtistCard = ({ artist }: { artist: User }) => {
           <AvatarGroup spacing={{ base: -2, lg: -2 }} size={{ base: 'xs', lg: 'sm' }}>
             {Object.values(artist?.tracks?.['heds']?.['hedstape']).map((track) => (
               <Avatar
+                onClick={() => gaEvents.clickLinkToTapeFromMostAppearancesCard()}
                 shadow="md"
                 _hover={{ saturate: 0 }}
                 transition="ease-in-out duration-300"

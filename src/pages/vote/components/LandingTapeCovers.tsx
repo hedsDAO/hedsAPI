@@ -6,6 +6,7 @@ import { Proposal } from 'hedsvote';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LandingProposalChoices } from './LandingProposalChoices';
+import * as gaEvents from '@/events';
 
 export const LandingTapeCovers = ({ tape, proposal }: { tape: TapeData; proposal: Proposal }) => {
   const latestHedsTape = useSelector(store.select.tapesModel.selectLatestHedsTape);
@@ -38,6 +39,7 @@ export const LandingTapeCovers = ({ tape, proposal }: { tape: TapeData; proposal
       </Container>
       <Flex mb={8} justifyContent={'center'} w="full" mx="auto">
         <Button
+          onClick={() => gaEvents.clickViewVoteFromHeaderCarousel(tape.name)}
           alignSelf={'baseline'}
           as={Link}
           to={`/vote/${tape.space}/${tape.tape}/${tape.id}`}

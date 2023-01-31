@@ -4,6 +4,7 @@ import { formatWallet } from '@/utils';
 import { Flex, Image, Skeleton, Text, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const ArtistCard = ({ artist }: { artist: User }) => {
   const navigate = useNavigate();
@@ -13,7 +14,10 @@ const ArtistCard = ({ artist }: { artist: User }) => {
   return (
     <div
       role="button"
-      onClick={() => navigate('/u/' + artist.wallet)}
+      onClick={() => {
+        navigate('/u/' + artist.wallet);
+        gaEvents.clickArtistCard(artist.displayName);
+      }}
       key={artist.wallet + artist.banner}
       className="group border border-neutral-900 bg-gray-50 relative col-span-1 rounded-sm bs-preset-1 m-1"
     >

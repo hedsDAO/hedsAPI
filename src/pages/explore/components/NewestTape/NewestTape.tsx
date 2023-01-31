@@ -5,6 +5,7 @@ import { store } from '@/store';
 import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { Link } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const NewestTape = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
@@ -21,6 +22,7 @@ const NewestTape = () => {
               <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
                 <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
                   <Button
+                    onClick={() => gaEvents.clickNewestTapeFeatureLink()}
                     data-testid="newest-tape-artist-button"
                     as={Link}
                     to={`/u/${NEWEST_TAPE_ARTIST}`}
