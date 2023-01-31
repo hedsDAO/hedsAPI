@@ -35,7 +35,7 @@ export const TapeDetails = () => {
   return (
     <Box minH="100vh">
       <Container maxW="6xl">
-        <VStack spacing="36px" align="stretch">
+        <VStack spacing={{ base: '4em', md: '3em' }} align="stretch">
           {!isEmpty(allTapes) && <TapeHeader />}
           <TapeDescription tapeImage={allTapes?.[tape]?.[id]?.image} tapeId={id} />
           {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack />}
