@@ -13,4 +13,5 @@ export interface ExploreState {
   isLoading: boolean;
   secondaryListings: HedsTapeListing[];
   hasFetchedAllListings: boolean;
+  scrollDataMax: number;
 }

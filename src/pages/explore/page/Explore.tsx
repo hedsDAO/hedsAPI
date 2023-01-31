@@ -18,14 +18,14 @@ export const Explore = () => {
   }, []);
 
   return (
-    <Box minH="full">
+    <Box>
       <CarouselWrapper slides={[<HedsSolo />, <NewestTape />]} />
       <Image src={hedImage} {...HEDS_IMG_PROPS} />
       <MostAppearances />
       <Divider mx="auto" w="80%" my={5} />
       <Stats />
       <Divider mx="auto" w="80%" my={5} />
-      <ActiveListings />
+      {/* <ActiveListings /> */}
     </Box>
   );
 };
