@@ -9,7 +9,7 @@ type ImageWithOverlayProps = BoxProps & {
   spacing?: string;
 };
 
-const ImageWithOverlay = (props: ImageWithOverlayProps) => {
+export const ImageWithOverlay = (props: ImageWithOverlayProps) => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean(false);
   const { title, description, url, src, alt, spacing = '8', objectPosition = 'cover', ...rest } = props;
 
@@ -40,5 +40,3 @@ const ImageWithOverlay = (props: ImageWithOverlayProps) => {
     </Box>
   );
 };
-
-export default ImageWithOverlay;

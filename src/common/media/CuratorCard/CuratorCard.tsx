@@ -4,6 +4,7 @@ import { formatWallet } from '@/utils';
 import { Flex, Image, Skeleton, Text, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const CuratorCard = ({ curator }: { curator: User }) => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
@@ -12,12 +13,15 @@ const CuratorCard = ({ curator }: { curator: User }) => {
   return (
     <div
       role="button"
-      onClick={() => navigate('/u/' + curator.wallet)}
+      onClick={() => {
+        navigate('/u/' + curator.wallet);
+        gaEvents.clickCuratorCard(curator.displayName);
+      }}
       key={curator.wallet + curator.banner}
-      className="group bg-gray-50 border border-neutral-900 relative col-span-1 rounded-sm bs-preset-1 m-2"
+      className="group bg-fuchsia-50 border border-neutral-900 relative col-span-1 rounded-sm bs-preset-1 m-2"
     >
       <Flex direction={'column'} className="col-span-1">
-        <Skeleton rounded="sm" m={2} fadeDuration={3} className="col-span-1" isLoaded={!isLoading && isImageLoaded}>
+        <Skeleton rounded="sm" m={2} className="col-span-1" isLoaded={!isLoading && isImageLoaded}>
           <Image
             onLoad={() => setIsImageLoaded.on()}
             maxH={{ base: '10rem', lg: '10rem' }}

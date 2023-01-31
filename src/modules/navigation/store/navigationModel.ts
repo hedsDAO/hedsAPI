@@ -16,7 +16,7 @@ export const navigationModel = createModel<RootModel>()({
   state: {
     isOpen: false,
     navLinks: [
-      { name: 'Explore', path: '/explore' },
+      { name: 'Explore', path: '/' },
       { name: 'Tapes', path: '/tapes' },
       { name: 'Artists', path: '/artists' },
       { name: 'Vote', path: '/vote' },

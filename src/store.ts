@@ -20,7 +20,7 @@ export const store = init<RootModel, FullModel>({
   plugins: [selectPlugin(), loadingPlugin(), persistPlugin(persistConfig)],
   redux: {
     devtoolOptions: {
-      disabled: process.env.NODE_ENV === 'production',
+      disabled: process.env.NODE_ENV !== 'development',
     },
   },
 });

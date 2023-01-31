@@ -24,7 +24,7 @@ const RefreshCollectionButton = () => {
     watch: true,
     enabled: false,
     structuralSharing: true,
-    onSuccess(data) {
+    onSuccess(data: Result[]) {
       handleUpdateCollection(data);
     },
     onError(err) {},
@@ -49,10 +49,9 @@ const RefreshCollectionButton = () => {
             rounded="sm"
             className="bg-transparent hover:scale-110 ease-in-out duration-500 delay-75"
             size="xs"
-            disabled={!isEmpty(hedsTapes) || !wallet?.length || now - userCollection?.lastUpdated < 30000}
+            isDisabled={!isEmpty(hedsTapes) || !wallet?.length || now - userCollection?.lastUpdated < 30000}
             isLoading={isFetching || isRefetching || isLoading}
             color="purple.800"
-            onClick={() => refetch().then(() => refetch())}
           >
             <IconHourglass className="hover:scale-110 ease-in-out" height={14} width={14} />
           </Button>

@@ -11,13 +11,15 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.scss', '.png'],
     alias: {
       '@': path.resolve(__dirname, 'src/'),
+      "@events": path.resolve(__dirname, 'src/events'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@common': path.resolve(__dirname, 'src/common/'),
       '@utils': path.resolve(__dirname, 'src/utils/'),
       '@models': path.resolve(__dirname, 'src/models/'),
       '@modules/modals': path.resolve(__dirname, 'src/modules/modals'),
-      '@modules/navigation': path.resolve(__dirname, 'src/modules/navigation')
+      '@modules/navigation': path.resolve(__dirname, 'src/modules/navigation'),
+      '@public': path.resolve(__dirname, 'src/public'),
     },
   },
   output: {

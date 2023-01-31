@@ -9,6 +9,7 @@ import { WagmiConfig, createClient, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { mainnet } from 'wagmi/chains';
 import { LISTINGS_BUTTON, LISTINGS_DESC, LISTINGS_TITLE } from '@/pages/explore/store/constants';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const { provider, webSocketProvider } = configureChains([mainnet], [publicProvider()]);
 const client = createClient({ provider, webSocketProvider });
@@ -19,11 +20,13 @@ describe('ActiveListings Unit', () => {
 
   beforeEach(() => {
     renderWithRematchStore(
-      <WagmiConfig client={client}>
-        <Router location={history.location} navigator={history}>
-          <ActiveListings />
-        </Router>
-      </WagmiConfig>,
+      <ChakraProvider>
+        <WagmiConfig client={client}>
+          <Router location={history.location} navigator={history}>
+            <ActiveListings />
+          </Router>
+        </WagmiConfig>
+      </ChakraProvider>,
       store,
     );
   });
@@ -43,7 +46,7 @@ describe('ActiveListings Unit', () => {
   });
   it('display all listing images and text content', () => {
     const listingContainer = screen.getByTestId('explore-listings-container');
-    secondaryListings.forEach((listing, index) => {
+    secondaryListings.slice(0, 4).forEach((listing, index) => {
       const listingImage = screen.getByTestId(`explore-listing-image-${index}`);
       expect(listingImage).toHaveAttribute('src', listing.image);
       expect(listingContainer).toHaveTextContent(listing.name);

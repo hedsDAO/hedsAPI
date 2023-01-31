@@ -2,7 +2,7 @@ import { Dispatch, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
-import { Button, Fade, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import { TimelineStatus } from '../../models/common';
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { DateTime } from 'luxon';
@@ -21,9 +21,7 @@ const PreMint = () => {
         <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{premint.name}</Text>
         {premint.status === TimelineStatus.CLOSED ? <ClosedBadge /> : premint.status === TimelineStatus.OPEN ? <OpenBadge /> : <UpcomingBadge />}
       </Flex>
-      <Fade>
-        <Text className="mt-2 text-sm tracking-tight text-gray-500">{premint.description}</Text>
-      </Fade>
+      <Text className="mt-2 text-sm tracking-tight text-gray-500">{premint.description}</Text>
       {premint.status === TimelineStatus.CLOSED ? (
         <ClosedDateBox start={start} end={end} />
       ) : premint.status === TimelineStatus.OPEN ? (
@@ -33,11 +31,9 @@ const PreMint = () => {
       )}
       <Flex mt={4} gap={2}>
         {premint.status === TimelineStatus.CLOSED ? (
-          <>
-            <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-              Pre Mint Closed
-            </Button>
-          </>
+          <Button isDisabled={true} leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+            Pre Mint Closed
+          </Button>
         ) : premint.status === TimelineStatus.OPEN ? (
           <Button
             onClick={() => {

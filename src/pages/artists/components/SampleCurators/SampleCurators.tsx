@@ -1,28 +1,26 @@
 import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { useNavigate } from 'react-router-dom';
-import { Box, Container, Divider, Flex, Heading, HStack, Image, Skeleton, Text } from '@chakra-ui/react';
-import { formatWallet } from '@/utils';
+import { Box, Container, Heading } from '@chakra-ui/react';
 import Marquee from 'react-fast-marquee';
 import { CuratorCard } from '@/common/media';
 import { User } from '@/models/common';
 
 const SampleCurators = () => {
-  const loading = useSelector((state: RootState) => state.loading.models.artistModel);
   const allCurators = useSelector(store.select.artistModel.selectAllCurators);
-  const navigate = useNavigate();
   return (
-    <Container className="mx-auto min-w-[100vw] pb-5">
-      <Box mb={5}>
-        <Container py={{ base: '4', md: '8' }}>
-          <HStack>
-            <Divider borderColor="gray.700" w="full" />
-            <Text fontSize="lg" fontWeight="semibold" whiteSpace="nowrap" letterSpacing={'widest'}>
-              SAMPLE CURATORS
-            </Text>
-            <Divider borderColor="gray.700" w="full" />
-          </HStack>
-        </Container>
+    <Container px={{ base: 0, lg: 4 }} mx="auto" minW="7xl" pb={5}>
+      <Box minW="7xl" mb={5}>
+        <Heading
+          px={{ base: 4, lg: 0 }}
+          className="animate__animated animate__fadeIn"
+          fontWeight={'semibold'}
+          letterSpacing={'widest'}
+          size={['sm', 'md']}
+          color={'gray.900'}
+        >
+          SAMPLE CURATORS
+        </Heading>
       </Box>
       <Marquee gradient={false}>
         {allCurators?.length &&

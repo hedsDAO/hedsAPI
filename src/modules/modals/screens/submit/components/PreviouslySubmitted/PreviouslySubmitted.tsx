@@ -37,8 +37,8 @@ const PreviouslySubmitted = () => {
             {generatedSubmission?.subId || previousSubmission?.subId}
           </SkeletonText>
           {hasImageLoaded && !isLoading && (
-            <Text color="red.400" mt={4} fontFamily={'"Space Mono", monospace'} className="animate__animated animate__fadeInUp animate__slow" fontSize="2xs">
-              keep this a secret
+            <Text color="red.500" mt={4} fontFamily={'"Space Mono", monospace'} className="animate__animated animate__fadeInUp animate__slow" fontSize="2xs">
+              keep this a secret - do not share until voting ends
             </Text>
           )}
         </VStack>
