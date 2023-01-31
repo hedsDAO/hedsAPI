@@ -25,6 +25,7 @@ const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
       wavesurfer?.current?.on('finish', () => {});
     }
     return () => {
+      setIsPlaying(false);
       if (wavesurfer?.current) {
         wavesurfer?.current?.destroy();
         // waveformRef.current = null;
