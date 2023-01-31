@@ -1,7 +1,6 @@
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import { DateTime } from 'luxon';
-
 const UpcomingDateBox = ({ start }: { start: DateTime }) => {
   return (
     <Flex my={3} alignItems={'stretch'} gap={2}>
