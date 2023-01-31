@@ -21,9 +21,9 @@ export const LandingProposalChoices = ({ proposal }: { proposal: Proposal }) => 
         columns={{ base: 5, md: 5, xl: 5 }}
       >
         {proposal?.choices?.slice(0, 20).map((choice) => (
-          <Stack key={choice.name} gap={2}>
-            <Skeleton rounded="lg" size="sm" isLoaded={hasImageLoaded}>
-              <Avatar opacity={0.7} size="sm" onLoad={setHasImageLoaded.on} outline="solid" borderRadius="lg" w="full" objectFit={'cover'} src={choice.image} />
+          <Stack key={choice.name} gap={{base: 1, lg: 2}}>
+            <Skeleton rounded="lg" size={{base: 'xs', lg:"sm"}} isLoaded={hasImageLoaded}>
+              <Avatar opacity={0.7} size={{base: 'xs', lg:"sm"}} onLoad={setHasImageLoaded.on} outline="solid" borderRadius="lg" w="full" objectFit={'cover'} src={choice.image} />
             </Skeleton>
           </Stack>
         ))}
