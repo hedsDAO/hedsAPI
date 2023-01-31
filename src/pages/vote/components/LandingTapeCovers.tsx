@@ -30,7 +30,7 @@ export const LandingTapeCovers = ({ tape, proposal }: { tape: TapeData; proposal
           <Stack gap={2}>
             <Box>
               <Skeleton rounded="2xl" minW={'20rem'} h="12.5rem" isLoaded={hasImageLoaded}>
-                <Image shadow="md" onLoad={setHasImageLoaded.on} outline="solid" rounded="2xl" h="12.5rem" w="full" objectFit={'cover'} src={tape.image} />
+                <Image shadow="md" onLoad={setHasImageLoaded.on} border='1px' rounded="2xl" h="12.5rem" w="full" objectFit={'cover'} src={tape.image} />
               </Skeleton>
             </Box>
           </Stack>

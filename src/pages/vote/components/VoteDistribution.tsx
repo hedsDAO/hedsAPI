@@ -101,7 +101,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
               .map((choice, i) => {
                 return (
                   <Flex
-                    p={2}
+                    p={3}
                     border="1px"
                     rounded="sm"
                     shadow="sm"
@@ -127,8 +127,8 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                         {choice.name}
                       </Text>
                     </Stack>
-                    <Flex flexDirection={['column-reverse', 'row']} alignItems={'center'} gap={2} pr={[0, 2]} w={{ base: '50%', lg: '60%' }}>
-                      <Flex alignItems={'center'} w={{ base: '60%', lg: '80%' }}>
+                    <Flex flexDirection={['column-reverse', 'row']} alignItems={['end', 'center']} gap={2} pr={[1, 2]} w={{ base: '50%', lg: '60%' }}>
+                      <Flex alignItems={['end', 'center']} w={{ base: '60%', lg: '80%' }}>
                         {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
                           <Fragment>
                             <Box w={`${round(resultsByPercentage(voteResults)[choice.id], 2)}%`} bg="blue.800" h="2" roundedLeft="full" />
@@ -139,7 +139,7 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                         )}
                       </Flex>
                       <Text
-                        textAlign={['center', 'right']}
+                        textAlign={['right', 'right']}
                         w={{ base: '50%', lg: '20%' }}
                         textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
                         fontSize={'sm'}
