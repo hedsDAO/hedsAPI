@@ -10,11 +10,12 @@ const UserCard = () => {
   const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
   const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const description = useSelector(store.select.userModel.selectCurrentUserDescription);
-  const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
+  const connectedUser = useSelector(store.select.userModel.selectConnectedUser);
+  const currentWallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   return (
     <Fragment>
       <VStack minW={{ base: 'full', lg: '64' }} maxW={{ base: 'full', lg: '64' }}>
-        {isOwnPage ? (
+        {!!connectedUser && currentWallet === connectedUser?.wallet ? (
           <Avatar shadow={'md'} size="2xl" src={profilePicture}>
             <Button
               shadow="sm"
