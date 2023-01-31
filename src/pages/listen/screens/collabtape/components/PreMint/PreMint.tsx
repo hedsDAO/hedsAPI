@@ -9,12 +9,10 @@ import { DateTime } from 'luxon';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 const PreMint = () => {
-  const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const premint = useSelector(store.select.collabModel.selectPremint);
-  const start = DateTime.fromMillis(premint.start, zone);
-  const end = DateTime.fromMillis(premint.end, zone);
-
+  const start = DateTime.fromMillis(premint.start);
+  const end = DateTime.fromMillis(premint.end);
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
