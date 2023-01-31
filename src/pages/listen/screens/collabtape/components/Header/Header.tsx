@@ -47,8 +47,8 @@ const Header = () => {
           {name}
         </Text>
         <Flex pb={3} gap={2}>
-          <OpenSeaButton />
-          <EtherscanButton />
+          {currentTape?.opensea && <OpenSeaButton />}
+          {currentTape?.etherscan && <EtherscanButton />}
         </Flex>
         <Flex px={1} mt={4} direction={'column'}>
           <Text fontWeight={'bold'} fontSize="xs">

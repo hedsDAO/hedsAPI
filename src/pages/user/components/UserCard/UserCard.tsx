@@ -10,11 +10,12 @@ const UserCard = () => {
   const profilePicture = useSelector(store.select.userModel.selectCurrentUserProfilePicture);
   const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const description = useSelector(store.select.userModel.selectCurrentUserDescription);
-  const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
+  const connectedUser = useSelector(store.select.userModel.selectConnectedUser);
+  const currentWallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   return (
     <Fragment>
       <VStack minW={{ base: 'full', lg: '64' }} maxW={{ base: 'full', lg: '64' }}>
-        {isOwnPage ? (
+        {!!connectedUser && currentWallet === connectedUser?.wallet ? (
           <Avatar shadow={'md'} size="2xl" src={profilePicture}>
             <Button
               shadow="sm"
@@ -24,11 +25,11 @@ const UserCard = () => {
               mr={0}
               position={'absolute'}
               rounded="full"
-              border="2px"
-              borderColor="gray.300"
+              border="1px"
+              borderColor="black"
               _hover={{ bg: 'gray.200', color: 'gray.700' }}
               bg="gray.100"
-              textColor={'gray.600'}
+              textColor={'blackAlpha.800'}
               justifyContent={'center'}
               p={1}
               onClick={() => {
@@ -50,9 +51,9 @@ const UserCard = () => {
           <Text textAlign={'center'} height="fit-content" maxW="48" fontWeight={'light'} fontSize="sm" overflowWrap={'normal'}>
             {description}
           </Text>
-          <Divider my={{ base: 4, lg: 3 }} />
+          <Divider borderColor="gray.400" my={{ base: 4, lg: 3 }} />
           <Badges />
-          <Divider my={{ base: 4, lg: 3 }} />
+          <Divider borderColor="gray.400" my={{ base: 5, lg: 4 }} />
         </Flex>
         <Flex gap={2} alignItems={'center'} justifyContent="center" direction={'column'}>
           <WalletButton />

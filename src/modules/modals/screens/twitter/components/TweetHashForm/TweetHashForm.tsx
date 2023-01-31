@@ -13,7 +13,7 @@ const TweetHashForm = () => {
         <FormLabel variant="inline">3. Tweet on your account</FormLabel>
         <Flex>
           <Button
-            disabled={currentStep !== TwitterStep.TWEET_HASH}
+            isDisabled={currentStep !== TwitterStep.TWEET_HASH}
             leftIcon={<IconLink height={16} width={16} />}
             size={'sm'}
             onClick={() => {

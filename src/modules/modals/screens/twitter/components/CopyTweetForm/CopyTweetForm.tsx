@@ -26,7 +26,7 @@ const CopyTweetForm = () => {
             children={<IconCheck height={16} width={16} />}
           />
           <Button
-            disabled={currentStep !== TwitterStep.COPY_TWEET}
+            isDisabled={currentStep !== TwitterStep.COPY_TWEET}
             leftIcon={<IconClipboard height={16} width={16} />}
             size={'sm'}
             onClick={() => {

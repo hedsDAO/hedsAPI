@@ -23,7 +23,7 @@ const PasteTweetForm = () => {
           <InputRightElement width="4.5rem">
             <Button
               isLoading={loading && currentStep === TwitterStep.VERIFY_TWEET}
-              disabled={currentStep !== TwitterStep.VERIFY_TWEET || !pastedTweetUrl}
+              isDisabled={currentStep !== TwitterStep.VERIFY_TWEET || !pastedTweetUrl}
               bg="green.200"
               h="1.75rem"
               size="sm"

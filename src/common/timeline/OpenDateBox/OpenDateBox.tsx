@@ -6,7 +6,7 @@ const OpenDateBox = ({ end }: { end: number }) => {
   return (
     <Flex my={3} alignItems={'stretch'} gap={2}>
       <IconButton
-      rounded={'sm'}
+        rounded={'sm'}
         pointerEvents={'none'}
         _hover={{ background: 'green.50' }}
         border={'solid 1px'}

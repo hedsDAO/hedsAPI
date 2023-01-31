@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
-
+import { ConnectKitButton } from 'connectkit';
 import { Switch } from '@/common/forms';
 import { Dispatch, store } from '@/store';
-import { Avatar, Badge, Box, Button, Container, Flex, IconButton, ListItem, ScaleFade, Text, UnorderedList } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Button, Container, Divider, Flex, IconButton, ListItem, ScaleFade, Text, UnorderedList } from '@chakra-ui/react';
 import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import { NavLink } from '@modules/navigation/store/navigationModel';
 import { Modals } from '@/modules/modals/store/modalModel';
+import { useEffect } from 'react';
 
 const Navbar = (): JSX.Element => {
   const { isConnected, address } = useAccount();
@@ -18,7 +19,15 @@ const Navbar = (): JSX.Element => {
   const brandText: string = useSelector(store.select.navigationModel.selectBrandText);
   const navLinks: NavLink[] = useSelector(store.select.navigationModel.selectAllNavLinks);
   const profilePicture: string = useSelector(store.select.userModel.selectConnectedUserProfilePicture);
-  const isShowingPlayer = useSelector(store.select.audioModel.selectIsShowingPlayer);
+  const nextModal = useSelector(store.select.modalModel.selectNextModal);
+
+  useEffect(() => {
+    if (isConnected) {
+      dispatch.userModel.getConnectedUserData(address.toLowerCase());
+      if (nextModal) dispatch.modalModel.setModal(nextModal);
+      else dispatch.modalModel.setModalOpen(false);
+    }
+  }, [isConnected]);
 
   return (
     <Container minW="100vw">
@@ -28,12 +37,13 @@ const Navbar = (): JSX.Element => {
             <Flex alignItems={'end'} gap={4} mr={1}>
               <Link to="/">
                 <Text
+                  fontFamily={"'Space Mono', monospace"}
                   color={'gray.900'}
                   fontSize={{ base: '2xl', lg: '4xl' }}
                   fontWeight={'medium'}
                   letterSpacing="wide"
                   position={'relative'}
-                  bottom={{ lg: '3px' }}
+                  bottom={{ lg: '3.5px' }}
                 >
                   {brandText}
                 </Text>
@@ -60,8 +70,7 @@ const Navbar = (): JSX.Element => {
             </UnorderedList>
           </Flex>
           <Box alignSelf={'center'} alignItems={'center'} gap={5} display={{ base: 'none', lg: 'flex' }}>
-            {isConnected && <Switch />}
-            {/* TODO: add user / wallet state logic and functionality  */}
+            <Switch />
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
                 <Avatar
@@ -69,63 +78,76 @@ const Navbar = (): JSX.Element => {
                   onClick={() => navigate(`/u/${address}`)}
                   size={'md'}
                   src={profilePicture}
-                ></Avatar>
+                />
                 <Badge
                   onClick={() => {
                     dispatch.modalModel.setModal(Modals.USER_MODAL);
                     dispatch.modalModel.setModalOpen(true);
                   }}
-                  border="2px"
-                  borderColor="white"
+                  border="1px"
+                  borderColor="black"
                   minW="fit-content"
                   borderRadius="full"
-                  boxSize="2.25em"
+                  bg="white"
+                  boxSize="2em"
                   alignSelf={'end'}
                   className="-ml-[20%] aspect-square"
                   as={IconButton}
-                  icon={<EllipsisHorizontalIcon className="text-neutral-700 " height="15" width="15" />}
+                  icon={<EllipsisHorizontalIcon height="14" width="14" />}
                 />
               </Flex>
             ) : (
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
+              <ConnectKitButton.Custom>
+                {({ isConnected, isConnecting, show, hide, address, ensName }) => {
+                  return (
+                    <Button
+                      onClick={show}
+                      isLoading={isConnecting}
+                      rounded="full"
+                      px={{ base: 4, lg: 5 }}
+                      size="sm"
+                      color="white"
+                      bg={isConnected ? 'unset' : 'black'}
+                      className={isConnected && 'gradient'}
+                    >
+                      connect
+                    </Button>
+                  );
                 }}
-                rounded="full"
-                px={{ base: 4, lg: 5 }}
-                size="sm"
-                color="white"
-                bg={isConnected ? 'unset' : 'black'}
-                className={isConnected && 'gradient'}
-              >
-                connect
-              </Button>
+              </ConnectKitButton.Custom>
             )}
           </Box>
         </Flex>
         <Flex py={5} px={2} display={{ base: 'flex', lg: 'none' }} alignItems={'center'} justify={'space-between'}>
-          <Flex gap={2} alignItems={'center'}>
+          <Flex gap={3} alignItems={'center'}>
             <Button
               px={2}
               bg="transparent"
               aria-label="Open Menu"
               onClick={() => dispatch.navigationModel.setIsOpen(!isOpen)}
               display={{ base: 'flex', lg: 'none' }}
+              _focus={{ bg: 'transparent' }}
+              transform={isOpen ? 'rotate(180deg)' : 'rotate(0deg)'}
             >
               <Bars3Icon className={isOpen ? 'block h-6 w-6' : 'block h-6 w-6'} aria-hidden="true" />
             </Button>
             <Flex alignItems={'end'} gap={4} mr={1}>
               <Link to="/">
-                <Text color={'gray.900'} fontSize={{ base: 'xl', lg: '4xl' }} fontWeight={'medium'} letterSpacing="wide" className="relative lg:bottom-[3px]">
+                <Text
+                  color={'gray.900'}
+                  fontFamily={"'Space Mono', monospace"}
+                  fontSize={{ base: 'xl', lg: '4xl' }}
+                  fontWeight={'medium'}
+                  letterSpacing="wide"
+                  className="relative bottom-[0.5px] lg:bottom-[3.5px]"
+                >
                   {brandText}
                 </Text>
               </Link>
             </Flex>
           </Flex>
           <Flex gap={4} alignItems={'center'} alignSelf={'center'}>
-            {isConnected && <Switch />}
-            {/* TODO: add user / wallet state logic and functionality  */}
+            <Switch />
             {isConnected ? (
               <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
                 <Avatar
@@ -133,59 +155,61 @@ const Navbar = (): JSX.Element => {
                   onClick={() => navigate(`/u/${address}`)}
                   size={'md'}
                   src={profilePicture}
-                ></Avatar>
+                />
                 <Badge
                   onClick={() => {
                     dispatch.modalModel.setModal(Modals.USER_MODAL);
                     dispatch.modalModel.setModalOpen(true);
                   }}
-                  border="2px"
-                  borderColor="white"
+                  border="1px"
+                  borderColor="black"
                   minW="fit-content"
                   borderRadius="full"
-                  boxSize="2.25em"
+                  bg="white"
+                  boxSize="2em"
                   alignSelf={'end'}
                   className="-ml-[20%] aspect-square"
                   as={IconButton}
-                  icon={<EllipsisHorizontalIcon className="text-neutral-700 " height="15" width="15" />}
+                  icon={<EllipsisHorizontalIcon height="14" width="14" />}
                 />
               </Flex>
             ) : (
-              <Button
-                onClick={() => {
-                  dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
-                  dispatch.modalModel.setModalOpen(true);
+              <ConnectKitButton.Custom>
+                {({ isConnected, isConnecting, show, hide, address, ensName }) => {
+                  return (
+                    <Button
+                      onClick={show}
+                      isLoading={isConnecting}
+                      rounded="full"
+                      px={{ base: 4, lg: 5 }}
+                      size="sm"
+                      color="white"
+                      bg={isConnected ? 'unset' : 'black'}
+                      className={isConnected && 'gradient'}
+                    >
+                      connect
+                    </Button>
+                  );
                 }}
-                rounded="full"
-                px={{ base: 4, lg: 5 }}
-                size="sm"
-                fontSize={{ base: 'xs', lg: 'sm' }}
-                fontWeight={{ base: 'normal', lg: 'medium' }}
-                letterSpacing={'wide'}
-                color="white"
-                bg={isConnected ? 'unset' : 'black'}
-                className={isConnected && 'gradient'}
-              >
-                connect
-              </Button>
+              </ConnectKitButton.Custom>
             )}
           </Flex>
         </Flex>
       </Box>
       <ScaleFade initialScale={0.0} in={isOpen}>
-        <Flex h={isOpen ? 'full' : '0'} display={'flex'} direction="column" experimental_spaceY={'1'} py={isOpen ? 3 : 0} mx={2}>
+        <Flex h={isOpen ? 'full' : '0'} display={{ base: 'flex', md: 'none' }} direction="row" alignItems={'baseline'} pb={isOpen ? 3 : 0} mx={2}>
           {navLinks.map((navItem) => (
             <Button
               bg="transparent"
-              size="sm"
-              border="1px"
-              className={`navbar-mobile-link`}
+              size="xs"
+              fontWeight={pathname === navItem.path ? 'medium' : 'light'}
+              textColor={pathname === navItem.path ? 'black' : 'gray.500'}
+              isDisabled={pathname === navItem.path}
+              _disabled={{ textColor: 'black' }}
               key={navItem.name + navItem.path}
-              as={Button}
-              to={navItem.path}
               onClick={() => {
-                navigate(navItem.path);
                 dispatch.navigationModel.setIsOpen(!isOpen);
+                setTimeout(() => navigate(navItem.path), 150);
               }}
             >
               {navItem.name}
@@ -193,76 +217,9 @@ const Navbar = (): JSX.Element => {
           ))}
         </Flex>
       </ScaleFade>
+      <Divider borderColor={'gray.300'} display={isOpen ? { base: 'block', md: 'none' } : 'none'} />
     </Container>
   );
 };
 
 export default Navbar;
-
-// import { Modals } from '@/modules/modals/store/modalModel';
-// import { Dispatch, store } from '@/store';
-// import { Avatar, Badge, Flex, IconButton, Spinner } from '@chakra-ui/react';
-// import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-// import { useAccount } from 'wagmi';
-
-// const ConnectButton = ({ nextModal }: { nextModal?: Modals }) => {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch<Dispatch>();
-//   const { isConnected, address, isReconnecting, isConnecting } = useAccount();
-//   const profilePicture = useSelector(store.select.userModel.selectConnectedUserProfilePicture);
-//   return (
-//     <Flex gap={2}>
-//       {isConnected && profilePicture ? (
-//         <Flex mr={{ base: -2, lg: 0 }} pl={{ base: 1, lg: 0 }} alignSelf={{ lg: 'end' }} alignItems={{ lg: 'end' }}>
-//           <Avatar
-//             className="hover:scale-105 ease-in-out transition-all cursor-pointer"
-//             onClick={() => navigate(`/u/${address}`)}
-//             size={'md'}
-//             src={profilePicture}
-//           ></Avatar>
-//           <Badge
-//             onClick={() => {
-//               dispatch.modalModel.setModal(Modals.USER_MODAL);
-//               dispatch.modalModel.setModalOpen(true);
-//             }}
-//             border="2px"
-//             borderColor="white"
-//             minW="fit-content"
-//             borderRadius="full"
-//             boxSize="2.25em"
-//             alignSelf={'end'}
-//             className="-ml-[20%] aspect-square"
-//             as={IconButton}
-//             icon={<EllipsisHorizontalIcon className="text-neutral-700 " height="15" width="15" />}
-//           />
-//         </Flex>
-//       ) : (
-//         <button
-//           onClick={() => {
-//             if (isConnected) navigate(`/u/${address}`);
-//             else {
-//               if (nextModal) dispatch.modalModel.setNextModal(nextModal);
-//               dispatch.modalModel.setModal(Modals.CONNECT_MODAL);
-//               dispatch.modalModel.setModalOpen(true);
-//             }
-//           }}
-//           className={`mr-2 px-5 lg:px-6 text-white inline-flex items-center rounded-full tracking-widest text-xs lg:text-sm py-1 ${
-//             isConnected ? 'bg-black' : 'gradient'
-//           } hover:bg-neutral-900 ease-linear`}
-//         >
-//           {isConnecting || isReconnecting ? (
-//             <>
-//               <Spinner mx={5} size={'sm'} />
-//             </>
-//           ) : (
-//             'connect'
-//           )}
-//         </button>
-//       )}
-//     </Flex>
-//   );
-// };
-
-// export default ConnectButton;

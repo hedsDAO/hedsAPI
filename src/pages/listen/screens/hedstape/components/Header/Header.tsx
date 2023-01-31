@@ -47,7 +47,11 @@ const Header = () => {
               objectFit="cover"
               rounded="sm"
             />
-            <PlayIcon role="button" onClick={setIsPlayingVideo.toggle} className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10" />
+            <PlayIcon
+              role="button"
+              onClick={setIsPlayingVideo.toggle}
+              className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10"
+            />
           </Center>
         </Skeleton>
         <Box height={{ md: '22rem', lg: '20rem' }} width={{ md: '22rem', lg: '20rem' }} display={isPlayingVideo ? 'inherit' : 'none'}>
@@ -65,7 +69,7 @@ const Header = () => {
           />
         </Box>
       </Stack>
-      <Stack direction={'column'} width={'full'} alignItems={{md: 'center', lg:'start'}} justifyContent="center">
+      <Stack direction={'column'} width={'full'} alignItems={{ md: 'center', lg: 'start' }} justifyContent="center">
         <Text fontWeight={'semibold'} fontSize={'4xl'}>
           {name}
         </Text>
@@ -98,7 +102,7 @@ const Header = () => {
           </Button>
         </Flex>
         {currentTape && (
-          <Flex w={{ base: 'full', md: 'md', lg: 'lg' }} pb={{md: 8, lg:2}} gap={1} direction={'column'}>
+          <Flex w={{ base: 'full', md: 'md', lg: 'lg' }} pb={{ md: 8, lg: 2 }} gap={1} direction={'column'}>
             <AudioTrack track={currentTape?.curator?.samples?.[space]?.[tape]?.[id]} />
           </Flex>
         )}
@@ -106,7 +110,7 @@ const Header = () => {
           <Text fontWeight={'bold'} fontSize="xs">
             About The Tape
           </Text>
-          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={{md: 'sm', lg:'md'}}>
+          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={{ md: 'sm', lg: 'md' }}>
             {description}
           </Text>
         </Flex>

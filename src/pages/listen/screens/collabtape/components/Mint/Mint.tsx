@@ -31,11 +31,9 @@ const Mint = () => {
       )}
       <Flex mt={4} gap={2}>
         {mint.status === TimelineStatus.CLOSED ? (
-          <>
-            <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-              Mint Closed
-            </Button>
-          </>
+          <Button isDisabled={true} leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+            Mint Closed
+          </Button>
         ) : mint.status === TimelineStatus.OPEN ? (
           <Button
             onClick={() => {
