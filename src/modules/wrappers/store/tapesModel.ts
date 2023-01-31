@@ -92,6 +92,13 @@ export const tapesModel = createModel<RootModel>()({
     selectCurrentTapeTimeline() {
       return createSelector(this.selectCurrentTape, (tape): Timeline => tape.timeline);
     },
+    selectCurrentTapePreMintStatus() {
+      return createSelector(this.selectCurrentTape, (tape): boolean => {
+        const now = DateTime.now().setZone('utc').toMillis();
+        if (now > tape.timeline?.premint?.start && now < tape.timeline?.premint?.end) return true;
+        else return false
+      });
+    },
     selectCurrentTapeName() {
       return createSelector(this.selectCurrentTape, (tape): string => tape.name || '');
     },
@@ -139,6 +146,10 @@ export const tapesModel = createModel<RootModel>()({
           if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data(), tracks: tracksTank });
           return;
         }
+      } else if (tape.id === 'secretgarden') {
+        const curatorRef = doc(db, 'users', tape.curator);
+        const curatorSnap = await getDoc(curatorRef);
+        if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
       }
     },
   }),

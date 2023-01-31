@@ -2,7 +2,7 @@ import { IN } from 'country-flag-icons/react/3x2';
 import { useSelector } from 'react-redux';
 import { BOX_ONE_DATE, BOX_ONE_DESC, BOX_ONE_TITLE, BOX_TWO_DESC, NEWEST_TAPE_ARTIST, NEWEST_TAPE_HEADING } from '@/pages/explore/store/constants';
 import { store } from '@/store';
-import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean, Link as ChakraLink } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 import * as gaEvents from '@/events';
@@ -18,7 +18,7 @@ const NewestTape = () => {
             {NEWEST_TAPE_HEADING}
           </Text>
           <Flex justifyContent={'space-evenly'} pt={14} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
-            <Box>
+            <Box as={Link} to={'/listen/heds/collabtape/secretgarden'} target="_blank">
               <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
                 <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
                   <Button
@@ -39,7 +39,17 @@ const NewestTape = () => {
                       / {artistsMapping?.[NEWEST_TAPE_ARTIST]?.displayName.toUpperCase()}
                     </Text>
                   </Button>
-                  <Button as={Link} to={`/u/${NEWEST_TAPE_ARTIST}`} py="4" border="1px" borderColor="black" size="sm" rounded="full" bg="white" zIndex={'30'}>
+                  <Button
+                    as={Link}
+                    to={'/listen/heds/collabtape/secretgarden'}
+                    py="4"
+                    border="1px"
+                    borderColor="black"
+                    size="sm"
+                    rounded="full"
+                    bg="white"
+                    zIndex={'30'}
+                  >
                     <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
                   </Button>
                 </Flex>
@@ -81,7 +91,17 @@ const NewestTape = () => {
               >
                 {BOX_TWO_DESC}
               </Text>
-              <Button my={{ base: 5, lg: 0 }} border="1px" borderColor="black" size="sm" rounded="full" bg="white" zIndex={'30'}>
+              <Button
+                as={Link}
+                to={'/listen/heds/collabtape/secretgarden'} 
+                my={{ base: 5, lg: 0 }}
+                border="1px"
+                borderColor="black"
+                size="sm"
+                rounded="full"
+                bg="white"
+                zIndex={'30'}
+              >
                 <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
               </Button>
             </Flex>

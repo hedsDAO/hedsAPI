@@ -7,7 +7,7 @@ const UpcomingDateBox = ({ start }: { start: DateTime }) => {
     <Flex my={3} alignItems={'stretch'} gap={2}>
       <IconButton
         rounded="sm"
-        disabled
+        isDisabled
         bg="gray.300"
         shadow={'sm'}
         aria-label="mint"
