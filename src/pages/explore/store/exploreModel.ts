@@ -25,7 +25,7 @@ export const exploreModel = createModel<RootModel>()({
   effects: () => ({
     async getLatestSecondaryListings(fetchAll?: boolean) {
       this.setIsLoading(true);
-      const url = fetchAll ? OPENSEA_EVENTS_CLOUD_FUNCTION : `${OPENSEA_EVENTS_CLOUD_FUNCTION}/${OPENSEA_LIMIT}`;
+      const url = fetchAll ? OPENSEA_EVENTS_CLOUD_FUNCTION : `${OPENSEA_EVENTS_CLOUD_FUNCTION}`;
       await axios
         .get(url)
         .then((res) => {
