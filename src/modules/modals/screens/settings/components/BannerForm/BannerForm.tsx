@@ -9,7 +9,7 @@ import { PrimaryButton, WarningButton } from '@/common/buttons';
 const BannerForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
-  const banner = useSelector(store.select.userModel.selectCurrentUserBanner);
+  const banner = useSelector(store.select.userModel.selectConnectedUserBanner);
   const { bannerPreview, bannerFile, profileChanges, isLoading } = useSelector((state: RootState) => state.settingsModel);
   const handleClick = () => inputRef.current.click();
   return (
