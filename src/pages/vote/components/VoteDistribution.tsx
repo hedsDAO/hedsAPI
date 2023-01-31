@@ -74,8 +74,8 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                 border="1px"
                 rounded="sm"
                 shadow="sm"
-                borderColor={'gray.500'}
-                backgroundColor={'white'}
+                borderColor={selectedTracks.has(choice.walletId) ? 'purple.500' : 'gray.500'}
+                backgroundColor={selectedTracks.has(choice.walletId) ? 'purple.200' : 'white'}
                 justifyContent={'space-between'}
                 w="full"
                 minW="full"
@@ -84,7 +84,11 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                 key={choice.name}
                 borderRadius="lg"
                 onClick={() => handleScoreChange(choice)}
-                _hover={{ borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }}
+                _hover={
+                  selectedTracks.has(choice.walletId)
+                    ? { borderColor: 'purple.800', bg: 'purple.100', cursor: 'pointer' }
+                    : { borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }
+                }
               >
                 <HStack w={{ base: '50%', lg: '40%' }}>
                   <Avatar size="sm" src={choice.image} />
