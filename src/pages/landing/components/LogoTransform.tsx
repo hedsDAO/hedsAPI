@@ -15,7 +15,7 @@ export const LogoTransform = ({ parallaxRef }: any) => {
     },
   });
   return (
-    <Link to="/explore">
+    <Link to="/explore" style={{ display: 'flex', alignItems: 'start', justifyContent: 'center' }}>
       <animated.img style={props} src={hedsLogo} />
     </Link>
   );

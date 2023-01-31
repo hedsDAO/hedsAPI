@@ -1,10 +1,10 @@
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax';
 import { Link } from 'react-router-dom';
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
-import { Box, Center, Container, Divider, Grid, GridItem, Stack, Icon, StackDivider, Flex } from '@chakra-ui/react';
+import { Box, Center, Container, Divider, Grid, GridItem, Stack, StackDivider, Flex } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
@@ -15,7 +15,7 @@ import hedsBackground from '@/public/hedsbackground.mp4';
 
 export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
-  const widthBreakpoint: boolean = window.innerWidth < 500;
+  const widthBreakpoint: boolean = window.innerWidth < 480;
   const heightBreakpoint: boolean = window.innerHeight < 700;
   const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.7 : 5;
 
@@ -65,7 +65,12 @@ export const Landing = () => {
         offset={0}
         speed={1}
         sticky={{ start: 0, end: 5 }}
-        style={{ display: 'flex', justifyContent: 'center', alignItems: 'start', height: '0%' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'start',
+          height: '0%',
+        }}
       >
         <LogoTransform parallaxRef={parallaxRef} />
       </ParallaxLayer>
