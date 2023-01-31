@@ -1,12 +1,29 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchEns } from '@/hooks';
 import { Dispatch, store } from '@/store';
-import { Box, Button, Flex, Heading, Icon, IconButton, Image, Link, SimpleGrid, Spinner, Stack, Text, useBreakpointValue } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Icon,
+  IconButton,
+  Image,
+  Link,
+  SimpleGrid,
+  Skeleton,
+  Spinner,
+  Stack,
+  Text,
+  useBoolean,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { LISTINGS_BUTTON, LISTINGS_DESC, LISTINGS_TITLE } from '@/pages/explore/store/constants';
 import * as gaEvents from '@/events';
 
 const ActiveListings = () => {
+  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const amountOfListings = useBreakpointValue({ base: 4, lg: 5 });
   const dispatch = useDispatch<Dispatch>();
   const latestSecondaryListings = useSelector(store.select.exploreModel.selectLatestSecondaryListings);
@@ -30,7 +47,17 @@ const ActiveListings = () => {
                 return (
                   <Box key={listing.name + listing.tokenId} border="1px" borderColor="black" p={4} rounded="lg" w="full">
                     <Box pos={'relative'}>
-                      <Image data-testid={`explore-listing-image-${index}`} border="1px" borderColor="black" rounded="lg" src={listing.image} />
+                      <Skeleton isLoaded={hasImageLoaded}>
+                        <Image
+                          
+                          onLoad={setHasImageLoaded.on}
+                          data-testid={`explore-listing-image-${index}`}
+                          border="1px"
+                          borderColor="black"
+                          rounded="lg"
+                          src={listing.image}
+                        />
+                      </Skeleton>
                       {listing.market === 'opensea' && (
                         <Flex justifyContent={'space-between'} zIndex={'50'} top="2" right="2" position={'absolute'}>
                           <IconButton
@@ -55,7 +82,15 @@ const ActiveListings = () => {
                         <Text letterSpacing={'tight'} fontFamily={"'Space Mono', monospace"} fontSize="lg" color="gray.600">
                           {listing.price} Ξ
                         </Text>
-                        <Button onClick={() => gaEvents.clickLinkToSecondaryListing()} as={Link} href={listing.link} target="_blank" px={2} variant={'explore'} size="xs">
+                        <Button
+                          onClick={() => gaEvents.clickLinkToSecondaryListing()}
+                          as={Link}
+                          href={listing.link}
+                          target="_blank"
+                          px={2}
+                          variant={'explore'}
+                          size="xs"
+                        >
                           <Icon color="gray.600" h="4" w="4" as={IconArrowRight}></Icon>
                         </Button>
                       </Flex>
