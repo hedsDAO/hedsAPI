@@ -10,7 +10,7 @@ export const TapeHeader = () => {
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
 
   return (
-    <Box justifyContent={'center'}>
+    <Box justifyContent={'center'} pt={{ base: '2em', md: '4em' }}>
       <HStack gap={2}>
         <Divider borderColor="gray.700" w="full" />
         {currentTape.name && (

@@ -121,13 +121,13 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                         : { borderColor: 'gray.400', bg: 'gray.50', cursor: 'pointer' }
                     }
                   >
-                    <HStack w={{ base: '50%', lg: '40%' }}>
+                    <Stack direction={['column', 'row']} w={{ base: '50%', lg: '40%' }}>
                       <Avatar size="sm" src={choice.image} />
-                      <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={'sm'}>
+                      <Text textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'} fontSize={['xs', 'sm']} alignSelf={['left', 'center']}>
                         {choice.name}
                       </Text>
-                    </HStack>
-                    <Flex alignItems={'center'} gap={2} pr={2} w={{ base: '50%', lg: '60%' }}>
+                    </Stack>
+                    <Flex flexDirection={['column-reverse', 'row']} alignItems={'center'} gap={2} pr={[0, 2]} w={{ base: '50%', lg: '60%' }}>
                       <Flex alignItems={'center'} w={{ base: '60%', lg: '80%' }}>
                         {+round(resultsByPercentage(voteResults)[choice.id], 2) > 1 ? (
                           <Fragment>
@@ -139,12 +139,12 @@ export const VoteDistribution = ({ handleScoreChange }: OwnProps) => {
                         )}
                       </Flex>
                       <Text
-                        textAlign={'right'}
-                        w={{ base: '40%', lg: '20%' }}
+                        textAlign={['center', 'right']}
+                        w={{ base: '50%', lg: '20%' }}
                         textColor={selectedTracks.has(choice.walletId) ? 'black' : 'gray.800'}
                         fontSize={'sm'}
                       >
-                        {round(resultsByPercentage(voteResults)[choice.id], 2)}%{' '}
+                        {round(resultsByPercentage(voteResults)[choice.id], 2)}%
                       </Text>
                     </Flex>
                   </Flex>
