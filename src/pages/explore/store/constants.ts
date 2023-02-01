@@ -65,7 +65,7 @@ export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/dabow-wanna-be';
 export const NEWEST_TAPE_HEADING = 'NEWEST TAPE';
 export const BOX_ONE_TITLE = 'heds x secret garden';
 export const BOX_ONE_DESC = 'release type: collabTAPE';
-export const BOX_ONE_DATE = 'mint date: FEBRUARY 3RD. 2023';
+export const BOX_ONE_DATE = 'mint date: FEBRUARY 1ST. 2023';
 export const BOX_TWO_DESC = `in collaboration with three oscillators & secretgarden.fm, we've invited heds artists to participate in the creation of the first hedsPLAYER, a curated stem player & NFT collection`;
 export const NEWEST_TAPE_ARTIST = '0x0a7c3007f2156ff8db9579efb7adbbd7212d3c3c';
 
