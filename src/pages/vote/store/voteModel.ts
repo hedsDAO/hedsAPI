@@ -74,7 +74,6 @@ export const voteModel = createModel<RootModel>()({
       return createSelector(this.selectProposal, (proposal: Proposal) => {
         if (!proposal.strategies) return 0;
         const { strategies } = proposal;
-        console.log(strategies);
         // return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
       });
     },

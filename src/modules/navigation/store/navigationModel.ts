@@ -19,7 +19,7 @@ export const navigationModel = createModel<RootModel>()({
       { name: 'Explore', path: '/' },
       { name: 'Tapes', path: '/tapes' },
       { name: 'Artists', path: '/artists' },
-      { name: 'Vote', path: '/vote' },
+      // { name: 'Vote', path: '/vote' },
     ],
     brandText: 'heds',
   } as NavigationState,

@@ -44,7 +44,6 @@ const DesktopQueue = () => {
                 </Stack>
                 <IconButton
                   onClick={() => {
-                    console.log('here');
                     dispatch.audioModel.removeTrackFromQueue(queueItem);
                   }}
                   disabled={false}
