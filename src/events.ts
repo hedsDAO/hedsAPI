@@ -55,3 +55,10 @@ export const clickDownloadSampleButtonInModal = (tape: string) => ReactGA.event(
 export const clickViewVoteResultsButton = (tape: string) => ReactGA.event({ category: 'Tape Page', action: 'Click View Vote Results Button', label: tape });
 export const clickViewLiveVoteButton = (tape: string) => ReactGA.event({ category: 'Tape Page', action: 'Click View Live Vote Button', label: tape });
 export const clickMintButton = (tape: string) => ReactGA.event({ category: 'Tape Page', action: 'Click Mint Button', label: tape });
+
+// Profile Page
+export const clickSettingsButton = () => ReactGA.event({ category: 'Profile Page', action: 'Click Settings Button' });
+export const clickCopyWalletAddress = () => ReactGA.event({ category: 'Profile Page', action: 'Click Copy Wallet Address' });
+export const clickLinkToTwitter = () => ReactGA.event({ category: 'Profile Page', action: 'Click Link To Twitter' });
+export const clickToggleToLikes = () => ReactGA.event({ category: 'Profile Page', action: 'Click Toggle To Likes' });
+export const clickRefreshCollection = (name: string) => ReactGA.event({ category: 'Profile Page', action: 'Click Refresh Collection', label: name });

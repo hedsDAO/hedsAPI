@@ -4,6 +4,7 @@ import { RootState, store } from '@/store';
 import { formatWallet, handleCopy } from '@/utils';
 import { Button, Fade, Flex, Skeleton, Text } from '@chakra-ui/react';
 import { IconCheck } from '@tabler/icons';
+import * as gaEvents from '@/events';
 
 const WalletButton = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -11,7 +12,10 @@ const WalletButton = () => {
   const isLoading = useSelector((state: RootState) => state.loading.models.userModel);
   return (
     <Button
-      onClick={() => handleCopy(setIsCopied, wallet)}
+      onClick={() => {
+        handleCopy(setIsCopied, wallet);
+        gaEvents.clickCopyWalletAddress();
+      }}
       leftIcon={<i className="fa-solid fa-copy text-xs"></i>}
       fontWeight={'light'}
       bg="gray.100"
