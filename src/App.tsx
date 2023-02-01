@@ -27,8 +27,8 @@ const App = (): JSX.Element => {
         <Route path="/artists" element={<Artists />} />
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/listen/:space/:tape/:id" element={<Listen />} />
-        {/* <Route path="/vote/:space/:tape/:id" element={<Vote />} />
-        <Route path="/vote" element={<Vote />} /> */}
+        {/* <Route path="/vote/:space/:tape/:id" element={<Vote />} /> */}
+        {/* <Route path="/vote" element={<Vote />} /> */}
         <Route path="/*" element={<Explore />} />
         {/* <Route path="/" element={<Explore />} /> */}
       </Route>
