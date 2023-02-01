@@ -17,10 +17,10 @@ export const Landing = () => {
   const parallaxRef = useRef<IParallax>(null);
   const widthBreakpoint: boolean = window.innerWidth < 480;
   const heightBreakpoint: boolean = window.innerHeight < 700;
-  const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 6 : widthBreakpoint ? 5.7 : 5;
+  const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 5.6 : widthBreakpoint ? 5.3 : 5;
 
   return (
-    <Parallax className="top-div" pages={parallaxPages} style={{ top: '0', left: '0', height: '100vh', position: 'inherit' }} ref={parallaxRef}>
+    <Parallax className="top-div" pages={parallaxPages} style={{ top: '0', left: '0', height: '100vh', position: 'fixed' }} ref={parallaxRef}>
       {/* Section 1 */}
       <ParallaxLayer
         offset={0}
@@ -214,7 +214,7 @@ export const Landing = () => {
                 <Number inputNum={420} dollar size={['3rem', null, '4rem', '8rem']} />
               </GridItem>
               <GridItem rowSpan={2} colSpan={1}>
-                <Center h="100%" textAlign={[null, 'right']} fontSize={['xs', 'sm', 'md']}>
+                <Center h="100%" textAlign={[null, 'right']} fontSize={['xs', 'sm', 'md']} padding={['1px', '3px']}>
                   SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
                 </Center>
               </GridItem>
