@@ -3,7 +3,7 @@ import { store } from '@/store';
 import { ProposalState } from 'hedsvote';
 import { formatWallet } from '@/utils';
 import { Avatar, Box, Badge, Divider, Flex, HStack, Stack, Square, Text } from '@chakra-ui/react';
-import { OLD_TAPES, HOW_VOTING_WORKS, ABOUT_VOTING, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
+import { OLD_TAPES, HOW_VOTING_WORKS, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
 
 interface OwnProps {
   tapeImage: string;
@@ -20,6 +20,7 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
   };
 
   const isOldTape = OLD_TAPES.includes(tapeId);
+  const isHedsTAPE06 = tapeId === '6';
 
   return (
     <Flex w="100%" flexDirection={{ base: 'column', md: 'row' }} justifyContent="space-evenly">
@@ -75,7 +76,7 @@ export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
         </Text>
         <Divider borderColor="gray.700" w="full" py={{ base: '1', md: '2' }} />
         <Text fontSize="xs" color="muted" pt="2">
-          {isOldTape ? ABOUT_VOTING_OLD_TAPES : ABOUT_VOTING}
+          {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}
         </Text>
       </Box>
     </Flex>
