@@ -49,7 +49,7 @@ export const HEDS_IMG_PROPS = {
 export const HEDS_SOLO_HEADING = 'introducing';
 export const HEDS_SOLO_TITLE = 'hedSOLO';
 export const HEDS_SOLO_DESC = 'a new look into the worldwide heds community, featuring solo releases from artists representing the future of music.';
-export const HEDS_SOLO_ARTIST = '0xd4a1b8f85e4df6afb1c66e54250ae9e216fc388d';
+export const HEDS_SOLO_ARTIST = '0xd9c0f7408550fffa543a4c725b7ebe05883fe434';
 export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/dabow-wanna-be';
 
 /**
