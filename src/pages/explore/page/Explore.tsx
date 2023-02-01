@@ -19,7 +19,7 @@ export const Explore = () => {
 
   return (
     <Box>
-      <CarouselWrapper slides={[<HedsSolo />, <NewestTape />]} />
+      <CarouselWrapper slides={[<NewestTape />, <HedsSolo />]} />
       <Image src={hedImage} {...HEDS_IMG_PROPS} />
       <MostAppearances />
       <Divider mx="auto" w="80%" my={5} />
