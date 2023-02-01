@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga4';
 
 /**Intialize GA */
-export const initGA = () => ReactGA.initialize('G-EES6VXHESQ');
+export const initGA = () => ReactGA.initialize('G-EWK413GWSB');
 
 /** PAGEVIEWS */
 export const setPageViewEvents = () => {
