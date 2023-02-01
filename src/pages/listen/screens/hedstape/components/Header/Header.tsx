@@ -6,17 +6,23 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player/lazy';
 import * as gaEvents from '@/events';
+import { useEffect } from 'react';
 
 const Header = () => {
   const [isPlayingVideo, setIsPlayingVideo] = useBoolean();
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
+  const isAudioPlaying = useSelector(store.select.audioModel.selectIsTrackPlaying);
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
   const opensea = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   const etherscan = useSelector(store.select.tapesModel.selectCurrentTapeEtherscanLink);
   const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
+
+  useEffect(() => {
+    if (isAudioPlaying) setIsPlayingVideo.off();
+  },[isAudioPlaying]);
 
   return (
     <Flex
