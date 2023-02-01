@@ -8,7 +8,7 @@ import { secondaryListings } from '@/tests/mocks/explore/secondaryListings';
 import { WagmiConfig, createClient, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { mainnet } from 'wagmi/chains';
-import { LISTINGS_BUTTON, LISTINGS_DESC, LISTINGS_TITLE } from '@/pages/explore/store/constants';
+import { LISTINGS_DESC, LISTINGS_TITLE } from '@/pages/explore/store/constants';
 import { ChakraProvider } from '@chakra-ui/react';
 
 const { provider, webSocketProvider } = configureChains([mainnet], [publicProvider()]);
@@ -40,7 +40,7 @@ describe('ActiveListings Unit', () => {
   });
   it('displays all text content', () => {
     const newestTapeContainer = screen.getByTestId('explore-listings');
-    [LISTINGS_BUTTON, LISTINGS_DESC, LISTINGS_TITLE].forEach((text) => {
+    [LISTINGS_DESC, LISTINGS_TITLE].forEach((text) => {
       expect(newestTapeContainer).toHaveTextContent(text);
     });
   });

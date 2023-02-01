@@ -5,11 +5,14 @@ import type { RootModel } from '@/models';
 import axios from 'axios';
 
 export const exploreModel = createModel<RootModel>()({
-  state: {} as ExploreState,
+  state: {
+    scrollDataMax: 4,
+  } as ExploreState,
   reducers: {
     setLatestSecondaryListings: (state, secondaryListings: HedsTapeListing[]) => ({ ...state, secondaryListings }),
     setHasFetchedAllListings: (state, hasFetchedAllListings: boolean) => ({ ...state, hasFetchedAllListings }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
+    setScrollDataMax: (state, scrollDataMax: number) => ({ ...state, scrollDataMax: scrollDataMax + 4 }),
   },
   selectors: (slice) => ({
     selectLatestSecondaryListings() {
@@ -21,11 +24,14 @@ export const exploreModel = createModel<RootModel>()({
     selectIsLoading() {
       return slice((exploreModel) => exploreModel.isLoading);
     },
+    selectScrollDataMax() {
+      return slice((exploreModel) => exploreModel.scrollDataMax);
+    },
   }),
   effects: () => ({
     async getLatestSecondaryListings(fetchAll?: boolean) {
       this.setIsLoading(true);
-      const url = fetchAll ? OPENSEA_EVENTS_CLOUD_FUNCTION : `${OPENSEA_EVENTS_CLOUD_FUNCTION}/${OPENSEA_LIMIT}`;
+      const url = fetchAll ? OPENSEA_EVENTS_CLOUD_FUNCTION : `${OPENSEA_EVENTS_CLOUD_FUNCTION}`;
       await axios
         .get(url)
         .then((res) => {

@@ -9,11 +9,10 @@ import { DateTime } from 'luxon';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 const Mint = () => {
-  const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.collabModel.selectMint);
-  const start = DateTime.fromMillis(mint.start, zone);
-  const end = DateTime.fromMillis(mint.end, zone);
+  const start = DateTime.fromMillis(mint.start);
+  const end = DateTime.fromMillis(mint.end);
 
   return (
     <div>
