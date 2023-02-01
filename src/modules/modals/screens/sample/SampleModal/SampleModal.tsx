@@ -35,8 +35,8 @@ const SampleModal = () => {
         <PrimaryButton 
           isLoading={isLoading} 
           onClick={() => {
-          dispatch.sampleModel.getSampleDownload(id);
           gaEvents.clickDownloadSampleButtonInModal(tapeName);
+          dispatch.sampleModel.getSampleDownload(id);
         }} 
           disabled={now > submit?.end ? false : !isChecked}>
           {DOWNLOAD_BUTTON_TEXT}
