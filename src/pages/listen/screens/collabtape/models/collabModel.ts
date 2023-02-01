@@ -33,8 +33,8 @@ export const collabModel = createModel<RootModel>()({
       timelineTank['premint'] = {
         name: names.premint,
         description: desc.premint,
-        start: mintTimes.start,
-        end: mintTimes.end,
+        start: premintTimes.start,
+        end: premintTimes.end,
         status: compareTimestamps(now, premintTimes.start, premintTimes.end),
       };
       timelineTank['mint'] = {
