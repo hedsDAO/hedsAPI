@@ -31,7 +31,7 @@ const Vote = () => {
       ) : (
         <UpcomingDateBox start={start} />
       )}
-      <Flex mt={4} gap={2}>
+      {/* <Flex mt={4} gap={2}>
         {vote.status === TimelineStatus.CLOSED ? (
           <Button
             onClick={() => navigate(`/vote/${space}/${tape}/${id}`)}
@@ -61,7 +61,7 @@ const Vote = () => {
         ) : (
           <></>
         )}
-      </Flex>
+      </Flex> */}
     </div>
   );
 };
