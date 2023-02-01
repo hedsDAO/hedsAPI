@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modals } from '@/modules/modals/store/modalModel';
+import * as gaEvents from '@/events';
 
 const UserCard = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -35,6 +36,7 @@ const UserCard = () => {
               onClick={() => {
                 dispatch.modalModel.setModal(Modals.SETTINGS_MODAL);
                 dispatch.modalModel.setModalOpen(true);
+                gaEvents.clickSettingsButton();
               }}
               aria-label="settings"
             >

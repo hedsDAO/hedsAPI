@@ -8,6 +8,7 @@ import { useContractReads } from 'wagmi';
 import { Result } from 'ethers/lib/utils';
 import { DateTime } from 'luxon';
 import { useLocation } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const RefreshCollectionButton = () => {
   const { pathname } = useLocation();
@@ -16,6 +17,7 @@ const RefreshCollectionButton = () => {
   const hedsTapes = useSelector(store.select.tapesModel.selectAllHedsTapes);
   const allTapeData = useSelector(store.select.tapesModel.selectAllTapeData);
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
+  const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const userCollection = useSelector(store.select.userModel.selectCurrentUserCollection);
   const { data, refetch, isLoading, isFetching, isRefetching } = useContractReads({
     contracts: formatReadContractArgs(wallet, allTapeData),
@@ -67,7 +69,10 @@ const RefreshCollectionButton = () => {
           disabled={!isEmpty(hedsTapes) && !wallet?.length}
           isLoading={isFetching || isRefetching || isLoading}
           color="purple.800"
-          onClick={() => refetch().then(() => refetch())}
+          onClick={() => {
+            gaEvents.clickRefreshCollection(displayName);
+            refetch().then(() => refetch());
+          }}
         >
           <IconRefresh className="hover:scale-110 ease-in-out" height={14} width={14} />
         </Button>
