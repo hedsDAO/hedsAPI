@@ -13,6 +13,7 @@ const PreMint = () => {
   const premint = useSelector(store.select.collabModel.selectPremint);
   const start = DateTime.fromMillis(premint.start);
   const end = DateTime.fromMillis(premint.end);
+  const tapeId = useSelector(store.select.tapesModel.selectCurrentTapeId);
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
@@ -35,8 +36,11 @@ const PreMint = () => {
         ) : premint.status === TimelineStatus.OPEN ? (
           <Button
             onClick={() => {
-              dispatch.modalModel.setModal(Modals.MINT_MODAL);
-              dispatch.modalModel.setModalOpen(true);
+              if (tapeId === 'secretgarden') window.open('https://www.secretgarden.fm/', '_blank', 'noreferrer');
+              else {
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+              }
             }}
             border={'solid 1px'}
             borderColor="green.200"

@@ -13,6 +13,7 @@ const Mint = () => {
   const mint = useSelector(store.select.collabModel.selectMint);
   const start = DateTime.fromMillis(mint.start);
   const end = DateTime.fromMillis(mint.end);
+  const tapeId = useSelector(store.select.tapesModel.selectCurrentTapeId);
 
   return (
     <div>
@@ -36,8 +37,11 @@ const Mint = () => {
         ) : mint.status === TimelineStatus.OPEN ? (
           <Button
             onClick={() => {
-              dispatch.modalModel.setModal(Modals.MINT_MODAL);
-              dispatch.modalModel.setModalOpen(true);
+              if (tapeId === 'secretgarden') window.open('https://www.secretgarden.fm/', '_blank', 'noreferrer');
+              else {
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+              }
             }}
             border={'solid 1px'}
             borderColor="green.200"
