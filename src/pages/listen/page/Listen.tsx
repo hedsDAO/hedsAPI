@@ -11,7 +11,6 @@ export const Listen = () => {
   const { space, tape, id } = useParams<{ space?: string; tape: string; id: string }>();
 
   const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
-  console.log(currentTape)
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
 
   useEffect(() => {
