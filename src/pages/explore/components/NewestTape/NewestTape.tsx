@@ -18,7 +18,7 @@ const NewestTape = () => {
             {NEWEST_TAPE_HEADING}
           </Text>
           <Flex justifyContent={'space-evenly'} pt={14} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
-            <Box as={Link} to={'/listen/heds/collabtape/secretgarden'} target="_blank">
+            <Box>
               <Skeleton rounded="3xl" minW="20rem" h="11rem" isLoaded={hasImageLoaded}>
                 <Flex mb={'-12'} mx={5} position={'relative'} justifyContent={'space-between'}>
                   <Button
