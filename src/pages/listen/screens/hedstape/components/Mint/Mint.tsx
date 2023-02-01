@@ -7,8 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TimelineStatus } from '@/pages/listen/screens/hedstape/models/common';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { Modals } from '@/modules/modals/store/modalModel';
+import { useParams } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const Mint = () => {
+  const { tape, id } = useParams();
   const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.hedstapeModel.selectMint);
@@ -36,6 +39,9 @@ const Mint = () => {
               Mint Closed
             </Button>
             <Button
+              onClick={() => {
+                gaEvents.clickLinkToOpenseaNextToMintButton(`${tape}/${id}`);
+              }}
               target="_blank"
               as={Link}
               href={openSeaLink?.length > 0 && openSeaLink}
@@ -55,6 +61,7 @@ const Mint = () => {
             onClick={() => {
               dispatch.modalModel.setModal(Modals.MINT_MODAL);
               dispatch.modalModel.setModalOpen(true);
+              gaEvents.clickMintButton(`${tape}/${id}`);
             }}
             border={'solid 1px'}
             borderColor="green.200"
