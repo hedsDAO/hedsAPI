@@ -89,4 +89,3 @@ export const MOST_AP_BUTTON = 'all artists';
 
 export const LISTINGS_TITLE = 'Active Listings';
 export const LISTINGS_DESC = 'available heds projects to add to your collection.';
-export const LISTINGS_BUTTON = 'see all';
