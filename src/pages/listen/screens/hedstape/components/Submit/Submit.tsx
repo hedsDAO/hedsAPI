@@ -7,8 +7,11 @@ import { TimelineStatus } from '@/pages/listen/screens/hedstape/models/common';
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { IconDownload } from '@tabler/icons';
+import { useParams } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const Submit = () => {
+  const { tape, id } = useParams();
   const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const submit = useSelector(store.select.hedstapeModel.selectSubmit);
@@ -33,6 +36,7 @@ const Submit = () => {
           onClick={() => {
             dispatch.modalModel.setModal(Modals.SAMPLE_MODAL);
             dispatch.modalModel.setModalOpen(true);
+            gaEvents.clickDownloadSampleButton(`${tape}/${id}`);
           }}
           border={'solid 1px'}
           borderColor="blue.100"
@@ -49,6 +53,7 @@ const Submit = () => {
             onClick={() => {
               dispatch.modalModel.setModal(Modals.SUBMIT_MODAL);
               dispatch.modalModel.setModalOpen(true);
+              gaEvents.clickSubmitButton(`${tape}/${id}`);
             }}
             border={'solid 1px'}
             borderColor="green.200"

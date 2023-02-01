@@ -5,6 +5,7 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player/lazy';
+import * as gaEvents from '@/events';
 
 const Header = () => {
   const [isPlayingVideo, setIsPlayingVideo] = useBoolean();
@@ -49,7 +50,10 @@ const Header = () => {
             />
             <PlayIcon
               role="button"
-              onClick={setIsPlayingVideo.toggle}
+              onClick={() => {
+                gaEvents.clickPlayTapeVideo(name);
+                return setIsPlayingVideo.toggle();
+              }}
               className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10"
             />
           </Center>
@@ -75,6 +79,9 @@ const Header = () => {
         </Text>
         <Flex pb={{ base: 8, lg: 3 }} gap={2}>
           <Button
+            onClick={() => {
+              gaEvents.clickLinkToOpensea(name);
+            }}
             as={ChakraLink}
             href={opensea}
             target="_blank"
@@ -88,6 +95,9 @@ const Header = () => {
             OpenSea
           </Button>
           <Button
+            onClick={() => {
+              gaEvents.clickLinkToEtherscan(name);
+            }}
             as={ChakraLink}
             href={etherscan}
             target="_blank"

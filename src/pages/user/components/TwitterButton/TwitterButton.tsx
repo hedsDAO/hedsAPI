@@ -3,6 +3,7 @@ import { Dispatch, RootState, store } from '@/store';
 import { formatTwitterUrl } from '@/utils';
 import { Button, Skeleton, Text, Link } from '@chakra-ui/react';
 import { Modals } from '@/modules/modals/store/modalModel';
+import * as gaEvents from '@/events';
 
 const TwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -17,6 +18,7 @@ const TwitterButton = () => {
           onClick={() => {
             dispatch.modalModel.setModal(Modals.TWITTER_MODAL);
             dispatch.modalModel.setModalOpen(true);
+            gaEvents.clickLinkToTwitter();
           }}
           leftIcon={<i className="fa-brands fa-twitter text-xs"></i>}
           bg="gray.100"
