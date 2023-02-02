@@ -56,7 +56,7 @@ export const Landing = () => {
       <ParallaxLayer
         offset={3}
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#d7d7d8',
         }}
       />
 
@@ -71,7 +71,7 @@ export const Landing = () => {
           height: '0%',
         }}
       >
-        <LogoTransform parallaxRef={parallaxRef} />
+        <LogoTransform parallaxRef={parallaxRef} width={widthBreakpoint ? '300px' : '600px'} />
       </ParallaxLayer>
 
       <ParallaxLayer
@@ -174,7 +174,7 @@ export const Landing = () => {
           <Box
             w={['100%', '50%']}
             h="100%"
-            padding={[null, '2em', '5em']}
+            padding={['0.5rem', '1rem']}
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -201,7 +201,7 @@ export const Landing = () => {
           <Box
             w={['100%', '50%']}
             h="100%"
-            padding={[null, '2em', '5em']}
+            padding={['0.5rem', '1rem']}
             fontFamily="mono"
             color="white"
             display="flex"
@@ -218,7 +218,7 @@ export const Landing = () => {
                 </Center>
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
-                <Flex display="flex" justify="center" align={['start', 'center']} h={[null, '100%']} textAlign="center" fontSize="sm">
+                <Flex display="flex" justify="center" align={['start', 'center']} h={[null, '100%']} textAlign="center" fontSize="sm" padding={['1em', null]}>
                   average artist earnings per tape
                 </Flex>
               </GridItem>
