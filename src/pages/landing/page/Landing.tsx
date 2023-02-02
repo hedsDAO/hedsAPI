@@ -61,7 +61,6 @@ export const Landing = () => {
       />
 
       <ParallaxLayer
-        className="logo-layer"
         offset={0}
         speed={1}
         sticky={{ start: 0, end: 5 }}
