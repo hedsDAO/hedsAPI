@@ -12,9 +12,9 @@
     "tw": "tailwindcss -i ./src/index.css -o ./build/app/output.css --watch",
     "tw-prod": "tailwindcss -i ./src/index.css -o ./build/app/output.css",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
-    "swap-prod": "cp ./firebase/prod.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts firebaseConfig.ts",
-    "swap-staging": "cp ./firebase/staging.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts firebaseConfig.ts",
-    "swap-dev": "cp ./firebase/dev.firebaseConfig.ts firebaseConfig.ts"
+    "swap-prod": "cp ./firebase/prod.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts ./src/firebaseConfig.ts",
+    "swap-staging": "cp ./firebase/staging.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts ./src/firebaseConfig.ts",
+    "swap-dev": "cp ./firebase/dev.firebaseConfig.ts ./src/firebaseConfig.ts"
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
