@@ -22,7 +22,7 @@ const Header = () => {
 
   useEffect(() => {
     if (isAudioPlaying) setIsPlayingVideo.off();
-  },[isAudioPlaying]);
+  }, [isAudioPlaying]);
 
   return (
     <Flex

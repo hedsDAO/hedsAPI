@@ -2,7 +2,7 @@ import { Models } from '@rematch/core';
 import { navigationModel } from '@/modules/navigation/store/navigationModel';
 import { tapesModel } from '@/modules/wrappers/store/tapesModel';
 import { artistModel } from '@/pages/artists/store/artistModel';
-import { userModel } from '@/modules/wrappers/store/userModal';
+import { userModel } from '@/modules/wrappers/store/userModel';
 import { hedstapeModel } from '@/pages/listen/screens/hedstape/models/hedstapeModel';
 import { collabModel } from '@/pages/listen/screens/collabtape/models/collabModel';
 import { audioModel } from '@/modules/audio/store/audioModel';
