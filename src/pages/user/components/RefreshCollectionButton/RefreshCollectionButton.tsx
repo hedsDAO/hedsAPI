@@ -19,6 +19,7 @@ const RefreshCollectionButton = () => {
   const wallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const userCollection = useSelector(store.select.userModel.selectCurrentUserCollection);
+  // const userVp = useSelector(store.select.userModel.selectCurrentUserVotingPower);
   const { data, refetch, isLoading, isFetching, isRefetching } = useContractReads({
     contracts: formatReadContractArgs(wallet, allTapeData),
     cacheOnBlock: true,
@@ -28,6 +29,7 @@ const RefreshCollectionButton = () => {
     structuralSharing: true,
     onSuccess(data: Result[]) {
       handleUpdateCollection(data);
+      // console.log(userVp);
     },
     onError(err) {},
   });

@@ -38,7 +38,7 @@ export const Tapes = () => {
                 } tracking-widest font-semibold`}
                 onClick={() => {
                   dispatch.tapesModel.setCurrentTab(index);
-                  if(tab === 'collabtape') {
+                  if (tab === 'collabtape') {
                     gaEvents.clickToggleCollabTape();
                   }
                 }}

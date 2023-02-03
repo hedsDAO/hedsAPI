@@ -1,6 +1,6 @@
 import { User, BadgeData, TrackMetadata, UserCollection } from '@/models/common';
 import { DateTime } from 'luxon';
-import { userModelState } from './userModal';
+import { userModelState } from './userModel';
 
 /**
  * @function emptyUserState

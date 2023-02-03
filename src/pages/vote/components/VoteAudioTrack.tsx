@@ -33,12 +33,12 @@ export const VoteAudioTrack = () => {
         borderRadius="lg"
       >
         <Box>
-          <Skeleton mb={2} isLoaded={isImageLoaded} minW="60px" minH="60px" maxW='60px'>
+          <Skeleton mb={2} isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
             <Center role="button" className="pointer-events-auto">
               <Image
                 height="60px"
                 width="60px"
-                border='1px'
+                border="1px"
                 onLoad={setIsImageLoaded.on}
                 _hover={{ opacity: 0 }}
                 className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all"

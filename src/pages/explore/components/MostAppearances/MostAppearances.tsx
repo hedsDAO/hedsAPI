@@ -19,7 +19,15 @@ const MostAppearances = () => {
       </Text>
       <Flex mt={{ base: 5, lg: 0 }} w="full" justifyContent={'end'}>
         <Flex alignItems="center" gap={2}>
-          <Text onClick={() => gaEvents.clickSeeAllArtist() } className="hover-underline-animation" fontSize="xs" textColor={'gray.600'} as={Link} to={'/artists'} role="link">
+          <Text
+            onClick={() => gaEvents.clickSeeAllArtist()}
+            className="hover-underline-animation"
+            fontSize="xs"
+            textColor={'gray.600'}
+            as={Link}
+            to={'/artists'}
+            role="link"
+          >
             {MOST_AP_BUTTON}
           </Text>
           <Icon color={'gray.600'} h="3" w="3" as={IconArrowRight} />
