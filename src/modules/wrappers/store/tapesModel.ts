@@ -96,7 +96,7 @@ export const tapesModel = createModel<RootModel>()({
       return createSelector(this.selectCurrentTape, (tape): boolean => {
         const now = DateTime.now().setZone('utc').toMillis();
         if (now > tape.timeline?.premint?.start && now < tape.timeline?.premint?.end) return true;
-        else return false
+        else return false;
       });
     },
     selectCurrentTapeName() {

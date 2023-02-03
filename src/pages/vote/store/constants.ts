@@ -17,5 +17,3 @@ export const ABOUT_VOTING_OLD_TAPES =
 
 export const ABOUT_VOTING_HT6 =
   'The curation of this tape followed a different process than normal. The community voted for their favorite visual background(s) to be featured on the tape, instead of the public audio submissions. The tracks that made it on to the tape were chose by the tape curator.';
-
-  
