@@ -32,13 +32,14 @@ const SampleModal = () => {
       <Disclaimer />
       <Flex gap={2}>
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
-        <PrimaryButton 
-          isLoading={isLoading} 
+        <PrimaryButton
+          isLoading={isLoading}
           onClick={() => {
-          gaEvents.clickDownloadSampleButtonInModal(tapeName);
-          dispatch.sampleModel.getSampleDownload(id);
-        }} 
-          disabled={now > submit?.end ? false : !isChecked}>
+            gaEvents.clickDownloadSampleButtonInModal(tapeName);
+            dispatch.sampleModel.getSampleDownload(id);
+          }}
+          disabled={now > submit?.end ? false : !isChecked}
+        >
           {DOWNLOAD_BUTTON_TEXT}
         </PrimaryButton>
       </Flex>

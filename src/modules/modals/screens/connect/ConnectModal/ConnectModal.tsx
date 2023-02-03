@@ -12,19 +12,18 @@ const ConnectModal = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, nextModal } = useSelector((state: RootState) => state.modalModel);
   const { isConnected, address } = useAccount();
-  const [ isMetaMask, setIsMetaMask] = useBoolean(true)
+  const [isMetaMask, setIsMetaMask] = useBoolean(true);
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
 
   useEffect(() => {
     if (isConnected) {
       dispatch.userModel.getConnectedUserData(address.toLowerCase());
-      if (nextModal) { 
+      if (nextModal) {
         dispatch.modalModel.setModal(nextModal);
-      }
-      else {
+      } else {
         dispatch.modalModel.setModalOpen(false);
         isMetaMask ? gaEvents.connectMetamaskSuccess() : gaEvents.connectWalletConnectSuccess();
-      };
+      }
     }
   }, [isConnected]);
 
@@ -43,10 +42,10 @@ const ConnectModal = () => {
                 if (connector.name === 'MetaMask') {
                   gaEvents.connectMetamask();
                   setIsMetaMask.on();
-                 } else {
+                } else {
                   gaEvents.connectWalletConnect();
                   setIsMetaMask.off();
-                 } 
+                }
               }}
             >
               <Flex gap={2}>

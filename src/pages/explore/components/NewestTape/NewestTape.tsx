@@ -93,7 +93,7 @@ const NewestTape = () => {
               </Text>
               <Button
                 as={Link}
-                to={'/listen/heds/collabtape/secretgarden'} 
+                to={'/listen/heds/collabtape/secretgarden'}
                 my={{ base: 5, lg: 0 }}
                 border="1px"
                 borderColor="black"
