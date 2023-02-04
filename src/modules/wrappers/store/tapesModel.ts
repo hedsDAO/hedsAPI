@@ -150,12 +150,12 @@ export const tapesModel = createModel<RootModel>()({
         const curatorRef = doc(db, 'users', tape.curator);
         const curatorSnap = await getDoc(curatorRef);
         if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
-      };
+      }
     },
     async getTapeCurator([tape]: [TapeData]) {
       const curatorRef = doc(db, 'users', tape.curator);
       const curatorSnap = await getDoc(curatorRef);
       if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
-    }
+    },
   }),
 });
