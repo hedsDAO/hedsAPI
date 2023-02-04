@@ -12,11 +12,10 @@ import * as gaEvents from '@/events';
 
 const Submit = () => {
   const { tape, id } = useParams();
-  const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const submit = useSelector(store.select.hedstapeModel.selectSubmit);
-  const start = DateTime.fromMillis(submit.start, zone);
-  const end = DateTime.fromMillis(submit.end, zone);
+  const start = DateTime.fromMillis(submit.start);
+  const end = DateTime.fromMillis(submit.end);
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>

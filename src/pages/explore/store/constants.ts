@@ -53,21 +53,38 @@ export const HEDS_SOLO_ARTIST = '0xd9c0f7408550fffa543a4c725b7ebe05883fe434';
 export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/dabow-wanna-be';
 
 /**
- * @component <NewestTape/>
- * @const NEWEST_TAPE_HEADING : heading for NewestTape page.
+ * @component <HedsPlayer/>
+ * @const HEDS_PLAYER_HEADING : heading for HedsPlayer page.
  * @const BOX_ONE_TITLE : title for box one.
  * @const BOX_ONE_DESC : description for box one.
  * @const BOX_ONE_DATE : deadline for box one.
  * @const BOX_TWO_DESC : description for box two.
- * @const NEWEST_TAPE_ARTIST : 2osc - newest tape artist.
+ * @const HEDS_PLAYER_ARTIST : 2osc - hedsPlayer artist.
  */
 
-export const NEWEST_TAPE_HEADING = 'NEWEST TAPE';
+export const HEDS_PLAYER_HEADING = 'hedsPLAYER';
 export const BOX_ONE_TITLE = 'heds x secret garden';
 export const BOX_ONE_DESC = 'release type: collabTAPE';
 export const BOX_ONE_DATE = 'mint date: FEBRUARY 1ST. 2023';
 export const BOX_TWO_DESC = `in collaboration with three oscillators & secretgarden.fm, we've invited heds artists to participate in the creation of the first hedsPLAYER, a curated stem player & NFT collection`;
-export const NEWEST_TAPE_ARTIST = '0x0a7c3007f2156ff8db9579efb7adbbd7212d3c3c';
+export const HEDS_PLAYER_ARTIST = '0x0a7c3007f2156ff8db9579efb7adbbd7212d3c3c';
+
+/**
+ * @component <LatestTape/>
+ * @const LATEST_TAPE_HEADING : heading for latest tape page.
+ * @const LATEST_TAPE_TITLE : title for latest tape page.
+ * @const LATEST_TAPE_DESC : description for latest tape page.
+ * @const LATEST_TAPE_ARTIST : dabow - current address for latest tape spotlight
+ */
+
+export const LATEST_TAPE_HEADING = 'SUBMISSIONS OPEN';
+export const LATEST_TAPE_TITLE = 'hedsTAPE 11';
+export const LATEST_TAPE_DESC = "The iconic mija has offered her inimitable take on a wide variety of electronic projects. For the first hedsTAPE of 2023, we're beyond excited to invite her on as the curator for HT11."
+export const LATEST_TAPE_ARTIST = '0xe4c80780cc7fc7047bccb30e2cbcb67400752a88';
+export const LATEST_TAPE_LINK = '/listen/heds/hedstape/11';
+export const LATEST_TAPE_PROMO_IMG =
+  'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/promo%2Fartists%2F1.jpeg?alt=media&token=7df1c199-4fc9-4f02-b854-b42376770fe1';
+
 
 /**
  * @component <MostAppearances/>

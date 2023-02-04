@@ -28,7 +28,7 @@ export const hedstapeModel = createModel<RootModel>()({
   effects: () => ({
     async getTapeTimeline(hedsTape: TapeAndTrackData) {
       const timelineTank: { [key: string]: TimelineItem } = {};
-      const now = DateTime.now().setZone('utc').toMillis();
+      const now = DateTime.now().toMillis();
       const submitTimes = hedsTape.timeline.submit;
       const voteTimes = hedsTape.timeline.vote;
       const mintTimes = hedsTape.timeline.mint;
