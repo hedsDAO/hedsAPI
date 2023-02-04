@@ -14,7 +14,8 @@ export const Listen = () => {
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
 
   useEffect(() => {
-    if (allTapes && allTapes?.[tape]?.[id] && allTapes?.[tape]?.[id]?.tracks) dispatch.tapesModel.getTapeArtists([allTapes?.[tape]?.[id]]);
+    if (allTapes && allTapes?.[tape]?.[id] && allTapes?.[tape]?.[id]?.tracks?.length) dispatch.tapesModel.getTapeArtists([allTapes?.[tape]?.[id]]);
+    if (allTapes && allTapes?.[tape]?.[id] && allTapes?.[tape]?.[id]?.tracks?.length === 0) dispatch.tapesModel.getTapeCurator([allTapes?.[tape]?.[id]]);
     if (pathname !== currentTape?.route) dispatch.tapesModel.getTapeArtists([allTapes?.[tape]?.[id]]);
   }, [allTapes, pathname, space, tape, id]);
 

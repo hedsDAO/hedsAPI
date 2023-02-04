@@ -5,9 +5,10 @@ import { createModel } from '@rematch/core';
 import { doc, DocumentData, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { clearUserState, clearConnectedUserState, populateNewUser, clearCurrentUserState } from './utils';
 import { db } from '@/App';
-import { UserRoles, User, TapeData, TrackMetadata } from '@/models/common';
+import { UserCollection, UserRoles, User, TapeData, TrackMetadata } from '@/models/common';
 import { formatUserCollection, isEmpty } from '@/utils';
 import { Result } from 'ethers/lib/utils';
+import { whitelist } from '@/data/tokenBurnWhitelist';
 
 export interface userModelState {
   connectedUser: User;
@@ -17,6 +18,19 @@ export interface userModelState {
   engagementTabs?: Array<string>;
   audioTabs?: Array<string>;
 }
+
+export const tapesAndVpWeights: { [key: string]: number } = {
+  '0xde8a0b17d3dc0468adc65309881d9d6a6cd66372': 9,
+  '0x5083cf11003f2b25ca7456717e6dc980545002e5': 6,
+  '0x567e687c93103010962f9e9cf5730ae8dbfc6d41': 5,
+  '0x8045fd700946a00436923f37d08f280ade3b4af6': 7,
+  '0x8f36eb094f7b960a234a482d4d8ffb8b37f728c6': 6,
+  '0x885236535d5cf7033bdc5bc1050cad7fdf4970a6': 5,
+  '0x20f2717f113d0b3815124876f3d72f8e1179341e': 6,
+  '0xa2aced918e8cff703b8bb4129a30146a1dc35675': 7,
+  '0xeb8377be44222e90388ff8bb04be27f9bfc6a98e': 8,
+  '0x9f396644ec4b2a2bc3c6cf665d29165dde0e83f1': 7,
+};
 
 export const userModel = createModel<RootModel>()({
   state: { engagementTabIndex: 0, audioTabIndex: 0 } as userModelState,
@@ -116,6 +130,43 @@ export const userModel = createModel<RootModel>()({
     },
     selectCurrentUserCollection() {
       return createSelector(this.selectCurrentUser, (currentUser: User) => currentUser?.collection || { items: {}, lastUpdated: 0 });
+    },
+    selectCurrentUserVotingPower() {
+      return createSelector(
+        this.selectCurrentUserRole,
+        this.selectCurrentUserWallet,
+        this.selectCurrentUserCollection,
+        (role: number, wallet: string, userCollection: UserCollection) => {
+          const collectionContracts = Object.keys(userCollection.items);
+          if (!collectionContracts.length) {
+            return 0;
+          }
+
+          const filteredContracts = collectionContracts.reduce((results, collectionContract) => {
+            if (userCollection.items[collectionContract].tape === 'hedstape') {
+              const quantity = userCollection.items[collectionContract].quantity;
+              results.push({ contract: collectionContract.toLowerCase(), quantity });
+            }
+            return results;
+          }, []);
+
+          if (!filteredContracts.length) return 0;
+
+          const vpFromCollection = filteredContracts.reduce((totalVp: number, filteredContract: { contract: string; quantity: number }) => {
+            const { contract, quantity } = filteredContract;
+            if (Object.keys(tapesAndVpWeights).includes(contract)) {
+              if (!totalVp) totalVp = 0;
+              const vpToAdd = quantity === 1 ? tapesAndVpWeights[contract] : tapesAndVpWeights[contract] * quantity;
+              return (totalVp += vpToAdd);
+            }
+          }, 0);
+
+          const vpFromArtistWhitelist = role === UserRoles.ARTIST ? 15 : 0;
+          const vpFromOgWhitelist = whitelist.find((whitelistAdress) => whitelistAdress === wallet.toLowerCase());
+
+          return vpFromOgWhitelist ? 10 + vpFromCollection + vpFromArtistWhitelist : vpFromCollection + vpFromArtistWhitelist;
+        },
+      );
     },
     selectCurrentUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
       return slice((userModel) => userModel.currentUser.submissions?.[space]?.[tape]?.[id]);

@@ -12,11 +12,10 @@ import * as gaEvents from '@/events';
 
 const Mint = () => {
   const { tape, id } = useParams();
-  const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.hedstapeModel.selectMint);
-  const start = DateTime.fromMillis(mint.start, zone);
-  const end = DateTime.fromMillis(mint.end, zone);
+  const start = DateTime.fromMillis(mint.start);
+  const end = DateTime.fromMillis(mint.end);
   const openSeaLink = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   return (
     <div>
