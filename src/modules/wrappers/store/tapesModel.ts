@@ -132,7 +132,8 @@ export const tapesModel = createModel<RootModel>()({
       this.setAllTapes(allTapesTank);
     },
     async getTapeArtists([tape]: [TapeData]) {
-      if (tape?.tracks) {
+      console.log(tape?.tracks && tape?.video ? "yes" : "no")
+      if (tape?.tracks && tape?.video) {
         const artistAddresses = [...tape?.tracks];
         const { space, tape: tapeName, id } = tape;
         if (artistAddresses?.length) {
@@ -146,11 +147,16 @@ export const tapesModel = createModel<RootModel>()({
           if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data(), tracks: tracksTank });
           return;
         }
-      } else if (tape.id === 'secretgarden') {
+      } else if (tape?.id === 'secretgarden') {
         const curatorRef = doc(db, 'users', tape.curator);
         const curatorSnap = await getDoc(curatorRef);
         if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
-      }
+      };
     },
+    async getTapeCurator([tape]: [TapeData]) {
+      const curatorRef = doc(db, 'users', tape.curator);
+      const curatorSnap = await getDoc(curatorRef);
+      if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
+    }
   }),
 });

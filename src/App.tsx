@@ -14,8 +14,8 @@ import { Explore } from './pages/explore/page/Explore';
 import firebaseConfig from './firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore();
-export const storage = getStorage(app, firebaseConfig.storageBucket);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 const App = (): JSX.Element => {
   const location = useLocation();
