@@ -14,10 +14,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Vote = () => {
   const { space, tape, id } = useParams();
   const navigate = useNavigate();
-  const zone = { zone: 'GMT' };
   const vote = useSelector(store.select.hedstapeModel.selectVote);
-  const start = DateTime.fromMillis(vote.start, zone);
-  const end = DateTime.fromMillis(vote.end, zone);
+  const start = DateTime.fromMillis(vote.start);
+  const end = DateTime.fromMillis(vote.end);
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
