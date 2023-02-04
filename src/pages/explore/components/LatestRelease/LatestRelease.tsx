@@ -43,7 +43,7 @@ const LatestRelease = () => {
                 <Button
                   onClick={() => gaEvents.clickHedsSoloFeatureLink()}
                   as={Link}
-                  to={`u/${LATEST_TAPE_ARTIST}`}
+                  to={`/u/${LATEST_TAPE_ARTIST}`}
                   data-testid="hedsolo-artist-button"
                   justifySelf={'start'}
                   py="4"
