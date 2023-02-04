@@ -42,6 +42,8 @@ const LatestRelease = () => {
               <Flex mb={'-12'} mx={{ base: 4, lg: 5 }} position={'relative'} justifyContent={'space-between'}>
                 <Button
                   onClick={() => gaEvents.clickHedsSoloFeatureLink()}
+                  as={Link}
+                  to={LATEST_TAPE_ARTIST}
                   data-testid="hedsolo-artist-button"
                   justifySelf={'start'}
                   py="4"
