@@ -132,7 +132,6 @@ export const tapesModel = createModel<RootModel>()({
       this.setAllTapes(allTapesTank);
     },
     async getTapeArtists([tape]: [TapeData]) {
-      console.log(tape?.tracks && tape?.video ? "yes" : "no")
       if (tape?.tracks && tape?.video) {
         const artistAddresses = [...tape?.tracks];
         const { space, tape: tapeName, id } = tape;
