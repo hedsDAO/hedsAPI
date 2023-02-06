@@ -14,7 +14,13 @@ const HedsPlayer = () => {
     <Box data-testid="explore-newest-tape" w="full">
       <Container px={{ base: 8, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'center'}>
-          <Text fontFamily={'"Space Mono", monospace'} color={'blackAlpha.800'}  letterSpacing={'tight'} fontSize={{ base: '3xl', lg: '5xl' }} fontWeight={'normal'}>
+          <Text
+            fontFamily={'"Space Mono", monospace'}
+            color={'blackAlpha.800'}
+            letterSpacing={'tight'}
+            fontSize={{ base: '3xl', lg: '5xl' }}
+            fontWeight={'normal'}
+          >
             {HEDS_PLAYER_HEADING}
           </Text>
           <Flex justifyContent={'space-evenly'} pt={14} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>

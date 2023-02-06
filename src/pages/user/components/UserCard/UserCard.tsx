@@ -1,9 +1,10 @@
 import { Dispatch, store } from '@/store';
 import { Avatar, Button, Divider, Flex, Heading, Text, VStack } from '@chakra-ui/react';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modals } from '@/modules/modals/store/modalModel';
+import { SplitsIcon } from '@/common/icons';
 import * as gaEvents from '@/events';
 
 const UserCard = () => {
@@ -12,7 +13,15 @@ const UserCard = () => {
   const displayName = useSelector(store.select.userModel.selectCurrentUserDisplayName);
   const description = useSelector(store.select.userModel.selectCurrentUserDescription);
   const connectedUser = useSelector(store.select.userModel.selectConnectedUser);
+  const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   const currentWallet = useSelector(store.select.userModel.selectCurrentUserWallet);
+  const splitsBalance = useSelector(store.select.userModel.selectUserSplitsBalance);
+
+  useEffect(() => {
+    if (!isOwnPage) return;
+    dispatch.userModel.getSplitsBalance(currentWallet);
+  }, [isOwnPage]);
+
   return (
     <Fragment>
       <VStack minW={{ base: 'full', lg: '64' }} maxW={{ base: 'full', lg: '64' }}>
@@ -53,7 +62,21 @@ const UserCard = () => {
           <Text textAlign={'center'} height="fit-content" maxW="48" fontWeight={'light'} fontSize="sm" overflowWrap={'normal'}>
             {description}
           </Text>
-          <Divider borderColor="gray.400" my={{ base: 4, lg: 3 }} />
+          {splitsBalance && (
+            <button className="mx-1 px-2 py-2 mb-1 rounded-sm border border-gray-400 bg-gray-100 inline-flex items-center">
+              <a target="_blank" className="flex justify-start items-center gap-x-1" href={`https://app.0xsplits.xyz/accounts/${currentWallet.toLowerCase()}`}>
+                <div className="inline dark:hidden">
+                  <SplitsIcon color="#121212" />
+                </div>
+                <div className="dark:inline hidden">
+                  <SplitsIcon />
+                </div>
+                <span className="ml-1 text-xs font-semibold">{splitsBalance.slice(0, 5)}</span>
+                <span className="font-regular text-xs px-1">ETH</span>
+              </a>
+            </button>
+          )}
+          <Divider borderColor="gray.400" mb={{ base: 4, lg: 3 }} />
           <Badges />
           <Divider borderColor="gray.400" my={{ base: 5, lg: 4 }} />
         </Flex>
