@@ -41,7 +41,7 @@ const LatestRelease = () => {
             <Skeleton rounded="3xl" minW={'20rem'} h="13rem" isLoaded={hasImageLoaded}>
               <Flex mb={'-12'} mx={{ base: 4, lg: 5 }} position={'relative'} justifyContent={'space-between'}>
                 <Button
-                  onClick={() => gaEvents.clickHedsSoloFeatureLink()}
+                  onClick={() => gaEvents.clickLatestReleaseFeatureLink()}
                   as={Link}
                   to={`/u/${LATEST_TAPE_ARTIST}`}
                   data-testid="hedsolo-artist-button"
