@@ -68,9 +68,6 @@ const UserCard = () => {
                 <div className="inline dark:hidden">
                   <SplitsIcon color="#121212" />
                 </div>
-                <div className="dark:inline hidden">
-                  <SplitsIcon />
-                </div>
                 <span className="ml-1 text-xs font-semibold">{splitsBalance.slice(0, 5)}</span>
                 <span className="font-regular text-xs px-1">ETH</span>
               </a>
