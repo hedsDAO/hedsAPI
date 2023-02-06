@@ -23,6 +23,7 @@ export const connectMetamaskSuccess = () => ReactGA.event({ category: 'Connect',
 export const connectWalletConnectSuccess = () => ReactGA.event({ category: 'Connect', action: 'Connect WalletConnect Success' });
 
 // Explore Page
+export const clickLatestReleaseFeatureLink = () => ReactGA.event({ category: 'Explore Page', action: 'Click Latest Release Feature Card Link' });
 export const clickHedsSoloFeatureLink = () => ReactGA.event({ category: 'Explore Page', action: 'Click Heds Solo Feature Card Link' });
 export const clickNewestTapeFeatureLink = () => ReactGA.event({ category: 'Explore Page', action: 'Click Newest Tape Feature Card Link' });
 export const clickSeeAllArtist = () => ReactGA.event({ category: 'Explore Page', action: 'Click See All Artist' });
