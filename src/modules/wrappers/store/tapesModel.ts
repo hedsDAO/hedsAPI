@@ -132,7 +132,7 @@ export const tapesModel = createModel<RootModel>()({
       this.setAllTapes(allTapesTank);
     },
     async getTapeArtists([tape]: [TapeData]) {
-      if (tape?.tracks && tape?.video) {
+      if (tape?.tracks) {
         const artistAddresses = [...tape?.tracks];
         const { space, tape: tapeName, id } = tape;
         if (artistAddresses?.length) {
