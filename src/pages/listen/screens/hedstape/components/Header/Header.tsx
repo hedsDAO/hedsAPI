@@ -5,17 +5,24 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player/lazy';
+import * as gaEvents from '@/events';
+import { useEffect } from 'react';
 
 const Header = () => {
   const [isPlayingVideo, setIsPlayingVideo] = useBoolean();
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
+  const isAudioPlaying = useSelector(store.select.audioModel.selectIsTrackPlaying);
   const description = useSelector(store.select.tapesModel.selectCurrentTapeDescription);
   const name = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentTape);
   const opensea = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
   const etherscan = useSelector(store.select.tapesModel.selectCurrentTapeEtherscanLink);
   const cover = useSelector(store.select.tapesModel.selectCurrentTapeCover);
+
+  useEffect(() => {
+    if (isAudioPlaying) setIsPlayingVideo.off();
+  }, [isAudioPlaying]);
 
   return (
     <Flex
@@ -47,7 +54,14 @@ const Header = () => {
               objectFit="cover"
               rounded="sm"
             />
-            <PlayIcon role="button" onClick={setIsPlayingVideo.toggle} className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10" />
+            {currentTape?.video && <PlayIcon
+              role="button"
+              onClick={() => {
+                gaEvents.clickPlayTapeVideo(name);
+                return setIsPlayingVideo.toggle();
+              }}
+              className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10"
+            />}
           </Center>
         </Skeleton>
         <Box height={{ md: '22rem', lg: '20rem' }} width={{ md: '22rem', lg: '20rem' }} display={isPlayingVideo ? 'inherit' : 'none'}>
@@ -65,12 +79,15 @@ const Header = () => {
           />
         </Box>
       </Stack>
-      <Stack direction={'column'} width={'full'} alignItems={{md: 'center', lg:'start'}} justifyContent="center">
+      <Stack direction={'column'} width={'full'} alignItems={{ md: 'center', lg: 'start' }} justifyContent="center">
         <Text fontWeight={'semibold'} fontSize={'4xl'}>
           {name}
         </Text>
         <Flex pb={{ base: 8, lg: 3 }} gap={2}>
           <Button
+            onClick={() => {
+              gaEvents.clickLinkToOpensea(name);
+            }}
             as={ChakraLink}
             href={opensea}
             target="_blank"
@@ -84,6 +101,9 @@ const Header = () => {
             OpenSea
           </Button>
           <Button
+            onClick={() => {
+              gaEvents.clickLinkToEtherscan(name);
+            }}
             as={ChakraLink}
             href={etherscan}
             target="_blank"
@@ -98,7 +118,7 @@ const Header = () => {
           </Button>
         </Flex>
         {currentTape && (
-          <Flex w={{ base: 'full', md: 'md', lg: 'lg' }} pb={{md: 8, lg:2}} gap={1} direction={'column'}>
+          <Flex w={{ base: 'full', md: 'md', lg: 'lg' }} pb={{ md: 8, lg: 2 }} gap={1} direction={'column'}>
             <AudioTrack track={currentTape?.curator?.samples?.[space]?.[tape]?.[id]} />
           </Flex>
         )}
@@ -106,7 +126,7 @@ const Header = () => {
           <Text fontWeight={'bold'} fontSize="xs">
             About The Tape
           </Text>
-          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={{md: 'sm', lg:'md'}}>
+          <Text textAlign={'start'} fontWeight={'light'} fontSize={'xs'} maxWidth={{ md: 'sm', lg: 'md' }}>
             {description}
           </Text>
         </Flex>

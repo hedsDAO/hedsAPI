@@ -3,6 +3,7 @@ import { Dispatch, RootState, store } from '@/store';
 import { formatTwitterUrl } from '@/utils';
 import { Button, Skeleton, Text, Link } from '@chakra-ui/react';
 import { Modals } from '@/modules/modals/store/modalModel';
+import * as gaEvents from '@/events';
 
 const TwitterButton = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -17,15 +18,16 @@ const TwitterButton = () => {
           onClick={() => {
             dispatch.modalModel.setModal(Modals.TWITTER_MODAL);
             dispatch.modalModel.setModalOpen(true);
+            gaEvents.clickLinkToTwitter();
           }}
           leftIcon={<i className="fa-brands fa-twitter text-xs"></i>}
-          bg="blue.100"
+          bg="gray.100"
           border={'1px'}
-          borderColor="blue.400"
-          rounded='sm'
+          borderColor="gray.800"
+          rounded="sm"
           fontWeight={'light'}
           size="xs"
-          width={{base: '24ch', lg: 'auto'}}
+          width={'24ch'}
           fontFamily={'"Space Mono", monospace'}
         >
           <Text>verify</Text>
@@ -36,13 +38,13 @@ const TwitterButton = () => {
           isExternal
           href={formatTwitterUrl(twitterHandle)}
           leftIcon={<i className="fa-brands fa-twitter text-xs"></i>}
-          bg="blue.100"
+          bg="gray.100"
           border={'1px'}
-          borderColor="blue.400"
-          rounded='sm'
+          borderColor="gray.800"
+          rounded="sm"
           fontWeight={'light'}
           size="xs"
-          width={{base: '24ch', lg: 'auto'}}
+          width={'24ch'}
           fontFamily={'"Space Mono", monospace'}
         >
           <Text>@{twitterHandle}</Text>

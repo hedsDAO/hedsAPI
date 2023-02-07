@@ -74,6 +74,9 @@ export const tapesModel = createModel<RootModel>()({
         else return false;
       });
     }),
+    selectCurrentVoteTape: hasProps(function (models, [tape, id]) {
+      return slice((tapesModel) => tapesModel?.allTapes?.[tape]?.[id]);
+    }),
 
     // const now = DateTime.now().setZone('utc').toMillis();
 
@@ -88,6 +91,13 @@ export const tapesModel = createModel<RootModel>()({
     },
     selectCurrentTapeTimeline() {
       return createSelector(this.selectCurrentTape, (tape): Timeline => tape.timeline);
+    },
+    selectCurrentTapePreMintStatus() {
+      return createSelector(this.selectCurrentTape, (tape): boolean => {
+        const now = DateTime.now().setZone('utc').toMillis();
+        if (now > tape.timeline?.premint?.start && now < tape.timeline?.premint?.end) return true;
+        else return false;
+      });
     },
     selectCurrentTapeName() {
       return createSelector(this.selectCurrentTape, (tape): string => tape.name || '');
@@ -122,7 +132,7 @@ export const tapesModel = createModel<RootModel>()({
       this.setAllTapes(allTapesTank);
     },
     async getTapeArtists([tape]: [TapeData]) {
-      if (tape?.tracks) {
+      if (tape?.tracks && tape?.video) {
         const artistAddresses = [...tape?.tracks];
         const { space, tape: tapeName, id } = tape;
         if (artistAddresses?.length) {
@@ -136,7 +146,16 @@ export const tapesModel = createModel<RootModel>()({
           if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data(), tracks: tracksTank });
           return;
         }
+      } else if (tape?.id === 'secretgarden') {
+        const curatorRef = doc(db, 'users', tape.curator);
+        const curatorSnap = await getDoc(curatorRef);
+        if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
       }
+    },
+    async getTapeCurator([tape]: [TapeData]) {
+      const curatorRef = doc(db, 'users', tape.curator);
+      const curatorSnap = await getDoc(curatorRef);
+      if (curatorSnap.exists()) this.setCurrentTape({ ...tape, curator: curatorSnap.data() });
     },
   }),
 });

@@ -34,7 +34,7 @@ export const artistModel = createModel<RootModel>()({
       return slice((artistModel) => artistModel.scrollDataMax);
     },
     selectArtistMapping() {
-      return slice((artistModel) => artistModel.artistMapping);
+      return slice((artistModel): ArtistMapping => artistModel.artistMapping || {});
     },
   }),
   reducers: {

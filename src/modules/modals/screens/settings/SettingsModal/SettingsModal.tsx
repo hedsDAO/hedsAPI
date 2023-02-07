@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Stack, StackDivider } from '@chakra-ui/react';
 import { Dispatch, RootState, store } from '@/store';
@@ -15,7 +15,7 @@ const SettingsModal = () => {
   const isSettingsLoading = useSelector((state: RootState) => state.loading.models.settingsModel);
   const isUserLoading = useSelector((state: RootState) => state.loading.models.userModel);
   const { profileChanges } = useSelector((state: RootState) => state.settingsModel);
-  const profileModalData = useSelector((state: RootState) => state.settingsModel);  
+  const profileModalData = useSelector((state: RootState) => state.settingsModel);
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
     return () => {
@@ -26,15 +26,19 @@ const SettingsModal = () => {
 
   useEffect(() => {
     if (connectedUser) dispatch.settingsModel.setProfileModelData(connectedUser);
-  }, [connectedUser])
+  }, [connectedUser]);
 
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
       <ModalHeader Icon={IconPencil} title={SETTINGS_MODAL_TITLE} />
-      <Stack spacing="4" divider={<StackDivider />}>
-        <ProfilePictureForm />
-        <BannerForm />
-        <DescriptionForm />
+      <Stack gap={4} divider={<StackDivider />}>
+        {!!connectedUser && !!profileChanges && (
+          <Fragment>
+            <ProfilePictureForm />
+            <BannerForm />
+            <DescriptionForm />
+          </Fragment>
+        )}
         <Flex gap={2}>
           <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
           <PrimaryButton

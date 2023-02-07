@@ -9,11 +9,11 @@ import { DateTime } from 'luxon';
 import { Modals } from '@/modules/modals/store/modalModel';
 
 const Mint = () => {
-  const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.collabModel.selectMint);
-  const start = DateTime.fromMillis(mint.start, zone);
-  const end = DateTime.fromMillis(mint.end, zone);
+  const start = DateTime.fromMillis(mint.start);
+  const end = DateTime.fromMillis(mint.end);
+  const tapeId = useSelector(store.select.tapesModel.selectCurrentTapeId);
 
   return (
     <div>
@@ -31,16 +31,17 @@ const Mint = () => {
       )}
       <Flex mt={4} gap={2}>
         {mint.status === TimelineStatus.CLOSED ? (
-          <>
-            <Button disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-              Mint Closed
-            </Button>
-          </>
+          <Button isDisabled={true} leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+            Mint Closed
+          </Button>
         ) : mint.status === TimelineStatus.OPEN ? (
           <Button
             onClick={() => {
-              dispatch.modalModel.setModal(Modals.MINT_MODAL);
-              dispatch.modalModel.setModalOpen(true);
+              if (tapeId === 'secretgarden') window.open('https://www.secretgarden.fm/', '_blank', 'noreferrer');
+              else {
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+              }
             }}
             border={'solid 1px'}
             borderColor="green.200"

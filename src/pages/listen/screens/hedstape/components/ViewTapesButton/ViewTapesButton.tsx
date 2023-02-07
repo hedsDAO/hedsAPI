@@ -1,12 +1,13 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import * as gaEvents from '@/events';
 
 const ViewTapesButton = () => {
   return (
-    <Flex maxW={'6xl'} mx={'auto'} px={[4, 3, 2, 1]} mb={2}>
+    <Flex maxW={'6xl'} mx={'auto'} px={[4, 3, 2, 1]} mt={5} mb={2}>
       <Flex className="group" width={'fit-content'} alignItems={'center'}>
         <i className="fa-regular fa-arrow-left group-hover:mr-3 mr-2 ease-in-out transition-all text-sm" />
-        <Text className="relative bottom-[1px]" to={'/tapes'} as={Link} fontSize={'xs'}>
+        <Text onClick={() => gaEvents.clickViewAllTapes()} className="relative bottom-[1px]" to={'/tapes'} as={Link} fontSize={'xs'}>
           view all tapes
         </Text>
       </Flex>

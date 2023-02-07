@@ -1,6 +1,6 @@
 export class TimelineDescriptions {
   premint = 'hedsTAPE holders hold access to a premint 24 hours prior to the public drop.';
-  mint = 'Own the collection on-chain. Minting is only open for 24 hours.';
+  mint = 'Own the collection on-chain.';
 }
 
 export class TimelineNames {

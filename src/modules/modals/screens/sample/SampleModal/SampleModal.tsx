@@ -8,6 +8,7 @@ import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { Disclaimer, TapeAndCurator } from '@/modules/modals/screens/sample/components';
 import { BACK_BUTTON_TEXT, DOWNLOAD_BUTTON_TEXT, SAMPLE_MODAL_TITLE } from '@modules/modals/screens/sample/models/constants';
 import { IconWaveSawTool } from '@tabler/icons';
+import * as gaEvents from '@/events';
 
 const SampleModal = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -15,6 +16,7 @@ const SampleModal = () => {
   const { isLoading, isChecked } = useSelector((state: RootState) => state.sampleModel);
   const { submit } = useSelector(store.select.tapesModel.selectCurrentTapeTimeline);
   const id = useSelector(store.select.tapesModel.selectCurrentTapeId);
+  const tapeName = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const now = DateTime.now().setZone(process.env.GLOBAL_TIMEZONE).toMillis();
 
   useEffect(() => {
@@ -30,7 +32,14 @@ const SampleModal = () => {
       <Disclaimer />
       <Flex gap={2}>
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>{BACK_BUTTON_TEXT}</SecondaryButton>
-        <PrimaryButton isLoading={isLoading} onClick={() => dispatch.sampleModel.getSampleDownload(id)} disabled={now > submit?.end ? false : !isChecked}>
+        <PrimaryButton
+          isLoading={isLoading}
+          onClick={() => {
+            gaEvents.clickDownloadSampleButtonInModal(tapeName);
+            dispatch.sampleModel.getSampleDownload(id);
+          }}
+          disabled={now > submit?.end ? false : !isChecked}
+        >
           {DOWNLOAD_BUTTON_TEXT}
         </PrimaryButton>
       </Flex>

@@ -21,7 +21,7 @@ const ProfilePictureForm = () => {
         </Text>
       </FormLabel>
       <Flex data-testid="profile-picture-form" justifyContent={'space-between'} direction={'row'} gap={2} alignItems={'center'}>
-        <Avatar borderRadius={'lg'} size={'md'} src={profilePicturePreview || profileChanges?.profilePicture || profilePicture} />
+        <Avatar rounded="full" borderRadius={'full'} size={'md'} src={profilePicturePreview || profileChanges?.profilePicture || profilePicture} />
         <Divider borderColor="blackAlpha.300" />
         <Flex justifyContent={'center'} width={{ base: 'full', sm: 'auto' }} gap={2}>
           <input ref={inputRef} onChange={(e) => dispatch.settingsModel.handleProfilePictureUpload(e)} type="file" className="hidden" />
@@ -29,6 +29,7 @@ const ProfilePictureForm = () => {
             {UPLOAD_BUTTON_TEXT}
           </PrimaryButton>
           <WarningButton
+            disabled={profileChanges.profilePicture?.includes(`0x${'0'.repeat(30)}`)}
             size="xs"
             onClick={() => {
               if (profilePictureFile) inputRef.current.value = '';

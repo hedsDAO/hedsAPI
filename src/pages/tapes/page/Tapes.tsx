@@ -3,6 +3,7 @@ import { TapesTab } from '@/modules/wrappers/store/tapesModel';
 import { Dispatch, store } from '@/store';
 import { Box, Grid, Heading, Flex, Text } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as gaEvents from '@/events';
 
 export const Tapes = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -35,7 +36,12 @@ export const Tapes = () => {
                 className={`${
                   index === currentTab ? 'underline underline-offset-[4.5px] decoration-1' : 'hover-underline-animation text-gray-500'
                 } tracking-widest font-semibold`}
-                onClick={() => dispatch.tapesModel.setCurrentTab(index)}
+                onClick={() => {
+                  dispatch.tapesModel.setCurrentTab(index);
+                  if (tab === 'collabtape') {
+                    gaEvents.clickToggleCollabTape();
+                  }
+                }}
                 key={tab + index}
               >
                 {tab}

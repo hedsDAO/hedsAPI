@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "heds-104d8",
     "heds": "heds-104d8",
     "heds-dev": "heds-dev"
   },
@@ -15,6 +14,5 @@
         ]
       }
     }
-  },
-  "etags": {}
+  }
 }

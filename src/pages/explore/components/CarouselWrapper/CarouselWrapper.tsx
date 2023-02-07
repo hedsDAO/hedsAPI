@@ -8,7 +8,8 @@ const CarouselWrapper = ({ slides }: { slides?: Array<JSX.Element> }) => {
     dots: true,
     autoplay: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
+    pauseOnHover: true,
     slidesToShow: 1,
     slidesToScroll: 1,
   };

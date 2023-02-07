@@ -1,4 +1,4 @@
-import * as express from "express";
+import * as express from 'express';
 
 // custom request body type
 export interface TypedRequestBody<T> extends express.Request {
@@ -17,6 +17,8 @@ export interface Options {
     };
   };
 }
+
+// opeasea parsed, listing type
 
 // creates prompt for openai
 export const generatePrompt = (string: string) => `a pixel art album cover of a small ${string} in the center with a white background`;

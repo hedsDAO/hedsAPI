@@ -3,6 +3,7 @@ import { Button } from '@chakra-ui/react';
 const SecondaryButton = ({ onClick, size, disabled, children }: { onClick: Function; size?: string; disabled?: boolean; children: any }) => {
   return (
     <Button
+      isDisabled={disabled}
       rounded="md"
       size={size || 'sm'}
       onClick={() => onClick()}

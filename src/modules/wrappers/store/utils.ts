@@ -1,6 +1,6 @@
 import { User, BadgeData, TrackMetadata, UserCollection } from '@/models/common';
 import { DateTime } from 'luxon';
-import { userModelState } from './userModal';
+import { userModelState } from './userModel';
 
 /**
  * @function emptyUserState
@@ -100,16 +100,15 @@ export const clearCurrentUserState = (state: userModelState): userModelState => 
  */
 
 export const populateNewUser = (wallet: string, displayName: string): User => {
+  const STORAGE_PREFIX_URL = 'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o';
   const vistorBadge: BadgeData = {
     description: 'Welcome to heds.',
-    image: 'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/badges%2Fvisitor.png?alt=media&token=468508bd-2831-4bd2-b943-329e5608cad1',
+    image: `${STORAGE_PREFIX_URL}/badges%2Fvisitor.png?alt=media&token=468508bd-2831-4bd2-b943-329e5608cad1`,
     name: 'Visitor',
   };
   const newUserData = {
-    profilePicture:
-      'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/users%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc',
-    banner:
-      'https://firebasestorage.googleapis.com/v0/b/heds-34ac0.appspot.com/o/banners%2F0x000000000000000000000000000000.jpg?alt=media&token=0ce2e318-a672-443f-903a-f252f02b505f',
+    profilePicture: `${STORAGE_PREFIX_URL}/profilePictures%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc`,
+    banner: `${STORAGE_PREFIX_URL}/banners%2F0x000000000000000000000000000000.png?alt=media&token=c2e9c947-5965-4d77-b0c3-047c2bc125d3`,
     twitterHandle: '',
     badges: [vistorBadge],
     description: '',

@@ -34,9 +34,9 @@ export const settingsModel = createModel<RootModel>()({
       const newProfileData = { ...profileModalState.profileChanges };
       const { profilePicture: prevProfilePicture, banner: prevBanner, wallet } = prevProfileData;
       if (prevProfileData?.profilePicture !== newProfileData?.profilePicture) {
-        if (prevProfilePicture?.includes(wallet)) await deleteObject(ref(storage, 'users/' + getCurrentImagePath(prevProfilePicture, wallet)));
+        if (prevProfilePicture?.includes(wallet)) await deleteObject(ref(storage, 'profilePictures/' + getCurrentImagePath(prevProfilePicture, wallet)));
         if (profilePicturePreview && !newProfileData?.profilePicture?.includes(`0x${'0'.repeat(30)}`)) {
-          await uploadBytes(ref(storage, `users/${wallet}${profilePictureFileType}`), profilePictureFile).then((snapshot) =>
+          await uploadBytes(ref(storage, `profilePictures/${wallet}${profilePictureFileType}`), profilePictureFile).then((snapshot) =>
             getDownloadURL(snapshot.ref).then((url) => (newProfileData.profilePicture = url)),
           );
         }
@@ -70,7 +70,7 @@ export const settingsModel = createModel<RootModel>()({
     },
     async deleteProfilePicture([profilePicture, profilePicturePreview]: [string, string]) {
       if (profilePicture) {
-        const defaultImageRef = ref(storage, 'users/' + getCurrentImagePath('.png', `0x${'0'.repeat(30)}`));
+        const defaultImageRef = ref(storage, 'profilePictures/' + getCurrentImagePath('.png', `0x${'0'.repeat(30)}`));
         const defaultImageUrl = await getDownloadURL(defaultImageRef);
         this.setProfilePicturePreview(defaultImageUrl);
         this.setProfilePicture(defaultImageUrl);
@@ -98,7 +98,7 @@ export const settingsModel = createModel<RootModel>()({
     },
     async deleteBanner([banner, bannerPreview]: [string, string]) {
       if (banner) {
-        const defaultImageRef = ref(storage, 'banners/' + getCurrentImagePath('.jpg', `0x${'0'.repeat(30)}`));
+        const defaultImageRef = ref(storage, 'banners/' + getCurrentImagePath('.png', `0x${'0'.repeat(30)}`));
         const defaultImageUrl = await getDownloadURL(defaultImageRef);
         this.setBanner(defaultImageUrl);
         this.setBannerPreview(defaultImageUrl);

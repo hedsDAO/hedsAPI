@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { formWaveSurferOptions, isEmpty } from '@/utils';
+import { formWaveSurferOptions } from '@/utils';
 import WaveSurfer from 'wavesurfer.js';
 import { Button, Grid, GridItem } from '@chakra-ui/react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
@@ -25,6 +25,7 @@ const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
       wavesurfer?.current?.on('finish', () => {});
     }
     return () => {
+      setIsPlaying(false);
       if (wavesurfer?.current) {
         wavesurfer?.current?.destroy();
         // waveformRef.current = null;
@@ -33,8 +34,8 @@ const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
   }, [audio]);
 
   return (
-    <Grid gap={2} alignItems={'center'} templateColumns="repeat(12, 1fr)">
-      <GridItem colSpan={1}>
+    <Grid gap={2} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)">
+      <GridItem colSpan={1} justifySelf="center">
         <Button
           rounded={'full'}
           bg="transparent"
