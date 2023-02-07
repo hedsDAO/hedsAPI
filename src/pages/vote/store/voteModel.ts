@@ -49,6 +49,28 @@ export const voteModel = createModel<RootModel>()({
         return choices ? choices.sort((a, b) => a.id - b.id) : [];
       });
     },
+    selectSortedChoicesByResults: hasProps(function (models, {choices, scores, tapeTrackIds}) {
+      return slice((voteModel) => {
+        if (!voteModel || !scores) return [];
+        const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
+        const sortedChoicesByResults = choices.reduce((acc: Choice[][], choice: Choice) => {
+          if (tapeTrackIds.includes(choice.walletId)) {
+            acc[0].push(choice);
+            return acc;
+          } else if (topVotedScores.includes(scores[choice.id])) {
+            acc[1].push(choice);
+            return acc;
+          } else {
+            acc[2].push(choice);
+            return acc;
+          };
+        }, [[],[],[]]);
+        sortedChoicesByResults[0].sort((a: Choice, b: Choice) => scores[b.id] - scores[a.id]);
+        sortedChoicesByResults[1].sort((a: Choice, b: Choice) => scores[b.id] - scores[a.id]);
+        sortedChoicesByResults[2].sort((a: Choice, b: Choice) => scores[b.id] - scores[a.id]);
+        return sortedChoicesByResults.flat();
+    });
+  }),
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
