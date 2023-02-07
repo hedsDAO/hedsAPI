@@ -30,7 +30,7 @@ const Mint = () => {
         <UpcomingDateBox start={start} />
       )}
       <Flex mt={4} gap={2}>
-        {mint.status === TimelineStatus.CLOSED ? (
+        {mint.status === TimelineStatus.CLOSED && tapeId !== 'secretgarden' ? (
           <Button isDisabled={true} leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
             Mint Closed
           </Button>
