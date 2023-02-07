@@ -56,36 +56,39 @@ export const voteModel = createModel<RootModel>()({
         return choices ? choices.sort((a, b) => a.id - b.id) : [];
       });
     },
-    selectSortedChoicesByResults: hasProps(function (models, {choices, scores, tapeTrackIds}) {
+    selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tapeTrackIds }) {
       return slice((voteModel) => {
         if (!voteModel || !scores) return [];
         const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
-        const totalScore = scores.reduce((acc:number, score: number) => acc + score, 0);
-        const sortedChoicesByResults = choices.reduce((acc: SubmissionChoice[][], choice: SubmissionChoice) => {
-          const scorePercentage = ((scores[choice.id] / totalScore) * 100);
-          const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
-          if (tapeTrackIds.includes(choice.walletId)) {
-            choice.score = roundedPercentage;
-            acc[0].push(choice);
-            return acc;
-          } else if (topVotedScores.includes(scores[choice.id])) {
-            choice.score = roundedPercentage
-            acc[1].push(choice);
-            return acc;
-          } else {
-            choice.score = roundedPercentage
-            acc[2].push(choice);
-            return acc;
-          };
-        }, [[],[],[]]);
+        const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
+        const sortedChoicesByResults = choices.reduce(
+          (acc: SubmissionChoice[][], choice: SubmissionChoice) => {
+            const scorePercentage = (scores[choice.id] / totalScore) * 100;
+            const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
+            if (tapeTrackIds.includes(choice.walletId)) {
+              choice.score = roundedPercentage;
+              acc[0].push(choice);
+              return acc;
+            } else if (topVotedScores.includes(scores[choice.id])) {
+              choice.score = roundedPercentage;
+              acc[1].push(choice);
+              return acc;
+            } else {
+              choice.score = roundedPercentage;
+              acc[2].push(choice);
+              return acc;
+            }
+          },
+          [[], [], []],
+        );
 
         sortedChoicesByResults[0].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
         sortedChoicesByResults[1].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
         sortedChoicesByResults[2].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
 
         return sortedChoicesByResults;
-    });
-  }),
+      });
+    }),
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
