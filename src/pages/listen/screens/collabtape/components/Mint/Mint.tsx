@@ -14,27 +14,29 @@ const Mint = () => {
   const start = DateTime.fromMillis(mint.start);
   const end = DateTime.fromMillis(mint.end);
   const tapeId = useSelector(store.select.tapesModel.selectCurrentTapeId);
+  const isMintClosed = mint.status === TimelineStatus.CLOSED && tapeId !== 'secretgarden';
+  const isMintOpenOrSgTape = mint.status === TimelineStatus.OPEN || tapeId === 'secretgarden';
 
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
         <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{mint.name}</Text>
-        {mint.status === TimelineStatus.CLOSED ? <ClosedBadge /> : mint.status === TimelineStatus.OPEN ? <OpenBadge /> : <UpcomingBadge />}
+        {isMintClosed ? <ClosedBadge /> : isMintOpenOrSgTape ? <OpenBadge /> : <UpcomingBadge />}
       </Flex>
       <Text className="mt-2 text-sm tracking-tight text-gray-500">{mint.description}</Text>
-      {mint.status === TimelineStatus.CLOSED ? (
+      {isMintClosed ? (
         <ClosedDateBox start={start} end={end} />
-      ) : mint.status === TimelineStatus.OPEN ? (
-        <OpenDateBox end={mint.end} />
+      ) : isMintOpenOrSgTape ? (
+        tapeId !== 'secretgarden' ? <OpenDateBox end={mint.end}/> : <></>
       ) : (
         <UpcomingDateBox start={start} />
       )}
       <Flex mt={4} gap={2}>
-        {mint.status === TimelineStatus.CLOSED && tapeId !== 'secretgarden' ? (
+        {isMintClosed ? (
           <Button isDisabled={true} leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
             Mint Closed
           </Button>
-        ) : mint.status === TimelineStatus.OPEN || tapeId === 'secretgarden' ? (
+        ) : isMintOpenOrSgTape ? (
           <Button
             onClick={() => {
               if (tapeId === 'secretgarden') window.open('https://www.secretgarden.fm/', '_blank', 'noreferrer');
