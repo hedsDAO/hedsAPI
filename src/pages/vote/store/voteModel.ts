@@ -43,6 +43,13 @@ export const voteModel = createModel<RootModel>()({
     selectScores() {
       return slice((voteModel) => voteModel?.scores);
     },
+    selectScoresByPercentage() {
+      return createSelector(this.selectScores, (scores: number[]) => {
+        if (!scores) return null;
+        const total = scores.reduce((acc, score) => acc + score, 0);
+        return scores.map((score) => (score / total) * 100);
+      });
+    },
     selectProposalChoices() {
       return slice((voteModel) => {
         const choices = voteModel?.choices || [];
@@ -68,7 +75,7 @@ export const voteModel = createModel<RootModel>()({
         sortedChoicesByResults[0].sort((a: Choice, b: Choice) => scores[b.id] - scores[a.id]);
         sortedChoicesByResults[1].sort((a: Choice, b: Choice) => scores[b.id] - scores[a.id]);
         sortedChoicesByResults[2].sort((a: Choice, b: Choice) => scores[b.id] - scores[a.id]);
-        return sortedChoicesByResults.flat();
+        return sortedChoicesByResults;
     });
   }),
     selectQuadraticVotes() {
