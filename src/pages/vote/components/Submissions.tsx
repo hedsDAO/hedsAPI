@@ -20,7 +20,7 @@ export const Submissions = () => {
 
   useEffect(() => {
     console.log('sorted choices by results', sortedChoicesByResults);
-  }, [currentTape]);
+  }, [sortedChoicesByResults]);
 
   return (
     <Box mx="auto">
