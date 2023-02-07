@@ -64,7 +64,14 @@ const UserCard = () => {
           </Text>
           {splitsBalance && (
             <Box my={3}>
-              <Button borderColor={'gray.400'} variant={'outline'} size="xs" target="_blank" as={Link} href={`https://app.0xsplits.xyz/accounts/${currentWallet.toLowerCase()}`}>
+              <Button
+                borderColor={'gray.400'}
+                variant={'outline'}
+                size="xs"
+                target="_blank"
+                as={Link}
+                href={`https://app.0xsplits.xyz/accounts/${currentWallet.toLowerCase()}`}
+              >
                 <SplitsIcon color="#121212" />
                 <span className="ml-1 text-xs font-semibold">{splitsBalance.slice(0, 5)}</span>
                 <span className="font-regular text-xs px-1">ETH</span>

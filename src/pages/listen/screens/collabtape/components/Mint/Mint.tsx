@@ -27,7 +27,11 @@ const Mint = () => {
       {isMintClosed ? (
         <ClosedDateBox start={start} end={end} />
       ) : isMintOpenOrSgTape ? (
-        tapeId !== 'secretgarden' ? <OpenDateBox end={mint.end}/> : <></>
+        tapeId !== 'secretgarden' ? (
+          <OpenDateBox end={mint.end} />
+        ) : (
+          <></>
+        )
       ) : (
         <UpcomingDateBox start={start} />
       )}
