@@ -1,5 +1,5 @@
 import { Dispatch, store } from '@/store';
-import { Avatar, Button, Divider, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Button, Divider, Flex, Heading, Text, VStack, Link, Box } from '@chakra-ui/react';
 import { Fragment, useEffect } from 'react';
 import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,15 +63,13 @@ const UserCard = () => {
             {description}
           </Text>
           {splitsBalance && (
-            <button className="mx-1 px-2 py-2 mb-1 rounded-sm border border-gray-400 bg-gray-100 inline-flex items-center">
-              <a target="_blank" className="flex justify-start items-center gap-x-1" href={`https://app.0xsplits.xyz/accounts/${currentWallet.toLowerCase()}`}>
-                <div className="inline dark:hidden">
-                  <SplitsIcon color="#121212" />
-                </div>
+            <Box my={3}>
+              <Button borderColor={'gray.400'} variant={'outline'} size="xs" target="_blank" as={Link} href={`https://app.0xsplits.xyz/accounts/${currentWallet.toLowerCase()}`}>
+                <SplitsIcon color="#121212" />
                 <span className="ml-1 text-xs font-semibold">{splitsBalance.slice(0, 5)}</span>
                 <span className="font-regular text-xs px-1">ETH</span>
-              </a>
-            </button>
+              </Button>
+            </Box>
           )}
           <Divider borderColor="gray.400" mb={{ base: 4, lg: 3 }} />
           <Badges />
