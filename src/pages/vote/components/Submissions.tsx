@@ -14,7 +14,7 @@ export const Submissions = () => {
   return (
     <Box mx="auto">
       what
-      <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={2}>
+      <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
         {choices &&
           choices?.map((choice: Choice) => {
             return <SubmissionCard key={choice.name + choice.image} choice={choice} />;
