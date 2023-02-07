@@ -27,10 +27,10 @@ export const NewTapeDetails = () => {
       <Box px={{ base: 5, lg: 4 }} pb={10} pt={5} maxW="7xl" mx="auto">
         <TapeBanner />
         <Flex gap={2}>
-          <Box w="30%">
+          <Box w="25%">
             <NewTapeDescription />
           </Box>
-          <Box w="70%">
+          <Box w="75%">
             <Submissions />
           </Box>
         </Flex>
