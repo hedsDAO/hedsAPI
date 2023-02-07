@@ -21,7 +21,7 @@ export const NewTapeDescription = () => {
           <Image borderRadius="full" boxSize="4rem" src={currentTape?.image} alt="Tape Image" onLoad={setHasImageLoaded.on} />
         </Skeleton>
         <Stack spacing="-0.5rem" pl="2px">
-          <Text fontSize="1.5rem" fontFamily="monospace" pt="8px">
+          <Text fontSize="1.5rem" fontFamily="monospace" pt="8px" letterSpacing="widest">
             {currentTape?.name}
           </Text>
           <Button
