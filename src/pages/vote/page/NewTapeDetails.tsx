@@ -26,11 +26,12 @@ export const NewTapeDetails = () => {
     <Container maxW="100%">
       <Box px={{ base: 5, lg: 4 }} pb={10} pt={5} maxW="7xl" mx="auto">
         <TapeBanner />
-        <Flex gap={2}>
+        <Flex gap={4}>
           <Box w="25%">
             <NewTapeDescription />
           </Box>
           <Box w="75%">
+            <VoteAudioTrack />
             <Submissions />
           </Box>
         </Flex>
