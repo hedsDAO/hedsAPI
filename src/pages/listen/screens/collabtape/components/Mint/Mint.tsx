@@ -34,7 +34,7 @@ const Mint = () => {
           <Button isDisabled={true} leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
             Mint Closed
           </Button>
-        ) : mint.status === TimelineStatus.OPEN ? (
+        ) : mint.status === TimelineStatus.OPEN || tapeId === 'secretgarden' ? (
           <Button
             onClick={() => {
               if (tapeId === 'secretgarden') window.open('https://www.secretgarden.fm/', '_blank', 'noreferrer');
