@@ -54,14 +54,16 @@ const Header = () => {
               objectFit="cover"
               rounded="sm"
             />
-            {currentTape?.video && <PlayIcon
-              role="button"
-              onClick={() => {
-                gaEvents.clickPlayTapeVideo(name);
-                return setIsPlayingVideo.toggle();
-              }}
-              className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10"
-            />}
+            {currentTape?.video && (
+              <PlayIcon
+                role="button"
+                onClick={() => {
+                  gaEvents.clickPlayTapeVideo(name);
+                  return setIsPlayingVideo.toggle();
+                }}
+                className="pointer-events-auto absolute w-[30px] h-[30px] md:h-[25px] md:w-[25px] z-10"
+              />
+            )}
           </Center>
         </Skeleton>
         <Box height={{ md: '22rem', lg: '20rem' }} width={{ md: '22rem', lg: '20rem' }} display={isPlayingVideo ? 'inherit' : 'none'}>

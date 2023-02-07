@@ -9,10 +9,13 @@ import { UserCollection, UserRoles, User, TapeData, TrackMetadata } from '@/mode
 import { formatUserCollection, isEmpty } from '@/utils';
 import { Result } from 'ethers/lib/utils';
 import { whitelist } from '@/data/tokenBurnWhitelist';
+import { ethers } from 'ethers';
+import { getSplitsBalance } from '@/utils/graphql/getSplitsBalance';
 
 export interface userModelState {
   connectedUser: User;
   currentUser: User;
+  splitsBalance?: string;
   audioTabIndex: number;
   engagementTabIndex: number;
   engagementTabs?: Array<string>;
@@ -181,6 +184,9 @@ export const userModel = createModel<RootModel>()({
         (connectedWallet: string, currentWallet: string) => connectedWallet === currentWallet,
       );
     },
+    selectUserSplitsBalance() {
+      return slice((userModel) => userModel?.splitsBalance);
+    },
     selectDoesUserHavePublicSubmissions() {
       return slice((userModel) => {
         if (userModel?.currentUser) {
@@ -209,6 +215,7 @@ export const userModel = createModel<RootModel>()({
     setUserData: (state, payload) => ({ ...state, ...payload }),
     setCurrentUserData: (state, currentUser: User) => ({ ...state, currentUser }),
     setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),
+    setSplitsBalance: (state, splitsBalance: string) => ({ ...state, splitsBalance }),
     setEngagementTabIndex: (state, engagementTabIndex: number) => ({ ...state, engagementTabIndex }),
     setAudioTabIndex: (state, audioTabIndex: number) => ({ ...state, audioTabIndex }),
     setAudioTabs: (state, audioTabs: Array<string>) => ({ ...state, audioTabs }),
@@ -251,6 +258,16 @@ export const userModel = createModel<RootModel>()({
           this.setEngagementTabs(engagementTabs);
         }
       }
+    },
+    async getSplitsBalance(walletId: string) {
+      const balance = await getSplitsBalance(walletId);
+      const tokenId = balance.user.internalBalances[0].token.id;
+      const amount = balance.user.internalBalances[0].amount;
+      if (tokenId === '0x0000000000000000000000000000000000000000' && amount > 0) {
+        this.setSplitsBalance(ethers.utils.formatEther(amount));
+        return;
+      }
+      return;
     },
     async createNewUser([wallet, displayName, isOnOwnPage]: [string, string, boolean]) {
       if (wallet?.length) {
