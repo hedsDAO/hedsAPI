@@ -18,7 +18,9 @@ export const Submissions = () => {
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tapeTrackIds: currentTape?.tracks }));
 
-  console.log(sortedChoicesByResults);
+  const handleSelectedSubmission = (choice: SubmissionChoice) => {
+    dispatch.voteModel.setCurrentTrack(choice);
+  };
 
   return (
     <Box mx="auto">
@@ -32,9 +34,7 @@ export const Submissions = () => {
       >
         SUBMISSIONS
       </Heading>
-      <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
-        {sortedChoicesByResults.length && <SubmissionCards choices={sortedChoicesByResults} />}
-      </Grid>
+      {sortedChoicesByResults.length && <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />}
     </Box>
   );
 };

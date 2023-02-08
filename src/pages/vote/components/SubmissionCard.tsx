@@ -1,32 +1,33 @@
-import { Box, Flex, Image, Progress, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Grid, Image, Progress, Stack, Text } from '@chakra-ui/react';
 import { SubmissionChoice } from '../store/voteModel';
 interface SubmissionProps {
   choices: [SubmissionChoice][];
+  handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
 interface CardProps {
   choice: SubmissionChoice;
+  handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
 
-export const SubmissionCards = ({ choices }: SubmissionProps) => {
+export const SubmissionCards = ({ choices, handleSelectedSubmission }: SubmissionProps) => {
   const [tracks, selected, submissions] = choices;
-  console.log('tracks', tracks);
   return (
-    <>
+    <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
       {tracks.map((choice) => (
-        <Track key={choice.name + choice.image} choice={choice} />
+        <Track key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
       {selected.map((choice) => (
-        <SelectedSubmission key={choice.name + choice.image} choice={choice} />
+        <SelectedSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
       {submissions.map((choice) => (
-        <Submission key={choice.name + choice.image} choice={choice} />
+        <Submission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
-    </>
+    </Grid>
   );
 };
 
-const Track = ({ choice }: CardProps) => (
-  <Box border="1px" borderRadius="md" borderColor="gray.500" bg="purple.100">
+const Track = ({ choice, handleSelectedSubmission }: CardProps) => (
+  <Box border="1px" borderRadius="md" borderColor="gray.500" bg="purple.100" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
     <Stack flexDirection="row">
       <Box p={2}>
         <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
@@ -40,9 +41,9 @@ const Track = ({ choice }: CardProps) => (
   </Box>
 );
 
-const Submission = ({ choice }: CardProps) => {
+const Submission = ({ choice, handleSelectedSubmission }: CardProps) => {
   return (
-    <Box border="1px" borderRadius="md" borderColor="gray.800">
+    <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
         <Box p={2}>
           <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
@@ -57,8 +58,8 @@ const Submission = ({ choice }: CardProps) => {
   );
 };
 
-const SelectedSubmission = ({ choice }: CardProps) => (
-  <Box border="1px" borderRadius="md" borderColor="gray.800" bg="gray.200">
+const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => (
+  <Box border="1px" borderRadius="md" borderColor="gray.800" bg="gray.200" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
     <Stack flexDirection="row">
       <Box p={2}>
         <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
