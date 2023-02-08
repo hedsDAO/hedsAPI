@@ -24,13 +24,13 @@ export const NewTapeDetails = () => {
 
   return (
     <Container maxW="100%">
-      <Box px={{ base: 5, lg: 4 }} pb={10} pt={5} maxW="7xl" mx="auto">
+      <Box px={{ base: 2, lg: 4 }} pb={10} pt={5} maxW="7xl" mx="auto">
         <TapeBanner />
-        <Flex gap={4}>
-          <Box w="25%">
+        <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: 8, lg: 10 }}>
+          <Box w={{ lg: '25%' }}>
             <NewTapeDescription />
           </Box>
-          <Box w="75%">
+          <Box w={{ lg: '75%' }}>
             <VoteAudioTrack />
             <Submissions />
           </Box>
