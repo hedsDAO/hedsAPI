@@ -27,17 +27,10 @@ export const Submissions = () => {
   return (
     <Box mx="auto">
       <Divider my={3} borderColor="transparent" w="full" />
-      <Heading
-        px={{ base: 0, lg: 2 }}
-        className="animate__animated animate__fadeIn"
-        fontWeight="light"
-        letterSpacing="widest"
-        size={['xs', 'sm']}
-        color={'gray.900'}
-      >
+      <Heading className="animate__animated animate__fadeIn" fontWeight="light" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
         SUBMISSIONS
       </Heading>
-      <Divider my={3} borderColor="transparent" w="full" />
+      <Divider my={1.5} borderColor="transparent" w="full" />
       {sortedChoicesByResults.length > 0 && !isOldTape ? (
         <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
       ) : (

@@ -17,7 +17,6 @@ export const VoteAudioTrack = () => {
       {!isLoadingProposal && currentTrack?.media?.length ? (
         <>
           <Heading
-            px={{ base: 0, lg: 2 }}
             className="animate__animated animate__fadeIn"
             fontWeight="light"
             letterSpacing="widest"
@@ -26,27 +25,21 @@ export const VoteAudioTrack = () => {
           >
             NOW PLAYING
           </Heading>
-          <Divider my={3} borderColor="transparent" w="full" />
-          <Flex alignItems={'center'} py={4} rounded="sm" className="group" borderRadius="lg">
-            <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
-              <Image
-                height="60px"
-                width="60px"
-                onLoad={setIsImageLoaded.on}
-                src={currentTrack?.image}
-                objectFit="cover"
-                rounded="md"
-                shadow={'sm'}
-              />
-            </Skeleton>
-            <Stack justifyContent="center" px={3}>
-              <Text className="font-serif" mt={'0rem !important'} fontSize="xs" color="gray.800">
-                {currentTrack.name}
-              </Text>
-              <Text className="font-serif" mt={'0rem !important'} fontSize="2xs" color="gray.600">
-                {currentTrack.artist}
-              </Text>
-            </Stack>
+          <Divider my={1} borderColor="transparent" w="full" />
+          <Flex gap={6} direction={{ base: 'column', lg: 'row' }} alignItems={{ lg: 'center' }} py={3} rounded="sm" className="group" borderRadius="lg">
+            <Flex>
+              <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
+                <Image border="1px" borderColor="gray.400" height="60px" width="60px" onLoad={setIsImageLoaded.on} src={currentTrack?.image} objectFit="cover" rounded="md" shadow={'sm'} />
+              </Skeleton>
+              <Stack justifyContent="center" px={3}>
+                <Text className="font-serif" mt={'0rem !important'} fontSize="xs" color="gray.800">
+                  {currentTrack.name}
+                </Text>
+                <Text className="font-serif" mt={'0rem !important'} fontSize="2xs" color="gray.600">
+                  {currentTrack.artist}
+                </Text>
+              </Stack>
+            </Flex>
             <WaveformPlayer audio={currentTrack?.media} />
           </Flex>
         </>

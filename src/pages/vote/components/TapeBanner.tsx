@@ -11,7 +11,7 @@ export const TapeBanner = () => {
   return (
     <Box pb={10} pt={5}>
       <Skeleton rounded="2xl" isLoaded={hasImageLoaded}>
-        <Image onLoad={setHasImageLoaded.on} w="7xl" h="6rem" rounded="xl" objectFit={'cover'} src={currentTape?.image} />
+        <Image shadow="sm" onLoad={setHasImageLoaded.on} w="7xl" h="6rem" rounded="xl" objectFit={'cover'} src={currentTape?.image} />
       </Skeleton>
     </Box>
   );
