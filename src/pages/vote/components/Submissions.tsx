@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Dispatch, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Grid, Heading, Skeleton, Text, VStack } from '@chakra-ui/react';
+import { Box, Divider, Grid, Heading, Skeleton, Text, VStack } from '@chakra-ui/react';
 import { SubmissionCards } from './SubmissionCard';
 
 import { Choice } from 'hedsvote';
@@ -24,6 +24,7 @@ export const Submissions = () => {
 
   return (
     <Box mx="auto">
+      <Divider my={3} borderColor="transparent" w="full" />
       <Heading
         px={{ base: 0, lg: 2 }}
         className="animate__animated animate__fadeIn"
@@ -34,7 +35,9 @@ export const Submissions = () => {
       >
         SUBMISSIONS
       </Heading>
-      {sortedChoicesByResults.length && <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />}
+      <Divider my={3} borderColor="transparent" w="full" />
+
+      {sortedChoicesByResults.length && <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} tapeId={id} />}
     </Box>
   );
 };

@@ -1,19 +1,25 @@
 import { useSelector } from 'react-redux';
 import { store, RootState } from '@/store';
+import { useParams } from 'react-router-dom';
 
 // Components
-import { Box, Center, Divider, Flex, Heading, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 
-// Models
+// Constants
+import { OLD_TAPES } from '@pages/vote/store/constants';
+
 export const VoteAudioTrack = () => {
+  const { id } = useParams();
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const currentTrack = useSelector(store.select.voteModel.selectCurrentTrack);
   const isLoadingProposal = useSelector((state: RootState) => state.loading.effects.voteModel.getProposal);
 
+  const isOldTape = OLD_TAPES.includes(id);
+
   return (
     <Box mx="auto">
-      {!isLoadingProposal && currentTrack?.media?.length && (
+      {!isLoadingProposal && currentTrack?.media?.length && !isOldTape ? (
         <>
           <Heading
             px={{ base: 0, lg: 2 }}
@@ -50,7 +56,7 @@ export const VoteAudioTrack = () => {
             <WaveformPlayer audio={currentTrack?.media} />
           </Flex>
         </>
-      )}
+      ) : null}
     </Box>
   );
 };

@@ -13,13 +13,16 @@ import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { Proposal, ProposalState } from 'hedsvote';
 
 // Constants
-import { OLD_TAPES, HOW_VOTING_WORKS, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
+import { OLD_TAPES, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
 
 export const NewTapeDescription = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const proposal = useSelector(store.select.voteModel.selectProposal);
+
+  const isOldTape = OLD_TAPES.includes(id);
+  const isHedsTAPE06 = id === '6';
 
   const handleProposalState = (state: ProposalState) => {
     if (state === ProposalState.OPEN)
@@ -71,7 +74,7 @@ export const NewTapeDescription = () => {
       <Text fontSize="sm" fontWeight="semibold" pt={5}>
         Description
       </Text>
-      <Text fontSize="xs">{ABOUT_VOTING}</Text>
+      <Text fontSize="xs"> {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}</Text>
       <Box>{handleProposalState(proposal?.state)}</Box>
     </Stack>
   );
