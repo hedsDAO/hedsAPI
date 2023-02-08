@@ -20,7 +20,7 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
   const [tracks, selected, submissions] = choices;
 
   return (
-    <Grid pt={6} templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} border="1px" borderRadius="md" p={{ base: 1, lg: 2 }}>
+    <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
       {tracks.map((choice) => (
         <Track key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
@@ -35,7 +35,7 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
 };
 
 export const OldTapeTrack = ({ choices, handleSelectedSubmission }: OldTapeProps) => (
-  <Grid pt={6} templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} border="1px" borderRadius="md" p={{ base: 1, lg: 2 }}>
+  <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} borderRadius="md">
     {choices.map((choice) => (
       <Box
         border="1px"
@@ -51,8 +51,10 @@ export const OldTapeTrack = ({ choices, handleSelectedSubmission }: OldTapeProps
             <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
           </Box>
           <Flex direction="column" pl="2px">
-            <Text fontSize="sm">{choice.name}</Text>
-            <Text fontSize="xs">{choice.artist}</Text>
+            <Text fontSize="xs">{choice.name}</Text>
+            <Text fontSize="2xs" textColor={'gray.700'}>
+              {choice.artist}
+            </Text>
           </Flex>
         </Stack>
       </Box>
@@ -64,45 +66,63 @@ const Track = ({ choice, handleSelectedSubmission }: CardProps) => (
   <Box border="1px" borderRadius="md" borderColor="gray.500" bg="purple.100" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
     <Stack flexDirection="row">
       <Box p={2}>
-        <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+        <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
       </Box>
-      <Flex direction="column" pl="2px">
-        <Text fontSize="sm">{choice.name}</Text>
-        <Text fontSize="xs">{choice.artist}</Text>
-        <Progress size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
-        <Text fontSize="xs">{choice.score}%</Text>
+      <Flex w="full" direction="column" pl={1} pr={2}>
+        <Text mt={'-1px !important'} fontSize="xs">
+          {choice.name}
+        </Text>
+        <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
+          <Text fontSize="2xs" textColor={'gray.700'}>
+            {choice.artist}
+          </Text>
+          <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
+            {choice.score}%
+          </Text>
+        </Flex>
+        <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
       </Flex>
     </Stack>
   </Box>
 );
 
-const Submission = ({ choice, handleSelectedSubmission }: CardProps) => {
-  return (
-    <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
-      <Stack flexDirection="row">
-        <Box p={2}>
-          <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
-        </Box>
-        <Flex direction="column" pl="2px">
-          <Text fontSize="sm">{choice.name}</Text>
-          <Progress size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
-          <Text fontSize="xs">{choice.score}%</Text>
+const Submission = ({ choice, handleSelectedSubmission }: CardProps) => (
+  <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
+    <Stack flexDirection="row">
+      <Box p={2}>
+        <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+      </Box>
+      <Flex w="full" direction="column" pl={1} pr={2}>
+        <Text mt={'-0.5px !important'} fontSize="xs">
+          {choice.name}
+        </Text>
+        <Flex mt={-0.5} minW="full" justifyContent={'end'}>
+          <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
+            {choice.score}%
+          </Text>
         </Flex>
-      </Stack>
-    </Box>
-  );
-};
+        <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
+      </Flex>
+    </Stack>
+  </Box>
+);
 
 const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => (
   <Box border="1px" borderRadius="md" borderColor="gray.800" bg="gray.200" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
     <Stack flexDirection="row">
       <Box p={2}>
-        <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+        <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
       </Box>
-      <Flex direction="column" pl="2px">
-        <Text fontSize="sm">{choice.name}</Text>
-        <Progress size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
-        <Text fontSize="xs">{choice.score}%</Text>
+      <Flex w="full" direction="column" pl={1} pr={2}>
+        <Text mt={'-1px !important'} fontSize="xs">
+          {choice.name}
+        </Text>
+        <Flex mt={-0.5} minW="full" justifyContent={'end'}>
+          <Text fontSize="2xs" textColor={'gray.800'}>
+            {choice.score}%
+          </Text>
+        </Flex>
+        <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
       </Flex>
     </Stack>
   </Box>

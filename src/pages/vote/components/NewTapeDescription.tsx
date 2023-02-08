@@ -27,18 +27,18 @@ export const NewTapeDescription = () => {
   const handleProposalState = (state: ProposalState) => {
     if (state === ProposalState.OPEN)
       return (
-        <Badge borderRadius="md" colorScheme={'green'}>
+        <Badge px={2} py={1} borderRadius="sm" colorScheme={'green'}>
           OPEN
         </Badge>
       );
     if (state === ProposalState.CLOSED)
       return (
-        <Badge borderRadius="md" colorScheme={'red'}>
+        <Badge px={2} py={1} borderRadius="sm" colorScheme={'red'}>
           CLOSED
         </Badge>
       );
     return (
-      <Badge borderRadius="md" colorScheme={'yellow'}>
+      <Badge px={2} py={1} borderRadius="sm" colorScheme={'yellow'}>
         PENDING
       </Badge>
     );
@@ -48,18 +48,18 @@ export const NewTapeDescription = () => {
     <Stack>
       <Stack direction="row">
         <Skeleton rounded="2xl" isLoaded={hasImageLoaded}>
-          <Image borderRadius="full" boxSize="4rem" src={currentTape?.image} alt="Tape Image" onLoad={setHasImageLoaded.on} />
+          <Image borderRadius="full" boxSize="4rem" shadow="sm" src={currentTape?.image} alt="Tape Image" onLoad={setHasImageLoaded.on} />
         </Skeleton>
-        <Stack spacing="-0.5rem" pl="2px">
-          <Text fontSize="1.5rem" fontFamily="monospace" pt="8px">
+        <Stack justifyContent={'center'} spacing="-0.25rem" pl="2px">
+          <Text fontSize="1.5rem" fontFamily={"'Space Mono', monospace"}>
             {currentTape?.name}
           </Text>
           <Button
             bg="none"
             size="xs"
-            fontFamily="monospace"
+            fontFamily={"'Space Mono', monospace"}
             fontWeight="light"
-            px="0"
+            px="0.5"
             w="fit-content"
             justifyContent="flex-start"
             rightIcon={<ExternalLinkIcon />}
@@ -75,7 +75,7 @@ export const NewTapeDescription = () => {
         Description
       </Text>
       <Text fontSize="xs"> {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}</Text>
-      <Box>{handleProposalState(proposal?.state)}</Box>
+      <Box pt={2}>{handleProposalState(proposal?.state)}</Box>
     </Stack>
   );
 };
