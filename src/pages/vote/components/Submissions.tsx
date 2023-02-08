@@ -4,16 +4,16 @@ import { Dispatch, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Divider, Grid, Heading, Skeleton, Text, VStack } from '@chakra-ui/react';
-import { SubmissionCards } from './SubmissionCard';
+import { SubmissionCards, OldTapeTrack } from './SubmissionCards';
 
 import { Choice } from 'hedsvote';
 import { SubmissionChoice } from '../store/voteModel';
+import { OLD_TAPES } from '@pages/vote/store/constants';
 
 export const Submissions = () => {
   const { tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
-  const proposal = useSelector(store.select.voteModel.selectProposal);
   const scores = useSelector(store.select.voteModel.selectScores);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tapeTrackIds: currentTape?.tracks }));
@@ -21,6 +21,8 @@ export const Submissions = () => {
   const handleSelectedSubmission = (choice: SubmissionChoice) => {
     dispatch.voteModel.setCurrentTrack(choice);
   };
+
+  const isOldTape = OLD_TAPES.includes(id);
 
   return (
     <Box mx="auto">
@@ -36,8 +38,11 @@ export const Submissions = () => {
         SUBMISSIONS
       </Heading>
       <Divider my={3} borderColor="transparent" w="full" />
-
-      {sortedChoicesByResults.length && <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} tapeId={id} />}
+      {sortedChoicesByResults.length > 0 && !isOldTape ? (
+        <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
+      ) : (
+        <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+      )}
     </Box>
   );
 };
