@@ -8,6 +8,7 @@ import { TapeBanner } from '../components/TapeBanner';
 import { NewTapeDescription } from '../components/NewTapeDescription';
 import { VoteAudioTrack } from '../components/VoteAudioTrack';
 import { Submissions } from '../components/Submissions';
+import { VoteResults } from '../components/VoteResults';
 import { Container, Box, Flex } from '@chakra-ui/react';
 
 export const NewTapeDetails = () => {
@@ -29,6 +30,7 @@ export const NewTapeDetails = () => {
         <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: 8, lg: 10 }}>
           <Box w={{ lg: '25%' }}>
             <NewTapeDescription />
+            <VoteResults />
           </Box>
           <Box w={{ lg: '75%' }}>
             <VoteAudioTrack />
