@@ -20,7 +20,7 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
   const [tracks, selected, submissions] = choices;
 
   return (
-    <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} border="1px" borderRadius="md" p={2}>
+    <Grid pt={6} templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} border="1px" borderRadius="md" p={{ base: 1, lg: 2 }}>
       {tracks.map((choice) => (
         <Track key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
@@ -35,7 +35,7 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
 };
 
 export const OldTapeTrack = ({ choices, handleSelectedSubmission }: OldTapeProps) => (
-  <Grid pt={6} templateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} border="1px" borderRadius="md" p={2}>
+  <Grid pt={6} templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} border="1px" borderRadius="md" p={{ base: 1, lg: 2 }}>
     {choices.map((choice) => (
       <Box
         border="1px"
