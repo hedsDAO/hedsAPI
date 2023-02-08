@@ -27,24 +27,23 @@ export const VoteAudioTrack = () => {
             NOW PLAYING
           </Heading>
           <Divider my={3} borderColor="transparent" w="full" />
-          <Flex py={4} rounded="sm" className="group" borderRadius="lg">
-            <Skeleton mb={2} isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
+          <Flex alignItems={'center'} py={4} rounded="sm" className="group" borderRadius="lg">
+            <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
               <Image
                 height="60px"
                 width="60px"
                 onLoad={setIsImageLoaded.on}
-                _hover={{ opacity: 0 }}
-                className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all"
                 src={currentTrack?.image}
                 objectFit="cover"
                 rounded="md"
+                shadow={'sm'}
               />
             </Skeleton>
-            <Stack justifyContent="center" pl={2}>
-              <Text className="font-serif" fontSize="sm" color="gray.800">
+            <Stack justifyContent="center" px={3}>
+              <Text className="font-serif" mt={'0rem !important'} fontSize="xs" color="gray.800">
                 {currentTrack.name}
               </Text>
-              <Text className="font-serif" fontSize="xs" color="gray.400">
+              <Text className="font-serif" mt={'0rem !important'} fontSize="2xs" color="gray.600">
                 {currentTrack.artist}
               </Text>
             </Stack>
