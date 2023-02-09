@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Dispatch, store } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Divider, Grid, Heading, Skeleton, Text, VStack } from '@chakra-ui/react';
+// Components
+import { Box, Divider, Flex, Heading, Tooltip } from '@chakra-ui/react';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { SubmissionCards, OldTapeTrack } from './SubmissionCards';
 
-import { Choice } from 'hedsvote';
+// Constants
 import { SubmissionChoice } from '../store/voteModel';
-import { OLD_TAPES } from '@pages/vote/store/constants';
+import { OLD_TAPES, ABOUT_SUBMISSIONS } from '@pages/vote/store/constants';
 
 export const Submissions = () => {
   const { tape, id } = useParams();
@@ -27,9 +28,14 @@ export const Submissions = () => {
   return (
     <Box mx="auto">
       <Divider my={3} borderColor="transparent" w="full" />
-      <Heading className="animate__animated animate__fadeIn" fontWeight="light" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
-        SUBMISSIONS
-      </Heading>
+      <Flex justifyContent="space-between">
+        <Heading className="animate__animated animate__fadeIn" fontWeight="light" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+          SUBMISSIONS
+        </Heading>
+        <Tooltip label={ABOUT_SUBMISSIONS}>
+          <InfoOutlineIcon color="gray.500" />
+        </Tooltip>
+      </Flex>
       <Divider my={1.5} borderColor="transparent" w="full" />
       {sortedChoicesByResults.length > 0 && !isOldTape ? (
         <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
