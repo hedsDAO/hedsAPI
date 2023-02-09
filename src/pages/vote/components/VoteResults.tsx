@@ -2,8 +2,9 @@ import { useSelector } from 'react-redux';
 import { store } from '@/store';
 
 // Components
-import { Avatar, Box, Heading, Flex, Grid, GridItem, HStack, Image, Stack, Text, IconButton } from '@chakra-ui/react';
+import { Avatar, Box, Heading, Flex, Grid, GridItem, HStack, Image, Stack, Spacer, Text, Tooltip, IconButton } from '@chakra-ui/react';
 import { IconX, IconPlus, IconMinus } from '@tabler/icons';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { formatWallet } from '@/utils';
 
 // Models
@@ -26,7 +27,7 @@ export const VoteResults = () => {
           >
             RESULTS
           </Heading>
-          <Stack border="1px" borderRadius="md" p={2}>
+          <Stack border="1px" borderColor="gray.700" borderRadius="md" p={1}>
             {votes.length > 0 && votes.map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
           </Stack>
         </>
@@ -40,9 +41,18 @@ const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
 
   return (
     <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
-      <Flex justifyContent="space-between" px={1}>
-        <Text fontSize="xs">{formatWallet(voter)}</Text>
-        <Text fontSize="xs">{vp}</Text>
+      <Flex justifyContent="space-between" px={1} py={2}>
+        <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
+          {formatWallet(voter)}
+        </Text>
+        <Flex w="30%" justifyContent="space-between" alignItems="center">
+          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
+            {vp} HED
+          </Text>
+          <Tooltip label="hello">
+            <InfoOutlineIcon color="gray.500" boxSize={3} />
+          </Tooltip>
+        </Flex>
       </Flex>
     </Box>
   );
