@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux';
 import { store } from '@/store';
 
 // Components
-import { Avatar, Box, Heading, Flex, Grid, GridItem, HStack, Image, Stack, Spacer, Text, Tooltip, IconButton } from '@chakra-ui/react';
-import { IconX, IconPlus, IconMinus } from '@tabler/icons';
+import { Box, Heading, Flex, Stack, Text, Tooltip } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { formatWallet } from '@/utils';
 
@@ -38,6 +37,18 @@ export const VoteResults = () => {
 
 const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
   const { voter, vp } = vote;
+  const choices = useSelector(store.select.voteModel.selectProposalChoices);
+
+  const formatChoiceSelection = (voteObject: { [id: string]: number }) => {
+    const totalScore = Object.values(voteObject).reduce((a, b) => a + b, 0);
+    const selectedChoices = Object.keys(voteObject).map((id) => {
+      const choiceId = parseInt(id) - 1;
+      const choice = choices[choiceId];
+      const percentage = ((voteObject[id] / totalScore) * 100).toFixed(2);
+      return `${percentage}% for ${choice.name}`;
+    });
+    return selectedChoices.join(', ');
+  };
 
   return (
     <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
@@ -49,7 +60,7 @@ const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
           <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
             {vp} HED
           </Text>
-          <Tooltip label="hello">
+          <Tooltip label={formatChoiceSelection(vote.choice)}>
             <InfoOutlineIcon color="gray.500" boxSize={3} />
           </Tooltip>
         </Flex>
