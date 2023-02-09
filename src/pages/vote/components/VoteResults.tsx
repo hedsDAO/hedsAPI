@@ -12,7 +12,7 @@ import { QuadraticVote } from 'hedsvote';
 
 export const VoteResults = () => {
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
-  console.log(votes);
+
   return (
     <>
       {votes && (
