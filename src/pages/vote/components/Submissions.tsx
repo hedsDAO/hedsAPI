@@ -29,7 +29,7 @@ export const Submissions = () => {
     <Box mx="auto">
       <Divider my={3} borderColor="transparent" w="full" />
       <Flex justifyContent="space-between">
-        <Heading className="animate__animated animate__fadeIn" fontWeight="light" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+        <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
           SUBMISSIONS
         </Heading>
         <Tooltip label={ABOUT_SUBMISSIONS}>
@@ -37,11 +37,13 @@ export const Submissions = () => {
         </Tooltip>
       </Flex>
       <Divider my={1.5} borderColor="transparent" w="full" />
-      {sortedChoicesByResults.length > 0 && !isOldTape ? (
-        <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
-      ) : (
-        <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
-      )}
+      <Box border="1px" borderColor="gray.700" borderRadius="md" p={1} bgColor="gray.50">
+        {sortedChoicesByResults.length > 0 && !isOldTape ? (
+          <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
+        ) : (
+          <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+        )}
+      </Box>
     </Box>
   );
 };
