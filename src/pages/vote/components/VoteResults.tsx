@@ -1,35 +1,54 @@
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
+import axios from 'axios';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { formatWallet } from '@/utils';
 
 // Models
 import { QuadraticVote } from 'hedsvote';
+import { useEffect } from 'react';
 
 export const VoteResults = () => {
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
+  const [isShowingAllResults, setIsShowingAllResults] = useBoolean();
+  const onlyWallets = votes?.map((vote) => vote.voter);
+  console.log(onlyWallets);
+  useEffect(() => {
+    if (onlyWallets?.length) getUsers();
+  }, [onlyWallets]);
+
+  const getUsers = async () => {
+    console.log('here');
+    await axios
+      .post('http://localhost:5001/heds-104d8/us-central1/users/getManyUsers', { users: onlyWallets })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       {votes && (
-        <>
+        <Stack>
           <Heading
-            py={{ base: 0, lg: 2 }}
+            py={{ base: 0, lg: 1 }}
             className="animate__animated animate__fadeIn"
-            fontWeight="light"
+            fontWeight="medium"
             letterSpacing="widest"
             size={['xs', 'sm']}
             color={'gray.900'}
           >
             RESULTS
           </Heading>
-          <Stack border="1px" borderColor="gray.700" borderRadius="md" p={1}>
-            {votes.length > 0 && votes.map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
+          <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1}>
+            {votes.length > 0 && votes.slice(0, isShowingAllResults ? -1 : 5).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
           </Stack>
-        </>
+          <Button borderColor="gray.500" fontWeight={'normal'} fontSize={'xs'} size="sm" variant={'outline'} onClick={setIsShowingAllResults.toggle}>
+            {isShowingAllResults ? 'show less' : 'show all'}
+          </Button>
+        </Stack>
       )}
     </>
   );

@@ -18,9 +18,9 @@ export const VoteAudioTrack = () => {
         <>
           <Heading
             className="animate__animated animate__fadeIn"
-            fontWeight="light"
+            fontWeight="medium"
             letterSpacing="widest"
-            size={['xs', 'sm']}
+            size={['xs', 'xs']}
             color={'gray.900'}
           >
             NOW PLAYING
