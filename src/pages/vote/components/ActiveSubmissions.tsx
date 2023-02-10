@@ -4,7 +4,7 @@ import { Box, Divider, Flex, Grid, Heading } from '@chakra-ui/react';
 import { VoteChoice } from '../store/voteModel';
 
 interface OwnProps {
-  handleSelectedSubmission: (choice: ChoVoteChoiceice) => void;
+  handleSelectedSubmission: (choice: VoteChoice) => void;
 }
 
 export const ActiveSubmissions = ({ handleSelectedSubmission }: OwnProps) => {
