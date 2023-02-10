@@ -6,6 +6,10 @@ export interface SubmissionChoice extends Choice {
   score: number;
 }
 
+export interface VoteChoice extends Choice {
+  votes: number;
+}
+
 export interface VoteModelState {
   scores?: number[];
   choices: Choice[];
