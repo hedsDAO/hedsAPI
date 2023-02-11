@@ -7,7 +7,7 @@ export interface SubmissionChoice extends Choice {
 }
 
 export interface VoteChoice extends Choice {
-  votes: number;
+  votes?: number;
 }
 
 export interface VoteModelState {
@@ -86,13 +86,20 @@ export const voteModel = createModel<RootModel>()({
           [[], [], []],
         );
 
-        sortedChoicesByResults[0].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        sortedChoicesByResults[1].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        sortedChoicesByResults[2].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        for (const array of sortedChoicesByResults) {
+          array.sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        };
 
         return sortedChoicesByResults;
       });
     }),
+    selectSortedChoicesBySubId() {
+      return createSelector(this.selectProposalChoices, (choices: Choice[]) => {
+        if (!choices) return [];
+        console.log(choices)
+        return choices.sort((a, b) => a.name.toUpperCase() < b.name.toUpperCase() ? -1 : (a.name.toUpperCase() > b.name.toUpperCase() ? 1 : 0));
+      });
+    },
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
@@ -148,9 +155,10 @@ export const voteModel = createModel<RootModel>()({
       const { createProposal } = createClient();
       try {
         const proposalCreated = await (await createProposal('proposals', proposal)).data;
-        const { choices, method, votes } = proposalCreated;
+        const { choices } = proposalCreated;
         this.setProposal(proposalCreated);
         this.setChoices(choices);
+        console.log(proposalCreated);
       } catch (error) {
         console.log(error);
       }
@@ -169,7 +177,7 @@ export const voteModel = createModel<RootModel>()({
       const { getProposal } = createClient();
       if (proposalAddress?.length) {
         try {
-          const proposal = await (await getProposal('heds', proposalAddress)).data;
+          const proposal = await (await getProposal('proposals', proposalAddress)).data;
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);

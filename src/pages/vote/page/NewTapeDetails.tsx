@@ -61,7 +61,6 @@ export const NewTapeDetails = () => {
           <Box w={{ lg: '25%' }}>
             <NewTapeDescription />
             {proposalState === ProposalState.CLOSED ? <VoteResults /> : <ActiveVoting />}
-            {/* <VoteResults /> */}
           </Box>
           <Box w={{ lg: '75%' }}>
             <VoteAudioTrack />

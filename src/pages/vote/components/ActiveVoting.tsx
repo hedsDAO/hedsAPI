@@ -16,7 +16,7 @@ export const ActiveVoting = () => {
         size={['xs', 'sm']}
         color={'gray.900'}
       >
-        VOTES
+        MY VOTES
       </Heading>
       <Stack border="1px" borderColor="gray.700" borderRadius="md" p={1}></Stack>
     </>
