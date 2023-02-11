@@ -10,11 +10,14 @@ import { VoteAudioTrack } from '../components/VoteAudioTrack';
 import { Submissions } from '../components/Submissions';
 import { VoteResults } from '../components/VoteResults';
 import { Container, Box, Flex } from '@chakra-ui/react';
+import { ProposalState } from 'hedsvote';
+import { CastVoteContainer } from '../components/CastVoteContainer';
 
 export const NewTapeDetails = () => {
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
+  const proposalState = useSelector(store.select.voteModel.selectProposalState);
 
   useEffect(() => {
     if (space && tape && id && allTapes?.[tape]?.[id]?.proposalId) {
@@ -30,7 +33,7 @@ export const NewTapeDetails = () => {
         <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: 8, lg: 10 }}>
           <Box w={{ lg: '25%' }}>
             <NewTapeDescription />
-            <VoteResults />
+            {proposalState === ProposalState.CLOSED ? <VoteResults /> : <CastVoteContainer />}
           </Box>
           <Box w={{ lg: '75%' }}>
             <VoteAudioTrack />

@@ -1,6 +1,7 @@
-import { Box, Flex, Grid, Image, Progress, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Grid, Image, Progress, Stack, Text, IconButton, Center } from '@chakra-ui/react';
 import { SubmissionChoice } from '../store/voteModel';
 import { Choice } from 'hedsvote';
+import { HeartIcon } from '@heroicons/react/24/outline';
 
 interface SubmissionProps {
   choices: [SubmissionChoice][];
@@ -16,6 +17,16 @@ interface OldTapeProps {
   handleSelectedSubmission: (choice: Choice) => void;
 }
 
+interface OpenVoteSubmissionProps {
+  choices: Choice[];
+  handleSelectedSubmission: (choice: SubmissionChoice) => void;
+}
+
+interface OpenVoteCardProps {
+  choice: SubmissionChoice;
+  handleSelectedSubmission: (choice: SubmissionChoice) => void;
+}
+
 export const SubmissionCards = ({ choices, handleSelectedSubmission }: SubmissionProps) => {
   const [tracks, selected, submissions] = choices;
 
@@ -29,6 +40,16 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
       ))}
       {submissions.map((choice) => (
         <Submission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
+      ))}
+    </Grid>
+  );
+};
+
+export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSubmissionProps) => {
+  return (
+    <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
+      {choices.map((choice) => (
+        <OpenSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
     </Grid>
   );
@@ -123,6 +144,29 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
+      </Flex>
+    </Stack>
+  </Box>
+);
+
+const OpenSubmission = ({ choice, handleSelectedSubmission }: OpenVoteCardProps) => (
+  <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
+    <Stack flexDirection="row">
+      <Box p={2}>
+        <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+      </Box>
+      <Flex w="full" direction="column" pl={1} pr={2}>
+        <Flex justifyContent={'space-between'} alignItems={'center'}>
+          <Text mt={'-0.5px !important'} fontSize="xs">
+            {choice.name}
+          </Text>
+          <IconButton bg="transparent !important" size="xs" aria-label="like" _hover={{ bg: 'gray.200' }} ml={1}>
+            <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
+              <HeartIcon height='16' width='16' />
+            </Center>
+          </IconButton>
+        </Flex>
+        <Progress mt={2} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
       </Flex>
     </Stack>
   </Box>

@@ -19,4 +19,4 @@ export const ABOUT_VOTING_HT6 =
   'The curation of this tape followed a different process than normal. The community voted for their favorite visual background(s) to be featured on the tape, instead of the public audio submissions. The tracks that made it on to the tape were chose by the tape curator.';
 
 export const ABOUT_SUBMISSIONS =
-  'Submissions are categorized into 3 categories: Tracks are in purple, selected submissions are in gray, and other submissions are in white.';
+  'Submissions are organized into 3 categories: The tracks that were chosen and appear on the tape are in purple, the top 20 votes submissions are in gray, and remaining submissions are in white.';
