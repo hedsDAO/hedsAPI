@@ -27,7 +27,7 @@ export const VoteResults = () => {
             RESULTS
           </Heading>
           <Stack border="1px" borderColor="gray.700" borderRadius="md" p={1}>
-            {votes.length > 0 && votes.map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
+            {votes.length > 0 && votes.sort((a,b) => b.vp - a.vp).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
           </Stack>
         </>
       )}

@@ -5,7 +5,7 @@ interface OwnProps {
   voteOptions: VoteChoice[];
 }
 
-export const ActiveVoting = ({ voteOptions }: OwnProps) => {
+export const ActiveVoting = () => {
   return (
     <>
       <Heading
