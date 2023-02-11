@@ -13,6 +13,7 @@ export interface VoteChoice extends Choice {
 export interface VoteModelState {
   scores?: number[];
   choices: Choice[];
+  likesbyChoiceId?: {[key: string]: number};
   proposal: Proposal;
   //! RE-UPLOAD VOTES AS QUADRATIC VOTES IN FB
   quadraticVotes?: QuadraticVote[];
@@ -128,8 +129,14 @@ export const voteModel = createModel<RootModel>()({
         // return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
       });
     },
+    selectUserLikes() {
+      return slice((voteModel) => voteModel?.likesbyChoiceId || {});
+    },
   }),
   reducers: {
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: {...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] ? state.likesbyChoiceId[choice.id]++ : 0} }),
+    decreaseChoiceWeightFromLikes: (state, choice: Choice) => (({ ...state, likesbyChoiceId: {...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] > 0 ? state.likesbyChoiceId[choice.id]-- : 0} })),
+    deleteChoiceFromLikes: (state, choice: Choice) => (({ ...state, likesbyChoiceId: {...state.likesbyChoiceId, [choice.id]: delete state.likesbyChoiceId[choice.id]} })),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
