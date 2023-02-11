@@ -16,20 +16,24 @@ export const VoteAudioTrack = () => {
     <Box mx="auto">
       {!isLoadingProposal && currentTrack?.media?.length ? (
         <>
-          <Heading
-            className="animate__animated animate__fadeIn"
-            fontWeight="light"
-            letterSpacing="widest"
-            size={['xs', 'sm']}
-            color={'gray.900'}
-          >
+          <Heading className="animate__animated animate__fadeIn" fontWeight="light" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
             NOW PLAYING
           </Heading>
           <Divider my={1} borderColor="transparent" w="full" />
           <Flex gap={6} direction={{ base: 'column', lg: 'row' }} alignItems={{ lg: 'center' }} py={3} rounded="sm" className="group" borderRadius="lg">
             <Flex>
               <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
-                <Image border="1px" borderColor="gray.400" height="60px" width="60px" onLoad={setIsImageLoaded.on} src={currentTrack?.image} objectFit="cover" rounded="md" shadow={'sm'} />
+                <Image
+                  border="1px"
+                  borderColor="gray.400"
+                  height="60px"
+                  width="60px"
+                  onLoad={setIsImageLoaded.on}
+                  src={currentTrack?.image}
+                  objectFit="cover"
+                  rounded="md"
+                  shadow={'sm'}
+                />
               </Skeleton>
               <Stack justifyContent="center" px={3}>
                 <Text className="font-serif" mt={'0rem !important'} fontSize="xs" color="gray.800">

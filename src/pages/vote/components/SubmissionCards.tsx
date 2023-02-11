@@ -3,7 +3,7 @@ import { SubmissionChoice } from '../store/voteModel';
 import { Choice } from 'hedsvote';
 
 interface SubmissionProps {
-  choices: [SubmissionChoice][];
+  choices: SubmissionChoice[][];
   handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
 interface CardProps {
