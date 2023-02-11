@@ -1,84 +1,141 @@
-import { useSelector } from 'react-redux';
-import { store } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, store } from '@/store';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar } from '@chakra-ui/react';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
 
 // Models
-import { QuadraticVote } from 'hedsvote';
+import { Choice } from 'hedsvote';
+import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { DateTime } from 'luxon';
+import { useSignMessage } from 'wagmi';
+import { useEffect } from 'react';
 
 export const CastVoteContainer = () => {
-  const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
-  const [isShowingAllResults, setIsShowingAllResults] = useBoolean();
+  const dispatch = useDispatch<Dispatch>();
+  const userLikes = useSelector(store.select.voteModel.selectUserLikes);
+  const choices = useSelector(store.select.voteModel.selectProposalChoices);
+  const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const formattedVoteObject = useSelector(store.select.voteModel.selectVoteObject);
+  const proposal = useSelector(store.select.voteModel.selectProposal);
+  // const vp = useSelector(store.select.voteModel.selectUserVotingPower(connectedUserWallet))
+  const now = DateTime.now().toMillis();
+  const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
+    message: JSON.stringify(formattedVoteObject),
+  });
 
+  useEffect(() => {
+    if (isSuccess) {
+      const voteObject = {
+        proposalId: proposal.ipfs.IpfsHash,
+        spaceId: proposal.space,
+        updatedVote: false, // ???
+        vote: {
+          choice: formattedVoteObject,
+          created: now,
+          signature: data,
+          voter: connectedUserWallet,
+          // vp: vp,
+        },
+      };
+      const hash: string = data;
+      window.alert('yay');
+      // dispatch.voteModel.castVote();
+    }
+  }, [isSuccess]);
   return (
     <>
-      {/* {votes && (
+      {userLikes && Object.values(userLikes)?.length ? (
         <Stack>
-          <Heading
-            mt={{ base: 5, lg: 4 }}
-            py={{ base: 0, lg: 1 }}
-            className="animate__animated animate__fadeIn"
-            fontWeight="medium"
-            letterSpacing="widest"
-            size={['xs', 'sm']}
-            color={'gray.900'}
-          >
-            RESULTS
-          </Heading>
-          <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1}>
-            {votes.length > 0 && votes.slice(0, isShowingAllResults ? -1 : 5).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
-          </Stack>
-          <Button borderColor="gray.500" fontWeight={'normal'} fontSize={'xs'} size="sm" variant={'outline'} onClick={setIsShowingAllResults.toggle}>
-            {isShowingAllResults ? 'show less' : 'show all'}
-          </Button>
+          <Flex mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'end'} justifyContent={'space-between'}>
+            <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+              VOTE
+            </Heading>
+            {connectedUserWallet ? (
+              <Button onClick={() => signMessage()} size="xs" variant={'outline'}>
+                Cast Vote
+              </Button>
+            ) : (
+              <Tooltip label={'connect your wallet to vote'}>
+                <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.500" />
+              </Tooltip>
+            )}
+          </Flex>
+          {choices.map((choice) => {
+            if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
+          })}
         </Stack>
-      )} */}
+      ) : (
+        <></>
+      )}
     </>
   );
 };
 
-const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
-  //   const { voter, vp } = vote;
-  //   const choices = useSelector(store.select.voteModel.selectProposalChoices);
-  //   const resultsUserData = useSelector(store.select.voteModel.selectResultsUserData);
-  //   const navigate = useNavigate();
-  //   const formatChoiceSelection = (voteObject: { [id: string]: number }) => {
-  //     const totalScore = Object.values(voteObject).reduce((a, b) => a + b, 0);
-  //     const selectedChoices = Object.keys(voteObject).map((id) => {
-  //       const choiceId = parseInt(id) - 1;
-  //       const choice = choices[choiceId];
-  //       const percentage = ((voteObject[id] / totalScore) * 100).toFixed(2);
-  //       return `${percentage}% for ${choice.name}`;
-  //     });
-  //     return selectedChoices.join(', ');
-  //   };
-
+const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: string]: number } }) => {
+  const dispatch = useDispatch<Dispatch>();
   return (
     <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
-      {/* <Flex justifyContent="space-between" px={1} py={2}>
+      <Flex justifyContent="space-between" px={1} py={2}>
         <Flex gap={2} alignItems={'center'}>
-          <Avatar
-            onClick={() => navigate(`/u/${vote.voter.toLowerCase()}`)}
-            borderRadius={'sm'}
-            src={resultsUserData?.[vote.voter.toLowerCase()]?.profilePicture}
-            size="xs"
-          />
+          <Avatar borderRadius={'sm'} src={choice.image} size="xs" />
           <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
-            {formatWallet(voter)}
+            {choice.name}
           </Text>
         </Flex>
         <Flex gap={2} alignItems="center">
-          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
-            {vp} HED
-          </Text>
-          <Tooltip label={formatChoiceSelection(vote.choice)}>
-            <InfoOutlineIcon color="gray.500" boxSize={3} />
-          </Tooltip>
+          <Flex justifyContent="space-between">
+            <IconButton
+              aria-label="decrement"
+              size="sm"
+              fontSize="md"
+              bg="transparent !important"
+              onClick={() => dispatch.voteModel.decreaseChoiceWeightFromLikes(choice)}
+            >
+              <Center _hover={{ transform: 'scale(1.2)' }} h="100%" w="100%">
+                <MinusIcon height="12" width="12" />
+              </Center>
+            </IconButton>
+            <Center>
+              <Text fontSize="xs" as="span" fontWeight="medium">
+                {userLikes[choice.id]}
+              </Text>
+            </Center>
+            <IconButton
+              aria-label="increment"
+              size="sm"
+              fontSize="md"
+              bg="transparent !important"
+              onClick={() => {
+                console.log(choice, 'choice b4 dispatch');
+                dispatch.voteModel.increaseChoiceWeightFromLikes(choice);
+              }}
+            >
+              <Center _hover={{ transform: 'scale(1.2)' }} h="100%" w="100%">
+                <PlusIcon height="12" width="12" />
+              </Center>
+            </IconButton>
+          </Flex>
+          <IconButton
+            onClick={() => {
+              if (userLikes?.[choice.id] >= 0) dispatch.voteModel.deleteChoiceFromLikes(choice);
+              else dispatch.voteModel.addChoiceToLikes(choice);
+            }}
+            bg="transparent !important"
+            size="xs"
+            aria-label="like"
+            _hover={{ bg: 'gray.200' }}
+            ml={1}
+          >
+            <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
+              {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
+            </Center>
+          </IconButton>
         </Flex>
-      </Flex> */}
+      </Flex>
     </Box>
   );
 };
