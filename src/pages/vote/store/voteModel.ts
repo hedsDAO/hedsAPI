@@ -8,9 +8,14 @@ export interface SubmissionChoice extends Choice {
   score?: number;
 }
 
+export interface VoteChoice extends Choice {
+  votes?: number;
+}
+
 export interface VoteModelState {
   scores?: number[];
   choices: Choice[];
+  likesbyChoiceId?: { [key: string]: number };
   proposal: Proposal;
   //! RE-UPLOAD VOTES AS QUADRATIC VOTES IN FB
   quadraticVotes?: QuadraticVote[];
@@ -70,7 +75,7 @@ export const voteModel = createModel<RootModel>()({
         if (!voteModel || !scores) return [];
         const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
-        const sortedChoicesByResults = choices.reduce(
+        const sortedChoicesByResults: SubmissionChoice[][] = choices.reduce(
           (acc: SubmissionChoice[][], choice: SubmissionChoice) => {
             const scorePercentage = (scores[choice.id] / totalScore) * 100;
             const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
@@ -91,13 +96,20 @@ export const voteModel = createModel<RootModel>()({
           [[], [], []],
         );
 
-        sortedChoicesByResults[0].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        sortedChoicesByResults[1].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        sortedChoicesByResults[2].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        for (const array of sortedChoicesByResults) {
+          array.sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        }
 
         return sortedChoicesByResults;
       });
     }),
+    selectSortedChoicesBySubId() {
+      return createSelector(this.selectProposalChoices, (choices: Choice[]) => {
+        if (!choices) return [];
+        console.log(choices);
+        return choices.sort((a, b) => (a.name.toUpperCase() < b.name.toUpperCase() ? -1 : a.name.toUpperCase() > b.name.toUpperCase() ? 1 : 0));
+      });
+    },
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
@@ -126,8 +138,25 @@ export const voteModel = createModel<RootModel>()({
         // return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
       });
     },
+    selectUserLikes() {
+      return slice((voteModel) => voteModel?.likesbyChoiceId || {});
+    },
   }),
   reducers: {
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id + 1]: 0 } }),
+    increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
+      ...state,
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id + 1]: state.likesbyChoiceId[choice.id + 1] ? state.likesbyChoiceId[choice.id + 1]++ : 0 },
+    }),
+    decreaseChoiceWeightFromLikes: (state, choice: Choice) => ({
+      ...state,
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id + 1]: state.likesbyChoiceId[choice.id + 1] > 0 ? state.likesbyChoiceId[choice.id + 1]-- : 0 },
+    }),
+    deleteChoiceFromLikes: (state, choice: Choice) => {
+      const likesbyChoiceId = { ...state.likesbyChoiceId };
+      delete likesbyChoiceId[choice.id + 1];
+      return { ...state, likesbyChoiceId };
+    },
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
@@ -154,9 +183,10 @@ export const voteModel = createModel<RootModel>()({
       const { createProposal } = createClient();
       try {
         const proposalCreated = await (await createProposal('proposals', proposal)).data;
-        const { choices, method, votes } = proposalCreated;
+        const { choices } = proposalCreated;
         this.setProposal(proposalCreated);
         this.setChoices(choices);
+        console.log(proposalCreated);
       } catch (error) {
         console.log(error);
       }

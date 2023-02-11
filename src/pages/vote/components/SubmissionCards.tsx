@@ -4,7 +4,7 @@ import { Choice } from 'hedsvote';
 import { HeartIcon } from '@heroicons/react/24/outline';
 
 interface SubmissionProps {
-  choices: [SubmissionChoice][];
+  choices: SubmissionChoice[][];
   handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
 interface CardProps {

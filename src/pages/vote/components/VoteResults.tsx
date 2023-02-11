@@ -30,7 +30,7 @@ export const VoteResults = () => {
             RESULTS
           </Heading>
           <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1}>
-            {votes.length > 0 && votes.slice(0, isShowingAllResults ? -1 : 5).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
+            {votes.length > 0 && votes.sort((a, b) => b.vp - a.vp).slice(0, isShowingAllResults ? -1 : 5).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
           </Stack>
           <Button borderColor="gray.500" fontWeight={'normal'} fontSize={'xs'} size="sm" variant={'outline'} onClick={setIsShowingAllResults.toggle}>
             {isShowingAllResults ? 'show less' : 'show all'}
