@@ -23,7 +23,7 @@ export const NewTapeDetails = () => {
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const proposalState = proposal?.state;
-  const [voteOptions, setVoteOptions] = useState<VoteChoice[]>([]);
+  const userLikes = useSelector(store.select.voteModel.selectUserLikes);
 
   useEffect(() => {
     if (space && tape && id && allTapes?.[tape]?.[id]?.proposalId) {
@@ -33,24 +33,7 @@ export const NewTapeDetails = () => {
   }, [space, tape, id, allTapes]);
 
   const handleSelectedSubmission = (choice: Choice) => {
-    if (proposalState === ProposalState.CLOSED) {
-      if (!voteOptions.find((c) => c.id === choice.id)) {
-        const choiceWithVotes = { ...choice, votes: 0 };
-        setVoteOptions([...voteOptions, choiceWithVotes]);
-      }
-    }
     dispatch.voteModel.setCurrentTrack(choice);
-  };
-
-  const handleScoreChange = (choice: VoteChoice, type: string) => {
-    const newVoteOptions = voteOptions.map((c) => {
-      if (c.id === choice.id) {
-        return { ...c, score: type === 'add' ? c.votes + 1 : c.votes > 0 ? c.votes - 1 : 0 };
-      } else {
-        return c;
-      }
-    });
-    setVoteOptions(newVoteOptions);
   };
 
   return (
