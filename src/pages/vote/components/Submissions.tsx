@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 // Components
 import { Box, Divider, Flex, Heading, Tooltip } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { SubmissionCards, OldTapeTrack } from './SubmissionCards';
+import { SubmissionCards, OldTapeTrack, OpenVoteCards } from './SubmissionCards';
 
 // Constants
 import { SubmissionChoice } from '../store/voteModel';
 import { OLD_TAPES, ABOUT_SUBMISSIONS } from '@pages/vote/store/constants';
+import { ProposalState } from 'hedsvote';
 
 export const Submissions = () => {
   const { tape, id } = useParams();
@@ -18,7 +19,7 @@ export const Submissions = () => {
   const scores = useSelector(store.select.voteModel.selectScores);
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tapeTrackIds: currentTape?.tracks }));
-
+  const proposalState = useSelector(store.select.voteModel.selectProposalState);
   const handleSelectedSubmission = (choice: SubmissionChoice) => {
     dispatch.voteModel.setCurrentTrack(choice);
   };
@@ -29,19 +30,25 @@ export const Submissions = () => {
     <Box mx="auto">
       <Divider my={3} borderColor="transparent" w="full" />
       <Flex justifyContent="space-between">
-        <Heading className="animate__animated animate__fadeIn" fontWeight="light" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+        <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
           SUBMISSIONS
         </Heading>
-        <Tooltip label={ABOUT_SUBMISSIONS}>
-          <InfoOutlineIcon color="gray.500" />
-        </Tooltip>
+        {proposalState === ProposalState.CLOSED && (
+          <Tooltip label={ABOUT_SUBMISSIONS}>
+            <InfoOutlineIcon color="gray.500" />
+          </Tooltip>
+        )}
       </Flex>
       <Divider my={1.5} borderColor="transparent" w="full" />
-      {sortedChoicesByResults.length > 0 && !isOldTape ? (
-        <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
-      ) : (
-        <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
-      )}
+      <Box border="1px" borderColor="gray.700" borderRadius="md" p={1} bgColor="gray.50">
+        {proposalState === ProposalState.OPEN ? (
+          <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+        ) : sortedChoicesByResults.length > 0 && !isOldTape ? (
+          <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
+        ) : (
+          <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+        )}
+      </Box>
     </Box>
   );
 };
