@@ -1,9 +1,11 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { calculateUserVotingPower, Choice, createClient, Proposal, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
+import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
+import { User } from '@/models/common';
+import axios from 'axios';
 
 export interface SubmissionChoice extends Choice {
-  score: number;
+  score?: number;
 }
 
 export interface VoteModelState {
@@ -18,6 +20,7 @@ export interface VoteModelState {
   currentTrack: Choice;
   isLoading: boolean;
   selectedSubmissions: SubmissionChoice[];
+  resultsUserData?: { [key: string]: User };
 }
 
 export const voteModel = createModel<RootModel>()({
@@ -28,6 +31,12 @@ export const voteModel = createModel<RootModel>()({
     isLoading: false,
   } as VoteModelState,
   selectors: (slice, createSelector, hasProps) => ({
+    selectProposalState() {
+      return slice((voteModel) => voteModel?.proposal?.state);
+    },
+    selectResultsUserData() {
+      return slice((voteModel) => voteModel?.resultsUserData);
+    },
     selectIsLoading() {
       return slice((voteModel) => voteModel?.isLoading);
     },
@@ -128,6 +137,7 @@ export const voteModel = createModel<RootModel>()({
     setSingleChoiceVotes: (state, singleChoiceVotes: SingleChoiceVote[]) => ({ ...state, singleChoiceVotes }),
     setAllProposals: (state, allProposals: Proposal[]) => ({ ...state, allProposals }),
     setSelectedSubmissions: (state, selectedSubmission: SubmissionChoice) => ({ ...state, selectedSubmission }),
+    setResultsUserData: (state, resultsUserData) => ({ ...state, resultsUserData }),
   },
   effects: () => ({
     async castVote(vote: VoteObject) {
@@ -165,7 +175,7 @@ export const voteModel = createModel<RootModel>()({
       const { getProposal } = createClient();
       if (proposalAddress?.length) {
         try {
-          const proposal = await (await getProposal('heds', proposalAddress)).data;
+          const proposal = await (await getProposal('proposals', proposalAddress)).data;
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);
@@ -178,6 +188,15 @@ export const voteModel = createModel<RootModel>()({
           } else if (method === VoteMethod.SINGLE_CHOICE && votes) {
             const singleChoiceVotes = Array.from(votes as SingleChoiceVote[]);
             this.setSingleChoiceVotes(singleChoiceVotes);
+          }
+          // get user data for vote results
+          if (proposal.state === ProposalState.CLOSED) {
+            const users = proposal.votes.map((vote) => vote.voter.toLowerCase());
+            const url = `https://us-central1-heds-104d8.cloudfunctions.net/users/getManyUsers`;
+            axios.post(url, { users: users }).then((res) => {
+              const { data } = res;
+              this.setResultsUserData(data);
+            });
           }
         } catch (error) {
           console.log(error);
