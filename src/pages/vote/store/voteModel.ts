@@ -141,20 +141,31 @@ export const voteModel = createModel<RootModel>()({
     selectUserLikes() {
       return slice((voteModel) => voteModel?.likesbyChoiceId || {});
     },
+    selectVoteObject() {
+      return createSelector(this.selectUserLikes, (userChoices) => {
+        if (!userChoices) return {};
+        const formattedChoicesTank: { [key: string]: number } = {};
+        for (let key in userChoices) {
+          const newKey = `${+key + 1}`;
+          formattedChoicesTank[newKey] = userChoices[key];
+        }
+        return formattedChoicesTank;
+      });
+    },
   }),
   reducers: {
-    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id + 1]: 0 } }),
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: 0 } }),
     increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
-      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id + 1]: state.likesbyChoiceId[choice.id + 1] ? state.likesbyChoiceId[choice.id + 1]++ : 0 },
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: ++state.likesbyChoiceId[choice.id] },
     }),
     decreaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
-      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id + 1]: state.likesbyChoiceId[choice.id + 1] > 0 ? state.likesbyChoiceId[choice.id + 1]-- : 0 },
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] > 0 ? --state.likesbyChoiceId[choice.id] : 0 },
     }),
     deleteChoiceFromLikes: (state, choice: Choice) => {
       const likesbyChoiceId = { ...state.likesbyChoiceId };
-      delete likesbyChoiceId[choice.id + 1];
+      delete likesbyChoiceId[choice.id];
       return { ...state, likesbyChoiceId };
     },
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),

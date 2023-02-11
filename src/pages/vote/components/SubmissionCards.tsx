@@ -2,6 +2,9 @@ import { Box, Flex, Grid, Image, Progress, Stack, Text, IconButton, Center } fro
 import { SubmissionChoice } from '../store/voteModel';
 import { Choice } from 'hedsvote';
 import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, store } from '@/store';
 
 interface SubmissionProps {
   choices: SubmissionChoice[][];
@@ -149,25 +152,39 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
   </Box>
 );
 
-const OpenSubmission = ({ choice, handleSelectedSubmission }: OpenVoteCardProps) => (
-  <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
-    <Stack flexDirection="row">
-      <Box p={2}>
-        <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
-      </Box>
-      <Flex w="full" direction="column" pl={1} pr={2}>
-        <Flex justifyContent={'space-between'} alignItems={'center'}>
-          <Text mt={'-0.5px !important'} fontSize="xs">
-            {choice.name}
-          </Text>
-          <IconButton bg="transparent !important" size="xs" aria-label="like" _hover={{ bg: 'gray.200' }} ml={1}>
-            <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
-              <HeartIcon height='16' width='16' />
-            </Center>
-          </IconButton>
+const OpenSubmission = ({ choice, handleSelectedSubmission }: OpenVoteCardProps) => {
+  const dispatch = useDispatch<Dispatch>();
+  const userLikes = useSelector(store.select.voteModel.selectUserLikes);
+  return (
+    <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
+      <Stack flexDirection="row">
+        <Box p={2}>
+          <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+        </Box>
+        <Flex w="full" direction="column" pl={1} pr={2}>
+          <Flex justifyContent={'space-between'} alignItems={'center'}>
+            <Text mt={'-0.5px !important'} fontSize="xs">
+              {choice.name}
+            </Text>
+            <IconButton
+              onClick={() => {
+                if (userLikes?.[choice.id] >= 0) dispatch.voteModel.deleteChoiceFromLikes(choice);
+                else dispatch.voteModel.addChoiceToLikes(choice);
+              }}
+              bg="transparent !important"
+              size="xs"
+              aria-label="like"
+              _hover={{ bg: 'gray.200' }}
+              ml={1}
+            >
+              <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
+                {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
+              </Center>
+            </IconButton>
+          </Flex>
+          <Progress mt={2} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
         </Flex>
-        <Progress mt={2} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
-      </Flex>
-    </Stack>
-  </Box>
-);
+      </Stack>
+    </Box>
+  );
+};

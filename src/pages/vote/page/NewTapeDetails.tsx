@@ -9,8 +9,6 @@ import { NewTapeDescription } from '../components/NewTapeDescription';
 import { VoteAudioTrack } from '../components/VoteAudioTrack';
 import { Submissions } from '../components/Submissions';
 import { VoteResults } from '../components/VoteResults';
-import { ActiveVoting } from '../components/ActiveVoting';
-import { ActiveSubmissions } from '../components/ActiveSubmissions';
 import { Container, Box, Flex } from '@chakra-ui/react';
 import { CastVoteContainer } from '../components/CastVoteContainer';
 
@@ -47,7 +45,7 @@ export const NewTapeDetails = () => {
           </Box>
           <Box w={{ lg: '75%' }}>
             <VoteAudioTrack />
-            {proposalState === ProposalState.CLOSED ? <Submissions /> : <ActiveSubmissions handleSelectedSubmission={handleSelectedSubmission} />}
+            <Submissions />
           </Box>
         </Flex>
       </Box>
