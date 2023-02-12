@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Components
 import { Box, Divider, Flex, Heading, Tooltip } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { SubmissionCards, OldTapeTrack, OpenVoteCards } from './SubmissionCards';
+import { SubmissionCards, OldTapeSubmissions, OpenVoteCards } from './SubmissionCards';
 
 // Constants
 import { SubmissionChoice } from '../store/voteModel';
@@ -46,7 +46,11 @@ export const Submissions = () => {
         ) : sortedChoicesByResults.length > 0 && !isOldTape ? (
           <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
         ) : (
-          <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+          <OldTapeSubmissions
+            tracks={choices.filter((choice) => currentTape?.tracks.includes(choice.walletId))}
+            choices={choices}
+            handleSelectedSubmission={handleSelectedSubmission}
+          />
         )}
       </Box>
     </Box>

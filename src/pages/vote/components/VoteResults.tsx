@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { store } from '@/store';
 
 // Components
@@ -10,13 +11,18 @@ import { formatWallet } from '@/utils';
 import { QuadraticVote } from 'hedsvote';
 import { useNavigate } from 'react-router-dom';
 
+// Constants
+import { OLD_TAPES } from '@pages/vote/store/constants';
+
 export const VoteResults = () => {
+  const { id } = useParams();
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const [isShowingAllResults, setIsShowingAllResults] = useBoolean();
+  const isOldTape = OLD_TAPES.includes(id);
 
   return (
     <>
-      {votes && (
+      {votes && !isOldTape && (
         <Stack>
           <Heading
             mt={{ base: 5, lg: 4 }}
@@ -30,7 +36,11 @@ export const VoteResults = () => {
             RESULTS
           </Heading>
           <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1}>
-            {votes.length > 0 && votes.sort((a, b) => b.vp - a.vp).slice(0, isShowingAllResults ? -1 : 5).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
+            {votes.length > 0 &&
+              votes
+                .sort((a, b) => b.vp - a.vp)
+                .slice(0, isShowingAllResults ? -1 : 5)
+                .map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
           </Stack>
           <Button borderColor="gray.500" fontWeight={'normal'} fontSize={'xs'} size="sm" variant={'outline'} onClick={setIsShowingAllResults.toggle}>
             {isShowingAllResults ? 'show less' : 'show all'}
