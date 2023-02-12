@@ -51,7 +51,7 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
 export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSubmissionProps) => {
   return (
     <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
-      {choices.map((choice) => (
+      {choices.sort((a,b) => a.name.localeCompare(b.name)).map((choice) => (
         <OpenSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
       ))}
     </Grid>

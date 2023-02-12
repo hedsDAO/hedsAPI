@@ -103,13 +103,6 @@ export const voteModel = createModel<RootModel>()({
         return sortedChoicesByResults;
       });
     }),
-    selectSortedChoicesBySubId() {
-      return createSelector(this.selectProposalChoices, (choices: Choice[]) => {
-        if (!choices) return [];
-        console.log(choices);
-        return choices.sort((a, b) => (a.name.toUpperCase() < b.name.toUpperCase() ? -1 : a.name.toUpperCase() > b.name.toUpperCase() ? 1 : 0));
-      });
-    },
     selectQuadraticVotes() {
       return slice((voteModel) => voteModel?.quadraticVotes || null);
     },
