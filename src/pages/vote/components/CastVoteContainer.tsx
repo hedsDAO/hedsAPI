@@ -13,6 +13,7 @@ import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { DateTime } from 'luxon';
 import { useSignMessage } from 'wagmi';
 import { useEffect } from 'react';
+import { calculateUserVotingPower } from 'hedsvote';
 
 export const CastVoteContainer = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -20,8 +21,10 @@ export const CastVoteContainer = () => {
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
   const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const formattedVoteObject = useSelector(store.select.voteModel.selectVoteObject);
+  const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
+  const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const proposal = useSelector(store.select.voteModel.selectProposal);
-  // const vp = useSelector(store.select.voteModel.selectUserVotingPower(connectedUserWallet))
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower)
   const now = DateTime.now().toMillis();
   const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
     message: JSON.stringify(formattedVoteObject),
@@ -32,20 +35,36 @@ export const CastVoteContainer = () => {
       const voteObject = {
         proposalId: proposal.ipfs.IpfsHash,
         spaceId: proposal.space,
-        updatedVote: false, // ???
+        updatedVote: hasUserVoted,
         vote: {
           choice: formattedVoteObject,
           created: now,
           signature: data,
           voter: connectedUserWallet,
-          // vp: vp,
+          vp: vp,
         },
       };
-      const hash: string = data;
-      window.alert('yay');
-      // dispatch.voteModel.castVote();
+
+      if (!hasUserVoted) {
+        dispatch.voteModel.castVote(voteObject);
+        return;
+      };
+
+      const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+      const updatedVote = {...voteObject,previousVote};
+      dispatch.voteModel.updateVote(updatedVote);
+      return;
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if(proposal?.strategies) {
+    calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
+      return dispatch.voteModel.setVp(vp);
+    });
+  };
+  }, [proposal.strategies]);
+
   return (
     <>
       {userLikes && Object.values(userLikes)?.length ? (

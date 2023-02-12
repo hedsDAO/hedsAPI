@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
+import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, UpdatedVoteObject, VoteMethod, VoteObject, calculateUserVotingPower } from 'hedsvote';
 import { User } from '@/models/common';
 import axios from 'axios';
 
@@ -125,12 +125,8 @@ export const voteModel = createModel<RootModel>()({
       );
     },
     selectUserVotingPower() {
-      return createSelector(this.selectProposal, (proposal: Proposal) => {
-        if (!proposal.strategies) return 0;
-        const { strategies } = proposal;
-        // return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
-      });
-    },
+      return slice((voteModel) => voteModel?.vp || 0);
+      },
     selectUserLikes() {
       return slice((voteModel) => voteModel?.likesbyChoiceId || {});
     },
@@ -145,6 +141,18 @@ export const voteModel = createModel<RootModel>()({
         return formattedChoicesTank;
       });
     },
+    selectHasUserVoted: hasProps(function (models,  connectedUser) {
+      return slice((voteModel) => {
+        if (!voteModel || !connectedUser) return false;
+        if (voteModel.quadraticVotes) {
+          return voteModel.quadraticVotes.some((vote) => vote.voter === connectedUser.toLowerCase());
+        } else if (voteModel.singleChoiceVotes) {
+          return voteModel.singleChoiceVotes.some((vote) => vote.voter === connectedUser.toLowerCase());
+        } else {
+          return false;
+        }
+      });
+    }),
   }),
   reducers: {
     addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: 0 } }),
@@ -166,6 +174,7 @@ export const voteModel = createModel<RootModel>()({
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
     setChoices: (state, choices: Choice[]) => ({ ...state, choices }),
     setScores: (state, scores: number[]) => ({ ...state, scores }),
+    setVp: (state, vp: number) => ({ ...state, vp }),
     setQuadraticVotes: (state, quadraticVotes: QuadraticVote[]) => ({ ...state, quadraticVotes }),
     setSingleChoiceVotes: (state, singleChoiceVotes: SingleChoiceVote[]) => ({ ...state, singleChoiceVotes }),
     setAllProposals: (state, allProposals: Proposal[]) => ({ ...state, allProposals }),
@@ -176,9 +185,17 @@ export const voteModel = createModel<RootModel>()({
     async castVote(vote: VoteObject) {
       const { castVote } = createClient();
       try {
-        await (
-          await castVote(vote)
-        ).data;
+          await castVote(vote);
+        this.getProposal(vote.proposalId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateVote(vote: UpdatedVoteObject) {
+      const { updateVote } = createClient();
+      try {
+        await updateVote(vote)
+        this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
       }
