@@ -33,7 +33,7 @@ const SubmissionRs = () => {
               </Flex>
               <Flex border="1px" borderColor="teal.200" rounded="lg" shadow="sm" p={3} alignItems="center" bg="teal.100">
                 <Text textAlign={'center'} color="muted" fontSize="xs">
-                  Submissions must be original and <span style={{ fontWeight: 'bold' }}>not contain and copyrighted content.</span>
+                  Submissions must be original and <span style={{ fontWeight: 'bold' }}>not contain any copyrighted content.</span>
                 </Text>
               </Flex>
               <Flex border="1px" borderColor="orange.200" rounded="lg" shadow="sm" p={3} alignItems="center" bg="orange.100">
