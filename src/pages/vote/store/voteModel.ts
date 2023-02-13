@@ -14,7 +14,7 @@ export interface VoteChoice extends Choice {
 
 export interface VoteModelState {
   scores?: number[];
-  choices: Choice[];
+  choices: SubmissionChoice[];
   likesbyChoiceId?: { [key: string]: number };
   proposal: Proposal;
   //! RE-UPLOAD VOTES AS QUADRATIC VOTES IN FB
@@ -126,7 +126,7 @@ export const voteModel = createModel<RootModel>()({
     },
     selectUserVotingPower() {
       return slice((voteModel) => voteModel?.vp || 0);
-      },
+    },
     selectUserLikes() {
       return slice((voteModel) => voteModel?.likesbyChoiceId || {});
     },
@@ -141,7 +141,7 @@ export const voteModel = createModel<RootModel>()({
         return formattedChoicesTank;
       });
     },
-    selectHasUserVoted: hasProps(function (models,  connectedUser) {
+    selectHasUserVoted: hasProps(function (models, connectedUser) {
       return slice((voteModel) => {
         if (!voteModel || !connectedUser) return false;
         if (voteModel.quadraticVotes) {
@@ -185,7 +185,7 @@ export const voteModel = createModel<RootModel>()({
     async castVote(vote: VoteObject) {
       const { castVote } = createClient();
       try {
-          await castVote(vote);
+        await castVote(vote);
         this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
@@ -194,7 +194,7 @@ export const voteModel = createModel<RootModel>()({
     async updateVote(vote: UpdatedVoteObject) {
       const { updateVote } = createClient();
       try {
-        await updateVote(vote)
+        await updateVote(vote);
         this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);

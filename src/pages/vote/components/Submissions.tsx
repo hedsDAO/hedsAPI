@@ -9,7 +9,7 @@ import { SubmissionCards, OldTapeSubmissions, OpenVoteCards, Tape06Submissions }
 
 // Constants
 import { SubmissionChoice } from '../store/voteModel';
-import { OLD_TAPES, ABOUT_SUBMISSIONS, HEDSTAPE06SELECTED } from '@pages/vote/store/constants';
+import { OLD_TAPES, ABOUT_SUBMISSIONS, ABOUT_SUBMISSIONS_OLD_TAPES, ABOUT_SUBMISSIONS_HT6, HEDSTAPE06SELECTED } from '@pages/vote/store/constants';
 import { ProposalState } from 'hedsvote';
 
 export const Submissions = () => {
@@ -35,7 +35,7 @@ export const Submissions = () => {
           SUBMISSIONS
         </Heading>
         {proposalState === ProposalState.CLOSED && (
-          <Tooltip label={ABOUT_SUBMISSIONS}>
+          <Tooltip label={isOldTape ? ABOUT_SUBMISSIONS_OLD_TAPES : isHedsTAPE06 ? ABOUT_SUBMISSIONS_HT6 : ABOUT_SUBMISSIONS}>
             <InfoOutlineIcon color="gray.500" />
           </Tooltip>
         )}
@@ -46,8 +46,8 @@ export const Submissions = () => {
           <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
         ) : isHedsTAPE06 ? (
           <Tape06Submissions
-            tracks={choices.filter((choice) => HEDSTAPE06SELECTED.includes(choice.name))}
-            choices={choices.filter((choice) => !HEDSTAPE06SELECTED.includes(choice.name))}
+            tracks={choices.filter((choice) => HEDSTAPE06SELECTED.includes(choice.name)).sort((a, b) => b.score - a.score)}
+            choices={choices.filter((choice) => !HEDSTAPE06SELECTED.includes(choice.name)).sort((a, b) => b.score - a.score)}
             handleSelectedSubmission={handleSelectedSubmission}
           />
         ) : sortedChoicesByResults.length > 0 && !isOldTape ? (
