@@ -27,6 +27,8 @@ export const Submissions = () => {
   const isOldTape = OLD_TAPES.includes(id);
   const isHedsTAPE06 = id === '6';
 
+  console.log('currentTape', currentTape?.tracks);
+
   return (
     <Box mx="auto">
       <Divider my={3} borderColor="transparent" w="full" />

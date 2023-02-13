@@ -112,9 +112,6 @@ const OldTapeSubmission = ({ choice, handleSelectedSubmission }: OldTapeCardProp
       </Box>
       <Flex direction="column" pl="2px">
         <Text fontSize="xs">{choice.name}</Text>
-        <Text fontSize="2xs" textColor={'gray.700'}>
-          {choice.artist}
-        </Text>
       </Flex>
     </Stack>
   </Box>
