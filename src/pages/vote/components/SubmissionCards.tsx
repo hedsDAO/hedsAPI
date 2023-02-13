@@ -63,11 +63,7 @@ export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSub
       {choices
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((choice) => (
-          <OpenSubmission
-            key={choice.name + choice.image}
-            choice={choice}
-            handleSelectedSubmission={handleSelectedSubmission}
-          />
+          <OpenSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
         ))}
     </Grid>
   );
@@ -190,14 +186,14 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
   </Box>
 );
 
-const OpenSubmission = ({ choice, handleSelectedSubmission}: CardProps) => {
+const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
-
-  console.log(hasUserVoted)
+  const totalVpDistributed = Object.values(userLikes).reduce((num, acc) => num + acc, 0);
+  const currentVpDistribution = userLikes[choice.id] / totalVpDistributed;
   return (
     <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
@@ -227,7 +223,7 @@ const OpenSubmission = ({ choice, handleSelectedSubmission}: CardProps) => {
               </IconButton>
             )}
           </Flex>
-          <Progress mt={vp > 0 ? 2 : 4} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
+          <Progress mt={vp > 0 ? 2 : 4} size="sm" value={currentVpDistribution > 0 ? currentVpDistribution * 100 : 0.01} colorScheme="gray" borderRadius="md" />
         </Flex>
       </Stack>
     </Box>

@@ -148,7 +148,6 @@ export const voteModel = createModel<RootModel>()({
     },
     selectVoteObject() {
       return createSelector(this.selectUserLikes, (userChoices) => {
-        console.log(userChoices, 'selector')
         if (!userChoices) return {};
         const formattedChoicesTank: { [key: string]: number } = {};
         for (let key in userChoices) {
