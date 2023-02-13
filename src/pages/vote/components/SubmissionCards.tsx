@@ -131,13 +131,11 @@ const Track = ({ choice, handleSelectedSubmission, showArtist = true }: CardProp
           {choice.name}
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
-          {showArtist && (
-            <Text fontSize="2xs" textColor={'gray.700'}>
-              {choice.artist}
-            </Text>
-          )}
+          <Text fontSize="2xs" textColor={'gray.700'}>
+            {showArtist ? choice.artist : ''}
+          </Text>
           <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
-            {choice.score}%
+            {+choice.score.toFixed(2)}%
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
@@ -158,7 +156,7 @@ const Submission = ({ choice, handleSelectedSubmission }: CardProps) => (
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'end'}>
           <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
-            {choice.score}%
+            {+choice.score.toFixed(2)}%
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
@@ -179,7 +177,7 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'end'}>
           <Text fontSize="2xs" textColor={'gray.800'}>
-            {choice.score}%
+            {+choice.score.toFixed(2)}%
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
@@ -226,8 +224,6 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
 };
 
 export const Tape06Submissions = ({ tracks, choices, handleSelectedSubmission }: Tape06CardProps) => {
-  console.log('inside', tracks);
-  console.log('chocies', choices);
   return (
     <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
       {tracks.map((choice) => (

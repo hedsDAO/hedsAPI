@@ -21,6 +21,12 @@ export const ABOUT_VOTING_HT6 =
 export const ABOUT_SUBMISSIONS =
   'Submissions are organized into 3 categories: The tracks that were chosen and appear on the tape are in purple, the top 20 votes submissions are in gray, and remaining submissions are in white.';
 
+export const ABOUT_SUBMISSIONS_OLD_TAPES =
+  'Submissions are organized into 2 categories: The tracks that were chosen and appear on the tape are in purple, and the remaining submissions are in white';
+
+export const ABOUT_SUBMISSIONS_HT6 =
+  'Voting for hedsTAPE 06 were based off visual environments. The environments that were chosen and appear on the tape are in purple, and the others are in white.';
+
 export const HEDSTAPE06SELECTED = [
   'forest',
   'the moon',
