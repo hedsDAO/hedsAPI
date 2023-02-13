@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl, Badge } from '@chakra-ui/react';
+import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl, Badge, useDisclosure } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
+import { SuccessfulVoteDialog } from './SuccessfulVoteDialog';
 
 // Models
 import { Choice } from 'hedsvote';
@@ -12,10 +13,12 @@ import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/re
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { DateTime } from 'luxon';
 import { useSignMessage } from 'wagmi';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { calculateUserVotingPower } from 'hedsvote';
 
 export const CastVoteContainer = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
@@ -47,13 +50,23 @@ export const CastVoteContainer = () => {
 
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
+        onOpen();
+        return;
+      } else {
+        const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+
+        console.log(previousVote.choice, 'updated');
+        const updateKeysVote: { [key: string]: number } = {};
+        for (let key in previousVote.choice) {
+          const vote = previousVote.choice[key];
+          const newId = `${+key - 1}`;
+          updateKeysVote[newId] = vote;
+        }
+        const updatedVote = { ...voteObject, previousVote };
+        dispatch.voteModel.updateVote(updatedVote);
+        onOpen();
         return;
       }
-
-      const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-      const updatedVote = { ...voteObject, previousVote };
-      dispatch.voteModel.updateVote(updatedVote);
-      return;
     }
   }, [isSuccess]);
 
@@ -66,8 +79,18 @@ export const CastVoteContainer = () => {
     }
   }, [proposal.strategies, connectedUserWallet]);
 
+  useEffect(() => {
+    if (hasUserVoted && connectedUserWallet) {
+      const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
+      if (userVote) {
+        dispatch.voteModel.setUserLikesById(userVote.choice);
+      }
+    }
+  }, [hasUserVoted, connectedUserWallet]);
+
   return (
     <>
+      <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
       {userLikes && Object.values(userLikes)?.length ? (
         <Stack>
           <Flex mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'end'} justifyContent={'space-between'}>

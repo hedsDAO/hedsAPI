@@ -63,7 +63,11 @@ export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSub
       {choices
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((choice) => (
-          <OpenSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
+          <OpenSubmission
+            key={choice.name + choice.image}
+            choice={choice}
+            handleSelectedSubmission={handleSelectedSubmission}
+          />
         ))}
     </Grid>
   );
@@ -186,10 +190,14 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
   </Box>
 );
 
-const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
+const OpenSubmission = ({ choice, handleSelectedSubmission}: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
+  const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
+
+  console.log(hasUserVoted)
   return (
     <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
