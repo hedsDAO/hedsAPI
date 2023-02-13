@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 // Components
 import { Box, Divider, Flex, Heading, Tooltip } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { SubmissionCards, OldTapeTrack, OpenVoteCards } from './SubmissionCards';
+import { SubmissionCards, OldTapeSubmissions, OpenVoteCards, Tape06Submissions } from './SubmissionCards';
 
 // Constants
 import { SubmissionChoice } from '../store/voteModel';
-import { OLD_TAPES, ABOUT_SUBMISSIONS } from '@pages/vote/store/constants';
+import { OLD_TAPES, ABOUT_SUBMISSIONS, HEDSTAPE06SELECTED } from '@pages/vote/store/constants';
 import { ProposalState } from 'hedsvote';
 
 export const Submissions = () => {
@@ -25,6 +25,7 @@ export const Submissions = () => {
   };
 
   const isOldTape = OLD_TAPES.includes(id);
+  const isHedsTAPE06 = id === '6';
 
   return (
     <Box mx="auto">
@@ -43,10 +44,20 @@ export const Submissions = () => {
       <Box border="1px" borderColor="gray.700" borderRadius="md" p={1} bgColor="gray.50">
         {proposalState === ProposalState.OPEN ? (
           <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+        ) : isHedsTAPE06 ? (
+          <Tape06Submissions
+            tracks={choices.filter((choice) => HEDSTAPE06SELECTED.includes(choice.name))}
+            choices={choices.filter((choice) => !HEDSTAPE06SELECTED.includes(choice.name))}
+            handleSelectedSubmission={handleSelectedSubmission}
+          />
         ) : sortedChoicesByResults.length > 0 && !isOldTape ? (
           <SubmissionCards choices={sortedChoicesByResults} handleSelectedSubmission={handleSelectedSubmission} />
         ) : (
-          <OldTapeTrack choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+          <OldTapeSubmissions
+            tracks={choices.filter((choice) => currentTape?.tracks.includes(choice.walletId))}
+            choices={choices.filter((choice) => !currentTape?.tracks.includes(choice.walletId))}
+            handleSelectedSubmission={handleSelectedSubmission}
+          />
         )}
       </Box>
     </Box>
