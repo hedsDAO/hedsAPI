@@ -264,6 +264,7 @@ export const userModel = createModel<RootModel>()({
     },
     async getSplitsBalance(walletId: string) {
       const balance = await getSplitsBalance(walletId);
+      if (!balance.user) return;
       const tokenId = balance.user.internalBalances[0].token.id;
       const amount = balance.user.internalBalances[0].amount;
       if (tokenId === '0x0000000000000000000000000000000000000000' && amount > 0) {
