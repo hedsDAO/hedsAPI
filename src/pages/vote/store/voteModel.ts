@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, UpdatedVoteObject, VoteMethod, VoteObject, calculateUserVotingPower } from 'hedsvote';
+import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, UpdatedVoteObject, VoteMethod, VoteObject } from 'hedsvote';
 import { User } from '@/models/common';
 import axios from 'axios';
 
