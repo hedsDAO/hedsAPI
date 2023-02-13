@@ -48,14 +48,13 @@ export const CastVoteContainer = () => {
         },
       };
 
-      // const location = choices.pop().location;
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
         onOpen();
         return;
       } else {
         const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-        const updatedVote = {...voteObject,previousVote};
+        const updatedVote = { ...voteObject, previousVote };
         dispatch.voteModel.updateVote(updatedVote);
         onOpen();
         return;
@@ -76,8 +75,16 @@ export const CastVoteContainer = () => {
     if (hasUserVoted && connectedUserWallet) {
       const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
       if (userVote) {
-        dispatch.voteModel.setUserLikesById(userVote.choice);
+        const formattedChoicesTank: { [key: string]: number } = {};
+        for (let key in userVote.choice) {
+          const newKey = `${+key - 1}`;
+          formattedChoicesTank[newKey] = userVote.choice[key];
+        }
+        dispatch.voteModel.setUserLikesById(formattedChoicesTank);
       }
+    }
+    if (!connectedUserWallet) {
+      dispatch.voteModel.setUserLikesById({})
     }
   }, [hasUserVoted, connectedUserWallet]);
 
@@ -108,9 +115,11 @@ export const CastVoteContainer = () => {
           {connectedUserWallet &&
             vp &&
             vp > 0 &&
-            choices.map((choice) => {
-              if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
-            })}
+            choices
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((choice) => {
+                if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
+              })}
         </Stack>
       ) : (
         <Stack>
@@ -129,7 +138,7 @@ export const CastVoteContainer = () => {
                 </Text>
               ) : (
                 <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                  You have no HEDS power for this cycle. To participate in the future, collect hedsTAPE 11 on 2/14/23.
+                  You have no HEDS power for this cycle. To participate in the future, collect hedsTAPE 11 on 2/24/23.
                 </Text>
               )}
             </Box>
