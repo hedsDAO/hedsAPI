@@ -219,7 +219,7 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
               </IconButton>
             )}
           </Flex>
-          <Progress mt={2} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
+          <Progress mt={vp > 0 ? 2 : 4} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
         </Flex>
       </Stack>
     </Box>
