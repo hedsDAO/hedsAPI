@@ -48,21 +48,14 @@ export const CastVoteContainer = () => {
         },
       };
 
+      // const location = choices.pop().location;
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
         onOpen();
         return;
       } else {
         const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-
-        console.log(previousVote.choice, 'updated');
-        const updateKeysVote: { [key: string]: number } = {};
-        for (let key in previousVote.choice) {
-          const vote = previousVote.choice[key];
-          const newId = `${+key - 1}`;
-          updateKeysVote[newId] = vote;
-        }
-        const updatedVote = { ...voteObject, previousVote };
+        const updatedVote = {...voteObject,previousVote};
         dispatch.voteModel.updateVote(updatedVote);
         onOpen();
         return;

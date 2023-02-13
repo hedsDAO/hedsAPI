@@ -3,6 +3,8 @@ import { createModel } from '@rematch/core';
 import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, UpdatedVoteObject, VoteMethod, VoteObject } from 'hedsvote';
 import { User } from '@/models/common';
 import axios from 'axios';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '@/App';
 
 export interface SubmissionChoice extends Choice {
   score?: number;
@@ -10,6 +12,20 @@ export interface SubmissionChoice extends Choice {
 
 export interface VoteChoice extends Choice {
   votes?: number;
+}
+
+export function formatVoteToFb(vote: VoteObject | UpdatedVoteObject, choices: Choice[]) {
+  const choicesIndexes = Object.keys(vote.vote.choice);
+  const formattedVote: any = vote;
+   choicesIndexes.map ( (choiceIndex) => {
+    console.log(choiceIndex)
+    const choice = choices.find(choice => choice.id + 1 === parseInt(choiceIndex));
+    const weight =  vote.vote.choice[choiceIndex];
+    console.log(weight)
+    formattedVote.vote.choice[choiceIndex] = { choice, weight};
+    return formattedVote.vote;
+  })
+  return formattedVote;
 }
 
 export interface VoteModelState {
@@ -187,8 +203,8 @@ export const voteModel = createModel<RootModel>()({
     async castVote(vote: VoteObject) {
       const { castVote } = createClient();
       try {
-        await castVote(vote);
-        this.getProposal(vote.proposalId);
+          await castVote(vote);
+          this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
       }
@@ -201,6 +217,7 @@ export const voteModel = createModel<RootModel>()({
       } catch (error) {
         console.log(error);
       }
+
     },
     async createProposal(proposal: Proposal) {
       const { createProposal } = createClient();
