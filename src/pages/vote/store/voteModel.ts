@@ -155,14 +155,14 @@ export const voteModel = createModel<RootModel>()({
     }),
   }),
   reducers: {
-    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: 0 } }),
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: 1 } }),
     increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
       likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: ++state.likesbyChoiceId[choice.id] },
     }),
     decreaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
-      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] > 0 ? --state.likesbyChoiceId[choice.id] : 0 },
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] > 1 ? --state.likesbyChoiceId[choice.id] : 1 },
     }),
     deleteChoiceFromLikes: (state, choice: Choice) => {
       const likesbyChoiceId = { ...state.likesbyChoiceId };
