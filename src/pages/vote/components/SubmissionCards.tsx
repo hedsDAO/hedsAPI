@@ -191,6 +191,7 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
 const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   return (
     <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
@@ -202,21 +203,23 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
             <Text mt={'-0.5px !important'} fontSize="xs">
               {choice.name}
             </Text>
-            <IconButton
-              onClick={() => {
-                if (userLikes?.[choice.id] >= 0) dispatch.voteModel.deleteChoiceFromLikes(choice);
-                else dispatch.voteModel.addChoiceToLikes(choice);
-              }}
-              bg="transparent !important"
-              size="xs"
-              aria-label="like"
-              _hover={{ bg: 'gray.200' }}
-              ml={1}
-            >
-              <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
-                {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
-              </Center>
-            </IconButton>
+            {vp > 0 && (
+              <IconButton
+                onClick={() => {
+                  if (userLikes?.[choice.id] >= 0) dispatch.voteModel.deleteChoiceFromLikes(choice);
+                  else dispatch.voteModel.addChoiceToLikes(choice);
+                }}
+                bg="transparent !important"
+                size="xs"
+                aria-label="like"
+                _hover={{ bg: 'gray.200' }}
+                ml={1}
+              >
+                <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
+                  {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
+                </Center>
+              </IconButton>
+            )}
           </Flex>
           <Progress mt={2} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
         </Flex>

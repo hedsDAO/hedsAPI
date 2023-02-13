@@ -24,7 +24,7 @@ export const CastVoteContainer = () => {
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const proposal = useSelector(store.select.voteModel.selectProposal);
-  const vp = useSelector(store.select.voteModel.selectUserVotingPower)
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
   const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
     message: JSON.stringify(formattedVoteObject),
@@ -48,22 +48,22 @@ export const CastVoteContainer = () => {
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
         return;
-      };
+      }
 
       const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-      const updatedVote = {...voteObject,previousVote};
+      const updatedVote = { ...voteObject, previousVote };
       dispatch.voteModel.updateVote(updatedVote);
       return;
     }
   }, [isSuccess]);
 
   useEffect(() => {
-    if(proposal?.strategies) {
-    calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
-      dispatch.voteModel.setVp(vp);
-      return;
-    });
-  };
+    if (proposal?.strategies) {
+      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
+        dispatch.voteModel.setVp(vp);
+        return;
+      });
+    }
   }, [proposal.strategies]);
 
   return (
@@ -84,12 +84,29 @@ export const CastVoteContainer = () => {
               </Tooltip>
             )}
           </Flex>
-          {choices.map((choice) => {
+          {connectedUserWallet && vp && vp > 0 && choices.map((choice) => {
             if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
           })}
         </Stack>
       ) : (
-        <></>
+        <Stack>
+          <Flex direction={'column'} mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'start'} justifyContent={'space-between'}>
+            <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+              VOTE
+            </Heading>
+            <Box px={3} py={2} mt={2} border="1px" borderColor="gray.400" borderRadius="md" bgColor="gray.50">
+              {connectedUserWallet ? (
+                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                  Favorite your choices by clicking the heart icon. Once you have selected your choices, click the cast vote button to submit your vote.
+                </Text>
+              ) : (
+                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                  Connect your wallet to access your voting power, favorite submissions and cast a vote on the tape.
+                </Text>
+              )}
+            </Box>
+          </Flex>
+        </Stack>
       )}
     </>
   );
