@@ -20,3 +20,16 @@ export const ABOUT_VOTING_HT6 =
 
 export const ABOUT_SUBMISSIONS =
   'Submissions are organized into 3 categories: The tracks that were chosen and appear on the tape are in purple, the top 20 votes submissions are in gray, and remaining submissions are in white.';
+
+export const HEDSTAPE06SELECTED = [
+  'forest',
+  'the moon',
+  'coral reef',
+  'mountain top',
+  'space',
+  'mayan ruins',
+  'volcanic/lava',
+  'ambulance',
+  '80s vaporland',
+  'private plane',
+];

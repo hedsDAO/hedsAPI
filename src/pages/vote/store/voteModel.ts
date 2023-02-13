@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, VoteMethod, VoteObject } from 'hedsvote';
+import { Choice, createClient, Proposal, ProposalState, quadratic, QuadraticVote, SingleChoiceVote, UpdatedVoteObject, VoteMethod, VoteObject } from 'hedsvote';
 import { User } from '@/models/common';
 import axios from 'axios';
 
@@ -8,9 +8,14 @@ export interface SubmissionChoice extends Choice {
   score?: number;
 }
 
+export interface VoteChoice extends Choice {
+  votes?: number;
+}
+
 export interface VoteModelState {
   scores?: number[];
   choices: Choice[];
+  likesbyChoiceId?: { [key: string]: number };
   proposal: Proposal;
   //! RE-UPLOAD VOTES AS QUADRATIC VOTES IN FB
   quadraticVotes?: QuadraticVote[];
@@ -70,7 +75,7 @@ export const voteModel = createModel<RootModel>()({
         if (!voteModel || !scores) return [];
         const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
-        const sortedChoicesByResults = choices.reduce(
+        const sortedChoicesByResults: SubmissionChoice[][] = choices.reduce(
           (acc: SubmissionChoice[][], choice: SubmissionChoice) => {
             const scorePercentage = (scores[choice.id] / totalScore) * 100;
             const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
@@ -91,9 +96,9 @@ export const voteModel = createModel<RootModel>()({
           [[], [], []],
         );
 
-        sortedChoicesByResults[0].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        sortedChoicesByResults[1].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        sortedChoicesByResults[2].sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        for (const array of sortedChoicesByResults) {
+          array.sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        }
 
         return sortedChoicesByResults;
       });
@@ -120,19 +125,56 @@ export const voteModel = createModel<RootModel>()({
       );
     },
     selectUserVotingPower() {
-      return createSelector(this.selectProposal, (proposal: Proposal) => {
-        if (!proposal.strategies) return 0;
-        const { strategies } = proposal;
-        // return calculateUserVotingPower('0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF'.toLowerCase(), strategies);
+      return slice((voteModel) => voteModel?.vp || 0);
+      },
+    selectUserLikes() {
+      return slice((voteModel) => voteModel?.likesbyChoiceId || {});
+    },
+    selectVoteObject() {
+      return createSelector(this.selectUserLikes, (userChoices) => {
+        if (!userChoices) return {};
+        const formattedChoicesTank: { [key: string]: number } = {};
+        for (let key in userChoices) {
+          const newKey = `${+key + 1}`;
+          formattedChoicesTank[newKey] = userChoices[key];
+        }
+        return formattedChoicesTank;
       });
     },
+    selectHasUserVoted: hasProps(function (models,  connectedUser) {
+      return slice((voteModel) => {
+        if (!voteModel || !connectedUser) return false;
+        if (voteModel.quadraticVotes) {
+          return voteModel.quadraticVotes.some((vote) => vote.voter === connectedUser.toLowerCase());
+        } else if (voteModel.singleChoiceVotes) {
+          return voteModel.singleChoiceVotes.some((vote) => vote.voter === connectedUser.toLowerCase());
+        } else {
+          return false;
+        }
+      });
+    }),
   }),
   reducers: {
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: 1 } }),
+    increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
+      ...state,
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: ++state.likesbyChoiceId[choice.id] },
+    }),
+    decreaseChoiceWeightFromLikes: (state, choice: Choice) => ({
+      ...state,
+      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] > 1 ? --state.likesbyChoiceId[choice.id] : 1 },
+    }),
+    deleteChoiceFromLikes: (state, choice: Choice) => {
+      const likesbyChoiceId = { ...state.likesbyChoiceId };
+      delete likesbyChoiceId[choice.id];
+      return { ...state, likesbyChoiceId };
+    },
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
     setChoices: (state, choices: Choice[]) => ({ ...state, choices }),
     setScores: (state, scores: number[]) => ({ ...state, scores }),
+    setVp: (state, vp: number) => ({ ...state, vp }),
     setQuadraticVotes: (state, quadraticVotes: QuadraticVote[]) => ({ ...state, quadraticVotes }),
     setSingleChoiceVotes: (state, singleChoiceVotes: SingleChoiceVote[]) => ({ ...state, singleChoiceVotes }),
     setAllProposals: (state, allProposals: Proposal[]) => ({ ...state, allProposals }),
@@ -143,9 +185,17 @@ export const voteModel = createModel<RootModel>()({
     async castVote(vote: VoteObject) {
       const { castVote } = createClient();
       try {
-        await (
-          await castVote(vote)
-        ).data;
+          await castVote(vote);
+        this.getProposal(vote.proposalId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateVote(vote: UpdatedVoteObject) {
+      const { updateVote } = createClient();
+      try {
+        await updateVote(vote)
+        this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
       }
@@ -154,9 +204,10 @@ export const voteModel = createModel<RootModel>()({
       const { createProposal } = createClient();
       try {
         const proposalCreated = await (await createProposal('proposals', proposal)).data;
-        const { choices, method, votes } = proposalCreated;
+        const { choices } = proposalCreated;
         this.setProposal(proposalCreated);
         this.setChoices(choices);
+        console.log(proposalCreated);
       } catch (error) {
         console.log(error);
       }
