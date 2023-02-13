@@ -15,7 +15,7 @@ export interface VoteChoice extends Choice {
 export interface VoteModelState {
   scores?: number[];
   choices: SubmissionChoice[];
-  likesbyChoiceId?: { [key: string]: number };
+  likesByChoiceId?: { [key: string]: number };
   proposal: Proposal;
   //! RE-UPLOAD VOTES AS QUADRATIC VOTES IN FB
   quadraticVotes?: QuadraticVote[];
@@ -128,10 +128,11 @@ export const voteModel = createModel<RootModel>()({
       return slice((voteModel) => voteModel?.vp || 0);
     },
     selectUserLikes() {
-      return slice((voteModel) => voteModel?.likesbyChoiceId || {});
+      return slice((voteModel) => voteModel?.likesByChoiceId || {});
     },
     selectVoteObject() {
       return createSelector(this.selectUserLikes, (userChoices) => {
+        console.log(userChoices, 'selector')
         if (!userChoices) return {};
         const formattedChoicesTank: { [key: string]: number } = {};
         for (let key in userChoices) {
@@ -155,20 +156,21 @@ export const voteModel = createModel<RootModel>()({
     }),
   }),
   reducers: {
-    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: 1 } }),
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: 1 } }),
     increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
-      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: ++state.likesbyChoiceId[choice.id] },
+      likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: ++state.likesByChoiceId[choice.id] },
     }),
     decreaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
-      likesbyChoiceId: { ...state.likesbyChoiceId, [choice.id]: state.likesbyChoiceId[choice.id] > 1 ? --state.likesbyChoiceId[choice.id] : 1 },
+      likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: state.likesByChoiceId[choice.id] > 1 ? --state.likesByChoiceId[choice.id] : 1 },
     }),
     deleteChoiceFromLikes: (state, choice: Choice) => {
-      const likesbyChoiceId = { ...state.likesbyChoiceId };
-      delete likesbyChoiceId[choice.id];
-      return { ...state, likesbyChoiceId };
+      const likesByChoiceId = { ...state.likesByChoiceId };
+      delete likesByChoiceId[choice.id];
+      return { ...state, likesByChoiceId };
     },
+    setUserLikesById: (state, likesByChoiceId) => ({ ...state, likesByChoiceId }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
