@@ -45,15 +45,17 @@ export const CastVoteContainer = () => {
         },
       };
 
+      const location = choices.pop().location;
       if (!hasUserVoted) {
+        
         dispatch.voteModel.castVote(voteObject);
         return;
-      };
-
-      const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-      const updatedVote = {...voteObject,previousVote};
-      dispatch.voteModel.updateVote(updatedVote);
-      return;
+      } else {
+        const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+        const updatedVote = {...voteObject,previousVote};
+        dispatch.voteModel.updateVote(updatedVote);
+        return;
+      }
     }
   }, [isSuccess]);
 
