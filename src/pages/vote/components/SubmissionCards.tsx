@@ -10,13 +10,21 @@ interface SubmissionProps {
   choices: SubmissionChoice[][];
   handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
+
 interface CardProps {
   choice: SubmissionChoice;
   handleSelectedSubmission: (choice: SubmissionChoice) => void;
+  showArtist?: boolean;
 }
 
-interface OldTapeProps {
+interface OldTapeSubmissionsProps {
+  tracks: Choice[];
   choices: Choice[];
+  handleSelectedSubmission: (choice: Choice) => void;
+}
+
+interface OldTapeCardProps {
+  choice: Choice;
   handleSelectedSubmission: (choice: Choice) => void;
 }
 
@@ -25,8 +33,9 @@ interface OpenVoteSubmissionProps {
   handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
 
-interface OpenVoteCardProps {
-  choice: SubmissionChoice;
+interface Tape06CardProps {
+  tracks: SubmissionChoice[];
+  choices: SubmissionChoice[];
   handleSelectedSubmission: (choice: SubmissionChoice) => void;
 }
 
@@ -51,42 +60,67 @@ export const SubmissionCards = ({ choices, handleSelectedSubmission }: Submissio
 export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSubmissionProps) => {
   return (
     <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
-      {choices.sort((a,b) => a.name.localeCompare(b.name)).map((choice) => (
-        <OpenSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
-      ))}
+      {choices
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((choice) => (
+          <OpenSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
+        ))}
     </Grid>
   );
 };
 
-export const OldTapeTrack = ({ choices, handleSelectedSubmission }: OldTapeProps) => (
+export const OldTapeSubmissions = ({ tracks, choices, handleSelectedSubmission }: OldTapeSubmissionsProps) => (
   <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} borderRadius="md">
+    {tracks.map((choice) => (
+      <OldTapeTrack key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
+    ))}
     {choices.map((choice) => (
-      <Box
-        border="1px"
-        borderRadius="md"
-        borderColor="gray.500"
-        bg="purple.100"
-        _hover={{ cursor: 'pointer' }}
-        onClick={() => handleSelectedSubmission(choice)}
-        key={choice.name + choice.image}
-      >
-        <Stack flexDirection="row">
-          <Box p={2}>
-            <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
-          </Box>
-          <Flex direction="column" pl="2px">
-            <Text fontSize="xs">{choice.name}</Text>
-            <Text fontSize="2xs" textColor={'gray.700'}>
-              {choice.artist}
-            </Text>
-          </Flex>
-        </Stack>
-      </Box>
+      <OldTapeSubmission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
     ))}
   </Grid>
 );
 
-const Track = ({ choice, handleSelectedSubmission }: CardProps) => (
+const OldTapeTrack = ({ choice, handleSelectedSubmission }: CardProps) => (
+  <Box
+    border="1px"
+    borderRadius="md"
+    borderColor="gray.500"
+    bg="purple.100"
+    _hover={{ cursor: 'pointer' }}
+    onClick={() => handleSelectedSubmission(choice)}
+    key={choice.name + choice.image}
+  >
+    <Stack flexDirection="row">
+      <Box p={2}>
+        <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+      </Box>
+      <Flex direction="column" pl="2px">
+        <Text fontSize="xs">{choice.name}</Text>
+        <Text fontSize="2xs" textColor={'gray.700'}>
+          {choice.artist}
+        </Text>
+      </Flex>
+    </Stack>
+  </Box>
+);
+
+const OldTapeSubmission = ({ choice, handleSelectedSubmission }: OldTapeCardProps) => (
+  <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
+    <Stack flexDirection="row">
+      <Box p={2}>
+        <Image boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+      </Box>
+      <Flex direction="column" pl="2px">
+        <Text fontSize="xs">{choice.name}</Text>
+        <Text fontSize="2xs" textColor={'gray.700'}>
+          {choice.artist}
+        </Text>
+      </Flex>
+    </Stack>
+  </Box>
+);
+
+const Track = ({ choice, handleSelectedSubmission, showArtist = true }: CardProps) => (
   <Box border="1px" borderRadius="md" borderColor="gray.500" bg="purple.100" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
     <Stack flexDirection="row">
       <Box p={2}>
@@ -97,9 +131,11 @@ const Track = ({ choice, handleSelectedSubmission }: CardProps) => (
           {choice.name}
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
-          <Text fontSize="2xs" textColor={'gray.700'}>
-            {choice.artist}
-          </Text>
+          {showArtist && (
+            <Text fontSize="2xs" textColor={'gray.700'}>
+              {choice.artist}
+            </Text>
+          )}
           <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
             {choice.score}%
           </Text>
@@ -152,7 +188,7 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
   </Box>
 );
 
-const OpenSubmission = ({ choice, handleSelectedSubmission }: OpenVoteCardProps) => {
+const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   return (
@@ -186,5 +222,20 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: OpenVoteCardProps)
         </Flex>
       </Stack>
     </Box>
+  );
+};
+
+export const Tape06Submissions = ({ tracks, choices, handleSelectedSubmission }: Tape06CardProps) => {
+  console.log('inside', tracks);
+  console.log('chocies', choices);
+  return (
+    <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
+      {tracks.map((choice) => (
+        <Track key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} showArtist={false} />
+      ))}
+      {choices.map((choice) => (
+        <Submission key={choice.name + choice.image} choice={choice} handleSelectedSubmission={handleSelectedSubmission} />
+      ))}
+    </Grid>
   );
 };
