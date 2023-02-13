@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl } from '@chakra-ui/react';
+import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl, Badge } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
 
 // Models
@@ -64,7 +64,7 @@ export const CastVoteContainer = () => {
         return;
       });
     }
-  }, [proposal.strategies]);
+  }, [proposal.strategies, connectedUserWallet]);
 
   return (
     <>
@@ -75,18 +75,26 @@ export const CastVoteContainer = () => {
               VOTE
             </Heading>
             {connectedUserWallet ? (
-              <Button onClick={() => signMessage()} size="xs" variant={'outline'}>
-                Cast Vote
-              </Button>
+              <Flex gap={2} alignItems={'center'}>
+                <Badge variant={'outline'}>
+                  {vp} {'HED'}
+                </Badge>
+                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'outline'}>
+                  Cast Vote
+                </Button>
+              </Flex>
             ) : (
               <Tooltip label={'connect your wallet to vote'}>
                 <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.500" />
               </Tooltip>
             )}
           </Flex>
-          {connectedUserWallet && vp && vp > 0 && choices.map((choice) => {
-            if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
-          })}
+          {connectedUserWallet &&
+            vp &&
+            vp > 0 &&
+            choices.map((choice) => {
+              if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
+            })}
         </Stack>
       ) : (
         <Stack>
@@ -95,13 +103,17 @@ export const CastVoteContainer = () => {
               VOTE
             </Heading>
             <Box px={3} py={2} mt={2} border="1px" borderColor="gray.400" borderRadius="md" bgColor="gray.50">
-              {connectedUserWallet ? (
+              {!connectedUserWallet ? (
+                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                  Connect your wallet to vote on the tape.
+                </Text>
+              ) : vp > 0 ? (
                 <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
                   Favorite your choices by clicking the heart icon. Once you have selected your choices, click the cast vote button to submit your vote.
                 </Text>
               ) : (
                 <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                  Connect your wallet to access your voting power, favorite submissions and cast a vote on the tape.
+                  You have no HEDS power for this cycle. To participate in the future, collect hedsTAPE 11 on 2/14/23.
                 </Text>
               )}
             </Box>
