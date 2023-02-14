@@ -1,5 +1,7 @@
 import { Box, Center, Container, Stack } from '@chakra-ui/react';
 import { Step } from './Step';
+import { useSpring } from 'react-spring';
+import { Waypoint } from 'react-waypoint';
 
 const steps = [
   {
@@ -29,15 +31,80 @@ const steps = [
 ];
 
 export const Stepper = () => {
+  const dividerSprings = steps.map((obj, i) => {
+    return useSpring(() => ({
+      from: {
+        height: '0%',
+      },
+    }));
+  });
+
+  const iconSprings = steps.map((obj, i) => {
+    return {
+      dashed: useSpring(() => ({
+        from: {
+          opacity: 1,
+        },
+      })),
+      check: useSpring(() => ({
+        from: {
+          opacity: 0,
+        },
+      })),
+    };
+  });
+
   return (
-    <Box bg="bg-surface">
+    <Box bg="bg-surface" paddingTop="5rem">
       <Container py={{ base: '4', md: '8' }}>
         <Center>
-          <Stack spacing="0">
-            {steps.map((step, id) => (
-              <Step key={id} title={step.name} description={step.description} isLastStep={steps.length === id + 1} multiplier={id} />
-            ))}
-          </Stack>
+          <Waypoint
+            onEnter={() => {
+              iconSprings.forEach((springs, i) => {
+                const dashedApi = springs.dashed[1];
+                const checkApi = springs.check[1];
+                dashedApi.start({
+                  to: { opacity: 0 },
+                  config: {
+                    tension: 25,
+                  },
+                  delay: 500 + i * 1000,
+                });
+                checkApi.start({
+                  to: { opacity: 1 },
+                  config: {
+                    tension: 25,
+                  },
+                  delay: 1000 + i * 1000,
+                });
+              });
+
+              dividerSprings.forEach((springs, i) => {
+                const [props, api] = springs;
+                api.start({
+                  to: { height: '100%' },
+                  delay: 1500 + i * 1000,
+                  config: {
+                    tension: 25,
+                  },
+                });
+              });
+            }}
+          >
+            <Stack spacing="0">
+              {steps.map((step, id) => (
+                <Step
+                  key={id}
+                  title={step.name}
+                  description={step.description}
+                  isLastStep={steps.length === id + 1}
+                  dividerProps={dividerSprings[id][0]}
+                  dashedProps={iconSprings[id].dashed[0]}
+                  checkProps={iconSprings[id].check[0]}
+                />
+              ))}
+            </Stack>
+          </Waypoint>
         </Center>
       </Container>
     </Box>
