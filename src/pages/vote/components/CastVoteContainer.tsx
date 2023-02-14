@@ -93,7 +93,6 @@ export const CastVoteContainer = () => {
     }
   }, [hasUserVoted, connectedUserWallet]);
 
-  console.log('hello');
   return (
     <>
       <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
@@ -192,7 +191,6 @@ const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: s
               fontSize="md"
               bg="transparent !important"
               onClick={() => {
-                console.log(choice, 'choice b4 dispatch');
                 dispatch.voteModel.increaseChoiceWeightFromLikes(choice);
               }}
             >
