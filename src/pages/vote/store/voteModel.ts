@@ -14,20 +14,6 @@ export interface VoteChoice extends Choice {
   votes?: number;
 }
 
-export function formatVoteToFb(vote: VoteObject | UpdatedVoteObject, choices: Choice[]) {
-  const choicesIndexes = Object.keys(vote.vote.choice);
-  const formattedVote: any = vote;
-   choicesIndexes.map ( (choiceIndex) => {
-    console.log(choiceIndex)
-    const choice = choices.find(choice => choice.id + 1 === parseInt(choiceIndex));
-    const weight =  vote.vote.choice[choiceIndex];
-    console.log(weight)
-    formattedVote.vote.choice[choiceIndex] = { choice, weight};
-    return formattedVote.vote;
-  })
-  return formattedVote;
-}
-
 export interface VoteModelState {
   scores?: number[];
   choices: SubmissionChoice[];
@@ -218,28 +204,28 @@ export const voteModel = createModel<RootModel>()({
       }
 
     },
-    async createProposal(proposal: Proposal) {
-      const { createProposal } = createClient();
-      try {
-        const proposalCreated = await (await createProposal('proposals', proposal)).data;
-        const { choices } = proposalCreated;
-        this.setProposal(proposalCreated);
-        this.setChoices(choices);
-        console.log(proposalCreated);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async deleteProposal(proposalAddress: string) {
-      const { deleteProposal } = createClient();
-      try {
-        await (
-          await deleteProposal('proposals', proposalAddress)
-        ).status;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async createProposal(proposal: Proposal) {
+    //   const { createProposal } = createClient();
+    //   try {
+    //     const proposalCreated = await (await createProposal('proposals', proposal)).data;
+    //     const { choices } = proposalCreated;
+    //     this.setProposal(proposalCreated);
+    //     this.setChoices(choices);
+    //     console.log(proposalCreated);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    // async deleteProposal(proposalAddress: string) {
+    //   const { deleteProposal } = createClient();
+    //   try {
+    //     await (
+    //       await deleteProposal('proposals', proposalAddress)
+    //     ).status;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async getProposal(proposalAddress: string) {
       const { getProposal } = createClient();
       if (proposalAddress?.length) {

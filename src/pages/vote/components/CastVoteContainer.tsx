@@ -53,12 +53,14 @@ export const CastVoteContainer = () => {
 
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
+        dispatch.userModel.addUserVote([voteObject,choices])
         onOpen();
         return;
       } else {
         const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
         const updatedVote = { ...voteObject, previousVote };
         dispatch.voteModel.updateVote(updatedVote);
+        dispatch.userModel.addUserVote([updatedVote,choices])
         onOpen();
         return;
       }
@@ -91,7 +93,6 @@ export const CastVoteContainer = () => {
     }
   }, [hasUserVoted, connectedUserWallet]);
 
-  console.log('hello');
   return (
     <>
       <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
@@ -190,7 +191,6 @@ const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: s
               fontSize="md"
               bg="transparent !important"
               onClick={() => {
-                console.log(choice, 'choice b4 dispatch');
                 dispatch.voteModel.increaseChoiceWeightFromLikes(choice);
               }}
             >
