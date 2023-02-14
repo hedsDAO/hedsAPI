@@ -13,7 +13,7 @@ const NameModal = () => {
   const isLoading = useSelector(store.select.nameModel.selectIsLoading);
   const error = useSelector(store.select.nameModel.selectError);
   const dispatch = useDispatch<Dispatch>();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const isOnOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   const connectedUserData = useSelector(store.select.userModel.selectConnectedUser);
@@ -30,7 +30,7 @@ const NameModal = () => {
     return () => {
       dispatch.userModel.getCurrentUserData(address.toLowerCase());
     };
-  }, []);
+  }, [isConnected]);
   return (
     <ModalContainer focus="100" size="sm" isOpen={isOpen} setModalOpen={false ? () => dispatch.modalModel.setModalOpen(!isOpen) : () => {}}>
       <ModalHeader title={NAME_MODAL_TEXT} Icon={IconPencil} />
