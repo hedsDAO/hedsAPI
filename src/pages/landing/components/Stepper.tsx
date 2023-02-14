@@ -68,14 +68,14 @@ export const Stepper = () => {
                   config: {
                     tension: 25,
                   },
-                  delay: 500 + i * 1000,
+                  delay: 500 + i ** 1.3 * 1500,
                 });
                 checkApi.start({
                   to: { opacity: 1 },
                   config: {
                     tension: 25,
                   },
-                  delay: 1000 + i * 1000,
+                  delay: 1000 + i ** 1.3 * 1500,
                 });
               });
 
@@ -83,9 +83,9 @@ export const Stepper = () => {
                 const [props, api] = springs;
                 api.start({
                   to: { height: '100%' },
-                  delay: 1500 + i * 1000,
+                  delay: 1500 + i * 2500,
                   config: {
-                    tension: 25,
+                    tension: 50,
                   },
                 });
               });

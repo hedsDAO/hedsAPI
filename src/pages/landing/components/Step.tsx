@@ -1,6 +1,6 @@
 import { BoxProps, Stack, Text } from '@chakra-ui/react';
 import { StepCircle } from './StepCircle';
-import { animated } from 'react-spring';
+import { animated, SpringValue, AnimationProps } from 'react-spring';
 
 interface StepProps extends BoxProps {
   title: string;
