@@ -5,7 +5,7 @@ import { store } from '@/store';
 
 // Components
 import { Badge, Box, Button, Flex, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon, InfoIcon } from '@chakra-ui/icons';
 
 // Models
 import { ProposalState } from 'hedsvote';
@@ -71,6 +71,16 @@ export const NewTapeDescription = () => {
         Description
       </Text>
       <Text fontSize="xs"> {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}</Text>
+      {proposal?.state === ProposalState.OPEN ? (
+        <Flex mt={4} p={2} border={'1px'} borderColor={'gray.300'} rounded="sm" gap={2} alignItems={'center'} bg="gray.100">
+          <InfoIcon height="3.5" width="3.5" />
+          <Text letterSpacing={'wide'} fontSize="2xs">
+            Results will be public after the voting period ends.
+          </Text>
+        </Flex>
+      ) : (
+        <Text></Text>
+      )}
       <Box pt={2}>{handleProposalState(proposal?.state)}</Box>
     </Stack>
   );
