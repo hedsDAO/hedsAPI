@@ -11,6 +11,7 @@ import { Result } from 'ethers/lib/utils';
 import { whitelist } from '@/data/tokenBurnWhitelist';
 import { ethers } from 'ethers';
 import { getSplitsBalance } from '@/utils/graphql/getSplitsBalance';
+import { Choice, UpdatedVoteObject, VoteObject } from 'hedsvote';
 
 export interface userModelState {
   connectedUser: User;
@@ -410,5 +411,18 @@ export const userModel = createModel<RootModel>()({
       if (role >= UserRoles.ARTIST) await setDoc(doc(db, 'artists', wallet), updatedUserData);
       this.setConnectedUserData(updatedUserData);
     },
+
+    async addUserVote([vote, choices]: [VoteObject | UpdatedVoteObject, Choice[]]) {
+      const docRef = doc(db, 'users', vote.vote.voter.toLowerCase());
+      const tapeId = choices.pop().location.split('/')[2];
+      const formattedVote: any = {...vote.vote}; 
+      for (let choiceId of Object.keys(vote.vote.choice)) {
+        const choice = choices.find((choice) => choice.id + 1 === (Number(choiceId)));
+        const weight = vote.vote.choice[choiceId];
+        formattedVote.choice[choiceId] = { weight, choice };
+        };
+        await updateDoc(docRef, { votes: { heds: { hedstape: { [tapeId]: formattedVote } } } });
+        return;
+      }
   }),
 });
