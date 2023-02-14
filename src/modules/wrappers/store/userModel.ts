@@ -218,7 +218,7 @@ export const userModel = createModel<RootModel>()({
   reducers: {
     setUserData: (state, payload) => ({ ...state, ...payload }),
     setCurrentUserData: (state, currentUser: User) => ({ ...state, currentUser }),
-    setConnectedUserData: (state, connectedUser: User) => ({ ...state, connectedUser }),
+    setConnectedUserData: (state, connectedUser) => ({ ...state, connectedUser }),
     setSplitsBalance: (state, splitsBalance: string) => ({ ...state, splitsBalance }),
     setEngagementTabIndex: (state, engagementTabIndex: number) => ({ ...state, engagementTabIndex }),
     setAudioTabIndex: (state, audioTabIndex: number) => ({ ...state, audioTabIndex }),
