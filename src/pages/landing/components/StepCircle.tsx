@@ -1,13 +1,13 @@
-import { Icon, SquareProps } from '@chakra-ui/react';
+import { Icon, SquareProps, Flex } from '@chakra-ui/react';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons';
 import { animated, useInView } from 'react-spring';
 
 interface ownProps {
-  order: number;
+  multiplier: number;
 }
 
-export const StepCircle = ({ order }: ownProps) => {
-  const rootMarginPercentage = 15 + order * 3;
+export const StepCircle = ({ multiplier }: ownProps) => {
+  const rootMarginPercentage = 15 + multiplier * 5;
 
   const [dashedRef, dashedProps] = useInView(
     () => ({
@@ -47,13 +47,13 @@ export const StepCircle = ({ order }: ownProps) => {
   );
 
   return (
-    <>
+    <Flex justify="center">
       <animated.div ref={dashedRef} style={{ position: 'fixed', zIndex: 1, ...dashedProps }}>
         <Icon as={IconCircleDashed} boxSize="8" />
       </animated.div>
       <animated.div ref={checkRef} style={{ position: 'fixed', zIndex: 0, ...checkProps }}>
         <Icon as={IconCircleCheck} color="black" boxSize="8" />
       </animated.div>
-    </>
+    </Flex>
   );
 };

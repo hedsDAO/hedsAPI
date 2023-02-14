@@ -45,7 +45,7 @@ export const Stepper = () => {
                 description={step.description}
                 isCompleted={currentStep > id}
                 isLastStep={steps.length === id + 1}
-                order={id}
+                multiplier={id}
               />
             ))}
           </Stack>
