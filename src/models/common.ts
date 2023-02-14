@@ -1,3 +1,5 @@
+import { Choice } from 'hedsvote';
+
 /**
  * @name Global
  * @summary Structures used for public user profiles. This can include artists, curators and non-engaged users.
@@ -43,7 +45,7 @@ export interface User {
   history?: UserListeningHistory[];
   likes?: TrackMetadata[];
   joined: number;
-  no?: number;
+  votes?: UserVoteHistory;
 }
 
 export interface TrackMetadataMapping {
@@ -113,6 +115,31 @@ export interface UserCollectionItem {
   space: string;
   tape: string;
   id: string;
+}
+
+export interface UserVoteHistory {
+  [key: string]: {
+    [key: string]: {
+      [key: string]: UserVote;
+    };
+  };
+}
+
+export interface UserVote {
+  choice?: UserVoteChoice;
+  choiceId?: number;
+  created: number;
+  scores?: number[];
+  signature: string;
+  voter: string;
+  vp: number;
+}
+
+export interface UserVoteChoice {
+  [key: string]: {
+    choice: Choice;
+    weight: number;
+  };
 }
 
 /**
