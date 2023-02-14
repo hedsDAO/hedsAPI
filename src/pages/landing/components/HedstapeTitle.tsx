@@ -1,10 +1,14 @@
+import { Flex, Text } from '@chakra-ui/react';
+
 export const HedsTapeTitle = () => (
   <>
-    <div className="flex flex-row mt-20em">
-      <p>THE</p>
-      <p className="text-9xl font-bold">hedsTAPE</p>
-      <p className="mt-auto">SERIES</p>
-    </div>
-    <p>curated samples from world renowned creatives</p>
+    <Flex direction="row" justify="center" width="100vw">
+      <Text>THE</Text>
+      <Text fontSize={['5xl', '8xl', '9xl']} fontWeight="bold">
+        hedsTAPE
+      </Text>
+      <Text className="mt-auto">SERIES</Text>
+    </Flex>
+    <Text textAlign="center">curated samples from world renowned creatives</Text>
   </>
 );
