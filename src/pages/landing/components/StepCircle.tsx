@@ -2,7 +2,13 @@ import { Icon, SquareProps } from '@chakra-ui/react';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons';
 import { animated, useInView } from 'react-spring';
 
-export const StepCircle = () => {
+interface ownProps {
+  order: number;
+}
+
+export const StepCircle = ({ order }: ownProps) => {
+  const rootMarginPercentage = 15 + order * 3;
+
   const [dashedRef, dashedProps] = useInView(
     () => ({
       from: {
@@ -17,7 +23,7 @@ export const StepCircle = () => {
       delay: 1000,
     }),
     {
-      rootMargin: '-30% 0px',
+      rootMargin: `-${rootMarginPercentage}% 0px`,
       once: true,
     },
   );
@@ -35,7 +41,7 @@ export const StepCircle = () => {
       },
     }),
     {
-      rootMargin: '-30% 0px',
+      rootMargin: `-${rootMarginPercentage}% 0px`,
       once: true,
     },
   );
