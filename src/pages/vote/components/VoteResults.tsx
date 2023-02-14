@@ -78,7 +78,7 @@ const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
             size="xs"
           />
           <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
-            {formatWallet(voter)}
+            {resultsUserData?.[vote.voter.toLowerCase()]?.displayName || formatWallet(voter)}
           </Text>
         </Flex>
         <Flex gap={2} alignItems="center">
