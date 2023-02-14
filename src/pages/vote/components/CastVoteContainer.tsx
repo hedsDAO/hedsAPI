@@ -16,6 +16,9 @@ import { useSignMessage } from 'wagmi';
 import { useEffect, useRef } from 'react';
 import { calculateUserVotingPower } from 'hedsvote';
 
+// Constants
+import { HEDS_POWER } from '../store/constants';
+
 export const CastVoteContainer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
@@ -84,10 +87,11 @@ export const CastVoteContainer = () => {
       }
     }
     if (!connectedUserWallet) {
-      dispatch.voteModel.setUserLikesById({})
+      dispatch.voteModel.setUserLikesById({});
     }
   }, [hasUserVoted, connectedUserWallet]);
 
+  console.log('hello');
   return (
     <>
       <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
@@ -99,9 +103,11 @@ export const CastVoteContainer = () => {
             </Heading>
             {connectedUserWallet ? (
               <Flex gap={2} alignItems={'center'}>
-                <Badge variant={'outline'}>
-                  {vp} {'HED'}
-                </Badge>
+                <Tooltip placement={'auto'} whiteSpace={'pre-line'} label={HEDS_POWER}>
+                  <Badge variant={'outline'}>
+                    {vp} {'HED'}
+                  </Badge>
+                </Tooltip>
                 <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'outline'}>
                   Cast Vote
                 </Button>
