@@ -218,28 +218,28 @@ export const voteModel = createModel<RootModel>()({
       }
 
     },
-    async createProposal(proposal: Proposal) {
-      const { createProposal } = createClient();
-      try {
-        const proposalCreated = await (await createProposal('proposals', proposal)).data;
-        const { choices } = proposalCreated;
-        this.setProposal(proposalCreated);
-        this.setChoices(choices);
-        console.log(proposalCreated);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async deleteProposal(proposalAddress: string) {
-      const { deleteProposal } = createClient();
-      try {
-        await (
-          await deleteProposal('proposals', proposalAddress)
-        ).status;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async createProposal(proposal: Proposal) {
+    //   const { createProposal } = createClient();
+    //   try {
+    //     const proposalCreated = await (await createProposal('proposals', proposal)).data;
+    //     const { choices } = proposalCreated;
+    //     this.setProposal(proposalCreated);
+    //     this.setChoices(choices);
+    //     console.log(proposalCreated);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    // async deleteProposal(proposalAddress: string) {
+    //   const { deleteProposal } = createClient();
+    //   try {
+    //     await (
+    //       await deleteProposal('proposals', proposalAddress)
+    //     ).status;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async getProposal(proposalAddress: string) {
       const { getProposal } = createClient();
       if (proposalAddress?.length) {

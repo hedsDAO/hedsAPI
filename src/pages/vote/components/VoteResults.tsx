@@ -25,7 +25,7 @@ export const VoteResults = () => {
       {votes && !isOldTape && (
         <Stack>
           <Heading
-            mt={{ base: 5, lg: 4 }}
+            mt={{ base: 5, lg: 10 }}
             py={{ base: 0, lg: 1 }}
             className="animate__animated animate__fadeIn"
             fontWeight="medium"
@@ -78,7 +78,7 @@ const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
             size="xs"
           />
           <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
-            {formatWallet(voter)}
+            {resultsUserData?.[vote.voter.toLowerCase()]?.displayName || formatWallet(voter)}
           </Text>
         </Flex>
         <Flex gap={2} alignItems="center">

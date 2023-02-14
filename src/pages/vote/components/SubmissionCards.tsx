@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Image, Progress, Stack, Text, IconButton, Center } from '@chakra-ui/react';
+import { Box, Flex, Grid, Image, Progress, Stack, Text, IconButton, Center, useBoolean, Skeleton } from '@chakra-ui/react';
 import { SubmissionChoice } from '../store/voteModel';
 import { Choice } from 'hedsvote';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -187,6 +187,7 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
 );
 
 const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
+  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
@@ -198,7 +199,9 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
     <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
         <Box p={2}>
-          <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+          <Skeleton isLoaded={hasImageLoaded} minW="3rem" minH="3rem">
+            <Image onLoad={setHasImageLoaded.on} minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+          </Skeleton>
         </Box>
         <Flex w="full" direction="column" pl={1} pr={2}>
           <Flex justifyContent={'space-between'} alignItems={'center'}>
