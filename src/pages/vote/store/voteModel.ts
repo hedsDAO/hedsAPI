@@ -261,7 +261,7 @@ export const voteModel = createModel<RootModel>()({
     async getAllProposals() {
       const { getAllProposals } = createClient();
       try {
-        const allProposals = await (await getAllProposals('proposals')).data;
+        const allProposals = await (await getAllProposals('heds')).data;
         this.setAllProposals(allProposals);
       } catch (error) {
         console.log(error);
