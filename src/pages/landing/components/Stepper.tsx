@@ -55,7 +55,7 @@ export const Stepper = () => {
   });
 
   return (
-    <Box bg="bg-surface" paddingTop="5rem">
+    <Box bg="bg-surface" paddingTop={['2rem', '5rem']} padding={['1rem', null]}>
       <Container py={{ base: '4', md: '8' }}>
         <Center>
           <Waypoint
