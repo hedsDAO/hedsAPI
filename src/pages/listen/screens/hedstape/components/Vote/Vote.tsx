@@ -9,7 +9,7 @@ import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { LockClosedIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { useNavigate, useParams } from 'react-router-dom';
-// import * as gaEvents from '@/events';
+import * as gaEvents from '@/events';
 
 const Vote = () => {
   const { space, tape, id } = useParams();
@@ -31,12 +31,12 @@ const Vote = () => {
       ) : (
         <UpcomingDateBox start={start} />
       )}
-      {/* <Flex mt={4} gap={2}>
+      <Flex mt={4} gap={2}>
         {vote.status === TimelineStatus.CLOSED ? (
           <Button
             onClick={() => {
               navigate(`/vote/${space}/${tape}/${id}`);
-              gaEvents.clickViewVoteResultsButton(`${tape}/${id});
+              gaEvents.clickViewVoteResultsButton(`${tape}/${id}`);
             }}
             rounded="sm"
             border={'solid 1px'}
@@ -52,7 +52,7 @@ const Vote = () => {
           <Button
             onClick={() => {
               navigate(`/vote/${space}/${tape}/${id}`);
-              gaEvents.clickViewLiveVoteButton(`${tape}/${id});
+              gaEvents.clickViewLiveVoteButton(`${tape}/${id}`);
             }}
             border={'solid 1px'}
             borderColor="green.200"
@@ -67,7 +67,7 @@ const Vote = () => {
         ) : (
           <></>
         )}
-      </Flex> */}
+      </Flex>
     </div>
   );
 };

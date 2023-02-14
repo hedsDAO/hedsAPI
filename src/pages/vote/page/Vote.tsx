@@ -1,9 +1,14 @@
-import { Fragment } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { VoteLanding } from './VoteLanding';
 import { TapeDetails } from './TapeDetails';
+import { NewTapeDetails } from './NewTapeDetails';
+import { Box } from '@chakra-ui/react';
 
 export const Vote = () => {
   const { space, tape, id } = useParams();
-  return <Fragment>{space && tape && id ? <TapeDetails /> : <VoteLanding />}</Fragment>;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [space, tape, id]);
+  return <Box minH="100vh">{space && tape && id ? <NewTapeDetails /> : <VoteLanding />}</Box>;
 };
