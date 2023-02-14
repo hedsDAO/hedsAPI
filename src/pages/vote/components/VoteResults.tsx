@@ -61,7 +61,7 @@ const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
     const selectedChoices = Object.keys(voteObject).map((id) => {
       const choiceId = parseInt(id) - 1;
       const choice = choices[choiceId];
-      const percentage = ((voteObject[id] / totalScore) * 100).toFixed(2);
+      const percentage = +((voteObject[id] / totalScore) * 100).toFixed(2);
       return `${percentage}% for ${choice?.name ? choice.name : ''}`;
     });
     return selectedChoices.join(', ');

@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl } from '@chakra-ui/react';
+import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl, Badge, useDisclosure } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
+import { SuccessfulVoteDialog } from './SuccessfulVoteDialog';
 
 // Models
 import { Choice } from 'hedsvote';
@@ -12,10 +13,12 @@ import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/re
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { DateTime } from 'luxon';
 import { useSignMessage } from 'wagmi';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { calculateUserVotingPower } from 'hedsvote';
 
 export const CastVoteContainer = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
@@ -24,7 +27,7 @@ export const CastVoteContainer = () => {
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
   const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const proposal = useSelector(store.select.voteModel.selectProposal);
-  const vp = useSelector(store.select.voteModel.selectUserVotingPower)
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
   const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
     message: JSON.stringify(formattedVoteObject),
@@ -47,27 +50,47 @@ export const CastVoteContainer = () => {
 
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
+        onOpen();
         return;
-      };
-
-      const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-      const updatedVote = {...voteObject,previousVote};
-      dispatch.voteModel.updateVote(updatedVote);
-      return;
+      } else {
+        const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+        const updatedVote = { ...voteObject, previousVote };
+        dispatch.voteModel.updateVote(updatedVote);
+        onOpen();
+        return;
+      }
     }
   }, [isSuccess]);
 
   useEffect(() => {
-    if(proposal?.strategies) {
-    calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
-      dispatch.voteModel.setVp(vp);
-      return;
-    });
-  };
-  }, [proposal.strategies]);
+    if (proposal?.strategies) {
+      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
+        dispatch.voteModel.setVp(vp);
+        return;
+      });
+    }
+  }, [proposal.strategies, connectedUserWallet]);
+
+  useEffect(() => {
+    if (hasUserVoted && connectedUserWallet) {
+      const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
+      if (userVote) {
+        const formattedChoicesTank: { [key: string]: number } = {};
+        for (let key in userVote.choice) {
+          const newKey = `${+key - 1}`;
+          formattedChoicesTank[newKey] = userVote.choice[key];
+        }
+        dispatch.voteModel.setUserLikesById(formattedChoicesTank);
+      }
+    }
+    if (!connectedUserWallet) {
+      dispatch.voteModel.setUserLikesById({})
+    }
+  }, [hasUserVoted, connectedUserWallet]);
 
   return (
     <>
+      <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
       {userLikes && Object.values(userLikes)?.length ? (
         <Stack>
           <Flex mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'end'} justifyContent={'space-between'}>
@@ -75,21 +98,52 @@ export const CastVoteContainer = () => {
               VOTE
             </Heading>
             {connectedUserWallet ? (
-              <Button onClick={() => signMessage()} size="xs" variant={'outline'}>
-                Cast Vote
-              </Button>
+              <Flex gap={2} alignItems={'center'}>
+                <Badge variant={'outline'}>
+                  {vp} {'HED'}
+                </Badge>
+                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'outline'}>
+                  Cast Vote
+                </Button>
+              </Flex>
             ) : (
               <Tooltip label={'connect your wallet to vote'}>
                 <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.500" />
               </Tooltip>
             )}
           </Flex>
-          {choices.map((choice) => {
-            if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
-          })}
+          {connectedUserWallet &&
+            vp &&
+            vp > 0 &&
+            choices
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((choice) => {
+                if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
+              })}
         </Stack>
       ) : (
-        <></>
+        <Stack>
+          <Flex direction={'column'} mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'start'} justifyContent={'space-between'}>
+            <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+              VOTE
+            </Heading>
+            <Box px={3} py={2} mt={2} border="1px" borderColor="gray.400" borderRadius="md" bgColor="gray.50">
+              {!connectedUserWallet ? (
+                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                  Connect your wallet to vote on the tape.
+                </Text>
+              ) : vp > 0 ? (
+                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                  Favorite your choices by clicking the heart icon. Once you have selected your choices, click the cast vote button to submit your vote.
+                </Text>
+              ) : (
+                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                  You have no HEDS power for this cycle. To participate in the future, collect hedsTAPE 11 on 2/24/23.
+                </Text>
+              )}
+            </Box>
+          </Flex>
+        </Stack>
       )}
     </>
   );
