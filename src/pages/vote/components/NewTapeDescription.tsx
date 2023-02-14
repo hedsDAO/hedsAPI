@@ -1,16 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { store, RootState } from '@/store';
-import { DateTime } from 'luxon';
+import { store } from '@/store';
 
 // Components
-import { Badge, Box, Button, Divider, Flex, HStack, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Badge, Box, Button, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 
 // Models
-import { Proposal, ProposalState } from 'hedsvote';
+import { ProposalState } from 'hedsvote';
 
 // Constants
 import { OLD_TAPES, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';

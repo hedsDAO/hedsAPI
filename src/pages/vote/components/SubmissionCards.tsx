@@ -131,13 +131,11 @@ const Track = ({ choice, handleSelectedSubmission, showArtist = true }: CardProp
           {choice.name}
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
-          {showArtist && (
-            <Text fontSize="2xs" textColor={'gray.700'}>
-              {choice.artist}
-            </Text>
-          )}
+          <Text fontSize="2xs" textColor={'gray.700'}>
+            {showArtist ? choice.artist : ''}
+          </Text>
           <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
-            {choice.score}%
+            {+choice.score.toFixed(2)}%
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
@@ -158,7 +156,7 @@ const Submission = ({ choice, handleSelectedSubmission }: CardProps) => (
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'end'}>
           <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
-            {choice.score}%
+            {+choice.score.toFixed(2)}%
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
@@ -179,7 +177,7 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
         </Text>
         <Flex mt={-0.5} minW="full" justifyContent={'end'}>
           <Text fontSize="2xs" textColor={'gray.800'}>
-            {choice.score}%
+            {+choice.score.toFixed(2)}%
           </Text>
         </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
@@ -191,6 +189,11 @@ const SelectedSubmission = ({ choice, handleSelectedSubmission }: CardProps) => 
 const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
+  const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
+  const totalVpDistributed = Object.values(userLikes).reduce((num, acc) => num + acc, 0);
+  const currentVpDistribution = userLikes[choice.id] / totalVpDistributed;
   return (
     <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
@@ -202,23 +205,25 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
             <Text mt={'-0.5px !important'} fontSize="xs">
               {choice.name}
             </Text>
-            <IconButton
-              onClick={() => {
-                if (userLikes?.[choice.id] >= 0) dispatch.voteModel.deleteChoiceFromLikes(choice);
-                else dispatch.voteModel.addChoiceToLikes(choice);
-              }}
-              bg="transparent !important"
-              size="xs"
-              aria-label="like"
-              _hover={{ bg: 'gray.200' }}
-              ml={1}
-            >
-              <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
-                {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
-              </Center>
-            </IconButton>
+            {vp > 0 && (
+              <IconButton
+                onClick={() => {
+                  if (userLikes?.[choice.id] >= 0) dispatch.voteModel.deleteChoiceFromLikes(choice);
+                  else dispatch.voteModel.addChoiceToLikes(choice);
+                }}
+                bg="transparent !important"
+                size="xs"
+                aria-label="like"
+                _hover={{ bg: 'gray.200' }}
+                ml={1}
+              >
+                <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
+                  {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
+                </Center>
+              </IconButton>
+            )}
           </Flex>
-          <Progress mt={2} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
+          <Progress mt={vp > 0 ? 2 : 4} size="sm" value={currentVpDistribution > 0 ? currentVpDistribution * 100 : 0.01} colorScheme="gray" borderRadius="md" />
         </Flex>
       </Stack>
     </Box>
@@ -226,8 +231,6 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
 };
 
 export const Tape06Submissions = ({ tracks, choices, handleSelectedSubmission }: Tape06CardProps) => {
-  console.log('inside', tracks);
-  console.log('chocies', choices);
   return (
     <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1}>
       {tracks.map((choice) => (
