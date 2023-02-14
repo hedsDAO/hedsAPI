@@ -5,6 +5,7 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
+import { useParams } from 'react-router-dom';
 
 interface SubmissionProps {
   choices: SubmissionChoice[][];
@@ -112,9 +113,6 @@ const OldTapeSubmission = ({ choice, handleSelectedSubmission }: OldTapeCardProp
       </Box>
       <Flex direction="column" pl="2px">
         <Text fontSize="xs">{choice.name}</Text>
-        <Text fontSize="2xs" textColor={'gray.700'}>
-          {choice.artist}
-        </Text>
       </Flex>
     </Stack>
   </Box>
