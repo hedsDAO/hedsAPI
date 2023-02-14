@@ -1,3 +1,4 @@
+import { US } from 'country-flag-icons/react/3x2';
 import { Container, Stack, Flex, Button, Icon, Box, Text, Image, Skeleton, useBoolean, Badge } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import {
@@ -73,6 +74,9 @@ const LatestRelease = () => {
                 objectFit={'cover'}
                 src={LATEST_TAPE_PROMO_IMG}
               />
+               <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
+                <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={US} />
+              </Box>
             </Skeleton>
           </Box>
           <Button
