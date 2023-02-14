@@ -1,61 +1,56 @@
 import { useSelector } from 'react-redux';
-import { store } from '@/store';
+import { store, RootState } from '@/store';
+import { useParams } from 'react-router-dom';
 
 // Components
-import { Box, Center, Divider, Flex, Heading, Image, Skeleton, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import WaveformPlayer from '@/modules/audio/screens/local/WaveformPlayer/WaveformPlayer';
 
-// Models
 export const VoteAudioTrack = () => {
+  const { space, tape, id } = useParams();
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   const currentTrack = useSelector(store.select.voteModel.selectCurrentTrack);
+  const isLoadingProposal = useSelector((state: RootState) => state.loading.effects.voteModel.getProposal);
+  const artistChosenForTape = useSelector(store.select.tapesModel.selectTapeArtistWalletsBySpaceTapeId([space, tape, id]));
 
   return (
     <Box mx="auto">
-      <Heading
-        px={{ base: 0, lg: 2 }}
-        className="animate__animated animate__fadeIn"
-        fontWeight={'semibold'}
-        letterSpacing={'widest'}
-        size={['xs', 'sm']}
-        color={'gray.900'}
-      >
-        NOW PLAYING
-      </Heading>
-      <Divider my={3} borderColor="transparent" w="full" />
-      <Flex
-        p={4}
-        rounded="sm"
-        border={'1px'}
-        borderColor={'purple.800'}
-        _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
-        className="group"
-        borderRadius="lg"
-      >
-        <Box>
-          <Skeleton mb={2} isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
-            <Center role="button" className="pointer-events-auto">
-              <Image
-                height="60px"
-                width="60px"
-                border="1px"
-                onLoad={setIsImageLoaded.on}
-                _hover={{ opacity: 0 }}
-                className="pointer-events-auto group-hover:opacity-20 ease-in-out transition-all"
-                src={currentTrack?.image}
-                objectFit="cover"
-                rounded="md"
-              />
-            </Center>
-          </Skeleton>
-          <Flex direction={'column'} justifyContent={'space-evenly'}>
-            <Text className="font-serif" fontSize="xs" color="blue.900">
-              {currentTrack.name}
-            </Text>
+      {!isLoadingProposal && currentTrack?.media?.length ? (
+        <>
+          <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'xs']} color={'gray.900'}>
+            NOW PLAYING
+          </Heading>
+          <Divider my={1} borderColor="transparent" w="full" />
+          <Flex gap={6} direction={{ base: 'column', lg: 'row' }} alignItems={{ lg: 'center' }} py={3} rounded="sm" className="group" borderRadius="lg">
+            <Flex>
+              <Skeleton isLoaded={isImageLoaded} minW="60px" minH="60px" maxW="60px">
+                <Image
+                  border="1px"
+                  borderColor="gray.400"
+                  height="60px"
+                  width="60px"
+                  onLoad={setIsImageLoaded.on}
+                  src={currentTrack?.image}
+                  objectFit="cover"
+                  rounded="md"
+                  shadow={'sm'}
+                />
+              </Skeleton>
+              <Stack justifyContent="center" px={3}>
+                <Text className="font-serif" mt={'0rem !important'} fontSize="xs" color="gray.800">
+                  {currentTrack.name}
+                </Text>
+                {artistChosenForTape.includes(currentTrack.walletId.toLowerCase()) && (
+                  <Text className="font-serif" mt={'0rem !important'} fontSize="2xs" color="gray.600">
+                    {currentTrack.artist}
+                  </Text>
+                )}
+              </Stack>
+            </Flex>
+            <WaveformPlayer audio={currentTrack?.media} />
           </Flex>
-        </Box>
-        <WaveformPlayer audio={currentTrack?.media} />
-      </Flex>
+        </>
+      ) : null}
     </Box>
   );
 };

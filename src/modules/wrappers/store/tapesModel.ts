@@ -74,6 +74,9 @@ export const tapesModel = createModel<RootModel>()({
         else return false;
       });
     }),
+    selectTapeArtistWalletsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
+      return slice((tapesModel) => tapesModel?.allTapes?.[tape]?.[id]?.tracks);
+    }),
     selectCurrentVoteTape: hasProps(function (models, [tape, id]) {
       return slice((tapesModel) => tapesModel?.allTapes?.[tape]?.[id]);
     }),
