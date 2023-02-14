@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { store } from '@/store';
 
 // Components
-import { Badge, Box, Button, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Badge, Box, Button, Flex, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 // Models
@@ -12,23 +12,21 @@ import { ProposalState } from 'hedsvote';
 
 // Constants
 import { OLD_TAPES, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
+import { OpenDateBox } from '@/common/timeline';
 
 export const NewTapeDescription = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const { space, tape, id } = useParams();
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const proposal = useSelector(store.select.voteModel.selectProposal);
+  const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
+  const timeline = allTapes?.[tape]?.[id]?.timeline;
 
   const isOldTape = OLD_TAPES.includes(id);
   const isHedsTAPE06 = id === '6';
 
   const handleProposalState = (state: ProposalState) => {
-    if (state === ProposalState.OPEN)
-      return (
-        <Badge px={2} py={1} borderRadius="sm" colorScheme={'green'}>
-          OPEN
-        </Badge>
-      );
+    if (state === ProposalState.OPEN) return <OpenDateBox end={timeline?.vote?.end} />;
     if (state === ProposalState.CLOSED)
       return (
         <Badge px={2} py={1} borderRadius="sm" colorScheme={'red'}>
