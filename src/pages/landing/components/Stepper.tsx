@@ -1,6 +1,5 @@
 import { Box, Center, Container, Stack } from '@chakra-ui/react';
 import { Step } from './Step';
-import { useStep } from './useStep';
 
 const steps = [
   {
@@ -30,23 +29,13 @@ const steps = [
 ];
 
 export const Stepper = () => {
-  const [currentStep, { setStep }] = useStep({ maxStep: steps.length, initialStep: 2 });
   return (
     <Box bg="bg-surface">
       <Container py={{ base: '4', md: '8' }}>
         <Center>
           <Stack spacing="0">
             {steps.map((step, id) => (
-              <Step
-                key={id}
-                cursor="pointer"
-                onClick={() => setStep(id)}
-                title={step.name}
-                description={step.description}
-                isCompleted={currentStep > id}
-                isLastStep={steps.length === id + 1}
-                multiplier={id}
-              />
+              <Step key={id} cursor="pointer" title={step.name} description={step.description} isLastStep={steps.length === id + 1} multiplier={id} />
             ))}
           </Stack>
         </Center>

@@ -1,20 +1,16 @@
-import { useState } from 'react';
-import { BoxProps, Divider, Stack, Text } from '@chakra-ui/react';
+import { BoxProps, Stack, Text } from '@chakra-ui/react';
 import { StepCircle } from './StepCircle';
-
-import { useSpring, animated, config, useInView } from 'react-spring';
-import { Waypoint } from 'react-waypoint';
+import { animated, useInView } from 'react-spring';
 
 interface StepProps extends BoxProps {
   title: string;
   description: string;
-  isCompleted: boolean;
   isLastStep: boolean;
   multiplier: number;
 }
-//TODO: clean up unused props
+
 export const Step = (props: StepProps) => {
-  const { isCompleted, isLastStep, title, description, multiplier, ...stackProps } = props;
+  const { isLastStep, title, description, multiplier, ...stackProps } = props;
   const rootMarginPercentage = 30 + multiplier * 5;
   const [dividerRef, dividerProps] = useInView(
     () => ({
@@ -33,12 +29,12 @@ export const Step = (props: StepProps) => {
       once: true,
     },
   );
+
   return (
     <Stack spacing="4" direction="row" {...stackProps}>
       <Stack spacing="9" align="center" direction="column">
         <StepCircle multiplier={multiplier} />
         {!isLastStep && <animated.div ref={dividerRef} style={{ borderLeft: '1px solid black', ...dividerProps }} />}
-        {/* <Divider orientation="vertical" borderWidth="1px" borderColor={isCompleted ? 'accent' : isLastStep ? 'transparent' : 'inherit'} /> */}
       </Stack>
       <Stack spacing="0.5" pb={isLastStep ? '0' : '8'}>
         <Text color="emphasized" fontWeight="medium">

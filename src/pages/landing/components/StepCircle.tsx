@@ -1,4 +1,4 @@
-import { Icon, SquareProps, Flex } from '@chakra-ui/react';
+import { Icon, Flex } from '@chakra-ui/react';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons';
 import { animated, useInView } from 'react-spring';
 
