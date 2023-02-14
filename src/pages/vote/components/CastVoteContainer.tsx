@@ -53,12 +53,14 @@ export const CastVoteContainer = () => {
 
       if (!hasUserVoted) {
         dispatch.voteModel.castVote(voteObject);
+        dispatch.userModel.addUserVote([voteObject,choices])
         onOpen();
         return;
       } else {
         const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
         const updatedVote = { ...voteObject, previousVote };
         dispatch.voteModel.updateVote(updatedVote);
+        dispatch.userModel.addUserVote([updatedVote,choices])
         onOpen();
         return;
       }
