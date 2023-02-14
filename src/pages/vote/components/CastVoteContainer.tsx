@@ -103,7 +103,7 @@ export const CastVoteContainer = () => {
             </Heading>
             {connectedUserWallet ? (
               <Flex gap={2} alignItems={'center'}>
-                <Tooltip whiteSpace={'pre-line'} label={HEDS_POWER}>
+                <Tooltip placement={'auto'} whiteSpace={'pre-line'} label={HEDS_POWER}>
                   <Badge variant={'outline'}>
                     {vp} {'HED'}
                   </Badge>
