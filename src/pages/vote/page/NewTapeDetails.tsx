@@ -39,11 +39,11 @@ export const NewTapeDetails = () => {
       <Box px={{ base: 2, lg: 4 }} pb={10} pt={5} maxW="7xl" mx="auto">
         <TapeBanner />
         <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: 8, lg: 10 }}>
-          <Box w={{ lg: '25%' }}>
+          <Box maxW={{ lg: '25%' }} minW={{ lg: '25%' }} w={{ lg: '25%' }}>
             <NewTapeDescription />
             {proposalState === ProposalState.CLOSED ? <VoteResults /> : <CastVoteContainer />}
           </Box>
-          <Box w={{ lg: '75%' }}>
+          <Box maxW={{ lg: '75%' }} minW={{ lg: '75%' }} w={{ lg: '75%' }}>
             <VoteAudioTrack />
             <Submissions />
           </Box>
