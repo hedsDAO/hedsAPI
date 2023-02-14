@@ -35,7 +35,7 @@ export const Stepper = () => {
         <Center>
           <Stack spacing="0">
             {steps.map((step, id) => (
-              <Step key={id} cursor="pointer" title={step.name} description={step.description} isLastStep={steps.length === id + 1} multiplier={id} />
+              <Step key={id} title={step.name} description={step.description} isLastStep={steps.length === id + 1} multiplier={id} />
             ))}
           </Stack>
         </Center>
