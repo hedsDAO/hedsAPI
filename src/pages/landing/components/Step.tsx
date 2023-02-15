@@ -21,8 +21,8 @@ export const Step = (props: StepProps) => {
         <StepCircle dashedProps={dashedProps} checkProps={checkProps} />
         {!isLastStep && <animated.div style={{ borderLeft: '1px solid black', ...dividerProps }} />}
       </Stack>
-      <Stack spacing="0.5" pb={isLastStep ? '0' : '8'}>
-        <animated.h5 style={textProps}>{title}</animated.h5>
+      <Stack spacing="0.5" pb={isLastStep ? '0' : '8'} paddingLeft="0.5rem">
+        <animated.h5 style={{ fontWeight: '600', ...textProps }}>{title}</animated.h5>
         <animated.p style={textProps}>{description}</animated.p>
       </Stack>
     </Stack>
