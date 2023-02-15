@@ -31,7 +31,7 @@ const steps = [
 ];
 
 export const Stepper = () => {
-  const dividerSprings = steps.map((obj, i) => {
+  const dividerSprings = steps.map(() => {
     return useSpring(() => ({
       from: {
         height: '0%',
@@ -39,7 +39,7 @@ export const Stepper = () => {
     }));
   });
 
-  const iconSprings = steps.map((obj, i) => {
+  const iconSprings = steps.map(() => {
     return {
       dashed: useSpring(() => ({
         from: {
@@ -54,15 +54,24 @@ export const Stepper = () => {
     };
   });
 
+  const textSprings = steps.map(() => {
+    return useSpring(() => ({
+      from: {
+        color: '#000000',
+      },
+    }));
+  });
+
   return (
     <Box bg="bg-surface" paddingTop={['2rem', '5rem']} padding={['1rem', null]}>
       <Container py={{ base: '4', md: '8' }}>
         <Center>
           <Waypoint
             onEnter={() => {
-              iconSprings.forEach((springs, i) => {
-                const dashedApi = springs.dashed[1];
-                const checkApi = springs.check[1];
+              iconSprings.forEach(({ dashed, check }, i) => {
+                const dashedApi = dashed[1];
+                const checkApi = check[1];
+
                 dashedApi.start({
                   to: { opacity: 0 },
                   config: {
@@ -79,14 +88,25 @@ export const Stepper = () => {
                 });
               });
 
-              dividerSprings.forEach((springs, i) => {
-                const [props, api] = springs;
+              textSprings.forEach(([props, api], i) => {
                 api.start({
-                  to: { height: '100%' },
-                  delay: 1500 + i * 2500,
-                  config: {
-                    tension: 50,
+                  to: {
+                    color: '#FAF9F6',
                   },
+                  delay: 1200 + i ** 1.3 * 1500,
+                  config: {
+                    tension: 20,
+                  },
+                });
+
+                dividerSprings.forEach(([props, api], i) => {
+                  api.start({
+                    to: { height: '100%' },
+                    delay: 1500 + i * 2500,
+                    config: {
+                      tension: 50,
+                    },
+                  });
                 });
               });
             }}
@@ -101,6 +121,7 @@ export const Stepper = () => {
                   dividerProps={dividerSprings[id][0]}
                   dashedProps={iconSprings[id].dashed[0]}
                   checkProps={iconSprings[id].check[0]}
+                  textProps={textSprings[id][0]}
                 />
               ))}
             </Stack>

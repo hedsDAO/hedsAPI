@@ -9,10 +9,11 @@ interface StepProps extends BoxProps {
   dividerProps: any;
   dashedProps: any;
   checkProps: any;
+  textProps: any;
 }
 
 export const Step = (props: StepProps) => {
-  const { isLastStep, title, description, dividerProps, dashedProps, checkProps, ...stackProps } = props;
+  const { isLastStep, title, description, dividerProps, dashedProps, checkProps, textProps, ...stackProps } = props;
 
   return (
     <Stack spacing="4" direction="row" {...stackProps}>
@@ -21,10 +22,8 @@ export const Step = (props: StepProps) => {
         {!isLastStep && <animated.div style={{ borderLeft: '1px solid black', ...dividerProps }} />}
       </Stack>
       <Stack spacing="0.5" pb={isLastStep ? '0' : '8'}>
-        <Text color="emphasized" fontWeight="medium">
-          {title}
-        </Text>
-        <Text color="muted">{description}</Text>
+        <animated.h5 style={textProps}>{title}</animated.h5>
+        <animated.p style={textProps}>{description}</animated.p>
       </Stack>
     </Stack>
   );
