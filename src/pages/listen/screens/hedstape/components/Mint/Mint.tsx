@@ -34,30 +34,7 @@ const Mint = () => {
         <UpcomingDateBox start={start} />
       )}
       <Flex mt={4} gap={2}>
-        {mint.status === TimelineStatus.CLOSED ? (
-          <>
-            <Button rounded={'sm'} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-              Mint Closed
-            </Button>
-            <Button
-              onClick={() => {
-                gaEvents.clickLinkToOpenseaNextToMintButton(`${tape}/${id}`);
-              }}
-              target="_blank"
-              as={Link}
-              href={openSeaLink?.length > 0 && openSeaLink}
-              rounded={'sm'}
-              border={'solid 1px'}
-              borderColor="blue.100"
-              bg="blue.50"
-              leftIcon={<i className="fak fa-opensea text-xs" />}
-              size={'sm'}
-              pr={3}
-            >
-              OpenSea
-            </Button>
-          </>
-        ) : mint.status === TimelineStatus.OPEN || premint.status === TimelineStatus.OPEN ? (
+        {mint.status === TimelineStatus.OPEN || premint.status === TimelineStatus.OPEN ? (
           <Stack direction="row" spacing={4}>
             <Button
               onClick={() => {
@@ -68,7 +45,7 @@ const Mint = () => {
               border={'solid 1px'}
               borderColor="green.200"
               bg="green.100"
-              leftIcon={<LockOpenIcon height="14" width="14" />}
+              leftIcon={premint.status === TimelineStatus.OPEN ? <LockOpenIcon height="14" width="14" /> : <LockClosedIcon height="14" width="14" />}
               size={'sm'}
               pr={3}
               isDisabled={premint.status !== TimelineStatus.OPEN}
@@ -84,7 +61,7 @@ const Mint = () => {
               border={'solid 1px'}
               borderColor="green.200"
               bg="green.100"
-              leftIcon={<LockOpenIcon height="14" width="14" />}
+              leftIcon={mint.status === TimelineStatus.OPEN ? <LockOpenIcon height="14" width="14" /> : <LockClosedIcon height="14" width="14" />}
               size={'sm'}
               pr={3}
               isDisabled={mint.status !== TimelineStatus.OPEN}
@@ -93,7 +70,31 @@ const Mint = () => {
             </Button>
           </Stack>
         ) : (
-          <></>
+          mint.status === TimelineStatus.CLOSED &&
+          premint.status === TimelineStatus.CLOSED && (
+            <Stack direction="row" spacing={4}>
+              <Button rounded={'sm'} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                Mint Closed
+              </Button>
+              <Button
+                onClick={() => {
+                  gaEvents.clickLinkToOpenseaNextToMintButton(`${tape}/${id}`);
+                }}
+                target="_blank"
+                as={Link}
+                href={openSeaLink?.length > 0 && openSeaLink}
+                rounded={'sm'}
+                border={'solid 1px'}
+                borderColor="blue.100"
+                bg="blue.50"
+                leftIcon={<i className="fak fa-opensea text-xs" />}
+                size={'sm'}
+                pr={3}
+              >
+                OpenSea
+              </Button>
+            </Stack>
+          )
         )}
       </Flex>
     </div>
