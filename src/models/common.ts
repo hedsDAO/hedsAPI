@@ -211,6 +211,7 @@ export enum TimelineStatus {
   SUBMIT,
   VOTE,
   CURATE,
+  PREMINT,
   MINT,
   CLOSED,
 }
