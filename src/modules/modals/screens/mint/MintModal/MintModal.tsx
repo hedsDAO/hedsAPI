@@ -33,17 +33,18 @@ const MintModal = () => {
     if (!mintSchedule) throw Error(`No active mint schedule available!`);
 
     // Transaction
-    const mintTransaction = await client.mint({
+    const mintTransaction = await (await client.mint({
       mintSchedule,
-      quantity: 1,
-    });
-    console.log(await mintTransaction.wait());
-    return mintTransaction.hash;
+      quantity,
+    })).wait();
+    console.log(await mintTransaction);
+    return mintTransaction;
   };
 
-  const handleMintStatus = () => {
+  const handleMintStatus = async (quantity: number) => {
     setIsMinting.on();
-    mintEdition(3);
+     await mintEdition(quantity);
+    setIsMinting.off();
   };
 
   return (
