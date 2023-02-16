@@ -1,6 +1,6 @@
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { Dispatch, store } from '@/store';
-import { Box, Button, Flex, IconButton, Link, Text } from '@chakra-ui/react';
+import { Button, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 import { DateTime } from 'luxon';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +14,11 @@ const Mint = () => {
   const { tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.hedstapeModel.selectMint);
+  const premint = useSelector(store.select.hedstapeModel.selectPremint);
   const start = DateTime.fromMillis(mint.start);
   const end = DateTime.fromMillis(mint.end);
   const openSeaLink = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
+
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
@@ -55,22 +57,41 @@ const Mint = () => {
               OpenSea
             </Button>
           </>
-        ) : mint.status === TimelineStatus.OPEN ? (
-          <Button
-            onClick={() => {
-              dispatch.modalModel.setModal(Modals.MINT_MODAL);
-              dispatch.modalModel.setModalOpen(true);
-              gaEvents.clickMintButton(`${tape}/${id}`);
-            }}
-            border={'solid 1px'}
-            borderColor="green.200"
-            bg="green.100"
-            leftIcon={<LockOpenIcon height="14" width="14" />}
-            size={'sm'}
-            pr={3}
-          >
-            Mint
-          </Button>
+        ) : mint.status === TimelineStatus.OPEN || premint.status === TimelineStatus.OPEN ? (
+          <Stack direction="row" spacing={4}>
+            <Button
+              onClick={() => {
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+                gaEvents.clickMintButton(`${tape}/${id}`);
+              }}
+              border={'solid 1px'}
+              borderColor="green.200"
+              bg="green.100"
+              leftIcon={<LockOpenIcon height="14" width="14" />}
+              size={'sm'}
+              pr={3}
+              isDisabled={premint.status !== TimelineStatus.OPEN}
+            >
+              Pre-Mint
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+                gaEvents.clickMintButton(`${tape}/${id}`);
+              }}
+              border={'solid 1px'}
+              borderColor="green.200"
+              bg="green.100"
+              leftIcon={<LockOpenIcon height="14" width="14" />}
+              size={'sm'}
+              pr={3}
+              isDisabled={mint.status !== TimelineStatus.OPEN}
+            >
+              Mint
+            </Button>
+          </Stack>
         ) : (
           <></>
         )}
