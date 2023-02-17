@@ -1,6 +1,6 @@
 import { Container, Stack, Flex, Button, Icon, Box, Text, Image, Skeleton, useBoolean, Link as ChakraLink } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
-import { AR } from 'country-flag-icons/react/3x2';
+import { US } from 'country-flag-icons/react/3x2';
 import { HEDS_SOLO_HEADING, HEDS_SOLO_TITLE, HEDS_SOLO_DESC, HEDS_SOLO_ARTIST, HEDS_SOLO_SOUND_LINK } from '@/pages/explore/store/constants';
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
@@ -74,7 +74,7 @@ const HedsSolo = () => {
                 src={artistsMapping?.[HEDS_SOLO_ARTIST]?.profilePicture}
               />
               <Box right={'5'} bottom="12" textAlign={'end'} position={'relative'}>
-                <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={AR} />
+                <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={US} />
               </Box>
             </Skeleton>
           </Box>
