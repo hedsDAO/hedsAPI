@@ -28,36 +28,38 @@ export const nameModel = createModel<RootModel>()({
     },
   }),
   effects: (dispatch) => ({
-    async validateDisplayName([displayName, connectedUserWallet, isOnOwnPage, connectedUserData]: [string, string, boolean, User | undefined]) {
-      const docRef = doc(db, 'displayName', displayName.toLowerCase());
-      const docSnap = await getDoc(docRef);
+    async validateDisplayName([displayName, connectedUserWallet, isOnOwnPage]: [string, string, boolean]) {
+      const displayNameRef = doc(db, 'displayName', displayName.toLowerCase());
+      const userRef = doc(db, 'users', connectedUserWallet.toLowerCase());
+      const userDocSnap = await getDoc(userRef);
+      const displayNameDocSnap = await getDoc(displayNameRef);
       this.setIsLoading(true);
       if (displayName.length <= 3 || displayName.length >= 15) {
         this.setError('Invalid display name. Must be between 3 and 15 characters.');
         return this.setIsLoading(false);
-      } else if (docSnap.exists) {
+      } else if (displayNameDocSnap.exists()) {
         this.setError('This display name is already taken.');
         return this.setIsLoading(false);
       } else {
         // user's display name is valid length and is unique
-        const newUserData = populateNewUser(connectedUserWallet, displayName);
-        const docRef = doc(db, 'users', connectedUserWallet.toLowerCase());
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const v2UserData = { ...newUserData, ...docSnap.data() };
-          await setDoc(docRef, v2UserData).then(() => {
-            this.setConnectedUserData(v2UserData);
-            if (isOnOwnPage) this.setCurrentUserData(v2UserData);
-            return this.setIsLoading(false);
+        const newUserData = populateNewUser(connectedUserWallet, displayName) as User;
+        if (userDocSnap.exists()) {
+          const v2UserData = { ...newUserData, ...userDocSnap.data() } as User;
+          await setDoc(userRef, v2UserData).then(async () => {
+            await setDoc(displayNameRef, { wallet: connectedUserWallet });
+            dispatch.userModel.setConnectedUserData(v2UserData);
+            if (isOnOwnPage) dispatch.userModel.setCurrentUserData(v2UserData);
+            this.setIsLoading(false);
           });
         } else {
-          const docRef = doc(db, 'users', connectedUserWallet.toLowerCase());
-          await setDoc(docRef, newUserData).then(() => {
-            this.setConnectedUserData(newUserData);
-            if (isOnOwnPage) this.setCurrentUserData(newUserData);
-            return this.setIsLoading(false);
+          await setDoc(userRef, newUserData).then(async () => {
+            await setDoc(displayNameRef, { wallet: connectedUserWallet });
+            dispatch.userModel.setConnectedUserData(newUserData);
+            if (isOnOwnPage) dispatch.userModel.setCurrentUserData(newUserData);
+            this.setIsLoading(false);
           });
         }
+        return dispatch.modalModel.setModalOpen(false);
       }
     },
   }),
