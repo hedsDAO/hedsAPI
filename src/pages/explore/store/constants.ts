@@ -77,7 +77,7 @@ export const HEDS_PLAYER_ARTIST = '0x0a7c3007f2156ff8db9579efb7adbbd7212d3c3c';
  * @const LATEST_TAPE_ARTIST : dabow - current address for latest tape spotlight
  */
 
-export const LATEST_TAPE_HEADING = 'COMMUNITY CURATION OPEN';
+export const LATEST_TAPE_HEADING = 'COMMUNITY CURATION COMPLETE';
 export const LATEST_TAPE_TITLE = 'hedsTAPE 11';
 export const LATEST_TAPE_DESC =
   "The iconic mija has offered her inimitable take on a wide variety of electronic projects. For the first hedsTAPE of 2023, we're beyond excited to invite her on as the curator for HT11.";
