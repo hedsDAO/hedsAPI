@@ -26,11 +26,6 @@ const NameModal = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    return () => {
-      dispatch.userModel.getCurrentUserData(address.toLowerCase());
-    };
-  }, []);
   return (
     <ModalContainer focus="100" size="sm" isOpen={isOpen} setModalOpen={false ? () => dispatch.modalModel.setModalOpen(!isOpen) : () => {}}>
       <ModalHeader title={NAME_MODAL_TEXT} Icon={IconPencil} />
@@ -75,7 +70,7 @@ const NameModal = () => {
       <Flex gap={2}>
         <PrimaryButton
           isLoading={isLoading}
-          disabled={displayName.length < 4 || displayName.length > 15 || !!error?.length}
+          disabled={displayName.length < 4 || displayName.length > 15 || !!error?.length || !address}
           onClick={() => {
             dispatch.nameModel.validateDisplayName([displayName, address, isOnOwnPage, connectedUserData]);
           }}
