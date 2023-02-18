@@ -48,9 +48,9 @@ export const HEDS_IMG_PROPS = {
 
 export const HEDS_SOLO_HEADING = 'introducing';
 export const HEDS_SOLO_TITLE = 'hedSOLO';
-export const HEDS_SOLO_DESC = 'a new look into the worldwide heds community, featuring solo releases from artists representing the future of music.';
-export const HEDS_SOLO_ARTIST = '0xd9c0f7408550fffa543a4c725b7ebe05883fe434';
-export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/dabow-wanna-be';
+export const HEDS_SOLO_DESC = `heds is honored to introduce the second artist(s) featured via our hedSOLO drops. Created by electronic music legends and heds OG's oshi and sober rob, "LAZER BUCK" is a new experimental bass heavy project from the duo.`;
+export const HEDS_SOLO_ARTIST = '0x8b5c660acd1ab7011143ccf615b6b9adf68e7904';
+export const HEDS_SOLO_SOUND_LINK = 'https://www.sound.xyz/heds/lazer-buck-adrenochrome';
 
 /**
  * @component <HedsPlayer/>
