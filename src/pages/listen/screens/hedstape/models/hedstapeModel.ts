@@ -11,6 +11,9 @@ export const hedstapeModel = createModel<RootModel>()({
     selectTapeTimeline() {
       return slice((hedstapeModel) => hedstapeModel.timeline);
     },
+    selectPremint() {
+      return createSelector(this.selectTapeTimeline, (timeline: { [key: string]: TimelineItem }) => timeline.premint);
+    },
     selectMint() {
       return createSelector(this.selectTapeTimeline, (timeline: { [key: string]: TimelineItem }) => timeline.mint);
     },
@@ -32,6 +35,7 @@ export const hedstapeModel = createModel<RootModel>()({
       const submitTimes = hedsTape.timeline.submit;
       const voteTimes = hedsTape.timeline.vote;
       const mintTimes = hedsTape.timeline.mint;
+      const premintTimes = hedsTape.timeline.premint;
       const names = new TimelineNames();
       const desc = new TimelineDescriptions();
       timelineTank['submit'] = {
@@ -47,6 +51,13 @@ export const hedstapeModel = createModel<RootModel>()({
         start: voteTimes.start,
         end: voteTimes.end,
         status: compareTimestamps(now, voteTimes.start, voteTimes.end),
+      };
+      timelineTank['premint'] = {
+        name: names.premint,
+        description: desc.premint,
+        start: premintTimes.start,
+        end: premintTimes.end,
+        status: compareTimestamps(now, premintTimes.start, premintTimes.end),
       };
       timelineTank['mint'] = {
         name: names.mint,
