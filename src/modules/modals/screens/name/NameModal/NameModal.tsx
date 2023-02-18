@@ -5,7 +5,7 @@ import { Divider, Flex, FormControl, FormHelperText, FormLabel, Heading, Input, 
 import { IconPencil } from '@tabler/icons';
 import { NAME_MODAL_LABEL, NAME_MODAL_TEXT } from '../models/constants';
 import { PrimaryButton } from '@/common/buttons';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
 
 const NameModal = () => {
@@ -16,7 +16,6 @@ const NameModal = () => {
   const { address } = useAccount();
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const isOnOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
-  const connectedUserData = useSelector(store.select.userModel.selectConnectedUser);
 
   useEffect(() => {
     if (error?.length) {
@@ -26,11 +25,6 @@ const NameModal = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    return () => {
-      dispatch.userModel.getCurrentUserData(address.toLowerCase());
-    };
-  }, []);
   return (
     <ModalContainer focus="100" size="sm" isOpen={isOpen} setModalOpen={false ? () => dispatch.modalModel.setModalOpen(!isOpen) : () => {}}>
       <ModalHeader title={NAME_MODAL_TEXT} Icon={IconPencil} />
@@ -75,10 +69,8 @@ const NameModal = () => {
       <Flex gap={2}>
         <PrimaryButton
           isLoading={isLoading}
-          disabled={displayName.length < 4 || displayName.length > 15 || !!error?.length}
-          onClick={() => {
-            dispatch.nameModel.validateDisplayName([displayName, address, isOnOwnPage, connectedUserData]);
-          }}
+          disabled={displayName.length < 4 || displayName.length > 15 || !!error?.length || !address}
+          onClick={() => dispatch.nameModel.validateDisplayName([displayName, address, isOnOwnPage])}
         >
           Confirm
         </PrimaryButton>
