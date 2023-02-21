@@ -1,8 +1,8 @@
 import { UserCollectionItem } from '@/models/common';
-import { Center, Divider, Image, Skeleton, Stack, useBoolean } from '@chakra-ui/react';
+import { Center, Divider, Image, Skeleton, Stack, useBoolean, Tag, Text, TagLabel } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const CollectionCard = ({ item, loading }: { item: UserCollectionItem; loading: boolean }) => {
+const CollectionCard = ({ item, tapeVp, loading }: { item: UserCollectionItem; tapeVp: number; loading: boolean }) => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   return (
     <Stack
@@ -32,6 +32,11 @@ const CollectionCard = ({ item, loading }: { item: UserCollectionItem; loading: 
           )}
         </div>
         <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{item.name}</span>
+        {tapeVp > 0 && 
+        <Tag mt="1" size='sm' borderRadius='full'>
+          <Text mr="1" color="green"> {tapeVp} </Text>
+            <TagLabel>HED</TagLabel>
+        </Tag>}
       </Skeleton>
     </Stack>
   );
