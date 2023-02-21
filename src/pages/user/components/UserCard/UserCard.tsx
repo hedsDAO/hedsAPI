@@ -1,5 +1,6 @@
 import { Dispatch, store } from '@/store';
-import { Avatar, Button, Divider, Flex, Heading, Text, VStack, Link, Box } from '@chakra-ui/react';
+import { Avatar, Badge, Button, Divider, Flex, Heading, Text, VStack, Link, Box, Tooltip, } from '@chakra-ui/react';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { Fragment, useEffect } from 'react';
 import { Badges, WalletButton, TwitterButton } from '../';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,9 @@ const UserCard = () => {
   const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   const currentWallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const splitsBalance = useSelector(store.select.userModel.selectUserSplitsBalance);
+  const connectedUserVp = useSelector(store.select.userModel.selectConnectedUserVotingPower);
+
+console.log('connectedUserVp', connectedUserVp);
 
   useEffect(() => {
     if (!isOwnPage) return;
@@ -78,6 +82,15 @@ const UserCard = () => {
               </Button>
             </Box>
           )}
+          <Text fontSize='lg' fontWeight='semibold'>
+            <Badge mr='1' fontSize='lg' colorScheme='green'>
+              81
+            </Badge>
+            HED
+            <Tooltip  label={"This number represents the current member's hedsPOWER. Each hedstape owned has an a number and then we add the sum to get you this number"}>
+              <InfoOutlineIcon ml="1" color="gray.500" />
+            </Tooltip>
+          </Text>
           <Divider borderColor="gray.400" mb={{ base: 4, lg: 3 }} />
           <Badges />
           <Divider borderColor="gray.400" my={{ base: 5, lg: 4 }} />
