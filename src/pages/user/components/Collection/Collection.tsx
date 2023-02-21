@@ -4,19 +4,22 @@ import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { CollectionCard } from '@/common/media';
 import { DateTime } from 'luxon';
+import { tapesAndVpWeights } from '@/modules/wrappers/store/userModel';
 
 const Collection = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const collection = useSelector(store.select.userModel.selectCurrentUserCollection);
+  const getTapeVp = (address: string) => ( tapesAndVpWeights[address] ? tapesAndVpWeights[address] : 0);
   return (
     <Stack py={2} data-testid="user-collection-container">
       {!isEmpty(collection?.items) ? (
         <div>
           <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)' }} gap={2}>
-            {Object.values(collection?.items).map((collectionItem, i) => {
+            {Object.entries(collection?.items).map((collectionEntry, i) => {
+              const [address, collectionItem] = collectionEntry;
               return (
                 <GridItem data-testid={`user-collection-${i}`} key={collectionItem?.name + collectionItem?.quantity}>
-                  <CollectionCard item={collectionItem} loading={loading} />
+                  <CollectionCard item={collectionItem} tapeVp={getTapeVp(address.toLowerCase())} loading={loading} />
                 </GridItem>
               );
             })}

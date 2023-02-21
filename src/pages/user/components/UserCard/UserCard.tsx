@@ -1,5 +1,5 @@
 import { Dispatch, store } from '@/store';
-import { Avatar, Badge, Button, Divider, Flex, Heading, Text, VStack, Link, Box, Tooltip, } from '@chakra-ui/react';
+import { Avatar, Badge, Button, Divider, Flex, Heading, Text, VStack, Link, Box, Tooltip, Tag, TagLabel } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { Fragment, useEffect } from 'react';
 import { Badges, WalletButton, TwitterButton } from '../';
@@ -17,9 +17,7 @@ const UserCard = () => {
   const isOwnPage = useSelector(store.select.userModel.selectIsOwnPage);
   const currentWallet = useSelector(store.select.userModel.selectCurrentUserWallet);
   const splitsBalance = useSelector(store.select.userModel.selectUserSplitsBalance);
-  const connectedUserVp = useSelector(store.select.userModel.selectConnectedUserVotingPower);
-
-console.log('connectedUserVp', connectedUserVp);
+  const currentUserVp = useSelector(store.select.userModel.selectCurrentUserVotingPower);
 
   useEffect(() => {
     if (!isOwnPage) return;
@@ -82,15 +80,13 @@ console.log('connectedUserVp', connectedUserVp);
               </Button>
             </Box>
           )}
-          <Text fontSize='lg' fontWeight='semibold'>
-            <Badge mr='1' fontSize='lg' colorScheme='green'>
-              81
-            </Badge>
-            HED
-            <Tooltip  label={"This number represents the current member's hedsPOWER. Each hedstape owned has an a number and then we add the sum to get you this number"}>
-              <InfoOutlineIcon ml="1" color="gray.500" />
+          <Tag mb='3' size='lg' borderRadius='full'>
+            <Text mr="1" color="green"> {currentUserVp} </Text>
+            <TagLabel>HED</TagLabel>
+            <Tooltip  label={"hedsPOWER is determined from hedsTAPE(s) ownership. hedsTAPE(s) with a higher ratio of owners to tapes in that collection will have higher hedsPOWER."}>
+              <InfoOutlineIcon h={'3'} w={'3'} ml="1" color="gray.500" />
             </Tooltip>
-          </Text>
+          </Tag>
           <Divider borderColor="gray.400" mb={{ base: 4, lg: 3 }} />
           <Badges />
           <Divider borderColor="gray.400" my={{ base: 5, lg: 4 }} />
