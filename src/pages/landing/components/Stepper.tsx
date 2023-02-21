@@ -1,6 +1,7 @@
 import { Box, Center, Container, Stack } from '@chakra-ui/react';
 import { Step } from './Step';
-import { useStep } from './useStep';
+import { useSpring } from 'react-spring';
+import { Waypoint } from 'react-waypoint';
 
 const steps = [
   {
@@ -30,24 +31,101 @@ const steps = [
 ];
 
 export const Stepper = () => {
-  const [currentStep, { setStep }] = useStep({ maxStep: steps.length, initialStep: 2 });
+  const dividerSprings = steps.map(() => {
+    return useSpring(() => ({
+      from: {
+        height: '0%',
+      },
+    }));
+  });
+
+  const iconSprings = steps.map(() => {
+    return {
+      dashed: useSpring(() => ({
+        from: {
+          opacity: 1,
+        },
+      })),
+      check: useSpring(() => ({
+        from: {
+          opacity: 0,
+        },
+      })),
+    };
+  });
+
+  const textSprings = steps.map(() => {
+    return useSpring(() => ({
+      from: {
+        color: '#000000',
+      },
+    }));
+  });
+
   return (
-    <Box bg="bg-surface">
+    <Box bg="bg-surface" paddingTop={['2rem', '5rem']} padding={['1rem', null]}>
       <Container py={{ base: '4', md: '8' }}>
         <Center>
-          <Stack spacing="0">
-            {steps.map((step, id) => (
-              <Step
-                key={id}
-                cursor="pointer"
-                onClick={() => setStep(id)}
-                title={step.name}
-                description={step.description}
-                isCompleted={currentStep > id}
-                isLastStep={steps.length === id + 1}
-              />
-            ))}
-          </Stack>
+          <Waypoint
+            onEnter={() => {
+              iconSprings.forEach(({ dashed, check }, i) => {
+                const dashedApi = dashed[1];
+                const checkApi = check[1];
+
+                dashedApi.start({
+                  to: { opacity: 0 },
+                  config: {
+                    tension: 25,
+                  },
+                  delay: 500 + i ** 1.3 * 1500,
+                });
+                checkApi.start({
+                  to: { opacity: 1 },
+                  config: {
+                    tension: 25,
+                  },
+                  delay: 1000 + i ** 1.3 * 1500,
+                });
+              });
+
+              textSprings.forEach(([props, api], i) => {
+                api.start({
+                  to: {
+                    color: '#FAF9F6',
+                  },
+                  delay: 1200 + i ** 1.3 * 1500,
+                  config: {
+                    tension: 20,
+                  },
+                });
+
+                dividerSprings.forEach(([props, api], i) => {
+                  api.start({
+                    to: { height: '100%' },
+                    delay: 1500 + i * 2500,
+                    config: {
+                      tension: 50,
+                    },
+                  });
+                });
+              });
+            }}
+          >
+            <Stack spacing="0">
+              {steps.map((step, id) => (
+                <Step
+                  key={id}
+                  title={step.name}
+                  description={step.description}
+                  isLastStep={steps.length === id + 1}
+                  dividerProps={dividerSprings[id][0]}
+                  dashedProps={iconSprings[id].dashed[0]}
+                  checkProps={iconSprings[id].check[0]}
+                  textProps={textSprings[id][0]}
+                />
+              ))}
+            </Stack>
+          </Waypoint>
         </Center>
       </Container>
     </Box>

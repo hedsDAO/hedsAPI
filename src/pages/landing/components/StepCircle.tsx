@@ -1,12 +1,21 @@
-import { Icon, SquareProps } from '@chakra-ui/react';
+import { Icon, Flex } from '@chakra-ui/react';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons';
+import { animated, useInView } from 'react-spring';
 
-interface RadioCircleProps extends SquareProps {
-  isCompleted: boolean;
+interface ownProps {
+  dashedProps: any;
+  checkProps: any;
 }
 
-export const StepCircle = (props: RadioCircleProps) => {
-  const { isCompleted } = props;
-
-  return <>{isCompleted ? <Icon as={IconCircleCheck} color="black" boxSize="8" /> : <Icon as={IconCircleDashed} boxSize="8" />}</>;
+export const StepCircle = ({ dashedProps, checkProps }: ownProps) => {
+  return (
+    <Flex justify="center">
+      <animated.div style={{ position: 'fixed', zIndex: 1, ...dashedProps }}>
+        <Icon as={IconCircleDashed} boxSize="8" />
+      </animated.div>
+      <animated.div style={{ position: 'fixed', zIndex: 0, ...checkProps }}>
+        <Icon as={IconCircleCheck} color="black" boxSize="8" />
+      </animated.div>
+    </Flex>
+  );
 };
