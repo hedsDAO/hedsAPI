@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { VoteLanding } from './VoteLanding';
-import { TapeDetails } from './TapeDetails';
 import { NewTapeDetails } from './NewTapeDetails';
 import { Box } from '@chakra-ui/react';
 
