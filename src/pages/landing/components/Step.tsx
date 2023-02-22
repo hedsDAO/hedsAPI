@@ -6,10 +6,10 @@ interface StepProps extends BoxProps {
   title: string;
   description: string;
   isLastStep: boolean;
-  dividerProps: any;
-  dashedProps: any;
-  checkProps: any;
-  textProps: any;
+  dividerProps: Object;
+  dashedProps: Object;
+  checkProps: Object;
+  textProps: Object;
 }
 
 export const Step = (props: StepProps) => {
