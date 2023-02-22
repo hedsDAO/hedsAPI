@@ -188,8 +188,8 @@ export const voteModel = createModel<RootModel>()({
     async castVote(vote: VoteObject) {
       const { castVote } = createClient();
       try {
-          await castVote(vote);
-          this.getProposal(vote.proposalId);
+        await castVote(vote);
+        this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
       }
@@ -202,7 +202,6 @@ export const voteModel = createModel<RootModel>()({
       } catch (error) {
         console.log(error);
       }
-
     },
     // async createProposal(proposal: Proposal) {
     //   const { createProposal } = createClient();

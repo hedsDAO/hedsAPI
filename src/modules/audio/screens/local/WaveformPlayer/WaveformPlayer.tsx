@@ -22,7 +22,7 @@ const WaveformPlayer = ({ audio }: { audio?: File | string }) => {
       if (audio instanceof File) wavesurfer?.current?.loadBlob(audio);
       else if (typeof audio === 'string') wavesurfer?.current?.load(audio);
       wavesurfer?.current?.on('ready', () => dispatch.voteModel.setIsLoading(false));
-      wavesurfer?.current?.on('finish', () => { 
+      wavesurfer?.current?.on('finish', () => {
         setIsPlaying(false);
         wavesurfer?.current?.stop();
       });

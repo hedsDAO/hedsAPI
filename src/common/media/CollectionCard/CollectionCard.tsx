@@ -26,17 +26,28 @@ const CollectionCard = ({ item, tapeVp, loading }: { item: UserCollectionItem; t
             className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-md object-center shadow-md outline-neutral-900 outline-1 outline"
           />
           {item && (
-            <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
-              x{item.quantity}
-            </div>
+            <div>
+              <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
+                x{item.quantity}
+              </div>
+              {tapeVp > 0 && 
+                <div className="text-xs font-bold absolute bottom-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
+                  {tapeVp} HED
+                </div>
+              }
+          </div>
           )}
         </div>
         <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{item.name}</span>
-        {tapeVp > 0 && 
-        <Tag mt="1" size='sm' borderRadius='full'>
-          <Text mr="1" color="green"> {tapeVp} </Text>
+        {/* {tapeVp > 0 && (
+          <Tag mt="1" size="sm" borderRadius="full">
+            <Text mr="1" color="green">
+              {' '}
+              {tapeVp}{' '}
+            </Text>
             <TagLabel>HED</TagLabel>
-        </Tag>}
+          </Tag>
+        )} */}
       </Skeleton>
     </Stack>
   );
