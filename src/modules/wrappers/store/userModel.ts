@@ -419,14 +419,14 @@ export const userModel = createModel<RootModel>()({
       const docRef = doc(db, 'users', vote.vote.voter.toLowerCase());
       const docSnap = await getDoc(docRef);
       const tapeId = choices.pop().location.split('/')[2];
-      const formattedVote: any = {...vote.vote}; 
+      const formattedVote: any = { ...vote.vote };
       for (let choiceId of Object.keys(vote.vote.choice)) {
-        const choice = choices.find((choice) => choice.id + 1 === (Number(choiceId)));
+        const choice = choices.find((choice) => choice.id + 1 === Number(choiceId));
         const weight = vote.vote.choice[choiceId];
         formattedVote.choice[choiceId] = { weight, choice };
-        };
-        await updateDoc(docRef, { votes: { heds: { hedstape: { ...docSnap.data().votes?.heds?.hedstape, [tapeId]: formattedVote } } } });
-        return;
       }
+      await updateDoc(docRef, { votes: { heds: { hedstape: { ...docSnap.data().votes?.heds?.hedstape, [tapeId]: formattedVote } } } });
+      return;
+    },
   }),
 });

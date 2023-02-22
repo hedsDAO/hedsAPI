@@ -12,8 +12,7 @@ import newSubmission from './servers/submissions';
 import activeListings from './servers/opensea';
 
 // FIRESTORE CONTROLLER
-import users from "./servers/users";
-
+import users from './servers/users';
 
 exports.twitterAuth = twitterAuth;
 exports.newSubmission = newSubmission;
