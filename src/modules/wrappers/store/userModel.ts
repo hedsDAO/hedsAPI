@@ -85,43 +85,6 @@ export const userModel = createModel<RootModel>()({
     selectConnectedUserLikes() {
       return createSelector(this.selectConnectedUser, (connectedUser: User) => connectedUser?.likes || []);
     },
-    selectConnectedUserVotingPower() {
-      return createSelector(
-        this.selectConnectedUserRole,
-        this.selectConnectedUserWallet,
-        this.selectConnectedUserCollection,
-        (role: number, wallet: string, userCollection: UserCollection) => {
-          const collectionContracts = Object.keys(userCollection.items);
-          if (!collectionContracts.length) {
-            return 0;
-          }
-
-          const filteredContracts = collectionContracts.reduce((results, collectionContract) => {
-            if (userCollection.items[collectionContract].tape === 'hedstape') {
-              const quantity = userCollection.items[collectionContract].quantity;
-              results.push({ contract: collectionContract.toLowerCase(), quantity });
-            }
-            return results;
-          }, []);
-
-          if (!filteredContracts.length) return 0;
-
-          const vpFromCollection = filteredContracts.reduce((totalVp: number, filteredContract: { contract: string; quantity: number }) => {
-            const { contract, quantity } = filteredContract;
-            if (Object.keys(tapesAndVpWeights).includes(contract)) {
-              if (!totalVp) totalVp = 0;
-              const vpToAdd = quantity === 1 ? tapesAndVpWeights[contract] : tapesAndVpWeights[contract] * quantity;
-              return (totalVp += vpToAdd);
-            }
-          }, 0);
-
-          const vpFromArtistWhitelist = role === UserRoles.ARTIST ? 15 : 0;
-          const vpFromOgWhitelist = whitelist.find((whitelistAdress) => whitelistAdress === wallet.toLowerCase());
-
-          return vpFromOgWhitelist ? 10 + vpFromCollection + vpFromArtistWhitelist : vpFromCollection + vpFromArtistWhitelist;
-        },
-      );
-    },
 
     /** Current User Selectors */
     selectCurrentUser() {
@@ -178,6 +141,43 @@ export const userModel = createModel<RootModel>()({
     selectCurrentUserSubmissionsBySpaceTapeId: hasProps(function (models, [space, tape, id]) {
       return slice((userModel) => userModel.currentUser.submissions?.[space]?.[tape]?.[id]);
     }),
+    selectCurrentUserVotingPower() {
+      return createSelector(
+        this.selectCurrentUserRole,
+        this.selectCurrentUserWallet,
+        this.selectCurrentUserCollection,
+        (role: number, wallet: string, userCollection: UserCollection) => {
+          const vpFromArtistWhitelist = role >= UserRoles.ARTIST ? 15 : 0;
+          const vpFromOgWhitelist = whitelist.find((whitelistAdress) => whitelistAdress === wallet.toLowerCase());
+
+          const collectionContracts = Object.keys(userCollection?.items || {});
+          if (!collectionContracts.length) {
+            return vpFromArtistWhitelist ? (vpFromOgWhitelist ? 10 + vpFromArtistWhitelist : vpFromArtistWhitelist) : vpFromOgWhitelist ? 10 : 0;
+          }
+
+          const filteredContracts = collectionContracts.reduce((results, collectionContract) => {
+            if (userCollection.items[collectionContract].tape === 'hedstape') {
+              const quantity = userCollection.items[collectionContract].quantity;
+              results.push({ contract: collectionContract.toLowerCase(), quantity });
+            }
+            return results;
+          }, []);
+
+          if (!filteredContracts.length) return 0;
+
+          const vpFromCollection: number = filteredContracts.reduce((totalVp: number, filteredContract: { contract: string; quantity: number }) => {
+            const { contract, quantity } = filteredContract;
+            if (Object.keys(tapesAndVpWeights).includes(contract)) {
+              if (!totalVp) totalVp = 0;
+              const vpToAdd = quantity === 1 ? tapesAndVpWeights[contract] : tapesAndVpWeights[contract] * quantity;
+              return (totalVp += vpToAdd);
+            }
+          }, 0);
+
+          return vpFromOgWhitelist ? 10 + vpFromCollection + vpFromArtistWhitelist : vpFromCollection + vpFromArtistWhitelist;
+        },
+      );
+    },
     selectHasConnectedUserLikedTrack: hasProps(function (models, track) {
       return slice((userModel) => (!isEmpty(track?.likedBy) ? userModel?.connectedUser?.wallet in track?.likedBy : false));
     }),
@@ -416,14 +416,14 @@ export const userModel = createModel<RootModel>()({
       const docRef = doc(db, 'users', vote.vote.voter.toLowerCase());
       const docSnap = await getDoc(docRef);
       const tapeId = choices.pop().location.split('/')[2];
-      const formattedVote: any = {...vote.vote}; 
+      const formattedVote: any = { ...vote.vote };
       for (let choiceId of Object.keys(vote.vote.choice)) {
-        const choice = choices.find((choice) => choice.id + 1 === (Number(choiceId)));
+        const choice = choices.find((choice) => choice.id + 1 === Number(choiceId));
         const weight = vote.vote.choice[choiceId];
         formattedVote.choice[choiceId] = { weight, choice };
-        };
-        await updateDoc(docRef, { votes: { heds: { hedstape: { ...docSnap.data().votes?.heds?.hedstape, [tapeId]: formattedVote } } } });
-        return;
       }
+      await updateDoc(docRef, { votes: { heds: { hedstape: { ...docSnap.data().votes?.heds?.hedstape, [tapeId]: formattedVote } } } });
+      return;
+    },
   }),
 });
