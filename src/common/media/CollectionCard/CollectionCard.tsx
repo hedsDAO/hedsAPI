@@ -39,15 +39,6 @@ const CollectionCard = ({ item, tapeVp, loading }: { item: UserCollectionItem; t
           )}
         </div>
         <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{item.name}</span>
-        {/* {tapeVp > 0 && (
-          <Tag mt="1" size="sm" borderRadius="full">
-            <Text mr="1" color="green">
-              {' '}
-              {tapeVp}{' '}
-            </Text>
-            <TagLabel>HED</TagLabel>
-          </Tag>
-        )} */}
       </Skeleton>
     </Stack>
   );
