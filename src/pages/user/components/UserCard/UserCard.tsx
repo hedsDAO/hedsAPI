@@ -80,10 +80,17 @@ const UserCard = () => {
               </Button>
             </Box>
           )}
-          <Tag mb='3' size='lg' borderRadius='full'>
-            <Text mr="1" color="green"> {currentUserVp} </Text>
+          <Tag mb="3" size="lg" borderRadius="full">
+            <Text mr="1" color="green">
+              {' '}
+              {currentUserVp}{' '}
+            </Text>
             <TagLabel>HED</TagLabel>
-            <Tooltip  label={"hedsPOWER is determined from hedsTAPE(s) ownership. hedsTAPE(s) with a higher ratio of owners to tapes in that collection will have higher hedsPOWER."}>
+            <Tooltip
+              label={
+                'hedsPOWER is determined from hedsTAPE(s) ownership. hedsTAPE(s) with a higher ratio of owners to tapes in that collection will have higher hedsPOWER.'
+              }
+            >
               <InfoOutlineIcon h={'3'} w={'3'} ml="1" color="gray.500" />
             </Tooltip>
           </Tag>

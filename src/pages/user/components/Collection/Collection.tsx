@@ -9,7 +9,7 @@ import { tapesAndVpWeights } from '@/modules/wrappers/store/userModel';
 const Collection = () => {
   const loading = useSelector((state: RootState) => state.loading.models.userModel);
   const collection = useSelector(store.select.userModel.selectCurrentUserCollection);
-  const getTapeVp = (address: string) => ( tapesAndVpWeights[address] ? tapesAndVpWeights[address] : 0);
+  const getTapeVp = (address: string) => (tapesAndVpWeights[address] ? tapesAndVpWeights[address] : 0);
   return (
     <Stack py={2} data-testid="user-collection-container">
       {!isEmpty(collection?.items) ? (
