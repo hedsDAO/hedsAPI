@@ -1,15 +1,19 @@
 import { BoxProps, Stack } from '@chakra-ui/react';
 import { StepCircle } from './StepCircle';
-import { animated } from 'react-spring';
+import { animated, SpringValues } from 'react-spring';
+
+type IconSpringValues = SpringValues<{ opacity: number }>;
+type DividerSpringValues = SpringValues<{ height: string }>;
+type TextSpringValues = SpringValues<{ color: string }>;
 
 interface StepProps extends BoxProps {
   title: string;
   description: string;
   isLastStep: boolean;
-  dividerProps: Object;
-  dashedProps: Object;
-  checkProps: Object;
-  textProps: Object;
+  dividerProps: DividerSpringValues;
+  dashedProps: IconSpringValues;
+  checkProps: IconSpringValues;
+  textProps: TextSpringValues;
 }
 
 export const Step = (props: StepProps) => {
