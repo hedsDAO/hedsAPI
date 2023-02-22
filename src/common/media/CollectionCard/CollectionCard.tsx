@@ -1,8 +1,8 @@
 import { UserCollectionItem } from '@/models/common';
-import { Center, Divider, Image, Skeleton, Stack, useBoolean } from '@chakra-ui/react';
+import { Center, Divider, Image, Skeleton, Stack, useBoolean, Tag, Text, TagLabel } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const CollectionCard = ({ item, loading }: { item: UserCollectionItem; loading: boolean }) => {
+const CollectionCard = ({ item, tapeVp, loading }: { item: UserCollectionItem; tapeVp: number; loading: boolean }) => {
   const [isImageLoaded, setIsImageLoaded] = useBoolean();
   return (
     <Stack
@@ -26,8 +26,15 @@ const CollectionCard = ({ item, loading }: { item: UserCollectionItem; loading: 
             className="group-hover:saturate-[50%] ease-in-out transition-all object-cover aspect-square rounded-md object-center shadow-md outline-neutral-900 outline-1 outline"
           />
           {item && (
-            <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
-              x{item.quantity}
+            <div>
+              <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
+                x{item.quantity}
+              </div>
+              {tapeVp > 0 && (
+                <div className="text-xs font-bold absolute bottom-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
+                  {tapeVp} HED
+                </div>
+              )}
             </div>
           )}
         </div>
