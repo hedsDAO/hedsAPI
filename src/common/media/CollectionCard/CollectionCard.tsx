@@ -30,12 +30,12 @@ const CollectionCard = ({ item, tapeVp, loading }: { item: UserCollectionItem; t
               <div className="text-xs absolute top-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
                 x{item.quantity}
               </div>
-              {tapeVp > 0 && 
+              {tapeVp > 0 && (
                 <div className="text-xs font-bold absolute bottom-2 right-0 py-0.5 px-2 bg-white bg-opacity-80 rounded-l-lg outline-neutral-900 outline-1 outline">
                   {tapeVp} HED
                 </div>
-              }
-          </div>
+              )}
+            </div>
           )}
         </div>
         <span className="mx-1 font-semibold text-xs font-serif tracking-wide group-hover:text-gray-900 text-gray-600">{item.name}</span>
