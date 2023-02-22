@@ -147,12 +147,12 @@ export const userModel = createModel<RootModel>()({
         this.selectCurrentUserWallet,
         this.selectCurrentUserCollection,
         (role: number, wallet: string, userCollection: UserCollection) => {
-          if (!userCollection.items) {
-            return 0;
-          }
-          const collectionContracts = Object.keys(userCollection?.items);
+          const vpFromArtistWhitelist = role >= UserRoles.ARTIST ? 15 : 0;
+          const vpFromOgWhitelist = whitelist.find((whitelistAdress) => whitelistAdress === wallet.toLowerCase());
+
+          const collectionContracts = Object.keys(userCollection?.items || {});
           if (!collectionContracts.length) {
-            return 0;
+            return vpFromArtistWhitelist ? (vpFromOgWhitelist ? 10 + vpFromArtistWhitelist : vpFromArtistWhitelist) : vpFromOgWhitelist ? 10 : 0;
           }
 
           const filteredContracts = collectionContracts.reduce((results, collectionContract) => {
@@ -173,9 +173,6 @@ export const userModel = createModel<RootModel>()({
               return (totalVp += vpToAdd);
             }
           }, 0);
-
-          const vpFromArtistWhitelist = role === UserRoles.ARTIST ? 15 : 0;
-          const vpFromOgWhitelist = whitelist.find((whitelistAdress) => whitelistAdress === wallet.toLowerCase());
 
           return vpFromOgWhitelist ? 10 + vpFromCollection + vpFromArtistWhitelist : vpFromCollection + vpFromArtistWhitelist;
         },

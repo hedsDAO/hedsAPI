@@ -88,7 +88,7 @@ const UserCard = () => {
             <TagLabel>HED</TagLabel>
             <Tooltip
               label={
-                'hedsPOWER is determined from hedsTAPE(s) ownership. hedsTAPE(s) with a higher ratio of owners to tapes in that collection will have higher hedsPOWER.'
+                'hedsPOWER is determined from hedsTAPE(s) ownership. hedsTAPE(s) with a higher ratio of owners to tapes in that collection will have higher hedsPOWER. An additional way to get hedsPOWER is by becoming a heds artist.'
               }
             >
               <InfoOutlineIcon h={'3'} w={'3'} ml="1" color="gray.500" />
