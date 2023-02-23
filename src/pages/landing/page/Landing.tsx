@@ -1,6 +1,6 @@
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax';
 import { Link } from 'react-router-dom';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Number } from '@/pages/landing/components/Number';
 import { TextBlock } from '@pages/landing/components/TextBlock';
 import { FadeOutDown } from '@pages/landing/components/FadeOutDown';
@@ -20,6 +20,8 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerCloseButton,
+  Button,
+  VStack,
 } from '@chakra-ui/react';
 import { HedsTapeTitle } from '@pages/landing/components/HedstapeTitle';
 import { GridItemImage } from '@pages/landing/components/GridItemImage';
@@ -28,21 +30,39 @@ import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, 
 import { LogoTransform } from '@/pages/landing/components/LogoTransform';
 import hedspin from '@/public/hedspin.gif';
 import hedsBackground from '@/public/hedsbackground.mp4';
+import { NavigationMenu } from '@/pages/landing/components/NavigationMenu';
 
 export const Landing = () => {
-  const parallaxRef = useRef<IParallax>(null);
+  const parallaxRef: React.MutableRefObject<IParallax> = useRef<IParallax>(null);
   const widthBreakpoint: boolean = window.innerWidth < 480;
   const heightBreakpoint: boolean = window.innerHeight < 700;
   const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 5.6 : widthBreakpoint ? 5.3 : 5;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const initDrawerRef: React.MutableRefObject<any> = useRef(null);
 
   return (
     <>
-      <Drawer isOpen={isOpen} onClose={onClose} placement="top" size="full">
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>heds</DrawerHeader>
-          <DrawerBody>nav</DrawerBody>
+      <Drawer initialFocusRef={initDrawerRef} isOpen={isOpen} onClose={onClose} placement="top" size="full">
+        <DrawerContent ref={initDrawerRef} backgroundColor="#000000" color="#FFFFFF" fontFamily={'"Space Mono", monospace'}>
+          <DrawerHeader display="flex" justifyContent="center">
+            <Button border="none" variant="ghost" onClick={() => onClose()}>
+              X
+            </Button>
+            <DrawerCloseButton />
+          </DrawerHeader>
+          <DrawerBody>
+            <VStack spacing={4} fontSize={['3xl', 'null', '5xl']}>
+              <Box>
+                <Link to="/explore">Explore</Link>
+              </Box>
+              <Box>
+                <Link to="/tapes">Tapes</Link>
+              </Box>
+              <Box>
+                <Link to="/artists">Artists</Link>
+              </Box>
+            </VStack>
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
       <Parallax className="top-div" pages={parallaxPages} style={{ top: '0', left: '0', height: '100vh', position: 'fixed' }} ref={parallaxRef}>
