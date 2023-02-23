@@ -15,6 +15,7 @@ const Mint = () => {
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.hedstapeModel.selectMint);
   const premint = useSelector(store.select.hedstapeModel.selectPremint);
+  const premintStart = DateTime.fromMillis(premint.start);
   const start = DateTime.fromMillis(mint.start);
   const end = DateTime.fromMillis(mint.end);
   const openSeaLink = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
@@ -31,7 +32,7 @@ const Mint = () => {
       ) : mint.status === TimelineStatus.OPEN ? (
         <OpenDateBox end={mint.end} />
       ) : (
-        <UpcomingDateBox start={start} />
+        <UpcomingDateBox start={premintStart ? premintStart : start} />
       )}
       <Flex mt={4} gap={2}>
         {mint.status === TimelineStatus.OPEN || premint.status === TimelineStatus.OPEN ? (
