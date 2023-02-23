@@ -10,9 +10,9 @@ import { GridItemImage } from '@pages/landing/components/GridItemImage';
 import { Stepper } from '@pages/landing/components/Stepper';
 import { IconDeviceAudioTape, IconHeadphones, IconIcons, IconTicket, IconUsers, IconWallet } from '@tabler/icons';
 import { LogoTransform } from '@/pages/landing/components/LogoTransform';
+import { NavigationMenu } from '@/pages/landing/components/NavigationMenu';
 import hedspin from '@/public/hedspin.gif';
 import hedsBackground from '@/public/hedsbackground.mp4';
-import { NavigationMenu } from '@/pages/landing/components/NavigationMenu';
 
 export const Landing = () => {
   const parallaxRef: React.MutableRefObject<IParallax> = useRef<IParallax>(null);
@@ -175,7 +175,7 @@ export const Landing = () => {
         </ParallaxLayer>
 
         {/* Section 4 */}
-        <ParallaxLayer offset={widthBreakpoint ? 2.2 : 2.5} speed={0.2}>
+        <ParallaxLayer offset={2} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'end' }}>
           <Divider />
           <Stack direction={['column', 'row']} divider={<StackDivider borderColor="gray.400" />} h={['70%', '30%']} w="100vw">
             <Box
@@ -232,7 +232,7 @@ export const Landing = () => {
               </Grid>
             </Box>
           </Stack>
-          <Center marginTop={['-2rem', '1rem']}>
+          <Center padding="1rem" marginTop={['-2rem', '1rem']}>
             <Box
               as="button"
               p={4}

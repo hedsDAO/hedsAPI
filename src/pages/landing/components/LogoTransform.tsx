@@ -13,5 +13,5 @@ export const LogoTransform = ({ parallaxRef, width }: any) => {
       }
     },
   });
-  return <animated.img style={props} src={hedsLogo} />;
+  return <animated.img style={{ ...props, cursor: 'pointer' }} src={hedsLogo} />;
 };
