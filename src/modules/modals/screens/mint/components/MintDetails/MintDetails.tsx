@@ -40,9 +40,7 @@ const PreMintPrice = ({ tapeId, premintStatus }: { tapeId: string; premintStatus
   const isSecretGarden = tapeId === 'secretgarden';
 
   return (
-    <Tooltip label={ERC_TOKEN_DESCRIPTION}>
-      <LabelBadge label={PRICE_LABEL} text={isSecretGarden ? (premintStatus ? '0.03' : '0.05') : premintStatus ? '0.02' : '0.03'} textColor={'green.600'} />
-    </Tooltip>
+    <LabelBadge label={PRICE_LABEL} text={isSecretGarden ? (premintStatus ? '0.03' : '0.05') : premintStatus ? '0.02' : '0.03'} textColor={'green.600'} />
   );
 };
 
