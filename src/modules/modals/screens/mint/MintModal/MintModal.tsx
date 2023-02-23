@@ -1,17 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Flex, useBoolean } from '@chakra-ui/react';
+import { Dispatch, RootState } from '@/store';
+
+// Components
+import { PrimaryButton, SecondaryButton } from '@/common/buttons';
+import { ModalContainer, ModalHeader } from '@/modules/modals/components';
+import { IconDisc } from '@tabler/icons';
+import { MintDetails, TapeCover, TapeNameAndCurator, TransactionProgress } from '../components';
+
+// Utils
+import { MINT_MODAL_TITLE } from '../models/constants';
+import { LanyardMerkleProofProvider } from '@soundxyz/sdk/merkle/lanyard';
+import { SoundAPI } from '@soundxyz/sdk/api';
 import { EditionConfig, MintConfig, SoundClient } from '@soundxyz/sdk';
 import { contractAddresses } from '@soundxyz/sound-protocol';
 import { ContractTransaction } from 'ethers';
 import { useAccount, useConnect } from 'wagmi';
 import { mainnet, goerli } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { PrimaryButton, SecondaryButton } from '@/common/buttons';
-import { ModalContainer, ModalHeader } from '@/modules/modals/components';
-import { Dispatch, RootState } from '@/store';
-import { Flex, useBoolean } from '@chakra-ui/react';
-import { IconDisc } from '@tabler/icons';
-import { MINT_MODAL_TITLE } from '../models/constants';
-import { MintDetails, TapeCover, TapeNameAndCurator, TransactionProgress } from '../components';
 
 const MintModal = () => {
   const [isMinting, setIsMinting] = useBoolean(false);
@@ -26,24 +32,32 @@ const MintModal = () => {
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
     console.log(signer);
-    const client = SoundClient({ signer });
+    const client = SoundClient({
+      merkleProvider: LanyardMerkleProofProvider,
+      signer,
+      soundAPI: SoundAPI({
+        apiKey: '3ca9ceee-35f2-4db0-8277-fc1fc553484a',
+      }),
+    });
     const editionAddress = '0x10c9b5B84c6F490972464946033835F098591Cfe';
     const mintSchedule = (await client.activeMintSchedules({ editionAddress })).shift();
     console.log(mintSchedule);
     if (!mintSchedule) throw Error(`No active mint schedule available!`);
 
     // Transaction
-    const mintTransaction = await (await client.mint({
-      mintSchedule,
-      quantity,
-    })).wait();
+    const mintTransaction = await (
+      await client.mint({
+        mintSchedule,
+        quantity,
+      })
+    ).wait();
     console.log(await mintTransaction);
     return mintTransaction;
   };
 
   const handleMintStatus = async (quantity: number) => {
     setIsMinting.on();
-     await mintEdition(quantity);
+    await mintEdition(quantity);
     setIsMinting.off();
   };
 
