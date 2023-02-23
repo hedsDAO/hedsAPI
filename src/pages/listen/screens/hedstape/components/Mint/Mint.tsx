@@ -1,13 +1,17 @@
-import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { Dispatch, store } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+// Components
+import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { Button, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
-import { DateTime } from 'luxon';
-import { useDispatch, useSelector } from 'react-redux';
-import { TimelineStatus } from '@/pages/listen/screens/hedstape/models/common';
 import { ClosedDateBox, OpenDateBox, UpcomingDateBox } from '@/common/timeline';
 import { Modals } from '@/modules/modals/store/modalModel';
-import { useParams } from 'react-router-dom';
+
+// Utils
+import { TimelineStatus } from '@/pages/listen/screens/hedstape/models/common';
+import { DateTime } from 'luxon';
 import * as gaEvents from '@/events';
 
 const Mint = () => {
@@ -31,8 +35,10 @@ const Mint = () => {
         <ClosedDateBox start={start} end={end} />
       ) : mint.status === TimelineStatus.OPEN ? (
         <OpenDateBox end={mint.end} />
+      ) : premint.status === TimelineStatus.OPEN ? (
+        <UpcomingDateBox start={start} />
       ) : (
-        <UpcomingDateBox start={premintStart ? premintStart : start} />
+        <UpcomingDateBox start={premintStart} />
       )}
       <Flex mt={4} gap={2}>
         {mint.status === TimelineStatus.OPEN || premint.status === TimelineStatus.OPEN ? (
@@ -44,12 +50,13 @@ const Mint = () => {
                 gaEvents.clickMintButton(`${tape}/${id}`);
               }}
               border={'solid 1px'}
-              borderColor="green.200"
-              bg="green.100"
+              borderColor={premint.status === TimelineStatus.CLOSED ? 'gray.400' : 'green.200'}
+              bg={premint.status === TimelineStatus.CLOSED ? 'gray.300' : 'green.100'}
               leftIcon={premint.status === TimelineStatus.OPEN ? <LockOpenIcon height="14" width="14" /> : <LockClosedIcon height="14" width="14" />}
               size={'sm'}
               pr={3}
               isDisabled={premint.status !== TimelineStatus.OPEN}
+              _hover={premint.status === TimelineStatus.CLOSED ? { bg: 'gray.300' } : { bg: 'green.300' }}
             >
               Pre-Mint
             </Button>
@@ -60,12 +67,13 @@ const Mint = () => {
                 gaEvents.clickMintButton(`${tape}/${id}`);
               }}
               border={'solid 1px'}
-              borderColor="green.200"
-              bg="green.100"
+              borderColor={mint.status === TimelineStatus.OPEN ? 'green.200' : 'gray.400'}
+              bg={mint.status === TimelineStatus.OPEN ? 'green.100' : 'gray.300'}
               leftIcon={mint.status === TimelineStatus.OPEN ? <LockOpenIcon height="14" width="14" /> : <LockClosedIcon height="14" width="14" />}
               size={'sm'}
               pr={3}
               isDisabled={mint.status !== TimelineStatus.OPEN}
+              _hover={mint.status === TimelineStatus.OPEN ? { bg: 'green.300' } : { bg: 'gray.300' }}
             >
               Mint
             </Button>
