@@ -70,13 +70,12 @@ const MintModal = () => {
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>Back</SecondaryButton>
         <Flex gap={3} alignItems="center">
           {isMinting && <TransactionProgress />}
-          <Select placeholder='Quantity'>
+          <Select onChange={(e) => setValue(parseInt(e.target.value))} size='sm'>
             <option value='option1'>1</option>
             <option value='option2'> 2</option>
             <option value='option3'>3</option>
             <option value='option2'>4</option>
             <option value='option3'>5</option>
-
           </Select>
           {/* <NumberInput min={1} max={5} value={value.toString()} onChange={(val) => setValue(parseInt(val))} maxW={20} size="sm">
             <NumberInputField />
