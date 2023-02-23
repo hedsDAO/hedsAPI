@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { Dispatch, RootState, store } from '@/store';
-import { Flex, useBoolean, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react';
+import { Flex, useBoolean, Select, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react';
 import { IconDisc } from '@tabler/icons';
 import { MintDetails, TapeCover, TapeNameAndCurator, TransactionProgress } from '../components';
 
@@ -36,7 +36,8 @@ const MintModal = () => {
     const signer = await connector?.getSigner();
     console.log(signer);
     const client = SoundClient({ signer });
-    const editionAddress = contract;
+    const editionAddress = contract.toLowerCase();
+    console.log(editionAddress)
     const mintSchedule = (await client.activeMintSchedules({ editionAddress })).shift();
     console.log(mintSchedule);
     if (!mintSchedule) throw Error(`No active mint schedule available!`);
@@ -69,13 +70,21 @@ const MintModal = () => {
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>Back</SecondaryButton>
         <Flex gap={3} alignItems="center">
           {isMinting && <TransactionProgress />}
-          <NumberInput min={1} max={5} value={value.toString()} onChange={(val) => setValue(parseInt(val))} maxW={20} size="sm">
+          <Select placeholder='Quantity'>
+            <option value='option1'>1</option>
+            <option value='option2'> 2</option>
+            <option value='option3'>3</option>
+            <option value='option2'>4</option>
+            <option value='option3'>5</option>
+
+          </Select>
+          {/* <NumberInput min={1} max={5} value={value.toString()} onChange={(val) => setValue(parseInt(val))} maxW={20} size="sm">
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
             </NumberInputStepper>
-          </NumberInput>
+          </NumberInput> */}
           <PrimaryButton onClick={handleMintStatus}>Mint</PrimaryButton>
         </Flex>
       </Flex>
