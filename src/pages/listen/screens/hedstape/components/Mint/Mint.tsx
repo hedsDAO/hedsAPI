@@ -1,6 +1,6 @@
 import { ClosedBadge, OpenBadge, UpcomingBadge } from '@/common/badges';
 import { Dispatch, store } from '@/store';
-import { Box, Button, Flex, IconButton, Link, Text } from '@chakra-ui/react';
+import { Button, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 import { DateTime } from 'luxon';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +14,12 @@ const Mint = () => {
   const { tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.hedstapeModel.selectMint);
+  const premint = useSelector(store.select.hedstapeModel.selectPremint);
+  const premintStart = DateTime.fromMillis(premint.start);
   const start = DateTime.fromMillis(mint.start);
   const end = DateTime.fromMillis(mint.end);
   const openSeaLink = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
+
   return (
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
@@ -29,50 +32,70 @@ const Mint = () => {
       ) : mint.status === TimelineStatus.OPEN ? (
         <OpenDateBox end={mint.end} />
       ) : (
-        <UpcomingDateBox start={start} />
+        <UpcomingDateBox start={premintStart ? premintStart : start} />
       )}
       <Flex mt={4} gap={2}>
-        {mint.status === TimelineStatus.CLOSED ? (
-          <>
-            <Button rounded={'sm'} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
-              Mint Closed
+        {mint.status === TimelineStatus.OPEN || premint.status === TimelineStatus.OPEN ? (
+          <Stack direction="row" spacing={4}>
+            <Button
+              onClick={() => {
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+                gaEvents.clickMintButton(`${tape}/${id}`);
+              }}
+              border={'solid 1px'}
+              borderColor="green.200"
+              bg="green.100"
+              leftIcon={premint.status === TimelineStatus.OPEN ? <LockOpenIcon height="14" width="14" /> : <LockClosedIcon height="14" width="14" />}
+              size={'sm'}
+              pr={3}
+              isDisabled={premint.status !== TimelineStatus.OPEN}
+            >
+              Pre-Mint
             </Button>
             <Button
               onClick={() => {
-                gaEvents.clickLinkToOpenseaNextToMintButton(`${tape}/${id}`);
+                dispatch.modalModel.setModal(Modals.MINT_MODAL);
+                dispatch.modalModel.setModalOpen(true);
+                gaEvents.clickMintButton(`${tape}/${id}`);
               }}
-              target="_blank"
-              as={Link}
-              href={openSeaLink?.length > 0 && openSeaLink}
-              rounded={'sm'}
               border={'solid 1px'}
-              borderColor="blue.100"
-              bg="blue.50"
-              leftIcon={<i className="fak fa-opensea text-xs" />}
+              borderColor="green.200"
+              bg="green.100"
+              leftIcon={mint.status === TimelineStatus.OPEN ? <LockOpenIcon height="14" width="14" /> : <LockClosedIcon height="14" width="14" />}
               size={'sm'}
               pr={3}
+              isDisabled={mint.status !== TimelineStatus.OPEN}
             >
-              OpenSea
+              Mint
             </Button>
-          </>
-        ) : mint.status === TimelineStatus.OPEN ? (
-          <Button
-            onClick={() => {
-              dispatch.modalModel.setModal(Modals.MINT_MODAL);
-              dispatch.modalModel.setModalOpen(true);
-              gaEvents.clickMintButton(`${tape}/${id}`);
-            }}
-            border={'solid 1px'}
-            borderColor="green.200"
-            bg="green.100"
-            leftIcon={<LockOpenIcon height="14" width="14" />}
-            size={'sm'}
-            pr={3}
-          >
-            Mint
-          </Button>
+          </Stack>
         ) : (
-          <></>
+          mint.status === TimelineStatus.CLOSED &&
+          premint.status === TimelineStatus.CLOSED && (
+            <Stack direction="row" spacing={4}>
+              <Button rounded={'sm'} disabled leftIcon={<LockClosedIcon height="14" width="14" />} size={'sm'} pr={3}>
+                Mint Closed
+              </Button>
+              <Button
+                onClick={() => {
+                  gaEvents.clickLinkToOpenseaNextToMintButton(`${tape}/${id}`);
+                }}
+                target="_blank"
+                as={Link}
+                href={openSeaLink?.length > 0 && openSeaLink}
+                rounded={'sm'}
+                border={'solid 1px'}
+                borderColor="blue.100"
+                bg="blue.50"
+                leftIcon={<i className="fak fa-opensea text-xs" />}
+                size={'sm'}
+                pr={3}
+              >
+                OpenSea
+              </Button>
+            </Stack>
+          )
         )}
       </Flex>
     </div>
