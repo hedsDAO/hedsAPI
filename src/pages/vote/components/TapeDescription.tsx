@@ -1,84 +1,87 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { store } from '@/store';
+
+// Components
+import { Badge, Box, Button, Flex, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { ExternalLinkIcon, InfoIcon } from '@chakra-ui/icons';
+
+// Models
 import { ProposalState } from 'hedsvote';
-import { formatWallet } from '@/utils';
-import { Avatar, Box, Badge, Divider, Flex, HStack, Stack, Square, Text } from '@chakra-ui/react';
-import { OLD_TAPES, HOW_VOTING_WORKS, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
 
-interface OwnProps {
-  tapeImage: string;
-  tapeId?: string;
-}
+// Constants
+import { OLD_TAPES, ABOUT_VOTING, ABOUT_VOTING_HT6, ABOUT_VOTING_OLD_TAPES } from '@pages/vote/store/constants';
+import { OpenDateBox } from '@/common/timeline';
 
-export const TapeDescription = ({ tapeImage, tapeId }: OwnProps) => {
+export const TapeDescription = () => {
+  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
+  const { space, tape, id } = useParams();
+  const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const proposal = useSelector(store.select.voteModel.selectProposal);
+  const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
+  const timeline = allTapes?.[tape]?.[id]?.timeline;
+
+  const isOldTape = OLD_TAPES.includes(id);
+  const isHedsTAPE06 = id === '6';
 
   const handleProposalState = (state: ProposalState) => {
-    if (state === ProposalState.OPEN) return <Badge colorScheme={'green'}>OPEN</Badge>;
-    if (state === ProposalState.CLOSED) return <Badge colorScheme={'red'}>CLOSED</Badge>;
-    return <Badge colorScheme={'yellow'}>PENDING</Badge>;
+    if (state === ProposalState.OPEN) return <OpenDateBox end={timeline?.vote?.end} />;
+    if (state === ProposalState.CLOSED)
+      return (
+        <Badge px={2} py={1} borderRadius="sm" colorScheme={'red'}>
+          CLOSED
+        </Badge>
+      );
+    return (
+      <Badge px={2} py={1} borderRadius="sm" colorScheme={'yellow'}>
+        PENDING
+      </Badge>
+    );
   };
 
-  const isOldTape = OLD_TAPES.includes(tapeId);
-  const isHedsTAPE06 = tapeId === '6';
-
   return (
-    <Flex w="100%" flexDirection={{ base: 'column', md: 'row' }} justifyContent="space-evenly">
-      <Box
-        bg={'blackAlpha.100'}
-        _hover={{ bg: 'white', borderColor: 'gray.800' }}
-        border={'1px'}
-        borderColor={'gray.600'}
-        rounded="sm"
-        boxShadow={'sm'}
-        borderRadius="lg"
-        p={{ base: '2', md: '4' }}
-        w={{ base: '100%', md: '45%' }}
-      >
-        <Stack p={3} spacing="5">
-          <Stack spacing="1">
-            <Text fontSize="lg" fontWeight="medium">
-              Details
-            </Text>
-            <Text fontSize="xs" color="muted">
-              {proposal?.description}
-            </Text>
-          </Stack>
-          <Box bg="white" border="1px" borderColor="gray.800" borderWidth={'1px'} p={{ base: '3', md: '4' }} borderRadius="lg">
-            <Stack justify="space-between" direction={{ base: 'column', md: 'row' }} spacing="5">
-              <HStack spacing="3">
-                <Square borderRadius="lg">
-                  <Avatar src={tapeImage} />
-                </Square>
-                <Box fontSize="sm">
-                  <Text color="emphasized" fontWeight="medium">
-                    {proposal?.author && formatWallet(proposal?.author)}
-                  </Text>
-                  {handleProposalState(proposal?.state)}
-                </Box>
-              </HStack>
-            </Stack>
-          </Box>
+    <Stack>
+      <Stack direction="row">
+        <Skeleton rounded="2xl" isLoaded={hasImageLoaded}>
+          <Image borderRadius="full" boxSize="4rem" shadow="sm" src={currentTape?.image} alt="Tape Image" onLoad={setHasImageLoaded.on} />
+        </Skeleton>
+        <Stack justifyContent={'center'} spacing="-0.25rem" pl="2px">
+          <Text fontSize="1.5rem" fontFamily={"'Space Mono', monospace"}>
+            {currentTape?.name}
+          </Text>
+          <Button
+            bg="none"
+            size="xs"
+            fontFamily={"'Space Mono', monospace"}
+            fontWeight="light"
+            px="0.5"
+            w="fit-content"
+            justifyContent="flex-start"
+            rightIcon={<ExternalLinkIcon />}
+            _hover={{ textDecoration: 'underline' }}
+            as={Link}
+            to={`/listen/${space}/${tape}/${id}`}
+          >
+            view tape
+          </Button>
         </Stack>
-      </Box>
-      <Box
-        bg="white"
-        border="1px"
-        borderColor="gray.800"
-        borderWidth={'1px'}
-        p={{ base: '5', md: '4' }}
-        borderRadius="lg"
-        w={{ base: '100%', md: '45%' }}
-        mt={{ base: '16px', md: '0' }}
-      >
-        <Text fontSize="lg" fontWeight="medium">
-          {HOW_VOTING_WORKS}
-        </Text>
-        <Divider borderColor="gray.700" w="full" py={{ base: '1', md: '2' }} />
-        <Text fontSize="xs" color="muted" pt="2">
-          {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}
-        </Text>
-      </Box>
-    </Flex>
+      </Stack>
+      <Text fontSize="sm" fontWeight="semibold" pt={5}>
+        Description
+      </Text>
+      <Text fontSize="xs"> {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}</Text>
+      {proposal?.state === ProposalState.OPEN ? (
+        <Flex mt={4} p={2} border={'1px'} borderColor={'gray.300'} rounded="sm" gap={2} alignItems={'center'} bg="gray.100">
+          <InfoIcon height="3.5" width="3.5" />
+          <Text letterSpacing={'wide'} fontSize="2xs">
+            Results will be public after the voting period ends.
+          </Text>
+        </Flex>
+      ) : (
+        <Text></Text>
+      )}
+      <Box pt={2}>{handleProposalState(proposal?.state)}</Box>
+    </Stack>
   );
 };
