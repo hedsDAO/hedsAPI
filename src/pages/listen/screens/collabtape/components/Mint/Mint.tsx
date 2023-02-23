@@ -12,6 +12,8 @@ const Mint = () => {
   const zone = { zone: 'GMT' };
   const dispatch = useDispatch<Dispatch>();
   const mint = useSelector(store.select.collabModel.selectMint);
+  const premint = useSelector(store.select.collabModel.selectPremint);
+  const premintStart = DateTime.fromMillis(premint.start, zone);
   const start = DateTime.fromMillis(mint.start, zone);
   const end = DateTime.fromMillis(mint.end, zone);
 
@@ -27,7 +29,7 @@ const Mint = () => {
       ) : mint.status === TimelineStatus.OPEN ? (
         <OpenDateBox end={mint.end} />
       ) : (
-        <UpcomingDateBox start={start} />
+        <UpcomingDateBox start={premintStart ? premintStart : start} />
       )}
       <Flex mt={4} gap={2}>
         {mint.status === TimelineStatus.CLOSED ? (
