@@ -9,8 +9,8 @@ import { store } from '@/store';
 
 const MintDetails = () => {
   const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
-  const tapeId = useSelector(store.select.tapesModel.selectCurrentTapeId);
-  const premintStatus = useSelector(store.select.tapesModel.selectCurrentTapePreMintStatus);
+  const tapeId: string = useSelector(store.select.tapesModel.selectCurrentTapeId);
+  const premintStatus: boolean = useSelector(store.select.tapesModel.selectCurrentTapePreMintStatus);
   const { data, isLoading, refetch, isRefetching } = useContractRead({
     address: contract as `0x${string}`,
     abi: erc721ABI,
@@ -19,15 +19,7 @@ const MintDetails = () => {
   return (
     <Fragment>
       <Flex justifyContent={'center'} mt={2} gap={2} direction={'row'} alignItems={'center'}>
-        {tapeId === 'secretgarden' ? (
-          <LabelBadge label={PRICE_LABEL} text={'0.03'} textColor={'green.600'} />
-        ) : tapeId === 'secretgarden' && !premintStatus ? (
-          <LabelBadge label={PRICE_LABEL} text={'0.05'} textColor={'green.600'} />
-        ) : (
-          <Tooltip label={ERC_TOKEN_DESCRIPTION}>
-            <LabelBadge label={PRICE_LABEL} text={PRICE_VALUE} textColor={'green.600'} />
-          </Tooltip>
-        )}
+        <PreMintPrice tapeId={tapeId} premintStatus={premintStatus} />
         <LabelBadge label={MINTED_LABEL} text={isRefetching ? '...' : data?._isBigNumber ? data?.toNumber().toString() : '0'} textColor={'blue.600'} />
         <Button
           leftIcon={<IconRefresh height="12" width="12" />}
@@ -44,10 +36,12 @@ const MintDetails = () => {
   );
 };
 
-const PreMintPrice = ({ premintStatus }: { premintStatus: boolean }) => (
-  <Tooltip label={ERC_TOKEN_DESCRIPTION}>
-    <LabelBadge label={PRICE_LABEL} text={premintStatus ? '0.03' : '0.05'} textColor={'green.600'} />
-  </Tooltip>
-);
+const PreMintPrice = ({ tapeId, premintStatus }: { tapeId: string; premintStatus: boolean }) => {
+  const isSecretGarden = tapeId === 'secretgarden';
+
+  return (
+    <LabelBadge label={PRICE_LABEL} text={isSecretGarden ? (premintStatus ? '0.03' : '0.05') : premintStatus ? '0.02' : '0.03'} textColor={'green.600'} />
+  );
+};
 
 export default MintDetails;

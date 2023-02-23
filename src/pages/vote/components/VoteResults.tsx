@@ -16,8 +16,8 @@ import { OLD_TAPES } from '@pages/vote/store/constants';
 
 export const VoteResults = () => {
   const { id } = useParams();
-  const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const [isShowingAllResults, setIsShowingAllResults] = useBoolean();
+  const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const isOldTape = OLD_TAPES.includes(id);
 

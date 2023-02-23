@@ -1,47 +1,48 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-
-// Utils
-import { Dispatch, RootState, store } from '@/store';
-import { isEmpty } from '@/utils';
+import { Dispatch, store } from '@/store';
 
 // Components
-import { Box, Container, VStack } from '@chakra-ui/react';
-import { VoteChoices } from '../components/VoteChoices';
-import { VoteAudioTrack } from '../components/VoteAudioTrack';
+import { TapeBanner } from '../components/TapeBanner';
 import { TapeDescription } from '../components/TapeDescription';
-import { TapeHeader } from '../components/TapeHeader';
+import { VoteAudioTrack } from '../components/VoteAudioTrack';
+import { Submissions } from '../components/Submissions';
+import { VoteResults } from '../components/VoteResults';
+import { Container, Box, Flex } from '@chakra-ui/react';
+import { CastVoteContainer } from '../components/CastVoteContainer';
+
+// Models
+import { ProposalState } from 'hedsvote';
 
 export const TapeDetails = () => {
   const { space, tape, id } = useParams();
   const dispatch = useDispatch<Dispatch>();
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
-  const proposal = useSelector(store.select.voteModel.selectProposal);
-  const currentTrack = useSelector(store.select.voteModel.selectCurrentTrack);
-  const isLoadingProposal = useSelector((state: RootState) => state.loading.effects.voteModel.getProposal);
+  const proposalState = useSelector(store.select.voteModel.selectProposalState);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    if (space && tape && id && allTapes?.[tape]?.[id]?.proposalId && !isLoadingProposal) {
+    if (space && tape && id && allTapes?.[tape]?.[id]?.proposalId) {
       const currentTape = allTapes[tape][id];
       dispatch.voteModel.getProposal(currentTape?.proposalId);
     }
   }, [space, tape, id, allTapes]);
 
   return (
-    <Box minH="100vh">
-      <Container maxW="6xl">
-        <VStack spacing={{ base: '4em', md: '3em' }} align="stretch">
-          {!isEmpty(allTapes) && <TapeHeader />}
-          <TapeDescription tapeImage={allTapes?.[tape]?.[id]?.image} tapeId={id} />
-          {currentTrack?.media?.length && !isLoadingProposal && <VoteAudioTrack />}
-          {proposal?.signature && <VoteChoices />}
-        </VStack>
-      </Container>
-    </Box>
+    <Container maxW="100%">
+      <Box px={{ base: 2, lg: 4 }} pb={10} pt={5} maxW="7xl" mx="auto">
+        <TapeBanner />
+        <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: 8, lg: 10 }}>
+          <Box maxW={{ lg: '25%' }} minW={{ lg: '25%' }} w={{ lg: '25%' }}>
+            <TapeDescription />
+            {proposalState === ProposalState.CLOSED ? <VoteResults /> : <CastVoteContainer />}
+          </Box>
+          <Box maxW={{ lg: '75%' }} minW={{ lg: '75%' }} w={{ lg: '75%' }}>
+            <VoteAudioTrack />
+            <Submissions />
+          </Box>
+        </Flex>
+      </Box>
+    </Container>
   );
 };
