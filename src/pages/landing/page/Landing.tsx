@@ -16,9 +16,9 @@ import hedsBackground from '@/public/hedsbackground.mp4';
 
 export const Landing = () => {
   const parallaxRef: React.MutableRefObject<IParallax> = useRef<IParallax>(null);
-  const widthBreakpoint: boolean = window.innerWidth < 480;
-  const heightBreakpoint: boolean = window.innerHeight < 700;
-  const parallaxPages: number = widthBreakpoint && heightBreakpoint ? 5.6 : widthBreakpoint ? 5.3 : 5;
+  const underWidthBreakpoint: boolean = window.innerWidth < 480;
+  const underHeightBreakpoint: boolean = window.innerHeight < 700;
+  const parallaxPages: number = underWidthBreakpoint && underHeightBreakpoint ? 5.6 : underWidthBreakpoint ? 5.3 : 5;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initDrawerRef: React.MutableRefObject<any> = useRef(null);
 
@@ -46,7 +46,7 @@ export const Landing = () => {
         />
 
         <ParallaxLayer
-          offset={widthBreakpoint ? 1.6 : 2}
+          offset={underWidthBreakpoint ? 1.6 : 2}
           style={{
             backgroundColor: '#e3e2d4',
             height: '20%',
@@ -54,11 +54,11 @@ export const Landing = () => {
         />
 
         <ParallaxLayer
-          offset={widthBreakpoint ? 1.99 : 2.35}
-          speed={widthBreakpoint ? 0.3 : 0.5}
+          offset={underWidthBreakpoint ? 1.99 : 2.35}
+          speed={underWidthBreakpoint ? 0.3 : 0.5}
           style={{
             backgroundColor: '#493e68',
-            height: widthBreakpoint ? '100%' : '80%',
+            height: underWidthBreakpoint ? '100%' : '80%',
           }}
         />
 
@@ -81,7 +81,7 @@ export const Landing = () => {
           }}
         >
           <Flex onClick={onOpen} align="start" justify="center">
-            <LogoTransform parallaxRef={parallaxRef} width={widthBreakpoint ? '300px' : '600px'} />
+            <LogoTransform parallaxRef={parallaxRef} width={underWidthBreakpoint ? '300px' : '600px'} />
           </Flex>
         </ParallaxLayer>
 
@@ -162,7 +162,7 @@ export const Landing = () => {
 
         {/* Section 3 */}
         <ParallaxLayer
-          offset={widthBreakpoint ? 1.65 : 2}
+          offset={underWidthBreakpoint ? 1.65 : 2}
           speed={0.2}
           style={{
             display: 'flex',
@@ -175,7 +175,7 @@ export const Landing = () => {
           <HedsTapeTitle />
         </ParallaxLayer>
 
-        <ParallaxLayer offset={widthBreakpoint ? 1.99 : 2.35} speed={widthBreakpoint ? 0.3 : 0.5}>
+        <ParallaxLayer offset={underWidthBreakpoint ? 1.99 : 2.35} speed={underWidthBreakpoint ? 0.3 : 0.5}>
           <Container marginTop={['-20%', '-15%']} maxW={['70%', '50%']}>
             <img src={hedspin} />
           </Container>
