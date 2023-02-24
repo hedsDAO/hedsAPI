@@ -89,11 +89,11 @@ const MintModal = () => {
         <Flex gap={3} alignItems="center">
           {isMinting && <TransactionProgress />}
           <Select onChange={(e) => setValue(parseInt(e.target.value))} size="sm" disabled={!isWhiteListed}>
-            <option value="option1">1</option>
-            <option value="option2"> 2</option>
-            <option value="option3">3</option>
-            <option value="option2">4</option>
-            <option value="option3">5</option>
+            <option value="1">1</option>
+            <option value="2"> 2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </Select>
           <PrimaryButton onClick={handleMintStatus} disabled={!isWhiteListed}>
             Mint
