@@ -176,7 +176,7 @@ export const Landing = () => {
         </ParallaxLayer>
 
         <ParallaxLayer offset={underWidthBreakpoint ? 1.99 : 2.35} speed={underWidthBreakpoint ? 0.3 : 0.5}>
-          <Container marginTop={['-20%', '-15%']} maxW={['70%', '50%']}>
+          <Container marginTop={['-20%', '-10%']} maxW={['70%', '40%']}>
             <img src={hedspin} />
           </Container>
         </ParallaxLayer>
