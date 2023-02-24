@@ -48,7 +48,6 @@ const MintModal = () => {
 
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
-    console.log(signer);
     const client = SoundClient({
       merkleProvider: LanyardMerkleProofProvider,
       signer,
