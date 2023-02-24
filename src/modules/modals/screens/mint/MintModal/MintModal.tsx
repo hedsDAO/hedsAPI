@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState, store } from '@/store';
 
 // Components
-import { Flex, useBoolean, Select, Tooltip } from '@chakra-ui/react';
+import { Flex, useBoolean, Select, Tooltip, useToast } from '@chakra-ui/react';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { IconDisc } from '@tabler/icons';
@@ -22,6 +22,7 @@ import axios from 'axios';
 import { MINT_MODAL_TITLE } from '../models/constants';
 
 const MintModal = () => {
+  const toast = useToast()
   const dispatch = useDispatch<Dispatch>();
   const [value, setValue] = useState<number>(1);
   const [isMinting, setIsMinting] = useBoolean(false);
@@ -73,6 +74,15 @@ const MintModal = () => {
     setIsMinting.on();
     await mintEdition(value);
     setIsMinting.off();
+    toast({
+      title: "hedsTAPE 11 Minted",
+      description: "You have successfully minted hedsTAPE 11",
+      status: "success",
+      duration: 7000,
+      position: "top-right",
+      isClosable: true,
+    })
+    dispatch.modalModel.setModalOpen(false);
   };
 
   return (
