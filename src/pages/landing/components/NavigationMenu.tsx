@@ -1,4 +1,4 @@
-import { VStack, Box, IconButton, Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerCloseButton } from '@chakra-ui/react';
+import { VStack, Box, IconButton, Drawer, DrawerContent, DrawerHeader, DrawerBody } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { CloseIcon } from '@chakra-ui/icons';
 

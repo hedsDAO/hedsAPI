@@ -57,7 +57,11 @@ export const Landing = () => {
             backgroundColor: '#493e68',
             height: widthBreakpoint ? '100%' : '80%',
           }}
-        />
+        >
+          <Container marginTop={['-20%', '-15%']} maxW={['70%', '50%']}>
+            <img src={hedspin} />
+          </Container>
+        </ParallaxLayer>
         <ParallaxLayer
           offset={3}
           style={{
@@ -169,9 +173,6 @@ export const Landing = () => {
           }}
         >
           <HedsTapeTitle />
-          <Container maxW={['60%', '50%', '40%']}>
-            <img src={hedspin} />
-          </Container>
         </ParallaxLayer>
 
         {/* Section 4 */}
