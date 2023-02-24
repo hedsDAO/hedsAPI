@@ -168,8 +168,8 @@ export const Landing = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'start',
             height: '20%',
-            marginTop: '3em',
           }}
         >
           <HedsTapeTitle />
