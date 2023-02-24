@@ -170,6 +170,7 @@ export const Landing = () => {
             alignItems: 'center',
             justifyContent: 'start',
             height: '20%',
+            marginTop: underWidthBreakpoint ? '3rem' : '0',
           }}
         >
           <HedsTapeTitle />
