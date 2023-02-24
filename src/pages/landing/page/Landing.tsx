@@ -227,7 +227,7 @@ export const Landing = () => {
                   <Number inputNum={420} dollar size={['3rem', null, '4rem', '8rem']} />
                 </GridItem>
                 <GridItem rowSpan={2} colSpan={1}>
-                  <Center h="100%" textAlign={[null, 'right']} fontSize={['xs', 'sm', 'md']} padding={['1px', '3px']}>
+                  <Center h="100%" textAlign={[null, 'right']} fontSize={['xs', 'sm', 'md']} padding={['1rem', '2rem']}>
                     SELECTED ARTISTS GET ACCESS TO EXCLUSIVE HEDS SAMPLE PACKS & ARTIST TOOLS
                   </Center>
                 </GridItem>
