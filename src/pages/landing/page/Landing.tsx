@@ -37,31 +37,31 @@ export const Landing = () => {
         <ParallaxLayer offset={0} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <video style={{ width: '200vw', overflow: 'hidden' }} playsInline autoPlay muted loop src={hedsBackground} />
         </ParallaxLayer>
+
         <ParallaxLayer
           offset={1}
           style={{
             backgroundColor: 'black',
           }}
         />
+
         <ParallaxLayer
-          offset={widthBreakpoint ? 1.8 : 2}
+          offset={widthBreakpoint ? 1.6 : 2}
           style={{
             backgroundColor: '#e3e2d4',
             height: '20%',
           }}
         />
+
         <ParallaxLayer
-          offset={widthBreakpoint ? 2 : 2.35}
-          speed={0.5}
+          offset={widthBreakpoint ? 1.99 : 2.35}
+          speed={widthBreakpoint ? 0.3 : 0.5}
           style={{
             backgroundColor: '#493e68',
             height: widthBreakpoint ? '100%' : '80%',
           }}
-        >
-          <Container marginTop={['-20%', '-15%']} maxW={['70%', '50%']}>
-            <img src={hedspin} />
-          </Container>
-        </ParallaxLayer>
+        />
+
         <ParallaxLayer
           offset={3}
           style={{
@@ -114,7 +114,7 @@ export const Landing = () => {
 
         {/* Section 2 */}
         <ParallaxLayer
-          offset={1.1}
+          offset={1}
           speed={0.5}
           style={{
             position: 'fixed',
@@ -131,7 +131,7 @@ export const Landing = () => {
         </ParallaxLayer>
 
         <ParallaxLayer
-          offset={1.4}
+          offset={1.3}
           speed={0.2}
           style={{
             display: 'block',
@@ -149,7 +149,7 @@ export const Landing = () => {
           />
         </ParallaxLayer>
 
-        <ParallaxLayer offset={1.1} speed={0.2} style={{ width: '100%' }}>
+        <ParallaxLayer offset={1} speed={0.2} style={{ width: '100%' }}>
           <Flex justify="flex-end">
             <Flex direction="column" align="start">
               <TextBlock tapeName="HEDSTAPE 10" tapeTag="SAMPLE FROM" artistName="RAMZOID" artistTag="ARTIST" />
@@ -162,7 +162,7 @@ export const Landing = () => {
 
         {/* Section 3 */}
         <ParallaxLayer
-          offset={widthBreakpoint ? 1.9 : 2}
+          offset={widthBreakpoint ? 1.65 : 2}
           speed={0.2}
           style={{
             display: 'flex',
@@ -173,6 +173,12 @@ export const Landing = () => {
           }}
         >
           <HedsTapeTitle />
+        </ParallaxLayer>
+
+        <ParallaxLayer offset={widthBreakpoint ? 1.99 : 2.35} speed={widthBreakpoint ? 0.3 : 0.5}>
+          <Container marginTop={['-20%', '-15%']} maxW={['70%', '50%']}>
+            <img src={hedspin} />
+          </Container>
         </ParallaxLayer>
 
         {/* Section 4 */}
