@@ -21,9 +21,9 @@ const LatestRelease = () => {
     <Box data-testid="explore-hedsolo" w="full">
       <Container px={{ base: 8, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'start'}>
-          <Badge colorScheme={'green'} py={1} px={2} variant={'outline'} fontSize={{ base: 'sm', lg: 'md' }}>
+          {/* <Badge colorScheme={'green'} py={1} px={2} variant={'outline'} fontSize={{ base: 'sm', lg: 'md' }}>
             {LATEST_TAPE_HEADING}
-          </Badge>
+          </Badge> */}
           <Text
             fontFamily={"'Space Mono', monospace"}
             color={'blackAlpha.800'}
