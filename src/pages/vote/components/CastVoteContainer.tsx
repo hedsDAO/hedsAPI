@@ -68,11 +68,10 @@ export const CastVoteContainer = () => {
 
   useEffect(() => {
     if (proposal?.strategies) {
-      dispatch.voteModel.setVp(100);
-      // calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
-      //   dispatch.voteModel.setVp(vp);
-      //   return;
-      // });
+      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
+        dispatch.voteModel.setVp(vp);
+        return;
+      });
     }
   }, [proposal.strategies, connectedUserWallet]);
 
