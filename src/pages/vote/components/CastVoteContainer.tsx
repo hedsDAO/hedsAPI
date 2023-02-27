@@ -68,10 +68,11 @@ export const CastVoteContainer = () => {
 
   useEffect(() => {
     if (proposal?.strategies) {
-      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
-        dispatch.voteModel.setVp(vp);
-        return;
-      });
+      dispatch.voteModel.setVp(100);
+      // calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
+      //   dispatch.voteModel.setVp(vp);
+      //   return;
+      // });
     }
   }, [proposal.strategies, connectedUserWallet]);
 
@@ -108,7 +109,10 @@ export const CastVoteContainer = () => {
                     {vp} {'HED'}
                   </Badge>
                 </Tooltip>
-                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'outline'}>
+                <Badge variant={'outline'} colorScheme={'purple'}>
+                  {choices.filter((choice) => choice.id in userLikes).length} LIKES
+                </Badge>
+                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'solid'}>
                   Cast Vote
                 </Button>
               </Flex>
