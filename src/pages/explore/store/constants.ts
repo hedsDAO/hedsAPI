@@ -7,10 +7,10 @@ import { ChakraProps } from '@chakra-ui/react';
  */
 
 export const STATS_DATA = [
-  { label: 'Tapes Minted', value: '734' },
-  { label: 'Value Generated', value: '$234,517' },
-  { label: 'Submissions', value: '438' },
-  { label: 'Unique Minters', value: '207' },
+  { label: 'Tapes Minted', value: '782' },
+  { label: 'Value Generated', value: '$236,127' },
+  { label: 'Submissions', value: '464' },
+  { label: 'Unique Minters', value: '259' },
 ];
 
 export const OPENSEA_EVENTS_CLOUD_FUNCTION = `https://us-central1-heds-104d8.cloudfunctions.net/activeListings`;
