@@ -34,6 +34,7 @@ export const tapesAndVpWeights: { [key: string]: number } = {
   '0xa2aced918e8cff703b8bb4129a30146a1dc35675': 7,
   '0xeb8377be44222e90388ff8bb04be27f9bfc6a98e': 8,
   '0x9f396644ec4b2a2bc3c6cf665d29165dde0e83f1': 7,
+  '0xfdf7d7ffe3d363f858644057ebc62afabb99152a': 7,
 };
 
 export const userModel = createModel<RootModel>()({
