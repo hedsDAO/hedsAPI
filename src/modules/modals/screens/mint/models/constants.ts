@@ -19,3 +19,5 @@ export const PRICE_VALUE = '0.1 ETH';
 export const MINTED_LABEL = 'Minted';
 
 export const ERC_TOKEN_DESCRIPTION = 'This is an ERC-721 token';
+export const LANYARD_API = 'https://lanyard.org/api/v1/tree?root='
+export const SOUND_KEY = '3ca9ceee-35f2-4db0-8277-fc1fc553484a'
