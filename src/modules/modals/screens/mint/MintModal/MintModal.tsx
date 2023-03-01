@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState, store } from '@/store';
 
 // Components
-import { Flex, useBoolean, Select, Tooltip, useToast } from '@chakra-ui/react';
+import { Button, Flex, useBoolean, Select, Tooltip, useToast } from '@chakra-ui/react';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { IconDisc } from '@tabler/icons';
@@ -19,18 +19,20 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import axios from 'axios';
 
 // Constants
-import { LANYARD_API, MINT_MODAL_TITLE, SOUND_KEY } from '../models/constants';
+import { LANYARD_API, MINT_MODAL_TITLE, SOUND_KEY, URL, TARGET, SIZE, COLLECTED_TWEET, COLLECT_PAGE_LINK } from '../models/constants';
 
 const MintModal = () => {
   const toast = useToast()
   const dispatch = useDispatch<Dispatch>();
   const [value, setValue] = useState<number>(1);
   const [isMinting, setIsMinting] = useBoolean(false);
+  const [hasMinted, setHasMinted] = useBoolean(false);
   const [isWhiteListed, setIsWhiteListed] = useBoolean(false);
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
   const merkleRoot = useSelector(store.select.tapesModel.selectCurrentTapeMerkleRoot);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const [space, tape, id] = useSelector(store.select.tapesModel.selectSpaceTapeId);
 
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
@@ -75,6 +77,7 @@ const MintModal = () => {
     setIsMinting.on();
     await mintEdition(value);
     setIsMinting.off();
+    setHasMinted.on();
     toast({
       title: "hedsTAPE 11 Minted",
       description: "You have successfully minted hedsTAPE 11",
@@ -83,8 +86,14 @@ const MintModal = () => {
       position: "top-right",
       isClosable: true,
     })
-    dispatch.modalModel.setModalOpen(false);
+    return;
   };
+
+  const handleShareTweet = () => {
+    const windowParams = [`${URL}${COLLECTED_TWEET}${id} ${COLLECT_PAGE_LINK}${space}/${tape}/${id}`, TARGET, SIZE]
+    window.open(windowParams[0], windowParams[1], windowParams[2]);
+    return;
+  };  
 
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
@@ -97,16 +106,22 @@ const MintModal = () => {
 
         <Flex gap={3} alignItems="center">
           {isMinting && <TransactionProgress />}
+          {!hasMinted && 
           <Select onChange={(e) => setValue(parseInt(e.target.value))} size="sm" disabled={!isWhiteListed}>
             <option value="1">1</option>
             <option value="2"> 2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-          </Select>
+          </Select>}
+          {!hasMinted ? ( 
           <PrimaryButton onClick={handleMintStatus} disabled={!isWhiteListed}>
             Mint
-          </PrimaryButton>
+          </PrimaryButton> ) : (
+            <Button  size="sm" colorScheme="twitter" onClick={handleShareTweet}>
+            Tweet
+          </Button>
+          )}
           {!isWhiteListed && (
             <Tooltip label="You are not eligible for pre-mint" alignItems="center">
               <InfoOutlineIcon color="red.200" />
