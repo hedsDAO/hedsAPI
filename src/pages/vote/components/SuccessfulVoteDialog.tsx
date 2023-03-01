@@ -8,7 +8,7 @@ import { URL, TARGET, SIZE, VOTED_TWEET, VOTE_PAGE_LINK } from '@modules/modals/
 export const SuccessfulVoteDialog = ({ isOpen, onOpen, onClose, cancelRef }: { isOpen: any; onOpen: any; onClose: any; cancelRef: any }) => {
   const { space, tape, id } = useParams();
 
-  const windowParams = [`${URL}${VOTED_TWEET}${id} ${VOTE_PAGE_LINK}${space}${tape}${id}`, TARGET, SIZE];
+  const windowParams = [`${URL}${VOTED_TWEET}${id} ${VOTE_PAGE_LINK}${space}/${tape}/${id}`, TARGET, SIZE];
 
   return (
     <>

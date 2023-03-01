@@ -34,4 +34,4 @@ export const URL = 'https://twitter.com/intent/tweet?text=';
 export const TARGET = 'mywin';
 export const SIZE = 'width=700,height=700';
 export const VOTED_TWEET = 'just voted on hedsTAPE';
-export const VOTE_PAGE_LINK = 'https://www.heds.app/vote/heds/hedstape/';
+export const VOTE_PAGE_LINK = 'https://www.heds.app/vote/';
