@@ -20,6 +20,7 @@ export const TapeDescription = () => {
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const allTapes = useSelector(store.select.tapesModel.selectAllTapes);
+
   const timeline = allTapes?.[tape]?.[id]?.timeline;
 
   const isOldTape = OLD_TAPES.includes(id);
@@ -33,11 +34,12 @@ export const TapeDescription = () => {
           CLOSED
         </Badge>
       );
-    return (
-      <Badge px={2} py={1} borderRadius="sm" colorScheme={'yellow'}>
-        PENDING
-      </Badge>
-    );
+    if (state === ProposalState.PENDING)
+      return (
+        <Badge px={2} py={1} borderRadius="sm" colorScheme={'yellow'}>
+          PENDING
+        </Badge>
+      );
   };
 
   return (
