@@ -22,7 +22,7 @@ import axios from 'axios';
 import { LANYARD_API, MINT_MODAL_TITLE, SOUND_KEY, URL, TARGET, SIZE, COLLECTED_TWEET, COLLECT_PAGE_LINK } from '../models/constants';
 
 const MintModal = () => {
-  const toast = useToast()
+  const toast = useToast();
   const dispatch = useDispatch<Dispatch>();
   const [value, setValue] = useState<number>(1);
   const [isMinting, setIsMinting] = useBoolean(false);
@@ -79,21 +79,21 @@ const MintModal = () => {
     setIsMinting.off();
     setHasMinted.on();
     toast({
-      title: "hedsTAPE 11 Minted",
-      description: "You have successfully minted hedsTAPE 11",
-      status: "success",
+      title: 'hedsTAPE 11 Minted',
+      description: 'You have successfully minted hedsTAPE 11',
+      status: 'success',
       duration: 7000,
-      position: "top-right",
+      position: 'top-right',
       isClosable: true,
-    })
+    });
     return;
   };
 
   const handleShareTweet = () => {
-    const windowParams = [`${URL}${COLLECTED_TWEET}${id} ${COLLECT_PAGE_LINK}${space}/${tape}/${id}`, TARGET, SIZE]
+    const windowParams = [`${URL}${COLLECTED_TWEET}${id} ${COLLECT_PAGE_LINK}${space}/${tape}/${id}`, TARGET, SIZE];
     window.open(windowParams[0], windowParams[1], windowParams[2]);
     return;
-  };  
+  };
 
   return (
     <ModalContainer size="md" isOpen={isOpen} setModalOpen={() => dispatch.modalModel.setModalOpen(!isOpen)}>
@@ -106,21 +106,23 @@ const MintModal = () => {
 
         <Flex gap={3} alignItems="center">
           {isMinting && <TransactionProgress />}
-          {!hasMinted && 
-          <Select onChange={(e) => setValue(parseInt(e.target.value))} size="sm" disabled={!isWhiteListed}>
-            <option value="1">1</option>
-            <option value="2"> 2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </Select>}
-          {!hasMinted ? ( 
-          <PrimaryButton onClick={handleMintStatus} disabled={!isWhiteListed}>
-            Mint
-          </PrimaryButton> ) : (
-            <Button  size="sm" colorScheme="twitter" onClick={handleShareTweet}>
-            Tweet
-          </Button>
+          {!hasMinted && (
+            <Select onChange={(e) => setValue(parseInt(e.target.value))} size="sm" disabled={!isWhiteListed}>
+              <option value="1">1</option>
+              <option value="2"> 2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </Select>
+          )}
+          {!hasMinted ? (
+            <PrimaryButton onClick={handleMintStatus} disabled={!isWhiteListed}>
+              Mint
+            </PrimaryButton>
+          ) : (
+            <Button size="sm" colorScheme="twitter" onClick={handleShareTweet}>
+              Tweet
+            </Button>
           )}
           {!isWhiteListed && (
             <Tooltip label="You are not eligible for pre-mint" alignItems="center">
