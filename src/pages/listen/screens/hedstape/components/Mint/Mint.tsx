@@ -24,14 +24,14 @@ const Mint = () => {
   const end = DateTime.fromMillis(mint.end);
   const openSeaLink = useSelector(store.select.tapesModel.selectCurrentTapeOpenseaLink);
 
-  const statusHeaderSwitch = (status: TimelineStatus) => {
+  const statusHeaderSwitch = (status: TimelineStatus, premintStatus: TimelineStatus) => {
     switch (status) {
       case TimelineStatus.CLOSED:
         return <ClosedBadge />;
       case TimelineStatus.OPEN:
         return <OpenBadge />;
       case TimelineStatus.UPCOMING:
-        return <UpcomingBadge />;
+        return premintStatus === TimelineStatus.OPEN ? <OpenBadge premintOpen={true} /> : <UpcomingBadge />;
     }
   };
 
@@ -133,7 +133,7 @@ const dateBoxSwitch = (status: TimelineStatus, premintStatus: TimelineStatus) =>
     <div>
       <Flex alignItems={'center'} gap={2.5} mb={2}>
         <Text className="text-xl font-bold tracking-wide leading-6 text-gray-900">{mint.name}</Text>
-        {statusHeaderSwitch(mint.status)}
+        {statusHeaderSwitch(mint.status, premint.status)}
       </Flex>
       <Text className="mt-2 text-sm tracking-tight text-gray-500">{mint.description}</Text>
       {dateBoxSwitch(mint.status, premint.status)}
