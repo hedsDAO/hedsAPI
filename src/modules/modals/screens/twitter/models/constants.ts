@@ -22,3 +22,16 @@ export const BACK_BUTTON_TEXT = 'Back';
  * @const CONFIRM_BUTTON_TEXT : Confirm twitter verification button.
  * @const BACK_BUTTON_TEXT : Exit modal test.
  */
+
+/*
+ * @const URL : Twitter URL
+ * @const TARGET : Browsing context
+ * @const SIZE : Window size
+ * @const VOTED_TWEET: Tweet to display;
+ */
+
+export const URL = 'https://twitter.com/intent/tweet?text=';
+export const TARGET = 'mywin';
+export const SIZE = 'width=700,height=700';
+export const VOTED_TWEET = 'just voted on hedsTAPE';
+export const VOTE_PAGE_LINK = 'https://www.heds.app/vote/';
