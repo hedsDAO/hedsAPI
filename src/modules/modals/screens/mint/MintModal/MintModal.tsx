@@ -19,7 +19,7 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import axios from 'axios';
 
 // Constants
-import { MINT_MODAL_TITLE } from '../models/constants';
+import { LANYARD_API, MINT_MODAL_TITLE, SOUND_KEY } from '../models/constants';
 
 const MintModal = () => {
   const toast = useToast()
@@ -29,6 +29,7 @@ const MintModal = () => {
   const [isWhiteListed, setIsWhiteListed] = useBoolean(false);
   const { isOpen } = useSelector((state: RootState) => state.modalModel);
   const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
+  const merkleRoot = useSelector(store.select.tapesModel.selectCurrentTapeMerkleRoot);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
 
   const connector = new MetaMaskConnector({
@@ -36,7 +37,7 @@ const MintModal = () => {
   });
 
   const checkWalletInRoot = async () => {
-    const response = await axios.get('https://lanyard.org/api/v1/tree?root=0x41F60DCB50D15915AE00B4F0C480C469F51F2A5A3D38B1B6BA54DBFD29C97334');
+    const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
 
     if (response.data.unhashedLeaves.includes(connectedWallet)) {
       setIsWhiteListed.on();
@@ -53,7 +54,7 @@ const MintModal = () => {
       merkleProvider: LanyardMerkleProofProvider,
       signer,
       soundAPI: SoundAPI({
-        apiKey: '3ca9ceee-35f2-4db0-8277-fc1fc553484a',
+        apiKey: SOUND_KEY,
       }),
     });
     const editionAddress = contract;
@@ -91,7 +92,6 @@ const MintModal = () => {
       <TapeNameAndCurator />
       <TapeCover />
       <MintDetails />
-      {/* TODO: add progress states for mint status */}
       <Flex justifyContent="space-between">
         <SecondaryButton onClick={() => dispatch.modalModel.setModalOpen(false)}>Back</SecondaryButton>
 
