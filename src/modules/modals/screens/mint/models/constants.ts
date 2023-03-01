@@ -19,15 +19,9 @@ export const PRICE_VALUE = '0.1 ETH';
 export const MINTED_LABEL = 'Minted';
 
 /*
- * @const URL : Twitter URL
- * @const TARGET : Browsing context
- * @const SIZE : Window size
  * @const COLLECTED_TWEET: Tweet to display;
  * @const COLLECT_PAGE_LINK: Link to display;
  */
-export const URL = 'https://twitter.com/intent/tweet?text=';
-export const TARGET = 'mywin';
-export const SIZE = 'width=700,height=700';
 export const COLLECTED_TWEET = 'just collected hedsTAPE';
 export const COLLECT_PAGE_LINK = 'https://www.heds.app/listen/';
 
