@@ -120,6 +120,9 @@ export const tapesModel = createModel<RootModel>()({
     selectCurrentTapeContract() {
       return createSelector(this.selectCurrentTape, (tape): string => tape.contract || '');
     },
+    selectCurrentTapeMerkleRoot() {
+      return createSelector(this.selectCurrentTape, (tape): string => tape.merkleRoot || '');
+    },
     selectCurrentTapeTracks() {
       return createSelector(this.selectCurrentTape, (tape): Array<User> => tape.tracks || []);
     },
