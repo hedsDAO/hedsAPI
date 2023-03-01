@@ -81,7 +81,7 @@ export const CastVoteContainer = () => {
       const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
       if (userVote) {
         const formattedChoicesTank: { [key: string]: number } = {};
-        for (let key in userVote.choice) {
+        for (const key in userVote.choice) {
           const newKey = `${+key - 1}`;
           formattedChoicesTank[newKey] = userVote.choice[key];
         }
