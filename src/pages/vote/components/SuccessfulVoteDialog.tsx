@@ -6,9 +6,9 @@ import { IconCircleCheck } from '@tabler/icons';
 import { URL, TARGET, SIZE, VOTED_TWEET, VOTE_PAGE_LINK } from '@modules/modals/screens/twitter/models/constants';
 
 export const SuccessfulVoteDialog = ({ isOpen, onOpen, onClose, cancelRef }: { isOpen: any; onOpen: any; onClose: any; cancelRef: any }) => {
-  const { id } = useParams();
+  const { space, tape, id } = useParams();
 
-  const windowParams = [`${URL}${VOTED_TWEET}${id} ${VOTE_PAGE_LINK}${id}`, TARGET, SIZE];
+  const windowParams = [`${URL}${VOTED_TWEET}${id} ${VOTE_PAGE_LINK}${space}${tape}${id}`, TARGET, SIZE];
 
   return (
     <>
