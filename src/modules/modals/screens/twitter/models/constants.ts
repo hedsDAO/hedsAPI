@@ -28,6 +28,7 @@ export const BACK_BUTTON_TEXT = 'Back';
  * @const TARGET : Browsing context
  * @const SIZE : Window size
  * @const VOTED_TWEET: Tweet to display;
+ * @const VOTE_PAGE_LINK: Link to display;
  */
 
 export const URL = 'https://twitter.com/intent/tweet?text=';
