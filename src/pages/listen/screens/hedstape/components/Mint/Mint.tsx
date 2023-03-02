@@ -35,18 +35,14 @@ const Mint = () => {
     }
   };
 
-const dateBoxSwitch = (status: TimelineStatus, premintStatus: TimelineStatus) => {
+  const dateBoxSwitch = (status: TimelineStatus, premintStatus: TimelineStatus) => {
     switch (status) {
       case TimelineStatus.CLOSED:
         return <ClosedDateBox start={start} end={end} />;
       case TimelineStatus.OPEN:
         return <OpenDateBox end={mint.end} />;
       case TimelineStatus.UPCOMING:
-        return premintStatus === TimelineStatus.OPEN ? (
-          <UpcomingDateBox start={start} />
-        ) : (
-          <UpcomingDateBox start={premintStart} />
-        );
+        return premintStatus === TimelineStatus.OPEN ? <UpcomingDateBox start={start} /> : <UpcomingDateBox start={premintStart} />;
     }
   };
 
@@ -99,7 +95,7 @@ const dateBoxSwitch = (status: TimelineStatus, premintStatus: TimelineStatus) =>
           Mint
         </Button>
       </Stack>
-    )
+    );
   };
 
   const mintClosedButtons = () => {
@@ -126,7 +122,7 @@ const dateBoxSwitch = (status: TimelineStatus, premintStatus: TimelineStatus) =>
           OpenSea
         </Button>
       </Stack>
-    )
+    );
   };
 
   return (
