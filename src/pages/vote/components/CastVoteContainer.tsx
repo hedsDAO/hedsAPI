@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar, IconButton, Center, FormControl, Badge, useDisclosure } from '@chakra-ui/react';
-import { formatWallet } from '@/utils';
+import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge, useDisclosure } from '@chakra-ui/react';
 import { SuccessfulVoteDialog } from './SuccessfulVoteDialog';
 
 // Models
@@ -32,7 +31,7 @@ export const CastVoteContainer = () => {
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
-  const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
+  const { data, isSuccess, signMessage } = useSignMessage({
     message: JSON.stringify(formattedVoteObject),
   });
 
@@ -81,7 +80,7 @@ export const CastVoteContainer = () => {
       const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
       if (userVote) {
         const formattedChoicesTank: { [key: string]: number } = {};
-        for (let key in userVote.choice) {
+        for (const key in userVote.choice) {
           const newKey = `${+key - 1}`;
           formattedChoicesTank[newKey] = userVote.choice[key];
         }
@@ -109,24 +108,31 @@ export const CastVoteContainer = () => {
                     {vp} {'HED'}
                   </Badge>
                 </Tooltip>
-                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'outline'}>
+                <Badge variant={'outline'} colorScheme={'purple'}>
+                  {choices.filter((choice) => choice.id in userLikes).length} LIKES
+                </Badge>
+                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'solid'}>
                   Cast Vote
                 </Button>
               </Flex>
             ) : (
               <Tooltip label={'connect your wallet to vote'}>
-                <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.500" />
+                <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.800" />
               </Tooltip>
             )}
           </Flex>
-          {connectedUserWallet &&
-            vp &&
-            vp > 0 &&
-            choices
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((choice) => {
-                if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
-              })}
+          <Box border="1px" borderRadius="md" p={1} color="gray.700" maxH="300px" overflowY="scroll">
+            <Stack spacing={1}>
+              {connectedUserWallet &&
+                vp &&
+                vp > 0 &&
+                choices
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((choice) => {
+                    if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
+                  })}
+            </Stack>
+          </Box>
         </Stack>
       ) : (
         <Stack>
@@ -159,7 +165,7 @@ export const CastVoteContainer = () => {
 const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: string]: number } }) => {
   const dispatch = useDispatch<Dispatch>();
   return (
-    <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
+    <Box border="1px" borderColor="gray.700" borderRadius="md" px={1} bgColor="gray.50">
       <Flex justifyContent="space-between" px={1} py={2}>
         <Flex gap={2} alignItems={'center'}>
           <Avatar borderRadius={'sm'} src={choice.image} size="xs" />

@@ -163,6 +163,7 @@ export interface TapeData {
   description: string;
   etherscan: string;
   image: string;
+  merkleRoot?: string;
   name: string;
   opensea: string;
   route: string;
@@ -183,6 +184,7 @@ export interface TapeAndTrackData {
   description: string;
   etherscan: string;
   image: string;
+  merkleRoot?: string;
   name: string;
   opensea: string;
   route: string;
