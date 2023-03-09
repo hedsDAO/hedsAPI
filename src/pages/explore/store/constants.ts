@@ -70,23 +70,6 @@ export const BOX_TWO_DESC = `in collaboration with three oscillators & secretgar
 export const HEDS_PLAYER_ARTIST = '0x0a7c3007f2156ff8db9579efb7adbbd7212d3c3c';
 
 /**
- * @component <LatestTape/>
- * @const LATEST_TAPE_HEADING : heading for latest tape page.
- * @const LATEST_TAPE_TITLE : title for latest tape page.
- * @const LATEST_TAPE_DESC : description for latest tape page.
- * @const LATEST_TAPE_ARTIST : dabow - current address for latest tape spotlight
- */
-
-export const LATEST_TAPE_HEADING = 'MINT OPEN';
-export const LATEST_TAPE_TITLE = 'hedsTAPE 11';
-export const LATEST_TAPE_DESC =
-  "The iconic mija has offered her inimitable take on a wide variety of electronic projects. For the first hedsTAPE of 2023, we're beyond excited to invite her on as the curator for HT11.";
-export const LATEST_TAPE_ARTIST = '0xe4c80780cc7fc7047bccb30e2cbcb67400752a88';
-export const LATEST_TAPE_LINK = '/listen/heds/hedstape/11';
-export const LATEST_TAPE_PROMO_IMG =
-  'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/promo%2Fartists%2F1.jpeg?alt=media&token=7df1c199-4fc9-4f02-b854-b42376770fe1';
-
-/**
  * @component <MostAppearances/>
  * @const MOST_AP_TITLE : title for MostAppearances page.
  * @const MOST_AP_DESC : description for MostAppearances page.
