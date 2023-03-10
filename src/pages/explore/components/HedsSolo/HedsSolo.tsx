@@ -1,27 +1,27 @@
 import { Container, Stack, Flex, Button, Icon, Box, Text, Image, Skeleton, useBoolean, Link as ChakraLink } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
-import { US } from 'country-flag-icons/react/3x2';
-import { HEDS_SOLO_HEADING, HEDS_SOLO_TITLE, HEDS_SOLO_DESC, HEDS_SOLO_ARTIST, HEDS_SOLO_SOUND_LINK } from '@/pages/explore/store/constants';
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
 import { Link } from 'react-router-dom';
 import * as gaEvents from '@/events';
+import { DocumentData } from 'firebase/firestore';
 
 const HedsSolo = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
+  const hedSoloData = useSelector(store.select.exploreModel.selectHedSolo) as DocumentData;
   return (
     <Box data-testid="explore-hedsolo" w="full">
       <Container px={{ base: 8, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'start'}>
           <Text color={'gray.500'} fontFamily={'"Space Mono", monospace'}>
-            {HEDS_SOLO_HEADING}
+            {hedSoloData?.heading}
           </Text>
           <Text color={'blackAlpha.800'} letterSpacing={'wide'} fontSize={{ base: '5xl', lg: '8xl' }} fontWeight={'normal'}>
-            {HEDS_SOLO_TITLE}
+            {hedSoloData?.title}
           </Text>
           <Text maxW="70ch" mt={10} color={'gray.500'} fontFamily={'"Space Mono", monospace'}>
-            {HEDS_SOLO_DESC}
+            {hedSoloData?.description}
           </Text>
         </Stack>
         <Flex pt={{ base: 20, lg: 20 }} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
@@ -32,7 +32,7 @@ const HedsSolo = () => {
                   onClick={() => gaEvents.clickHedsSoloFeatureLink()}
                   data-testid="hedsolo-artist-button"
                   as={Link}
-                  to={`/u/${HEDS_SOLO_ARTIST}`}
+                  to={`/u/${hedSoloData?.wallet}`}
                   justifySelf={'start'}
                   py="4"
                   border="1px"
@@ -43,13 +43,13 @@ const HedsSolo = () => {
                   bg="white"
                 >
                   <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
-                    / {artistsMapping?.[HEDS_SOLO_ARTIST]?.displayName.toUpperCase()}
+                    / {artistsMapping?.[hedSoloData?.wallet]?.displayName.toUpperCase()}
                   </Text>
                 </Button>
                 <Button
                   role="link"
                   as={ChakraLink}
-                  href={HEDS_SOLO_SOUND_LINK}
+                  href={hedSoloData?.link || ""}
                   target="_blank"
                   py="4"
                   border="1px"
@@ -71,11 +71,11 @@ const HedsSolo = () => {
                 minH="11rem"
                 h="11rem"
                 objectFit={'cover'}
-                src={artistsMapping?.[HEDS_SOLO_ARTIST]?.profilePicture}
+                src={artistsMapping?.[hedSoloData?.wallet]?.profilePicture}
               />
-              <Box right={'5'} bottom="12" textAlign={'end'} position={'relative'}>
+              {/* <Box right={'5'} bottom="12" textAlign={'end'} position={'relative'}>
                 <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={US} />
-              </Box>
+              </Box> */}
             </Skeleton>
           </Box>
         </Flex>
