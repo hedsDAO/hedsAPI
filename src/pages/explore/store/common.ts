@@ -1,3 +1,5 @@
+import { DocumentData } from "firebase/firestore";
+
 export interface HedsTapeListing {
   market: any;
   tokenId: any;
@@ -14,4 +16,6 @@ export interface ExploreState {
   secondaryListings: HedsTapeListing[];
   hasFetchedAllListings: boolean;
   scrollDataMax: number;
+  exploreData: DocumentData;
+  carouselOrder: string[];
 }

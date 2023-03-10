@@ -1,15 +1,15 @@
-import { IN } from 'country-flag-icons/react/3x2';
 import { useSelector } from 'react-redux';
-import { BOX_ONE_DATE, BOX_ONE_DESC, BOX_ONE_TITLE, BOX_TWO_DESC, HEDS_PLAYER_ARTIST, HEDS_PLAYER_HEADING } from '@/pages/explore/store/constants';
 import { store } from '@/store';
-import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean, Link as ChakraLink } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, Icon, Image, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 import * as gaEvents from '@/events';
+import { DocumentData } from 'firebase/firestore';
 
 const HedsPlayer = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
+  const hedsPlayerData = useSelector(store.select.exploreModel.selectHedsPlayer) as DocumentData;
   return (
     <Box data-testid="explore-newest-tape" w="full">
       <Container px={{ base: 8, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
@@ -21,7 +21,7 @@ const HedsPlayer = () => {
             fontSize={{ base: '3xl', lg: '5xl' }}
             fontWeight={'normal'}
           >
-            {HEDS_PLAYER_HEADING}
+            {hedsPlayerData?.heading}
           </Text>
           <Flex justifyContent={'space-evenly'} pt={14} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
             <Box>
@@ -31,7 +31,7 @@ const HedsPlayer = () => {
                     onClick={() => gaEvents.clickNewestTapeFeatureLink()}
                     data-testid="newest-tape-artist-button"
                     as={Link}
-                    to={`/u/${HEDS_PLAYER_ARTIST}`}
+                    to={`/u/${hedsPlayerData?.wallet || ''}`}
                     justifySelf={'start'}
                     py="4"
                     border="1px"
@@ -42,12 +42,12 @@ const HedsPlayer = () => {
                     bg="white"
                   >
                     <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
-                      / {artistsMapping?.[HEDS_PLAYER_ARTIST]?.displayName.toUpperCase()}
+                      / {artistsMapping?.[hedsPlayerData?.wallet || '']?.displayName.toUpperCase()}
                     </Text>
                   </Button>
                   <Button
                     as={Link}
-                    to={'/listen/heds/collabtape/secretgarden'}
+                    to={hedsPlayerData?.heading || ''}
                     py="4"
                     border="1px"
                     borderColor="black"
@@ -68,22 +68,22 @@ const HedsPlayer = () => {
                   minH="11rem"
                   h="11rem"
                   objectFit={'cover'}
-                  src={artistsMapping?.[HEDS_PLAYER_ARTIST]?.profilePicture}
+                  src={artistsMapping?.[hedsPlayerData?.wallet || '']?.profilePicture}
                 />
-                <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
+                {/* <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
                   <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={IN} />
-                </Box>
+                </Box> */}
               </Skeleton>
             </Box>
           </Flex>
           <Flex alignItems={'center'} pt={{ base: 5, lg: 10 }} gap={10} direction={{ base: 'column', lg: 'row' }} maxW="4xl" mx="auto">
             <Stack alignItems={'start'}>
               <Text color="gray.700" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
-                {BOX_ONE_TITLE}
+                {hedsPlayerData?.title}
               </Text>
               <Text color="gray.500" fontWeight={'light'} fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                {BOX_ONE_DESC} <br />
-                {BOX_ONE_DATE}
+                {hedsPlayerData?.subHeading} <br />
+                {hedsPlayerData?.releaseDate}
               </Text>
             </Stack>
             <Flex direction={{ base: 'column', lg: 'row' }} gap={6} alignItems={'center'}>
@@ -95,11 +95,11 @@ const HedsPlayer = () => {
                 fontWeight={'light'}
                 fontFamily={'"Space Mono", monospace'}
               >
-                {BOX_TWO_DESC}
+                {hedsPlayerData?.description}
               </Text>
               <Button
                 as={Link}
-                to={'/listen/heds/collabtape/secretgarden'}
+                to={hedsPlayerData?.heading || ''}
                 my={{ base: 5, lg: 0 }}
                 border="1px"
                 borderColor="black"

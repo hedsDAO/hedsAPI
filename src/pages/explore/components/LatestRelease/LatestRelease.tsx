@@ -1,29 +1,19 @@
-import { US } from 'country-flag-icons/react/3x2';
 import { Container, Stack, Flex, Button, Icon, Box, Text, Image, Skeleton, useBoolean, Badge } from '@chakra-ui/react';
 import { IconArrowRight } from '@tabler/icons';
-import {
-  LATEST_TAPE_HEADING,
-  LATEST_TAPE_TITLE,
-  LATEST_TAPE_DESC,
-  LATEST_TAPE_ARTIST,
-  LATEST_TAPE_LINK,
-  LATEST_TAPE_PROMO_IMG,
-} from '@/pages/explore/store/constants';
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
 import { Link } from 'react-router-dom';
 import * as gaEvents from '@/events';
+import { DocumentData } from 'firebase/firestore';
 
 const LatestRelease = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const artistsMapping = useSelector(store.select.artistModel.selectArtistMapping);
+  const latestRelease = useSelector(store.select.exploreModel.selectLatestRelease) as DocumentData;
   return (
     <Box data-testid="explore-hedsolo" w="full">
       <Container px={{ base: 8, lg: 40 }} py={{ base: 10, lg: 24 }} maxW="8xl">
         <Stack alignItems={'start'}>
-          {/* <Badge colorScheme={'green'} py={1} px={2} variant={'outline'} fontSize={{ base: 'sm', lg: 'md' }}>
-            {LATEST_TAPE_HEADING}
-          </Badge> */}
           <Text
             fontFamily={"'Space Mono', monospace"}
             color={'blackAlpha.800'}
@@ -31,10 +21,10 @@ const LatestRelease = () => {
             fontSize={{ base: '4xl', lg: '7xl' }}
             fontWeight={'normal'}
           >
-            {LATEST_TAPE_TITLE}
+            {latestRelease?.title}
           </Text>
           <Text maxW="70ch" mt={10} color={'gray.500'} fontFamily={'"Space Mono", monospace'}>
-            {LATEST_TAPE_DESC}
+            {latestRelease?.description}
           </Text>
         </Stack>
         <Flex pt={{ base: 20, lg: 20 }} gap={8} w="full" direction={{ base: 'column', sm: 'row' }}>
@@ -44,7 +34,7 @@ const LatestRelease = () => {
                 <Button
                   onClick={() => gaEvents.clickLatestReleaseFeatureLink()}
                   as={Link}
-                  to={`/u/${LATEST_TAPE_ARTIST}`}
+                  to={`/u/${latestRelease?.wallet || ''}`}
                   data-testid="hedsolo-artist-button"
                   justifySelf={'start'}
                   py="4"
@@ -56,10 +46,20 @@ const LatestRelease = () => {
                   bg="white"
                 >
                   <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
-                    / {artistsMapping?.[LATEST_TAPE_ARTIST]?.displayName.toUpperCase()}
+                    / {artistsMapping?.[latestRelease?.wallet]?.displayName.toUpperCase()}
                   </Text>
                 </Button>
-                <Button as={Link} to={LATEST_TAPE_LINK} py="4" border="1px" borderColor="black" size="sm" rounded="full" bg="white" zIndex={'30'}>
+                <Button
+                  as={Link}
+                  to={latestRelease?.link?.length ? latestRelease?.link : '/'}
+                  py="4"
+                  border="1px"
+                  borderColor="black"
+                  size="sm"
+                  rounded="full"
+                  bg="white"
+                  zIndex={'30'}
+                >
                   <Icon color="gray.500" h="4" w="4" as={IconArrowRight}></Icon>
                 </Button>
               </Flex>
@@ -72,16 +72,16 @@ const LatestRelease = () => {
                 minH="13rem"
                 h="13rem"
                 objectFit={'cover'}
-                src={LATEST_TAPE_PROMO_IMG}
+                src={latestRelease?.image || ""}
               />
-              <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
+              {/* <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
                 <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={US} />
-              </Box>
+              </Box> */}
             </Skeleton>
           </Box>
           <Button
             as={Link}
-            to={LATEST_TAPE_LINK}
+            to={latestRelease?.link?.length ? latestRelease?.link : '/'}
             mx={{ base: 'auto', lg: '0' }}
             display={{ base: 'flex', sm: 'none' }}
             my={{ base: 2, lg: 0 }}
