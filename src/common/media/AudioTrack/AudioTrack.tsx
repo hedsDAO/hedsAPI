@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { TrackMetadata, TrackType } from '@/models/common';
 import { Dispatch, store } from '@/store';
-import { Center, Flex, Heading, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { IconTextPlus, IconEye, IconMusic, IconEyeOff } from '@tabler/icons';
 import { formatSubId, isEmpty } from '@/utils';
@@ -90,17 +90,36 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
         </Center>
       </Skeleton>
       <Flex opacity={track?.public ? '' : '60%'} direction={'column'} justifyContent={'space-evenly'} ml={'12px'}>
-        {track.wallet === currentWallet ? (
-          <Heading fontWeight={'semibold'} fontSize="sm" color={'gray.800'}>
-            <>{track.artist}</>
-          </Heading>
+        {track.audio === "https://www.heds.cloud/ipfs/Qmd5FQDC3qHDFDiX7J54tjCsaf8qTd2A4H3UjB7u8P768o" ? (
+          <Flex gap={1}>
+            <Link className="text-base" to={`/u/${"0x61d741b371a57554d30e2a44a946e31e6f52570f"}`}>
+              <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
+                {track.artist.split(',')[0]}
+              </Heading>
+            </Link>
+            <Box ml="-1">,</Box>
+            <Link className="text-base" to={`/u/${"0xf089af48c0abd5fa41741c334e18083f6a502045"}`}>
+              <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
+                {track.artist.split(', ')[1]}
+              </Heading>
+            </Link>
+          </Flex>
         ) : (
-          <Link className="text-base" to={`/u/${track.wallet}`}>
-            <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
-              {track.artist}
-            </Heading>
-          </Link>
+          <>
+            {track.wallet === currentWallet ? (
+              <Heading fontWeight={'semibold'} fontSize="sm" color={'gray.800'}>
+                <>{track.artist}</>
+              </Heading>
+            ) : (
+              <Link className="text-base" to={`/u/${track.wallet}`}>
+                <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
+                  {track.artist}
+                </Heading>
+              </Link>
+            )}
+          </>
         )}
+
         {pathname.includes('/listen') ? (
           <Text className="font-serif" fontSize="xs" color="blue.900">
             {track.album}
