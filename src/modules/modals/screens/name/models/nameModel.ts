@@ -45,19 +45,17 @@ export const nameModel = createModel<RootModel>()({
         const newUserData = populateNewUser(connectedUserWallet, displayName) as User;
         if (userDocSnap.exists()) {
           const v2UserData = { ...newUserData, ...userDocSnap.data() } as User;
-          await setDoc(userRef, v2UserData).then(async () => {
-            await setDoc(displayNameRef, { wallet: connectedUserWallet });
-            dispatch.userModel.setConnectedUserData(v2UserData);
-            if (isOnOwnPage) dispatch.userModel.setCurrentUserData(v2UserData);
-            this.setIsLoading(false);
-          });
+          await setDoc(userRef, v2UserData);
+          await setDoc(displayNameRef, { wallet: connectedUserWallet });
+          dispatch.userModel.setConnectedUserData(v2UserData);
+          if (isOnOwnPage) dispatch.userModel.setCurrentUserData(v2UserData);
+          this.setIsLoading(false);
         } else {
-          await setDoc(userRef, newUserData).then(async () => {
-            await setDoc(displayNameRef, { wallet: connectedUserWallet });
-            dispatch.userModel.setConnectedUserData(newUserData);
-            if (isOnOwnPage) dispatch.userModel.setCurrentUserData(newUserData);
-            this.setIsLoading(false);
-          });
+          await setDoc(userRef, newUserData);
+          await setDoc(displayNameRef, { wallet: connectedUserWallet });
+          dispatch.userModel.setConnectedUserData(newUserData);
+          if (isOnOwnPage) dispatch.userModel.setCurrentUserData(newUserData);
+          this.setIsLoading(false);
         }
         return dispatch.modalModel.setModalOpen(false);
       }
