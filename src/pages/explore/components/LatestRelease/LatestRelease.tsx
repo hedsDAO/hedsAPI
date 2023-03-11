@@ -31,24 +31,65 @@ const LatestRelease = () => {
           <Box>
             <Skeleton rounded="3xl" minW={'20rem'} h="13rem" isLoaded={hasImageLoaded}>
               <Flex mb={'-12'} mx={{ base: 4, lg: 5 }} position={'relative'} justifyContent={'space-between'}>
-                <Button
-                  onClick={() => gaEvents.clickLatestReleaseFeatureLink()}
-                  as={Link}
-                  to={`/u/${latestRelease?.wallet || ''}`}
-                  data-testid="hedsolo-artist-button"
-                  justifySelf={'start'}
-                  py="4"
-                  border="1px"
-                  borderColor="black"
-                  size="sm"
-                  px="12"
-                  rounded="full"
-                  bg="white"
-                >
-                  <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
-                    / {artistsMapping?.[latestRelease?.wallet]?.displayName.toUpperCase()}
-                  </Text>
-                </Button>
+                {latestRelease?.collab ? (
+                  <Flex gap={2}>
+                    <Button
+                      onClick={() => gaEvents.clickLatestReleaseFeatureLink()}
+                      as={Link}
+                      to={`/u/${latestRelease?.wallet || ''}`}
+                      data-testid="hedsolo-artist-button"
+                      justifySelf={'start'}
+                      py="4"
+                      border="1px"
+                      borderColor="black"
+                      size="sm"
+                      px="4"
+                      rounded="full"
+                      bg="white"
+                    >
+                      <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
+                        / {artistsMapping?.[latestRelease?.wallet]?.displayName.toUpperCase()}
+                      </Text>
+                    </Button>
+                    <Button
+                      onClick={() => gaEvents.clickLatestReleaseFeatureLink()}
+                      as={Link}
+                      to={`/u/${latestRelease?.collab || ''}`}
+                      data-testid="hedsolo-artist-button"
+                      justifySelf={'start'}
+                      py="4"
+                      border="1px"
+                      borderColor="black"
+                      size="sm"
+                      px="4"
+                      rounded="full"
+                      bg="white"
+                    >
+                      <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
+                        / {artistsMapping?.[latestRelease?.collab]?.displayName.toUpperCase()}
+                      </Text>
+                    </Button>
+                  </Flex>
+                ) : (
+                  <Button
+                    onClick={() => gaEvents.clickLatestReleaseFeatureLink()}
+                    as={Link}
+                    to={`/u/${latestRelease?.wallet || ''}`}
+                    data-testid="hedsolo-artist-button"
+                    justifySelf={'start'}
+                    py="4"
+                    border="1px"
+                    borderColor="black"
+                    size="sm"
+                    px="12"
+                    rounded="full"
+                    bg="white"
+                  >
+                    <Text color="gray.500" fontWeight={'light'} fontFamily={'"Space Mono", monospace'}>
+                      / {artistsMapping?.[latestRelease?.wallet]?.displayName.toUpperCase()}
+                    </Text>
+                  </Button>
+                )}
                 <Button
                   as={Link}
                   to={latestRelease?.link?.length ? latestRelease?.link : '/'}
@@ -72,7 +113,7 @@ const LatestRelease = () => {
                 minH="13rem"
                 h="13rem"
                 objectFit={'cover'}
-                src={latestRelease?.image || ""}
+                src={latestRelease?.image || ''}
               />
               {/* <Box right="5" bottom="12" textAlign={'end'} position={'relative'}>
                 <Icon shadow="md" border="4px" rounded="xl" borderColor="white" h="8" w="11" as={US} />
