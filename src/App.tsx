@@ -10,6 +10,7 @@ import { Artists } from './pages/artists/page/Artists';
 import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
+import { Song } from './pages/song/page/Song';
 // import { Landing } from './pages/landing/page/Landing';
 import firebaseConfig from './firebaseConfig';
 
@@ -26,6 +27,7 @@ const App = (): JSX.Element => {
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/u/:wallet" element={<User />} />
+        <Route path="/s/:id" element={<Song />}/>
         <Route path="/listen/:space/:tape/:id" element={<Listen />} />
         <Route path="/vote/:space/:tape/:id" element={<Vote />} />
         <Route path="/vote" element={<Vote />} />
