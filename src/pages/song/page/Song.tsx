@@ -1,11 +1,30 @@
-import { AspectRatio, Box, Button, Container, Flex, Grid, GridItem, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { formWaveSurferOptions } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState } from '@/store';
 import WaveSurfer from 'wavesurfer.js';
-import { PlayIcon } from '@heroicons/react/24/solid';
 import { WaveSurferParams } from 'wavesurfer.js/types/params';
+
+// Components
+import {
+  AspectRatio,
+  Box,
+  Button,
+  Container,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
+  Stack,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import { PlayIcon } from '@heroicons/react/24/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 
 const testData = {
@@ -109,20 +128,22 @@ export const Song = () => {
           <div ref={waveformRef} className={'w-full'}></div>
         </GridItem>
       </Grid>
-      <Grid py={10} px={10} bgColor="blackAlpha.400" gap={3} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)">
-        <Button fontWeight={'normal'} bg="white" letterSpacing="wider" px={3} size="xs" rounded="full">
+      {/* <Grid py={10} px={10} bgColor="blackAlpha.400" gap={3} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)"> */}
+      <Tabs variant="soft-rounded" colorScheme="whiteAlpha">
+        <TabList>
+          <Tab fontSize="xs">TAPE DATA</Tab>
+          <Tab fontSize="xs">APPEARS ON</Tab>
+          <Tab fontSize="xs">LIKES</Tab>
+          <Tab fontSize="xs">AI SENTIMENT</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>Tape Data</TabPanel>
+        </TabPanels>
+      </Tabs>
+      {/* <Button fontWeight={'normal'} bg="white" letterSpacing="wider" px={3} size="xs" rounded="full">
           TAPE DATA
-        </Button>
-        <Button fontWeight={'normal'} bg="white" letterSpacing="wider" px={3} size="xs" rounded="full">
-          APPEARS ON
-        </Button>
-        <Button fontWeight={'normal'} bg="white" letterSpacing="wider" px={3} size="xs" rounded="full">
-          LIKES
-        </Button>
-        <Button fontWeight={'normal'} bg="white" letterSpacing="wider" px={3} size="xs" rounded="full">
-          AI SENTIMENT
-        </Button>
-      </Grid>
+        </Button> */}
+      {/* </Grid> */}
       <Box px={12} pt={3} pb={10} bgColor="blackAlpha.400">
         <Stack>
           <Flex gap={2}>
