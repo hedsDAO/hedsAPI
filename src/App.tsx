@@ -13,6 +13,8 @@ import { Explore } from './pages/explore/page/Explore';
 // import { Landing } from './pages/landing/page/Landing';
 import firebaseConfig from './firebaseConfig';
 
+import { Song } from './pages/song/page/Song';
+
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
@@ -31,6 +33,7 @@ const App = (): JSX.Element => {
         <Route path="/vote" element={<Vote />} />
         <Route path="/*" element={<Explore />} />
         {/* <Route path="/" element={<Explore />} /> */}
+        <Route path="/song" element={<Song />} />
       </Route>
       {/* TODO : LANDING */}
       {/* <Route index element={<Landing />} />
