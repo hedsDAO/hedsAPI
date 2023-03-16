@@ -6,31 +6,15 @@ import WaveSurfer from 'wavesurfer.js';
 import { WaveSurferParams } from 'wavesurfer.js/types/params';
 
 // Components
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  GridItem,
-  Image,
-  Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { AspectRatio, Flex, Grid, GridItem, Image, Stack, Tabs, TabList, TabPanels, Tab, TabPanel, Text } from '@chakra-ui/react';
+import { TapeDataTab } from '../components/TapeDataTab';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 
 const testData = {
   track: 'internal dingo',
   duration: 59,
-  type: 1,
+  type: 0,
   space: 'heds',
   stats: {
     likedBy: {},
@@ -128,32 +112,18 @@ export const Song = () => {
           <div ref={waveformRef} className={'w-full'}></div>
         </GridItem>
       </Grid>
-      {/* <Grid py={10} px={10} bgColor="blackAlpha.400" gap={3} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)"> */}
-      <Tabs variant="soft-rounded" colorScheme="whiteAlpha">
+      <Tabs variant="soft-rounded" colorScheme="blackAlpha" bgColor="blackAlpha.400" p="2rem">
         <TabList>
-          <Tab fontSize="xs">TAPE DATA</Tab>
-          <Tab fontSize="xs">APPEARS ON</Tab>
-          <Tab fontSize="xs">LIKES</Tab>
-          <Tab fontSize="xs">AI SENTIMENT</Tab>
+          <Tab fontSize="sm">TAPE DATA</Tab>
+          <Tab fontSize="sm">APPEARS ON</Tab>
+          <Tab fontSize="sm">LIKES</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>Tape Data</TabPanel>
+          <TabPanel>
+            <TapeDataTab artist={testData.artist} wallet={testData.wallet} subId={testData.subId} subImage={testData.subImage} type={testData.type} />
+          </TabPanel>
         </TabPanels>
       </Tabs>
-      {/* <Button fontWeight={'normal'} bg="white" letterSpacing="wider" px={3} size="xs" rounded="full">
-          TAPE DATA
-        </Button> */}
-      {/* </Grid> */}
-      <Box px={12} pt={3} pb={10} bgColor="blackAlpha.400">
-        <Stack>
-          <Flex gap={2}>
-            <Text fontSize="sm" fontWeight={'bold'}>
-              TAPE:
-            </Text>
-            <Text fontSize="sm">{testData?.album}</Text>
-          </Flex>
-        </Stack>
-      </Box>
     </>
   );
 };
