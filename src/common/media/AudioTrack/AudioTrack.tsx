@@ -92,13 +92,13 @@ const AudioTrack = ({ track }: { track: TrackMetadata }) => {
       <Flex opacity={track?.public ? '' : '60%'} direction={'column'} justifyContent={'space-evenly'} ml={'12px'}>
         {track.audio === "https://www.heds.cloud/ipfs/Qmd5FQDC3qHDFDiX7J54tjCsaf8qTd2A4H3UjB7u8P768o" ? (
           <Flex gap={1}>
-            <Link className="text-base" to={`/u/${"0x61d741b371a57554d30e2a44a946e31e6f52570f"}`}>
+            <Link className="text-base" to={`/u/${"0xf089af48c0abd5fa41741c334e18083f6a502045"}`}>
               <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
                 {track.artist.split(',')[0]}
               </Heading>
             </Link>
             <Box ml="-1">,</Box>
-            <Link className="text-base" to={`/u/${"0xf089af48c0abd5fa41741c334e18083f6a502045"}`}>
+            <Link className="text-base" to={`/u/${"0xab4ed9b7d2b4b6b1deb06297313fa5559d92fb69"}`}>
               <Heading mb={0.5} className="hover-underline-animation" fontWeight={'medium'} pointerEvents={'auto'} fontSize="xs" color={'gray.800'}>
                 {track.artist.split(', ')[1]}
               </Heading>
