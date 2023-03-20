@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
+import { useSigner } from 'wagmi'
 
 // Components
 import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge, useDisclosure } from '@chakra-ui/react';
@@ -11,7 +12,6 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { DateTime } from 'luxon';
-import { useSignMessage } from 'wagmi';
 import { useEffect, useRef } from 'react';
 import { calculateUserVotingPower } from 'hedsvote';
 
@@ -22,6 +22,7 @@ export const CastVoteContainer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const dispatch = useDispatch<Dispatch>();
+  const { data: signer} = useSigner()
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
   const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
@@ -31,12 +32,8 @@ export const CastVoteContainer = () => {
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
-  const { data, isSuccess, signMessage } = useSignMessage({
-    message: JSON.stringify(formattedVoteObject),
-  });
 
-  useEffect(() => {
-    if (isSuccess) {
+  const castVote = () => {
       const voteObject = {
         proposalId: proposal.ipfs.IpfsHash,
         spaceId: proposal.space,
@@ -44,27 +41,27 @@ export const CastVoteContainer = () => {
         vote: {
           choice: formattedVoteObject,
           created: now,
-          signature: data,
+          signature: "",
           voter: connectedUserWallet,
           vp,
         },
       };
 
       if (!hasUserVoted) {
-        dispatch.voteModel.castVote(voteObject);
-        dispatch.userModel.addUserVote([voteObject, choices]);
+        console.log('voteObject', voteObject)
+        dispatch.voteModel.castVote({vote: voteObject, signer});
+        // dispatch.userModel.addUserVote([voteObject, choices]);
         onOpen();
         return;
       } else {
         const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
         const updatedVote = { ...voteObject, previousVote };
-        dispatch.voteModel.updateVote(updatedVote);
-        dispatch.userModel.addUserVote([updatedVote, choices]);
+        dispatch.voteModel.updateVote({vote: updatedVote, signer});
+        // dispatch.userModel.addUserVote([updatedVote, choices]);
         onOpen();
         return;
       }
-    }
-  }, [isSuccess]);
+  };
 
   useEffect(() => {
     if (proposal?.strategies) {
@@ -84,7 +81,7 @@ export const CastVoteContainer = () => {
           const newKey = `${+key - 1}`;
           formattedChoicesTank[newKey] = userVote.choice[key];
         }
-        dispatch.voteModel.setUserLikesById(formattedChoicesTank);
+        dispatch.voteModel.setUserLikesByIdOnUserDoc(formattedChoicesTank);
       }
     }
     if (!connectedUserWallet) {
@@ -111,7 +108,7 @@ export const CastVoteContainer = () => {
                 <Badge variant={'outline'} colorScheme={'purple'}>
                   {choices.filter((choice) => choice.id in userLikes).length} LIKES
                 </Badge>
-                <Button colorScheme={'green'} onClick={() => signMessage()} size="xs" variant={'solid'}>
+                <Button colorScheme={'green'} onClick={() => castVote()} size="xs" variant={'solid'}>
                   Cast Vote
                 </Button>
               </Flex>

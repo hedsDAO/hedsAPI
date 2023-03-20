@@ -5,6 +5,7 @@ import { User } from '@/models/common';
 import axios from 'axios';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/App';
+import { Signer } from 'ethers';
 
 export interface SubmissionChoice extends Choice {
   score?: number;
@@ -134,12 +135,14 @@ export const voteModel = createModel<RootModel>()({
     },
     selectVoteObject() {
       return createSelector(this.selectUserLikes, (userChoices) => {
+        console.log('userChoices', userChoices)
         if (!userChoices) return {};
         const formattedChoicesTank: { [key: string]: number } = {};
         for (let key in userChoices) {
           const newKey = `${+key + 1}`;
           formattedChoicesTank[newKey] = userChoices[key];
         }
+        console.log('formattedChoicesTank', formattedChoicesTank)
         return formattedChoicesTank;
       });
     },
@@ -172,6 +175,7 @@ export const voteModel = createModel<RootModel>()({
       return { ...state, likesByChoiceId };
     },
     setUserLikesById: (state, likesByChoiceId) => ({ ...state, likesByChoiceId }),
+    setUserLikesByIdOnUserDoc: (state, likesByChoiceIdOnUserDoc) => ({ ...state, likesByChoiceIdOnUserDoc }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
@@ -185,36 +189,37 @@ export const voteModel = createModel<RootModel>()({
     setResultsUserData: (state, resultsUserData) => ({ ...state, resultsUserData }),
   },
   effects: () => ({
-    async castVote(vote: VoteObject) {
+    async castVote({vote, signer}: {vote: VoteObject, signer: Signer}) {
       const { castVote } = createClient();
+      console.log("vote in effect: ",vote)
       try {
-        await castVote(vote);
+        await castVote(signer, vote);
         this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
       }
     },
-    async updateVote(vote: UpdatedVoteObject) {
+    async updateVote({vote, signer}: {vote: UpdatedVoteObject, signer: Signer}) {
       const { updateVote } = createClient();
       try {
-        await updateVote(vote);
+        await updateVote(signer,vote);
         this.getProposal(vote.proposalId);
       } catch (error) {
         console.log(error);
       }
     },
-    // async createProposal(proposal: Proposal) {
-    //   const { createProposal } = createClient();
-    //   try {
-    //     const proposalCreated = await (await createProposal('proposals', proposal)).data;
-    //     const { choices } = proposalCreated;
-    //     this.setProposal(proposalCreated);
-    //     this.setChoices(choices);
-    //     console.log(proposalCreated);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async createProposal({proposal, signer}: {proposal: Proposal, signer: Signer}) {
+      const { createProposal } = createClient();
+      try {
+        const proposalCreated = await (await createProposal(signer,proposal.space, proposal, )).data;
+        const { choices } = proposalCreated;
+        this.setProposal(proposalCreated);
+        this.setChoices(choices);
+        console.log(proposalCreated);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // async deleteProposal(proposalAddress: string) {
     //   const { deleteProposal } = createClient();
     //   try {
@@ -229,7 +234,7 @@ export const voteModel = createModel<RootModel>()({
       const { getProposal } = createClient();
       if (proposalAddress?.length) {
         try {
-          const proposal = await (await getProposal('heds', proposalAddress)).data;
+          const proposal = await (await getProposal('test', proposalAddress)).data;
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);
