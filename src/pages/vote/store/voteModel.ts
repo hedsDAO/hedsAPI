@@ -192,6 +192,7 @@ export const voteModel = createModel<RootModel>()({
       try {
         await castVote(signer, vote);
         this.getProposal(vote.proposalId);
+        return;
       } catch (error) {
         console.log(error);
       }
@@ -201,6 +202,7 @@ export const voteModel = createModel<RootModel>()({
       try {
         await updateVote(signer,vote);
         this.getProposal(vote.proposalId);
+        return;
       } catch (error) {
         console.log(error);
       }

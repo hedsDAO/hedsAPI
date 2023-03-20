@@ -3,8 +3,7 @@ import { Dispatch, store } from '@/store';
 import { useSigner } from 'wagmi'
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge, useDisclosure } from '@chakra-ui/react';
-import { SuccessfulVoteDialog } from './SuccessfulVoteDialog';
+import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge, useToast } from '@chakra-ui/react';
 
 // Models
 import { Choice } from 'hedsvote';
@@ -19,8 +18,7 @@ import { calculateUserVotingPower } from 'hedsvote';
 import { HEDS_POWER } from '../store/constants';
 
 export const CastVoteContainer = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
+  // const toast = useToast();
   const dispatch = useDispatch<Dispatch>();
   const { data: signer} = useSigner()
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
@@ -32,8 +30,20 @@ export const CastVoteContainer = () => {
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
+  
+  // const voteToast = () => {
+  //   toast({
+  //     title: 'hedsTAPE 12 Vote',
+  //     description: 'Vote successfullly cast for hedsTAPE 12',
+  //     status: 'success',
+  //     duration: 7000,
+  //     position: 'top-right',
+  //     isClosable: true,
+  //   });
+  //   return;
+  // }
 
-  const castVote = () => {
+  const castVote = async () => {
       const voteObject = {
         proposalId: proposal.ipfs.IpfsHash,
         spaceId: proposal.space,
@@ -48,16 +58,16 @@ export const CastVoteContainer = () => {
       };
 
       if (!hasUserVoted) {
-        dispatch.voteModel.castVote({vote: voteObject, signer});
+        await dispatch.voteModel.castVote({vote: voteObject, signer});
+        // if (votes.find((vote) => vote.voter === connectedUserWallet).signature) voteToast();
         // dispatch.userModel.addUserVote([voteObject, choices]);
-        onOpen();
         return;
       } else {
         const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
         const updatedVote = { ...voteObject, previousVote };
-        dispatch.voteModel.updateVote({vote: updatedVote, signer});
+        const success = await dispatch.voteModel.updateVote({vote: updatedVote, signer});
+        // if (success) voteToast();
         // dispatch.userModel.addUserVote([updatedVote, choices]);
-        onOpen();
         return;
       }
   };
@@ -102,7 +112,6 @@ export const CastVoteContainer = () => {
   
   return (
     <>
-      <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
       {userLikes && Object.values(userLikes)?.length ? (
         <Stack>
           <Flex mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'end'} justifyContent={'space-between'}>
