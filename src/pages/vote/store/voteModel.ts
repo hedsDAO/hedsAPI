@@ -232,7 +232,7 @@ export const voteModel = createModel<RootModel>()({
       const { getProposal } = createClient();
       if (proposalAddress?.length) {
         try {
-          const proposal = await (await getProposal('test', proposalAddress)).data;
+          const proposal = await (await getProposal('heds', proposalAddress)).data;
           const { choices, method, votes } = proposal;
           this.setProposal(proposal);
           this.setChoices(choices);
