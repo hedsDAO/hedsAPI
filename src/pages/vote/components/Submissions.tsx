@@ -20,7 +20,7 @@ export const Submissions = () => {
   const currentTape = useSelector(store.select.tapesModel.selectCurrentVoteTape([tape, id]));
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tapeTrackIds: currentTape?.tracks }));
   const proposalState = useSelector(store.select.voteModel.selectProposalState);
-  const globalLoading = useSelector((state: RootState) => state.loading.global);
+  const voteLoading = useSelector((state: RootState) => state.loading.effects.voteModel.getProposal);
 
   const handleSelectedSubmission = (choice: SubmissionChoice) => {
     dispatch.voteModel.setCurrentTrack(choice);
@@ -31,7 +31,7 @@ export const Submissions = () => {
 
   return (
     <Box mx="auto">
-      {!globalLoading ? (
+      {!voteLoading ? (
         <>
           <Divider my={3} borderColor="transparent" w="full" />
           <Flex justifyContent="space-between">
@@ -65,7 +65,7 @@ export const Submissions = () => {
             )}
           </Box>
         </>
-      ) : null}
+       ) : null}
     </Box>
   );
 };

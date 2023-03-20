@@ -5,6 +5,7 @@ import { User } from '@/models/common';
 import axios from 'axios';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/App';
+import { Signer } from 'ethers';
 
 export interface SubmissionChoice extends Choice {
   score?: number;
@@ -172,6 +173,7 @@ export const voteModel = createModel<RootModel>()({
       return { ...state, likesByChoiceId };
     },
     setUserLikesById: (state, likesByChoiceId) => ({ ...state, likesByChoiceId }),
+    setUserLikesByIdOnUserDoc: (state, likesByChoiceIdOnUserDoc) => ({ ...state, likesByChoiceIdOnUserDoc }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     setProposal: (state, proposal: Proposal) => ({ ...state, proposal }),
@@ -185,32 +187,33 @@ export const voteModel = createModel<RootModel>()({
     setResultsUserData: (state, resultsUserData) => ({ ...state, resultsUserData }),
   },
   effects: () => ({
-    async castVote(vote: VoteObject) {
+    async castVote({vote, signer}: {vote: VoteObject, signer: Signer}) {
       const { castVote } = createClient();
       try {
-        await castVote(vote);
+        await castVote(signer, vote);
         this.getProposal(vote.proposalId);
+        return;
       } catch (error) {
         console.log(error);
       }
     },
-    async updateVote(vote: UpdatedVoteObject) {
+    async updateVote({vote, signer}: {vote: UpdatedVoteObject, signer: Signer}) {
       const { updateVote } = createClient();
       try {
-        await updateVote(vote);
+        await updateVote(signer,vote);
         this.getProposal(vote.proposalId);
+        return;
       } catch (error) {
         console.log(error);
       }
     },
-    // async createProposal(proposal: Proposal) {
+    // async createProposal({proposal, signer}: {proposal: Proposal, signer: Signer}) {
     //   const { createProposal } = createClient();
     //   try {
-    //     const proposalCreated = await (await createProposal('proposals', proposal)).data;
+    //     const proposalCreated = await (await createProposal(signer,proposal.space, proposal, )).data;
     //     const { choices } = proposalCreated;
     //     this.setProposal(proposalCreated);
     //     this.setChoices(choices);
-    //     console.log(proposalCreated);
     //   } catch (error) {
     //     console.log(error);
     //   }
@@ -252,6 +255,8 @@ export const voteModel = createModel<RootModel>()({
               this.setResultsUserData(data);
             });
           }
+
+
         } catch (error) {
           console.log(error);
         }
