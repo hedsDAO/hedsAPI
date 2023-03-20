@@ -48,7 +48,6 @@ export const CastVoteContainer = () => {
       };
 
       if (!hasUserVoted) {
-        console.log('voteObject', voteObject)
         dispatch.voteModel.castVote({vote: voteObject, signer});
         // dispatch.userModel.addUserVote([voteObject, choices]);
         onOpen();
@@ -81,7 +80,7 @@ export const CastVoteContainer = () => {
           const newKey = `${+key - 1}`;
           formattedChoicesTank[newKey] = userVote.choice[key];
         }
-        dispatch.voteModel.setUserLikesByIdOnUserDoc(formattedChoicesTank);
+        dispatch.voteModel.setUserLikesById(formattedChoicesTank);
       }
     }
     if (!connectedUserWallet) {
@@ -89,6 +88,18 @@ export const CastVoteContainer = () => {
     }
   }, [hasUserVoted, connectedUserWallet]);
 
+  const disableVoteButton = () => {
+    const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+    if (previousVote) {
+      const formattedChoicesTank: { [key: string]: number } = {};
+      for (const key in previousVote.choice) {
+        const newKey = `${+key - 1}`;
+        formattedChoicesTank[newKey] = previousVote.choice[key];
+      }
+      return JSON.stringify(formattedChoicesTank) === JSON.stringify(userLikes);
+    } else return false;
+  };
+  
   return (
     <>
       <SuccessfulVoteDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} cancelRef={cancelRef} />
@@ -108,7 +119,7 @@ export const CastVoteContainer = () => {
                 <Badge variant={'outline'} colorScheme={'purple'}>
                   {choices.filter((choice) => choice.id in userLikes).length} LIKES
                 </Badge>
-                <Button colorScheme={'green'} onClick={() => castVote()} size="xs" variant={'solid'}>
+                <Button colorScheme={'green'} onClick={() => castVote()} size="xs" variant={'solid'} isDisabled={disableVoteButton()}>
                   Cast Vote
                 </Button>
               </Flex>
