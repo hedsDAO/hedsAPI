@@ -135,14 +135,12 @@ export const voteModel = createModel<RootModel>()({
     },
     selectVoteObject() {
       return createSelector(this.selectUserLikes, (userChoices) => {
-        console.log('userChoices', userChoices)
         if (!userChoices) return {};
         const formattedChoicesTank: { [key: string]: number } = {};
         for (let key in userChoices) {
           const newKey = `${+key + 1}`;
           formattedChoicesTank[newKey] = userChoices[key];
         }
-        console.log('formattedChoicesTank', formattedChoicesTank)
         return formattedChoicesTank;
       });
     },
@@ -191,7 +189,6 @@ export const voteModel = createModel<RootModel>()({
   effects: () => ({
     async castVote({vote, signer}: {vote: VoteObject, signer: Signer}) {
       const { castVote } = createClient();
-      console.log("vote in effect: ",vote)
       try {
         await castVote(signer, vote);
         this.getProposal(vote.proposalId);
@@ -208,18 +205,17 @@ export const voteModel = createModel<RootModel>()({
         console.log(error);
       }
     },
-    async createProposal({proposal, signer}: {proposal: Proposal, signer: Signer}) {
-      const { createProposal } = createClient();
-      try {
-        const proposalCreated = await (await createProposal(signer,proposal.space, proposal, )).data;
-        const { choices } = proposalCreated;
-        this.setProposal(proposalCreated);
-        this.setChoices(choices);
-        console.log(proposalCreated);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async createProposal({proposal, signer}: {proposal: Proposal, signer: Signer}) {
+    //   const { createProposal } = createClient();
+    //   try {
+    //     const proposalCreated = await (await createProposal(signer,proposal.space, proposal, )).data;
+    //     const { choices } = proposalCreated;
+    //     this.setProposal(proposalCreated);
+    //     this.setChoices(choices);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     // async deleteProposal(proposalAddress: string) {
     //   const { deleteProposal } = createClient();
     //   try {
@@ -257,6 +253,8 @@ export const voteModel = createModel<RootModel>()({
               this.setResultsUserData(data);
             });
           }
+
+
         } catch (error) {
           console.log(error);
         }
