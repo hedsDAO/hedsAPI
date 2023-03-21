@@ -1,20 +1,22 @@
 import { Avatar, Badge, Flex, Stack, Text } from '@chakra-ui/react';
-import { render } from '@testing-library/react';
 import { TrackType } from '../store/songModel';
+import { DateTime } from 'luxon';
 
 interface OwnProps {
   artist: string;
   wallet: string;
   subId: string;
   subImage: string;
-
+  created?: number;
   type?: TrackType;
 }
 
-export const TapeDataTab = ({ artist, wallet, subId, subImage, type }: OwnProps) => {
+export const TapeDataTab = ({ artist, wallet, subId, subImage, created, type }: OwnProps) => {
   const renderTrackType = (type: TrackType) => {
     if (type === TrackType.SUBMISSION) return <Badge colorScheme={'green'}>Submission</Badge>;
   };
+
+  const date = DateTime.fromMillis(created).toLocaleString({ month: 'numeric', day: 'numeric', year: 'numeric' });
 
   return (
     <Flex>
@@ -27,9 +29,14 @@ export const TapeDataTab = ({ artist, wallet, subId, subImage, type }: OwnProps)
             {artist}
           </Text>
         </Flex>
-        <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
-          PUBLISHED:
-        </Text>
+        <Flex>
+          <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
+            PUBLISHED:
+          </Text>
+          <Text fontSize="sm" fontWeight="light">
+            {date}
+          </Text>
+        </Flex>
         <Flex>
           <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
             RELEASE TYPE:
@@ -40,6 +47,10 @@ export const TapeDataTab = ({ artist, wallet, subId, subImage, type }: OwnProps)
       <Stack w="50%">
         <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
           AI DESCRIPTION:
+        </Text>
+        <Text fontSize="sm" fontWeight="light">
+          The sample includes recordings from an original TR-808, a Moog MiniMoog Model D, a Yamaha CS-80 and more. Sounds were recorded through a Universal
+          Audio Apollo 16.
         </Text>
         <Flex>
           <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
