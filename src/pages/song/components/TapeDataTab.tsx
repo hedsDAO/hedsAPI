@@ -1,4 +1,4 @@
-import { Avatar, Badge, Flex, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Flex, Stack, Text, Wrap } from '@chakra-ui/react';
 import { TrackType } from '../store/songModel';
 import { DateTime } from 'luxon';
 
@@ -19,8 +19,8 @@ export const TapeDataTab = ({ artist, wallet, subId, subImage, created, type }: 
   const date = DateTime.fromMillis(created).toLocaleString({ month: 'numeric', day: 'numeric', year: 'numeric' });
 
   return (
-    <Flex>
-      <Stack w="50%">
+    <Flex direction={['column', 'row']}>
+      <Stack w={{ base: '100%', lg: '50%' }}>
         <Flex>
           <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
             ARTIST:
@@ -44,14 +44,16 @@ export const TapeDataTab = ({ artist, wallet, subId, subImage, created, type }: 
           {renderTrackType(type)}
         </Flex>
       </Stack>
-      <Stack w="50%">
-        <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
-          AI DESCRIPTION:
-        </Text>
-        <Text fontSize="sm" fontWeight="light">
-          The sample includes recordings from an original TR-808, a Moog MiniMoog Model D, a Yamaha CS-80 and more. Sounds were recorded through a Universal
-          Audio Apollo 16.
-        </Text>
+      <Stack w={{ base: '100%', lg: '50%' }}>
+        <Box>
+          <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
+            AI DESCRIPTION:
+          </Text>
+          <Text fontSize="sm" fontWeight="light">
+            The sample includes recordings from an original TR-808, a Moog MiniMoog Model D, a Yamaha CS-80 and more. Sounds were recorded through a Universal
+            Audio Apollo 16.
+          </Text>
+        </Box>
         <Flex>
           <Text fontSize="sm" fontWeight="extrabold" pr="0.5rem">
             SUBMISSION ID:
