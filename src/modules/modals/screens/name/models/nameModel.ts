@@ -42,17 +42,17 @@ export const nameModel = createModel<RootModel>()({
         return this.setIsLoading(false);
       } else {
         // user's display name is valid length and is unique
-        const newUserData = populateNewUser(connectedUserWallet, displayName) as User;
+        const newUserData = populateNewUser(connectedUserWallet.toLowerCase(), displayName) as User;
         if (userDocSnap.exists()) {
           const v2UserData = { ...newUserData, ...userDocSnap.data() } as User;
           await setDoc(userRef, v2UserData);
-          await setDoc(displayNameRef, { wallet: connectedUserWallet });
+          await setDoc(displayNameRef, { wallet: connectedUserWallet.toLowerCase() });
           dispatch.userModel.setConnectedUserData(v2UserData);
           if (isOnOwnPage) dispatch.userModel.setCurrentUserData(v2UserData);
           this.setIsLoading(false);
         } else {
           await setDoc(userRef, newUserData);
-          await setDoc(displayNameRef, { wallet: connectedUserWallet });
+          await setDoc(displayNameRef, { wallet: connectedUserWallet.toLowerCase() });
           dispatch.userModel.setConnectedUserData(newUserData);
           if (isOnOwnPage) dispatch.userModel.setCurrentUserData(newUserData);
           this.setIsLoading(false);
