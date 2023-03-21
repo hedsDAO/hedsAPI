@@ -8,6 +8,8 @@ import { WaveSurferParams } from 'wavesurfer.js/types/params';
 // Components
 import { AspectRatio, Flex, Grid, GridItem, Image, Stack, Tabs, TabList, TabPanels, Tab, TabPanel, Text } from '@chakra-ui/react';
 import { TapeDataTab } from '../components/TapeDataTab';
+import { AppearsOnTab } from '../components/AppearsOnTab';
+import { LikesTab } from '../components/LikesTab';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 
@@ -32,6 +34,7 @@ const testData = {
   wallet: '0x8e09b494f20aeadb8d9b3c8b3bec7cb6c7e18e83',
   subId: 'internalDINGO',
   audio: 'https://www.heds.cloud/ipfs/QmNMrUBhK5wUwjVDhADvMQnh4gq3d2hhZjKwu6rXjonaHr',
+  created: 1679363005000,
 };
 
 export const Song = () => {
@@ -96,7 +99,13 @@ export const Song = () => {
               </Text>
             </Flex>
             <Flex pt={6} gap={3}>
-              <PlayIcon width={30}></PlayIcon>
+              <PlayIcon
+                width={30}
+                onClick={() => {
+                  wavesurfer?.current?.playPause();
+                  setIsPlaying(!isPlaying);
+                }}
+              ></PlayIcon>
               <HeartIcon width={30}></HeartIcon>
             </Flex>
           </Stack>
@@ -120,7 +129,20 @@ export const Song = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <TapeDataTab artist={testData.artist} wallet={testData.wallet} subId={testData.subId} subImage={testData.subImage} type={testData.type} />
+            <TapeDataTab
+              artist={testData.artist}
+              wallet={testData.wallet}
+              subId={testData.subId}
+              subImage={testData.subImage}
+              type={testData.type}
+              created={testData.created}
+            />
+          </TabPanel>
+          <TabPanel>
+            <AppearsOnTab />
+          </TabPanel>
+          <TabPanel>
+            <LikesTab />
           </TabPanel>
         </TabPanels>
       </Tabs>
