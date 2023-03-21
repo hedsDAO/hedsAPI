@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Box, Image, Stack, Wrap, WrapItem } from '@chakra-ui/react';
+import { Image, Wrap, WrapItem } from '@chakra-ui/react';
 
 interface OwnProps {
   appearsOn: string[];
