@@ -81,20 +81,20 @@ export const Song = () => {
     <>
       <Grid maxW="full" templateColumns="repeat(12, 1fr)" gap={6}>
         <GridItem colSpan={7}>
-          <Stack mt="-10" pl={20} gap={4} justifyContent={'center'} h="full">
+          <Stack mt="-10" pl={20} gap={4} justifyContent={'center'} h="full" direction={{ base: 'row', lg: 'column' }}>
             <Flex direction="column">
-              <Text letterSpacing={'widest'} fontSize={'md'} textColor={'gray.500'}>
+              <Text letterSpacing={'widest'} fontSize={{ base: 'xs', lg: 'md' }} textColor={'gray.500'}>
                 TRACK
               </Text>
-              <Text letterSpacing={'widest'} fontSize={'3xl'}>
+              <Text letterSpacing={'widest'} fontSize={{ base: 'md', lg: '3xl' }}>
                 {testData?.subId}
               </Text>
             </Flex>
             <Flex direction="column">
-              <Text letterSpacing={'widest'} fontSize={'md'} textColor={'gray.500'}>
+              <Text letterSpacing={'widest'} fontSize={{ base: 'xs', lg: 'md' }} textColor={'gray.500'}>
                 ARTIST
               </Text>
-              <Text letterSpacing={'widest'} fontSize={'3xl'}>
+              <Text letterSpacing={'widest'} fontSize={{ base: 'md', lg: '3xl' }}>
                 {testData?.artist}
               </Text>
             </Flex>
@@ -110,13 +110,13 @@ export const Song = () => {
             </Flex>
           </Stack>
         </GridItem>
-        <GridItem colSpan={5}>
+        <GridItem colSpan={{ base: 12, lg: 5 }}>
           <AspectRatio ratio={1}>
             <Image src={testData.cover} />
           </AspectRatio>
         </GridItem>
       </Grid>
-      <Grid gap={2} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)">
+      <Grid gap={2} w="full" alignItems={'center'} templateColumns="repeat(12, 1fr)" display={{ base: 'hidden', lg: 'block' }}>
         <GridItem h="110px" overflowY={'hidden'} mt={'-110px'} colSpan={12}>
           <div ref={waveformRef} className={'w-full'}></div>
         </GridItem>
