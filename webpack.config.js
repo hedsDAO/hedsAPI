@@ -19,7 +19,7 @@ module.exports = {
       '@models': path.resolve(__dirname, 'src/models/'),
       '@modules/modals': path.resolve(__dirname, 'src/modules/modals'),
       '@modules/navigation': path.resolve(__dirname, 'src/modules/navigation'),
-      '@public': path.resolve(__dirname, 'src/public'),
+      '@public': path.resolve(__dirname, 'public'),
     },
   },
   output: {
@@ -64,7 +64,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      favicon: "./src/public/favicon.png",
+      favicon: "./public/favicon.png",
     }),
     new Dotenv()
   ],
