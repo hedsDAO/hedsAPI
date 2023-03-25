@@ -6,13 +6,8 @@ import { mainnet } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import { TapeWrapper, UserWrapper } from '@/modules/wrappers';
-import { ModalWrapper } from '@/modules/modals/components';
-import { AudioWrapper } from './modules/audio/components';
+import { ChakraProvider } from '@chakra-ui/react';
 import { store } from './store';
-import { theme } from './theme/theme';
-import ReactGA from 'react-ga4';
 import * as gaEvents from './events';
 import App from '@/App';
 
@@ -37,24 +32,13 @@ const client = createClient(
   }),
 );
 
-const initializeLightDarkMode = <ColorModeScript initialColorMode={theme.config.initialColorMode} />;
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
     <ConnectKitProvider>
       <RematchProvider store={store}>
-        <ChakraProvider theme={theme}>
-          {initializeLightDarkMode}
+        <ChakraProvider>
           <BrowserRouter>
-            <TapeWrapper>
-              <UserWrapper>
-                <AudioWrapper>
-                  <ModalWrapper>
-                    <App />
-                  </ModalWrapper>
-                </AudioWrapper>
-              </UserWrapper>
-            </TapeWrapper>
+            <App />
           </BrowserRouter>
         </ChakraProvider>
       </RematchProvider>
