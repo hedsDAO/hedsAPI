@@ -6,12 +6,12 @@ export const getUserByWallet = async (wallet: string) => {
   return rows[0];
 };
 
-export const updateUser = async (wallet: string, data: any) => {
+export const updateUser = async (user_id: number, data: any) => {
   const keys = Object.keys(data);
   const values = Object.values(data);
 
-  const query = `UPDATE heds.users SET ${keys.map((key, i) => `${key} = $${i + 2}`)} WHERE wallet = $1`;
-  await pool.query(query, [wallet, ...values]);
+  const query = `UPDATE heds.users SET ${keys.map((key, i) => `${key} = $${i + 2}`)} WHERE user_id = $1`;
+  await pool.query(query, [user_id, ...values]);
 };
 
 export const getUserSongs = async (userId: number) => {

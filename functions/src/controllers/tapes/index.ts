@@ -1,4 +1,5 @@
 import { pool } from '../../database';
+import { TapeData } from './types';
 
 export const getTapeById = async (tapeId: number) => {
   const query = 'SELECT * FROM heds.tapes WHERE id = $1';
@@ -6,20 +7,52 @@ export const getTapeById = async (tapeId: number) => {
   return rows[0];
 };
 
-export const getTapeSongs = async (tapeId: number) => {
-  const tape = await getTapeById(tapeId);
-  if (!tape) return [];
+export const getTapeSongs = async (tape_id: number): Promise<any> => {
+    const songsResult = await pool.query(
+      'SELECT s.* FROM heds.songs s INNER JOIN heds.song_tapes st ON s.id = st.song_id WHERE st.tape_id = $1',
+      [tape_id]
+    );
+  
+    return songsResult.rows;
+  };
+  
+  export const createTape = async (tapeData: TapeData): Promise<any> => {
+    const { contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links } = tapeData;
+  
+    const result = await pool.query(
+      'INSERT INTO heds.tapes (contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
+      [contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links]
+    );
+  
+    return result.rows[0];
+  };
 
-  const trackIds = tape.tracks;
-  const query = `
-    SELECT
-      heds.songs.*
-    FROM
-      heds.songs
-      INNER JOIN heds.tape_track ON heds.songs.id = heds.tape_track.song_id
-    WHERE
-      heds.tape_track.id = ANY($1)
-  `;
-  const { rows } = await pool.query(query, [trackIds]);
-  return rows;
-};
+  export const updateTape = async (tape_id: number, tapeData: Partial<TapeData>): Promise<any> => {
+    const keys = Object.keys(tapeData);
+  
+    if (keys.length === 0) {
+      throw new Error('No data provided to update');
+    }
+  
+    let query = 'UPDATE heds.tapes SET ';
+    let values = [];
+  
+    for (let i = 1; i <= keys.length; i++) {
+      const key = keys[i - 1] as keyof Partial<TapeData>;
+      query += `${key} = $${i}, `;
+      values.push(tapeData[key]);
+    }
+  
+    query = query.slice(0, -2); // remove trailing comma and space
+    query += ` WHERE id = $${keys.length + 1} RETURNING *`;
+    values.push(tape_id);
+  
+    const result = await pool.query(query, values);
+  
+    return result.rows[0];
+  };
+
+  export const deleteTape = async (tape_id: number): Promise<any> => {
+    const result = await pool.query('DELETE FROM heds.tapes WHERE id = $1 RETURNING *', [tape_id]);
+    return result.rows[0];
+  };
