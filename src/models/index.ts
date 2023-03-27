@@ -1,5 +1,11 @@
 import { Models } from '@rematch/core';
 
-export interface RootModel extends Models<RootModel> {}
+import { tapesModel } from '@/pages/Tape/models/tapeModel';
 
-export const models: RootModel = {};
+export interface RootModel extends Models<RootModel> {
+    tapesModel: typeof tapesModel;
+}
+
+export const models: RootModel = {
+    tapesModel,
+};
