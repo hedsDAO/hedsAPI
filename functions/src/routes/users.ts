@@ -45,33 +45,33 @@ router.delete('/:user_id', async (req, res) => {
 });
 
 router.get('/:user_id/songs', async (req, res) => {
-    try {
-      const user_id = parseInt(req.params.user_id);
-      const songs = await getUserSongs(user_id);
-      res.json(songs);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
-  });
-  
-  router.get('/:user_id/likes', async (req, res) => {
-    try {
-      const user_id = parseInt(req.params.user_id);
-      const likes = await getUserLikes(user_id);
-      res.json(likes);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
-  });
-  
-  router.get('/:user_id/events', async (req, res) => {
-    try {
-      const user_id = parseInt(req.params.user_id);
-      const events = await getUserEvents(user_id);
-      res.json(events);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
-  });
+  try {
+    const user_id = parseInt(req.params.user_id);
+    const songs = await getUserSongs(user_id);
+    res.json(songs);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.get('/:user_id/likes', async (req, res) => {
+  try {
+    const user_id = parseInt(req.params.user_id);
+    const likes = await getUserLikes(user_id);
+    res.json(likes);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.get('/:user_id/events', async (req, res) => {
+  try {
+    const user_id = parseInt(req.params.user_id);
+    const events = await getUserEvents(user_id);
+    res.json(events);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
 
 export default router;
