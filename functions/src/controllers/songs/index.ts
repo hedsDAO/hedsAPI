@@ -1,22 +1,27 @@
 import { pool } from '../../database';
 import { SongData } from './types';
 
-export const getSongByAudio = async (audio: string) => {
-  const query = `
-    SELECT
-      heds.songs.*,
-      heds.users.*
-    FROM
-      heds.songs
-      INNER JOIN heds.song_artists ON heds.songs.id = heds.song_artists.song_id
-      INNER JOIN heds.users ON heds.song_artists.user_id = heds.users.id
-    WHERE
-      heds.songs.audio = $1
-  `;
-  const { rows } = await pool.query(query, [audio]);
-  return rows;
-};
-
+export const getSongByAudio = async (audio: string): Promise<any> => {
+    const songResult = await pool.query(
+      'SELECT id FROM heds.songs WHERE audio = $1',
+      [audio]
+    );
+  
+    const songId = songResult.rows[0]?.id;
+    if (!songId) {
+      throw new Error('Song not found');
+    }
+  
+    const artistResult = await pool.query(
+      'SELECT user_id FROM heds.song_artists WHERE song_id = $1',
+      [songId]
+    );
+  
+    const artists = artistResult.rows.map(row => row.user_id);
+  
+    return { ...songResult.rows[0], artists };
+  };
+  
 export async function createSong(songData: SongData, user_id: number) {
     const {
       audio,

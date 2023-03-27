@@ -1,4 +1,5 @@
 import { pool } from '../../database';
+import { UserData } from './types';
 
 export const getUserByWallet = async (wallet: string) => {
   const query = 'SELECT * FROM heds.users WHERE wallet = $1';
@@ -10,8 +11,9 @@ export const updateUser = async (user_id: number, data: any) => {
   const keys = Object.keys(data);
   const values = Object.values(data);
 
-  const query = `UPDATE heds.users SET ${keys.map((key, i) => `${key} = $${i + 2}`)} WHERE user_id = $1`;
-  await pool.query(query, [user_id, ...values]);
+  const query = `UPDATE heds.users SET ${keys.map((key, i) => `${key} = $${i + 2}`)} WHERE user_id = $1 RETURNING *`;
+  const { rows } = await pool.query(query, [user_id, ...values]);
+    return rows[0];
 };
 
 export const getUserSongs = async (userId: number) => {
@@ -32,7 +34,7 @@ export const getUserEvents = async (userId: number) => {
     return rows;
   };
 
-  export async function createUser(userData: any) {
+  export async function createUser(userData: UserData) {
     const {
       badges,
       banner,
