@@ -4,7 +4,7 @@ import { User as UserComponent } from '@/common';
 
 const TapeHeader = ({ tape, curator }: { tape: Tape; curator: User }) => {
   return (
-    <Box bg="blackAlpha.200">
+    <Box>
       <Grid display={{ base: 'none', lg: 'grid' }} templateColumns={'repeat(7, 1fr)'}>
         <GridItem colSpan={3}>
           <Image borderBottomRightRadius={20} src={tape.image} />
@@ -40,8 +40,8 @@ const TapeHeader = ({ tape, curator }: { tape: Tape; curator: User }) => {
           </Stack>
         </GridItem>
       </Grid>
-      <Stack display={{ base: 'flex', lg: 'none' }}>
-        <Flex px={4} pt={3} pb={1} justifyContent={'space-between'}>
+      <Stack pb={2} display={{ base: 'flex', lg: 'none' }}>
+        <Flex px={4} justifyContent={'space-between'}>
           <Stack>
             <Box letterSpacing={'widest'} fontSize={'md'} color={'blackAlpha.600'}>
               TAPE
@@ -60,7 +60,7 @@ const TapeHeader = ({ tape, curator }: { tape: Tape; curator: User }) => {
           </Stack>
         </Flex>
         <Image src={tape.image} />
-        <Flex justifyContent={'space-between'} alignItems={'center'} gap={4} px={4} pt={2} pb={1}>
+        <Flex justifyContent={'space-between'} alignItems={'center'} gap={4} px={4}>
           <UserComponent user={curator} />
           <Flex alignItems={'center'} gap={2}>
             <Text letterSpacing={'widest'} fontSize={'sm'} color={'blackAlpha.600'}>

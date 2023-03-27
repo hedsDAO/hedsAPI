@@ -1,5 +1,7 @@
 import { Song, Tape, User } from '@/models/common';
 
+export const tabs = ['Tracks', 'Details'];
+
 export const mockTape: Tape = {
   id: 13,
   contract: '0xfDF7D7FFe3D363f858644057EBC62afABb99152A',
