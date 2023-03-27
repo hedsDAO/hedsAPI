@@ -14,15 +14,14 @@ router.get('/:tape_id', async (req, res) => {
 });
 
 router.get('/:tape_id/songs', async (req, res) => {
-    try {
-      const tape_id = parseInt(req.params.tape_id);
-      const songs = await getTapeSongs(tape_id);
-      res.json(songs);
-    } catch (error: any) {
-      res.status(500).send(error.message);
-    }
+  try {
+    const tape_id = parseInt(req.params.tape_id);
+    const songs = await getTapeSongs(tape_id);
+    res.json(songs);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
 });
-
 
 router.post('/', async (req, res) => {
   try {
