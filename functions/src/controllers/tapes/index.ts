@@ -8,23 +8,24 @@ export const getTapeById = async (tapeId: number) => {
 };
 
 export const getTapeSongs = async (tape_id: number): Promise<any> => {
-    const songsResult = await pool.query(
-      'SELECT s.* FROM heds.songs s INNER JOIN heds.song_tapes st ON s.id = st.song_id WHERE st.tape_id = $1',
+    const { rows } = await pool.query(
+      'SELECT * FROM heds.songs WHERE tape_id = $1',
       [tape_id]
     );
   
-    return songsResult.rows;
+    return rows;
   };
+  
   
   export const createTape = async (tapeData: TapeData): Promise<any> => {
     const { contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links } = tapeData;
   
-    const result = await pool.query(
+    const { rows } = await pool.query(
       'INSERT INTO heds.tapes (contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
       [contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links]
     );
   
-    return result.rows[0];
+    return rows[0];
   };
 
   export const updateTape = async (tape_id: number, tapeData: Partial<TapeData>): Promise<any> => {
@@ -47,12 +48,12 @@ export const getTapeSongs = async (tape_id: number): Promise<any> => {
     query += ` WHERE id = $${keys.length + 1} RETURNING *`;
     values.push(tape_id);
   
-    const result = await pool.query(query, values);
+    const { rows } = await pool.query(query, values);
   
-    return result.rows[0];
+    return rows[0];
   };
 
   export const deleteTape = async (tape_id: number): Promise<any> => {
-    const result = await pool.query('DELETE FROM heds.tapes WHERE id = $1 RETURNING *', [tape_id]);
-    return result.rows[0];
+    const { rows } = await pool.query('DELETE FROM heds.tapes WHERE id = $1 RETURNING *', [tape_id]);
+    return rows[0];
   };
