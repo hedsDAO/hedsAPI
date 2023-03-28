@@ -12,8 +12,11 @@ export const Nav = ({ tabs }: { tabs: string[] }) => {
       <Box>
         {currentTabs.map((tab, index) => (
           <Button
+            shadow="md"
+            key={tab + index}
             px={6}
-            size="sm"
+            fontSize={{ base: 'xs', lg: 'sm' }}
+            size={'sm'}
             fontWeight="medium"
             rounded="full"
             border={'1px solid black'}

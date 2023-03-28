@@ -5,8 +5,8 @@ import { mockTapeArtists } from '../models/constant';
 
 const TapeDetails = ({ curator, tape }: { curator: User; tape: Tape }) => {
   return (
-    <Box pb={10}>
-      <Grid px={10} templateColumns={{base: 'repeat(2, 1fr)', lg:'repeat(4, 1fr)'}}>
+    <Box bg="blackAlpha.200" pb={10}>
+      <Grid px={10} templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}>
         <GridItem colSpan={2}>
           <Stack pt={8} gap={2}>
             <Text letterSpacing={'widest'} fontSize={'md'} fontWeight={'semibold'} color={'blackAlpha.800'}>
@@ -68,12 +68,12 @@ const TapeDetails = ({ curator, tape }: { curator: User; tape: Tape }) => {
           <Text pb={4} pt={10} letterSpacing={'widest'} fontWeight={'semibold'} fontSize={'md'} color={'blackAlpha.800'}>
             TOP SUPPORTERS
           </Text>
-          <Flex display={{base: 'none', lg: 'flex'}} gap={4}>
+          <Flex display={{ base: 'none', lg: 'flex' }} gap={4}>
             {mockTapeArtists.slice(0, 5).map((artist, index) => {
               return <UserComponent key={artist.display_name} user={artist} size={'sm'} />;
             })}
           </Flex>
-          <Flex display={{base: 'flex', lg: 'none'}} gap={4}>
+          <Flex display={{ base: 'flex', lg: 'none' }} gap={4}>
             {mockTapeArtists.slice(0, 3).map((artist, index) => {
               return <UserComponent key={artist.display_name} user={artist} size={'sm'} />;
             })}

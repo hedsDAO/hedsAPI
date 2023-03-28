@@ -5,7 +5,14 @@ export const Song = ({ song, artist, index }: { song: SongMetadata; artist: User
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const [isHovering, setIsHovering] = useBoolean();
   return (
-    <Flex bg={index && index % 2 === 0 ? 'blackAlpha.200' : 'transparent'} onMouseEnter={setIsHovering.on} onMouseLeave={setIsHovering.off} p={3} alignItems={'center'} justifyContent={'space-between'}>
+    <Flex
+      bg={index && index % 2 === 0 ? 'blackAlpha.50' : 'transparent'}
+      onMouseEnter={setIsHovering.on}
+      onMouseLeave={setIsHovering.off}
+      p={3}
+      alignItems={'center'}
+      justifyContent={'space-between'}
+    >
       <Flex justifyContent={'space-between'}>
         <VStack justifyContent={'center'} pl={2} pr={4}>
           <Skeleton h={'5'} w={'3'} isLoaded={hasImageLoaded}>
