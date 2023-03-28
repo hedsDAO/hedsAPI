@@ -5,14 +5,18 @@ import { getStorage } from 'firebase/storage';
 
 import firebaseConfig from './firebaseConfig';
 
-import { Song } from './common/song/Song';
+import { Tape } from './pages/Tape/Tape';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
 const App = (): JSX.Element => {
-  return <Song />;
+  return (
+    <Routes>
+      <Route path="/tape/:id" element={<Tape />} />
+    </Routes>
+  );
 };
 
 export default App;
