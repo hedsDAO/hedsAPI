@@ -1,9 +1,9 @@
-import * as express from 'express';
-import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents } from '../controllers/users';
+import * as express from "express";
+import {getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents} from "../controllers/users";
 
 const router = express.Router();
 
-router.get('/:wallet', async (req, res) => {
+router.get("/:wallet", async (req, res) => {
   try {
     const wallet = req.params.wallet;
     const user = await getUserByWallet(wallet);
@@ -13,7 +13,7 @@ router.get('/:wallet', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const userData = req.body;
     const newUser = await createUser(userData);
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:user_id', async (req, res) => {
+router.put("/:user_id", async (req, res) => {
   try {
     const user_id = parseInt(req.params.user_id);
     const userData = req.body;
@@ -34,7 +34,7 @@ router.put('/:user_id', async (req, res) => {
   }
 });
 
-router.delete('/:user_id', async (req, res) => {
+router.delete("/:user_id", async (req, res) => {
   try {
     const user_id = parseInt(req.params.user_id);
     const result = await deleteUser(user_id);
@@ -44,7 +44,7 @@ router.delete('/:user_id', async (req, res) => {
   }
 });
 
-router.get('/:user_id/songs', async (req, res) => {
+router.get("/:user_id/songs", async (req, res) => {
   try {
     const user_id = parseInt(req.params.user_id);
     const songs = await getUserSongs(user_id);
@@ -54,7 +54,7 @@ router.get('/:user_id/songs', async (req, res) => {
   }
 });
 
-router.get('/:user_id/likes', async (req, res) => {
+router.get("/:user_id/likes", async (req, res) => {
   try {
     const user_id = parseInt(req.params.user_id);
     const likes = await getUserLikes(user_id);
@@ -64,7 +64,7 @@ router.get('/:user_id/likes', async (req, res) => {
   }
 });
 
-router.get('/:user_id/events', async (req, res) => {
+router.get("/:user_id/events", async (req, res) => {
   try {
     const user_id = parseInt(req.params.user_id);
     const events = await getUserEvents(user_id);

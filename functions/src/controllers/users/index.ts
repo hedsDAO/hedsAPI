@@ -1,9 +1,10 @@
-import { pool } from '../../database';
-import { UserData } from './types';
+import {pool} from "../../database";
+import {UserData} from "./types";
+import {SongData} from "../songs/types";
 
 export const getUserByWallet = async (wallet: string) => {
-  const query = 'SELECT * FROM heds.users WHERE wallet = $1';
-  const { rows } = await pool.query(query, [wallet]);
+  const query = "SELECT * FROM heds.users WHERE wallet = $1";
+  const {rows} = await pool.query(query, [wallet]);
   return rows[0];
 };
 
@@ -12,30 +13,40 @@ export const updateUser = async (user_id: number, data: any) => {
   const values = Object.values(data);
 
   const query = `UPDATE heds.users SET ${keys.map((key, i) => `${key} = $${i + 2}`)} WHERE user_id = $1 RETURNING *`;
-  const { rows } = await pool.query(query, [user_id, ...values]);
+  const {rows} = await pool.query(query, [user_id, ...values]);
   return rows[0];
 };
 
 export const getUserSongs = async (userId: number) => {
-  const query = 'SELECT * FROM heds.songs INNER JOIN heds.song_artists ON heds.songs.id = heds.song_artists.song_id WHERE heds.song_artists.user_id = $1';
-  const { rows } = await pool.query(query, [userId]);
+  const query = "SELECT * FROM heds.songs INNER JOIN heds.song_artists ON heds.songs.id = heds.song_artists.song_id WHERE heds.song_artists.user_id = $1";
+  const {rows} = await pool.query(query, [userId]);
   return rows;
 };
 
-export const getUserLikes = async (userId: number) => {
-  const query = 'SELECT * FROM heds.likes WHERE user_id = $1';
-  const { rows } = await pool.query(query, [userId]);
-  return rows;
+export const getUserLikes = async (user_id: number): Promise<SongData[]> => {
+  const likeResult = await pool.query("SELECT song_id FROM heds.likes WHERE user_id = $1", [user_id]);
+
+  const likedSongIds = likeResult.rows.map((row) => row.song_id);
+
+  if (likedSongIds.length === 0) {
+    return [];
+  }
+
+  const songResult = await pool.query("SELECT * FROM heds.songs WHERE id = ANY($1::int[])", [likedSongIds]);
+
+  const likedSongs = songResult.rows;
+
+  return likedSongs;
 };
 
 export const getUserEvents = async (userId: number) => {
-  const query = 'SELECT * FROM heds.user_events WHERE user_id = $1';
-  const { rows } = await pool.query(query, [userId]);
+  const query = "SELECT * FROM heds.user_events WHERE user_id = $1";
+  const {rows} = await pool.query(query, [userId]);
   return rows;
 };
 
 export async function createUser(userData: UserData) {
-  const { badges, banner, collection, description, display_name, history, joined, profile_picture, votes, wallet, spotlight, role } = userData;
+  const {badges, banner, collection, description, display_name, history, joined, profile_picture, votes, wallet, spotlight, role} = userData;
 
   const query = `
       INSERT INTO heds.users (
@@ -57,7 +68,7 @@ export async function createUser(userData: UserData) {
 
 export async function deleteUser(user_id: number) {
   // Begin a transaction
-  await pool.query('BEGIN');
+  await pool.query("BEGIN");
 
   try {
     // Delete user's likes
@@ -85,12 +96,12 @@ export async function deleteUser(user_id: number) {
     await pool.query(deleteUserQuery, [user_id]);
 
     // Commit the transaction
-    await pool.query('COMMIT');
+    await pool.query("COMMIT");
 
-    return { success: true, message: 'User deleted successfully.' };
+    return {success: true, message: "User deleted successfully."};
   } catch (error: any) {
     // Rollback the transaction in case of an error
-    await pool.query('ROLLBACK');
+    await pool.query("ROLLBACK");
     throw new Error(`Unable to delete user: ${error.message}`);
   }
 }

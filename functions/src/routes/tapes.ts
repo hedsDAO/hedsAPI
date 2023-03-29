@@ -1,9 +1,9 @@
-import * as express from 'express';
-import { getTapeById, createTape, updateTape, deleteTape, getTapeSongs } from '../controllers/tapes';
+import * as express from "express";
+import {getTapeById, createTape, updateTape, deleteTape, getTapeSongs} from "../controllers/tapes";
 
 const router = express.Router();
 
-router.get('/:tape_id', async (req, res) => {
+router.get("/:tape_id", async (req, res) => {
   try {
     const tape_id = parseInt(req.params.tape_id);
     const tape = await getTapeById(tape_id);
@@ -13,7 +13,7 @@ router.get('/:tape_id', async (req, res) => {
   }
 });
 
-router.get('/:tape_id/songs', async (req, res) => {
+router.get("/:tape_id/songs", async (req, res) => {
   try {
     const tape_id = parseInt(req.params.tape_id);
     const songs = await getTapeSongs(tape_id);
@@ -23,7 +23,7 @@ router.get('/:tape_id/songs', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const tapeData = req.body;
     const newTape = await createTape(tapeData);
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:tape_id', async (req, res) => {
+router.put("/:tape_id", async (req, res) => {
   try {
     const tape_id = parseInt(req.params.tape_id);
     const tapeData = req.body;
@@ -44,7 +44,7 @@ router.put('/:tape_id', async (req, res) => {
   }
 });
 
-router.delete('/:tape_id', async (req, res) => {
+router.delete("/:tape_id", async (req, res) => {
   try {
     const tape_id = parseInt(req.params.tape_id);
     const result = await deleteTape(tape_id);

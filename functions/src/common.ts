@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 
 // custom request body type
 export interface TypedRequestBody<T> extends express.Request {

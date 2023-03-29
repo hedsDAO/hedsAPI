@@ -45,7 +45,7 @@ export const exploreModel = createModel<RootModel>()({
     },
     selectCarouselOrder() {
       return slice((exploreModel) => exploreModel.carouselOrder);
-    }
+    },
   }),
   effects: () => ({
     async getLatestSecondaryListings(fetchAll?: boolean) {
