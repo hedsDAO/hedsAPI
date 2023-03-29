@@ -16,3 +16,11 @@ export interface SongArtistData {
   verified: boolean;
   ownership_percent: number;
 }
+
+export interface LikeData {
+  user_id: number;
+  song_id: number;
+  display_name: string;
+  profile_picture: string;
+  wallet: string;
+}
