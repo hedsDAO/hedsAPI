@@ -18,7 +18,7 @@ interface TrackStats {
   plays: number;
 }
 
-export enum TrackType {
+enum TrackType {
   SUBMISSION,
   TRACK,
   COLLAB,
