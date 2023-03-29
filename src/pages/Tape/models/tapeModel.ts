@@ -64,7 +64,7 @@ export interface TapeState {
   links: Links | undefined;
 }
 
-export const tapesModel = createModel<RootModel>()({
+export const tapeModel = createModel<RootModel>()({
   state: {
     id: undefined,
     contract: '',
