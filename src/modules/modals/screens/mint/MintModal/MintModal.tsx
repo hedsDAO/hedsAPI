@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, RootState, store } from '@/store';
+import { useAccount } from 'wagmi';
 
 // Components
 import { Button, Flex, useBoolean, Select, Tooltip, useToast, Box } from '@chakra-ui/react';
 import { PrimaryButton, SecondaryButton } from '@/common/buttons';
 import { ModalContainer, ModalHeader } from '@/modules/modals/components';
 import { IconDisc } from '@tabler/icons';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { MintDetails, TapeCover, TapeNameAndCurator, TransactionProgress } from '../components';
 
 // Utils
@@ -16,13 +16,14 @@ import { SoundAPI } from '@soundxyz/sdk/api';
 import { SoundClient } from '@soundxyz/sdk';
 import { mainnet, goerli } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { Modals } from '@/modules/modals/store/modalModel';
 import axios from 'axios';
 
 // Constants
 import { LANYARD_API, MINT_MODAL_TITLE, SOUND_KEY, COLLECTED_TWEET, COLLECT_PAGE_LINK } from '../models/constants';
 import { URL, TARGET, SIZE } from '@modules/modals/screens/twitter/models/constants';
-import { useAccount, useConnect } from 'wagmi';
-import { Modals } from '@/modules/modals/store/modalModel';
+
+
 
 const MintModal = () => {
   const toast = useToast();
@@ -35,10 +36,11 @@ const MintModal = () => {
   const contract = useSelector(store.select.tapesModel.selectCurrentTapeContract);
   const merkleRoot = useSelector(store.select.tapesModel.selectCurrentTapeMerkleRoot);
   const connectedWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
+  const tapeName = useSelector(store.select.tapesModel.selectCurrentTapeName);
   const [space, tape, id] = useSelector(store.select.tapesModel.selectSpaceTapeId);
-  const { connect } = useConnect();
-  const { isConnected } = useAccount();
 
+  const { isConnected } = useAccount();
+console.log(tapeName)
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
   });
@@ -89,8 +91,8 @@ const MintModal = () => {
       setIsMinting.off();
       setHasMinted.on();
       toast({
-        title: 'hedsTAPE 11 Minted',
-        description: 'You have successfully minted hedsTAPE 11',
+        title: `${tapeName} Minted`,
+        description: `You have successfully minted ${tapeName}`,
         status: 'success',
         duration: 7000,
         position: 'top-right',
