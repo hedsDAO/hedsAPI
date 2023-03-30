@@ -8,30 +8,31 @@ export const Nav = ({ tabs }: { tabs: string[] }) => {
   const currentTabs = useMemo(() => [...tabs], []);
   const selectedTab = useSelector(store.select.navModel.selectCurrentTab);
   return (
-    <Flex p={6}>
-      <Box>
-        {currentTabs.map((tab, index) => (
-          <Button
-            shadow="md"
-            key={tab + index}
-            px={6}
-            fontSize={{ base: 'xs', lg: 'sm' }}
-            size={'sm'}
-            fontWeight="medium"
-            rounded="full"
-            border={'1px solid black'}
-            mr={4}
-            bg={selectedTab === index ? 'black' : 'white'}
-            color={selectedTab === index ? 'white' : 'black'}
-            textTransform="uppercase"
-            onClick={useCallback(() => {
-              dispatch.navModel.setCurrentTab(index);
-            }, [dispatch, index])}
-          >
-            {tab}
-          </Button>
-        ))}
-      </Box>
+    <Flex justifyContent={{ base: 'center', lg: 'start' }} p={6} gap={2}>
+      {currentTabs.map((tab, index) => (
+        <Button
+          // shadow="sm"
+          key={tab + index}
+          fontSize={{ base: 'xs', lg: 'sm' }}
+          size={{ base: 'xs', lg: 'sm' }}
+          _hover={selectedTab === index ? { bg: 'transparent', color: 'black' } : { bg: 'transparent', color: 'blackAlpha.500' }}
+         
+          letterSpacing={'0.25rem'}
+          textAlign="center"
+          rounded="sm"
+          borderColor={'transparent'}
+          // border={'1px solid black'}
+          // bg={selectedTab === index ? 'black' : 'white'}
+          bg="transparent"
+          color={selectedTab === index ? 'black' : 'blackAlpha.300'}
+          textTransform="uppercase"
+          onClick={useCallback(() => {
+            dispatch.navModel.setCurrentTab(index);
+          }, [dispatch, index])}
+        >
+          {tab}
+        </Button>
+      ))}
     </Flex>
   );
 };

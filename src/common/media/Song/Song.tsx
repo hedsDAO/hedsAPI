@@ -1,7 +1,7 @@
 import { Song as SongMetadata, User } from '@/models/common';
 import { Box, Flex, Image, Stack, IconButton, Tooltip, useBoolean, Center, VStack, Skeleton, Text } from '@chakra-ui/react';
 
-export const Song = ({ song, artist, index }: { song: SongMetadata; artist: User; index?: number }) => {
+const Song = ({ song, artist, index }: { song: SongMetadata; artist: User; index?: number }) => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const [isHovering, setIsHovering] = useBoolean();
   return (
@@ -27,7 +27,7 @@ export const Song = ({ song, artist, index }: { song: SongMetadata; artist: User
           <Skeleton w={{ base: '14', lg: '16' }} h={{ base: '14', lg: '16' }} isLoaded={hasImageLoaded}>
             <Image
               onLoad={setHasImageLoaded.on}
-              opacity={isHovering ? '40%' : '100%'}
+              opacity={isHovering ? '20%' : '100%'}
               transition={'ease-in-out'}
               transitionDuration={'0.2s'}
               shadow={'md'}
@@ -97,3 +97,5 @@ export const Song = ({ song, artist, index }: { song: SongMetadata; artist: User
     </Flex>
   );
 };
+
+export default Song;

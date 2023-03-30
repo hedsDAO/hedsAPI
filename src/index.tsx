@@ -7,9 +7,11 @@ import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
+import { defaultTheme } from './theme/default';
 import { store } from './store';
-import * as gaEvents from './events';
+import PersistentAudio from './components/PersistentAudio/PersistentAudio';
 import App from '@/App';
+import * as gaEvents from './events';
 
 import 'animate.css';
 import './index.css';
@@ -36,9 +38,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
     <ConnectKitProvider>
       <RematchProvider store={store}>
-        <ChakraProvider>
+        <ChakraProvider theme={defaultTheme}>
           <BrowserRouter>
-            <App />
+            <PersistentAudio>
+              <App />
+            </PersistentAudio>
           </BrowserRouter>
         </ChakraProvider>
       </RematchProvider>

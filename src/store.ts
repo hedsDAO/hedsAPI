@@ -11,8 +11,7 @@ const persistConfig = {
   key: 'root',
   storage,
   version: 2,
-  whitelist: ['audioModel'],
-  blacklist: ['audioModel.isShowingQueue'],
+  whitelist: ['persistentAudioModel'],
 };
 
 export const store = init<RootModel, FullModel>({

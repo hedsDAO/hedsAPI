@@ -7,15 +7,22 @@ const User = ({ user, size }: { user: UserMetadata; size?: 'sm' | 'lg' }) => {
     <>
       {size === 'lg' || !size ? (
         <Flex>
-          <Avatar src={user.profile_picture} />
-          <Stack justifyContent={'center'} pl={4}>
-            <Box letterSpacing={'widest'} fontSize={'sm'} mt={'0 !important'}>
-              {user.display_name}
-            </Box>
-            <Box letterSpacing={'widest'} fontSize={'sm'} color={'blackAlpha.700'} mt={'0 !important'}>
-              {formatWallet(user.wallet)}
-            </Box>
-          </Stack>
+          <Box bg="" py={2}>
+            <Flex>
+              <Avatar size='md' border={'solid 1px'} src={user.profile_picture} />
+              <Stack justifyContent={'center'} pl={4}>
+                <Flex alignItems={'center'} fontSize="2xs" gap={2}>
+                <Box fontFamily={'mono'} letterSpacing={'widest'} fontSize={'sm'} mt={'0 !important'}>
+                  {user.display_name}
+                </Box>
+                <i className="fa-regular fa-arrow-up-right-from-square"></i>
+                </Flex>
+                <Box color="blackAlpha.400" fontFamily={'mono'} letterSpacing={'widest'} fontSize={'2xs'} mt={'0 !important'}>
+                  {formatWallet(user.wallet)}
+                </Box>
+              </Stack>
+            </Flex>
+          </Box>
         </Flex>
       ) : (
         <Box>

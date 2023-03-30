@@ -4,8 +4,8 @@ import { Tape as TapeMetadata, User } from '@/models/common';
 import { Box, Divider } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
-import { NavbarTabs } from './models/common';
-import { Nav } from '@/components/nav/Nav';
+import { TapeNavbarTabs } from './models/common';
+import { Nav } from '@/components/Nav/Nav';
 
 export const Tape = () => {
   const tape = mockTape as TapeMetadata;
@@ -17,8 +17,8 @@ export const Tape = () => {
       <TapeHeader tape={tape} curator={user} />
       <Nav tabs={tabs} />
       <Divider/>
-      {currentTab === NavbarTabs.TRACKS && <TapeTracks />}
-      {currentTab === NavbarTabs.DETAILS && <TapeDetails tape={tape} curator={user} />}
+      {currentTab === TapeNavbarTabs.TRACKS && <TapeTracks />}
+      {currentTab === TapeNavbarTabs.DETAILS && <TapeDetails tape={tape} curator={user} />}
     </Box>
   );
 };
