@@ -40,7 +40,6 @@ const MintModal = () => {
   const [space, tape, id] = useSelector(store.select.tapesModel.selectSpaceTapeId);
 
   const { isConnected } = useAccount();
-console.log(tapeName)
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
   });
