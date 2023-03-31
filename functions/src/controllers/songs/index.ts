@@ -1,9 +1,10 @@
 import {pool} from "../../database";
 import {LikeData, SongData} from "./types";
+import schemaName from "../../../config";
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
-    const songResult = await pool.query("SELECT * FROM heds.songs WHERE audio = $1", [audio]);
+    const songResult = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE audio = $1`, [audio]);
     const songId = songResult.rows[0]?.id;
 
     if (!songId) {
@@ -12,8 +13,8 @@ export const getSongByAudio = async (audio: string): Promise<any> => {
 
     const artistResult = await pool.query(
         `SELECT * 
-     FROM heds.song_artists AS song_artists
-     JOIN heds.users AS users ON users.id = song_artists.user_id
+     FROM ${schemaName}.song_artists AS song_artists
+     JOIN ${schemaName}.users AS users ON users.id = song_artists.user_id
      WHERE song_artists.song_id = $1`,
         [songId],
     );
@@ -29,11 +30,11 @@ export const getSongByAudio = async (audio: string): Promise<any> => {
 export const getLikesBySongId = async (song_id: number): Promise<LikeData[]> => {
   try {
     const result = await pool.query(
-        `SELECT DISTINCT ON (heds.likes.user_id)
-        heds.likes.user_id, heds.likes.song_id, heds.users.display_name, heds.users.profile_picture, heds.users.wallet
-        FROM heds.likes
-        JOIN heds.users ON heds.likes.user_id = heds.users.id
-        WHERE heds.likes.song_id = $1`, [song_id],
+        `SELECT DISTINCT ON (${schemaName}.likes.user_id)
+        ${schemaName}.likes.user_id, ${schemaName}.likes.song_id, ${schemaName}.users.display_name, ${schemaName}.users.profile_picture, ${schemaName}.users.wallet
+        FROM ${schemaName}.likes
+        JOIN ${schemaName}.users ON ${schemaName}.likes.user_id = ${schemaName}.users.id
+        WHERE ${schemaName}.likes.song_id = $1`, [song_id],
     );
 
     const likes = result.rows.map((row) => ({
@@ -61,7 +62,7 @@ export async function createSong(songData: SongData, user_id: number) {
   try {
     // Insert the new song into the song table
     const songQuery = `
-        INSERT INTO heds.songs (
+        INSERT INTO ${schemaName}.songs (
           audio, cover, duration, public, track_name, type,
           submission_data, cyanite_id, created, total_likes
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -75,7 +76,7 @@ export async function createSong(songData: SongData, user_id: number) {
 
     // Insert the song artist into the song_artists table
     const artistQuery = `
-        INSERT INTO heds.song_artists (song_id, user_id, verified, ownership_percent)
+        INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent)
         VALUES ($1, $2, $3, $4);
       `;
 
@@ -104,19 +105,19 @@ export async function deleteSong(song_id: number) {
   try {
     // Delete song's likes
     const deleteLikesQuery = `
-        DELETE FROM heds.likes WHERE song_id = $1;
+        DELETE FROM ${schemaName}.likes WHERE song_id = $1;
       `;
     await pool.query(deleteLikesQuery, [song_id]);
 
     // Delete song's artists entries
     const deleteSongArtistsQuery = `
-        DELETE FROM heds.song_artists WHERE song_id = $1;
+        DELETE FROM ${schemaName}.song_artists WHERE song_id = $1;
       `;
     await pool.query(deleteSongArtistsQuery, [song_id]);
 
     // Delete song
     const deleteSongQuery = `
-        DELETE FROM heds.songs WHERE id = $1;
+        DELETE FROM ${schemaName}.songs WHERE id = $1;
       `;
     await pool.query(deleteSongQuery, [song_id]);
 
