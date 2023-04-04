@@ -2,28 +2,39 @@ import { extendTheme } from '@chakra-ui/react';
 
 export const defaultTheme = extendTheme({
   colors: {
-    heds: {
-      bg: '#FAF9F5',
-      100: '#E5E5E5',
-      200: '#FB8500',
-      300: '#023047',
-      400: '#FFB703',
-      500: '#FB8500',
-      //   text: '#000000',
-      //   100: '#4299E1',
-      //   101: '#9FC1E8',
-      //   200: '#ED8936',
-      //   201: '#F3C969',
-      //   300: '#A63F55',
+    blue: {
+      primary: '#89CFF0',
+      light: '#B2E2FA',
+      dark: '#6196B3',
+    },
+    orange: {
+      primary: '#FFC48C',
+      light: '#FFE0B5',
+      dark: '#D49A6A',
+    },
+    white: {
+      pure: '#FFFFFF',
+      off: '#F5F5F5',
+    },
+    black: {
+      pure: '#000000',
+      darkGray: '#333333',
+      lightGray: '#999999',
+    },
+    containerBg: {
+      light: '#F2F2F2',
+      medium: '#E0E0E0',
+      dark: '#BEBEBE',
     },
   },
   fontFaces: {
     mono: "'Space Mono', monospace",
+    inter: "'Inter', sans-serif",
   },
   styles: {
     global: {
       html: {
-        bg: 'heds.bg',
+        bg: '',
       },
       body: {
         bg: 'heds.bg',

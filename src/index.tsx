@@ -19,6 +19,7 @@ import '../build/app/output.css';
 import '@fontsource/roboto-mono';
 import '@fontsource/noto-sans-mono';
 import '@fontsource/space-mono';
+import "@fontsource/inter"
 
 gaEvents.initGA();
 gaEvents.setPageViewEvents();

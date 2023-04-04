@@ -6,16 +6,16 @@ const User = ({ user, size }: { user: UserMetadata; size?: 'sm' | 'lg' }) => {
   return (
     <>
       {size === 'lg' || !size ? (
-        <Flex>
-          <Box bg="" py={2}>
+        <Flex mt={'0 !important'}>
+          <Box bg="">
             <Flex>
-              <Avatar size='md' border={'solid 1px'} src={user.profile_picture} />
+              <Avatar size="md" border={'solid 1px'} src={user.profile_picture} />
               <Stack justifyContent={'center'} pl={4}>
                 <Flex alignItems={'center'} fontSize="2xs" gap={2}>
-                <Box fontFamily={'mono'} letterSpacing={'widest'} fontSize={'sm'} mt={'0 !important'}>
-                  {user.display_name}
-                </Box>
-                <i className="fa-regular fa-arrow-up-right-from-square"></i>
+                  <Box fontFamily={'inter'} letterSpacing={'widest'} fontSize={'sm'} mt={'0 !important'}>
+                    {user.display_name}
+                  </Box>
+                  <i className="fa-regular fa-arrow-up-right-from-square"></i>
                 </Flex>
                 <Box color="blackAlpha.400" fontFamily={'mono'} letterSpacing={'widest'} fontSize={'2xs'} mt={'0 !important'}>
                   {formatWallet(user.wallet)}
@@ -25,17 +25,15 @@ const User = ({ user, size }: { user: UserMetadata; size?: 'sm' | 'lg' }) => {
           </Box>
         </Flex>
       ) : (
-        <Box>
+        <Stack w='full' pt={2} alignItems={'center'}>
           <Avatar size="xl" src={user.profile_picture} />
-          <Stack pt={2} alignItems={'center'}>
-            <Box letterSpacing={'widest'} fontSize={'xs'} mt={'0 !important'}>
-              {user.display_name}
-            </Box>
-            <Box letterSpacing={'widest'} fontSize={'xs'} color={'blackAlpha.700'} mt={'0 !important'}>
-              {formatWallet(user.wallet)}
-            </Box>
-          </Stack>
-        </Box>
+          <Box letterSpacing={'widest'} fontSize={'xs'} mt={'2 !important'}>
+            {user.display_name}
+          </Box>
+          <Box letterSpacing={'widest'} fontSize={'xs'} color={'blackAlpha.700'} mt={'0 !important'}>
+            {formatWallet(user.wallet)}
+          </Box>
+        </Stack>
       )}
     </>
   );

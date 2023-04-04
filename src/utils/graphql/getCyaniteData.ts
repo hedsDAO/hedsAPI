@@ -10,6 +10,10 @@ const getCyaniteData = (id: number) => {
               ... on AudioAnalysisV6Finished {
                 result {
                   bpmRangeAdjusted
+                  bpmPrediction {
+                    value
+                    confidence
+                  }
                   mood {
                     aggressive
                     calm
@@ -35,6 +39,7 @@ const getCyaniteData = (id: number) => {
                   emotionalProfile
                   musicalEraTag
                   transformerCaption
+                  timeSignature
                 }
               }
             }
