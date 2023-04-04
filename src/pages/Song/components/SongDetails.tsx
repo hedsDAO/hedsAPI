@@ -254,7 +254,7 @@ const SongDetails = ({ cyanite, curator, tape }: { cyanite?: { [key: string]: an
             </GridItem>
             <GridItem colSpan={1}>
               <Stack>
-                {cyanite?.mood &&
+                {/* {cyanite?.mood &&
                   Object.entries(cyanite.mood).map(([mood, value], index) => {
                     return (
                       <Flex
@@ -275,7 +275,7 @@ const SongDetails = ({ cyanite, curator, tape }: { cyanite?: { [key: string]: an
                         </Text>
                       </Flex>
                     );
-                  })}
+                  })} */}
               </Stack>
             </GridItem>
             <GridItem colSpan={{ base: 1, xl: 2 }}>{cyanite?.mood && <RadialChart data={cyanite?.mood} />}</GridItem>
