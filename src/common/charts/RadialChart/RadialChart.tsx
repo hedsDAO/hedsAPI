@@ -51,7 +51,7 @@ const RadialChart: React.FC<RadialChartProps> = ({ data }) => {
   });
 
   return (
-    <ResponsiveContainer width={'100%'} height={320}>
+    <ResponsiveContainer minHeight={350} width={'100%'} height={'100%'}>
       <RadarChart data={arrOfData}>
         <PolarGrid gridType="circle" strokeWidth={1} />
         <PolarAngleAxis dataKey="category" tick={{ fontSize: '0.5rem' }} />

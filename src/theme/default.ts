@@ -2,6 +2,9 @@ import { extendTheme } from '@chakra-ui/react';
 
 export const defaultTheme = extendTheme({
   colors: {
+    heds: {
+      bg: '#f2f2f2'
+    },
     blue: {
       primary: '#89CFF0',
       light: '#B2E2FA',
@@ -34,7 +37,7 @@ export const defaultTheme = extendTheme({
   styles: {
     global: {
       html: {
-        bg: '',
+        bg: 'heds.bg',
       },
       body: {
         bg: 'heds.bg',
