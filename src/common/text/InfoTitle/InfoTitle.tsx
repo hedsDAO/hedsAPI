@@ -1,8 +1,20 @@
-import { Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 
 const InfoTitle = ({ title }: { title: string }) => {
   return (
-    <Text mb={4} letterSpacing={'widest'} fontSize={'md'} fontWeight="semibold" color={'blackAlpha.700'}>
+    <Text
+      px={1}
+      as={Flex}
+      gap={1.5}
+      mb={3}
+      textTransform="uppercase"
+      alignItems="center"
+      fontWeight={'medium'}
+      fontFamily="inter"
+      fontSize="sm"
+      letterSpacing={'widest'}
+      color="blackAlpha.800"
+    >
       {title}
     </Text>
   );

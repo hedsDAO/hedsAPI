@@ -10,5 +10,8 @@ export { default as InfoTitle } from './text/InfoTitle/InfoTitle';
 // buttons
 export { default as ArrowButton } from './buttons/ArrowButton/ArrowButton';
 
+// events
+export { default as SongEvent } from "./events/SongEvent/SongEvent";
+
 // charts
 export { default as RadialChart } from './charts/RadialChart/RadialChart';

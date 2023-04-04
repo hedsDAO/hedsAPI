@@ -1,7 +1,7 @@
 import { Tape } from '@/common';
-import { Pagination } from '@/components/Pagination/Pagination';
 import { Box, Divider, Grid, GridItem } from '@chakra-ui/react';
 import { mockTape } from '../models/constant';
+
 const SongAppearsOn = () => {
   return (
     <Box pb={4}>
@@ -11,7 +11,6 @@ const SongAppearsOn = () => {
           <Tape tape={mockTape} />
         </GridItem>
       </Grid>
-      <Pagination />
     </Box>
   );
 };
