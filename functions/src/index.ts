@@ -1,22 +1,22 @@
 // The Firebase Admin SDK to access Firestore.
-import * as admin from "firebase-admin";
-import * as functions from "firebase-functions";
+import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 admin.initializeApp();
 
 // TWITTER CONTROLLER
-import twitterAuth from "./servers/authentication";
+import twitterAuth from './servers/authentication';
 
 // SUBMISSIONS CONTROLLER
-import newSubmission from "./servers/submissions";
+import newSubmission from './servers/submissions';
 
 // OPENSEA CONTROLLER
-import activeListings from "./servers/opensea";
+import activeListings from './servers/opensea';
 
 // FIRESTORE CONTROLLER
-import users from "./servers/users";
+import users from './servers/users';
 
 // FIREBASE APP
-import app from "./app";
+import app from './app';
 
 exports.twitterAuth = twitterAuth;
 exports.newSubmission = newSubmission;

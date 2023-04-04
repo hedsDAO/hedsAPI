@@ -1,16 +1,16 @@
-import express from "express";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
 
-import userRoutes from "./routes/users";
-import songRoutes from "./routes/songs";
-import tapeRoutes from "./routes/tapes";
+import userRoutes from './routes/users';
+import songRoutes from './routes/songs';
+import tapeRoutes from './routes/tapes';
 
 const app = express();
-app.use(cors({origin: true}));
+app.use(cors({ origin: true }));
 app.use(express.json());
 
-app.use("/users", userRoutes);
-app.use("/songs", songRoutes);
-app.use("/tapes", tapeRoutes);
+app.use('/users', userRoutes);
+app.use('/songs', songRoutes);
+app.use('/tapes', tapeRoutes);
 
 export default app;

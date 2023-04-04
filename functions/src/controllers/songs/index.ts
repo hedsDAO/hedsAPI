@@ -1,6 +1,6 @@
-import {pool} from "../../database";
-import {LikeData, SongData} from "./types";
-import schemaName from "../../../config";
+import { pool } from '../../database';
+import { LikeData, SongData } from './types';
+import schemaName from '../../../config';
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
@@ -12,16 +12,16 @@ export const getSongByAudio = async (audio: string): Promise<any> => {
     }
 
     const artistResult = await pool.query(
-        `SELECT * 
+      `SELECT * 
      FROM ${schemaName}.song_artists AS song_artists
      JOIN ${schemaName}.users AS users ON users.id = song_artists.user_id
      WHERE song_artists.song_id = $1`,
-        [songId],
+      [songId],
     );
 
     const artists = artistResult.rows.map((row) => row);
 
-    return {...songResult.rows[0], artists};
+    return { ...songResult.rows[0], artists };
   } catch (error) {
     console.log(error);
   }
@@ -30,11 +30,12 @@ export const getSongByAudio = async (audio: string): Promise<any> => {
 export const getLikesBySongId = async (song_id: number): Promise<LikeData[]> => {
   try {
     const result = await pool.query(
-        `SELECT DISTINCT ON (${schemaName}.likes.user_id)
+      `SELECT DISTINCT ON (${schemaName}.likes.user_id)
         ${schemaName}.likes.user_id, ${schemaName}.likes.song_id, ${schemaName}.users.display_name, ${schemaName}.users.profile_picture, ${schemaName}.users.wallet
         FROM ${schemaName}.likes
         JOIN ${schemaName}.users ON ${schemaName}.likes.user_id = ${schemaName}.users.id
-        WHERE ${schemaName}.likes.song_id = $1`, [song_id],
+        WHERE ${schemaName}.likes.song_id = $1`,
+      [song_id],
     );
 
     const likes = result.rows.map((row) => ({
@@ -54,10 +55,10 @@ export const getLikesBySongId = async (song_id: number): Promise<LikeData[]> => 
 };
 
 export async function createSong(songData: SongData, user_id: number) {
-  const {audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes} = songData;
+  const { audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes } = songData;
 
   // Begin a transaction
-  await pool.query("BEGIN");
+  await pool.query('BEGIN');
 
   try {
     // Insert the new song into the song table
@@ -88,19 +89,19 @@ export async function createSong(songData: SongData, user_id: number) {
     await pool.query(artistQuery, artistValues);
 
     // Commit the transaction
-    await pool.query("COMMIT");
+    await pool.query('COMMIT');
 
-    return {songId, ...songData, user_id, verified, ownership_percent};
+    return { songId, ...songData, user_id, verified, ownership_percent };
   } catch (error: any) {
     // Rollback the transaction in case of an error
-    await pool.query("ROLLBACK");
+    await pool.query('ROLLBACK');
     throw new Error(`Unable to create song: ${error.message}`);
   }
 }
 
 export async function deleteSong(song_id: number) {
   // Begin a transaction
-  await pool.query("BEGIN");
+  await pool.query('BEGIN');
 
   try {
     // Delete song's likes
@@ -122,12 +123,12 @@ export async function deleteSong(song_id: number) {
     await pool.query(deleteSongQuery, [song_id]);
 
     // Commit the transaction
-    await pool.query("COMMIT");
+    await pool.query('COMMIT');
 
-    return {success: true, message: "Song deleted successfully."};
+    return { success: true, message: 'Song deleted successfully.' };
   } catch (error: any) {
     // Rollback the transaction in case of an error
-    await pool.query("ROLLBACK");
+    await pool.query('ROLLBACK');
     throw new Error(`Unable to delete song: ${error.message}`);
   }
 }

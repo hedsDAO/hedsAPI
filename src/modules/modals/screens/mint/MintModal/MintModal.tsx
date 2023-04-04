@@ -23,8 +23,6 @@ import axios from 'axios';
 import { LANYARD_API, MINT_MODAL_TITLE, SOUND_KEY, COLLECTED_TWEET, COLLECT_PAGE_LINK } from '../models/constants';
 import { URL, TARGET, SIZE } from '@modules/modals/screens/twitter/models/constants';
 
-
-
 const MintModal = () => {
   const toast = useToast();
   const dispatch = useDispatch<Dispatch>();

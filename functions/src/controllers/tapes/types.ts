@@ -7,7 +7,7 @@ export interface TapeData {
   video: string;
   bpm: number;
   timeline: any;
-  type: "submission" | "track" | "collab" | "sample" | "hedsolo";
+  type: 'submission' | 'track' | 'collab' | 'sample' | 'hedsolo';
   splits: string;
   links: any;
 }
