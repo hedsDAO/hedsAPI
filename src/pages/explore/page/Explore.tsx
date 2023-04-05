@@ -31,7 +31,7 @@ export const Explore = () => {
       {carouselOrder?.length ? (
         <CarouselWrapper slides={carouselOrder?.map((key) => carouselMapping[key])} />
       ) : (
-        <VStack justifyContent={'center'} minH='70vh'>
+        <VStack justifyContent={'center'} minH="70vh">
           <Spinner size="md" />
         </VStack>
       )}

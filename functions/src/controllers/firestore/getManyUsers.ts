@@ -9,7 +9,7 @@ export const getManyUsers = async (req: express.Request, res: express.Response) 
   const firestore = getFirestore();
   const UID = admin.firestore.FieldPath.documentId();
   const arrOfUsers = req?.body?.users;
-  let usersTank = {} as { [key: string]: DocumentData };
+  const usersTank = {} as { [key: string]: DocumentData };
   /**
    * @name queryFirebaseData
    * @param {string[]} currentUserQueue array of wallets to query

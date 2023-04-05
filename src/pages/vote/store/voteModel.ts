@@ -187,7 +187,7 @@ export const voteModel = createModel<RootModel>()({
     setResultsUserData: (state, resultsUserData) => ({ ...state, resultsUserData }),
   },
   effects: () => ({
-    async castVote({vote, signer}: {vote: VoteObject, signer: Signer}) {
+    async castVote({ vote, signer }: { vote: VoteObject; signer: Signer }) {
       const { castVote } = createClient();
       try {
         await castVote(signer, vote);
@@ -197,10 +197,10 @@ export const voteModel = createModel<RootModel>()({
         console.log(error);
       }
     },
-    async updateVote({vote, signer}: {vote: UpdatedVoteObject, signer: Signer}) {
+    async updateVote({ vote, signer }: { vote: UpdatedVoteObject; signer: Signer }) {
       const { updateVote } = createClient();
       try {
-        await updateVote(signer,vote);
+        await updateVote(signer, vote);
         this.getProposal(vote.proposalId);
         return;
       } catch (error) {
@@ -255,8 +255,6 @@ export const voteModel = createModel<RootModel>()({
               this.setResultsUserData(data);
             });
           }
-
-
         } catch (error) {
           console.log(error);
         }

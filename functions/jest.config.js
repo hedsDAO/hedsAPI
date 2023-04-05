@@ -7,5 +7,5 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest',
     '\\.js$': './custom-transformer.js',
   },
-  modulePathIgnorePatterns: ['<rootDir>/test/'],
+  // modulePathIgnorePatterns: ['<rootDir>/test/'],
 };
