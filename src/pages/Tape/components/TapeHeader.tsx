@@ -29,14 +29,14 @@ const TapeHeader = ({ tape, curator }: { tape: Tape; curator: User }) => {
               CURATED BY
             </Text>
             <UserComponent user={curator} />
-            {/* <Flex pt={10} gap={2} alignItems={'center'}>
+            <Flex pt={10} gap={2} alignItems={'center'}>
               <Button rounded="full" color="blackAlpha.800" fontWeight={'medium'} px={3} py={1} size="xs" bg="blackAlpha.200">
                 <i className="fa-regular fa-file-arrow-down"></i>
               </Button>
               <Text letterSpacing={'widest'} fontSize={'md'} color={'blackAlpha.600'}>
                 SAMPLE
               </Text>
-            </Flex> */}
+            </Flex>
           </Stack>
         </GridItem>
       </Grid>
