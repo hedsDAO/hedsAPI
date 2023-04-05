@@ -1,8 +1,6 @@
 import * as dotenv from 'dotenv';
 import { NextFunction, Request, Response } from 'express';
-import * as admin from 'firebase-admin';
 import { beforeAll, beforeEach, describe, expect, jest, test } from '@jest/globals';
-import * as serviceAccount from '../../../service_key.json';
 import { pinImageToGateway } from '../../../src/controllers/pinata/pinImageToGateway';
 
 jest.setTimeout(10000);
@@ -24,7 +22,6 @@ describe('pinImageToGateway', () => {
   });
 
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 

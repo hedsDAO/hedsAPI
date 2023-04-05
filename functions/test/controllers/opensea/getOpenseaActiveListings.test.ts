@@ -1,8 +1,6 @@
 import * as dotenv from 'dotenv';
 import { Request, Response } from 'express';
-import * as admin from 'firebase-admin';
 import { beforeAll, beforeEach, describe, expect, jest, test } from '@jest/globals';
-import * as serviceAccount from '../../../service_key.json';
 import { getOpenseaActiveListings } from '../../../src/controllers/opensea/getOpenseaActiveListings';
 
 jest.setTimeout(20000);
@@ -19,7 +17,6 @@ describe('getOpenseaActiveListings', () => {
   });
 
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 

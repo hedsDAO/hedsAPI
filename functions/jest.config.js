@@ -7,5 +7,9 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest',
     '\\.js$': './custom-transformer.js',
   },
-  modulePathIgnorePatterns: ['<rootDir>/test/'],
+  globals: {
+    "ts-jest": {
+      "tsconfig": "tsconfig.jest.json"
+    }
+  }
 };

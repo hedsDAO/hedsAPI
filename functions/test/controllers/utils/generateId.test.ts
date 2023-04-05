@@ -1,6 +1,4 @@
 import { beforeAll, describe, jest, test, expect, beforeEach } from '@jest/globals';
-import * as admin from 'firebase-admin';
-import * as serviceAccount from '../../../service_key.json';
 import { Response, Request, NextFunction } from 'express';
 import { generateId } from '../../../src/controllers/utils/generateId';
 import * as dotenv from 'dotenv';
@@ -19,7 +17,6 @@ describe('getGeneratedImage', () => {
   });
 
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 

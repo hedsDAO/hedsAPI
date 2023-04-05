@@ -1,6 +1,4 @@
 import { beforeAll, beforeEach, describe, jest, expect, test } from '@jest/globals';
-import * as admin from 'firebase-admin';
-import * as serviceAccount from '../../../service_key.json';
 import { authenticateTweet } from '../../../src/controllers/twitter/authenticateTweet';
 import * as dotenv from 'dotenv';
 import { NextFunction, Request, Response } from 'express';
@@ -24,7 +22,6 @@ describe('authenticateTweet', () => {
   });
 
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 

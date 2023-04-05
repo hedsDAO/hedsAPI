@@ -1,8 +1,6 @@
 import * as dotenv from 'dotenv';
 import { Request, Response } from 'express';
-import * as admin from 'firebase-admin';
 import { beforeAll, beforeEach, describe, jest, expect, test } from '@jest/globals';
-import * as serviceAccount from '../../../service_key.json';
 import { pinAudioToGateway } from './../../../src/controllers/pinata/pinAudioToGateway';
 
 jest.setTimeout(10000);
@@ -28,7 +26,6 @@ describe('pinAudioToGateway', () => {
   });
 
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 
