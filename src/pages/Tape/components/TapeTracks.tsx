@@ -1,6 +1,6 @@
 import { Box, Flex, Stack, Text, VStack } from '@chakra-ui/react';
 import { mockTapeTracks, mockTapeArtists } from '../models/constant';
-import { Song } from '@/common/song/Song';
+import { Song } from '@/common';
 
 const TapeTracks = () => {
   return (
