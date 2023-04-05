@@ -1,76 +1,18 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
-
-interface Contributor {
-  userId: string;
-  split: number;
-  verified: boolean;
-}
-
-interface SubmissionData {
-  subId: string;
-  subImage: string;
-  proposalId: string;
-}
-
-interface TrackStats {
-  likedBy: { [key: string]: number };
-  plays: number;
-}
-
-export enum TrackType {
-  SUBMISSION,
-  TRACK,
-  COLLAB,
-  SAMPLE,
-  HEDSOLO,
-}
-
-export interface SongResponse {
-  id: number;
-  audio: string;
-  cover: string;
-  duration: number;
-  public: boolean;
-  appear_on?: number[];
-  track_name: string;
-  type: TrackType;
-  submission_data: string;
-  cyanite_id: string;
-  created: number;
-  total_likes: number;
-}
-
-export interface SongState {
-  id: number | undefined;
-  audio: string;
-  contributors: Contributor[];
-  cover: string;
-  duration: number;
-  public: boolean;
-  stats?: TrackStats; // are we removing this?
-  appearsOn: string[];
-  trackName: string;
-  type: TrackType;
-  submissionData: SubmissionData;
-  cyaniteId: string;
-  created: number;
-}
+import axios from 'axios';
 
 export const songModel = createModel<RootModel>()({
-  state: {
-    id: undefined,
-    audio: '',
-    contributors: [],
-    cover: 'string',
-    duration: 0,
-    public: true,
-    stats: {},
-    appearsOn: [],
-    trackName: '',
-    type: 0,
-    submissionData: {},
-    cyaniteId: '',
-    created: 0,
-  } as SongState,
+  state: {} as any,
+  reducers: {
+    setSong: (state, payload: any) => ({ state, ...payload }),
+  },
+  effects: () => ({
+    async getSongData(audio: string) {
+      const response = await axios.get(`http://localhost:5001/heds-104d8/us-central1/api/songs/${audio}`);
+      console.log(response);
+    }
+  }),
 });
+
+

@@ -10,9 +10,9 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "types": []
+    "types": ["node", "jest"]
   },
   "compileOnSave": true,
-  "include": ["src/**/*", "test/**/*", "jest.config.js"],
-  "exclude": ["node_modules", "../node_modules/**/*", "../node_modules/@types/**/*"]
+  "include": ["src/**/*", "jest.config.js"],
+  "exclude": ["node_modules", "node_modules/@types/**/*", "../node_modules/**/*", "../node_modules/@types/**/*", "*/.test.ts"]
 }

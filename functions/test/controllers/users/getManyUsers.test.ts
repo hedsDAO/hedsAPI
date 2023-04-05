@@ -1,8 +1,6 @@
 import * as dotenv from 'dotenv';
 import { Request, Response } from 'express';
-import * as admin from 'firebase-admin';
 import { beforeAll, beforeEach, describe, expect, jest, test } from '@jest/globals';
-import * as serviceAccount from '../../../service_key.json';
 import { getManyUsers } from '../../../src/controllers/firestore/getManyUsers';
 import userDataReqMock from '../../mocks/userDataReqMock';
 
@@ -26,7 +24,6 @@ describe('getManyUsers', () => {
   });
 
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 

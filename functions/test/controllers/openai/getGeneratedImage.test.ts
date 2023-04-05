@@ -1,6 +1,4 @@
 import { beforeAll, describe, jest, expect, test, beforeEach } from '@jest/globals';
-import * as admin from 'firebase-admin';
-import * as serviceAccount from '../../../service_key.json';
 import { Request, Response, NextFunction } from 'express';
 import * as dotenv from 'dotenv';
 import { getGeneratedImage } from '../../../src/controllers/openai/getGeneratedImage';
@@ -22,7 +20,6 @@ describe('getGeneratedImage', () => {
     } as unknown as Response;
   });
   beforeAll(async () => {
-    await admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
     dotenv.config();
   });
 
