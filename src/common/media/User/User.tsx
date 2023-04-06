@@ -1,5 +1,5 @@
 import { User as UserMetadata } from '@/models/common';
-import { Avatar, Box, Flex, Stack } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
 
 const User = ({ user, size }: { user: UserMetadata; size?: 'sm' | 'lg' }) => {
@@ -25,14 +25,14 @@ const User = ({ user, size }: { user: UserMetadata; size?: 'sm' | 'lg' }) => {
           </Box>
         </Flex>
       ) : (
-        <Stack w='full' pt={2} alignItems={'center'}>
-          <Avatar size="xl" src={user.profile_picture} />
-          <Box letterSpacing={'widest'} fontSize={'xs'} mt={'2 !important'}>
+        <Stack w="full" pt={2} alignItems={'center'}>
+          <Avatar border="solid 1px" borderColor="heds.100 !important" size="xl" src={user.profile_picture} />
+          <Text opacity={'70%'} fontFamily="karla" fontSize={{ base: '2xs', lg: 'xs' }} letterSpacing={'wide'} color={'white'}>
             {user.display_name}
-          </Box>
-          <Box letterSpacing={'widest'} fontSize={'xs'} color={'blackAlpha.700'} mt={'0 !important'}>
+          </Text>
+          <Text mt={'0 !important'} fontFamily="karla" fontSize="2xs" letterSpacing={'wide'} color={'white'}>
             {formatWallet(user.wallet)}
-          </Box>
+          </Text>
         </Stack>
       )}
     </>

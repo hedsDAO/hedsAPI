@@ -33,21 +33,21 @@ const SongEvent = ({ type, message, subject, timestamp }: SongEventProps) => {
   return (
     <Box mt={'0 !important'}>
       <Flex p={1.5} alignItems="center" gap={5}>
-        <Center rounded="lg" bg="gray.700">
+        <Center rounded="lg" bg="heds.700">
           <Box opacity={'0%'} shadow={'lg'} rounded={'lg'} w={{ base: '10', lg: '12' }} h={{ base: '10', lg: '12' }} />
           {songEventIcon(type)}
         </Center>
         <Stack justifyContent={'center'}>
           <Flex alignItems={'baseline'} gap={1.5}>
-            <Text fontFamily="inter" fontSize={{ base: '2xs', lg: 'xs' }} letterSpacing={'widest'} color={'blackAlpha.700'}>
+            <Text opacity={'70%'} fontFamily="karla" fontSize={{ base: '2xs', lg: 'xs' }} letterSpacing={'wide'} color={'white'}>
               {message}
             </Text>
           </Flex>
-          <Text mt={'0 !important'} fontFamily="inter" fontSize="2xs" letterSpacing={'widest'} color={'blackAlpha.500'}>
+          <Text mt={'0 !important'} fontFamily="karla" fontSize="2xs" letterSpacing={'wide'} color={'white'}>
             {subject}
           </Text>
         </Stack>
-        <Text ml={'auto'} mr={{ base: 1, lg: 2 }} mt={'0 !important'} fontFamily="inter" fontSize="2xs" letterSpacing={'widest'} color={'blackAlpha.600'}>
+        <Text ml={'auto'} mr={{ base: 1, lg: 2 }} mt={'0 !important'} fontFamily="karla" fontSize="2xs" letterSpacing={'wide'} color={'white'}>
           {timestamp}
         </Text>
       </Flex>

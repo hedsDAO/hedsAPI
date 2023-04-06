@@ -6,14 +6,14 @@ const InfoTitle = ({ title }: { title: string }) => {
       px={1}
       as={Flex}
       gap={1.5}
-      mb={3}
+      mb={2.5}
       textTransform="uppercase"
       alignItems="center"
-      fontWeight={'medium'}
-      fontFamily="inter"
+      fontWeight={'bold'}
+      fontFamily="poppins"
       fontSize="sm"
       letterSpacing={'widest'}
-      color="blackAlpha.800"
+      color="white"
     >
       {title}
     </Text>

@@ -20,6 +20,9 @@ import '@fontsource/roboto-mono';
 import '@fontsource/noto-sans-mono';
 import '@fontsource/space-mono';
 import "@fontsource/inter"
+import "@fontsource/karla"
+import "@fontsource/poppins"
+
 
 gaEvents.initGA();
 gaEvents.setPageViewEvents();

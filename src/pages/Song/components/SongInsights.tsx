@@ -2,28 +2,11 @@ import { SimpleGrid, GridItem, Center, Stack, Flex, Text } from '@chakra-ui/reac
 
 const SongInsights = ({ cyanite }: { cyanite: any }) => {
   return (
-    <SimpleGrid columns={{ base: 3, xl: 3 }} gap={2} px={1} pb={3}>
+    <SimpleGrid columns={{ base: 2, xl: 2 }} gap={2} px={1} pb={3}>
       <GridItem minW="full" colSpan={1}>
-        <Center p={1} minW={{ base: '10', lg: '12' }} w={'full'} h={{ base: '10', lg: '12' }} rounded="lg" bg="gray.700">
+        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="heds.700">
           <Stack alignItems={'center'}>
-            <Text fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
-              BPM
-            </Text>
-            <Flex alignItems={'baseline'} mt={'0 !important'}>
-              <Text fontWeight={'semibold'} color="white" mt={'0 !important'} fontSize={'2xs'}>
-                {cyanite?.bpmPrediction?.value}
-              </Text>
-              <Text ml={1} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
-                {cyanite?.bpmPrediction?.confidence?.toFixed(2) * 100}%
-              </Text>
-            </Flex>
-          </Stack>
-        </Center>
-      </GridItem>
-      <GridItem minW="full" colSpan={1}>
-        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="gray.700">
-          <Stack alignItems={'center'}>
-            <Text fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
+            <Text fontFamily={'karla'} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
               GENRE
             </Text>
             <Text fontWeight={'semibold'} color="white" mt={'0 !important'} fontSize={'2xs'}>
@@ -33,9 +16,9 @@ const SongInsights = ({ cyanite }: { cyanite: any }) => {
         </Center>
       </GridItem>
       <GridItem minW="full" colSpan={1}>
-        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="gray.700">
+        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="heds.700">
           <Stack alignItems={'center'}>
-            <Text fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
+            <Text fontFamily={'karla'} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
               SUBGENRE
             </Text>
             <Text fontWeight={'semibold'} color="white" mt={'0 !important'} fontSize={'2xs'}>
@@ -45,16 +28,16 @@ const SongInsights = ({ cyanite }: { cyanite: any }) => {
         </Center>
       </GridItem>
       <GridItem minW="full" colSpan={1}>
-        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="gray.700">
+        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="heds.700">
           <Stack alignItems={'center'}>
-            <Text fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
+            <Text fontFamily={'karla'} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
               KEY
             </Text>
             <Flex alignItems={'baseline'} mt={'0 !important'}>
               <Text fontWeight={'semibold'} color="white" mt={'0 !important'} fontSize={'2xs'}>
                 {cyanite?.keyPrediction?.value}
               </Text>
-              <Text ml={1} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
+              <Text ml={1} fontFamily={'karla'} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
                 {cyanite?.keyPrediction?.confidence?.toFixed(2) * 100}%
               </Text>
             </Flex>
@@ -62,9 +45,9 @@ const SongInsights = ({ cyanite }: { cyanite: any }) => {
         </Center>
       </GridItem>
       <GridItem minW="full" colSpan={1}>
-        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="gray.700">
+        <Center p={2} w="full" h={{ base: '10', lg: '12' }} rounded="lg" bg="heds.700">
           <Stack alignItems={'center'}>
-            <Text fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
+            <Text fontFamily={'karla'} fontWeight={'light'} color="white" mt={'0 !important'} fontSize={'2xs'}>
               TIME SIGNATURE
             </Text>
             <Flex alignItems={'baseline'} mt={'0 !important'}>

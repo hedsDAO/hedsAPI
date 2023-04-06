@@ -4,8 +4,8 @@ import { Box, Image, Stack, Text } from '@chakra-ui/react';
 const Tape = ({ tape }: { tape: TapeMetadata }) => {
   return (
     <Stack>
-      <Image rounded="lg" src={tape.image} />
-      <Text pt={2} fontSize="sm" fontWeight={'medium'} letterSpacing='widest'>
+      <Image border="solid 1px" borderColor="heds.100" rounded="md" src={tape.image} />
+      <Text pt={1} fontFamily="poppins" fontSize="sm" opacity={'70%'} letterSpacing="wide" color="white">
         {tape.name}
       </Text>
     </Stack>
