@@ -1,5 +1,5 @@
 import { pool } from '../../database';
-import { LikeData, SongData } from './types';
+import { SongData } from './types';
 import schemaName from '../../../config';
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
@@ -25,29 +25,38 @@ export const getSongByAudio = async (audio: string): Promise<any> => {
   }
 };
 
-export const getLikesBySongId = async (song_id: number): Promise<LikeData[]> => {
+export const getSongsByAudio = async (audioIds: string[]): Promise<any[]> => {
   try {
-    const result = await pool.query(
-      `SELECT DISTINCT ON (${schemaName}.likes.user_id)
-        ${schemaName}.likes.user_id, ${schemaName}.likes.song_id, ${schemaName}.users.display_name, ${schemaName}.users.profile_picture, ${schemaName}.users.wallet
-        FROM ${schemaName}.likes
-        JOIN ${schemaName}.users ON ${schemaName}.likes.user_id = ${schemaName}.users.id
-        WHERE ${schemaName}.likes.song_id = $1`,
-      [song_id],
+    const songsResult = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE audio = ANY($1)`, [audioIds]);
+    if (!songsResult.rows.length) {
+      return [];
+    }
+
+    const songIds = songsResult.rows.map((song) => song.id);
+    const artistResult = await pool.query(
+      `SELECT *
+       FROM ${schemaName}.song_artists AS song_artists
+       JOIN ${schemaName}.users AS users ON users.id = song_artists.user_id
+       WHERE song_artists.song_id = ANY($1)`,
+      [songIds],
     );
 
-    const likes = result.rows.map((row) => ({
-      user_id: row.user_id,
-      song_id: row.song_id,
-      display_name: row.display_name,
-      profile_picture: row.profile_picture,
-      wallet: row.wallet,
-    }));
-    console.log(likes);
+    const artistMap: { [songId: string]: any[] } = {};
 
-    return likes;
+    artistResult.rows.forEach((row) => {
+      if (!artistMap[row.song_id]) {
+        artistMap[row.song_id] = [];
+      }
+      artistMap[row.song_id].push(row);
+    });
+
+    const songsWithArtists = songsResult.rows.map((song) => ({
+      ...song,
+      artists: artistMap[song.id] || [],
+    }));
+
+    return songsWithArtists;
   } catch (error: any) {
-    console.log(error);
     return error;
   }
 };

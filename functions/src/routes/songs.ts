@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getSongByAudio, createSong, deleteSong, getLikesBySongId } from '../controllers/songs';
+import { getSongByAudio, createSong, deleteSong, getSongsByAudio } from '../controllers/songs';
 const router = express.Router();
 
 router.get('/:audio', async (req, res) => {
@@ -10,6 +10,19 @@ router.get('/:audio', async (req, res) => {
     if (!song) {
       return res.status(404).send('Song not found');
     } else return res.json(song);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.post('/audio_ids', async (req, res) => {
+  try {
+    const ipfsPrefix = 'https://www.heds.cloud/ipfs/';
+    const audioIds: string[] = req.body?.audioIds?.map((id: string) => ipfsPrefix + id);
+    const songs = await getSongsByAudio(audioIds);
+    if (!songs) {
+      return res.status(404).send('Songs not found');
+    } else return res.json(songs);
   } catch (error: any) {
     return res.status(500).send(error.message);
   }
@@ -31,16 +44,6 @@ router.delete('/:song_id', async (req, res) => {
     const song_id = parseInt(req.params.song_id);
     const result = await deleteSong(song_id);
     res.json(result);
-  } catch (error: any) {
-    res.status(500).send(error.message);
-  }
-});
-
-router.get('/:song_id/likes', async (req, res) => {
-  try {
-    const song_id = parseInt(req.params.song_id);
-    const likes = await getLikesBySongId(song_id);
-    res.json(likes);
   } catch (error: any) {
     res.status(500).send(error.message);
   }

@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
 import axios from 'axios';
-import { getCyaniteData } from '@/utils';
+import { getCyaniteData, getSimilarSongs } from '@/utils';
 import { User } from '@/models/common';
 
 interface Song {
@@ -27,6 +27,7 @@ interface Song {
   };
   cyanite_data: any;
   artists: User[];
+  similar_songs: Song[];
 }
 
 export const songModel = createModel<RootModel>()({
@@ -35,6 +36,7 @@ export const songModel = createModel<RootModel>()({
   } as any,
   reducers: {
     setSong: (state, song: any) => ({ ...state, song }),
+    setSimilarSongs: (state, similarSongs: Song[]) => ({ ...state, song: { ...state.song, similar_songs: similarSongs } }),
   },
   selectors: (slice) => ({
     selectSong: () => slice((state) => state.song),
@@ -44,12 +46,20 @@ export const songModel = createModel<RootModel>()({
     selectSongCover: () => slice((state): string | undefined => state.song.cover),
     selectSongSubImage: () => slice((state): string | undefined => state.song.submission_data?.sub_image),
     selectCyaniteData: () => slice((state): any | undefined => state.song?.cyanite_data),
+    selectSongId: () => slice((state): number | undefined => state.song?.id),
   }),
   effects: () => ({
     async getSongData(audio: string) {
       const response = await axios.get(`http://localhost:5001/heds-104d8/us-central1/api/songs/${audio}`);
-      const cyaniteData = await getCyaniteData(response.data.cyanite_id);
+      const cyaniteId = response.data.cyanite_id;
+      const [audioIds, cyaniteData] = await Promise.all([getSimilarSongs(cyaniteId), getCyaniteData(cyaniteId)]);
+      const similarSongs = await axios.post(`http://localhost:5001/heds-104d8/us-central1/api/songs/audio_ids`, { audioIds });
       this.setSong({ ...response.data, cyanite_data: cyaniteData.result });
+      this.setSimilarSongs(similarSongs.data);
+    },
+    async likeSong([userId, songId]: number[]) {
+      const response = await axios.post(`http://localhost:5001/heds-104d8/us-central1/api/likes/addLike`, { userId, songId });
+      console.log(response.data, 'song like');
     },
   }),
 });

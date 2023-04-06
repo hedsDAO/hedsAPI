@@ -1,12 +1,13 @@
 import { Grid, GridItem, Stack, Flex, AspectRatio, Box, Text, Image, Avatar, Button, Divider } from '@chakra-ui/react';
 import { mockTape } from '../models/constant';
 import { PlayIcon, HeartIcon, PauseIcon } from '@heroicons/react/24/solid';
-import { useSelector } from 'react-redux';
-import { store } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, store } from '@/store';
 import { User } from '@/models/common';
 import { useState } from 'react';
 
 const SongHeader = () => {
+  const dispatch = useDispatch<Dispatch>();
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLiked, setIsLiked] = useState(true);
   const songArtists = useSelector(store.select.songModel.selectSongArtists);
@@ -14,6 +15,7 @@ const SongHeader = () => {
   const songSubId = useSelector(store.select.songModel.selectSongSubId);
   const songCover = useSelector(store.select.songModel.selectSongCover);
   const songSubImage = useSelector(store.select.songModel.selectSongSubImage);
+  const songId = useSelector(store.select.songModel.selectSongId);
   return (
     <Grid maxW="full" templateColumns={{ base: 'repeat(1, 1fr)', xl: 'repeat(10, 1fr)' }} gap={6}>
       <GridItem
@@ -27,7 +29,7 @@ const SongHeader = () => {
         <Stack pb={5}>
           <Flex direction="row">
             {songArtists?.map((artist: User) => (
-              <Flex direction="column" gap={1} alignItems="start">
+              <Flex key={artist.wallet} direction="column" gap={1} alignItems="start">
                 <Flex alignItems="baseline" gap={1}>
                   <Text opacity={'70%'} fontFamily={'karla'} fontSize={'2xs'} color="white">
                     ARTIST
@@ -82,7 +84,7 @@ const SongHeader = () => {
           </Flex>
           {isLiked ? (
             <Button
-              onClick={() => setIsLiked(!isLiked)}
+              onClick={() => dispatch.songModel.likeSong([songId, 113])}
               color="button.dark"
               px={6}
               py={8}

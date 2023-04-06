@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
+import likeRoutes from './routes/likes';
 import userRoutes from './routes/users';
 import songRoutes from './routes/songs';
 import tapeRoutes from './routes/tapes';
@@ -9,6 +10,7 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
+app.use('/likes', likeRoutes)
 app.use('/users', userRoutes);
 app.use('/songs', songRoutes);
 app.use('/tapes', tapeRoutes);

@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents } from '../controllers/users';
+import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserEvents } from '../controllers/users';
 
 const router = express.Router();
 
@@ -51,16 +51,6 @@ router.get('/:user_id/songs', async (req, res) => {
     return res.json(songs);
   } catch (error: any) {
     return res.status(500).send(error.message);
-  }
-});
-
-router.get('/:user_id/likes', async (req, res) => {
-  try {
-    const user_id = parseInt(req.params.user_id);
-    const likes = await getUserLikes(user_id);
-    res.json(likes);
-  } catch (error: any) {
-    res.status(500).send(error.message);
   }
 });
 

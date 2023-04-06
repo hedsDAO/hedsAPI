@@ -22,7 +22,7 @@ const CustomPolygon: React.FC<CustomPolygonProps> = ({ points, colors }) => {
       {points.map((point, index) => {
         const nextPoint = points[(index + 1) % points.length];
         const path = `M${point.x},${point.y} L${nextPoint.x},${nextPoint.y} L${centerX},${centerY} Z`;
-        return <path key={index} d={path} stroke={'transparent'} fill={colors[index % colors.length]} fillOpacity={0.6} />;
+        return <path key={index} d={path} stroke={'transparent'} fill={colors[index % colors.length]} fillOpacity={0.9} />;
       })}
       <Polygon points={points} fill="none" />
     </g>

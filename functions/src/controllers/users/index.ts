@@ -1,6 +1,5 @@
 import { pool } from '../../database';
 import { UserData } from './types';
-import { SongData } from '../songs/types';
 import schemaName from '../../../config';
 
 export const getUserByWallet = async (wallet: string) => {
@@ -23,22 +22,6 @@ export const getUserSongs = async (userId: number) => {
   const query = `SELECT * FROM ${schemaName}.songs INNER JOIN ${schemaName}.song_artists ON ${schemaName}.songs.id = ${schemaName}.song_artists.song_id WHERE ${schemaName}.song_artists.user_id = $1`;
   const { rows } = await pool.query(query, [userId]);
   return rows;
-};
-
-export const getUserLikes = async (user_id: number): Promise<SongData[]> => {
-  const likeResult = await pool.query(`SELECT song_id FROM ${schemaName}.likes WHERE user_id = $1`, [user_id]);
-
-  const likedSongIds = likeResult.rows.map((row) => row.song_id);
-
-  if (likedSongIds.length === 0) {
-    return [];
-  }
-
-  const songResult = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE id = ANY($1::int[])`, [likedSongIds]);
-
-  const likedSongs = songResult.rows;
-
-  return likedSongs;
 };
 
 export const getUserEvents = async (userId: number) => {
