@@ -65,7 +65,7 @@ export const Submissions = () => {
             )}
           </Box>
         </>
-       ) : null}
+      ) : null}
     </Box>
   );
 };

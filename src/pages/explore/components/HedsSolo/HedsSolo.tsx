@@ -49,7 +49,7 @@ const HedsSolo = () => {
                 <Button
                   role="link"
                   as={ChakraLink}
-                  href={hedSoloData?.link || ""}
+                  href={hedSoloData?.link || ''}
                   target="_blank"
                   py="4"
                   border="1px"

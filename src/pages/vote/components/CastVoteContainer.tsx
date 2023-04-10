@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { useSigner } from 'wagmi'
+import { useSigner } from 'wagmi';
 
 // Components
 import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge, useToast } from '@chakra-ui/react';
@@ -20,7 +20,7 @@ import { HEDS_POWER } from '../store/constants';
 export const CastVoteContainer = () => {
   // const toast = useToast();
   const dispatch = useDispatch<Dispatch>();
-  const { data: signer} = useSigner()
+  const { data: signer } = useSigner();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const choices = useSelector(store.select.voteModel.selectProposalChoices);
   const connectedUserWallet = useSelector(store.select.userModel.selectConnectedUserWallet);
@@ -30,7 +30,7 @@ export const CastVoteContainer = () => {
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
-  
+
   // const voteToast = () => {
   //   toast({
   //     title: 'hedsTAPE 12 Vote',
@@ -44,32 +44,32 @@ export const CastVoteContainer = () => {
   // }
 
   const castVote = async () => {
-      const voteObject = {
-        proposalId: proposal.ipfs.IpfsHash,
-        spaceId: proposal.space,
-        updatedVote: hasUserVoted,
-        vote: {
-          choice: formattedVoteObject,
-          created: now,
-          signature: "",
-          voter: connectedUserWallet,
-          vp,
-        },
-      };
+    const voteObject = {
+      proposalId: proposal.ipfs.IpfsHash,
+      spaceId: proposal.space,
+      updatedVote: hasUserVoted,
+      vote: {
+        choice: formattedVoteObject,
+        created: now,
+        signature: '',
+        voter: connectedUserWallet,
+        vp,
+      },
+    };
 
-      if (!hasUserVoted) {
-        await dispatch.voteModel.castVote({vote: voteObject, signer});
-        // if (votes.find((vote) => vote.voter === connectedUserWallet).signature) voteToast();
-        // dispatch.userModel.addUserVote([voteObject, choices]);
-        return;
-      } else {
-        const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-        const updatedVote = { ...voteObject, previousVote };
-        const success = await dispatch.voteModel.updateVote({vote: updatedVote, signer});
-        // if (success) voteToast();
-        // dispatch.userModel.addUserVote([updatedVote, choices]);
-        return;
-      }
+    if (!hasUserVoted) {
+      await dispatch.voteModel.castVote({ vote: voteObject, signer });
+      // if (votes.find((vote) => vote.voter === connectedUserWallet).signature) voteToast();
+      // dispatch.userModel.addUserVote([voteObject, choices]);
+      return;
+    } else {
+      const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+      const updatedVote = { ...voteObject, previousVote };
+      const success = await dispatch.voteModel.updateVote({ vote: updatedVote, signer });
+      // if (success) voteToast();
+      // dispatch.userModel.addUserVote([updatedVote, choices]);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export const CastVoteContainer = () => {
       return JSON.stringify(formattedChoicesTank) === JSON.stringify(userLikes);
     } else return false;
   };
-  
+
   return (
     <>
       {userLikes && Object.values(userLikes)?.length ? (
