@@ -20,7 +20,8 @@ export const sampleModel = createModel<RootModel>()({
     async getSampleDownload(id: string) {
       this.setIsLoading(true);
       let sampleRef = null as StorageReference;
-      if (id === '13') sampleRef = ref(storage, `samples/ht${id}.zip`);
+      const isZip = id === '13';
+      if (isZip) sampleRef = ref(storage, `samples/ht${id}.zip`);
       else sampleRef = ref(storage, `samples/ht${id}.mp3`);
       await getDownloadURL(sampleRef).then(async (url: string) => {
         this.setIsLoading(false);
@@ -31,7 +32,7 @@ export const sampleModel = createModel<RootModel>()({
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = `ht${id}.mp3`;
+            a.download = isZip ? `ht${id}.zip` : `ht${id}.mp3`;
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
