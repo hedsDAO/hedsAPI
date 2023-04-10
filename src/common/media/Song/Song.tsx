@@ -52,7 +52,7 @@ const Song = ({ song, artist, index }: { song: SongMetadata; artist: User; index
           {!hasImageLoaded ? (
             <Skeleton w="10ch" h={'4'} rounded="2xl" isLoaded={true}></Skeleton>
           ) : (
-            <Box fontSize={{ base: 'sm', lg: 'md' }}>{JSON.parse(song.submission_data)?.['sub_id']}</Box>
+            <Box fontSize={{ base: 'sm', lg: 'md' }}>{typeof song.submission_data === 'string' && JSON.parse(song.submission_data)?.['sub_id']}</Box>
           )}
           {!hasImageLoaded ? (
             <Skeleton w="10ch" h={'4'} rounded="2xl" isLoaded={true}></Skeleton>

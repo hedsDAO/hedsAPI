@@ -20,7 +20,7 @@ export const mockTape: Tape = {
   links: '{}',
 };
 
-export const mockUser: User = {
+export const mockUser: any = {
   id: 514,
   profile_picture:
     'https://storage.googleapis.com/heds-104d8.appspot.com/profilePictures/0xe4c80780cc7fc7047bccb30e2cbcb67400752a88.jpeg?GoogleAccessId=firebase-adminsdk-u5n5o%40heds-104d8.iam.gserviceaccount.com&Expires=16447046400&Signature=ZEjLUiN4RnrJ4T3sUtQdA0HOy9neCTC8NJH9BihMpONnjuJ%2BYiaZlLE5%2BXWzE3jgUia6glrwojLUohmwlnonisGP1l26LJBwbEd3Xji9BCtf8Fxzt4f36mkwzdFY2nYFN28TYFketleO%2FhWn%2FH2Kk5NuexpmBA7ePI13LgsTZ88kVXsvv6TdyitlihXFmIvZIlETuV7KSqnD8Xfde17Kjq1gAj%2Bta1dhlz4rjLFlhrrMQi%2BQt%2FbjAARYk32DrQFnes6Ih0b5NCJQRwk6I16kvQdxCFG%2FTA7F3LwLjsyndLOTKjx41S9kR3qlR2q38ScJ4eHRsQ6NGwqsDTaQWcvuWw%3D%3D',
@@ -40,7 +40,7 @@ export const mockUser: User = {
   votes: null,
 };
 
-export const mockTapeTracks: Song[] = [
+export const mockTapeTracks: any[] = [
   {
     id: 11,
     tape_id: 13,

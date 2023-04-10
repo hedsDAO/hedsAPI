@@ -1,5 +1,4 @@
 import { Grid, GridItem, Stack, Flex, AspectRatio, Box, Text, Image, Avatar, Button, Divider } from '@chakra-ui/react';
-import { mockTape } from '../models/constant';
 import { PlayIcon, HeartIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
@@ -16,6 +15,7 @@ const SongHeader = () => {
   const songCover = useSelector(store.select.songModel.selectSongCover);
   const songSubImage = useSelector(store.select.songModel.selectSongSubImage);
   const songId = useSelector(store.select.songModel.selectSongId);
+
   return (
     <Grid maxW="full" templateColumns={{ base: 'repeat(1, 1fr)', xl: 'repeat(10, 1fr)' }} gap={6}>
       <GridItem
@@ -31,12 +31,9 @@ const SongHeader = () => {
             {songArtists?.map((artist: User) => (
               <Flex key={artist.wallet} direction="column" gap={1} alignItems="start">
                 <Flex alignItems="baseline" gap={1}>
-                  <Text opacity={'70%'} fontFamily={'karla'} fontSize={'2xs'} color="white">
+                  {/* <Text opacity={'70%'} fontFamily={'karla'} fontSize={'2xs'} color="white">
                     ARTIST
-                  </Text>
-                  <Text opacity={'70%'} mt={'-1 !important'} fontFamily={'poppins'} fontWeight="200" color="heds.400" fontSize={{ base: '2xs', xl: 'xs' }}>
-                    {artist.display_name}
-                  </Text>
+                  </Text> */}
                 </Flex>
                 <Divider pt={1} borderColor={'button.dark'} />
               </Flex>
@@ -74,10 +71,20 @@ const SongHeader = () => {
               )}
             </Flex>
             <Flex pt={1.5} direction="column">
-              <Text fontFamily={'karla'} fontSize={'md'} color="white">
-                TRACK
-              </Text>
-              <Text mt={'-2 !important'} letterSpacing={'wide'} fontFamily={'poppins'} fontWeight="700" color="heds.200" fontSize={{ base: 'lg', xl: '3xl' }}>
+              {songArtists?.map((artist: User) => (
+                <Text
+                  key={artist.wallet}
+                  opacity={'60%'}
+                  mt={'0 !important'}
+                  fontFamily={'poppins'}
+                  fontWeight="200"
+                  color="heds.400"
+                  fontSize={{ base: '2xs', xl: 'xs' }}
+                >
+                  {artist.display_name}
+                </Text>
+              ))}
+              <Text mt={'-1 !important'} letterSpacing={'wide'} fontFamily={'poppins'} fontWeight="700" color="heds.200" fontSize={{ base: 'lg', xl: '3xl' }}>
                 {songName || songSubId}
               </Text>
             </Flex>
@@ -112,7 +119,7 @@ const SongHeader = () => {
       <GridItem mt={'-1'} colSpan={{ base: 1, xl: 3 }}>
         <AspectRatio ratio={1}>
           <Box>
-            <Image opacity={{ base: '15%', xl: '10%' }} filter={'blur(1px)'} rounded="none" src={mockTape.image} />
+            <Image opacity={{ base: '15%', xl: '10%' }} filter={'blur(1px)'} rounded="none" src={songCover} />
             <Avatar m="2" shadow="sm" borderRadius={'md'} src={songSubImage || songCover} size="xl" position="absolute" />
           </Box>
         </AspectRatio>

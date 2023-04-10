@@ -4,7 +4,7 @@ import axios from 'axios';
 import { getCyaniteData, getSimilarSongs } from '@/utils';
 import { User } from '@/models/common';
 
-interface Song {
+export interface Song {
   id: number;
   tape_id: number;
   audio: string;
@@ -47,6 +47,8 @@ export const songModel = createModel<RootModel>()({
     selectSongSubImage: () => slice((state): string | undefined => state.song.submission_data?.sub_image),
     selectCyaniteData: () => slice((state): any | undefined => state.song?.cyanite_data),
     selectSongId: () => slice((state): number | undefined => state.song?.id),
+    selectSimilarSongs: () => slice((state): Song[] | undefined => state.song?.similar_songs),
+    selectSongAudio: () => slice((state): string | undefined => state.song?.audio),
   }),
   effects: () => ({
     async getSongData(audio: string) {

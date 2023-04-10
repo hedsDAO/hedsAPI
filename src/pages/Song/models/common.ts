@@ -1,5 +1,6 @@
 export enum SongNavbarTabs {
-  DETAILS = 0,
+  RELATED_TRACKS = 0,
+  DETAILS,
   APPEARS_ON,
   LIKES,
 }

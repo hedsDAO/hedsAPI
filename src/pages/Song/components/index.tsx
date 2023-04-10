@@ -4,3 +4,4 @@ export { default as SongWaveform } from './SongWaveform';
 export { default as SongAppearsOn } from './SongAppearsOn';
 export { default as SongLikes } from './SongLikes';
 export { default as SongInsights } from './SongInsights';
+export { default as SongRelatedTracks } from './SongRelatedTracks';

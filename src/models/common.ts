@@ -32,17 +32,23 @@ export interface User {
 
 export interface Song {
   id: number;
-  track_name: string;
   tape_id: number;
-  cover: string;
   audio: string;
+  cover: string;
   duration: number;
   public: boolean;
-  submission_data: string;
+  track_name: string;
+  submission_data: {
+    sub_id?: string;
+    sub_image?: string;
+    proposal_id?: string;
+  };
   cyanite_id: string;
-  track_data: any;
-  total_likes: number | null;
-  // TODO: revise fields:
-  type: any;
-  created: any;
+  created: number;
+  total_likes: number;
+  track_data: {
+    track_no?: string;
+    tape_name?: string;
+  };
+  artists: User[];
 }

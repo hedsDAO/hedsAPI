@@ -1,6 +1,6 @@
 import { Song, User, Tape } from '@/models/common';
 
-export const mockSong: Song = {
+export const mockSong: any = {
   id: 11,
   tape_id: 13,
   audio: 'https://www.heds.cloud/ipfs/QmWvSojHfBGqRSmyL9xADgxWwyKBnmoFTj8VU1rniAohFf',
@@ -14,7 +14,8 @@ export const mockSong: Song = {
   cyanite_id: '14064202',
   created: null,
   total_likes: null,
-  track_data: '{"track_no": 3, "video": "https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/promo%2Fartists%2FcoldOPOSSUM0001-1680.mp4?alt=media&token=de5a9ba6-2ebb-4610-b3f0-bd3fb976a64b"}',
+  track_data:
+    '{"track_no": 3, "video": "https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/promo%2Fartists%2FcoldOPOSSUM0001-1680.mp4?alt=media&token=de5a9ba6-2ebb-4610-b3f0-bd3fb976a64b"}',
 };
 
 export const mockArtist: User = {
