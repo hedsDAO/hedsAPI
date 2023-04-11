@@ -19,6 +19,7 @@
       "@models/*": ["src/models/*"],
       "@modules/modals/*": ["src/modules/modals/*"],
       "@modules/navigation/*": ["src/modules/navigation/*"],
+      "@api/*": ["src/api/*"],
       "@public/*": ["public/*"]
     }
   },

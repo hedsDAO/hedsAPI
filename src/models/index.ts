@@ -1,13 +1,13 @@
 import { Models } from '@rematch/core';
-import { navModel } from '@/components/Nav/models/navModel';
-import { songModel } from '@/pages/Song/models/songModel';
+import { songModel } from '@/pages/song/models/songModel';
+import { modalModel } from '@/components/Modals/models/modalModel';
 
 export interface RootModel extends Models<RootModel> {
-  navModel: typeof navModel;
   songModel: typeof songModel;
+  modalModel: typeof modalModel;
 }
 
 export const models: RootModel = {
-  navModel,
   songModel,
+  modalModel,
 };
