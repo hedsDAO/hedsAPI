@@ -1,0 +1,1 @@
+export const API_PREFIX = 'http://localhost:5001/heds-104d8/us-central1/api/'

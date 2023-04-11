@@ -8,6 +8,7 @@ import { infuraProvider } from 'wagmi/providers/infura';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import { defaultTheme } from './theme/default';
+import { ModalWrapper } from '@components/Modals/components/ModalWrapper';
 import { store } from './store';
 import App from '@/App';
 import * as gaEvents from './events';
@@ -40,7 +41,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RematchProvider store={store}>
         <ChakraProvider theme={defaultTheme}>
           <BrowserRouter>
-            <App />
+            <ModalWrapper>
+              <App />
+            </ModalWrapper>
           </BrowserRouter>
         </ChakraProvider>
       </RematchProvider>

@@ -8,6 +8,7 @@ module.exports = {
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@common/(.*)$': '<rootDir>/src/common/$1',
+    '^@api/(.*)$': '<rootDir>/src/api/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@models/(.*)$': '<rootDir>/src/models/$1',
     '^@modals/modals/(.*)$': '<rootDir>/src/modules/modals/$1',
