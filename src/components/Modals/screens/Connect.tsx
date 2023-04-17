@@ -1,8 +1,8 @@
-import { AspectRatio, Avatar, Box, Button, GridItem, Link, SimpleGrid, Spinner, Stack, Text } from '@chakra-ui/react';
+import { AspectRatio, Avatar, Box, Button, GridItem, Link, SimpleGrid, Spinner, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, store } from '@/store';
+import { Dispatch } from '@/store';
 
 import MetamaskIcon from '@public/wallets/metamask.svg';
 import CoinbaseIcon from '@public/wallets/coinbase.svg';
@@ -10,7 +10,7 @@ import ImtokenIcon from '@public/wallets/other/imtoken.svg';
 import ZerionIcon from '@public/wallets/other/zerion.svg';
 import RainbowIcon from '@public/wallets/other/rainbow.svg';
 import WalletConnectIcon from '@public/wallets/other/walletconnect.svg';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 const CoinbaseTextReplacement: { [key: string]: string } = { 'Coinbase Wallet': 'Coinbase' };
 const IconMapping: { [key: string]: string | string[] } = {
@@ -21,13 +21,28 @@ const IconMapping: { [key: string]: string | string[] } = {
 
 export const Connect = () => {
   const dispatch = useDispatch<Dispatch>();
-  const isOpen = useSelector(store.select.modalModel.selectModalIsOpen);
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { connector: activeConnector, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
   const { disconnect } = useDisconnect();
 
+  useEffect(() => {
+    onOpen();
+  }, []);
+
   return (
-    <Modal size="xs" motionPreset="slideInBottom" isCentered isOpen={isOpen} onClose={() => dispatch.modalModel.closeModal()}>
+    <Modal
+      size="xs"
+      motionPreset="slideInBottom"
+      isCentered
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        setTimeout(() => {
+          dispatch.modalModel.setModal(null);
+        }, 500);
+      }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

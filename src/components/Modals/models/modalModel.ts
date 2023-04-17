@@ -9,21 +9,18 @@ export enum Modals {
 
 export interface ModalState {
   modal: Modals;
-  isOpen: boolean;
 }
 
 export const modalModel = createModel<RootModel>()({
   state: {
     modal: null,
-    isOpen: false,
   } as ModalState,
   reducers: {
-    setModal: (state, modal: Modals) => ({ ...state, modal, isOpen: true }),
-    closeModal: (state) => ({ ...state, isOpen: false }),
+    setModal: (state, modal: Modals) => ({ ...state, modal }),
+    clearState: (state) => ({ ...state, modal: null }),
   },
   selectors: (slice) => ({
     selectCurrentModal: () => slice((state) => state.modal),
-    selectModalIsOpen: () => slice((state) => state.isOpen),
   }),
   effects: () => ({}),
 });
