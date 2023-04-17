@@ -1,4 +1,4 @@
-import { AspectRatio, Avatar, Box, Button, GridItem, SimpleGrid, Spinner, Stack, Text } from '@chakra-ui/react';
+import { AspectRatio, Avatar, Box, Button, GridItem, Link, SimpleGrid, Spinner, Stack, Text } from '@chakra-ui/react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,7 +50,9 @@ export const Connect = () => {
                 return (
                   <Fragment key={connector.id}>
                     {isLoading && pendingConnector?.id === connector.id ? (
-                      <Spinner key="spinner" size="sm" />
+                      <Stack w="full" h="full" alignItems={'center'} justifyContent="center">
+                        <Spinner color="white" key="spinner" size="md" />
+                      </Stack>
                     ) : Array.isArray(source) ? (
                       <Box w="full" onClick={() => connect({ connector })}>
                         <GridItem mx="auto" colSpan={2}>
@@ -58,7 +60,14 @@ export const Connect = () => {
                             <SimpleGrid placeItems={'center'} gap={1} columns={2}>
                               {source?.map((src: any) => (
                                 <GridItem w="full" key={src.name} colSpan={1}>
-                                  <Avatar size="full" borderRadius={'xl'} src={src} />
+                                  <Avatar
+                                    transitionDuration=".2s"
+                                    transitionTimingFunction="ease-in-out"
+                                    _hover={{ transform: 'scale(0.97)' }}
+                                    size="full"
+                                    borderRadius={'xl'}
+                                    src={src}
+                                  />
                                 </GridItem>
                               ))}
                             </SimpleGrid>
@@ -73,7 +82,14 @@ export const Connect = () => {
                         <Box w="full" onClick={() => connect({ connector })}>
                           <Stack h="full" gap={2} textAlign="center">
                             <AspectRatio ratio={1}>
-                              <Avatar size="full" borderRadius={'xl'} src={source} />
+                              <Avatar
+                                transitionDuration=".2s"
+                                transitionTimingFunction="ease-in-out"
+                                _hover={{ transform: 'scale(0.97)' }}
+                                size="full"
+                                borderRadius={'xl'}
+                                src={source}
+                              />
                             </AspectRatio>
                             <Text justifySelf={'center'} color="white" fontSize="2xs" fontFamily={'karla'} opacity="70%">
                               {connector.name in CoinbaseTextReplacement ? CoinbaseTextReplacement[connector.name] : connector.name}
@@ -86,11 +102,32 @@ export const Connect = () => {
                 );
               })}
               <GridItem as={Stack} alignItems="center" justifyContent="center" colSpan={1}>
-                <Stack alignItems="center" justifyContent="center" rounded="lg" fontSize={'2xs'} color="white" opacity="70%" as={Stack} px={5} py={3}>
-                  <Text justifySelf={'center'} fontSize="2xs" fontFamily={'karla'}>
+                <Stack
+                  href="https://ethereum.org/en/wallets/find-wallet/"
+                  target="__blank"
+                  alignItems="center"
+                  justifyContent="center"
+                  rounded="lg"
+                  fontSize={'2xs'}
+                  color="white"
+                  opacity="70%"
+                  as={Link}
+                  _hover={{ textDecoration: 'none' }}
+                  textDecoration={'none'}
+                  px={5}
+                  py={3}
+                >
+                  <Text
+                    transitionDuration=".2s"
+                    transitionTimingFunction="ease-in-out"
+                    _hover={{ transform: 'scale(1.05)' }}
+                    justifySelf={'center'}
+                    fontSize="2xs"
+                    fontFamily={'karla'}
+                  >
                     find a wallet
                   </Text>
-                  <i className="fas fa-arrow-right"></i>
+                  <i className="fas fa-arrow-right" />
                 </Stack>
               </GridItem>
             </SimpleGrid>
