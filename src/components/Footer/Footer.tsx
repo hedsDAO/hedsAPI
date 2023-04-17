@@ -10,9 +10,6 @@ export const Footer = () => {
           <Text letterSpacing={'wide'} fontFamily={'karla'} opacity={'80%'} fontWeight={100} fontSize={'md'} color="white">
             heds
           </Text>
-          <Text letterSpacing={'wide'} fontFamily={'karla'} opacity={'60%'} fontWeight={100} fontSize={'2xs'} color="white">
-            2023
-          </Text>
         </Flex>
       </Flex>
       <Flex gap={6}>

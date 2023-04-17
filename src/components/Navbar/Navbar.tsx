@@ -2,7 +2,7 @@ import { Dispatch } from '@/store';
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Modals } from '../modals/models/modalModel';
+import { Modals } from '../../modals/models/modalModel';
 
 export const Navbar = () => {
   const dispatch = useDispatch<Dispatch>();

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import {  store } from '@/store';
-import { Modals } from '@/components/modals/models/modalModel';
-import { Connect } from '@/components/modals/screens/Connect';
-import { Settings } from '@/components/modals/screens/Settings';
-import { Twitter } from '@/components/modals/screens/Twitter';
+import { Modals } from '@/modals/models/modalModel';
+import { Connect } from '@/modals/screens/connect/Connect';
+import { Settings } from '@/modals/screens/settings/Settings';
+import { Twitter } from '@/modals/screens/twitter/Twitter';
 
 export const ModalWrapper = ({ children }: { children: React.ReactNode }) => {
   const modal = useSelector(store.select.modalModel.selectCurrentModal);

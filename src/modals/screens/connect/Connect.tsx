@@ -1,7 +1,7 @@
 import { AspectRatio, Avatar, Box, Button, GridItem, Link, SimpleGrid, Spinner, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
 import MetamaskIcon from '@public/wallets/metamask.svg';
