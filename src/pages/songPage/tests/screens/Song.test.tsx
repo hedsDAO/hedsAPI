@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Song } from '@pages/song/screens/Song';
+import { Song } from '@/pages/songPage/screens/Song';
 
 describe('Song Page', () => {
   test('renders the title', () => {
