@@ -1,6 +1,6 @@
 import { Models } from '@rematch/core';
 import { songModel } from '@/pages/song/models/songModel';
-import { modalModel } from '@/components/modals/models/modalModel';
+import { modalModel } from '@/modals/models/modalModel';
 import { authModel } from '@/auth/models/authModel';
 
 export interface RootModel extends Models<RootModel> {
