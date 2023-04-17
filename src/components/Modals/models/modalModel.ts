@@ -14,14 +14,16 @@ export interface ModalState {
 
 export const modalModel = createModel<RootModel>()({
   state: {
+    modal: null,
     isOpen: false,
   } as ModalState,
   reducers: {
-    setModal: (state, modal) => ({ ...state, modal, isOpen: true }),
-    setModalIsOpen: (state, isOpen) => ({ ...state, isOpen }),
+    setModal: (state, modal: Modals) => ({ ...state, modal, isOpen: true }),
+    closeModal: (state) => ({ ...state, isOpen: false }),
   },
   selectors: (slice) => ({
-    selectModal: () => slice((state) => state.modal),
+    selectCurrentModal: () => slice((state) => state.modal),
     selectModalIsOpen: () => slice((state) => state.isOpen),
   }),
+  effects: () => ({}),
 });

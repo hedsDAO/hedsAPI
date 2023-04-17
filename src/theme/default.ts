@@ -1,9 +1,24 @@
 import { extendTheme } from '@chakra-ui/react';
+import buttonTheme from '@/theme/custom/connectButton';
+import modalTheme from './custom/modalTheme';
 
 export const defaultTheme = extendTheme({
+  components: { Button: buttonTheme, Modal: modalTheme },
   colors: {
     heds: {
-      bg: '#f2f2f2'
+      bg: '#17151C',
+      100: '#9293FF',
+      200: '#AC8FFF',
+      300: '#C48CFF',
+      400: '#DC89FF',
+      500: '#26232D',
+      600: '#17151C',
+      700: '#745CBA',
+    },
+    button: {
+      primary: '#745CBA',
+      dark: '#4D4D4D',
+      light: '#F6F6F6',
     },
     blue: {
       primary: '#89CFF0',
@@ -33,6 +48,8 @@ export const defaultTheme = extendTheme({
   fontFaces: {
     mono: "'Space Mono', monospace",
     inter: "'Inter', sans-serif",
+    karla: "'Karla', sans-serif",
+    poppins: "'Poppins', sans-serif",
   },
   styles: {
     global: {
