@@ -1,5 +1,5 @@
 import { Models } from '@rematch/core';
-import { songModel } from '@/pages/song/models/songModel';
+import { songModel } from '@/pages/songPage/models/songModel';
 import { modalModel } from '@/modals/models/modalModel';
 import { authModel } from '@/auth/models/authModel';
 

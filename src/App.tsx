@@ -5,9 +5,9 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import firebaseConfig from './firebaseConfig';
 
-import { Tape } from '@pages/tape/screens/Tape';
-import { Song } from '@pages/song/screens/Song';
-import { User } from '@/pages/user/screens/User';
+import { Tape } from '@/pages/tapePage/screens/Tape';
+import { Song } from '@/pages/songPage/screens/Song';
+import { User } from '@/pages/userPage/screens/User';
 import { Footer } from '@/components/Footer/Footer';
 import { Navbar } from '@/components/Navbar/Navbar';
 import { Box } from '@chakra-ui/react';
