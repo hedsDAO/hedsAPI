@@ -15,6 +15,8 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/inter": "^4.5.15",
+    "@fontsource/karla": "^4.5.11",
+    "@fontsource/poppins": "^4.5.10",
     "@fontsource/space-mono": "^4.5.10",
     "@heroicons/react": "^2.0.8",
     "@rematch/core": "^2.2.0",

@@ -10,6 +10,7 @@ import { Song } from '@pages/song/screens/Song';
 import { User } from '@/pages/user/screens/User';
 import { Footer } from '@/components/Footer/Footer';
 import { Navbar } from '@/components/Navbar/Navbar';
+import { Box } from '@chakra-ui/react';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -19,7 +20,9 @@ const App = (): JSX.Element => {
   const NavAndFooterWrapper = (
     <Fragment>
       <Navbar />
-      <Outlet />
+      <Box minH="90vh">
+        <Outlet />
+      </Box>
       <Footer />
     </Fragment>
   );
@@ -27,6 +30,7 @@ const App = (): JSX.Element => {
   return (
     <Routes>
       <Route element={NavAndFooterWrapper}>
+        <Route path="*" element={<></>} />
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/s/:cid" element={<Song />} />
         <Route path="/t/:id" element={<Tape />} />
