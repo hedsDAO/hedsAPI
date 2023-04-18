@@ -65,14 +65,25 @@ export const User = () => {
           </Text>
         </GridItem>
         <GridItem w="full" h="full" bg="heds.bg2" colSpan={2} rowSpan={1}>
-          <Flex p={5}>
-            <Image maxW='18vw' objectFit={'cover'} src={user?.spotlight?.cover} />
+          <Flex alignItems={'center'} gap={10} p={5}>
+            <Image border="solid 1px" borderColor="heds.100" rounded="md" maxW="20vw" objectFit={'cover'} src={user?.spotlight?.cover} />
             <Stack>
-              <Text>{user?.spotlight?.submission_data?.subId}</Text>
+              <Text fontSize={'sm'} fontFamily="karla" fontWeight={'bold'} opacity="40%" color="white">
+                TRACK
+              </Text>
+              <Text letterSpacing={'wide'} fontFamily={'inter'} mt={'0 !important'} color="white" fontSize="xl">
+                {user?.spotlight?.submission_data?.sub_id}
+              </Text>
+              <Text pt={2} fontSize={'xs'} fontFamily="karla" fontWeight={'bold'} opacity="40%" color="white">
+                ARTIST
+              </Text>
+              <Text letterSpacing={'wide'} fontFamily={'inter'} mt={'0 !important'} color="white" fontSize="lg">
+                {user?.spotlight?.artists.map((e: any) => e.display_name)}
+              </Text>
             </Stack>
           </Flex>
         </GridItem>
-        <GridItem w="full" h="full" bg="heds.bg2" colSpan={2} rowSpan={1}>
+        <GridItem w="full" h="full" colSpan={2} rowSpan={1}>
           x
         </GridItem>
       </Grid>
