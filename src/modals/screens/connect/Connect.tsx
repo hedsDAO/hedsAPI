@@ -1,8 +1,8 @@
 import { AspectRatio, Avatar, Box, Button, GridItem, Link, SimpleGrid, Spinner, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
-import { Dispatch } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, store } from '@/store';
 
 import MetamaskIcon from '@public/wallets/metamask.svg';
 import CoinbaseIcon from '@public/wallets/coinbase.svg';
@@ -20,6 +20,7 @@ const IconMapping: { [key: string]: string | string[] } = {
 };
 
 export const Connect = () => {
+  const connectedUser = useSelector(store.select.authModel.selectUser);
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { connector: activeConnector, isConnected } = useAccount();
@@ -52,10 +53,11 @@ export const Connect = () => {
         </ModalHeader>
         <ModalCloseButton color="white" />
         <ModalBody py="3" px="10" as={Stack}>
-          {isConnected ? (
+          {isConnected && connectedUser ? (
             <Fragment>
-              <Text>Connected to {activeConnector.name}</Text>
-              <Button onClick={() => disconnect()}>Disconnect</Button>
+              <Button mt={1} onClick={() => disconnect()}>
+                Disconnect
+              </Button>
             </Fragment>
           ) : (
             <SimpleGrid gap={7} columns={2}>
@@ -150,13 +152,7 @@ export const Connect = () => {
             </SimpleGrid>
           )}
         </ModalBody>
-        <ModalFooter>
-          {error && (
-            <Text fontSize={'xs'} mx="auto">
-              {error.message}
-            </Text>
-          )}
-        </ModalFooter>
+        <ModalFooter />
       </ModalContent>
     </Modal>
   );

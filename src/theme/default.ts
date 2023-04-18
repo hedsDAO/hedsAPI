@@ -9,6 +9,7 @@ export const defaultTheme = extendTheme({
   colors: {
     heds: {
       bg: '#17151C',
+      bg2: '#27252B',
       100: '#9293FF',
       200: '#AC8FFF',
       300: '#C48CFF',
