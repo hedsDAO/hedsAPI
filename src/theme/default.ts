@@ -1,9 +1,11 @@
 import { extendTheme } from '@chakra-ui/react';
 import buttonTheme from '@/theme/custom/connectButton';
 import modalTheme from './custom/modalTheme';
+import avatarTheme from './custom/avatarTheme';
+import gradientAnimations from './styles/gradientAnimations';
 
 export const defaultTheme = extendTheme({
-  components: { Button: buttonTheme, Modal: modalTheme },
+  components: { Button: buttonTheme, Modal: modalTheme, Avatar: avatarTheme },
   colors: {
     heds: {
       bg: '#17151C',
@@ -46,19 +48,17 @@ export const defaultTheme = extendTheme({
     },
   },
   fontFaces: {
-    mono: "'Space Mono', monospace",
+    spacemono: "'Space Mono', monospace",
     inter: "'Inter', sans-serif",
     karla: "'Karla', sans-serif",
     poppins: "'Poppins', sans-serif",
   },
   styles: {
-    global: {
-      html: {
-        bg: 'heds.bg',
+    global: (props: any) => ({
+      'html, body': {
+        background: 'heds.bg',
       },
-      body: {
-        bg: 'heds.bg',
-      },
-    },
+      ...gradientAnimations,
+    }),
   },
 });

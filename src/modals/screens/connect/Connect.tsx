@@ -76,6 +76,7 @@ export const Connect = () => {
                               {source?.map((src: any) => (
                                 <GridItem w="full" key={src.name} colSpan={1}>
                                   <Avatar
+                                    bg="heds.bg"
                                     transitionDuration=".2s"
                                     transitionTimingFunction="ease-in-out"
                                     _hover={{ transform: 'scale(0.97)' }}
@@ -98,6 +99,7 @@ export const Connect = () => {
                           <Stack h="full" gap={2} textAlign="center">
                             <AspectRatio ratio={1}>
                               <Avatar
+                                bg="heds.bg"
                                 transitionDuration=".2s"
                                 transitionTimingFunction="ease-in-out"
                                 _hover={{ transform: 'scale(0.97)' }}

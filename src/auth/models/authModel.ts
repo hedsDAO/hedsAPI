@@ -14,6 +14,9 @@ export const authModel = createModel<RootModel>()({
   reducers: {
     setUser: (state, user: User) => ({ ...state, user }),
   },
+  selectors: (slice) => ({
+    selectUser: () => slice((state) => state.user),
+  }),
   effects: () => ({
     async getUser(wallet: string) {
       const response = await getUserByWallet(wallet.toLowerCase());
