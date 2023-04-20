@@ -20,7 +20,7 @@ const App = (): JSX.Element => {
   const NavAndFooterWrapper = (
     <Fragment>
       <Navbar />
-      <Box minH="90vh">
+      <Box minH="100vh" mt={14}>
         <Outlet />
       </Box>
       <Footer />

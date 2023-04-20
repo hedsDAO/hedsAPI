@@ -1,4 +1,4 @@
 
 export const Tape = () => {
-  return <></>;
+  return <></>
 };
