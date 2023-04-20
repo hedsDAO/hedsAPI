@@ -49,7 +49,7 @@ export const defaultTheme = extendTheme({
     },
   },
   fontFaces: {
-    spacemono: "'Space Mono', monospace",
+    space: "'Space Mono', monospace",
     inter: "'Inter', sans-serif",
     karla: "'Karla', sans-serif",
     poppins: "'Poppins', sans-serif",

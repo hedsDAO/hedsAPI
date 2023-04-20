@@ -26,7 +26,7 @@ export interface User {
   wallet: string;
   joined: number;
   spotlight: any;
-  collection: string;
+  collection: any;
   votes: any;
 }
 
@@ -38,11 +38,25 @@ export interface Song {
   audio: string;
   duration: number;
   public: boolean;
-  submission_data: string;
+  submission_data: {
+    sub_id: string;
+    sub_image: string;
+  };
   cyanite_id: string;
   track_data: any;
   total_likes: number | null;
-  // TODO: revise fields:
+  artists: User[];
   type: any;
   created: any;
+}
+
+export interface UserEvent {
+  id: number;
+  user_id: number;
+  event_type: string;
+  event_data: {
+    message: string;
+    subject: string;
+  };
+  created: number;
 }
