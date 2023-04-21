@@ -8,7 +8,7 @@ export const Nav = ({ tabs }: { tabs: string[] }) => {
   const currentTabs = useMemo(() => [...tabs], []);
   const selectedTab = useSelector(store.select.navModel.selectCurrentTab);
   return (
-    <Flex justifyContent={{ base: 'start', lg: 'start' }} gap={2    }>
+    <Flex mt={'2 !important'} justifyContent={{ base: 'start', lg: 'start' }} gap={2}>
       {currentTabs.map((tab, index) => (
         <Button
           fontFamily={'karla'}

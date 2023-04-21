@@ -12,13 +12,13 @@ export const WalletAndVP = () => {
       gap={{ base: 1.5, lg: 2 }}
       alignItems={{ base: 'center', lg: 'center' }}
     >
-      <Stack direction={{ base: 'row-reverse', lg: 'column' }} alignItems={{ base: 'center', lg: 'end' }} gap={1.5}>
+      <Stack display={{ base: 'none', lg: 'flex' }} direction={{ base: 'row-reverse', lg: 'column' }} alignItems={{ base: 'center', lg: 'end' }} gap={1.5}>
         <Text className="gradient-text" fontFamily={'poppins'} fontWeight="bold" fontSize={{ base: '2xl', lg: '4xl' }}>
           92
         </Text>
         <Button
           display={{ base: 'none', lg: 'flex' }}
-          mt={{ base: '-4 !important', lg: '-2 !important' }}
+          mt={{ base: '-4 !important', lg: '-1.5 !important' }}
           as={Link}
           rounded="full"
           target="_blank"
@@ -34,7 +34,15 @@ export const WalletAndVP = () => {
           {wallet?.slice(0, 6)}
         </Button>
       </Stack>
-      <Text mt={{ base: '-1.5 !important', lg: '-3 !important' }} fontSize={{ base: 'xs', lg: 'md' }} opacity={'30%'} color="white" className="fas fa-info-circle" as={'i'}></Text>
+      <Text
+        display={{ base: 'none', lg: 'flex' }}
+        mt={{ base: '-1.5 !important', lg: '-3 !important' }}
+        fontSize={{ base: 'xs', lg: 'md' }}
+        opacity={'30%'}
+        color="white"
+        className="fas fa-info-circle"
+        as={'i'}
+      ></Text>
     </Flex>
   );
 };
