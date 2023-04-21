@@ -41,8 +41,8 @@ export const Navbar = () => {
   useEffect(() => {
     boxControls.start({
       backgroundColor: scrollPosition > 0 ? 'rgba(24, 21, 28, 0.7)' : 'rgba(24, 21, 28, 1)',
-      paddingTop: scrollPosition > 0 ? 3 : 18,
-      paddingBottom: scrollPosition > 0 ? 3 : 18,
+      paddingTop: scrollPosition > 0 ? 4 : 18,
+      paddingBottom: scrollPosition > 0 ? 4 : 18,
     });
     imageControls.start({
       width: scrollPosition > 0 ? '30px' : '75px',
@@ -85,7 +85,7 @@ export const Navbar = () => {
                   opacity={link.isActive ? '100%' : '70%'}
                   letterSpacing={'wide'}
                   fontSize="xs"
-                  // textTransform={'uppercase'}
+                  textTransform={'uppercase'}
                   fontFamily={'karla'}
                   color="white"
                   fontWeight={'light'}

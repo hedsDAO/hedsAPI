@@ -2,94 +2,71 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Dispatch, store } from '@/store';
-import { Box, Flex, Grid, GridItem, SimpleGrid, Stack } from '@chakra-ui/react';
 
-import { ProfilePicture } from '@pages/user/components/ProfilePicture';
+// Models & Constants
+import { Box, Flex, Grid, GridItem, Stack } from '@chakra-ui/react';
+import { FlexStyles, GridStyles, StackStyles, USER_NAV_TABS } from '@pages/user/models/constants';
+
+// Components
+import { Nav } from '@/components/Nav/Nav';
 import { Details } from '@/pages/user/components/Details';
+import { UserNavTabs } from '@/pages/user/models/common';
 import { Banner } from '@pages/user/components/Banner';
+import { Collection } from '@pages/user/components/Collection';
+import { Discography } from '@pages/user/components/Discography';
+import { Likes } from '@pages/user/components/Likes';
+import { ProfilePicture } from '@pages/user/components/ProfilePicture';
 import { RecentEvents } from '@pages/user/components/RecentEvents';
 import { Spotlight } from '@pages/user/components/Spotlight';
 import { WalletAndVP } from '@pages/user/components/WalletAndVP';
-import { Nav } from '@/components/Nav/Nav';
-import { UserNavTabs } from '@/pages/user/models/common';
-import { CollectionItem } from '@/common/media/CollectionItem';
-import { LikedItem } from '@/common/media/LikedItem';
-import { Song } from '@/models/common';
-import { TrackItem } from '@/common/media/TrackItem';
+
+/**
+ * @function User
+ * @returns {JSX.Element} The `User` component JSX element.
+ * @description displays a user's banner, profile picture, details, and
+ * various types of content depending on the currently selected tab.
+ */
 
 export const User = () => {
-  const { wallet } = useParams();
+  const { wallet } = useParams<{ wallet: string }>();
   const dispatch = useDispatch<Dispatch>();
   const currentTab = useSelector(store.select.navModel.selectCurrentTab);
-  const collection = useSelector(store.select.userModel.selectCollection);
-  const likes = useSelector(store.select.userModel.selectLikes);
-  const songs = useSelector(store.select.userModel.selectSongs);
 
+  // Get user data when wallet changes
   useEffect(() => {
     if (wallet?.length) dispatch.userModel.getUser(wallet);
   }, [wallet]);
 
+  // Reset pagination when tab changes
+  useEffect(() => {
+    dispatch.paginationModel.setCurrentPage(0);
+    dispatch.paginationModel.setItemsPerPage(4);
+  }, [currentTab]);
+
   return (
     <Box>
       <Banner />
-      <Flex
-        justifyContent={{ base: 'center', lg: 'space-between' }}
-        alignItems={{ base: 'end', lg: 'baseline' }}
-        direction={{ base: 'column', lg: 'row' }}
-        mt={3}
-        maxW={{ base: 'full', lg: '3xl', xl: '6xl' }}
-        mx="auto"
-      >
-        <Flex
-          alignSelf={'center'}
-          alignItems={{ base: 'center' }}
-          justifyContent={{ base: 'center', lg: 'start' }}
-          direction={{ base: 'column', lg: 'row' }}
-          gap={{ base: 2, lg: 5 }}
-        >
+      <Flex {...FlexStyles}>
+        <Stack {...StackStyles}>
           <ProfilePicture />
           <Details />
-        </Flex>
+        </Stack>
         <WalletAndVP />
       </Flex>
-      <Grid mt={20} gap={5} maxW={'6xl'} mx="auto" templateRows="repeat(2, 1fr)" templateColumns="repeat(6, 1fr)">
-        <GridItem rounded='lg' h={'fit-content'} px={5} py={3} as={Stack} bg="heds.bg2" colSpan={2} rowSpan={2}>
-          <RecentEvents />
-        </GridItem>
-        <GridItem rounded='lg' w="full" h="full" bg="heds.bg2" colSpan={4} rowSpan={1}>
+      <Grid {...GridStyles}>
+        <GridItem rounded="lg" bg="heds.bg3" colSpan={{ base: 6, xl: 4 }}>
           <Spotlight />
         </GridItem>
-        <GridItem w="full" h="full" colSpan={4} rowSpan={1}>
-          <Nav tabs={['Collection', 'Likes', 'Tracks']} />
-          {currentTab === UserNavTabs.COLLECTION && !!collection && (
-            <SimpleGrid mt={4} gap={3} columns={4}>
-              {Object.values(collection)
-                ?.slice(0, 4)
-                .map((item: any) => (
-                  <GridItem key={item.name + 'col'} colSpan={1}>
-                    <CollectionItem name={item.name} image={item.image} />
-                  </GridItem>
-                ))}
-            </SimpleGrid>
-          )}
-          {currentTab === UserNavTabs.LIKES && (
-            <SimpleGrid mt={4} gap={3} columns={4}>
-              {likes?.slice(0, 4).map((item: Song) => (
-                <GridItem key={item.id + 'likes'} colSpan={1}>
-                  <LikedItem name={item.submission_data.sub_id} image={item.cover} />
-                </GridItem>
-              ))}
-            </SimpleGrid>
-          )}
-          {currentTab === UserNavTabs.TRACKS && (
-            <SimpleGrid mt={4} gap={3} columns={4}>
-              {songs?.slice(0, 4).map((item: Song) => (
-                <GridItem key={item.id + 'tracks'} colSpan={1}>
-                  <TrackItem name={item.submission_data.sub_id} image={item.cover} />
-                </GridItem>
-              ))}
-            </SimpleGrid>
-          )}
+        <GridItem rounded="lg" p={3} as={Stack} bg="heds.bg3" colSpan={{ base: 6, xl: 2 }}>
+          <RecentEvents />
+        </GridItem>
+        <GridItem colSpan={6}>
+          <Nav tabs={USER_NAV_TABS} />
+        </GridItem>
+        <GridItem colSpan={6}>
+          {currentTab === UserNavTabs.COLLECTION && <Collection />}
+          {currentTab === UserNavTabs.LIKES && <Likes />}
+          {currentTab === UserNavTabs.DISCOGRAPHY && <Discography />}
         </GridItem>
       </Grid>
     </Box>

@@ -3,7 +3,7 @@ import HedLogo from '@public/heddot.png';
 
 export const Footer = () => {
   return (
-    <Flex py={6} px={8} justifyContent={'space-between'}>
+    <Flex py={6} px={8} mt={10} justifyContent={'space-between'}>
       <Flex ml={-1} gap={4} alignItems={'center'}>
         <Avatar borderRadius={'none'} size="xs" src={HedLogo} />
         <Flex gap={2} alignItems={'baseline'}>

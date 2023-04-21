@@ -19,7 +19,7 @@ export interface User {
   profile_picture: string;
   banner: string;
   twitter_handle: string;
-  badges: string;
+  badges: { name: string; image: string; description: string }[];
   description: string;
   display_name: string;
   role: string;
@@ -39,24 +39,30 @@ export interface Song {
   duration: number;
   public: boolean;
   submission_data: {
-    sub_id: string;
-    sub_image: string;
+    sub_id?: string;
+    sub_image?: string;
+    proposalId?: string;
   };
   cyanite_id: string;
   track_data: any;
   total_likes: number | null;
-  artists: User[];
+  artists?: User[];
   type: any;
   created: any;
+  video?: string;
 }
 
-export interface UserEvent {
+export interface UserEvents {
   id: number;
   user_id: number;
-  event_type: string;
+  event_type: UserEventTypes;
   event_data: {
     message: string;
     subject: string;
   };
-  created: number;
+  event_timestamp: string;
+}
+
+export enum UserEventTypes {
+  USER_CREATED = 'user_created',
 }
