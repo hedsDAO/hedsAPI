@@ -45,7 +45,7 @@ export const userModel = createModel<RootModel>()({
   },
   selectors: (slice) => ({
     selectUser: () => slice((state) => state.user),
-    selectUserEvents: () => slice((state): UserEvents[] => state.user_events),
+    selectUserEvents: () => slice((state): UserEvents[] | [] => state.user_events),
 
     selectProfilePicture: () => slice((state) => state.user?.profile_picture),
     selectBanner: () => slice((state) => state.user?.banner),
@@ -62,7 +62,7 @@ export const userModel = createModel<RootModel>()({
     selectCollection: () => slice((state): { [key: string]: any } => state.user?.collection?.items),
     selectNumOfCollections: () => slice((state) => (!isEmpty(state.user?.collection) ? Object.values(state.user?.collection?.items)?.length : 0)),
   }),
-  effects: () => ({
+  effects: (dispatch) => ({
     async getUser(wallet: string) {
       let spotlight, user_songs, user_likes, user_events;
       const response = await getUserByWallet(wallet.toLowerCase());

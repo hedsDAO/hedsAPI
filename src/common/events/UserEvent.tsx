@@ -12,7 +12,7 @@ const UserEventIcons = {
 
 export const UserEvent = ({ name, event }: { name: string; event: UserEvents }) => {
   return (
-    <Box>
+    <Box data-testid="user-event-item">
       <Flex p={1} alignItems="center" gap={5}>
         <Center rounded="lg" bg="heds.700">
           <Box opacity={'0%'} shadow={'lg'} rounded={'lg'} w={{ base: '10', lg: '12' }} h={{ base: '10', lg: '12' }} />

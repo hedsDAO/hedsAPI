@@ -16,6 +16,7 @@ export const Details = () => {
         </Text>
         {twitter_handle && (
           <Button
+            data-testid="twitter-button"
             display={{ base: 'none', lg: 'flex' }}
             as={Link}
             mb={{ base: '-1 !important', lg: '-1 !important' }}
@@ -50,6 +51,7 @@ export const Details = () => {
       </Flex>
       <Flex gap={1} alignItems={'baseline'}>
         <Button
+          data-testid="twitter-button"
           display={{ base: 'flex', lg: 'none' }}
           as={Link}
           mb={{ base: '0 !important', lg: '-1 !important' }}
@@ -67,6 +69,7 @@ export const Details = () => {
           92
         </Button>
         <Button
+          data-testid="wallet-button"
           display={{ base: 'flex', lg: 'none' }}
           mt={{ base: '0 !important', lg: '-1.5 !important' }}
           as={Link}
@@ -85,6 +88,7 @@ export const Details = () => {
         </Button>
         {twitter_handle && (
           <Button
+            data-testid="twitter-button"
             display={{ base: 'flex', lg: 'none' }}
             as={Link}
             mb={{ base: '0 !important', lg: '-1 !important' }}
