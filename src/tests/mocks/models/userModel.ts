@@ -1,4 +1,4 @@
-export const userModelState: any = {
+export const userModelState : any = {
   user: {
     id: 471,
     profile_picture:

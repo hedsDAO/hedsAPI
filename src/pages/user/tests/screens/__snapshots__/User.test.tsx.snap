@@ -30,6 +30,7 @@ Object {
                 class="css-135glum"
               >
                 <img
+                  alt="user profile picture"
                   class="chakra-image css-jg1zau"
                 />
                 <div
@@ -65,6 +66,7 @@ Object {
               >
                 <a
                   class="chakra-link chakra-button css-vu00lg"
+                  data-testid="twitter-button"
                   href="https://www.twitter.com/undefined"
                   target="_blank"
                 >
@@ -72,6 +74,7 @@ Object {
                 </a>
                 <a
                   class="chakra-link chakra-button css-nsxr0z"
+                  data-testid="wallet-button"
                   href="https://www.etherscan.com/address/undefined"
                   target="_blank"
                 />
@@ -113,6 +116,7 @@ Object {
                 class="chakra-stack css-zuobqs"
               >
                 <img
+                  alt="spotlight cover"
                   class="chakra-image css-1cj8osz"
                 />
               </div>
@@ -129,6 +133,7 @@ Object {
                   </p>
                   <p
                     class="chakra-text css-lktipz"
+                    data-testid="spotlight-track-name"
                   />
                   <hr
                     aria-orientation="horizontal"
@@ -147,6 +152,7 @@ Object {
                       </p>
                       <p
                         class="chakra-text css-jjjdbd"
+                        data-testid="spotlight-artist-name"
                       />
                     </div>
                     <div
@@ -256,6 +262,7 @@ Object {
               class="css-135glum"
             >
               <img
+                alt="user profile picture"
                 class="chakra-image css-jg1zau"
               />
               <div
@@ -291,6 +298,7 @@ Object {
             >
               <a
                 class="chakra-link chakra-button css-vu00lg"
+                data-testid="twitter-button"
                 href="https://www.twitter.com/undefined"
                 target="_blank"
               >
@@ -298,6 +306,7 @@ Object {
               </a>
               <a
                 class="chakra-link chakra-button css-nsxr0z"
+                data-testid="wallet-button"
                 href="https://www.etherscan.com/address/undefined"
                 target="_blank"
               />
@@ -339,6 +348,7 @@ Object {
               class="chakra-stack css-zuobqs"
             >
               <img
+                alt="spotlight cover"
                 class="chakra-image css-1cj8osz"
               />
             </div>
@@ -355,6 +365,7 @@ Object {
                 </p>
                 <p
                   class="chakra-text css-lktipz"
+                  data-testid="spotlight-track-name"
                 />
                 <hr
                   aria-orientation="horizontal"
@@ -373,6 +384,7 @@ Object {
                     </p>
                     <p
                       class="chakra-text css-jjjdbd"
+                      data-testid="spotlight-artist-name"
                     />
                   </div>
                   <div

@@ -27,6 +27,7 @@ export const ProfilePicture = () => {
         onMouseLeave={setIsHovering.off}
       >
         <Image
+          alt='user profile picture'
           transitionDuration=".3s"
           transitionTimingFunction="ease-in-out"
           onLoad={setHasProfilePicturedLoaded.on}
