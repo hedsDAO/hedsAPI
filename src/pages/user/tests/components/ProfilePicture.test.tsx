@@ -1,7 +1,7 @@
 import { ProfilePicture } from '@/pages/user/components/ProfilePicture';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
-import { userModelState } from '@/tests/mocks/models/userModel';
+import { userModelState } from '@/tests/mocks/models/userModelState';
 import { screen } from '@testing-library/react';
 
 describe('ProfilePicture unit', () => {

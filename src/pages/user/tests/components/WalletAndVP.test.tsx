@@ -1,7 +1,7 @@
 import { WalletAndVP } from '@pages/user/components/WalletAndVP';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
-import { userModelState } from '@/tests/mocks/models/userModel';
+import { userModelState } from '@/tests/mocks/models/userModelState';
 import { screen } from '@testing-library/react';
 
 describe('WalletAndVP unit', () => {

@@ -1,7 +1,7 @@
 import { RecentEvents } from '@/pages/user/components/RecentEvents';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
-import { userModelState } from '@/tests/mocks/models/userModel';
+import { userModelState } from '@/tests/mocks/models/userModelState';
 import { act, screen } from '@testing-library/react';
 
 describe('RecentEvents unit', () => {

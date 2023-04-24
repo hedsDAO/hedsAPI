@@ -1,7 +1,7 @@
 import { Spotlight } from '@/pages/user/components/Spotlight';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
-import { userModelState } from '@/tests/mocks/models/userModel';
+import { userModelState } from '@/tests/mocks/models/userModelState';
 import { screen } from '@testing-library/react';
 
 describe('Spotlight unit', () => {

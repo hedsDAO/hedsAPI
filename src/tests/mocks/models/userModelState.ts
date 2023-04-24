@@ -1,4 +1,7 @@
-export const userModelState : any = {
+import { UserEventTypes } from "@/models/common";
+import { UserModelState } from "@/pages/user/models/common";
+
+export const userModelState : UserModelState = {
   user: {
     id: 471,
     profile_picture:
@@ -1373,7 +1376,7 @@ export const userModelState : any = {
     {
       id: 567,
       user_id: 471,
-      event_type: 'user_created',
+      event_type: 'user_created' as UserEventTypes,
       event_data: {
         message: 'joined heds',
         subject: 'Apr 19, 2022',
