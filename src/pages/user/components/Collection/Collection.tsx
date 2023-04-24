@@ -4,6 +4,13 @@ import { Pagination } from '@/components/Pagination/Pagination';
 import { store } from '@/store';
 import { isEmpty } from '@/utils';
 import { GridItem, SimpleGrid } from '@chakra-ui/react';
+import * as styles from '@pages/user/components/Collection/styles';
+
+/**
+ * @function Collection
+ * @description Renders a users' collection of owned tapes.
+ * @returns {JSX.Element} - Rendered component.
+ **/
 
 export const Collection = () => {
   const collection = useSelector(store.select.userModel.selectCollection);
@@ -13,22 +20,24 @@ export const Collection = () => {
   const start = currentPage * itemsPerPage;
   const end = start + itemsPerPage;
   return (
-    <GridItem colSpan={6}>
-      <SimpleGrid gap={5} columns={{ base: 2, md: 4, xl: 4 }}>
+    <GridItem {...styles.$mainContainerStyles}>
+      <SimpleGrid {...styles.$collectionGridStyles}>
         {!isEmpty(collection) &&
           Object.values(collection)
             .slice(start, end)
             .map((item: any) => (
-              <GridItem key={item.name + 'col'} colSpan={1}>
+              <GridItem key={item.name + item.image}>
                 <CollectionItem name={item.name} image={item.image} />
               </GridItem>
             ))}
       </SimpleGrid>
       {numOfItems > 4 ? (
-        <GridItem mt={4} colSpan={6}>
+        <GridItem {...styles.$paginationContainerStyles}>
           <Pagination totalItems={numOfItems} />
         </GridItem>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
     </GridItem>
   );
 };

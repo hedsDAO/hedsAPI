@@ -53,4 +53,6 @@ describe('userModel unit', () => {
       axiosGetSpy.mockRestore();
     });
   });
+
+  // TODO: Add tests for selectors
 });

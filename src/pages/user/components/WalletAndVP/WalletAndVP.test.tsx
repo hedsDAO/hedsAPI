@@ -1,4 +1,4 @@
-import { WalletAndVP } from '@pages/user/components/WalletAndVP';
+import { WalletAndVP } from '@/pages/user/components/WalletAndVP/WalletAndVP';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { userModelState } from '@/tests/mocks/models/userModelState';

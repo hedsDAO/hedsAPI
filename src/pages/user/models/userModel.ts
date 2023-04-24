@@ -46,7 +46,6 @@ export const userModel = createModel<RootModel>()({
   selectors: (slice) => ({
     selectUser: () => slice((state) => state.user),
     selectUserEvents: () => slice((state): UserEvents[] | [] => state.user_events),
-
     selectProfilePicture: () => slice((state) => state.user?.profile_picture),
     selectBanner: () => slice((state) => state.user?.banner),
     selectDisplayName: () => slice((state) => state.user?.display_name),
@@ -54,7 +53,6 @@ export const userModel = createModel<RootModel>()({
     selectTwitterHandle: () => slice((state) => state.user?.twitter_handle),
     selectSpotlight: () => slice((state): Song => state.user?.spotlight),
     selectWallet: () => slice((state) => state.user?.wallet),
-
     selectSongs: () => slice((state) => state.user_songs),
     selectNumOfSongs: () => slice((state) => state.user_songs?.length),
     selectLikes: () => slice((state) => state.user_likes),
