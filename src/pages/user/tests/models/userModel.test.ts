@@ -42,7 +42,7 @@ describe('userModel unit', () => {
 
       axiosGetSpy
         .mockResolvedValueOnce({ data: userModelState.user })
-        .mockResolvedValueOnce({ data: {} }) // Assuming you don't have a spotlight song in your mock data
+        .mockResolvedValueOnce({ data: {} })
         .mockResolvedValueOnce({ data: userModelState.user_songs })
         .mockResolvedValueOnce({ data: userModelState.user_likes })
         .mockResolvedValueOnce({ data: userModelState.user_events });
