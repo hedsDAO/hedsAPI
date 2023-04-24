@@ -592,3 +592,143 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2023-04-24T15:14:47.892Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
 [debug] [2023-04-24T15:14:47.892Z] [work-queue] {"queueLength":0,"workRunningCount":0}
 [info] i  functions: Finished "api" in 302.77275ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 302.77275ms"}}
+[debug] [2023-04-24T17:08:20.002Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:08:20.002Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:08:20.002Z] Accepted request GET /heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb --> us-central1-api
+[debug] [2023-04-24T17:08:20.005Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:08:20.006Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[debug] [2023-04-24T17:08:20.006Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:08:20.006Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[info] >  0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"user":"0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m 0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[info] >  heds {"user":"heds","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m heds"}}
+[debug] [2023-04-24T17:08:20.367Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:08:20.367Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 359.781833ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 359.781833ms"}}
+[debug] [2023-04-24T17:08:28.788Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:08:28.788Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:08:28.788Z] Accepted request GET /heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb --> us-central1-api
+[debug] [2023-04-24T17:08:28.796Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:08:28.796Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[debug] [2023-04-24T17:08:28.796Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:08:28.796Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[info] >  0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"user":"0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m 0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[info] >  heds {"user":"heds","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m heds"}}
+[debug] [2023-04-24T17:08:28.865Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:08:28.865Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 67.251916ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 67.251916ms"}}
+[debug] [2023-04-24T17:08:28.870Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:08:28.870Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:08:28.870Z] Accepted request GET /heds-104d8/us-central1/api/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx --> us-central1-api
+[debug] [2023-04-24T17:08:28.875Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:08:28.875Z] [functions] Got req.url=/heds-104d8/us-central1/api/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx, mapping to path=/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx, mapping to path=/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx"}}
+[debug] [2023-04-24T17:08:28.875Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:08:28.875Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:08:28.996Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:08:28.996Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 118.84ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 118.84ms"}}
+[debug] [2023-04-24T17:08:29.001Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:08:29.001Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:08:29.001Z] Accepted request GET /heds-104d8/us-central1/api/users/471/songs --> us-central1-api
+[debug] [2023-04-24T17:08:29.002Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:08:29.002Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/471/songs, mapping to path=/users/471/songs {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/471/songs, mapping to path=/users/471/songs"}}
+[debug] [2023-04-24T17:08:29.002Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:08:29.002Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:08:29.061Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:08:29.061Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 57.221ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 57.221ms"}}
+[debug] [2023-04-24T17:08:29.065Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:08:29.065Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:08:29.065Z] Accepted request GET /heds-104d8/us-central1/api/users/471/likes --> us-central1-api
+[debug] [2023-04-24T17:08:29.066Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:08:29.066Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/471/likes, mapping to path=/users/471/likes {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/471/likes, mapping to path=/users/471/likes"}}
+[debug] [2023-04-24T17:08:29.066Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:08:29.066Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:08:29.183Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:08:29.183Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 115.693ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 115.693ms"}}
+[debug] [2023-04-24T17:08:29.188Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:08:29.188Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:08:29.188Z] Accepted request GET /heds-104d8/us-central1/api/users/471/events --> us-central1-api
+[debug] [2023-04-24T17:08:29.190Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:08:29.190Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/471/events, mapping to path=/users/471/events {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/471/events, mapping to path=/users/471/events"}}
+[debug] [2023-04-24T17:08:29.190Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:08:29.190Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:08:29.251Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:08:29.251Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 59.6ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 59.6ms"}}
+[debug] [2023-04-24T17:17:41.063Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:17:41.063Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:17:41.063Z] Accepted request GET /heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb --> us-central1-api
+[debug] [2023-04-24T17:17:41.064Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:17:41.064Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[debug] [2023-04-24T17:17:41.064Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:17:41.064Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[info] >  0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"user":"0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m 0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[info] >  heds {"user":"heds","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m heds"}}
+[debug] [2023-04-24T17:17:41.415Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:17:41.415Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 350.357167ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 350.357167ms"}}
+[debug] [2023-04-24T17:17:41.416Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:17:41.416Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:17:41.416Z] Accepted request GET /heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb --> us-central1-api
+[debug] [2023-04-24T17:17:41.417Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:17:41.417Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb, mapping to path=/users/0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[debug] [2023-04-24T17:17:41.417Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:17:41.417Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[info] >  0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb {"user":"0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m 0xd2d22571b06df7a36f24fd84e528fd1bb12ff5cb"}}
+[info] >  heds {"user":"heds","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m heds"}}
+[debug] [2023-04-24T17:17:41.420Z] [work-queue] {"queueLength":1,"workRunningCount":1}
+[debug] [2023-04-24T17:17:41.420Z] [work-queue] {"queueLength":0,"workRunningCount":2}
+[debug] [2023-04-24T17:17:41.420Z] Accepted request GET /heds-104d8/us-central1/api/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx --> us-central1-api
+[debug] [2023-04-24T17:17:41.421Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:17:41.421Z] [functions] Got req.url=/heds-104d8/us-central1/api/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx, mapping to path=/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx, mapping to path=/songs/QmPM2ABuo11bP6Koq8BvNWgZoKUxUibSBrvERgSaA9gdcx"}}
+[debug] [2023-04-24T17:17:41.421Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:17:41.421Z] [worker-us-central1-api-33787017-8155-4648-8e5f-8170abcf81d9]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-33787017-8155-4648-8e5f-8170abcf81d9]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:17:41.488Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:17:41.488Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[info] i  functions: Finished "api" in 70.063541ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 70.063541ms"}}
+[debug] [2023-04-24T17:17:41.770Z] [worker-us-central1-api-33787017-8155-4648-8e5f-8170abcf81d9]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-33787017-8155-4648-8e5f-8170abcf81d9]: IDLE"}}
+[debug] [2023-04-24T17:17:41.770Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 347.431083ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 347.431083ms"}}
+[debug] [2023-04-24T17:17:41.777Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:17:41.777Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:17:41.777Z] Accepted request GET /heds-104d8/us-central1/api/users/471/songs --> us-central1-api
+[debug] [2023-04-24T17:17:41.779Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:17:41.779Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/471/songs, mapping to path=/users/471/songs {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/471/songs, mapping to path=/users/471/songs"}}
+[debug] [2023-04-24T17:17:41.779Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:17:41.779Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:17:41.838Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:17:41.838Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 58.220791ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 58.220791ms"}}
+[debug] [2023-04-24T17:17:41.842Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:17:41.842Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:17:41.842Z] Accepted request GET /heds-104d8/us-central1/api/users/471/likes --> us-central1-api
+[debug] [2023-04-24T17:17:41.843Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:17:41.843Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/471/likes, mapping to path=/users/471/likes {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/471/likes, mapping to path=/users/471/likes"}}
+[debug] [2023-04-24T17:17:41.843Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:17:41.843Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:17:41.958Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:17:41.958Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 114.399875ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 114.399875ms"}}
+[debug] [2023-04-24T17:17:41.965Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T17:17:41.966Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T17:17:41.966Z] Accepted request GET /heds-104d8/us-central1/api/users/471/events --> us-central1-api
+[debug] [2023-04-24T17:17:41.967Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T17:17:41.967Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/471/events, mapping to path=/users/471/events {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/471/events, mapping to path=/users/471/events"}}
+[debug] [2023-04-24T17:17:41.967Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T17:17:41.967Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[debug] [2023-04-24T17:17:42.025Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T17:17:42.026Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 57.823917ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 57.823917ms"}}
