@@ -66,7 +66,7 @@ export const userModel = createModel<RootModel>()({
     async getUser(wallet: string) {
       let spotlight, user_songs, user_likes, user_events;
       const response = await getUserByWallet(wallet.toLowerCase());
-      if (response.data?.spotlight?.length) spotlight = await getSongByHash(response.data.spotlight);
+      if (response.data?.spotlight?.length) spotlight = await getSongByHash(response?.data?.spotlight);
       if (response.data?.id) {
         user_songs = await getUserSongsById(response.data.id);
         user_likes = await getUserLikesById(response.data.id);
