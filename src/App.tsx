@@ -7,7 +7,7 @@ import firebaseConfig from './firebaseConfig';
 
 import { Tape } from '@/pages/tape/screens/Tape';
 import { Song } from '@/pages/song/screens/Song';
-import { User } from '@/pages/user/screens/User';
+import { User } from '@/pages/user/screens/User/User';
 import { Footer } from '@/components/Footer/Footer';
 import { Navbar } from '@/components/Navbar/Navbar';
 import { Box } from '@chakra-ui/react';

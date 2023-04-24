@@ -1,4 +1,4 @@
-import { ProfilePicture } from '@/pages/user/components/ProfilePicture';
+import { ProfilePicture } from '@/pages/user/components/ProfilePicture/ProfilePicture';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { userModelState } from '@/tests/mocks/models/userModelState';

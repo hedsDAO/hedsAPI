@@ -1,4 +1,4 @@
-import { Collection } from '@/pages/user/components/Collection';
+import { Collection } from '@/pages/user/components/Collection/Collection';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { userModelState } from '@/tests/mocks/models/userModelState';
