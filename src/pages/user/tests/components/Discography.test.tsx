@@ -1,7 +1,7 @@
 import { Discography } from '@/pages/user/components/Discography';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
-import { userModelState } from '@/tests/mocks/models/userModel';
+import { userModelState } from '@/tests/mocks/models/userModelState';
 import { act, screen } from '@testing-library/react';
 
 describe('Discography unit', () => {
@@ -17,9 +17,9 @@ describe('Discography unit', () => {
   it('renders 0 track items when provided none', async () => {
     act(() => {
       store.dispatch.paginationModel.setState({ currentPage: 0, itemsPerPage: 0})
-      store.dispatch.userModel.setUser({
-        ...userModelState,
-        user_songs: [],
+      store.dispatch.userModel.setState({
+        ...userModelState.user,
+        user_likes: [],
       });
     });
     const trackItems = await screen.queryAllByTestId('track-item');

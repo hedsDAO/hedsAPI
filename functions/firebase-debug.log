@@ -579,3 +579,16 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2023-04-22T22:24:04.301Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
 [debug] [2023-04-22T22:24:04.301Z] [work-queue] {"queueLength":0,"workRunningCount":0}
 [info] i  functions: Finished "api" in 58.185375ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 58.185375ms"}}
+[debug] [2023-04-24T15:14:47.586Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2023-04-24T15:14:47.586Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2023-04-24T15:14:47.586Z] Accepted request GET /heds-104d8/us-central1/api/users/0xd2d --> us-central1-api
+[debug] [2023-04-24T15:14:47.588Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-04-24T15:14:47.588Z] [functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d, mapping to path=/users/0xd2d {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/heds-104d8/us-central1/api/users/0xd2d, mapping to path=/users/0xd2d"}}
+[debug] [2023-04-24T15:14:47.588Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[debug] [2023-04-24T15:14:47.588Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: BUSY"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"api\""}}
+[info] >  0xd2d {"user":"0xd2d","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m 0xd2d"}}
+[info] >  heds {"user":"heds","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"\u001b[90m> \u001b[39m heds"}}
+[debug] [2023-04-24T15:14:47.892Z] [worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-de7c06c9-05ea-44c8-98e7-77ccfde2034d]: IDLE"}}
+[debug] [2023-04-24T15:14:47.892Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "api" in 302.77275ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 302.77275ms"}}

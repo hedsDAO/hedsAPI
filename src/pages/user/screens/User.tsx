@@ -17,7 +17,7 @@ import { Discography } from '@pages/user/components/Discography';
 import { Likes } from '@pages/user/components/Likes';
 import { ProfilePicture } from '@pages/user/components/ProfilePicture';
 import { RecentEvents } from '@pages/user/components/RecentEvents';
-import { Spotlight } from '@pages/user/components/Spotlight';
+import { Spotlight } from '@/pages/user/components/Spotlight';
 import { WalletAndVP } from '@pages/user/components/WalletAndVP';
 
 /**

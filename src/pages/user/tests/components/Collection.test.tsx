@@ -1,7 +1,7 @@
 import { Collection } from '@/pages/user/components/Collection';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
-import { userModelState } from '@/tests/mocks/models/userModel';
+import { userModelState } from '@/tests/mocks/models/userModelState';
 import { act, screen } from '@testing-library/react';
 
 describe('Collection unit', () => {
@@ -16,7 +16,7 @@ describe('Collection unit', () => {
   });
   it('renders no collection items when provided 0', async () => {
     act(() => {
-      store.dispatch.userModel.setUser({
+      store.dispatch.userModel.setState({
         ...userModelState,
         user: {
           ...userModelState.user,

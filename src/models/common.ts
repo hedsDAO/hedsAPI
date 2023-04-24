@@ -50,6 +50,11 @@ export interface Song {
   type: any;
   created: any;
   video?: string;
+  // TODO: Add type for this
+  song_id?: number,
+  user_id?: number,
+  verified?: boolean,
+  ownership_percent?: number,
 }
 
 export interface UserEvents {
