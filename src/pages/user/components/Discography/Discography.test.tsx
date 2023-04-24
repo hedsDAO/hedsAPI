@@ -1,4 +1,4 @@
-import { Discography } from '@/pages/user/components/Discography';
+import { Discography } from '@/pages/user/components/Discography/Discography';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { userModelState } from '@/tests/mocks/models/userModelState';

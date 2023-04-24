@@ -1,9 +1,16 @@
+import { useSelector } from 'react-redux';
 import { LikedItem } from '@/common/media/LikedItem';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { Song } from '@/models/common';
 import { store } from '@/store';
 import { GridItem, SimpleGrid } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import * as styles from '@pages/user/components/Likes/styles';
+
+/**
+ * @function Likes
+ * @description Renders a users' liked tracks.
+ * @returns {JSX.Element} - Rendered component.
+ **/
 
 export const Likes = () => {
   const likes = useSelector(store.select.userModel.selectLikes);
@@ -13,16 +20,16 @@ export const Likes = () => {
   const start = currentPage * itemsPerPage;
   const end = start + itemsPerPage;
   return (
-    <GridItem colSpan={6}>
-      <SimpleGrid gap={5} columns={{ base: 2, md: 4, xl: 4 }}>
+    <GridItem {...styles.$mainContainerStyles}>
+      <SimpleGrid {...styles.$likesGridStyles}>
         {likes?.slice(start, end).map((item: Song) => (
-          <GridItem key={item.id + 'likes'} colSpan={1}>
+          <GridItem key={item.id + item.cover}>
             <LikedItem name={item.submission_data.sub_id} image={item.cover} />
           </GridItem>
         ))}
       </SimpleGrid>
       {numOfLikes > 4 && (
-        <GridItem mt={4} colSpan={6}>
+        <GridItem {...styles.$paginationContainerStyles}>
           <Pagination totalItems={numOfLikes} />
         </GridItem>
       )}

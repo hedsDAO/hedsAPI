@@ -1,4 +1,4 @@
-import { RecentEvents } from '@/pages/user/components/RecentEvents';
+import { RecentEvents } from '@/pages/user/components/RecentEvents/RecentEvents';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { userModelState } from '@/tests/mocks/models/userModelState';
