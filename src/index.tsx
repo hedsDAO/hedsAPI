@@ -17,11 +17,10 @@ import * as gaEvents from './events';
 
 import 'animate.css';
 import './index.css';
-import '../build/app/output.css';
-import "@fontsource/space-mono"
+import '@fontsource/space-mono';
 import '@fontsource/inter';
-import "@fontsource/poppins"
-import "@fontsource/karla"
+import '@fontsource/poppins';
+import '@fontsource/karla';
 
 import { AuthWrapper } from './auth/components/AuthWrapper';
 
