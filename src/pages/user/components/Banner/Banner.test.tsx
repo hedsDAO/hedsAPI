@@ -1,4 +1,4 @@
-import { Banner } from '@/pages/user/components/Banner';
+import { Banner } from '@/pages/user/components/Banner/Banner';
 import { store } from '@/store';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { userModelState } from '@/tests/mocks/models/userModelState';

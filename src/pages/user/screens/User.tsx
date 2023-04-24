@@ -1,24 +1,25 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
+// Components
+import { Nav } from '@/components/Nav/Nav';
+import { Banner } from '@/pages/user/components/Banner/Banner';
+import { Collection } from '@/pages/user/components/Collection/Collection';
+import { Details } from '@/pages/user/components/Details/Details';
+import { Discography } from '@/pages/user/components/Discography/Discography';
+import { Likes } from '@/pages/user/components/Likes/Likes';
+import { ProfilePicture } from '@/pages/user/components/ProfilePicture/ProfilePicture';
+import { RecentEvents } from '@/pages/user/components/RecentEvents/RecentEvents';
+import { Spotlight } from '@/pages/user/components/Spotlight/Spotlight';
+import { WalletAndVP } from '@/pages/user/components/WalletAndVP/WalletAndVP';
+import { UserNavTabs } from '@/pages/user/models/common';
 import { Dispatch, store } from '@/store';
 
 // Models & Constants
 import { Box, Flex, Grid, GridItem, Stack } from '@chakra-ui/react';
-import { FlexStyles, GridStyles, StackStyles, USER_NAV_TABS } from '@pages/user/models/constants';
-
-// Components
-import { Nav } from '@/components/Nav/Nav';
-import { Details } from '@/pages/user/components/Details';
-import { UserNavTabs } from '@/pages/user/models/common';
-import { Banner } from '@pages/user/components/Banner';
-import { Collection } from '@pages/user/components/Collection';
-import { Discography } from '@pages/user/components/Discography';
-import { Likes } from '@pages/user/components/Likes';
-import { ProfilePicture } from '@pages/user/components/ProfilePicture';
-import { RecentEvents } from '@pages/user/components/RecentEvents';
-import { Spotlight } from '@/pages/user/components/Spotlight';
-import { WalletAndVP } from '@pages/user/components/WalletAndVP';
+import { USER_NAV_TABS } from '@pages/user/models/constants';
+import * as styles from '@pages/user/screens/styles';
 
 /**
  * @function User
@@ -46,24 +47,24 @@ export const User = () => {
   return (
     <Box>
       <Banner />
-      <Flex {...FlexStyles}>
-        <Stack {...StackStyles}>
+      <Flex {...styles.$flexStyles}>
+        <Stack {...styles.$stackStyles}>
           <ProfilePicture />
           <Details />
         </Stack>
         <WalletAndVP />
       </Flex>
-      <Grid {...GridStyles}>
-        <GridItem rounded="lg" bg="heds.bg3" colSpan={{ base: 6, xl: 4 }}>
+      <Grid {...styles.$gridStyles}>
+        <GridItem {...styles.$spotlightItemStyles}>
           <Spotlight />
         </GridItem>
-        <GridItem rounded="lg" p={3} as={Stack} bg="heds.bg3" colSpan={{ base: 6, xl: 2 }}>
+        <GridItem {...styles.$recentEventsItemStyles}>
           <RecentEvents />
         </GridItem>
-        <GridItem colSpan={6}>
+        <GridItem {...styles.$navItemStyles}>
           <Nav tabs={USER_NAV_TABS} />
         </GridItem>
-        <GridItem colSpan={6}>
+        <GridItem {...styles.$navItemStyles}>
           {currentTab === UserNavTabs.COLLECTION && <Collection />}
           {currentTab === UserNavTabs.LIKES && <Likes />}
           {currentTab === UserNavTabs.DISCOGRAPHY && <Discography />}
