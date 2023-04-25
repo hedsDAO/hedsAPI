@@ -13,9 +13,8 @@ export const getUserByWallet = async (wallet: string) => {
 export const updateUser = async (user_id: number, data: any) => {
   const keys = Object.keys(data);
   const values = Object.values(data);
-
-  const query = `UPDATE ${schemaName}.users SET ${keys.map((key, i) => `${key} = $${i + 2}`)} WHERE user_id = $1 RETURNING *`;
-  const { rows } = await pool.query(query, [user_id, ...values]);
+  const query = `UPDATE ${schemaName}.users SET ${keys.map((key, i) => `${key} = $${i + 1}`)} WHERE id = $${keys.length + 1} RETURNING *`;
+  const { rows } = await pool.query(query, [...values, user_id]);
   return rows[0];
 };
 
