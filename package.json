@@ -8,6 +8,12 @@
     "test": "NODE_ENV=development jest --config=jest.config.js --runInBand --detectOpenHandles --forceExit",
     "test:watch": "NODE_ENV=development jest --config=jest.config.js --watch"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/src/__mocks__/styleMock.js"
+    }
+  },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.16",
     "@chakra-ui/pro-theme": "^0.0.57",

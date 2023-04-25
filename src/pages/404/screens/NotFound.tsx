@@ -1,16 +1,18 @@
-import { Button, Center, Heading, Text, VStack } from '@chakra-ui/react';
+import { Button, Center, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import HedLogo from '@public/heddot.png';
+import * as styles from '@pages/404/screens/styles';
 
 export const NotFound = () => {
   return (
-    <Center h="100vh" w="100%" flexDirection="column" justifyContent="center" alignItems="center">
+    <Center {...styles.$centerStyles}>
       <VStack spacing={4}>
-        <Heading as="h1" size="2xl" color="white">
-          404
-        </Heading>
-        <Text fontSize="lg" textAlign="center" color="white">
-          The Page You Were Looking For Does Not Exist
-        </Text>
-        <Button>Go Home</Button>
+        <HStack>
+          <Text {...styles.$numberStyles}>4</Text>
+          <Image src={HedLogo} alt="Zero" boxSize="8rem" />
+          <Text {...styles.$numberStyles}>4</Text>
+        </HStack>
+        <Text {...styles.$textStyles}>The Page You Were Looking For Does Not Exist</Text>
+        <Button {...styles.$buttonStyles}>GO HOME</Button>
       </VStack>
     </Center>
   );
