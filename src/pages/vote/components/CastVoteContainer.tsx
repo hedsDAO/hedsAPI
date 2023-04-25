@@ -3,7 +3,7 @@ import { Dispatch, store } from '@/store';
 import { useSigner } from 'wagmi';
 
 // Components
-import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge, useToast } from '@chakra-ui/react';
+import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge } from '@chakra-ui/react';
 
 // Models
 import { Choice } from 'hedsvote';
@@ -30,6 +30,7 @@ export const CastVoteContainer = () => {
   const proposal = useSelector(store.select.voteModel.selectProposal);
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
+  const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
 
   // const voteToast = () => {
   //   toast({
@@ -112,68 +113,74 @@ export const CastVoteContainer = () => {
 
   return (
     <>
-      {userLikes && Object.values(userLikes)?.length ? (
-        <Stack>
-          <Flex mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'end'} justifyContent={'space-between'}>
-            <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
-              VOTE
-            </Heading>
-            {connectedUserWallet ? (
-              <Flex gap={2} alignItems={'center'}>
-                <Tooltip placement={'auto'} whiteSpace={'pre-line'} label={HEDS_POWER}>
-                  <Badge variant={'outline'}>
-                    {vp} {'HED'}
-                  </Badge>
-                </Tooltip>
-                <Badge variant={'outline'} colorScheme={'purple'}>
-                  {choices.filter((choice) => choice.id in userLikes).length} LIKES
-                </Badge>
-                <Button colorScheme={'green'} onClick={() => castVote()} size="xs" variant={'solid'} isDisabled={disableVoteButton()}>
-                  Cast Vote
-                </Button>
-              </Flex>
-            ) : (
-              <Tooltip label={'connect your wallet to vote'}>
-                <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.800" />
-              </Tooltip>
-            )}
-          </Flex>
-          <Box border="1px" borderRadius="md" p={1} color="gray.700" maxH="300px" overflowY="scroll">
-            <Stack spacing={1}>
-              {connectedUserWallet &&
-                vp &&
-                vp > 0 &&
-                choices
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((choice) => {
-                    if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
-                  })}
-            </Stack>
-          </Box>
-        </Stack>
+      {isHedsTAPE13 && votes?.length ? (
+        <></>
       ) : (
-        <Stack>
-          <Flex direction={'column'} mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'start'} justifyContent={'space-between'}>
-            <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
-              VOTE
-            </Heading>
-            <Box px={3} py={2} mt={2} border="1px" borderColor="gray.400" borderRadius="md" bgColor="gray.50">
-              {!connectedUserWallet ? (
-                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                  Connect your wallet to vote on the tape.
-                </Text>
-              ) : vp > 0 ? (
-                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                  Favorite your choices by clicking the heart icon. Once you have selected your choices, click the cast vote button to submit your vote.
-                </Text>
-              ) : (
-                <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                  You have no HEDS power for this cycle. To participate in the future, collect hedsTAPE 11 on 2/24/23.
-                </Text>
-              )}
-            </Box>
-          </Flex>
-        </Stack>
+        <>
+          {userLikes && Object.values(userLikes)?.length ? (
+            <Stack>
+              <Flex mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'end'} justifyContent={'space-between'}>
+                <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+                  VOTE
+                </Heading>
+                {connectedUserWallet ? (
+                  <Flex gap={2} alignItems={'center'}>
+                    <Tooltip placement={'auto'} whiteSpace={'pre-line'} label={HEDS_POWER}>
+                      <Badge variant={'outline'}>
+                        {vp} {'HED'}
+                      </Badge>
+                    </Tooltip>
+                    <Badge variant={'outline'} colorScheme={'purple'}>
+                      {choices.filter((choice) => choice.id in userLikes).length} LIKES
+                    </Badge>
+                    <Button colorScheme={'green'} onClick={() => castVote()} size="xs" variant={'solid'} isDisabled={disableVoteButton()}>
+                      Cast Vote
+                    </Button>
+                  </Flex>
+                ) : (
+                  <Tooltip label={'connect your wallet to vote'}>
+                    <InfoOutlineIcon style={{ marginRight: '1px' }} color="gray.800" />
+                  </Tooltip>
+                )}
+              </Flex>
+              <Box border="1px" borderRadius="md" p={1} color="gray.700" maxH="300px" overflowY="scroll">
+                <Stack spacing={1}>
+                  {connectedUserWallet &&
+                    vp &&
+                    vp > 0 &&
+                    choices
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((choice) => {
+                        if (choice.id in userLikes) return <VoterCard choice={choice} userLikes={userLikes} key={choice.id} />;
+                      })}
+                </Stack>
+              </Box>
+            </Stack>
+          ) : (
+            <Stack>
+              <Flex direction={'column'} mt={{ base: 5, lg: 8 }} py={{ base: 0, lg: 1 }} alignItems={'start'} justifyContent={'space-between'}>
+                <Heading className="animate__animated animate__fadeIn" fontWeight="medium" letterSpacing="widest" size={['xs', 'sm']} color={'gray.900'}>
+                  VOTE
+                </Heading>
+                <Box px={3} py={2} mt={2} border="1px" borderColor="gray.400" borderRadius="md" bgColor="gray.50">
+                  {!connectedUserWallet ? (
+                    <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                      Connect your wallet to vote on the tape.
+                    </Text>
+                  ) : vp > 0 ? (
+                    <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                      Favorite your choices by clicking the heart icon. Once you have selected your choices, click the cast vote button to submit your vote.
+                    </Text>
+                  ) : (
+                    <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
+                      You have no HEDS power for this cycle. To participate in the future, collect hedsTAPE 11 on 2/24/23.
+                    </Text>
+                  )}
+                </Box>
+              </Flex>
+            </Stack>
+          )}
+        </>
       )}
     </>
   );
