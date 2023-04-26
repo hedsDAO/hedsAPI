@@ -1,5 +1,5 @@
 import { Button, Center, HStack, Image, Text, VStack } from '@chakra-ui/react';
-import HedLogo from '@public/heddot.png';
+import HedLogo from '/public/heddot.png';
 import * as styles from '@pages/404/screens/styles';
 
 export const NotFound = () => {
