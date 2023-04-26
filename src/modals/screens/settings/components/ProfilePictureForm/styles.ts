@@ -1,5 +1,9 @@
 import { BoxProps, CenterProps, ImageProps, InputProps, StackProps, TextProps } from '@chakra-ui/react';
 
+export interface ExtendedInputProps extends InputProps {
+  'data-testid'?: string;
+}
+
 /**
  * @description Styles for the Box component containing the profile picture form.
  * @returns {BoxProps} - Box styles.
@@ -24,8 +28,9 @@ export const $profileFormVStackStyles: StackProps = {
  * @description Styles for the hidden input component.
  * @returns {React.InputHTMLAttributes<HTMLInputElement>} - Input styles.
  */
-export const $inputStyles: InputProps = {
+export const $inputStyles: ExtendedInputProps = {
   type: 'file',
+  'data-testid': 'profile-picture-input',
   accept: 'image/*',
   className: 'hidden',
 };
@@ -47,6 +52,7 @@ export const $imageStyles = (src: string, profilePictureError?: string, isHoveri
   mt: '-12',
   objectFit: 'contain',
   rounded: 'full',
+  alt: "profile-picture"
 });
 
 /**

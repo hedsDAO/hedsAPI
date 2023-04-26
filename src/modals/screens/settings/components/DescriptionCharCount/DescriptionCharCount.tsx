@@ -18,12 +18,12 @@ export const DescriptionCharCount = () => {
     <Flex>
       <Fade in={descriptionError?.length > 0}>
         <Box {...styles.$errorBoxStyles(descriptionError)}>
-          <Text {...styles.$errorTextStyles(descriptionError)}>{descriptionError}</Text>
+          <Text data-testid="desc-count-error" {...styles.$errorTextStyles(descriptionError)}>{descriptionError}</Text>
         </Box>
       </Fade>
       <Fade in={descriptionError?.length === 0 || !descriptionError}>
         <Flex>
-          <Text {...styles.$charCountTextStyles(descriptionError)}> {descCharacters || description.length} </Text>
+          <Text {...styles.$charCountTextStyles(descriptionError)}> {descCharacters || description?.length} </Text>
           <Text {...styles.$slashTextStyles(descriptionError)}> / </Text>
           <Text {...styles.$maxCharTextStyles(descriptionError)}> {MAX_CHAR_COUNT} </Text>
         </Flex>
