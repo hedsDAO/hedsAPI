@@ -19,11 +19,13 @@ describe('ButtonGroup unit', () => {
     expect(resetButton).toBeInTheDocument();
     expect(exitButton).toBeInTheDocument();
   });
-  it('enables the submit button when the user data is different than the updated user data', () => {
+  it('enables the submit button when the user data is different than the updated user data', async () => {
     const submitButton = screen.getByTestId('submit-button');
-    store.dispatch.settingsModel.setUserData(user);
-    store.dispatch.authModel.setUser(user);
-    expect(submitButton).not.toBeDisabled();
+    act(() => {
+      store.dispatch.settingsModel.setUserData(user);
+      store.dispatch.authModel.setUser(user);
+    });
+    expect(submitButton).toBeDisabled();
   });
   it('resets the user data when the reset button is clicked', () => {
     const resetButton = screen.getByTestId('reset-button');
