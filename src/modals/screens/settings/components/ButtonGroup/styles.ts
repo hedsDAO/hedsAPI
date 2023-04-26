@@ -44,7 +44,6 @@ export const $saveButtonStyles = (isLoading: boolean, isDisabled: boolean): Butt
  * @type {ButtonProps}
  **/
 export const $resetButtonStyles = (isDisabled: boolean): ButtonProps => ({
-  onClick: () => {},
   isDisabled: isDisabled,
   _hover: { borderColor: 'transparent', bg: 'heds.bg2', transform: 'rotate(360deg)' },
   fontSize: '2xs',
