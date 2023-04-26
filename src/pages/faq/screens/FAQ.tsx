@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { VStack, Heading, Container } from '@chakra-ui/react';
-import { FAQItem } from '@pages/faq/components/FAQItem';
+import { FAQItem } from '@/pages/faq/components/FAQItem/FAQItem';
+import * as styles from '@/pages/faq/screens/styles';
 
 type FAQData = {
   question: string;
@@ -9,21 +10,27 @@ type FAQData = {
 
 const faqData: FAQData[] = [
   {
-    question: 'question 1',
-    answer: 'answer 1',
+    question: 'What is heds?',
+    answer:
+      'heds is a decentralized audio-visual collective. Once a month, heds will release a collaborative mixtape, created and curated by the community, as its own digital collection.',
   },
   {
-    question: 'question 2',
-    answer: 'answer 2',
+    question: ' How can I contribute?',
+    answer:
+      'The best and most productive way to contribute is to participate in community interactions, submitting your work to the monthly tapes, and joining listening parties public Q & A’s.',
   },
-  // Add more questions and answers here.
+  {
+    question: 'When is everything happening?',
+    answer:
+      'Specific announcements will be released as we go, so pay attention to the twitter page, throw on notifications, as well as the #announcements channel in the discord!',
+  },
 ];
 
 export const FAQPage: FC = () => {
   return (
     <Container centerContent>
-      <VStack spacing={6} width="100%">
-        <Heading as="h1" size="xl" color="white">
+      <VStack {...styles.$stackStyles}>
+        <Heading as="h1" {...styles.$headingStyles}>
           Frequently Asked Questions
         </Heading>
         {faqData.map((faqItem, index) => (
