@@ -5,7 +5,8 @@ import { useDisclosure } from '@chakra-ui/react';
 
 /**
  * @function useSettings
- * @description A custom hook that handles the modal open/close logic for the `Settings` component.
+ * @description A custom hook that handles the modal open/close and 
+ * transition logic for the `Settings` component.
  */
 
 export const useSettings = () => {

@@ -23,14 +23,14 @@ export const ButtonGroup = () => {
       <DescriptionCharCount />
       <Flex {...styles.$buttonsFlexStyles}>
         <Button
-          data-testid="reset-button"
+          data-testid="submit-button"
           onClick={() => dispatch.settingsModel.handleSubmit([settingsState, currentUserData])}
           {...styles.$saveButtonStyles(isLoading, JSON.stringify(currentUserData) === JSON.stringify(newUserData) || isLoading)}
         >
           {isLoading ? <Spinner {...styles.$spinnerSize} /> : SAVE_BUTTON_TEXT}
         </Button>
         <Button
-        data-testid="clear-button"
+        data-testid="reset-button"
           onClick={() => {
             dispatch.settingsModel.clearState();
             dispatch.settingsModel.setUserData(currentUserData);
@@ -39,7 +39,7 @@ export const ButtonGroup = () => {
         >
           <i className={styles.$refreshIcon} />
         </Button>
-        <Button onClick={() => dispatch.settingsModel.clearState()} {...styles.$clearButtonStyles}>
+        <Button data-testid="exit-button" onClick={() => dispatch.settingsModel.clearState()} {...styles.$clearButtonStyles}>
           <i className={styles.$exitIcon} />
         </Button>
       </Flex>

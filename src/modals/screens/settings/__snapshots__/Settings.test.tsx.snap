@@ -212,7 +212,7 @@ Object {
                 >
                   <button
                     class="chakra-button css-1smjvvq"
-                    data-testid="reset-button"
+                    data-testid="submit-button"
                     disabled=""
                     type="button"
                   >
@@ -220,7 +220,7 @@ Object {
                   </button>
                   <button
                     class="chakra-button css-xruyz4"
-                    data-testid="clear-button"
+                    data-testid="reset-button"
                     disabled=""
                     type="button"
                   >
@@ -230,6 +230,7 @@ Object {
                   </button>
                   <button
                     class="chakra-button css-1s7a4ca"
+                    data-testid="exit-button"
                     type="button"
                   >
                     <i
