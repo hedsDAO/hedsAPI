@@ -25,8 +25,8 @@ export const BannerForm = () => {
   
   return (
     <Box {...styles.$bannerBoxStyles} onMouseEnter={setIsHoveringBanner.on} onMouseLeave={setIsHoveringBanner.off}>
-      <Input ref={bannerInputRef} {...styles.$bannerInputStyles} onChange={(e) => dispatch.settingsModel.handleBannerUpload(e)} />
-      <Image {...styles.$bannerImageStyles(bannerError, isHoveringBanner)} src={bannerPreview || banner} alt={banner} />
+      <Input data-testid='banner-input' ref={bannerInputRef} {...styles.$bannerInputStyles} onChange={(e) => dispatch.settingsModel.handleBannerUpload(e)} />
+      <Image data-testid='banner-preview' {...styles.$bannerImageStyles(bannerError, isHoveringBanner)} src={bannerPreview || banner} alt={banner} />
       <Center {...styles.$bannerCenterStyles} onClick={() => bannerInputRef.current?.click()}>
         <VStack {...styles.$bannerVStackStyles}>
           <Text {...styles.$bannerTextStyles(bannerError, isHoveringBanner)}>{bannerError?.length ? bannerError : BANNER_FORM_TEXT}</Text>

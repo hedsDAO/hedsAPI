@@ -20,6 +20,7 @@ export const DescriptionForm = () => {
         <FormLabel {...styles.$formLabelStyles}>{DESCRIPTION_TITLE}</FormLabel>
         <FormHelperText {...styles.$formHelperTextStyles}>{UPDATE_DESCRIPTION_TEXT}</FormHelperText>
         <Textarea
+          data-testid="description-input"
           onChange={(e) => dispatch.settingsModel.handleDescriptionChange(e)}
           {...styles.$textareaStyles(descriptionError, newDescription, description)}
         />
