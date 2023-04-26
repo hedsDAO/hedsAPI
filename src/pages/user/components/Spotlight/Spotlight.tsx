@@ -26,7 +26,7 @@ export const Spotlight = () => {
           <Flex {...styles.$flexStyles}>
             <Stack>
               <Text {...styles.$artistTextStyles}>{ARTIST_TEXT}</Text>
-              <Text {...styles.$artistNameTextStyles}>{spotlight?.artists.map((e: User) => e.display_name)}</Text>
+              <Text {...styles.$artistNameTextStyles}>{spotlight?.artists?.map((e: User) => e.display_name)}</Text>
             </Stack>
             <Flex {...styles.$flexIconsStyles}>
               <Box {...styles.$playCircleIconStyles} />

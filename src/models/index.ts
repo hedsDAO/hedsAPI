@@ -5,6 +5,7 @@ import { authModel } from '@/auth/models/authModel';
 import { userModel } from '@/pages/user/models/userModel';
 import { navModel } from '@/components/Nav/models/navModel';
 import { paginationModel } from '@/components/Pagination/models/paginationModel';
+import { settingsModel } from '@/modals/screens/settings/models/settingsModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
@@ -13,6 +14,7 @@ export interface RootModel extends Models<RootModel> {
   userModel: typeof userModel;
   navModel: typeof navModel;
   paginationModel: typeof paginationModel;
+  settingsModel: typeof settingsModel;
 }
 
 export const models: RootModel = {
@@ -22,4 +24,5 @@ export const models: RootModel = {
   userModel,
   navModel,
   paginationModel,
+  settingsModel,
 };

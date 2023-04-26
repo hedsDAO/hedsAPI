@@ -51,10 +51,10 @@ export interface Song {
   created: any;
   video?: string;
   // TODO: Add type for this
-  song_id?: number,
-  user_id?: number,
-  verified?: boolean,
-  ownership_percent?: number,
+  song_id?: number;
+  user_id?: number;
+  verified?: boolean;
+  ownership_percent?: number;
 }
 
 export interface UserEvents {
@@ -71,3 +71,5 @@ export interface UserEvents {
 export enum UserEventTypes {
   USER_CREATED = 'user_created',
 }
+
+export type UserSettingsData = Partial<Pick<User, 'profile_picture' | 'banner' | 'description'>>;

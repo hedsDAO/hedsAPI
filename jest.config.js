@@ -1,8 +1,9 @@
 module.exports = {
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', '.png'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', '.png', '.svg'],
   collectCoverageFrom: ['<rootDir>/**/*.{ts, tsx}'],
   roots: ['<rootDir>'],
   moduleNameMapper: {
+    "wagmi": "<rootDir>/src/tests/mocks/wagmi/wagmi.ts",
     '^axios$': require.resolve('axios'),
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
@@ -20,6 +21,7 @@ module.exports = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$',
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
+    "^.+\\.svg$": "jest-transform-stub",
   },
   setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
   modulePathIgnorePatterns: ['<rootDir>/functions/'],
