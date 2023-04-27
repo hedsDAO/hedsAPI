@@ -33,11 +33,11 @@ const App = (): JSX.Element => {
   return (
     <Routes>
       <Route element={NavAndFooterWrapper}>
-        <Route path="*" element={<NotFound />} />
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/s/:cid" element={<Song />} />
         <Route path="/t/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
