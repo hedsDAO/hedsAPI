@@ -55,6 +55,7 @@ export function Landing() {
     fontSize: '4em',
     color: 'white',
     textAlign: 'center',
+    marginBottom:  window.innerWidth <= 414 ? '8px' :'6px',
   };
 
 
