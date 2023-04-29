@@ -22,8 +22,4 @@ export const song: Song = {
     tape_name: 'hedsTAPE 08',
   },
   video: 'https://www.heds.cloud/ipfs/QmUrbmvPQ6qoaQxD6fwimvBraXJXEqU4tREscNh5oH8JL1',
-  song_id: 241,
-  user_id: 471,
-  verified: true,
-  ownership_percent: 100,
 };

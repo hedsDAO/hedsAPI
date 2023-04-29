@@ -6,7 +6,7 @@ import { userModel } from '@/pages/user/models/userModel';
 import { navModel } from '@/components/Nav/models/navModel';
 import { paginationModel } from '@/components/Pagination/models/paginationModel';
 import { settingsModel } from '@/modals/screens/settings/models/settingsModel';
-import { globalAudioModel } from '@/components/GlobalAudio/models/globalAudio';
+import { globalAudioModel } from '@/components/GlobalAudio/models/globalAudioModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
