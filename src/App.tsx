@@ -10,7 +10,7 @@ import { Artists } from './pages/artists/page/Artists';
 import { Listen } from './pages/listen/page/Listen';
 import { Vote } from './pages/vote/page/Vote';
 import { Explore } from './pages/explore/page/Explore';
-// import { Landing } from './pages/landing/page/Landing';
+import { Landing } from './pages/landing/page/tempLanding';
 import firebaseConfig from './firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
@@ -19,10 +19,10 @@ export const storage = getStorage(app);
 
 const App = (): JSX.Element => {
   const location = useLocation();
-  // const isLanding = location?.pathname === '/';
+  const isLanding = location?.pathname === '/';
   return (
     <Routes>
-      <Route element={<NavbarFooterWrapper />}>
+      {/* <Route element={<NavbarFooterWrapper />}>
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/u/:wallet" element={<User />} />
@@ -30,11 +30,11 @@ const App = (): JSX.Element => {
         <Route path="/vote/:space/:tape/:id" element={<Vote />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/*" element={<Explore />} />
-        {/* <Route path="/" element={<Explore />} /> */}
-      </Route>
+        {/* <Route path="/" element={<Landing />} /> */}
+      {/* </Route> */}
       {/* TODO : LANDING */}
-      {/* <Route index element={<Landing />} />
-      <Route element={!isLanding ? <NavbarFooterWrapper /> : <></>}>
+      <Route index element={<Landing />} />
+      <Route element={<NavbarFooterWrapper />}>
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/u/:wallet" element={<User />} />
@@ -42,7 +42,7 @@ const App = (): JSX.Element => {
         <Route path="/vote/:space/:tape/:id" element={<Vote />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/explore" element={<Explore />} />
-      </Route> */}
+      </Route>
     </Routes>
   );
 };
