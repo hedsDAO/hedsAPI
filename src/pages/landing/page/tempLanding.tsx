@@ -134,7 +134,7 @@ const videoStyle: React.CSSProperties = {
         <LinkButton label='artists' path='/artists' />
       </div>
       <VideoContainer>
-        <video style={videoStyle} src={linkTwo} autoPlay muted loop playsInline/>
+        <video style={videoStyle} src={linkTwo} autoPlay muted loop playsInline onContextMenu={(e) => e.preventDefault()}/>
         {window.innerWidth >= 414 ? imagePositions.map((position, index) => (
           <FloatingImage key={index} src="https://www.heds.cloud/ipfs/QmPr717eLbsxYJQyxNWRLt2FDNoy27nZKk9RTqujdc1qKS" size={150} top={position.top} left={position.left} right={position.right} bottom={position.bottom} />
         )) : imagePositions.slice(4).map((position, index) => (
