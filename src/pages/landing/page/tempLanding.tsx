@@ -55,7 +55,6 @@ export function Landing() {
     fontSize: '4em',
     color: 'white',
     textAlign: 'center',
-    marginBottom:  window.innerWidth <= 414 ? '8px' :'6px',
   };
 
 
@@ -63,32 +62,23 @@ export function Landing() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   background-color: #262626;
   height: 100vh;  /* Make the container fill the entire screen height */
 
   @media (max-width: 1920px) {
     // padding: 20px; /* Add padding on larger screens */
-    align-items: center;
-    justify-content: center;
   }
 
   @media (max-width: 1728px) {
     // padding: 15px; /* Adjust padding for smaller screens */
-    align-items: center;
-    justify-content: center;
-  }
 
   @media (max-width: 414px) {
     // padding: 10px; /* Reduce padding for mobile screens */
-    align-items: center;
-    justify-content: center;
   }
 
   @media (max-width: 390px) {
     // padding: 5px; /* Reduce padding further for very small screens */
-    align-items: center;
-    justify-content: center;
   }
 `;
 
