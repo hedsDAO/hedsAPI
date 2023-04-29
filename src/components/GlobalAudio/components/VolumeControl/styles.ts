@@ -12,8 +12,8 @@ export const $volumeIconTextStyles = (onClick: () => void, volume: number, isMut
   pointerEvents: 'auto',
   mt: '5px !important',
   fontSize: 'md',
+  ml: volume === 0 ? '0' : "-1px !important",
   as: 'i',
-  mr: '-2px !important',
   color: 'white',
   className: volume === 0 || isMuted ? 'fas fa-volume-xmark' : 'fa-solid fa-volume',
 });

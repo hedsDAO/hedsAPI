@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 
-import { Box, Button, Flex, GridItem, SimpleGrid, useTheme } from '@chakra-ui/react';
+import { Box, Flex, GridItem, SimpleGrid, useTheme } from '@chakra-ui/react';
 import { CloseButton } from '@/components/GlobalAudio/components/CloseButton/CloseButton';
 import { LikeButton } from '@/components/GlobalAudio/components/LikeButton/LikeButton';
 import { PlayerButtons } from '@/components/GlobalAudio/components/PlayerButtons/PlayerButtons';
@@ -11,8 +11,11 @@ import { SongCover } from '@/components/GlobalAudio/components/SongCover/SongCov
 import { SongDetails } from '@/components/GlobalAudio/components/SongDetails/SongDetails';
 import { useGlobalAudio } from '@/components/GlobalAudio/components/useGlobalAudio/useGlobalAudio';
 import { VolumeControl } from '@/components/GlobalAudio/components/VolumeControl/VolumeControl';
-import { currentSong as song } from '@/tests/mocks/data/currentSong';
 import * as styles from '@/components/GlobalAudio/screens/styles';
+
+// test
+import { Button } from '@chakra-ui/react';
+import { currentSong as song } from '@/tests/mocks/data/currentSong';
 
 /**
  * @function GlobalAudio A higher-order component that wraps its child components with a global audio player.
@@ -34,9 +37,9 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <Button {...styles.$globalAudioTestButtonStyles} onClick={() => dispatch.globalAudioModel.setCurrentSong(song)}>
+      {/* <Button {...styles.$globalAudioTestButtonStyles} onClick={() => dispatch.globalAudioModel.setCurrentSong(song)}>
         test
-      </Button>
+      </Button> */}
       {children}
       <Box {...styles.$globalAudioContainerStyles}>
         <MotionBox animate={boxControls} transition={styles.$getMotionBoxTransition()}>
