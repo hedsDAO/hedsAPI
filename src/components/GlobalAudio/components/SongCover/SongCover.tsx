@@ -1,15 +1,21 @@
 import { store } from '@/store';
 import { AspectRatio, Image, Skeleton, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
+import * as styles from '@/components/GlobalAudio/components/SongCover/styles';
 
+/**
+ * @function SongCover
+ * @description A component that displays the cover image of the current song with a skeleton before loading.
+ * @returns {JSX.Element} - Rendered SongCover component.
+ */
 export const SongCover = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const currentSong = useSelector(store.select.globalAudioModel.selectCurrentSong);
 
   return (
-    <AspectRatio h="80px" width={'80px'} ratio={1}>
-      <Skeleton startColor="heds.bg2" endColor="heds.400" isLoaded={!!currentSong && hasImageLoaded} fitContent rounded={'md'}>
-        <Image onLoad={setHasImageLoaded.on} h="80px" rounded="md" objectFit={'cover'} src={currentSong?.cover} />
+    <AspectRatio {...styles.$songCoverAspectRatioStyles}>
+      <Skeleton {...styles.$songCoverSkeletonStyles(!!currentSong && hasImageLoaded)}>
+        <Image onLoad={setHasImageLoaded.on} src={currentSong?.cover} {...styles.$songCoverImageStyles} />
       </Skeleton>
     </AspectRatio>
   );

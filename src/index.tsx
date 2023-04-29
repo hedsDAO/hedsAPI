@@ -11,7 +11,7 @@ import { infuraProvider } from 'wagmi/providers/infura';
 import { ChakraProvider } from '@chakra-ui/react';
 import { defaultTheme } from './theme/default';
 import { ModalWrapper } from '@/modals/components/ModalWrapper';
-import { GlobalAudio } from '@/components/GlobalAudio/GlobalAudio';
+import { GlobalAudio } from '@/components/GlobalAudio/screens/GlobalAudio';
 import { store } from './store';
 import App from '@/App';
 import * as gaEvents from './events';

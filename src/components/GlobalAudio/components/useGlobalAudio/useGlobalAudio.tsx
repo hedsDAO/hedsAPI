@@ -15,6 +15,8 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
   const wavesurfer = useRef<WaveSurfer | null>(null);
   const currentSong = useSelector(store.select.globalAudioModel.selectCurrentSong);
   const currentSongHash = useSelector(store.select.globalAudioModel.selectCurrentSongHash);
+  const isMuted = useSelector(store.select.globalAudioModel.selectIsMuted);
+  const volume = useSelector(store.select.globalAudioModel.selectVolume);
 
   useEffect(() => {
     var options: WaveSurferParams; // wavesurfer params
@@ -51,9 +53,17 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
     wavesurfer?.current?.setVolume(percent);
   };
 
-  const handleMute = (bool: boolean) => {
-    dispatch.globalAudioModel.setIsMuted(bool);
-    wavesurfer?.current?.setMute(bool);
+  const handleMute = () => {
+    const bool = !isMuted;
+    if (isMuted) {
+      dispatch.globalAudioModel.setIsMuted(bool);
+      wavesurfer?.current?.setMute(bool);
+      for (let i = 0; i <= 100; i++) handleVolume(i);
+    } else {
+      dispatch.globalAudioModel.setIsMuted(bool);
+      wavesurfer?.current?.setMute(bool);
+      for (let i = 100; i >= 0; i--) handleVolume(i);
+    }
   };
 
   const handleClose = () => {
