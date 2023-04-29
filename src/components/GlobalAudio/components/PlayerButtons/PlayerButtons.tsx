@@ -1,23 +1,21 @@
 import { useSelector } from 'react-redux';
 import { store } from '@/store';
 import { Flex, Text } from '@chakra-ui/react';
+import * as styles from '@/components/GlobalAudio/components/PlayerButtons/styles';
 
+/**
+ * @function PlayerButtons
+ * @param {Function} handlePlayPause - The function to be called when the play/pause button is clicked.
+ * @description A player buttons component that displays backward, play/pause, and forward buttons.
+ * @returns {JSX.Element} - Rendered PlayerButtons component.
+ */
 export const PlayerButtons = ({ handlePlayPause }: { handlePlayPause: () => void }) => {
   const isPlaying = useSelector(store.select.globalAudioModel.selectIsPlaying);
   return (
-    <Flex gap={3} alignItems={'center'}>
-      <Text color="white" as={'i'} className="fa-solid fa-backward"></Text>
-      <Text
-        w="16px"
-        onClick={handlePlayPause}
-        role="button"
-        pointerEvents={'auto'}
-        color="white"
-        fontSize="2xl"
-        as={'i'}
-        className={isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play'}
-      />
-      <Text color="white" as={'i'} className="fa-solid fa-forward"></Text>
+    <Flex {...styles.$playerButtonsFlexStyles}>
+      <Text {...styles.$backwardButtonStyles()} />
+      <Text {...styles.$playPauseButtonStyles(isPlaying, handlePlayPause)} />
+      <Text {...styles.$forwardButtonStyles()} />
     </Flex>
   );
 };

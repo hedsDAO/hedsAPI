@@ -1,15 +1,24 @@
+import { motion, useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { store } from '@/store';
 import { Flex, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text, useBoolean } from '@chakra-ui/react';
-import { motion, useAnimation } from 'framer-motion';
-import { useSelector } from 'react-redux';
+import * as styles from '@/components/GlobalAudio/components/VolumeControl/styles';
 
-export const VolumeControl = ({ handleVolume, handleMute }: { handleVolume: (e: number) => void; handleMute: (e: boolean) => void }) => {
+/**
+ * @function VolumeControl
+ * @param {Object} props - The VolumeControl component props.
+ * @param {Function} handleVolume - The function to be called to handle the volume change.
+ * @param {Function} handleMute - The function to be called to handle mute/unmute.
+ * @description A volume control component that displays a volume slider and a mute/unmute button.
+ * @returns {JSX.Element} - Rendered VolumeControl component.
+ */
+export const VolumeControl = ({ handleVolume, handleMute }: { handleVolume: (e: number) => void; handleMute: () => void }) => {
   const [isHoverVolume, setIsHoverVolume] = useBoolean(false);
   const volumeBoxControls = useAnimation();
-  const MotionBox = motion.div;
   const volume = useSelector(store.select.globalAudioModel.selectVolume);
   const isMuted = useSelector(store.select.globalAudioModel.selectIsMuted);
+  const MotionBox = motion.div;
 
   useEffect(() => {
     volumeBoxControls.start({
@@ -20,33 +29,14 @@ export const VolumeControl = ({ handleVolume, handleMute }: { handleVolume: (e: 
   }, [isHoverVolume, volumeBoxControls]);
 
   return (
-    <Flex onMouseLeave={setIsHoverVolume.off} onMouseEnter={setIsHoverVolume.on} gap={1} alignContent={'center'} w="full" mr={10}>
-      <Text
-        minW="22px"
-        pointerEvents={'auto'}
-        role="button"
-        onClick={() => {
-          if (isMuted) {
-            handleMute(false);
-            for (let i = 0; i <= 100; i++) handleVolume(i);
-          } else {
-            handleMute(true);
-            for (let i = 100; i >= 0; i--) handleVolume(i);
-          }
-        }}
-        mt={'5px !important'}
-        fontSize="md"
-        as={'i'}
-        mr={'-2px !important'}
-        className={volume === 0 || isMuted ? 'fas fa-volume-xmark' : 'fa-solid fa-volume'}
-        color="white"
-      />
+    <Flex {...styles.$volumeControlFlexStyles} onMouseLeave={setIsHoverVolume.off} onMouseEnter={setIsHoverVolume.on}>
+      <Text {...styles.$volumeIconTextStyles(handleMute, volume, isMuted)} />
       <MotionBox animate={volumeBoxControls} transition={{ type: 'spring', damping: 0, stiffness: 100 }}>
-        <Slider ml={1} mt={'-1 !important'} size="sm" value={volume * 100} defaultValue={volume * 100} onChange={(val: number) => handleVolume(val)}>
-          <SliderTrack bg="heds.500">
-            <SliderFilledTrack bg="heds.100" />
+        <Slider {...styles.$volumeControlSliderStyles(volume * 100, volume * 100, (val: number) => handleVolume(val))}>
+          <SliderTrack {...styles.$volumeControlSliderTrackStyles}>
+            <SliderFilledTrack {...styles.$volumeControlSliderFilledTrackStyles} />
           </SliderTrack>
-          <SliderThumb _focus={{ boxShadow: 'none', outlineColor: 'transparent' }} />
+          <SliderThumb {...styles.$volumeControlSliderThumbStyles} />
         </Slider>
       </MotionBox>
     </Flex>
