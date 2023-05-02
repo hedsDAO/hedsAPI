@@ -20,6 +20,7 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
 
   useEffect(() => {
     var options: WaveSurferParams; // wavesurfer params
+    // if (!pathname.includes(currentSongHash)) {
     dispatch.globalAudioModel.setIsLoading(true);
     if (waveformRef) options = formWaveSurferOptions(waveformRef.current);
     if (options) wavesurfer.current = WaveSurfer.create(options);
@@ -27,11 +28,24 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
     wavesurfer.current?.on('ready', () => {
       setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
     });
-  }, [waveformRef, isOpen]);
+    // }
+  }, [waveformRef, isOpen, currentSongHash]);
 
   useEffect(() => {
+    var options: WaveSurferParams; // wavesurfer params
     if (currentSong?.audio) {
+      console.log(pathname.includes(currentSongHash));
       if (!pathname.includes(currentSongHash) && waveformRef?.current) onOpen();
+      else {
+      console.log('here');
+        dispatch.globalAudioModel.setIsLoading(true);
+        if (waveformRef) options = formWaveSurferOptions(waveformRef.current);
+        if (options) wavesurfer.current = WaveSurfer.create(options);
+        if (currentSong?.audio) wavesurfer.current?.load(currentSong?.audio);
+        wavesurfer.current?.on('ready', () => {
+          setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
+        });
+      }
       wavesurfer.current?.load(currentSong?.audio);
     }
   }, [currentSong]);
