@@ -37,7 +37,7 @@ const MintDetails = () => {
 };
 
 const PreMintPrice = ({ tapeId, premintStatus }: { tapeId: string; premintStatus: boolean }) => {
-  return <LabelBadge label={PRICE_LABEL} text={'0.01'} textColor={'green.600'} />;
+  return <LabelBadge label={PRICE_LABEL} text={'0.005'} textColor={'green.600'} />;
 };
 
 export default MintDetails;
