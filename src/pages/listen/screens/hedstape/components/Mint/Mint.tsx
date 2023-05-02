@@ -60,7 +60,8 @@ const Mint = () => {
   const mintOpenButtons = () => {
     return (
       <Stack direction="row" spacing={4}>
-        <Button
+        {/* REMOVE PREMINT, PENDING FUTURE TAPE STRUCTURES */}
+        {/* <Button
           onClick={() => {
             dispatch.modalModel.setModal(Modals.MINT_MODAL);
             dispatch.modalModel.setModalOpen(true);
@@ -76,7 +77,7 @@ const Mint = () => {
           _hover={premint.status === TimelineStatus.CLOSED ? { bg: 'gray.300' } : { bg: 'green.300' }}
         >
           Pre-Mint
-        </Button>
+        </Button> */}
         <Button
           onClick={() => {
             dispatch.modalModel.setModal(Modals.MINT_MODAL);
