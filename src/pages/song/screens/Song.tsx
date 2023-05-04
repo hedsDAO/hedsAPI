@@ -1,55 +1,44 @@
-import { useEffect, useRef, useState } from 'react';
-import { Box, Grid, GridItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
+import { useEffect, useRef } from 'react';
+import { Box, Divider } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { SongAppearsOn, SongDetails, SongHeader, SongLikes, SongWaveform } from '../components';
+import { Header } from '@/pages/song/components/Header/Header';
+import { useParams } from 'react-router-dom';
+import { useLocalAudio } from '@/pages/song/components/useLocalAudio/useLocalAudio';
+import { Waveform } from '@/pages/song/components/Waveform/Waveform';
 import { Nav } from '@/components/Nav/Nav';
-import { SongNavbarTabs } from '../models/common';
-import { useLocation } from 'react-router-dom';
-import { User } from '@/models/common';
-import { useGlobalAudio } from '@/components/GlobalAudio/components/useGlobalAudio/useGlobalAudio';
-import WaveSurfer from 'wavesurfer.js';
-import { WaveSurferParams } from 'wavesurfer.js/types/params';
-import { formWaveSurferOptions } from '@/utils';
+import { SongNavbarTabs } from '@/pages/song/models/common';
+import { Details } from '@/pages/song/components/Details/Details';
+import { AppearsOn } from '@/pages/song/components/AppearsOn/AppearsOn';
+import { Related } from '../components/Related/Related';
+import { Likes } from '@/pages/song/components/Likes/Likes';
 
 export const Song = () => {
-  const { pathname } = useLocation();
-  const wavesurfer = useRef<WaveSurfer | null>(null);
   const dispatch = useDispatch<Dispatch>();
+  const { id } = useParams();
   const waveformRef = useRef<HTMLDivElement>(null);
-  // const { handleMute } = useGlobalAudio(waveformRef);
-  const currentTab = useSelector(store.select.navModel.selectCurrentTab);
-  const cyaniteData = useSelector(store.select.songModel.selectCyaniteData);
-  const currentSongHash = useSelector(store.select.globalAudioModel.selectCurrentSongHash);
+  const { handlePlayPause } = useLocalAudio(waveformRef);
   const song = useSelector(store.select.songModel.selectSong);
+  const currentTab = useSelector(store.select.navModel.selectCurrentTab);
 
   useEffect(() => {
-    const id = pathname?.split('/song/')?.[1];
-    if (id) dispatch.songModel.getSongData(id);
-  }, []);
-
-  useEffect(() => {
-    var options: WaveSurferParams; // wavesurfer params
-    if (song?.audio) {
-      if (waveformRef) options = formWaveSurferOptions(waveformRef.current);
-      if (options) wavesurfer.current = WaveSurfer.create(options);
-      if (song?.audio) wavesurfer.current?.load(song?.audio);
-      wavesurfer.current?.on('ready', () => {
-        setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
-      });
-      wavesurfer.current?.load(song?.audio);
-    }
-  }, [song]);
+    if (id?.length) dispatch.songModel.getSongData(id);
+  }, [id]);
 
   return (
     <Box>
-      {song && <SongHeader song={song} />}
-      {song && <div ref={waveformRef} className={'w-full'} />}
-      {/* {song && <SongWaveform song={song} />} */}
-      {/* <Nav tabs={['Details', 'Appears On', 'Likes']} /> */}
-      {/* {currentTab === SongNavbarTabs.DETAILS && <SongDetails cyanite={cyaniteData} curator={{} as User} song={song} />}
-      {currentTab === SongNavbarTabs.APPEARS_ON && <SongAppearsOn />} */}
-      {/* {currentTab === SongNavbarTabs.LIKES && <SongLikes users={mockTapeArtists} />} */}
+      <Header handlePlayPause={handlePlayPause} />
+      {song?.audio && <Waveform waveformRef={waveformRef} />}
+      <Box maxW={{ lg: '85vw' }} mx="auto">
+        <Nav tabs={['Details', 'Appears On', 'Likes', 'Related']} />
+      </Box>
+      <Divider mt={{ lg: 2 }} borderColor="heds.100" />
+      <Box px={6} maxW={{ lg: '8xl' }} mx="auto">
+        {currentTab === SongNavbarTabs.DETAILS && <Details />}
+        {currentTab === SongNavbarTabs.APPEARS_ON && <AppearsOn />}
+        {currentTab === SongNavbarTabs.LIKES && <Likes />}
+        {currentTab === SongNavbarTabs.RELATED && <Related />}
+      </Box>
     </Box>
   );
 };

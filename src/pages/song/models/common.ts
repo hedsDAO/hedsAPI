@@ -2,6 +2,7 @@ export enum SongNavbarTabs {
   DETAILS = 0,
   APPEARS_ON,
   LIKES,
+  RELATED
 }
 
 export interface Contributor {

@@ -1,16 +1,17 @@
 import { WaveSurferParams } from 'wavesurfer.js/types/params';
 
-const formWavesurferOptions = (ref: any): WaveSurferParams => ({
+const formGlobalWavesurferOptions = (ref: any): WaveSurferParams => ({
   container: ref,
-  waveColor: '#4D4D4D',
-  progressColor: '#AC8FFF',
+  waveColor: '#E0E0E0',
+  progressColor: '#0E1117',
   cursorColor: 'transparent',
   barWidth: 4,
   barRadius: 0,
   responsive: true,
-  height: 160,
+  height: 0,
   normalize: true,
   hideScrollbar: true,
+  pixelRatio: 1000,
 });
 
-export default formWavesurferOptions;
+export default formGlobalWavesurferOptions;

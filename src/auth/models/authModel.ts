@@ -30,7 +30,6 @@ export const authModel = createModel<RootModel>()({
       this.setUser(response.data);
       const { id } = response.data;
       const likes = await getUserLikesById(id);
-      console.log(likes?.data, 'likes');
       if (likes?.data) this.setUserLikes(likes.data);
     },
     async updateUser(newUserData: User) {
@@ -39,7 +38,6 @@ export const authModel = createModel<RootModel>()({
     },
     async getUserLikes(userId: number) {
       const response = await getUserLikesById(userId);
-      console.log(response, 'user likes');
       // this.setUserLikes(response.data);
     },
   }),

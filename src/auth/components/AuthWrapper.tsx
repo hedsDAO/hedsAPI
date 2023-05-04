@@ -8,7 +8,6 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { isConnected, address } = useAccount();
 
   useEffect(() => {
-    console.log('connected: ', isConnected);
     if (isConnected && address) dispatch.authModel.getUser(address)
   }, [isConnected]);
 

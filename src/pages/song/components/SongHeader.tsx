@@ -1,5 +1,4 @@
-import { Grid, GridItem, Stack, Flex, AspectRatio, Box, Text, Image, Avatar, Button, IconButton } from '@chakra-ui/react';
-// import { mockSong, mockArtist, mockTape } from '../models/constant';
+import { Grid, GridItem, Stack, Flex, AspectRatio, Box, Text, Image, Avatar, IconButton } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { PlayIcon, HeartIcon } from '@heroicons/react/24/solid';
 import { Song } from '@/models/common';
@@ -11,7 +10,7 @@ const SongHeader = ({ song }: { song: Song }) => {
   const navigate = useNavigate();
   return (
     <Grid maxW="full" templateColumns={{ base: 'repeat(1, 1fr)', xl: 'repeat(10, 1fr)' }} gap={6}>
-      <GridItem colSpan={{ base: 1, xl: 7 }}>
+      {/* <GridItem colSpan={{ base: 1, xl: 7 }}>
         <Stack
           px={{ base: 4, xl: 0 }}
           direction={{ base: 'row', xl: 'column' }}
@@ -33,9 +32,6 @@ const SongHeader = ({ song }: { song: Song }) => {
             <Text letterSpacing={'widest'} fontSize={'xs'} textColor={'gray.500'}>
               ARTIST
             </Text>
-            <Text letterSpacing={'widest'} fontSize={{ base: 'md', xl: '2xl' }}>
-              {/* {mockArtist?.display_name} */}
-            </Text>
           </Flex>
           <Flex display={{ base: 'none', xl: 'flex' }} pt={6} gap={3}>
             <IconButton onClick={() => dispatch.globalAudioModel.setCurrentSong(song)} aria-label="play-button" icon={<PlayIcon width={30}></PlayIcon>} />
@@ -50,7 +46,7 @@ const SongHeader = ({ song }: { song: Song }) => {
             <Avatar m="2" shadow="md" borderRadius={'sm'} src={song?.submission_data?.sub_image} size="lg" position="absolute" />
           </Box>
         </AspectRatio>
-      </GridItem>
+      </GridItem> */}
     </Grid>
   );
 };

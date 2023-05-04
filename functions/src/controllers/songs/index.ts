@@ -52,6 +52,12 @@ export const getLikesBySongId = async (song_id: number): Promise<LikeData[]> => 
   }
 };
 
+export const getSongEventsById = async (song_id: number) => {
+  const query = `SELECT * FROM ${schemaName}.song_events WHERE song_id = $1`;
+  const { rows } = await pool.query(query, [song_id]);
+  return rows;
+};
+
 export async function createSong(songData: SongData, user_id: number) {
   const { audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes } = songData;
 

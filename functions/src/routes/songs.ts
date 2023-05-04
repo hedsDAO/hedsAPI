@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getSongByAudio, createSong, deleteSong, getLikesBySongId } from '../controllers/songs';
+import { getSongByAudio, createSong, deleteSong, getLikesBySongId, getSongEventsById } from '../controllers/songs';
 const router = express.Router();
 
 router.get('/:audio', async (req, res) => {
@@ -45,5 +45,33 @@ router.get('/:song_id/likes', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+router.get('/:song_id/events', async (req, res) => {
+  try {
+    const song_id = parseInt(req.params.song_id);
+    const events = await getSongEventsById(song_id);
+    res.json(events);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.put('/getManyByHash', async (req, res) => {
+  try {
+    console.log(req.body.song_hashes);
+    const song_hashes: string[] = req.body.song_hashes;
+    const ipfsPrefix = 'https://www.heds.cloud/ipfs/';
+    let songsTank = [];
+    for (let i = 0; i < song_hashes.length; i++) {
+      const response = await getSongByAudio(ipfsPrefix + song_hashes[i]);
+      songsTank.push(response);
+    }
+    res.json(songsTank);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+
 
 export default router;

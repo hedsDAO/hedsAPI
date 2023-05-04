@@ -5,7 +5,7 @@ import { WaveSurferParams } from 'wavesurfer.js/types/params';
 import WaveSurfer from 'wavesurfer.js';
 
 import { Dispatch, store } from '@/store';
-import { formWaveSurferOptions } from '@/utils';
+import { formGlobalWavesurferOptions } from '@/utils';
 import { useDisclosure } from '@chakra-ui/react';
 
 export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => {
@@ -22,7 +22,7 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
     var options: WaveSurferParams; // wavesurfer params
     // if (!pathname.includes(currentSongHash)) {
     dispatch.globalAudioModel.setIsLoading(true);
-    if (waveformRef) options = formWaveSurferOptions(waveformRef.current);
+    if (waveformRef) options = formGlobalWavesurferOptions(waveformRef.current);
     if (options) wavesurfer.current = WaveSurfer.create(options);
     if (currentSong?.audio) wavesurfer.current?.load(currentSong?.audio);
     wavesurfer.current?.on('ready', () => {
@@ -37,9 +37,9 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
       console.log(pathname.includes(currentSongHash));
       if (!pathname.includes(currentSongHash) && waveformRef?.current) onOpen();
       else {
-      console.log('here');
+        console.log('here');
         dispatch.globalAudioModel.setIsLoading(true);
-        if (waveformRef) options = formWaveSurferOptions(waveformRef.current);
+        if (waveformRef) options = formGlobalWavesurferOptions(waveformRef.current);
         if (options) wavesurfer.current = WaveSurfer.create(options);
         if (currentSong?.audio) wavesurfer.current?.load(currentSong?.audio);
         wavesurfer.current?.on('ready', () => {
