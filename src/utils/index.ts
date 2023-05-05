@@ -6,6 +6,9 @@ export { default as formatDuration } from './formatDuration';
 export { default as getTimePassed } from './getTimePassed';
 export { default as isEmpty } from './isEmpty';
 export { default as getCurrentImagePath } from './getCurrentImagePath';
+export { default as formatCyaniteGenres } from './formatCyaniteGenres';
+export { default as formatCyaniteSubGenres } from './formatCyaniteSubGenres';
+export { default as formatCyaniteKeys } from './formatCyaniteKeys';
 
 // GraphQL
 export { default as getCyaniteData } from './graphql/getCyaniteData';

@@ -44,7 +44,10 @@ export interface Song {
     proposalId?: string;
   };
   cyanite_id: string;
-  track_data: any;
+  track_data: {
+    track_no?: number;
+    tape_name?: string;
+  };
   total_likes: number | null;
   artists?: SongArtist[];
   type: any;
@@ -96,6 +99,7 @@ export interface SongEvents {
 export enum SongEventTypes {
   SUBMISSION = 'tape_submission',
   PLACEMENT = 'tape_placement',
+  SONG_LIKE = 'song_like',
 }
 
 export type UserSettingsData = Partial<Pick<User, 'profile_picture' | 'banner' | 'description'>>;

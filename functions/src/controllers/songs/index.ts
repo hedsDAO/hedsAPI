@@ -135,4 +135,77 @@ export async function deleteSong(song_id: number) {
     await pool.query('ROLLBACK');
     throw new Error(`Unable to delete song: ${error.message}`);
   }
-}
+};
+
+export const likeSong = async (songId: number, userId: number) => {
+  try {
+    await pool.query('BEGIN');
+
+    const userDataQuery = `SELECT display_name FROM ${schemaName}.users WHERE id = $1`;
+    const userResult = await pool.query(userDataQuery, [userId]);
+    const displayName = userResult.rows[0].display_name;
+
+    const songDataQuery = `SELECT track_name FROM ${schemaName}.songs WHERE id = $1`;
+    const songResult = await pool.query(songDataQuery, [songId]);
+    const trackName = songResult.rows[0].track_name;
+    const artistIdQuery =  `SELECT user_id FROM ${schemaName}.song_artists WHERE song_id = $1`;
+    const artistIdResult = await pool.query(artistIdQuery, [songId]);
+    const artistId = artistIdResult.rows[0].user_id;
+    const artistDataQuery = `SELECT display_name FROM ${schemaName}.users WHERE id = $1`;
+    const artistResult = await pool.query(artistDataQuery, [artistId]);
+    const artistName = artistResult.rows[0].display_name;
+
+    // Create a new event in heds.song_events table
+    const eventType = 'song_like'; 
+    const eventData = {
+      message: `${displayName} liked a track`,
+      subject: `${trackName} by ${artistName}`,
+    };
+
+    const songEventQuery = `
+    INSERT INTO ${schemaName}.song_events (event_type, event_data, event_timestamp, song_id, user_id)
+    VALUES ($1, $2, $3, $4, $5);
+  `;
+  const songEventValues = [eventType, JSON.stringify(eventData), new Date().toISOString().slice(0, 19).replace('T', ' '), songId, userId];
+  await pool.query(songEventQuery, songEventValues);
+
+    // Increment total_likes in heds.songs table
+    const updateTotalLikesQuery = `UPDATE ${schemaName}.songs SET total_likes = total_likes + 1 WHERE id = $1`;
+    await pool.query(updateTotalLikesQuery, [songId]);
+
+    // Update heds.likes table with song_id and user_id
+    const likesQuery = `INSERT INTO ${schemaName}.likes (song_id, user_id) VALUES ($1, $2)`;
+    await pool.query(likesQuery, [songId, userId]);
+
+    await pool.query('COMMIT');
+  } catch (error: any) {
+    await pool.query('ROLLBACK');
+    throw new Error(`Unable to like song: ${error.message}`);
+  }
+};
+
+export const unlikeSong = async (songId: number, userId: number) => {
+  try {
+    await pool.query('BEGIN');
+
+    // Remove the like from heds.likes table
+    const removeLikeQuery = `DELETE FROM ${schemaName}.likes WHERE song_id = $1 AND user_id = $2`;
+    await pool.query(removeLikeQuery, [songId, userId]);
+
+    // Decrement total_likes in heds.songs table
+    const updateTotalLikesQuery = `UPDATE ${schemaName}.songs SET total_likes = total_likes - 1 WHERE id = $1`;
+    await pool.query(updateTotalLikesQuery, [songId]);
+
+    // Remove the like event from heds.song_events table
+    const removeSongEventQuery = `
+      DELETE FROM ${schemaName}.song_events
+      WHERE song_id = $1 AND user_id = $2 AND event_type = 'song_like';
+    `;
+    await pool.query(removeSongEventQuery, [songId, userId]);
+
+    await pool.query('COMMIT');
+  } catch (error: any) {
+    await pool.query('ROLLBACK');
+    throw new Error(`Unable to unlike song: ${error.message}`);
+  }
+};

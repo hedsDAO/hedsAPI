@@ -71,3 +71,10 @@ export const $getBoxControlsAnimation = (isOpen: boolean, theme: WithCSSVar<any>
   background: theme.colors.heds.bg4,
   borderRadius: '0.5rem',
 });
+
+export const $getBoxControlFirstMountAnimation = (theme: WithCSSVar<any>) => ({
+  display: 'none',
+  opacity: 0,
+  background: theme.colors.heds.bg4,
+  borderRadius: '0.5rem',
+});

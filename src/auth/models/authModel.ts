@@ -17,12 +17,13 @@ export const authModel = createModel<RootModel>()({
     setUser: (state, user: User) => ({ ...state, user }),
     setUserLikes: (state, userLikes: Song[]) => ({ ...state, userLikes }),
   },
-  selectors: (slice) => ({
+  selectors: (slice, _, hasProps) => ({
     selectUser: () => slice((state) => state.user),
     selectBanner: () => slice((state) => state.user?.banner),
     selectProfilePicture: () => slice((state) => state.user?.profile_picture),
     selectDescription: () => slice((state) => state.user?.description),
     selectUserLikes: () => slice((state) => state.userLikes),
+    selectUserId: () => slice((state) => state.user?.id),
   }),
   effects: () => ({
     async getUser(wallet: string) {

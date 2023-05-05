@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { WaveSurferParams } from 'wavesurfer.js/types/params';
 import WaveSurfer from 'wavesurfer.js';
-
 import { Dispatch, store } from '@/store';
 import { formGlobalWavesurferOptions } from '@/utils';
 import { useDisclosure } from '@chakra-ui/react';
@@ -16,39 +15,31 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
   const currentSong = useSelector(store.select.globalAudioModel.selectCurrentSong);
   const currentSongHash = useSelector(store.select.globalAudioModel.selectCurrentSongHash);
   const isMuted = useSelector(store.select.globalAudioModel.selectIsMuted);
+  const isPlaying = useSelector(store.select.globalAudioModel.selectIsPlaying);
+  const isLocalAudioPlaying = useSelector(store.select.songModel.selectIsPlaying);
   const volume = useSelector(store.select.globalAudioModel.selectVolume);
+  const progress = useSelector(store.select.globalAudioModel.selectProgress);
 
   useEffect(() => {
-    var options: WaveSurferParams; // wavesurfer params
-    // if (!pathname.includes(currentSongHash)) {
     dispatch.globalAudioModel.setIsLoading(true);
-    if (waveformRef) options = formGlobalWavesurferOptions(waveformRef.current);
-    if (options) wavesurfer.current = WaveSurfer.create(options);
-    if (currentSong?.audio) wavesurfer.current?.load(currentSong?.audio);
-    wavesurfer.current?.on('ready', () => {
-      setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
-    });
-    // }
-  }, [waveformRef, isOpen, currentSongHash]);
-
-  useEffect(() => {
-    var options: WaveSurferParams; // wavesurfer params
-    if (currentSong?.audio) {
-      console.log(pathname.includes(currentSongHash));
-      if (!pathname.includes(currentSongHash) && waveformRef?.current) onOpen();
-      else {
-        console.log('here');
-        dispatch.globalAudioModel.setIsLoading(true);
-        if (waveformRef) options = formGlobalWavesurferOptions(waveformRef.current);
-        if (options) wavesurfer.current = WaveSurfer.create(options);
-        if (currentSong?.audio) wavesurfer.current?.load(currentSong?.audio);
-        wavesurfer.current?.on('ready', () => {
-          setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
-        });
-      }
-      wavesurfer.current?.load(currentSong?.audio);
+    var options: WaveSurferParams;
+    const isOnSongPage = currentSongHash === pathname.split('/song/')[1];
+    if (currentSong?.audio && !isOnSongPage && !isLocalAudioPlaying) {
+      onOpen();
+      if (waveformRef) options = formGlobalWavesurferOptions(waveformRef.current);
+      if (options) wavesurfer.current = WaveSurfer.create(options);
+      if (currentSong?.audio) wavesurfer.current?.load(currentSong?.audio);
+      wavesurfer.current?.on('ready', () => {
+        wavesurfer.current?.seekTo(progress);
+        setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
+      });
+    } else {
+      onClose();
     }
-  }, [currentSong]);
+    return () => {
+      onClose();
+    }
+  }, [currentSong, isLocalAudioPlaying]);
 
   const handlePlayPause = () => {
     const current = wavesurfer?.current?.isPlaying();

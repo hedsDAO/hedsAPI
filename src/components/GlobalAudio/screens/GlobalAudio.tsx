@@ -1,8 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, store } from '@/store';
-
+import { useSelector } from 'react-redux';
+import { store } from '@/store';
 import { Box, Flex, GridItem, SimpleGrid, useTheme } from '@chakra-ui/react';
 import { CloseButton } from '@/components/GlobalAudio/components/CloseButton/CloseButton';
 import { LikeButton } from '@/components/GlobalAudio/components/LikeButton/LikeButton';
@@ -13,17 +12,12 @@ import { useGlobalAudio } from '@/components/GlobalAudio/components/useGlobalAud
 import { VolumeControl } from '@/components/GlobalAudio/components/VolumeControl/VolumeControl';
 import * as styles from '@/components/GlobalAudio/screens/styles';
 
-// test
-import { Button } from '@chakra-ui/react';
-import { currentSong as song } from '@/tests/mocks/data/currentSong';
-
 /**
  * @function GlobalAudio A higher-order component that wraps its child components with a global audio player.
  * @param {React.ReactNode} children - The child components to be wrapped by the global audio player.
  * @returns {JSX.Element} The wrapped child components.
  */
 export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
-  const dispatch = useDispatch<Dispatch>();
   const waveformRef = useRef<HTMLDivElement | null>(null);
   const { handlePlayPause, handleVolume, handleMute, handleClose, isOpen } = useGlobalAudio(waveformRef);
   const currentSong = useSelector(store.select.globalAudioModel.selectCurrentSong);
@@ -32,14 +26,12 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
 
   useEffect(() => {
-    boxControls.start(styles.$getBoxControlsAnimation(isOpen, theme));
+    if (!currentSong) boxControls.set({ opacity: 0 });
+    else boxControls.start(styles.$getBoxControlsAnimation(isOpen, theme));
   }, [isOpen, currentSong, boxControls, MotionBox]);
 
   return (
     <>
-      {/* <Button {...styles.$globalAudioTestButtonStyles} onClick={() => dispatch.globalAudioModel.setCurrentSong(song)}>
-        test
-      </Button> */}
       {children}
       <Box {...styles.$globalAudioContainerStyles}>
         <MotionBox animate={boxControls} transition={styles.$getMotionBoxTransition()}>

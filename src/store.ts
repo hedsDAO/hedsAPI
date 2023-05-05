@@ -11,7 +11,7 @@ const persistConfig = {
   key: 'root',
   storage,
   version: 2,
-  whitelist: ['globalAudioModel'],
+  whitelist: [''],
 };
 
 export const store = init<RootModel, FullModel>({

@@ -15,15 +15,27 @@ export const useLocalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => {
     if (waveformRef?.current) options = formWavesurferOptions(waveformRef.current);
     if (options) wavesurfer.current = WaveSurfer.create(options);
     if (waveformRef.current) {
-      if (song?.audio) wavesurfer.current?.load(song?.audio);
+      if (song?.audio) (setTimeout(() => wavesurfer.current?.load(song?.audio), 2000));
       if (wavesurfer?.current) dispatch.songModel.setIsLoading(true);
       wavesurfer.current?.on('ready', () => {
-        setTimeout(() => dispatch.globalAudioModel.setIsLoading(false), 1000);
+        dispatch.songModel.setIsLoading(false);
+      });
+      wavesurfer.current?.on('waveform-ready', () => {
+        dispatch.songModel.setIsLoading(false);
       });
     }
+    return () => {
+      if (wavesurfer?.current?.isPlaying()) {
+        const progress = wavesurfer?.current?.getCurrentTime();
+        dispatch.globalAudioModel.setProgresss(progress);
+      }
+      dispatch.songModel.setIsPlaying(false);
+      wavesurfer?.current?.destroy();
+    };
   }, [waveformRef?.current, song?.audio]);
 
   const handlePlayPause = () => {
+    setTimeout(() => dispatch.globalAudioModel.setCurrentSong(song), 1000);
     const current = wavesurfer?.current?.isPlaying();
     if (current) {
       dispatch.songModel.setIsPlaying(false);

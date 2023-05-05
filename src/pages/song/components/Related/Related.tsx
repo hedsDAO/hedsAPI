@@ -10,7 +10,7 @@ export const Related = () => {
   const relatedSongs = useSelector(store.select.songModel.selectRelatedSongs);
   const handleNavigate = (song: Song) => () => navigate(`/song/${song?.audio?.split('/ipfs/')[1]}`);
   return (
-    <SimpleGrid gap={5} pt={12} columns={6}>
+    <SimpleGrid gap={{ base: 3, lg: 5 }} pt={{ base: 6, lg: 12 }} columns={{ base: 2, lg: 6 }}>
       {relatedSongs?.length
         ? relatedSongs?.slice(0, 6)?.map((song: Song, index: number) => (
             <GridItem key={'related' + song.id} colSpan={1}>
@@ -20,7 +20,15 @@ export const Related = () => {
                     <Image onLoad={setHasImageLoaded.on} border="solid 1px" borderColor="heds.100" rounded={'md'} src={song?.cover} />
                   </Skeleton>
                 </AspectRatio>
-                <Text letterSpacing={'wide'} fontWeight={'medium'} fontFamily={'inter'} mt={2} color="white" fontSize={'sm'}>
+                <Text
+                  letterSpacing={'wide'}
+                  fontWeight={'medium'}
+                  fontFamily={'inter'}
+                  mt={2}
+                  color="white"
+                  opacity={'75%'}
+                  fontSize={{ base: 'xs', lg: 'sm' }}
+                >
                   {song?.track_name || song?.submission_data?.sub_id}
                 </Text>
               </Box>

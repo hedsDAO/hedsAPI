@@ -16,3 +16,11 @@ export const getSongLikesById = (song_id: number) => {
 export const getManySongsByHash = (song_hashes: string[]) => {
   return axios.put(`${API_PREFIX}/songs/getManyByHash`, { song_hashes: song_hashes });
 };
+
+export const likeSong = (song_id: number, user_id: number) => {
+  return axios.post(`${API_PREFIX}/songs/${song_id}/likes`, { user_id: user_id });
+};
+
+export const unlikeSong = (song_id: number, user_id: number) => {
+  return axios.delete(`${API_PREFIX}/songs/${song_id}/likes`, { data: { user_id: user_id } });
+};
