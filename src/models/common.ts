@@ -2,10 +2,10 @@ export interface Tape {
   id: number;
   contract: string;
   name: string;
-  merkle_root: string;
+  merkleRoot: string;
   description: string;
   image: string;
-  proposal_id: string;
+  proposalId: string;
   video: string;
   bpm: number;
   timeline: string;
