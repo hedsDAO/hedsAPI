@@ -4,23 +4,12 @@ import { getManySongsByHash, getSongByHash, getSongEventsById, getSongLikesById,
 import { CyaniteData, Song, SongEvents, User } from '@/models/common';
 import { getCyaniteData, getRelatedTracks } from '@/utils';
 import { DEFAULT_NAV_TABS, APPEARS_ON_TAB } from '@pages/song/models/constants';
-
-interface SongState {
-  song?: Song;
-  cyaniteData?: CyaniteData;
-  songEvents?: SongEvents[];
-  relatedSongs?: Song[];
-  navbarTabs: string[];
-  likes: User[];
-  isPlaying: boolean;
-  volume: number;
-  isMuted: boolean;
-  isLoading: boolean;
-}
+import { SongModelState } from '@pages/song/models/common';
 
 export const songModel = createModel<RootModel>()({
-  state: {} as SongState,
+  state: {} as SongModelState,
   reducers: {
+    setState: (state, payload: SongModelState) => ({ ...state, ...payload }),
     setSong: (state, payload: Song) => ({ ...state, song: payload }),
     setCyaniteData: (state, payload: any) => ({ ...state, cyaniteData: payload }),
     setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),
@@ -31,35 +20,35 @@ export const songModel = createModel<RootModel>()({
     setRelatedSongs: (state, relatedSongs: any) => ({ ...state, relatedSongs }),
     setSongLikes: (state, likes: any) => ({ ...state, likes }),
     setNavbarTabs: (state, navbarTabs: string[]) => ({ ...state, navbarTabs }),
-    clearState: () => ({} as SongState),
+    clearState: () => ({} as SongModelState),
   },
   selectors: (slice) => ({
-    selectSong: () => slice((state: SongState) => state.song),
-    selectSongId: () => slice((state: SongState) => state.song?.id),
-    selectSongCover: () => slice((state: SongState) => state.song?.cover),
-    selectSongHash: () => slice((state: SongState): string => state.song?.audio?.split('/ipfs/')[1]),
-    selectSongSubmissionCover: () => slice((state: SongState) => state.song?.submission_data?.sub_image),
-    selectSongArtists: () => slice((state: SongState): User[] => state.song?.artists?.map((artist) => artist)),
-    selectSongTrackName: () => slice((state: SongState) => state.song?.track_name || state.song?.submission_data?.sub_id),
-    selectSongTrackNumber: () => slice((state: SongState) => state.song?.track_data?.track_no),
-    selectCyaniteData: () => slice((state: SongState) => state?.cyaniteData),
-    selectRelatedSongs: () => slice((state: SongState) => state?.relatedSongs),
-    selectSongEvents: () => slice((state: SongState) => state?.songEvents),
-    selectSongLikes: () => slice((state: SongState) => state?.likes),
-    selectIsPlaying: () => slice((state: SongState) => state.isPlaying),
-    selectVolume: () => slice((state: SongState) => state.volume),
-    selectIsLoading: () => slice((state: SongState) => state.isLoading),
-    selectIsMuted: () => slice((state: SongState) => state.isMuted),
-    selectNavbarTabs: () => slice((state: SongState) => state?.navbarTabs),
+    selectSong: () => slice((state: SongModelState) => state.song),
+    selectSongId: () => slice((state: SongModelState) => state.song?.id),
+    selectSongCover: () => slice((state: SongModelState) => state.song?.cover),
+    selectSongHash: () => slice((state: SongModelState): string => state.song?.audio?.split('/ipfs/')[1]),
+    selectSongSubmissionCover: () => slice((state: SongModelState) => state.song?.submission_data?.sub_image),
+    selectSongArtists: () => slice((state: SongModelState): User[] => state.song?.artists?.map((artist) => artist)),
+    selectSongTrackName: () => slice((state: SongModelState) => state.song?.track_name || state.song?.submission_data?.sub_id),
+    selectSongTrackNumber: () => slice((state: SongModelState) => state.song?.track_data?.track_no),
+    selectCyaniteData: () => slice((state: SongModelState) => state?.cyaniteData),
+    selectRelatedSongs: () => slice((state: SongModelState) => state?.relatedSongs),
+    selectSongEvents: () => slice((state: SongModelState) => state?.songEvents),
+    selectSongLikes: () => slice((state: SongModelState) => state?.likes),
+    selectIsPlaying: () => slice((state: SongModelState) => state.isPlaying),
+    selectVolume: () => slice((state: SongModelState) => state.volume),
+    selectIsLoading: () => slice((state: SongModelState) => state.isLoading),
+    selectIsMuted: () => slice((state: SongModelState) => state.isMuted),
+    selectNavbarTabs: () => slice((state: SongModelState) => state?.navbarTabs),
     selectNumberOfAttributes: () =>
-      slice((state: SongState) => {
+      slice((state: SongModelState) => {
         const subGenreTags = state.cyaniteData?.subgenreTags?.length || 0;
         const genreTags = state.cyaniteData?.genreTags?.length || 0;
         const bpmPrediction = 1;
         const keyPrediction = 1;
         return subGenreTags + genreTags + bpmPrediction + keyPrediction;
       }),
-    selectTapeName: () => slice((state: SongState): string => state.song?.track_data?.tape_name),
+    selectTapeName: () => slice((state: SongModelState): string => state.song?.track_data?.tape_name),
   }),
   effects: (dispatch) => ({
     async getSongData(hash: string) {
@@ -67,7 +56,10 @@ export const songModel = createModel<RootModel>()({
       const response = await getSongByHash(hash);
       this.setSong(response?.data);
       const songEventsResponse = await getSongEventsById(response.data?.id);
-      this.setSongEvents(songEventsResponse?.data);
+      const sortedEvents = songEventsResponse?.data?.sort((a: SongEvents, b: SongEvents) => {
+        return new Date(b.event_timestamp).getTime() - new Date(a.event_timestamp).getTime();
+      });
+      this.setSongEvents(sortedEvents);
       const songLikes = await getSongLikesById(response.data?.id);
       this.setSongLikes(songLikes?.data);
       const cyaniteId = response?.data?.cyanite_id;

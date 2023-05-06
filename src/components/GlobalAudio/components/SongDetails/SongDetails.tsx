@@ -12,7 +12,6 @@ import * as styles from '@/components/GlobalAudio/components/SongDetails/styles'
 export const SongDetails = () => {
   const songName = useSelector(store.select.globalAudioModel.selectCurrentSongName);
   const song = useSelector(store.select.globalAudioModel.selectCurrentSong);
-  console.log(song?.artists[0], 'artist');
   return (
     <Stack {...styles.$songDetailsStackStyles}>
       <Text {...styles.$songNameTextStyles}>{songName}</Text>

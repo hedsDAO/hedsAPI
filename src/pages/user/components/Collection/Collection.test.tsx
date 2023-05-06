@@ -12,7 +12,7 @@ describe('Collection unit', () => {
   it('renders collection items', () => {
     const collectionItems = screen.getAllByTestId('collection-item');
     // pagination limit (4)
-    expect(collectionItems).toHaveLength(4);
+    expect(collectionItems).toHaveLength(6);
   });
   it('renders no collection items when provided 0', async () => {
     act(() => {

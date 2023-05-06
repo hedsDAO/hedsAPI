@@ -5,6 +5,13 @@ import { WaveSurferParams } from 'wavesurfer.js/types/params';
 import formWavesurferOptions from '@/utils/formWavesurferOptions';
 import WaveSurfer from 'wavesurfer.js';
 
+/**
+ * @function useLocalAudio
+ * @description A custom React hook that initializes and manages a local audio player using WaveSurfer.js.
+ * @param {React.RefObject<HTMLDivElement>} waveformRef - A reference to the waveform container element.
+ * @returns {Object} - An object containing the handlePlayPause function and the wavesurfer instance.
+ **/
+
 export const useLocalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => {
   const dispatch = useDispatch<Dispatch>();
   const wavesurfer = useRef<WaveSurfer | null>(null);

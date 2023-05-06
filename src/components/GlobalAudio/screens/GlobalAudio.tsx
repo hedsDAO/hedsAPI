@@ -26,7 +26,7 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
 
   useEffect(() => {
-    if (!currentSong) boxControls.set({ opacity: 0 });
+    if (!currentSong) boxControls.set({ opacity: 0, y: '100%' });
     else boxControls.start(styles.$getBoxControlsAnimation(isOpen, theme));
   }, [isOpen, currentSong, boxControls, MotionBox]);
 

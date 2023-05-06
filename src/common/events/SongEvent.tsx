@@ -45,11 +45,11 @@ const SongEvent = ({ event_type, event_data, event_timestamp }: SongEvents) => {
         </Center>
         <Stack justifyContent={'center'}>
           <Flex alignItems={'baseline'} gap={1.5}>
-            <Text fontFamily="inter" fontSize={{ base: '2xs', lg: 'xs' }} letterSpacing={'widest'} color={'white'}>
+            <Text fontFamily="karla" fontSize={{ base: '2xs', lg: 'xs' }} opacity={'75%'} letterSpacing={'wide'} color={'white'}>
               {event_data.message}
             </Text>
           </Flex>
-          <Text mt={'0 !important'} opacity="60%" fontFamily="inter" fontSize="2xs" letterSpacing={'widest'} color={'white'}>
+          <Text mt={'0 !important'} opacity="60%" fontFamily="karla" fontSize="2xs" letterSpacing={'widest'} color={'white'}>
             {event_data.subject}
           </Text>
         </Stack>

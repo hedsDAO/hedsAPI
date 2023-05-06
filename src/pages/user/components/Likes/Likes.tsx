@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LikedItem } from '@/common/media/LikedItem';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { Song } from '@/models/common';
-import { store } from '@/store';
+import { Dispatch, store } from '@/store';
 import { GridItem, SimpleGrid } from '@chakra-ui/react';
 import * as styles from '@pages/user/components/Likes/styles';
 
@@ -13,6 +13,7 @@ import * as styles from '@pages/user/components/Likes/styles';
  **/
 
 export const Likes = () => {
+  const dispatch = useDispatch<Dispatch>()
   const likes = useSelector(store.select.userModel.selectLikes);
   const numOfLikes = useSelector(store.select.userModel.selectNumOfLikes);
   const currentPage = useSelector(store.select.paginationModel.selectCurrentPage);
@@ -28,7 +29,7 @@ export const Likes = () => {
           </GridItem>
         ))}
       </SimpleGrid>
-      {numOfLikes > 4 && (
+      {numOfLikes > 6 && (
         <GridItem {...styles.$paginationContainerStyles}>
           <Pagination totalItems={numOfLikes} />
         </GridItem>

@@ -1,41 +1,73 @@
+import { Pagination } from '@/components/Pagination/Pagination';
 import { User } from '@/models/common';
 import { store } from '@/store';
 import { AspectRatio, Box, GridItem, Image, SimpleGrid, Skeleton, Text, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { SongLikeData } from '../../models/common';
+import * as styles from './styles';
+
+/**
+ * @function Likes
+ * @description Renders a component that displays the users who liked the song, with pagination if necessary.
+ * @returns {JSX.Element} - Rendered component.
+ **/
 
 export const Likes = () => {
-  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const navigate = useNavigate();
+  const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const songLikes = useSelector(store.select.songModel.selectSongLikes);
-  const handleNavigate = (user: User) => () => navigate(`/u/${user?.wallet}`);
+  const songHash = useSelector(store.select.songModel.selectSongHash);
+  const currentPage = useSelector(store.select.paginationModel.selectCurrentPage);
+  const itemsPerPage = useSelector(store.select.paginationModel.selectItemsPerPage);
+  const start = currentPage * itemsPerPage;
+  const end = start + itemsPerPage;
+
+  const handleNavigate = (wallet: string) => () => navigate(`/u/${wallet}`);
+  const handleLikeEmptyStates = () => {
+    const itemsOnCurrentPage = songLikes?.slice(start, end)?.length;
+    return songLikes?.length < 6 ? 6 - songLikes?.length : itemsOnCurrentPage < 6 ? 6 - itemsOnCurrentPage : 0;
+  };
   return (
-    <SimpleGrid gap={5} pt={{ base: 6, lg: 12 }} columns={{ base: 2, lg: 6 }}>
+    <SimpleGrid {...styles.$likesGridStyles}>
       {songLikes?.length
-        ? songLikes?.slice(0, 6)?.map((user: User, index: number) => (
-            <GridItem key={'related' + user.id} colSpan={1}>
-              <Box onClick={handleNavigate(user)} border="solid 1px" borderColor="heds.100" rounded={'md'} px={3} pt={3} pb={2} bg="heds.bg2">
-                <AspectRatio ratio={1}>
-                  <Skeleton rounded="full" isLoaded={hasImageLoaded}>
-                    <Image onLoad={setHasImageLoaded.on} border="solid 1px" borderColor="heds.100" rounded={'full'} src={user?.profile_picture} />
-                  </Skeleton>
-                </AspectRatio>
-                <Text letterSpacing={'wide'} fontWeight={'medium'} fontFamily={'inter'} mt={2} color="white" fontSize={'sm'}>
-                  {user?.display_name}
-                </Text>
+        ? songLikes?.slice(start || 0, end || songLikes?.length)?.map((likes: SongLikeData, index: number) => (
+            <GridItem key={songHash + likes.user_id + index} {...styles.$gridItemStyles} data-testid={`song-likes-${index}`}>
+              <Box {...styles.$likesBoxStyles(handleNavigate(likes.wallet), false)}>
+                <Skeleton {...styles.$skeletonStyles} isLoaded={hasImageLoaded}>
+                  <AspectRatio {...styles.$aspectRatioStyles}>
+                    <Image {...styles.$imageStyles} onLoad={setHasImageLoaded.on} src={likes?.profile_picture} />
+                  </AspectRatio>
+                </Skeleton>
+                <Text {...styles.$userTextStyles}>{likes?.display_name}</Text>
               </Box>
             </GridItem>
           ))
         : [0, 1, 2, 3, 4, 5].map((_, index: number) => (
-            <GridItem key={'related' + index} colSpan={1}>
-              <Box rounded={'md'} px={3} pt={3} pb={2} bg="heds.bg2" opacity={'30%'}>
+            <GridItem key={songHash + index} {...styles.$gridItemStyles}>
+              <Box {...styles.$likesBoxStyles(() => {}, true)}>
                 <AspectRatio ratio={1}>
-                  <Box h="full" w="full" rounded={'full'} />
+                  <Box {...styles.$emptyBoxStyles} />
                 </AspectRatio>
-                <Text letterSpacing={'wide'} fontWeight={'medium'} fontFamily={'inter'} mt={2} color="white" fontSize={'sm'} minH="2.5ch" minW="10ch"></Text>
+                <Text {...styles.$emptyTextStyles} />
               </Box>
             </GridItem>
           ))}
+      {Array.from(Array(handleLikeEmptyStates()).keys()).map((i: number) => (
+        <GridItem data-testid={`song-likes-empty-${i}`} key={songHash + i} {...styles.$gridItemStyles}>
+          <Box {...styles.$likesBoxStyles(() => {}, true)}>
+            <AspectRatio ratio={1}>
+              <Box {...styles.$emptyBoxStyles} />
+            </AspectRatio>
+            <Text {...styles.$emptyTextStyles} />
+          </Box>
+        </GridItem>
+      ))}
+      {songLikes?.length > 6 && (
+        <GridItem {...styles.$paginationContainerStyles}>
+          <Pagination totalItems={songLikes?.length} />
+        </GridItem>
+      )}
     </SimpleGrid>
   );
 };
