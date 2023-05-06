@@ -35,10 +35,13 @@ export const useGlobalAudio = (waveformRef: React.RefObject<HTMLDivElement>) => 
       });
     } else {
       onClose();
+      wavesurfer?.current?.destroy();
     }
     return () => {
       onClose();
-    }
+      dispatch.globalAudioModel.setIsPlaying(false);
+      wavesurfer?.current?.destroy();
+    };
   }, [currentSong, isLocalAudioPlaying]);
 
   const handlePlayPause = () => {

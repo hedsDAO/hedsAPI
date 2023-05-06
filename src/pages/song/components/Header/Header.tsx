@@ -21,8 +21,10 @@ export const Header = ({ handlePlayPause }: { handlePlayPause: () => void }) => 
   return (
     <Box pos="relative">
       <Box display={{ base: 'block', lg: 'none' }}>
-        <Skeleton isLoaded={hasLargeCoverLoaded}>
-          <Image onLoad={setHasLargeCoverLoaded.on} opacity={{ base: '10%', xl: '30%' }} borderRadius="0" src={cover} w="100%" h="100%" />
+        <Skeleton fitContent startColor="heds.bg2" endColor="heds.bg3" isLoaded={hasLargeCoverLoaded || isLoading}>
+          <AspectRatio ratio={1}>
+            <Image onLoad={setHasLargeCoverLoaded.on} opacity={{ base: '10%', xl: '30%' }} borderRadius="0" src={cover} w="100%" h="100%" />
+          </AspectRatio>
         </Skeleton>
         <Box position={'absolute'} top={4} right={4}>
           <Skeleton isLoaded={hasSmallCoverLoaded} w="16" h="16">
@@ -111,7 +113,7 @@ export const Header = ({ handlePlayPause }: { handlePlayPause: () => void }) => 
         <GridItem colSpan={3} display={{ base: 'none', lg: 'block' }}>
           <AspectRatio ratio={1}>
             <Box>
-              <Skeleton isLoaded={hasLargeCoverLoaded}>
+              <Skeleton fitContent startColor="heds.bg2" endColor="heds.bg3" isLoaded={!isLoading || hasLargeCoverLoaded}>
                 <Image onLoad={setHasLargeCoverLoaded.on} opacity={{ base: '35%', xl: '30%' }} rounded="none" src={cover} />
               </Skeleton>
             </Box>
