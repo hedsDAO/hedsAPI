@@ -3,9 +3,47 @@ import { TapeData } from './types';
 import schemaName from '../../../config';
 
 export const getTapeById = async (tapeId: number) => {
-  const query = `SELECT * FROM ${schemaName}.tapes WHERE id = $1`;
+  const query = `
+    SELECT t.*, u.id AS sample_artist_id, u.display_name AS sample_artist_display_name, u.profile_picture AS sample_artist_profile_picture
+    FROM ${schemaName}.tapes t
+    LEFT JOIN ${schemaName}.tape_sample_artists tsa ON t.id = tsa.tape_id
+    LEFT JOIN ${schemaName}.users u ON tsa.user_id = u.id
+    WHERE t.id = $1;
+  `;
   const { rows } = await pool.query(query, [tapeId]);
-  return rows[0];
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const tapeData: TapeData = {
+    id: rows[0].id,
+    contract: rows[0].contract,
+    name: rows[0].name,
+    merkle_root: rows[0].merkle_root,
+    description: rows[0].description,
+    image: rows[0].image,
+    proposal_id: rows[0].proposal_id,
+    video: rows[0].video,
+    bpm: rows[0].bpm,
+    timeline: rows[0].timeline,
+    type: rows[0].type,
+    splits: rows[0].splits,
+    links: rows[0].links,
+    sample_artists: [],
+  };
+
+  rows.forEach((row) => {
+    if (row.sample_artist_id) {
+      tapeData.sample_artists.push({
+        id: row.sample_artist_id,
+        display_name: row.sample_artist_display_name,
+        profile_picture: row.sample_artist_profile_picture,
+      });
+    }
+  });
+
+  return tapeData;
 };
 
 export const getTapeSongs = async (tape_id: number): Promise<any> => {
