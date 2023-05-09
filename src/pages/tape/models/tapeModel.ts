@@ -52,6 +52,9 @@ export const tapeModel = createModel<RootModel>()({
   },
   selectors: (slice) => ({
     selectCurrentTape: () => slice((state) => state.tape),
+    selectTapeCover: () => slice((state) => state.tape.image),
+    selectTimeline: () => slice((state) => state.tape.timeline),
+    selectTracks: () => slice((state) => state.tape.tracks),
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
