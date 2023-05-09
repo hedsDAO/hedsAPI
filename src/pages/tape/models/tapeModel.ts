@@ -16,7 +16,11 @@ export const tapeModel = createModel<RootModel>()({
       video: '',
       bpm: undefined,
       tracks: [],
-      timeline: undefined,
+      timeline: {
+        mint: { start: 0, end: 0 },
+        submit: { start: 0, end: 0 },
+        vote: { start: 0, end: 0 },
+      },
       type: undefined,
       splits: '',
       links: undefined,

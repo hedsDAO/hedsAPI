@@ -8,6 +8,10 @@ import { Avatar, Box, Button, Divider, Flex, HStack, Image, Stack, Text } from '
 // Constants
 import { Dispatch, store } from '@/store';
 
+// Utils
+import { DateTime } from 'luxon';
+import { getTimePassed } from '@/utils';
+
 export const Tape = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
@@ -19,6 +23,17 @@ export const Tape = () => {
 
   useEffect(() => {
     console.log('currentTape', currentTape);
+    const date = DateTime.fromMillis(currentTape?.timeline?.submit?.start);
+    const log = date.toLocaleString({
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZoneName: 'short',
+    });
+    console.log('date', date);
+    console.log('log', log);
   }, [currentTape]);
 
   return (
