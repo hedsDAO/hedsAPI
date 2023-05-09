@@ -21,26 +21,32 @@ export const Tape = () => {
     dispatch.tapeModel.getTape(id);
   }, [id]);
 
-  useEffect(() => {
-    console.log('currentTape', currentTape);
-    const date = DateTime.fromMillis(currentTape?.timeline?.submit?.start);
-    const log = date.toLocaleString({
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZoneName: 'short',
-    });
-    console.log('date', date);
-    console.log('log', log);
-  }, [currentTape]);
+  const formatTime = (time: number) => {
+    if (time !== 0) {
+      const dateObj = DateTime.fromMillis(time);
+      const date = dateObj.toLocaleString({
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short',
+      });
+      return date;
+    }
+  };
 
   return (
     <Box>
-      <HStack mx={8} px="120px" spacing="80px">
-        <Image src={currentTape.image} alt="tape-cover" boxSize="xl" border="1px" borderColor="#DC89FF" />
-        <Stack gap={3}>
+      <Stack
+        pt={{ base: 2, lg: 12 }}
+        mx={{ base: 2, lg: 8 }}
+        px={{ sm: '20px', md: '80px', lg: '120px' }}
+        spacing={['30px', '80px']}
+        direction={{ base: 'column', lg: 'row' }}
+      >
+        <Image src={currentTape.image} alt="tape-cover" boxSize={['sm', 'md', 'lg']} border="1px" borderColor="#DC89FF" />
+        <Stack gap={3} justifyContent="center" width={{ sm: '100%', md: '80%', lg: '30%' }}>
           <Text color="#D3D3FF" letterSpacing="widest" fontSize="3xl" fontWeight="bold">
             {currentTape.name}
           </Text>
@@ -54,7 +60,7 @@ export const Tape = () => {
           ))}
           <Button
             color="white"
-            width="50%"
+            width={['100%', '50%']}
             bgColor="black"
             border="1px"
             borderColor="#745CBA"
@@ -68,18 +74,18 @@ export const Tape = () => {
           <Text color="white" fontSize="lg" fontWeight="bold">
             About The Tape
           </Text>
-          <Text color="white" fontSize="xs">
+          <Text color="white" fontSize="xs" lineHeight="20px">
             {currentTape.description}
           </Text>
         </Stack>
-        <Stack>
+        <Stack justifyContent={['flex-start', 'center']} alignItems="flex-start">
           <HStack>
             <Text color="#9293FF" fontFamily="sans-serif">
               Submit
             </Text>
             <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
             <Text color="white" fontFamily="sans-serif" fontSize="xs">
-              {currentTape?.timeline?.submit?.start}
+              {formatTime(currentTape?.timeline?.submit?.start)}
             </Text>
           </HStack>
           <Button
@@ -98,10 +104,17 @@ export const Tape = () => {
             </Text>
             <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
             <Text color="white" fontFamily="sans-serif" fontSize="xs">
-              {currentTape?.timeline?.submit?.start}
+              {formatTime(currentTape?.timeline?.vote?.start)}
             </Text>
           </HStack>
-          <Button bgColor="#745CBA" color="white" fontFamily="sans-serif" fontWeight="light" fontSize="xs">
+          <Button
+            bgColor="#745CBA"
+            color="white"
+            fontFamily="sans-serif"
+            fontWeight="light"
+            fontSize="xs"
+            leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
+          >
             VOTE NOW
           </Button>
           <HStack>
@@ -109,18 +122,18 @@ export const Tape = () => {
               Mint
             </Text>
             <Text color="white" fontFamily="sans-serif" fontSize="xs">
-              {currentTape?.timeline?.submit?.start}
+              {formatTime(currentTape?.timeline?.mint?.start)}
             </Text>
           </HStack>
           <Button bgColor="#745CBA" color="white" fontFamily="sans-serif" fontWeight="light" leftIcon={<i className="fa-solid fa-bell" />} fontSize="xs">
             GET NOTIFIED
           </Button>
         </Stack>
-      </HStack>
+      </Stack>
       <Divider orientation="horizontal" colorScheme="#9293FF" py={8} />
-      <Flex gap={3} flexWrap="wrap" mx={8} p={8}>
+      <Flex gap={3} flexWrap="wrap" mx={{ base: 2, lg: 8 }} px={['20px', '60px', '100px', '120px']} pt={8}>
         {currentTape.tracks.map((song) => (
-          <Box key={song.id} border="1px" borderColor="#745CBA" bgColor="#4F4F4F" borderRadius="md" p={2} w="250px">
+          <Box key={song.id} border="1px" borderColor="#745CBA" bgColor="#4F4F4F" borderRadius="md" p={2} w={{ sm: '100%', md: '32%', lg: '19%' }}>
             <HStack>
               <Image src={song.cover} alt="song-over" boxSize="4rem" border="1px" borderColor="#DC89FF" />
               <Stack>
