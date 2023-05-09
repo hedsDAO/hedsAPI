@@ -25,10 +25,22 @@ export const Tape = () => {
     <Box>
       <HStack mx={8} px="120px" spacing="80px">
         <Image src={currentTape.image} alt="tape-cover" boxSize="xl" border="1px" borderColor="#DC89FF" />
-        <Stack h="100%">
+        <Stack>
           <Text color="#D3D3FF" letterSpacing="widest" fontSize="3xl" fontWeight="bold">
             {currentTape.name}
           </Text>
+          <Button
+            color="#745CBA"
+            bgColor="black"
+            border="1px"
+            borderColor="#745CBA"
+            fontFamily="sans-serif"
+            fontWeight="light"
+            leftIcon={<i className="fa-solid fa-arrow-down-to-line" />}
+            fontSize="xs"
+          >
+            DOWNLOAD SAMPLE
+          </Button>
           <Text color="white" fontSize="lg" fontWeight="bold">
             About The Tape
           </Text>
