@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 // Components
-import { Box, Button, Divider, Flex, HStack, Image, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Divider, Flex, HStack, Image, Stack, Text } from '@chakra-ui/react';
 
 // Constants
 import { Dispatch, store } from '@/store';
@@ -25,18 +25,27 @@ export const Tape = () => {
     <Box>
       <HStack mx={8} px="120px" spacing="80px">
         <Image src={currentTape.image} alt="tape-cover" boxSize="xl" border="1px" borderColor="#DC89FF" />
-        <Stack>
+        <Stack gap={3}>
           <Text color="#D3D3FF" letterSpacing="widest" fontSize="3xl" fontWeight="bold">
             {currentTape.name}
           </Text>
+          {currentTape.sampleArtists.map((artist) => (
+            <Stack key={artist.id} direction="row" alignItems="center">
+              <Avatar src={artist.profile_picture} name={artist.display_name} />
+              <Text color="white" fontSize="sm">
+                {artist.display_name}
+              </Text>
+            </Stack>
+          ))}
           <Button
-            color="#745CBA"
+            color="white"
+            width="50%"
             bgColor="black"
             border="1px"
             borderColor="#745CBA"
             fontFamily="sans-serif"
             fontWeight="light"
-            leftIcon={<i className="fa-solid fa-arrow-down-to-line" />}
+            leftIcon={<i className="fa-solid fa-arrow-down-to-line" style={{ color: '#745CBA' }} />}
             fontSize="xs"
           >
             DOWNLOAD SAMPLE
@@ -99,9 +108,14 @@ export const Tape = () => {
           <Box key={song.id} border="1px" borderColor="#745CBA" bgColor="#4F4F4F" borderRadius="md" p={2} w="250px">
             <HStack>
               <Image src={song.cover} alt="song-over" boxSize="4rem" border="1px" borderColor="#DC89FF" />
-              <Text color="white" fontSize="xs" fontWeight="medium" letterSpacing="wider">
-                {song.track_name}
-              </Text>
+              <Stack>
+                <Text color="white" fontSize="xs" fontWeight={500} letterSpacing="wider">
+                  {song.track_name}
+                </Text>
+                <Text color="white" fontSize="xs" fontWeight={200} letterSpacing="wider">
+                  {song.artist_display_name}
+                </Text>
+              </Stack>
             </HStack>
           </Box>
         ))}
