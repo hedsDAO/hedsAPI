@@ -1,6 +1,7 @@
 import { createModel } from '@rematch/core';
-import { getTapeById, getSongsByTapeId } from '@/api/tape';
+import { getTapeById } from '@/api/tape';
 import type { RootModel } from '@/models';
+import { Tape } from '@models/common';
 
 export const tapeModel = createModel<RootModel>()({
   state: {
@@ -18,15 +19,30 @@ export const tapeModel = createModel<RootModel>()({
       timeline: undefined,
       type: undefined,
       splits: '',
-      market: undefined,
       links: undefined,
-    },
+      sampleArtists: [],
+    } as Tape,
   },
   reducers: {
-    setTape: (state, tape, songs) => {
-      const newTape = { ...tape, merkleRoot: tape.merkle_root, proposalId: tape.proposal_id, tracks: songs };
-      delete newTape.merkle_root;
-      delete newTape.proposal_id;
+    setTape: (state, tape) => {
+      const { id, contract, name, merkle_root, description, image, proposal_id, video, bpm, timeline, type, splits, links, sample_artists, songs } = tape;
+      const newTape = {
+        id,
+        contract,
+        name,
+        merkleRoot: merkle_root,
+        description,
+        image,
+        proposalId: proposal_id,
+        video,
+        bpm,
+        timeline,
+        type,
+        splits,
+        links,
+        sampleArtists: sample_artists,
+        tracks: songs,
+      };
       return { ...state, tape: newTape };
     },
   },
@@ -35,9 +51,10 @@ export const tapeModel = createModel<RootModel>()({
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
-      const tape = await getTapeById(id);
-      const songs = await getSongsByTapeId(id);
-      this.setTape(tape.data, songs.data);
+      // const tape = await getTapeById(id);
+      // console.log('tape', tape);
+      const response = await getTapeById(id);
+      this.setTape(response.data);
     },
   }),
 });

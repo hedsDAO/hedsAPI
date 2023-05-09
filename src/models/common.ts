@@ -8,10 +8,24 @@ export interface Tape {
   proposalId: string;
   video: string;
   bpm: number;
-  timeline: string;
+  timeline: Timeline;
   type: string;
   splits: string;
   links: string;
+  sampleArtists: Artist[];
+  tracks: Song[];
+}
+
+interface Timeline {
+  mint: { start: number; end: number };
+  submit: { start: number; end: number };
+  vote: { start: number; end: number };
+}
+
+interface Artist {
+  display_name: string;
+  id: number;
+  profile_picture: string;
 }
 
 export interface User {
@@ -50,6 +64,9 @@ export interface Song {
   type: any;
   created: any;
   video?: string;
+  artist_id?: number;
+  artist_display_name?: string;
+  artist_display_picture?: string;
 }
 
 export interface UserSong extends Song {
