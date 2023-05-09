@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Nav } from '@/components/Nav/Nav';
@@ -10,7 +10,6 @@ import { AppearsOn } from '@pages/song/components/AppearsOn/AppearsOn';
 import { Details } from '@pages/song/components/Details/Details';
 import { Likes } from '@pages/song/components/Likes/Likes';
 import { Related } from '@pages/song/components/Related/Related';
-import { useLocalAudio } from '@pages/song/components/useLocalAudio/useLocalAudio';
 import { Waveform } from '@pages/song/components/Waveform/Waveform';
 import { SongNavbarTabs } from '@pages/song/models/common';
 import * as styles from '@pages/song/screens/styles';
@@ -26,8 +25,6 @@ import * as styles from '@pages/song/screens/styles';
 export const Song = () => {
   const dispatch = useDispatch<Dispatch>();
   const { id } = useParams();
-  const waveformRef = useRef<HTMLDivElement>(null);
-  const { handlePlayPause } = useLocalAudio(waveformRef);
   const song = useSelector(store.select.songModel.selectSong);
   const navbarTabs = useSelector(store.select.songModel.selectNavbarTabs);
   const currentTab = useSelector(store.select.navModel.selectCurrentTab);
@@ -40,8 +37,8 @@ export const Song = () => {
 
   return (
     <Box>
-      <Header handlePlayPause={handlePlayPause} />
-      {song?.audio && <Waveform waveformRef={waveformRef} />}
+      <Header />
+      {song && <Waveform />}
       <Skeleton fitContent {...styles.$navSkeletonStyles(navbarTabs, isLoading)}>
         <Box {...styles.$navBoxStyles}>
           <Nav tabs={navbarTabs || DEFAULT_NAV_TABS} />

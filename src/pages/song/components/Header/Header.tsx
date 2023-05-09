@@ -5,20 +5,22 @@ import { AspectRatio, Avatar, Box, Button, Divider, Flex, GridItem, Image, Simpl
 import { User } from '@/models/common';
 import { ARTIST_HEADER_TEXT } from '@pages/song/models/constants';
 import * as styles from '@pages/song/components/Header/styles';
+import { useAudio } from '@/hooks/useAudio/useAudio';
 
 /**
  * @function Header
  * @description Renders a component displaying the song header, including the song cover, play/pause button, artist information, and like button.
- * @param {Function} handlePlayPause - Function to handle play and pause actions.
  * @returns {JSX.Element} - Rendered component.
  **/
 
-export const Header = ({ handlePlayPause }: { handlePlayPause: () => void }) => {
+export const Header = () => {
   const dispatch = useDispatch<Dispatch>();
   const navigate = useNavigate();
+  const { handlePlayPause, isOnOwnSongPage } = useAudio();
   const [hasLargeCoverLoaded, setHasLargeCoverLoaded] = useBoolean();
   const [hasSmallCoverLoaded, setHasSmallCoverLoaded] = useBoolean();
-  const isPlaying = useSelector(store.select.songModel.selectIsPlaying);
+  const song = useSelector(store.select.songModel.selectSong);
+  const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const cover = useSelector(store.select.songModel.selectSongCover);
   const subCover = useSelector(store.select.songModel.selectSongSubmissionCover);
   const songArtists = useSelector(store.select.songModel.selectSongArtists);
@@ -28,7 +30,6 @@ export const Header = ({ handlePlayPause }: { handlePlayPause: () => void }) => 
   const songHash = useSelector(store.select.songModel.selectSongHash);
   const songLikes = useSelector(store.select.songModel.selectSongLikes);
   const isLoading = useSelector(store.select.songModel.selectIsLoading);
-
   const handleNavigate = (user: User) => () => navigate(`/u/${user?.wallet}`);
   const handleLikeAndUnlike = () => {
     songLikes?.map((like: any) => like.user_id).includes(connectedUserId)
@@ -52,8 +53,8 @@ export const Header = ({ handlePlayPause }: { handlePlayPause: () => void }) => 
       </Box>
       <SimpleGrid {...styles.$simpleGridStyles}>
         <GridItem {...styles.$gridItemStyles}>
-          <Button {...styles.$playPauseButtonStyles(isLoading, handlePlayPause)}>
-            <Text {...styles.$playButtonIconStyles(isLoading, isPlaying)} />
+          <Button {...styles.$playPauseButtonStyles(isLoading, () => handlePlayPause(song))}>
+            <Text {...styles.$playButtonIconStyles(isLoading, isPlaying && isOnOwnSongPage)} />
           </Button>
           <Stack {...styles.$stackWrapperStyles}>
             <Stack {...styles.$stackStyles}>

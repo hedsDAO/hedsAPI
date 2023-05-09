@@ -86,7 +86,9 @@ export const $gridItemStyles: GridItemProps = {
 
 export const $playPauseButtonStyles = (isLoading: boolean, handlePlayPause: () => void): ExtendedButtonProps => ({
   isDisabled: isLoading,
-  onClick: handlePlayPause,
+  onClick: () => {
+    handlePlayPause();
+  },
   _hover: { bg: 'heds.bg5', opacity: '80%' },
   bg: 'heds.bg5',
   py: '8',

@@ -17,12 +17,14 @@ interface ExtendedTextProps extends TextProps {
  * @constant {ExtendedTextProps} $backwardButtonStyles
  * @description TextProps object that contains styles for the backward button in the PlayerButtons component.
  */
-export const $backwardButtonStyles = (): ExtendedTextProps => ({
+export const $backwardButtonStyles = (onClick: () => void): ExtendedTextProps => ({
   role: 'button',
   pointerEvents: 'auto',
   color: 'white',
   as: 'i',
+  onClick,
   className: 'fa-solid fa-backward',
+  "data-testid": 'ga-backward-button'
 });
 
 /**
@@ -34,20 +36,23 @@ export const $playPauseButtonStyles = (isPlaying: boolean, onClick: () => void):
   role: 'button',
   pointerEvents: 'auto',
   color: 'white',
-  fontSize: '2xl',
+  fontSize: {base: 'lg', lg:'2xl'},
   w: '16px',
   as: 'i',
   className: isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play',
+  "data-testid": 'ga-play-pause-button'
 });
 
 /**
  * @constant {ExtendedTextProps} $forwardButtonStyles
  * @description TextProps object that contains styles for the forward button in the PlayerButtons component.
  */
-export const $forwardButtonStyles = (): ExtendedTextProps => ({
+export const $forwardButtonStyles = (onClick: () => void): ExtendedTextProps => ({
   role: 'button',
   pointerEvents: 'auto',
   color: 'white',
   as: 'i',
+  onClick,
   className: 'fa-solid fa-forward',
+  "data-testid": 'ga-forward-button'
 });

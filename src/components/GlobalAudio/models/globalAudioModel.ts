@@ -1,21 +1,24 @@
 import type { RootModel } from '@/models';
-import { Song, SongArtist } from '@/models/common';
+import { Song } from '@/models/common';
 import { createModel } from '@rematch/core';
-import Wavesurfer from 'wavesurfer.js';
 
-interface GlobalAudioState {
+export interface GlobalAudioState {
   currentSong: Song;
   isPlaying: boolean;
   volume: number;
   isMuted: boolean;
   isLoading: boolean;
   progress: number;
+  isOpen: boolean;
 }
 
 export const globalAudioModel = createModel<RootModel>()({
   state: {
+    volume: 1, 
   } as GlobalAudioState,
   reducers: {
+    setState: (state, payload): GlobalAudioState => ({ ...state, ...payload }),
+    setIsOpen: (state, isOpen: boolean) => ({ ...state, isOpen }),
     setCurrentSong: (state, currentSong: Song | null) => ({ ...state, currentSong }),
     setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),
     setVolume: (state, volume: number) => ({ ...state, volume }),
@@ -25,6 +28,9 @@ export const globalAudioModel = createModel<RootModel>()({
     clearState: () => ({} as GlobalAudioState),
   },
   selectors: (slice) => ({
+    selectIsOpen() {
+      return slice((state): boolean => state.isOpen);
+    },
     selectIsMuted() {
       return slice((state): boolean => state.isMuted);
     },

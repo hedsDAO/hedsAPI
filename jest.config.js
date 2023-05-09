@@ -4,6 +4,7 @@ module.exports = {
   roots: ['<rootDir>'],
   moduleNameMapper: {
     "wagmi": "<rootDir>/src/tests/mocks/wagmi/wagmi.ts",
+    "@/hooks/useWaveform/useWaveform": "<rootDir>/src/tests/mocks/hooks/useWaveform.ts",
     '^axios$': require.resolve('axios'),
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',

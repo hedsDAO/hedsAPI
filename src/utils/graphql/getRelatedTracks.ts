@@ -1,4 +1,4 @@
-const getRelatedTracks = (id: number) => {
+const getRelatedTracks = (id: number, limit?: number) => {
   const data = JSON.stringify({
     query: `
       query SimilarTracksQuery($id: ID!) {
@@ -9,7 +9,7 @@ const getRelatedTracks = (id: number) => {
           }
           ... on Track {
             id
-            similarTracks(target: { library: {}}) {
+            similarTracks(first: ${limit || 10}, target: { library: {}}) {
               __typename
               ... on SimilarTracksError {
                 code
@@ -48,8 +48,7 @@ const getRelatedTracks = (id: number) => {
       if (json.data?.libraryTrack?.similarTracks?.edges) {
         const list = json.data?.libraryTrack?.similarTracks?.edges?.map((edge: any) => edge?.node?.title?.split('.')[0]);
         return list;
-      }
-      else return null;
+      } else return null;
     });
 };
 

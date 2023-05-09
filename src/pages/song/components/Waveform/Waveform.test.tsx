@@ -1,5 +1,6 @@
 import { Waveform } from '@/pages/song/components/Waveform/Waveform';
 import { store } from '@/store';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { renderWithRematchStore } from '@/tests/renderWithRematchStore';
 import { songModelState } from '@/tests/mocks/models/songModelState';
 import { screen } from '@testing-library/react';
@@ -7,7 +8,12 @@ import { screen } from '@testing-library/react';
 describe('Waveform unit', () => {
   beforeEach(() => {
     store.dispatch.songModel.setState(songModelState);
-    renderWithRematchStore(<Waveform />, store);
+    renderWithRematchStore(
+      <Router>
+        <Waveform />
+      </Router>,
+      store,
+    );
   });
   it('renders song waveform container', () => {
     const waveformContainer = screen.getByTestId('song-waveform-box');
