@@ -47,7 +47,18 @@ export const getTapeById = async (tapeId: number) => {
 };
 
 export const getTapeSongs = async (tape_id: number): Promise<any> => {
-  const { rows } = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE tape_id = $1`, [tape_id]);
+  const query = `
+    SELECT
+      s.*,
+      u.id as artist_id,
+      u.display_name as artist_display_name,
+      u.profile_picture as artist_profile_picture
+    FROM ${schemaName}.songs s
+    INNER JOIN ${schemaName}.song_artists sa ON s.id = sa.song_id
+    INNER JOIN ${schemaName}.users u ON sa.user_id = u.id
+    WHERE s.tape_id = $1
+  `;
+  const { rows } = await pool.query(query, [tape_id]);
 
   return rows;
 };

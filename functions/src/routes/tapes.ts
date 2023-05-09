@@ -7,7 +7,8 @@ router.get('/:tape_id', async (req, res) => {
   try {
     const tape_id = parseInt(req.params.tape_id);
     const tape = await getTapeById(tape_id);
-    res.json(tape);
+    const songs = await getTapeSongs(tape_id);
+    res.json({...tape,songs});
   } catch (error: any) {
     res.status(500).send(error.message);
   }
