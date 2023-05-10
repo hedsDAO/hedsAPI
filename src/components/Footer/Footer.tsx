@@ -1,5 +1,5 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react';
-import HedLogo from '@public/heddot.png';
+const HedLogo = require('/public/heddot.png');
 
 export const Footer = () => {
   return (

@@ -1,4 +1,4 @@
-import { Song, User, UserEvents } from '@/models/common';
+import { Song, User, UserEvents, UserSong } from '@/models/common';
 
 /**
  * @enum {number}
@@ -21,7 +21,7 @@ export enum UserNavTabs {
 
 export interface UserModelState {
   user: User;
-  user_songs: Song[];
+  user_songs: UserSong[];
   user_likes: Song[];
   user_events: UserEvents[];
 }

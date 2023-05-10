@@ -1,0 +1,311 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings unit snapshot snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div
+      aria-hidden="true"
+      data-aria-hidden="true"
+    />
+    <div
+      class="chakra-portal"
+    >
+      <div
+        aria-hidden="true"
+        class="chakra-modal__overlay css-13d1tkw"
+        data-aria-hidden="true"
+        style="opacity: 0;"
+      />
+      <div
+        aria-hidden="true"
+        data-aria-hidden="true"
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="0"
+      />
+      <div
+        data-focus-lock-disabled="false"
+      >
+        <div
+          class="chakra-modal__content-container css-1oxhx2p"
+          tabindex="-1"
+        >
+          <section
+            aria-describedby="chakra-modal--body-:r1:"
+            aria-labelledby="chakra-modal--header-:r1:"
+            aria-modal="true"
+            class="chakra-modal__content css-1qg5b5z"
+            id="chakra-modal-:r1:"
+            role="dialog"
+            style="opacity: 0; transform: translateX(0px) translateY(16px) translateZ(0);"
+            tabindex="-1"
+          >
+            <header
+              class="chakra-modal__header css-72fd9l"
+              id="chakra-modal--header-:r1:"
+            >
+              <p
+                class="chakra-text css-1vqwm2t"
+              >
+                SETTINGS
+              </p>
+            </header>
+            <button
+              aria-label="Close"
+              class="chakra-modal__close-btn css-ueeams"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="chakra-icon css-onkibi"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            <div
+              class="chakra-modal__body css-0"
+              id="chakra-modal--body-:r1:"
+            >
+              <div
+                class="css-2fr1h1"
+              >
+                <input
+                  accept="image/*"
+                  class="chakra-input css-0"
+                  data-testid="banner-input"
+                  hidden=""
+                  type="file"
+                />
+                <img
+                  class="chakra-image css-1io7w98"
+                  data-testid="banner-preview"
+                />
+                <div
+                  class="css-gxjp01"
+                  role="button"
+                >
+                  <div
+                    class="chakra-stack css-igigla"
+                  >
+                    <p
+                      class="chakra-text css-6018si"
+                    >
+                      CHANGE BANNER
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="css-ppihqu"
+              >
+                <input
+                  accept="image/*"
+                  class="chakra-input hidden css-0"
+                  data-testid="profile-picture-input"
+                  type="file"
+                />
+                <img
+                  alt="profile-picture"
+                  class="chakra-image css-1r9uduk"
+                />
+                <div
+                  class="css-tps9k3"
+                  role="button"
+                >
+                  <div
+                    class="chakra-stack css-igigla"
+                  >
+                    <p
+                      class="chakra-text css-ui0dlw"
+                    >
+                      CHANGE PROFILE
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="chakra-stack css-pb6zhq"
+              >
+                <div
+                  class="chakra-form-control css-0"
+                  role="group"
+                >
+                  <label
+                    class="chakra-form__label css-1lzs8oo"
+                    for="field-:r2:"
+                    id="field-:r2:-label"
+                  >
+                    Description
+                  </label>
+                  <div
+                    class="chakra-form__helper-text css-9bha6i"
+                    id="field-:r2:-helptext"
+                  >
+                    Update your profile description.
+                  </div>
+                  <textarea
+                    aria-describedby="field-:r2:-helptext"
+                    class="chakra-textarea css-1d29m1r"
+                    data-testid="description-input"
+                    id="field-:r2:"
+                    maxlength="130"
+                    placeholder=""
+                    rows="3"
+                  />
+                </div>
+              </div>
+              <div
+                class="css-ihd2hm"
+              >
+                <div
+                  class="css-k008qs"
+                >
+                  <div
+                    class="chakra-fade"
+                    style="opacity: 0;"
+                  >
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-ak6yrd"
+                        data-testid="desc-count-error"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="chakra-fade"
+                    style="opacity: 0;"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <p
+                        class="chakra-text css-1mlwv6f"
+                      >
+                         
+                         
+                      </p>
+                      <p
+                        class="chakra-text css-9iemu3"
+                      >
+                         / 
+                      </p>
+                      <p
+                        class="chakra-text css-9iemu3"
+                      >
+                         
+                        130
+                         
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="css-nn803e"
+                >
+                  <button
+                    class="chakra-button css-1smjvvq"
+                    data-testid="submit-button"
+                    disabled=""
+                    type="button"
+                  >
+                    SAVE
+                  </button>
+                  <button
+                    class="chakra-button css-xruyz4"
+                    data-testid="reset-button"
+                    disabled=""
+                    type="button"
+                  >
+                    <i
+                      class="fa-regular fa-arrow-rotate-right"
+                    />
+                  </button>
+                  <button
+                    class="chakra-button css-1s7a4ca"
+                    data-testid="exit-button"
+                    type="button"
+                  >
+                    <i
+                      class="fa-solid fa-arrow-right-from-bracket"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        data-aria-hidden="true"
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="0"
+      />
+    </div>
+  </body>,
+  "container": <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+  />,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

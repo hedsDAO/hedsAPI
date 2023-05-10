@@ -11,6 +11,7 @@ export const defaultTheme = extendTheme({
       bg: '#17151C',
       bg2: '#27252B',
       bg3: '#201C27',
+      bg4: "#060212",
       100: '#9293FF',
       200: '#AC8FFF',
       300: '#C48CFF',
@@ -18,6 +19,7 @@ export const defaultTheme = extendTheme({
       500: '#26232D',
       600: '#17151C',
       700: '#745CBA',
+      800: '#CDCDCD'
     },
     button: {
       primary: '#745CBA',

@@ -4,4 +4,4 @@ build
 .env
 .DS_Store
 .firebase/**/*
-.functions/firebase-debug.log
+**/logs
