@@ -26,6 +26,7 @@ export const tapeModel = createModel<RootModel>()({
       links: undefined,
       sampleArtists: [],
     } as Tape,
+    isLoading: false,
   },
   reducers: {
     setTape: (state, tape) => {
@@ -49,19 +50,23 @@ export const tapeModel = createModel<RootModel>()({
       };
       return { ...state, tape: newTape };
     },
+    setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
   },
   selectors: (slice) => ({
     selectCurrentTape: () => slice((state) => state.tape),
     selectTapeCover: () => slice((state) => state.tape.image),
     selectTimeline: () => slice((state) => state.tape.timeline),
     selectTracks: () => slice((state) => state.tape.tracks),
+    selectIsLoading: () => slice((state) => state.isLoading),
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
+      this.setIsLoading(true);
       // const tape = await getTapeById(id);
       // console.log('tape', tape);
       const response = await getTapeById(id);
       this.setTape(response.data);
+      this.setIsLoading(false);
     },
   }),
 });

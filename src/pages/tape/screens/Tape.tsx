@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 // Components
-import { Box, Divider, Image, Stack } from '@chakra-ui/react';
+import { Box, Divider, Image, Skeleton, Stack } from '@chakra-ui/react';
 import { TimelineButtons } from '../components/TimelineButtons/TimelineButtons';
 import { TapeDetails } from '../components/TapeDetails/TapeDetails';
 import { Tracks } from '../components/Tracks/Tracks';
@@ -15,6 +15,7 @@ export const Tape = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
+  const isLoading = useSelector(store.select.tapeModel.selectIsLoading);
 
   useEffect(() => {
     dispatch.tapeModel.getTape(id);
@@ -29,7 +30,9 @@ export const Tape = () => {
         spacing={['30px', '80px']}
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Image src={cover} alt="tape-cover" boxSize={['sm', 'md', 'lg']} border="1px" borderColor="#DC89FF" />
+        <Skeleton isLoaded={!isLoading}>
+          <Image src={cover} alt="tape-cover" boxSize={['sm', 'md', 'lg']} border="1px" borderColor="#DC89FF" />
+        </Skeleton>
         <TapeDetails />
         <TimelineButtons />
       </Stack>
