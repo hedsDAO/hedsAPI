@@ -34,7 +34,7 @@ const App = (): JSX.Element => {
     <Routes>
       <Route element={NavAndFooterWrapper}>
         <Route path="/u/:wallet" element={<User />} />
-        <Route path="/s/:cid" element={<Song />} />
+        <Route path="/song/:id" element={<Song />} />
         <Route path="/t/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="*" element={<NotFound />} />
