@@ -46,15 +46,24 @@ export interface Song {
   cyanite_id: string;
   track_data: any;
   total_likes: number | null;
-  artists?: User[];
+  artists?: SongArtist[];
   type: any;
   created: any;
   video?: string;
-  // TODO: Add type for this
-  song_id?: number,
-  user_id?: number,
-  verified?: boolean,
-  ownership_percent?: number,
+}
+
+export interface UserSong extends Song {
+  song_id: number;
+  user_id: number;
+  verified: boolean;
+  ownership_percent: number;
+}
+
+export interface SongArtist extends User {
+  song_id: number;
+  user_id: number;
+  verified: boolean;
+  ownership_percent: number;
 }
 
 export interface UserEvents {
@@ -71,3 +80,5 @@ export interface UserEvents {
 export enum UserEventTypes {
   USER_CREATED = 'user_created',
 }
+
+export type UserSettingsData = Partial<Pick<User, 'profile_picture' | 'banner' | 'description'>>;

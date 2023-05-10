@@ -11,12 +11,14 @@ import { infuraProvider } from 'wagmi/providers/infura';
 import { ChakraProvider } from '@chakra-ui/react';
 import { defaultTheme } from './theme/default';
 import { ModalWrapper } from '@/modals/components/ModalWrapper';
+import { GlobalAudio } from '@/components/GlobalAudio/screens/GlobalAudio';
 import { store } from './store';
 import App from '@/App';
 import * as gaEvents from './events';
 
 import 'animate.css';
 import './index.css';
+import '../build/app/output.css';
 import '@fontsource/space-mono';
 import '@fontsource/inter';
 import '@fontsource/poppins';
@@ -45,7 +47,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter>
           <AuthWrapper>
             <ModalWrapper>
-              <App />
+              <GlobalAudio>
+                <App />
+              </GlobalAudio>
             </ModalWrapper>
           </AuthWrapper>
         </BrowserRouter>
