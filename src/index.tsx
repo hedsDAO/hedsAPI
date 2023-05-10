@@ -12,7 +12,11 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { defaultTheme } from './theme/default';
 import { ModalWrapper } from '@/modals/components/ModalWrapper';
 import { GlobalAudio } from '@/components/GlobalAudio/screens/GlobalAudio';
+import { AuthWrapper } from './auth/components/AuthWrapper';
+import { getPersistor } from '@rematch/persist';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { store } from './store';
+
 import App from '@/App';
 import * as gaEvents from './events';
 
@@ -24,10 +28,9 @@ import '@fontsource/inter';
 import '@fontsource/poppins';
 import '@fontsource/karla';
 
-import { AuthWrapper } from './auth/components/AuthWrapper';
-
 gaEvents.initGA();
 gaEvents.setPageViewEvents();
+const persistor = getPersistor();
 
 const INFURA_PROVIDER_KEY = 'b8453c72aa7c484fb1efee0eed133fe6';
 const WC_PROJECT_ID = 'd7f07ef372c401f9d0ff10c1ff07fbaf';
@@ -45,13 +48,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RematchProvider store={store}>
       <ChakraProvider theme={defaultTheme}>
         <BrowserRouter>
-          <AuthWrapper>
-            <ModalWrapper>
-              <GlobalAudio>
-                <App />
-              </GlobalAudio>
-            </ModalWrapper>
-          </AuthWrapper>
+          <PersistGate persistor={persistor}>
+            <AuthWrapper>
+              <ModalWrapper>
+                <GlobalAudio>
+                  <App />
+                </GlobalAudio>
+              </ModalWrapper>
+            </AuthWrapper>
+          </PersistGate>
         </BrowserRouter>
       </ChakraProvider>
     </RematchProvider>
