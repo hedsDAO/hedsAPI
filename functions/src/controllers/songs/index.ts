@@ -52,6 +52,12 @@ export const getLikesBySongId = async (song_id: number): Promise<LikeData[]> => 
   }
 };
 
+export const getSongEventsById = async (song_id: number) => {
+  const query = `SELECT * FROM ${schemaName}.song_events WHERE song_id = $1`;
+  const { rows } = await pool.query(query, [song_id]);
+  return rows;
+};
+
 export async function createSong(songData: SongData, user_id: number) {
   const { audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes } = songData;
 
@@ -129,7 +135,7 @@ export async function deleteSong(song_id: number) {
     await pool.query('ROLLBACK');
     throw new Error(`Unable to delete song: ${error.message}`);
   }
-};
+}
 
 export const likeSong = async (songId: number, userId: number) => {
   try {
@@ -142,19 +148,25 @@ export const likeSong = async (songId: number, userId: number) => {
     const songDataQuery = `SELECT track_name FROM ${schemaName}.songs WHERE id = $1`;
     const songResult = await pool.query(songDataQuery, [songId]);
     const trackName = songResult.rows[0].track_name;
+    const artistIdQuery = `SELECT user_id FROM ${schemaName}.song_artists WHERE song_id = $1`;
+    const artistIdResult = await pool.query(artistIdQuery, [songId]);
+    const artistId = artistIdResult.rows[0].user_id;
+    const artistDataQuery = `SELECT display_name FROM ${schemaName}.users WHERE id = $1`;
+    const artistResult = await pool.query(artistDataQuery, [artistId]);
+    const artistName = artistResult.rows[0].display_name;
 
     // Create a new event in heds.song_events table
-    const eventType = 'song_like'; 
+    const eventType = 'song_like';
     const eventData = {
-      message: 'liked a track',
-      subject: `${trackName} by ${displayName}`,
+      message: `${displayName} liked a track`,
+      subject: `${trackName} by ${artistName}`,
     };
 
     const songEventQuery = `
-      INSERT INTO ${schemaName}.song_events (event_type, event_data, timestamp, song_id, user_id)
-      VALUES ($1, $2, $3, NOW(), $4);
-    `;
-    const songEventValues = [eventType, JSON.stringify(eventData), new Date(), songId, userId];
+    INSERT INTO ${schemaName}.song_events (event_type, event_data, event_timestamp, song_id, user_id)
+    VALUES ($1, $2, $3, $4, $5);
+  `;
+    const songEventValues = [eventType, JSON.stringify(eventData), new Date().toISOString().slice(0, 19).replace('T', ' '), songId, userId];
     await pool.query(songEventQuery, songEventValues);
 
     // Increment total_likes in heds.songs table
@@ -195,5 +207,45 @@ export const unlikeSong = async (songId: number, userId: number) => {
   } catch (error: any) {
     await pool.query('ROLLBACK');
     throw new Error(`Unable to unlike song: ${error.message}`);
+  }
+};
+
+export const getManySongs = async (songHashes: string[]) => {
+  try {
+    const prefixedSongHashes = songHashes.map((hash) => `https://www.heds.cloud/ipfs/${hash}`);
+    const placeholders = prefixedSongHashes.map((_, i) => `$${i + 1}`).join(',');
+    console.log(placeholders, 'placeholders');
+    const songResult = await pool.query(`SELECT * FROM heds.songs WHERE audio IN (${placeholders})`, songHashes);
+    console.log(songResult, 'results');
+    if (songResult.rows.length === 0) return null;
+
+    const songs = songResult.rows;
+    const songIds = songs.map((song) => song.id);
+    const artistResult = await pool.query(
+      `SELECT song_artists.song_id, users.*
+       FROM heds.song_artists AS song_artists
+       JOIN heds.users AS users ON users.id = song_artists.user_id
+       WHERE song_artists.song_id = ANY($1)`,
+      [songIds],
+    );
+
+    const artistsBySongId = artistResult.rows.reduce((acc, row) => {
+      const { song_id, ...artist } = row;
+      if (!acc[song_id]) {
+        acc[song_id] = [];
+      }
+      acc[song_id].push(artist);
+      return acc;
+    }, {});
+
+    const songsWithArtists = songs.map((song) => ({
+      ...song,
+      artists: artistsBySongId[song.id] || [],
+    }));
+
+    return songsWithArtists;
+  } catch (error) {
+    console.log(error);
+    return;
   }
 };
