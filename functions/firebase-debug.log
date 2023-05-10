@@ -1337,3 +1337,134 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2023-04-24T21:45:50.445Z] [worker-us-central1-api-7035cd3f-7a38-442a-9930-c135072fa6ec]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-api-7035cd3f-7a38-442a-9930-c135072fa6ec]: IDLE"}}
 [debug] [2023-04-24T21:45:50.445Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
 [info] i  functions: Finished "api" in 232.026708ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"api\" in 232.026708ms"}}
+[debug] [2023-05-10T15:53:53.385Z] ----------------------------------------------------------------------
+[debug] [2023-05-10T15:53:53.386Z] Command:       /Users/nicoleip/Library/Application Support/fnm/node-versions/v16.18.0/installation/bin/node /Users/nicoleip/Library/Caches/fnm_multishells/92806_1683733925122/bin/firebase emulators:start
+[debug] [2023-05-10T15:53:53.386Z] CLI Version:   11.21.0
+[debug] [2023-05-10T15:53:53.386Z] Platform:      darwin
+[debug] [2023-05-10T15:53:53.386Z] Node Version:  v16.18.0
+[debug] [2023-05-10T15:53:53.387Z] Time:          Wed May 10 2023 05:53:53 GMT-1000 (Hawaii-Aleutian Standard Time)
+[debug] [2023-05-10T15:53:53.387Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-10T15:53:53.428Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-05-10T15:53:53.428Z] > authorizing via signed-in user (nicole@heds.io)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2023-05-10T15:53:53.991Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-05-10T15:53:53.991Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-05-10T15:53:53.996Z] [hub] writing locator at /var/folders/p5/299jf6b123b5c9xd61sckyxw0000gn/T/hub-heds-104d8.json
+[debug] [2023-05-10T15:53:54.370Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-05-10T15:53:54.371Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-05-10T15:53:54.371Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, firestore, database, hosting, pubsub, storage {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, firestore, database, hosting, pubsub, storage\u001b[22m"}}
+[info] ✔  functions: Using node@16 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@16 from host."}}
+[debug] [2023-05-10T15:53:54.387Z] defaultcredentials: writing to file /Users/nicoleip/.config/firebase/nicole_heds_io_application_default_credentials.json
+[debug] [2023-05-10T15:53:54.393Z] Setting GAC to /Users/nicoleip/.config/firebase/nicole_heds_io_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /Users/nicoleip/.config/firebase/nicole_heds_io_application_default_credentials.json"}}
+[debug] [2023-05-10T15:53:54.393Z] > refreshing access token with scopes: []
+[debug] [2023-05-10T15:53:54.394Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-05-10T15:53:54.394Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-05-10T15:53:54.701Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-05-10T15:53:54.701Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-05-10T15:53:54.754Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/heds-104d8/adminSdkConfig [none]
+[debug] [2023-05-10T15:53:55.141Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/heds-104d8/adminSdkConfig 200
+[debug] [2023-05-10T15:53:55.141Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/heds-104d8/adminSdkConfig {"projectId":"heds-104d8","storageBucket":"heds-104d8.appspot.com","locationId":"us-central"}
+[debug] [2023-05-10T15:53:55.187Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-05-10T15:53:55.187Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-05-10T15:53:55.187Z] Starting Emulator UI with command {"binary":"node","args":["/Users/nicoleip/.cache/firebase/emulators/ui-v1.11.2/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/nicoleip/.cache/firebase/emulators/ui-v1.11.2/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-05-10T15:53:55.260Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-05-10T15:53:55.261Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "/Users/nicoleip/dev/heds/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/nicoleip/dev/heds/functions\" for Cloud Functions..."}}
+[debug] [2023-05-10T15:53:55.455Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2023-05-10T15:53:55.814Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --fix --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "test": "NODE_ENV=test jest ./test/routes/songs.test.ts --watchAll --no-cache"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/src/index.js",
+  "dependencies": {
+    "@firebase/rules-unit-testing": "^2.0.5",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "axios": "^1.2.2",
+    "axios-retry": "^3.3.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "express": "^4.18.2",
+    "firebase": "^9.15.0",
+    "firebase-admin": "^11.3.0",
+    "firebase-functions": "^4.0.0",
+    "luxon": "^3.2.1",
+    "openai": "^3.1.0",
+    "pg": "^8.10.0",
+    "twitter-v2": "^1.1.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
+    "@jest/globals": "^29.3.1",
+    "@types/chai": "^4.3.4",
+    "@types/jest": "^29.0.3",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.10",
+    "@types/pg": "^8.6.6",
+    "@types/sinon": "^10.0.13",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "babel-jest": "^29.3.1",
+    "chai": "^4.3.7",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "jest": "^29.5.0",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2023-05-10T15:53:55.814Z] Building nodejs source
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-05-10T15:53:55.816Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-05-10T15:53:55.894Z] Serving at port 9006
+
+[debug] [2023-05-10T15:53:56.076Z] Got response from /__/functions.yaml {"endpoints":{"twitterAuth":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"twitterAuth"},"newSubmission":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"newSubmission"},"activeListings":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"activeListings"},"users":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"users"},"api":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"api"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-05-10T15:53:56.081Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: twitterAuth, newSubmission, activeListings, users, api. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: twitterAuth, newSubmission, activeListings, users, api."}}
+[info] ✔  functions[us-central1-twitterAuth]: http function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/twitterAuth). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/twitterAuth)."}}
+[info] ✔  functions[us-central1-newSubmission]: http function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/newSubmission). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/newSubmission)."}}
+[info] ✔  functions[us-central1-activeListings]: http function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/activeListings). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/activeListings)."}}
+[info] ✔  functions[us-central1-users]: http function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/users). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/users)."}}
+[info] ✔  functions[us-central1-api]: http function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/api). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/heds-104d8/us-central1/api)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Functions │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
