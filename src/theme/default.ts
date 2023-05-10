@@ -12,6 +12,8 @@ export const defaultTheme = extendTheme({
       bg2: '#27252B',
       bg3: '#201C27',
       bg4: "#060212",
+      bg5: "#686868",
+      bg6: "#1F1C26",
       100: '#9293FF',
       200: '#AC8FFF',
       300: '#C48CFF',
