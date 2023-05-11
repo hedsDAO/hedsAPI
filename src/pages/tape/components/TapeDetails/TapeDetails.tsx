@@ -28,6 +28,7 @@ export const TapeDetails = () => {
         fontWeight="light"
         leftIcon={<i className="fa-solid fa-arrow-down-to-line" style={{ color: '#745CBA' }} />}
         fontSize="xs"
+        _hover={{ bgColor: '#454545' }}
       >
         DOWNLOAD SAMPLE
       </Button>
