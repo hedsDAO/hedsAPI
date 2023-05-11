@@ -23,6 +23,7 @@ describe('TimelineButtons component', () => {
 
     // the button should not be disabled
     const submitButton = getByText('UPLOAD SUBMISSION');
+    // chakra doesn't seem to use the same attributes
     expect(submitButton.closest('button')).toHaveAttribute('disabled', '');
 
     const voteButton = getByText('VOTE NOW');
