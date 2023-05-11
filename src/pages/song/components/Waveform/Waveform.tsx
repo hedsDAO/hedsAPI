@@ -16,8 +16,8 @@ export const Waveform = () => {
   const waveformRef = useRef<HTMLDivElement>(null);
   useWaveform({ waveformRef, song });
   return (
-    <Box {...styles.$waveformBoxStyles}>
-      <Box {...styles.$waveformStyles(waveformRef)} />
+    <Box data-testid="song-waveform-box" {...styles.$waveformBoxStyles}>
+      <Box data-testid="song-waveform" {...styles.$waveformStyles} ref={waveformRef} />
     </Box>
   );
 };

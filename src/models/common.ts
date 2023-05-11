@@ -46,7 +46,7 @@ export interface Song {
   cyanite_id: string;
   track_data: {
     track_no?: number;
-    tape_name?: string;
+    tape_name: string;
   };
   total_likes: number | null;
   artists?: SongArtist[];
