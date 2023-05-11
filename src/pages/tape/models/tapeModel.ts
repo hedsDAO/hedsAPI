@@ -34,8 +34,6 @@ export const tapeModel = createModel<RootModel>()({
     setTape: (state, tape) => {
       const { id, contract, name, merkle_root, description, image, proposal_id, video, bpm, timeline, type, splits, links, sample_artists, songs } = tape;
       const { mint, submit, vote } = timeline;
-      submit.start = 1683833400000;
-      submit.end = 1683837000000;
 
       const checkTimeline = () => {
         const now = DateTime.now().toMillis();
@@ -50,7 +48,7 @@ export const tapeModel = createModel<RootModel>()({
         }
       };
 
-      const currentCycle = 'checkTimeline()';
+      const currentCycle = checkTimeline();
 
       const newTape = {
         id,
@@ -84,8 +82,6 @@ export const tapeModel = createModel<RootModel>()({
   effects: (dispatch) => ({
     async getTape(id: string) {
       this.setIsLoading(true);
-      // const tape = await getTapeById(id);
-      // console.log('tape', tape);
       const response = await getTapeById(id);
       this.setTape(response.data);
       this.setIsLoading(false);
