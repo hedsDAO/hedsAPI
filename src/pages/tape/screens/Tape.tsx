@@ -14,17 +14,12 @@ import { Dispatch, store } from '@/store';
 export const Tape = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
-  const tape = useSelector(store.select.tapeModel.selectCurrentTape);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const isLoading = useSelector(store.select.tapeModel.selectIsLoading);
 
   useEffect(() => {
     dispatch.tapeModel.getTape(id);
   }, [id]);
-
-  useEffect(() => {
-    console.log(tape);
-  }, [tape]);
 
   return (
     <Box>
