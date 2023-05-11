@@ -7,6 +7,7 @@ import { navModel } from '@/components/Nav/models/navModel';
 import { paginationModel } from '@/components/Pagination/models/paginationModel';
 import { settingsModel } from '@/modals/screens/settings/models/settingsModel';
 import { globalAudioModel } from '@/components/GlobalAudio/models/globalAudioModel';
+import { twitterModel } from '@/modals/screens/twitter/models/twitterModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
@@ -17,6 +18,7 @@ export interface RootModel extends Models<RootModel> {
   paginationModel: typeof paginationModel;
   settingsModel: typeof settingsModel;
   globalAudioModel: typeof globalAudioModel;
+  twitterModel: typeof twitterModel;
 }
 
 export const models: RootModel = {
@@ -28,4 +30,5 @@ export const models: RootModel = {
   paginationModel,
   settingsModel,
   globalAudioModel,
+  twitterModel,
 };
