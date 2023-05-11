@@ -2,6 +2,7 @@ import { createModel } from '@rematch/core';
 import { getTapeById } from '@/api/tape';
 import type { RootModel } from '@/models';
 import { Tape } from '@models/common';
+import { DateTime } from 'luxon';
 
 export const tapeModel = createModel<RootModel>()({
   state: {
@@ -27,10 +28,30 @@ export const tapeModel = createModel<RootModel>()({
       sampleArtists: [],
     } as Tape,
     isLoading: false,
+    cycle: '',
   },
   reducers: {
     setTape: (state, tape) => {
       const { id, contract, name, merkle_root, description, image, proposal_id, video, bpm, timeline, type, splits, links, sample_artists, songs } = tape;
+      const { mint, submit, vote } = timeline;
+      submit.start = 1683833400000;
+      submit.end = 1683837000000;
+
+      const checkTimeline = () => {
+        const now = DateTime.now().toMillis();
+        if (now >= submit.start && now < submit.end) {
+          return 'submit';
+        } else if (now >= vote.start && now < vote.end) {
+          return 'vote';
+        } else if (now >= mint.start && now < mint.end) {
+          return 'mint';
+        } else {
+          return 'end';
+        }
+      };
+
+      const currentCycle = 'checkTimeline()';
+
       const newTape = {
         id,
         contract,
@@ -48,7 +69,7 @@ export const tapeModel = createModel<RootModel>()({
         sampleArtists: sample_artists,
         tracks: songs,
       };
-      return { ...state, tape: newTape };
+      return { ...state, cycle: currentCycle, tape: newTape };
     },
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
   },
@@ -58,6 +79,7 @@ export const tapeModel = createModel<RootModel>()({
     selectTimeline: () => slice((state) => state.tape.timeline),
     selectTracks: () => slice((state) => state.tape.tracks),
     selectIsLoading: () => slice((state) => state.isLoading),
+    selectCurrentCycle: () => slice((state) => state.cycle),
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {

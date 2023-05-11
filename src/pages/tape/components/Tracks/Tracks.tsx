@@ -7,7 +7,16 @@ export const Tracks = () => {
   return (
     <Flex gap={3} flexWrap="wrap" mx={{ base: 2, lg: 8 }} px={['20px', '60px', '100px', '120px']} pt={8}>
       {tracks.map((song) => (
-        <Box key={song.id} border="1px" borderColor="#745CBA" bgColor="#4F4F4F" borderRadius="md" p={2} w={{ sm: '100%', md: '32%', lg: '19%' }}>
+        <Box
+          key={song.id}
+          border="1px"
+          borderColor="#745CBA"
+          bgColor="#4F4F4F"
+          borderRadius="md"
+          p={2}
+          w={{ base: '100%', sm: '100%', md: '32%', lg: '19%' }}
+          data-testid="track-box"
+        >
           <HStack>
             <Image src={song.cover} alt="song-over" boxSize="4rem" border="1px" borderColor="#DC89FF" />
             <Stack>
