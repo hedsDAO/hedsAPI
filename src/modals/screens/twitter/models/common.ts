@@ -17,6 +17,7 @@ export class TwitterModalState {
   isLoading: boolean;
   error: string;
   isCopied: boolean;
+  hasCopied: boolean;
   isGenerated: boolean;
 }
 

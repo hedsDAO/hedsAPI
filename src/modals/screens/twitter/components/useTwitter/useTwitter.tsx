@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 import { useDisclosure } from '@chakra-ui/react';
-import { TwitterModalState } from '../../models/common';
+import { TwitterModalState, TwitterModalSteps } from '../../models/common';
 
 /**
  * @function useTwitter
@@ -22,7 +22,7 @@ export const useTwitter = () => {
   }, []);
 
   useEffect(() => {
-    if (isOpen && twitterState === ({} as TwitterModalState)) {
+    if (isOpen && twitterState === ({ currentStep: TwitterModalSteps.GENERATE_AND_COPY_TWEET } as TwitterModalState)) {
       onClose();
       setTimeout(() => {
         dispatch.modalModel.setModal(null);
