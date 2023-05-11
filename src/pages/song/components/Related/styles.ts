@@ -5,11 +5,11 @@ interface ExtendedSimpleGridProps extends SimpleGridProps {
   'data-testid'?: string;
 }
 
-export const $simpleGridStyles: ExtendedSimpleGridProps = {
+export const $simpleGridStyles: SimpleGridProps = {
   gap: { base: 3, lg: 5 },
   pt: { base: 6, lg: 12 },
   columns: { base: 2, lg: 6 },
-  'data-testid': 'song-related-grid',
+
 };
 
 export const $gridItemStyles: GridItemProps = {

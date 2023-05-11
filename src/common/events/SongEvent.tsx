@@ -2,7 +2,7 @@ import { SongEvents, SongEventTypes } from '@/models/common';
 import { getTimePassed } from '@/utils';
 import { Box, Center, Flex, Stack, Text } from '@chakra-ui/react';
 
-const songEventIcon = (eventType: string) => {
+const songEventIcon = (eventType: SongEventTypes) => {
   switch (eventType) {
     case SongEventTypes.SUBMISSION:
       return (
@@ -25,7 +25,7 @@ const songEventIcon = (eventType: string) => {
   }
 };
 
-const songEventIconBg = (eventType: string) => {
+const songEventIconBg = (eventType: SongEventTypes) => {
   switch (eventType) {
     case SongEventTypes.SUBMISSION:
       return 'heds.700';

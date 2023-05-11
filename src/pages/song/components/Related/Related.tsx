@@ -29,7 +29,7 @@ export const Related = () => {
   };
 
   return (
-    <SimpleGrid {...styles.$simpleGridStyles}>
+    <SimpleGrid data-testid="song-related-grid" {...styles.$simpleGridStyles}>
       {relatedSongs?.length
         ? relatedSongs?.slice(start, end)?.map((song: Song, index: number) => (
             <GridItem key={songHash + song.id + index} {...styles.$gridItemStyles} data-testid={`song-related-${index}`}>
