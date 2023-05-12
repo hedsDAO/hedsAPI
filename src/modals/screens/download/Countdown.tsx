@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { Box, HStack, Text } from '@chakra-ui/react';
 
 interface Time {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
+  days: string;
+  hours: string;
+  minutes: string;
+  seconds: string;
 }
 
 interface OwnProps {
@@ -14,10 +14,10 @@ interface OwnProps {
 
 export const Countdown = ({ epochTime }: OwnProps) => {
   const [time, setTime] = useState<Time>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    days: '',
+    hours: '',
+    minutes: '',
+    seconds: '',
   });
 
   useEffect(() => {
@@ -28,10 +28,22 @@ export const Countdown = ({ epochTime }: OwnProps) => {
       const distance = countDownDate - now;
 
       setTime({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)).toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        }),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        }),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        }),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000).toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        }),
       });
     }, 1000);
 
@@ -41,23 +53,39 @@ export const Countdown = ({ epochTime }: OwnProps) => {
   return (
     <HStack spacing={4}>
       <Box>
-        <Text fontSize="xl">{time.days}</Text>
-        <Text>Days</Text>
+        <Text fontSize="2xl" fontFamily="monospace" color="#AC8FFF" letterSpacing="wide">
+          {time.days}
+        </Text>
+        <Text fontFamily="inter" fontWeight="400" color="#C6C6C6">
+          DAYS
+        </Text>
       </Box>
       <Text>:</Text>
       <Box>
-        <Text fontSize="xl">{time.hours}</Text>
-        <Text>Hours</Text>
+        <Text fontSize="2xl" fontFamily="monospace" color="#AC8FFF" letterSpacing="wide">
+          {time.hours}
+        </Text>
+        <Text fontFamily="inter" fontWeight="400" color="#C6C6C6">
+          HRS
+        </Text>
       </Box>
       <Text>:</Text>
       <Box>
-        <Text fontSize="xl">{time.minutes}</Text>
-        <Text>Minutes</Text>
+        <Text fontSize="2xl" fontFamily="monospace" color="#AC8FFF" letterSpacing="wide">
+          {time.minutes}
+        </Text>
+        <Text fontFamily="inter" fontWeight="400" color="#C6C6C6">
+          MIN
+        </Text>
       </Box>
       <Text>:</Text>
       <Box>
-        <Text fontSize="xl">{time.seconds}</Text>
-        <Text>Seconds</Text>
+        <Text fontSize="2xl" fontFamily="monospace" color="#AC8FFF" letterSpacing="wide">
+          {time.seconds}
+        </Text>
+        <Text fontFamily="inter" fontWeight="400" color="#C6C6C6">
+          SEC
+        </Text>
       </Box>
     </HStack>
   );
