@@ -8,6 +8,9 @@ import { DateTime } from 'luxon';
 import { getTimePassed } from '@/utils';
 import { store } from '@/store';
 
+// Styles
+import * as styles from '@/pages/tape/components/TimelineButtons/styles';
+
 export const TimelineButtons = () => {
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
@@ -28,30 +31,17 @@ export const TimelineButtons = () => {
   };
 
   return (
-    <Stack justifyContent={['flex-start', 'center']} alignItems="flex-start">
+    <Stack {...styles.$timelineButtonsStackStyles}>
       <HStack>
-        <Text color="#9293FF" fontFamily="sans-serif">
-          Submit
-        </Text>
+        <Text {...styles.$cycleNameTextStyles}>Submit</Text>
         {cycle === 'submit' ? (
           <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
         ) : (
           <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
         )}
-        <Text color="white" fontFamily="sans-serif" fontSize="xs">
-          {formatTime(timeline?.submit?.start)}
-        </Text>
+        <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.start)}</Text>
       </HStack>
-      <Button
-        bgColor="#745CBA"
-        color="white"
-        fontFamily="sans-serif"
-        fontWeight="light"
-        leftIcon={<i className="fa-solid fa-arrow-down-to-line" />}
-        fontSize="xs"
-        _hover={{ bgColor: '#9d80f2' }}
-        isDisabled={!(cycle === 'submit')}
-      >
+      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-solid fa-arrow-down-to-line" />} isDisabled={!(cycle === 'submit')}>
         UPLOAD SUBMISSION
       </Button>
       <HStack>
@@ -63,39 +53,18 @@ export const TimelineButtons = () => {
         ) : (
           <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
         )}
-        <Text color="white" fontFamily="sans-serif" fontSize="xs">
-          {formatTime(timeline?.vote?.start)}
-        </Text>
+        <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
       </HStack>
-      <Button
-        bgColor="#745CBA"
-        color="white"
-        fontFamily="sans-serif"
-        fontWeight="light"
-        fontSize="xs"
-        leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
-        _hover={{ bgColor: '#9d80f2' }}
-        isDisabled={!(cycle === 'vote')}
-      >
+      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'vote')}>
         VOTE NOW
       </Button>
       <HStack>
         <Text color="#9293FF" fontFamily="sans-serif">
           Mint
         </Text>
-        <Text color="white" fontFamily="sans-serif" fontSize="xs">
-          {formatTime(timeline?.mint?.start)}
-        </Text>
+        <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.mint?.start)}</Text>
       </HStack>
-      <Button
-        bgColor="#745CBA"
-        color="white"
-        fontFamily="sans-serif"
-        fontWeight="light"
-        leftIcon={<i className="fa-solid fa-bell" />}
-        fontSize="xs"
-        _hover={{ bgColor: '#9d80f2' }}
-      >
+      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-solid fa-bell" />}>
         {cycle === 'mint' ? 'MINT' : 'GET NOTIFIED'}
       </Button>
     </Stack>
