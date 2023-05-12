@@ -32,6 +32,7 @@ export const tapeModel = createModel<RootModel>()({
   },
   reducers: {
     setTape: (state, tape) => {
+      console.log('tape', tape);
       const { id, contract, name, merkle_root, description, image, proposal_id, video, bpm, timeline, type, splits, links, sample_artists, songs } = tape;
       const { mint, submit, vote } = timeline;
 
@@ -76,6 +77,7 @@ export const tapeModel = createModel<RootModel>()({
     selectTapeCover: () => slice((state) => state.tape.image),
     selectTimeline: () => slice((state) => state.tape.timeline),
     selectTracks: () => slice((state) => state.tape.tracks),
+    selectSampleArtists: () => slice((state) => state.tape.sampleArtists),
     selectIsLoading: () => slice((state) => state.isLoading),
     selectCurrentCycle: () => slice((state) => state.cycle),
   }),
