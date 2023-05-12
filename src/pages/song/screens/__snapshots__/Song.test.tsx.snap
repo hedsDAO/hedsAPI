@@ -1,0 +1,840 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Song unit snapshot snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="css-0"
+      >
+        <div
+          class="css-79elbk"
+        >
+          <div
+            class="css-y7fuh1"
+          >
+            <div
+              class="chakra-skeleton css-i7le5z"
+            >
+              <div
+                class="chakra-aspect-ratio css-rioh04"
+              >
+                <img
+                  class="chakra-image css-rdbdr7"
+                />
+              </div>
+            </div>
+            <div
+              class="css-1prtw9i"
+            >
+              <div
+                class="chakra-skeleton css-10pngdb"
+              >
+                <span
+                  class="chakra-avatar css-yie7qj"
+                >
+                  <svg
+                    aria-label=" avatar"
+                    class="chakra-avatar__svg css-16ite8i"
+                    role="img"
+                    viewBox="0 0 128 128"
+                  >
+                    <path
+                      d="M103,102.1388 C93.094,111.92 79.3504,118 64.1638,118 C48.8056,118 34.9294,111.768 25,101.7892 L25,95.2 C25,86.8096 31.981,80 40.6,80 L87.4,80 C96.019,80 103,86.8096 103,95.2 L103,102.1388 Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M63.9961647,24 C51.2938136,24 41,34.2938136 41,46.9961647 C41,59.7061864 51.2938136,70 63.9961647,70 C76.6985159,70 87,59.7061864 87,46.9961647 C87,34.2938136 76.6985159,24 63.9961647,24"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-13ix392"
+          >
+            <div
+              class="css-165ru3g"
+            >
+              <button
+                class="chakra-button css-269m92"
+                data-testid="song-play-pause-button"
+                type="button"
+              >
+                <i
+                  class="chakra-text fas fa-play css-6kfj2u"
+                />
+              </button>
+              <div
+                class="chakra-stack css-c0f9yd"
+              >
+                <div
+                  class="chakra-stack css-33dobs"
+                >
+                  <div
+                    class="css-dxxn3y"
+                  >
+                    <p
+                      class="chakra-text css-90p3gp"
+                    >
+                      ARTIST
+                    </p>
+                  </div>
+                  <hr
+                    aria-orientation="horizontal"
+                    class="chakra-divider css-1flx70t"
+                  />
+                </div>
+                <p
+                  class="chakra-text css-1vvpe8o"
+                />
+              </div>
+              <button
+                class="chakra-button css-focya0"
+                data-testid="song-like-button"
+                disabled=""
+                type="button"
+              >
+                <i
+                  class="chakra-text fas fa-heart css-e5peyk"
+                />
+              </button>
+            </div>
+            <div
+              class="css-jmqpxj"
+            >
+              <div
+                class="chakra-aspect-ratio css-rioh04"
+              >
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="chakra-skeleton css-cdkrf0"
+                  >
+                    <img
+                      class="chakra-image css-1h57lvz"
+                    />
+                  </div>
+                  <span
+                    class="chakra-avatar css-yie7qj"
+                  >
+                    <svg
+                      aria-label=" avatar"
+                      class="chakra-avatar__svg css-16ite8i"
+                      role="img"
+                      viewBox="0 0 128 128"
+                    >
+                      <path
+                        d="M103,102.1388 C93.094,111.92 79.3504,118 64.1638,118 C48.8056,118 34.9294,111.768 25,101.7892 L25,95.2 C25,86.8096 31.981,80 40.6,80 L87.4,80 C96.019,80 103,86.8096 103,95.2 L103,102.1388 Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M63.9961647,24 C51.2938136,24 41,34.2938136 41,46.9961647 C41,59.7061864 51.2938136,70 63.9961647,70 C76.6985159,70 87,59.7061864 87,46.9961647 C87,34.2938136 76.6985159,24 63.9961647,24"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="chakra-skeleton css-1a4pk4h"
+        >
+          <div
+            class="css-k31un0"
+          >
+            <div
+              class="css-1whh555"
+            >
+              <button
+                class="chakra-button css-wtvw0i"
+                type="button"
+              >
+                Details
+              </button>
+              <button
+                class="chakra-button css-1fy1hmj"
+                type="button"
+              >
+                Related
+              </button>
+              <button
+                class="chakra-button css-1fy1hmj"
+                type="button"
+              >
+                Likes
+              </button>
+            </div>
+            <div
+              class="css-182nf6q"
+            >
+              <button
+                aria-controls="menu-list-:r1:"
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class="chakra-button chakra-menu__menu-button css-19lqrls"
+                id="menu-button-:r1:"
+                type="button"
+              >
+                <span
+                  class="css-xl71ch"
+                >
+                  <svg
+                    class="chakra-icon css-e8xa0h"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <div
+                class="css-0"
+                style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+              >
+                <div
+                  aria-orientation="vertical"
+                  class="chakra-menu__menu-list css-miyh87"
+                  id="menu-list-:r1:"
+                  role="menu"
+                  style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+                  tabindex="-1"
+                >
+                  <button
+                    class="chakra-menu__menuitem css-3a3z0g"
+                    data-index="0"
+                    id="menu-list-:r1:-menuitem-:r2:"
+                    role="menuitem"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Details
+                  </button>
+                  <button
+                    class="chakra-menu__menuitem css-1b6qfzf"
+                    data-index="1"
+                    id="menu-list-:r1:-menuitem-:r3:"
+                    role="menuitem"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Related
+                  </button>
+                  <button
+                    class="chakra-menu__menuitem css-1b6qfzf"
+                    data-index="2"
+                    id="menu-list-:r1:-menuitem-:r4:"
+                    role="menuitem"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Likes
+                  </button>
+                </div>
+              </div>
+              <p
+                class="chakra-text css-1fj456c"
+              >
+                Details
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr
+          aria-orientation="horizontal"
+          class="chakra-divider css-1npdkbo"
+        />
+        <div
+          class="css-17o3l8a"
+        >
+          <div
+            class="css-1fz1525"
+            data-testid="details-simple-grid"
+          >
+            <div
+              class="css-9xqkvx"
+            >
+              <div
+                class="chakra-stack css-1x65gi9"
+              >
+                <p
+                  class="chakra-text css-fp6k5g"
+                  data-testid="song-recent-heading"
+                >
+                  RECENT
+                </p>
+                <div
+                  class="chakra-stack css-n21gh5"
+                />
+              </div>
+            </div>
+            <div
+              class="css-9xqkvx"
+            >
+              <div
+                class="chakra-stack css-1x65gi9"
+              >
+                <p
+                  class="chakra-text css-fp6k5g"
+                  data-testid="song-attributes-heading"
+                >
+                  ATTRIBUTES
+                </p>
+                <div
+                  class="css-h3rjfo"
+                  data-testid="attributes-grid"
+                >
+                  <div
+                    class="chakra-skeleton css-19z5udh"
+                  >
+                    <div
+                      class="chakra-stack css-1xnv6wj"
+                    >
+                      <p
+                        class="chakra-text css-c4ww8m"
+                        data-testid="attribute-name"
+                      >
+                        KEY
+                      </p>
+                      <p
+                        class="chakra-text css-183fo1i"
+                        data-testid="attribute-description"
+                      >
+                        Unknown Key
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="chakra-skeleton css-19z5udh"
+                  >
+                    <div
+                      class="chakra-stack css-1xnv6wj"
+                    >
+                      <p
+                        class="chakra-text css-c4ww8m"
+                        data-testid="attribute-name"
+                      >
+                        TIME SIGNATURE
+                      </p>
+                      <p
+                        class="chakra-text css-183fo1i"
+                        data-testid="attribute-description"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1usnp47"
+                  >
+                    <div
+                      class="css-d9pshq"
+                    />
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1usnp47"
+                  >
+                    <div
+                      class="css-d9pshq"
+                    />
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1usnp47"
+                  >
+                    <div
+                      class="css-d9pshq"
+                    />
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1usnp47"
+                  >
+                    <div
+                      class="css-d9pshq"
+                    />
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1usnp47"
+                  >
+                    <div
+                      class="css-d9pshq"
+                    />
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1usnp47"
+                  >
+                    <div
+                      class="css-d9pshq"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="css-9xqkvx"
+            >
+              <div
+                class="chakra-stack css-1x65gi9"
+              >
+                <p
+                  class="chakra-text css-fp6k5g"
+                  data-testid="song-mood-heading"
+                >
+                  MOOD SPECTROGRAM
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="css-0"
+    >
+      <div
+        class="css-79elbk"
+      >
+        <div
+          class="css-y7fuh1"
+        >
+          <div
+            class="chakra-skeleton css-i7le5z"
+          >
+            <div
+              class="chakra-aspect-ratio css-rioh04"
+            >
+              <img
+                class="chakra-image css-rdbdr7"
+              />
+            </div>
+          </div>
+          <div
+            class="css-1prtw9i"
+          >
+            <div
+              class="chakra-skeleton css-10pngdb"
+            >
+              <span
+                class="chakra-avatar css-yie7qj"
+              >
+                <svg
+                  aria-label=" avatar"
+                  class="chakra-avatar__svg css-16ite8i"
+                  role="img"
+                  viewBox="0 0 128 128"
+                >
+                  <path
+                    d="M103,102.1388 C93.094,111.92 79.3504,118 64.1638,118 C48.8056,118 34.9294,111.768 25,101.7892 L25,95.2 C25,86.8096 31.981,80 40.6,80 L87.4,80 C96.019,80 103,86.8096 103,95.2 L103,102.1388 Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M63.9961647,24 C51.2938136,24 41,34.2938136 41,46.9961647 C41,59.7061864 51.2938136,70 63.9961647,70 C76.6985159,70 87,59.7061864 87,46.9961647 C87,34.2938136 76.6985159,24 63.9961647,24"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="css-13ix392"
+        >
+          <div
+            class="css-165ru3g"
+          >
+            <button
+              class="chakra-button css-269m92"
+              data-testid="song-play-pause-button"
+              type="button"
+            >
+              <i
+                class="chakra-text fas fa-play css-6kfj2u"
+              />
+            </button>
+            <div
+              class="chakra-stack css-c0f9yd"
+            >
+              <div
+                class="chakra-stack css-33dobs"
+              >
+                <div
+                  class="css-dxxn3y"
+                >
+                  <p
+                    class="chakra-text css-90p3gp"
+                  >
+                    ARTIST
+                  </p>
+                </div>
+                <hr
+                  aria-orientation="horizontal"
+                  class="chakra-divider css-1flx70t"
+                />
+              </div>
+              <p
+                class="chakra-text css-1vvpe8o"
+              />
+            </div>
+            <button
+              class="chakra-button css-focya0"
+              data-testid="song-like-button"
+              disabled=""
+              type="button"
+            >
+              <i
+                class="chakra-text fas fa-heart css-e5peyk"
+              />
+            </button>
+          </div>
+          <div
+            class="css-jmqpxj"
+          >
+            <div
+              class="chakra-aspect-ratio css-rioh04"
+            >
+              <div
+                class="css-0"
+              >
+                <div
+                  class="chakra-skeleton css-cdkrf0"
+                >
+                  <img
+                    class="chakra-image css-1h57lvz"
+                  />
+                </div>
+                <span
+                  class="chakra-avatar css-yie7qj"
+                >
+                  <svg
+                    aria-label=" avatar"
+                    class="chakra-avatar__svg css-16ite8i"
+                    role="img"
+                    viewBox="0 0 128 128"
+                  >
+                    <path
+                      d="M103,102.1388 C93.094,111.92 79.3504,118 64.1638,118 C48.8056,118 34.9294,111.768 25,101.7892 L25,95.2 C25,86.8096 31.981,80 40.6,80 L87.4,80 C96.019,80 103,86.8096 103,95.2 L103,102.1388 Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M63.9961647,24 C51.2938136,24 41,34.2938136 41,46.9961647 C41,59.7061864 51.2938136,70 63.9961647,70 C76.6985159,70 87,59.7061864 87,46.9961647 C87,34.2938136 76.6985159,24 63.9961647,24"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="chakra-skeleton css-1a4pk4h"
+      >
+        <div
+          class="css-k31un0"
+        >
+          <div
+            class="css-1whh555"
+          >
+            <button
+              class="chakra-button css-wtvw0i"
+              type="button"
+            >
+              Details
+            </button>
+            <button
+              class="chakra-button css-1fy1hmj"
+              type="button"
+            >
+              Related
+            </button>
+            <button
+              class="chakra-button css-1fy1hmj"
+              type="button"
+            >
+              Likes
+            </button>
+          </div>
+          <div
+            class="css-182nf6q"
+          >
+            <button
+              aria-controls="menu-list-:r1:"
+              aria-expanded="false"
+              aria-haspopup="menu"
+              class="chakra-button chakra-menu__menu-button css-19lqrls"
+              id="menu-button-:r1:"
+              type="button"
+            >
+              <span
+                class="css-xl71ch"
+              >
+                <svg
+                  class="chakra-icon css-e8xa0h"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            </button>
+            <div
+              class="css-0"
+              style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+            >
+              <div
+                aria-orientation="vertical"
+                class="chakra-menu__menu-list css-miyh87"
+                id="menu-list-:r1:"
+                role="menu"
+                style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+                tabindex="-1"
+              >
+                <button
+                  class="chakra-menu__menuitem css-3a3z0g"
+                  data-index="0"
+                  id="menu-list-:r1:-menuitem-:r2:"
+                  role="menuitem"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Details
+                </button>
+                <button
+                  class="chakra-menu__menuitem css-1b6qfzf"
+                  data-index="1"
+                  id="menu-list-:r1:-menuitem-:r3:"
+                  role="menuitem"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Related
+                </button>
+                <button
+                  class="chakra-menu__menuitem css-1b6qfzf"
+                  data-index="2"
+                  id="menu-list-:r1:-menuitem-:r4:"
+                  role="menuitem"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Likes
+                </button>
+              </div>
+            </div>
+            <p
+              class="chakra-text css-1fj456c"
+            >
+              Details
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr
+        aria-orientation="horizontal"
+        class="chakra-divider css-1npdkbo"
+      />
+      <div
+        class="css-17o3l8a"
+      >
+        <div
+          class="css-1fz1525"
+          data-testid="details-simple-grid"
+        >
+          <div
+            class="css-9xqkvx"
+          >
+            <div
+              class="chakra-stack css-1x65gi9"
+            >
+              <p
+                class="chakra-text css-fp6k5g"
+                data-testid="song-recent-heading"
+              >
+                RECENT
+              </p>
+              <div
+                class="chakra-stack css-n21gh5"
+              />
+            </div>
+          </div>
+          <div
+            class="css-9xqkvx"
+          >
+            <div
+              class="chakra-stack css-1x65gi9"
+            >
+              <p
+                class="chakra-text css-fp6k5g"
+                data-testid="song-attributes-heading"
+              >
+                ATTRIBUTES
+              </p>
+              <div
+                class="css-h3rjfo"
+                data-testid="attributes-grid"
+              >
+                <div
+                  class="chakra-skeleton css-19z5udh"
+                >
+                  <div
+                    class="chakra-stack css-1xnv6wj"
+                  >
+                    <p
+                      class="chakra-text css-c4ww8m"
+                      data-testid="attribute-name"
+                    >
+                      KEY
+                    </p>
+                    <p
+                      class="chakra-text css-183fo1i"
+                      data-testid="attribute-description"
+                    >
+                      Unknown Key
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="chakra-skeleton css-19z5udh"
+                >
+                  <div
+                    class="chakra-stack css-1xnv6wj"
+                  >
+                    <p
+                      class="chakra-text css-c4ww8m"
+                      data-testid="attribute-name"
+                    >
+                      TIME SIGNATURE
+                    </p>
+                    <p
+                      class="chakra-text css-183fo1i"
+                      data-testid="attribute-description"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="chakra-skeleton css-1usnp47"
+                >
+                  <div
+                    class="css-d9pshq"
+                  />
+                </div>
+                <div
+                  class="chakra-skeleton css-1usnp47"
+                >
+                  <div
+                    class="css-d9pshq"
+                  />
+                </div>
+                <div
+                  class="chakra-skeleton css-1usnp47"
+                >
+                  <div
+                    class="css-d9pshq"
+                  />
+                </div>
+                <div
+                  class="chakra-skeleton css-1usnp47"
+                >
+                  <div
+                    class="css-d9pshq"
+                  />
+                </div>
+                <div
+                  class="chakra-skeleton css-1usnp47"
+                >
+                  <div
+                    class="css-d9pshq"
+                  />
+                </div>
+                <div
+                  class="chakra-skeleton css-1usnp47"
+                >
+                  <div
+                    class="css-d9pshq"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-9xqkvx"
+          >
+            <div
+              class="chakra-stack css-1x65gi9"
+            >
+              <p
+                class="chakra-text css-fp6k5g"
+                data-testid="song-mood-heading"
+              >
+                MOOD SPECTROGRAM
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

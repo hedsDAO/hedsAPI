@@ -1,0 +1,110 @@
+import { getSongByHash } from '@/api/song';
+import type { RootModel } from '@/models';
+import { Song } from '@/models/common';
+import { getRelatedTracks } from '@/utils';
+import { createModel } from '@rematch/core';
+import { AudioModelState } from '@/hooks/useAudio/models/common';
+
+export const audioModel = createModel<RootModel>()({
+  state: {
+    song: {} as Song,
+    isPlaying: false,
+    isMuted: false,
+    isLoading: false,
+    isError: false,
+    autoplay: true,
+    progress: 0,
+    duration: 0,
+    volume: 1,
+  } as AudioModelState,
+  reducers: {
+    setSong: (state, song: Song) => ({ ...state, song }),
+    setIsPlaying: (state, isPlaying: boolean) => ({ ...state, isPlaying }),
+    setIsMuted: (state, isMuted: boolean) => ({ ...state, isMuted }),
+    setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
+    setPrevious: (state, previous: Song) => ({ ...state, previous }),
+    setError: (state, isError: boolean) => ({ ...state, isError }),
+    setProgress: (state, progress: number) => ({ ...state, progress }),
+    setAutoplay: (state, autoplay: boolean) => ({ ...state, autoplay }),
+    setVolume: (state, volume: number) => ({ ...state, volume }),
+    setUpNext: (state, upNext: Song) => ({ ...state, upNext }),
+    setDuration: (state, duration: number) => ({ ...state, duration }),
+    setState: (state, payload): AudioModelState => ({ ...state, ...payload }),
+    clearState: () => ({
+      song: {} as Song,
+      isPlaying: false,
+      isMuted: false,
+      isLoading: false,
+      isError: false,
+      autoplay: true,
+      progress: 0,
+      duration: 0,
+      volume: 1,
+    }),
+  },
+  selectors: (slice) => ({
+    selectSong() {
+      return slice((state): Song => state.song);
+    },
+    selectIsPlaying() {
+      return slice((state): boolean => state.isPlaying);
+    },
+    selectIsLoading() {
+      return slice((state): boolean => state.isLoading);
+    },
+    selectIsMuted() {
+      return slice((state): boolean => state.isMuted);
+    },
+    selectProgress() {
+      return slice((state): number => state.progress);
+    },
+    selectDuration() {
+      return slice((state): number => state.duration);
+    },
+    selectVolume() {
+      return slice((state): number => state.volume);
+    },
+    selectAutoplay() {
+      return slice((state): boolean => state.autoplay);
+    },
+    selectUpNext() {
+      return slice((state): Song => state.upNext);
+    },
+    selectPrevious() {
+      return slice((state): Song => state.previous);
+    },
+    // song data selectors
+    selectTrackName() {
+      return slice((state): string => state.song?.track_name);
+    },
+    selectAudio() {
+      return slice((state): string => state.song?.audio);
+    },
+    selectArtists() {
+      return slice((state): string => state.song?.artists?.map((artist) => artist.display_name).join(', '));
+    },
+    selectTapeName() {
+      return slice((state): string => state.song?.track_data?.tape_name);
+    },
+    selectCover() {
+      return slice((state): string => state.song?.cover);
+    },
+    selectSongId() {
+      return slice((state): number => state.song?.id);
+    },
+    selectSongHash() {
+      return slice((state): string => state.song?.audio?.split('/ipfs/')[1]);
+    },
+  }),
+  effects: () => ({
+    async getNextSong(song: Song) {
+      let relatedSongHashes: string[];
+      let nextSongResponse;
+      let nextSong;
+      if (song?.cyanite_id) relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 3);
+      if (relatedSongHashes?.length) nextSongResponse = await getSongByHash(relatedSongHashes[2]);
+      if (nextSongResponse?.data) nextSong = nextSongResponse?.data;
+      if (nextSong) this.setUpNext(nextSong);
+    },
+  }),
+});

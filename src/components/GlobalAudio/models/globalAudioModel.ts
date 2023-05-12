@@ -10,6 +10,7 @@ export const globalAudioModel = createModel<RootModel>()({
     volume: 1,
     isMuted: false,
     isLoading: false,
+    isOpen: false,
   },
   reducers: {
     setCurrentSong: (state, currentSong: Song | null) => ({ ...state, currentSong }),
@@ -17,7 +18,8 @@ export const globalAudioModel = createModel<RootModel>()({
     setVolume: (state, volume: number) => ({ ...state, volume }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setIsMuted: (state, isMuted: boolean) => ({ ...state, isMuted }),
-    clearState: () => ({ currentSong: null, isPlaying: false, volume: 1, waveform: null, isLoading: false, isMuted: false }),
+    setIsOpen: (state, isOpen: boolean) => ({ ...state, isOpen }),
+    clearState: () => ({ currentSong: null, isPlaying: false, volume: 1, waveform: null, isLoading: false, isMuted: false, isOpen: false }),
   },
   selectors: (slice) => ({
     selectIsMuted() {
