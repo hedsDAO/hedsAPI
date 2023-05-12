@@ -66,15 +66,15 @@ export const twitterModel = createModel<RootModel>()({
       // **
       // make call to FB/DB const url = `${VALIDATE_TWITTER_URL}/${wallet}/${tweetId}/${twitterHandle}/${userHash}`;
       // if success, set currentStep to CONFIRM
-      // this.setCurrentStep(TwitterModalSteps.CONFIRM);
+      setTimeout(() => this.setIsLoading(false), 2000);
+      this.setCurrentStep(TwitterModalSteps.CONFIRM);
       // **
       // if error (pick error and use settimeout to clear UI after 4 seconds)
       // duplicate error this.setError(DUPLICATE_ERROR_TEXT);
       // invalid url / unable to veriy this.setError(VERIFICATION_ERROR_TEXT);
       // all other errors this.setError(GENERAL_ERROR_TEXT);
       // **
-      setTimeout(() => this.setIsLoading(false), 2000);
-      setTimeout(() => this.setError(''), 4000);
+      // setTimeout(() => this.setError(''), 4000);
     },
     async linkTwitterHandle([twitterHandle, user_id]: [string, number]) {
       this.setIsLoading(true);

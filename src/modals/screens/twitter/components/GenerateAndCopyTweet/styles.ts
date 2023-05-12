@@ -40,6 +40,8 @@ export const $copyTweetButtonStyles: ButtonProps = {
   letterSpacing: 'widest',
   fontFamily: 'inter',
   textColor: 'white',
+  bg: 'heds.bg8',
+  _hover: { bg: 'heds.bg7'},
   fontSize: '2xs',
   size: 'sm',
   px: 7,
