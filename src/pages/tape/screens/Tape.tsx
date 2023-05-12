@@ -11,6 +11,9 @@ import { Tracks } from '../components/Tracks/Tracks';
 // Constants
 import { Dispatch, store } from '@/store';
 
+// Styles
+import * as styles from '@/pages/tape/screens/styles';
+
 export const Tape = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
@@ -23,20 +26,14 @@ export const Tape = () => {
 
   return (
     <Box>
-      <Stack
-        pt={{ base: 2, lg: 12 }}
-        mx={{ base: 2, lg: 8 }}
-        px={['20px', '60px', '100px', '120px']}
-        spacing={['30px', '80px']}
-        direction={{ base: 'column', lg: 'row' }}
-      >
+      <Stack {...styles.$tapeStackStyles}>
         <Skeleton isLoaded={!isLoading}>
-          <Image src={cover} alt="tape-cover" boxSize={['xs', 'sm', 'md', 'lg']} border="1px" borderColor="#DC89FF" />
+          <Image src={cover} alt="tape-cover" {...styles.$tapeImageStyles} />
         </Skeleton>
         <TapeDetails />
         <TimelineButtons />
       </Stack>
-      <Divider orientation="horizontal" colorScheme="#9293FF" py={8} />
+      <Divider {...styles.$tapeDividerStyles} />
       <Tracks />
     </Box>
   );
