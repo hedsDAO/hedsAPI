@@ -5,7 +5,7 @@ import { useAudioController } from '@/hooks/useAudio/models/AudioContext';
 import { useAudio } from '@/hooks/useAudio/useAudio';
 import { Song } from '@/models/common';
 import { Dispatch, store } from '@/store';
-import formWavesurferOptions from '@/utils/formWavesurferOptions';
+import { formWaveSurferOptions } from '@/utils';
 
 /**
  * useWaveform is a custom hook for managing waveform visualization and interaction
@@ -35,9 +35,9 @@ export const useWaveform = ({ waveformRef, song }: { waveformRef: React.RefObjec
     if (isOnOwnSongPage && isPlaying && state.howlerInstance) {
       positionInterval = setInterval(() => {
         if (!isUserSeeking.current) {
-          dispatch.audioModel.setProgress(state.howlerInstance?.seek() as number);
-          setPlaybackPosition(state.howlerInstance?.seek() as number);
-          playbackPositionRef.current = state.howlerInstance?.seek() as number;
+          dispatch.audioModel.setProgress(state.howlerInstance?.seek());
+          setPlaybackPosition(state.howlerInstance?.seek());
+          playbackPositionRef.current = state.howlerInstance?.seek();
         }
       }, 100);
     } else clearInterval(positionInterval);
@@ -80,17 +80,18 @@ export const useWaveform = ({ waveformRef, song }: { waveformRef: React.RefObjec
     dispatch.audioModel.setIsLoading(true);
     if (!waveformRef.current || !song.audio) return;
     if (song.audio !== currentSong?.audio && waveformRef.current) wavesurfer.current?.destroy();
-    const options = formWavesurferOptions(waveformRef.current);
+    const options = formWaveSurferOptions(waveformRef.current);
     wavesurfer.current = WaveSurfer.create(options);
     wavesurfer.current.load(song.audio);
     wavesurfer.current.on('waveform-ready', () => dispatch.audioModel.setIsLoading(false));
     wavesurfer.current.on('ready', () => wavesurfer?.current?.setVolume(0));
     wavesurfer.current.on('seek', (e) => setSeekPosition(e));
-    waveformRef.current.addEventListener('click', (e) => (isUserSeeking.current = true));
+    waveformRef.current.addEventListener('click', () => (isUserSeeking.current = true));
     return () => {
+      isUserSeeking.current = false;
       wavesurfer.current?.destroy();
     };
-  }, [waveformRef, song.audio]);
+  }, [waveformRef.current, song.audio]);
 
   return { isWaveformLoading };
 };
