@@ -15,6 +15,7 @@ import { GlobalAudio } from '@/components/GlobalAudio/screens/GlobalAudio';
 import { AuthWrapper } from './auth/components/AuthWrapper';
 import { getPersistor } from '@rematch/persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import { AudioControllerProvider } from '@/hooks/useAudio/models/AudioContext';
 import { store } from './store';
 
 import App from '@/App';
@@ -49,6 +50,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ChakraProvider theme={defaultTheme}>
         <BrowserRouter>
           <PersistGate persistor={persistor}>
+            <AudioControllerProvider>
             <AuthWrapper>
               <ModalWrapper>
                 <GlobalAudio>
@@ -56,6 +58,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 </GlobalAudio>
               </ModalWrapper>
             </AuthWrapper>
+            </AudioControllerProvider>
           </PersistGate>
         </BrowserRouter>
       </ChakraProvider>

@@ -186,7 +186,7 @@ Object {
             class="css-6no1tz"
           >
             <div
-              class="css-s8fvqb"
+              class="css-1whh555"
             >
               <button
                 class="chakra-button css-wtvw0i"
@@ -206,6 +206,82 @@ Object {
               >
                 Discography
               </button>
+            </div>
+            <div
+              class="css-182nf6q"
+            >
+              <button
+                aria-controls="menu-list-:r1:"
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class="chakra-button chakra-menu__menu-button css-19lqrls"
+                id="menu-button-:r1:"
+                type="button"
+              >
+                <span
+                  class="css-xl71ch"
+                >
+                  <svg
+                    class="chakra-icon css-e8xa0h"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <div
+                class="css-0"
+                style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+              >
+                <div
+                  aria-orientation="vertical"
+                  class="chakra-menu__menu-list css-miyh87"
+                  id="menu-list-:r1:"
+                  role="menu"
+                  style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+                  tabindex="-1"
+                >
+                  <button
+                    class="chakra-menu__menuitem css-3a3z0g"
+                    data-index="0"
+                    id="menu-list-:r1:-menuitem-:r2:"
+                    role="menuitem"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Collection
+                  </button>
+                  <button
+                    class="chakra-menu__menuitem css-1b6qfzf"
+                    data-index="1"
+                    id="menu-list-:r1:-menuitem-:r3:"
+                    role="menuitem"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Likes
+                  </button>
+                  <button
+                    class="chakra-menu__menuitem css-1b6qfzf"
+                    data-index="2"
+                    id="menu-list-:r1:-menuitem-:r4:"
+                    role="menuitem"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Discography
+                  </button>
+                </div>
+              </div>
+              <p
+                class="chakra-text css-1fj456c"
+              >
+                Collection
+              </p>
             </div>
           </div>
           <div
@@ -405,7 +481,7 @@ Object {
           class="css-6no1tz"
         >
           <div
-            class="css-s8fvqb"
+            class="css-1whh555"
           >
             <button
               class="chakra-button css-wtvw0i"
@@ -425,6 +501,82 @@ Object {
             >
               Discography
             </button>
+          </div>
+          <div
+            class="css-182nf6q"
+          >
+            <button
+              aria-controls="menu-list-:r1:"
+              aria-expanded="false"
+              aria-haspopup="menu"
+              class="chakra-button chakra-menu__menu-button css-19lqrls"
+              id="menu-button-:r1:"
+              type="button"
+            >
+              <span
+                class="css-xl71ch"
+              >
+                <svg
+                  class="chakra-icon css-e8xa0h"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            </button>
+            <div
+              class="css-0"
+              style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+            >
+              <div
+                aria-orientation="vertical"
+                class="chakra-menu__menu-list css-miyh87"
+                id="menu-list-:r1:"
+                role="menu"
+                style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+                tabindex="-1"
+              >
+                <button
+                  class="chakra-menu__menuitem css-3a3z0g"
+                  data-index="0"
+                  id="menu-list-:r1:-menuitem-:r2:"
+                  role="menuitem"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Collection
+                </button>
+                <button
+                  class="chakra-menu__menuitem css-1b6qfzf"
+                  data-index="1"
+                  id="menu-list-:r1:-menuitem-:r3:"
+                  role="menuitem"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Likes
+                </button>
+                <button
+                  class="chakra-menu__menuitem css-1b6qfzf"
+                  data-index="2"
+                  id="menu-list-:r1:-menuitem-:r4:"
+                  role="menuitem"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Discography
+                </button>
+              </div>
+            </div>
+            <p
+              class="chakra-text css-1fj456c"
+            >
+              Collection
+            </p>
           </div>
         </div>
         <div
