@@ -23,7 +23,7 @@ import * as gaEvents from './events';
 
 import 'animate.css';
 import './index.css';
-import '../build/app/output.css';
+// import '../build/app/output.css';
 import '@fontsource/space-mono';
 import '@fontsource/inter';
 import '@fontsource/poppins';
@@ -51,13 +51,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter>
           <PersistGate persistor={persistor}>
             <AudioControllerProvider>
-            <AuthWrapper>
-              <ModalWrapper>
-                <GlobalAudio>
-                  <App />
-                </GlobalAudio>
-              </ModalWrapper>
-            </AuthWrapper>
+              <AuthWrapper>
+                <ModalWrapper>
+                  <GlobalAudio>
+                    <App />
+                  </GlobalAudio>
+                </ModalWrapper>
+              </AuthWrapper>
             </AudioControllerProvider>
           </PersistGate>
         </BrowserRouter>
