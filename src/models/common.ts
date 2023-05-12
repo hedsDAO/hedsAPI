@@ -44,7 +44,10 @@ export interface Song {
     proposalId?: string;
   };
   cyanite_id: string;
-  track_data: any;
+  track_data: {
+    track_no?: number;
+    tape_name: string;
+  };
   total_likes: number | null;
   artists?: SongArtist[];
   type: any;
@@ -81,4 +84,52 @@ export enum UserEventTypes {
   USER_CREATED = 'user_created',
 }
 
+export interface SongEvents {
+  id: number;
+  user_id: number;
+  song_id: number;
+  event_type: SongEventTypes;
+  event_data: {
+    message: string;
+    subject: string;
+  };
+  event_timestamp: string;
+}
+
+export enum SongEventTypes {
+  SUBMISSION = 'tape_submission',
+  PLACEMENT = 'tape_placement',
+  SONG_LIKE = 'song_like',
+}
+
 export type UserSettingsData = Partial<Pick<User, 'profile_picture' | 'banner' | 'description'>>;
+
+export interface CyaniteData {
+  bpmRangeAdjusted: number;
+  bpmPrediction: { value: number; confidence: number };
+  genreTags: string[];
+  subgenreTags: string[];
+  emotionalProfile: string;
+  keyPrediction: { value: string; confidence: number };
+  mood: {
+    aggressive: number;
+    calm: number;
+    chilled: number;
+    dark: number;
+    energetic: number;
+    epic: number;
+    ethereal: number;
+    happy: number;
+    romantic: number;
+    sad: number;
+    scary: number;
+    sexy: number;
+    uplifting: number;
+  };
+  moodAdvancedTags: string[];
+  musicalEraTag: string;
+  timeSignature: string;
+  transformerCaption: string;
+}
+
+
