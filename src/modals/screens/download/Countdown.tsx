@@ -51,7 +51,7 @@ export const Countdown = ({ epochTime }: OwnProps) => {
   }, [epochTime]);
 
   return (
-    <HStack spacing={4}>
+    <HStack spacing={4} justifyContent="center">
       <Box>
         <Text fontSize="2xl" fontFamily="monospace" color="#AC8FFF" letterSpacing="wide">
           {time.days}
