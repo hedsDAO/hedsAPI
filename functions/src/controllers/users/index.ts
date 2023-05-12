@@ -106,3 +106,35 @@ export async function deleteUser(user_id: number) {
     throw new Error(`Unable to delete user: ${error.message}`);
   }
 }
+
+export const addSongToListeningHistory = async (user_id: number, song_id: number) => {
+  try {
+    await pool.query(
+      `INSERT INTO ${schemaName}.listening_history (user_id, song_id, last_played)
+       VALUES ($1, $2, NOW());`,
+      [user_id, song_id]
+    );
+
+    return { message: 'Song added to listening history' };
+  } catch (error: any) {
+    throw new Error(`Unable to add song to listening history: ${error.message}`);
+  }
+};
+
+export const getUserListeningHistory = async (user_id: number) => {
+  const query = `
+    SELECT
+      ${schemaName}.listening_history.*,
+      ${schemaName}.songs.*,
+      ${schemaName}.song_artists.user_id AS artist_id,
+      ${schemaName}.users.display_name AS artist_name
+    FROM ${schemaName}.listening_history
+    INNER JOIN ${schemaName}.songs ON ${schemaName}.listening_history.song_id = ${schemaName}.songs.id
+    INNER JOIN ${schemaName}.song_artists ON ${schemaName}.songs.id = ${schemaName}.song_artists.song_id
+    INNER JOIN ${schemaName}.users ON ${schemaName}.song_artists.user_id = ${schemaName}.users.id
+    WHERE ${schemaName}.listening_history.user_id = $1
+    ORDER BY ${schemaName}.listening_history.last_played DESC
+  `;
+  const { rows } = await pool.query(query, [user_id]);
+  return rows;
+};
