@@ -10,7 +10,6 @@ export const VerifyTweet = () => {
   const twitterWindowUrl = useSelector(store.select.twitterModel.selectTwitterWindowUrl);
   const error = useSelector(store.select.twitterModel.selectError);
   const dispatch = useDispatch<Dispatch>();
-
   return (
     <>
       <Stack {...styles.$verifyTweetStackStyles}>
@@ -34,14 +33,15 @@ export const VerifyTweet = () => {
         <Flex {...styles.$verifySubHeadingFlexContainer}>
           <Input {...styles.$verifyTweetInputStyles(error)} onChange={(e) => dispatch.twitterModel.setTweetUrl(e.target.value)} isDisabled={isLoading} />
           <IconButton
+            icon={<i className="fa-brands fa-twitter" />}
             {...styles.$verifyTweetIconButtonStyles}
             onClick={() => window.open(twitterWindowUrl[0], twitterWindowUrl[1], twitterWindowUrl[2])}
             isDisabled={isLoading}
           />
           <Button
-            {...styles.$verifyTweetButtonStyles}
+            isDisabled={!tweetUrl || isLoading}
+            {...styles.$verifyTweetButtonStyles(!tweetUrl || isLoading)}
             onClick={() => dispatch.twitterModel.verifyTweet(tweetUrl)}
-            isDisabled={tweetUrl?.length === 0 || isLoading}
           >
             {constants.VERIFY_TWEET_BUTTON_TEXT}
           </Button>

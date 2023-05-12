@@ -71,18 +71,18 @@ export const $verifyTweetIconButtonStyles: IconButtonProps = {
   _hover: { bg: 'twitter.800' },
   px: 4,
   size: 'sm',
-  className: 'fab fa-twitter',
 };
 
-export const $verifyTweetButtonStyles: ButtonProps = {
-  bg: 'heds.700',
+export const $verifyTweetButtonStyles = (isDisabled: boolean): ButtonProps => ({
+  bg: isDisabled ? 'heds.bg8' : 'heds.700',
+  pointerEvents: isDisabled ? 'none' : 'auto',
   color: 'white',
   letterSpacing: 'widest',
   fontFamily: 'inter',
   fontSize: '2xs',
   px: 5,
   size: 'sm',
-};
+});
 
 export const $verifyTweetErrorTextStyles: TextProps = {
   mb: '-1 !important',
