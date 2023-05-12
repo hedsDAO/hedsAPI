@@ -14,7 +14,7 @@ export const Download = () => {
         <ModalCloseButton />
         <ModalBody color="white">
           <Text color="#AC8FFF" fontFamily={'inter'} fontSize="xl" fontWeight="700">
-            CURATED BY
+            CURATED BY:
           </Text>
           {sampleArtists.map((artist) => (
             <Stack direction="row" key={artist.display_name} alignItems="center">
@@ -22,7 +22,9 @@ export const Download = () => {
               <Text>{artist.display_name}</Text>
             </Stack>
           ))}
-          <Text>SUBMISSION CLOSE IN</Text>
+          <Text fontFamily="inter" fontWeight="400" color="#848484">
+            SUBMISSIONS CLOSE IN
+          </Text>
           <Countdown epochTime={1754896800000} />
           <Text fontFamily="poppins" fontWeight="700" fontSize="15px">
             BEFORE YOU DOWNLOAD
