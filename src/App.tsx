@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -18,12 +18,14 @@ import { Box } from '@chakra-ui/react';
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-
 const App = (): JSX.Element => {
+  const { pathname } = useLocation();
+  const isOnHomeOrExplore = pathname === '/' || pathname === '/explore';
+  
   const NavAndFooterWrapper = (
     <Fragment>
       <Navbar />
-      <Box minH="100vh" mt={14}>
+      <Box minH="100vh" mt={isOnHomeOrExplore ? 0 : '67px'}>
         <Outlet />
       </Box>
       <Footer />
