@@ -11,6 +11,7 @@ import { globalAudioModel } from '@/components/GlobalAudio/models/globalAudioMod
 import { twitterModel } from '@/modals/screens/twitter/models/twitterModel';
 import { audioModel } from '@/hooks/useAudio/models/audioModel';
 import { waveformModel } from '@/hooks/useWaveform/models/waveformModel';
+import { artistsModel } from '@/pages/artists/models/artistsModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
@@ -25,6 +26,7 @@ export interface RootModel extends Models<RootModel> {
   twitterModel: typeof twitterModel;
   audioModel: typeof audioModel;
   waveformModel: typeof waveformModel;
+  artistsModel: typeof artistsModel;
 }
 
 export const models: RootModel = {
@@ -40,4 +42,5 @@ export const models: RootModel = {
   twitterModel,
   audioModel,
   waveformModel,
+  artistsModel,
 };
