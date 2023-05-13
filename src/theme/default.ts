@@ -1,3 +1,4 @@
+
 import { extendTheme } from '@chakra-ui/react';
 import buttonTheme from '@/theme/custom/connectButton';
 import modalTheme from './custom/modalTheme';
@@ -63,8 +64,12 @@ export const defaultTheme = extendTheme({
     global: (props: any) => ({
       'html, body': {
         background: 'heds.bg',
+        height: '100%',
+        maxWidth: '100vw',
+        overscrollBehavior: 'none !important',
       },
       ...gradientAnimations,
     }),
   },
 });
+
