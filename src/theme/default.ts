@@ -23,7 +23,7 @@ export const defaultTheme = extendTheme({
       500: '#26232D',
       600: '#17151C',
       700: '#745CBA',
-      800: '#CDCDCD'
+      800: '#CDCDCD',
     },
     button: {
       primary: '#745CBA',
