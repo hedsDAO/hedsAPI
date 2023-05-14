@@ -8,7 +8,7 @@ export const Download = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
   return (
-    <Modal isOpen={true} onClose={() => console.log('closed')}>
+    <Modal isOpen={true} onClose={() => console.log('closed')} size="sm">
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
@@ -16,24 +16,24 @@ export const Download = () => {
           <Text color="#AC8FFF" fontFamily={'inter'} fontSize="xl" fontWeight="700">
             CURATED BY:
           </Text>
-          <Box textAlign="center">
+          <Box textAlign="center" pt={6}>
             {sampleArtists.map((artist) => (
               <Stack direction="row" key={artist.display_name} alignItems="center" justifyContent="center">
-                <Avatar src={artist.profile_picture} border="1px" borderColor="#AC8FFF" />
+                <Avatar src={artist.profile_picture} size="lg" border="1px" borderColor="#AC8FFF" />
                 <Text>{artist.display_name}</Text>
               </Stack>
             ))}
-            <Text fontFamily="inter" fontWeight="400" color="#848484">
+            <Text fontFamily="inter" fontWeight="400" color="#848484" pt={8} fontSize="sm">
               SUBMISSIONS CLOSE IN
             </Text>
             <Countdown epochTime={1754896800000} />
-            <Text fontFamily="poppins" fontWeight="700" fontSize="15px">
+            <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
               BEFORE YOU DOWNLOAD
             </Text>
-            <Text fontFamily="inter" fontWeight="700" fontSize="12px">
+            <Text fontFamily="inter" fontWeight="500" fontSize="sm">
               All submissions must be original and not contain any copyrighted content. The track must be 135 BPM and have a length between 60 to 90 seconds.
             </Text>
-            <Checkbox isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}>
+            <Checkbox pt={6} size="sm" isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}>
               I UNDERSTAND AND AGREE
             </Checkbox>
           </Box>
