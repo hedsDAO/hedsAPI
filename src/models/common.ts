@@ -20,9 +20,10 @@ interface Timeline {
   mint: { start: number; end: number };
   submit: { start: number; end: number };
   vote: { start: number; end: number };
+  premint?: { start: number; end: number };
 }
 
-interface Artist {
+export interface Artist {
   display_name: string;
   id: number;
   profile_picture: string;

@@ -12,6 +12,7 @@ import { twitterModel } from '@/modals/screens/twitter/models/twitterModel';
 import { audioModel } from '@/hooks/useAudio/models/audioModel';
 import { waveformModel } from '@/hooks/useWaveform/models/waveformModel';
 import { artistsModel } from '@/pages/artists/models/artistsModel';
+import { tapesModel } from '@/pages/tapes/models/tapesModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
@@ -27,6 +28,7 @@ export interface RootModel extends Models<RootModel> {
   audioModel: typeof audioModel;
   waveformModel: typeof waveformModel;
   artistsModel: typeof artistsModel;
+  tapesModel: typeof tapesModel;
 }
 
 export const models: RootModel = {
@@ -43,4 +45,5 @@ export const models: RootModel = {
   audioModel,
   waveformModel,
   artistsModel,
+  tapesModel,
 };
