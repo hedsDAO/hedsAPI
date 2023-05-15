@@ -27,7 +27,7 @@ export const Collection = () => {
             .slice(start, end)
             .map((item: any) => (
               <GridItem key={item.name + item.image}>
-                <CollectionItem name={item.name} image={item.image} />
+                <CollectionItem item={...item} />
               </GridItem>
             ))}
       </SimpleGrid>
