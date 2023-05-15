@@ -16,8 +16,7 @@ export const ModalWrapper = ({ children }: { children: React.ReactNode }) => {
   };
   return (
     <>
-      <Download />
-      {/* {modal !== null && modalMap[modal]} */}
+      {modal !== null && modalMap[modal]}
       {children}
     </>
   );
