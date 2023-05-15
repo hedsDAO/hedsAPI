@@ -30,6 +30,11 @@ export interface TapeCollectionItem {
   quantity: number;
 }
 
+export interface UserCollection {
+  items: { [key: string]: TapeCollectionItem };
+  lastUpdated: number;
+}
+
 interface Timeline {
   mint: { start: number; end: number };
   submit: { start: number; end: number };

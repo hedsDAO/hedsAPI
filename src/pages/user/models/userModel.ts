@@ -2,7 +2,7 @@ import type { RootModel } from '@/models';
 import { getSongByHash } from '@/api/song';
 import { getUserByWallet, getUserEventsById, getUserLikesById, getUserSongsById, updateUser } from '@/api/user';
 import { formatCollectionData, isEmpty } from '@/utils';
-import { Song, TapeCollectionArg, TapeCollectionItem, User, UserEvents } from '@models/common';
+import { Song, TapeCollectionArg, TapeCollectionItem, User, UserCollection, UserEvents } from '@models/common';
 import { UserModelState } from '@pages/user/models/common';
 import { createModel } from '@rematch/core';
 import { getTapeCollectionArgs } from '@/api/tape';
@@ -47,6 +47,7 @@ export const userModel = createModel<RootModel>()({
     setUserSongs: (state, user_songs: any) => ({ ...state, user_songs }),
     setUserLikes: (state, user_likes: any) => ({ ...state, user_likes }),
     setUserEvents: (state, user_events: any) => ({ ...state, user_events }),
+    setUserCollection: (state, collection: UserCollection) => ({ ...state, collection: collection }),
     setCollectionArgs: (state, collection_args: TapeCollectionArg[]) => ({ ...state, collection_args }),
     setIsFetchingCollection: (state, isFetchingCollection: boolean) => ({ ...state, isFetchingCollection }),
   },
@@ -64,34 +65,42 @@ export const userModel = createModel<RootModel>()({
     selectNumOfSongs: () => slice((state) => state.user_songs?.length),
     selectLikes: () => slice((state) => state.user_likes),
     selectNumOfLikes: () => slice((state) => state.user_likes?.length),
-    selectIsFetchingCollection: () => slice((state) => state.isFetchingCollection),
-    selectCollectionArgs: () => slice((state) => state.collection_args),
-    selectCollection: () => slice((state): { [key: string]: any } => state.user?.collection?.items),
-    selectNumOfCollections: () => slice((state) => (!isEmpty(state.user?.collection) ? Object.values(state.user?.collection?.items)?.length : 0)),
+    selectIsFetchingCollection: () => slice((state): boolean => state.isFetchingCollection),
+    selectCollectionArgs: () => slice((state): TapeCollectionArg[] => state.collection_args),
+    selectCollection: () => slice((state): TapeCollectionItem => state.user?.collection?.items),
+    selectNumOfCollections: () => slice((state): number => (!isEmpty(state.user?.collection) ? Object.values(state.user?.collection?.items)?.length : 0)),
   }),
   effects: (dispatch) => ({
     async getUser(wallet: string) {
       let spotlight, user_songs, user_likes, user_events, collection_args;
       const response = await getUserByWallet(wallet.toLowerCase());
-      if (response.data?.spotlight?.length) spotlight = await getSongByHash(response?.data?.spotlight);
       if (response.data?.id) {
-        user_songs = await getUserSongsById(response.data.id);
-        user_likes = await getUserLikesById(response.data.id);
-        user_events = await getUserEventsById(response.data.id);
-        collection_args = await getTapeCollectionArgs();
+        try {
+          if (response.data?.spotlight?.length) spotlight = await getSongByHash(response?.data?.spotlight);
+          user_songs = await getUserSongsById(response.data.id);
+          user_likes = await getUserLikesById(response.data.id);
+          user_events = await getUserEventsById(response.data.id);
+          collection_args = await getTapeCollectionArgs();
+        } catch (e) {
+          console.log(e);
+        }
       }
-      this.setUser({ ...response.data, spotlight: spotlight?.data || null });
+      this.setUser({ ...response.data });
       this.setUserSongs(user_songs?.data || []);
       this.setUserLikes(user_likes?.data || []);
       this.setUserEvents(user_events?.data || []);
       this.setCollectionArgs(collection_args?.data || []);
+      if (isEmpty(response?.data?.collection)) this.setIsFetchingCollection(true);
     },
     async updateUserCollection([data, allTapeData, prevUserData]: [any[], TapeCollectionArg[], User]) {
       const { id } = prevUserData;
       const newCollectionData = formatCollectionData(data, allTapeData);
-      const newUserData = { ...prevUserData, collection: newCollectionData };
+      const newUserData = {
+        ...prevUserData,
+        collection: newCollectionData,
+      };
       try {
-        await updateUser(id, newUserData);
+        await updateUser(id, { collection: newCollectionData });
         this.setUser(newUserData);
       } catch (e) {
         console.log(e);

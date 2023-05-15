@@ -1,8 +1,10 @@
-import { Button } from '@chakra-ui/react';
-import { formatContractArgs } from '@/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
+import { Button } from '@chakra-ui/react';
 import { useContractReads } from 'wagmi';
+import { DateTime } from 'luxon';
+import { formatContractArgs } from '@/utils';
+import * as styles from '@/pages/user/components/RefreshCollectionButton/styles';
 
 export const RefreshCollectionButton = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -10,6 +12,9 @@ export const RefreshCollectionButton = () => {
   const currentWallet = useSelector(store.select.userModel.selectWallet);
   const prevUserData = useSelector(store.select.userModel.selectUser);
   const collectionArgs = useSelector(store.select.userModel.selectCollectionArgs);
+  const now = DateTime.now().toMillis();
+  const oneMinute = 60000;
+
   const { isLoading } = useContractReads({
     contracts: formatContractArgs(currentWallet),
     cacheOnBlock: true,
@@ -27,12 +32,10 @@ export const RefreshCollectionButton = () => {
 
   return (
     <Button
-      bg="heds.100"
-      rounded="sm"
+      {...styles.$buttonStyles}
+      isDisabled={now - prevUserData?.collection?.lastUpdated < oneMinute}
       onClick={() => dispatch.userModel.setIsFetchingCollection(true)}
       isLoading={isLoading}
-      mr={{ base: 3, lg: 1 }}
-      size="xs"
     >
       <i className="fas fa-arrows-rotate" />
     </Button>
