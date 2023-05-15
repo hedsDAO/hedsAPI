@@ -1,27 +1,39 @@
 import { Button } from '@chakra-ui/react';
 import { formatContractArgs } from '@/utils';
-import { useSelector } from 'react-redux';
-import { store } from '@/store';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, store } from '@/store';
 import { useContractReads } from 'wagmi';
 
 export const RefreshCollectionButton = () => {
-  const [enabled, setEnabled] = useState(false);
+  const dispatch = useDispatch<Dispatch>();
+  const isFetchingCollection = useSelector(store.select.userModel.selectIsFetchingCollection);
   const currentWallet = useSelector(store.select.userModel.selectWallet);
-  const { data, isLoading } = useContractReads({
+  const prevUserData = useSelector(store.select.userModel.selectUser);
+  const collectionArgs = useSelector(store.select.userModel.selectCollectionArgs);
+  const { isLoading } = useContractReads({
     contracts: formatContractArgs(currentWallet),
     cacheOnBlock: true,
     staleTime: 5000000,
-    enabled: enabled,
+    enabled: isFetchingCollection,
     structuralSharing: true,
     onSuccess(data) {
-      console.log(data);
+      dispatch.userModel.setIsFetchingCollection(false);
+      dispatch.userModel.updateUserCollection([data, collectionArgs, prevUserData]);
     },
-    onError(err) {},
+    onError(err) {
+      dispatch.userModel.setIsFetchingCollection(false);
+    },
   });
 
   return (
-    <Button onClick={() => setEnabled(true)} isLoading={isLoading} mr={{ base: 3, lg: 1 }} size="xs">
+    <Button
+      bg="heds.100"
+      rounded="sm"
+      onClick={() => dispatch.userModel.setIsFetchingCollection(true)}
+      isLoading={isLoading}
+      mr={{ base: 3, lg: 1 }}
+      size="xs"
+    >
       <i className="fas fa-arrows-rotate" />
     </Button>
   );
