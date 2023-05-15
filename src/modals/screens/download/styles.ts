@@ -66,6 +66,7 @@ export const $submissionTextStyles: TextProps = {
   fontWeight: '400',
   color: 'gray.300',
   fontSize: 'sm',
+  letterSpacing: 'widest',
 };
 
 export const $generalTextStyles: TextProps = {
@@ -81,4 +82,11 @@ export const $redTextStyles: TextProps = {
   display: 'inline',
   fontWeight: 'extrabold',
   color: 'red.500',
+};
+
+export const $cycleTimeTextStyles: TextProps = {
+  color: 'white',
+  fontFamily: 'sans-serif',
+  fontSize: 'sm',
+  letterSpacing: 'widest',
 };
