@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Flex,
   Stack,
   Text,
   Modal,
@@ -23,15 +24,36 @@ import { Countdown } from './components/Countdown/Countdown';
 import { Dispatch, store } from '@/store';
 import * as styles from '@/modals/screens/download/styles';
 
+// Utils
+import { DateTime } from 'luxon';
+
 export const Download = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
+  const timeline = useSelector(store.select.tapeModel.selectTimeline);
+  const currentCycle = useSelector(store.select.tapeModel.selectCurrentCycle);
+
+  useEffect(() => {
+    if (currentCycle !== 'submit') setIsChecked(true);
+  }, [currentCycle]);
 
   useEffect(() => {
     onOpen();
   }, []);
+
+  const formatTime = (time: number) => {
+    if (time !== 0) {
+      const dateObj = DateTime.fromMillis(time);
+      const date = dateObj.toLocaleString({
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+      });
+      return date;
+    }
+  };
 
   return (
     <Modal
@@ -58,26 +80,35 @@ export const Download = () => {
               </Stack>
             ))}
           </Box>
-          <Box {...styles.$downloadBoxStyles}>
-            <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE IN</Text>
-            <Countdown epochTime={1754896800000} />
-            <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
-              BEFORE YOU DOWNLOAD
-            </Text>
-            <Text {...styles.$generalTextStyles}>All submissions must be</Text>
-            <Text {...styles.$redTextStyles}> original </Text>
-            <Text {...styles.$generalTextStyles}>and </Text>
-            <Text {...styles.$redTextStyles}>not contain any copyrighted content. </Text>
-            <Text {...styles.$generalTextStyles}>The track must be</Text>
-            <Text {...styles.$redTextStyles}> 135 BPM </Text>
-            <Text {...styles.$generalTextStyles}>and have a length between </Text>
-            <Text {...styles.$redTextStyles}>60 to 90 seconds.</Text>
-          </Box>
-          <Box {...styles.$downloadBoxStyles}>
-            <Checkbox {...styles.$downloadCheckboxStyles} isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}>
-              I UNDERSTAND AND AGREE
-            </Checkbox>
-          </Box>
+          {currentCycle === 'submit' ? (
+            <>
+              <Box {...styles.$downloadBoxStyles}>
+                <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE IN</Text>
+                <Countdown epochTime={1754896800000} />
+                <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
+                  BEFORE YOU DOWNLOAD
+                </Text>
+                <Text {...styles.$generalTextStyles}>All submissions must be</Text>
+                <Text {...styles.$redTextStyles}> original </Text>
+                <Text {...styles.$generalTextStyles}>and </Text>
+                <Text {...styles.$redTextStyles}>not contain any copyrighted content. </Text>
+                <Text {...styles.$generalTextStyles}>The track must be</Text>
+                <Text {...styles.$redTextStyles}> 135 BPM </Text>
+                <Text {...styles.$generalTextStyles}>and have a length between </Text>
+                <Text {...styles.$redTextStyles}>60 to 90 seconds.</Text>
+              </Box>
+              <Box {...styles.$downloadBoxStyles}>
+                <Checkbox {...styles.$downloadCheckboxStyles} isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}>
+                  I UNDERSTAND AND AGREE
+                </Checkbox>
+              </Box>
+            </>
+          ) : (
+            <Flex justifyContent="center" gap={3} pt={6}>
+              <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSED </Text>
+              <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.end)}</Text>
+            </Flex>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button leftIcon={<i className="fa-solid fa-arrow-down-to-line" />} {...styles.$downloadButtonStyles} isDisabled={!isChecked}>
