@@ -20,7 +20,7 @@ export const Navbar = () => {
   const { isConnected } = useAccount();
   const connectedUser = useSelector(store.select.authModel.selectUser);
   const dispatch = useDispatch<Dispatch>();
-  
+
   const boxControls = useAnimation();
   const imageControls = useAnimation();
   const textControls = useAnimation();

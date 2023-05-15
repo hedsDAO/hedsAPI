@@ -1,45 +1,86 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Avatar, Box, Button, Checkbox, Stack, Text, Modal, ModalOverlay, ModalContent, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
-import { store } from '@/store';
-import { Countdown } from './Countdown';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+// Components
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Stack,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { Countdown } from './components/Countdown/Countdown';
+
+// Constants
+import { Dispatch, store } from '@/store';
+import * as styles from '@/modals/screens/download/styles';
 
 export const Download = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const dispatch = useDispatch<Dispatch>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
+
+  useEffect(() => {
+    onOpen();
+  }, []);
+
   return (
-    <Modal isOpen={true} onClose={() => console.log('closed')} size="sm">
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        setTimeout(() => {
+          dispatch.modalModel.setModal(null);
+        }, 500);
+      }}
+      size="sm"
+      motionPreset="slideInBottom"
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
+        <ModalCloseButton color="white" />
         <ModalBody color="white">
-          <Text color="#AC8FFF" fontFamily={'inter'} fontSize="xl" fontWeight="700">
-            CURATED BY:
-          </Text>
-          <Box textAlign="center" pt={6}>
+          <Text {...styles.$downloadTextStyles}>CURATED BY:</Text>
+          <Box {...styles.$downloadBoxStyles}>
             {sampleArtists.map((artist) => (
-              <Stack direction="row" key={artist.display_name} alignItems="center" justifyContent="center">
-                <Avatar src={artist.profile_picture} size="lg" border="1px" borderColor="#AC8FFF" />
+              <Stack key={artist.display_name} {...styles.$downloadStackStyles}>
+                <Avatar src={artist.profile_picture} {...styles.$downloadAvatarStyles} />
                 <Text>{artist.display_name}</Text>
               </Stack>
             ))}
-            <Text fontFamily="inter" fontWeight="400" color="#848484" pt={8} fontSize="sm">
-              SUBMISSIONS CLOSE IN
-            </Text>
+          </Box>
+          <Box {...styles.$downloadBoxStyles}>
+            <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE IN</Text>
             <Countdown epochTime={1754896800000} />
             <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
               BEFORE YOU DOWNLOAD
             </Text>
-            <Text fontFamily="inter" fontWeight="500" fontSize="sm">
-              All submissions must be original and not contain any copyrighted content. The track must be 135 BPM and have a length between 60 to 90 seconds.
-            </Text>
-            <Checkbox pt={6} size="sm" isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}>
+            <Text {...styles.$generalTextStyles}>All submissions must be</Text>
+            <Text {...styles.$redTextStyles}> original </Text>
+            <Text {...styles.$generalTextStyles}>and </Text>
+            <Text {...styles.$redTextStyles}>not contain any copyrighted content. </Text>
+            <Text {...styles.$generalTextStyles}>The track must be</Text>
+            <Text {...styles.$redTextStyles}> 135 BPM </Text>
+            <Text {...styles.$generalTextStyles}>and have a length between </Text>
+            <Text {...styles.$redTextStyles}>60 to 90 seconds.</Text>
+          </Box>
+          <Box {...styles.$downloadBoxStyles}>
+            <Checkbox {...styles.$downloadCheckboxStyles} isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}>
               I UNDERSTAND AND AGREE
             </Checkbox>
           </Box>
         </ModalBody>
         <ModalFooter>
-          <Button leftIcon={<i className="fa-solid fa-arrow-down-to-line" />} bgColor="#7563BE" color="white" mr={3} w="100%" isDisabled={!isChecked}>
+          <Button leftIcon={<i className="fa-solid fa-arrow-down-to-line" />} {...styles.$downloadButtonStyles} isDisabled={!isChecked}>
             DOWNLOAD
           </Button>
         </ModalFooter>
