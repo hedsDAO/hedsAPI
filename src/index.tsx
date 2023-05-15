@@ -51,13 +51,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter>
           <PersistGate persistor={persistor}>
             <AudioControllerProvider>
-            <AuthWrapper>
-              <ModalWrapper>
-                <GlobalAudio>
-                  <App />
-                </GlobalAudio>
-              </ModalWrapper>
-            </AuthWrapper>
+              <AuthWrapper>
+                <ModalWrapper>
+                  <GlobalAudio>
+                    <App />
+                  </GlobalAudio>
+                </ModalWrapper>
+              </AuthWrapper>
             </AudioControllerProvider>
           </PersistGate>
         </BrowserRouter>
