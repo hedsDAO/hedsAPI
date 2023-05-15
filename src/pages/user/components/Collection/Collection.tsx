@@ -5,6 +5,7 @@ import { store } from '@/store';
 import { isEmpty } from '@/utils';
 import { GridItem, SimpleGrid } from '@chakra-ui/react';
 import * as styles from '@pages/user/components/Collection/styles';
+import { TapeCollectionItem } from '@/models/common';
 
 /**
  * @function Collection
@@ -25,9 +26,9 @@ export const Collection = () => {
         {!isEmpty(collection) &&
           Object.values(collection)
             .slice(start, end)
-            .map((item: any) => (
+            .map((item: TapeCollectionItem) => (
               <GridItem key={item.name + item.image}>
-                <CollectionItem item={...item} />
+                <CollectionItem item={item} />
               </GridItem>
             ))}
       </SimpleGrid>
