@@ -41,7 +41,7 @@ export const useAudio = () => {
 
   useEffect(() => {
     if (isOnOwnSongPage) dispatch.globalAudioModel.setIsOpen(false);
-    else if (!isOnOwnSongPage && state.howlerInstance) dispatch.globalAudioModel.setIsOpen(true);
+    else if (!isOnOwnSongPage && song) dispatch.globalAudioModel.setIsOpen(true);
     else dispatch.globalAudioModel.setIsOpen(false);
   }, [song.audio, pathname]);
 
@@ -61,7 +61,7 @@ export const useAudio = () => {
     return () => {
       clearInterval(positionInterval);
     };
-  }, [isPlaying, state.howlerInstance, dispatch.audioModel, progress]);
+  }, [isPlaying, state.howlerInstance, dispatch.audioModel, isOnOwnSongPage]);
 
   /**
    * Create howler instance for the current song

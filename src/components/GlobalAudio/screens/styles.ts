@@ -66,8 +66,15 @@ export function $getMotionBoxTransition(): Transition {
 }
 
 export const $getBoxControlsAnimation = (isOpen: boolean, theme: WithCSSVar<any>) => ({
-  y: isOpen ? '-10%' : '100%',
+  y: isOpen ? '-20%' : '100%',
   opacity: isOpen ? 1 : 0,
+  background: theme.colors.heds.bg4,
+  borderRadius: '0.5rem',
+});
+
+export const $getBoxControlFirstMountAnimation = (theme: WithCSSVar<any>) => ({
+  display: 'none',
+  opacity: 0,
   background: theme.colors.heds.bg4,
   borderRadius: '0.5rem',
 });

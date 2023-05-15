@@ -12,7 +12,7 @@ export const $volumeIconTextStyles = (onClick: () => void, volume: number, isMut
   pointerEvents: 'auto',
   mt: '5px !important',
   fontSize: 'md',
-  ml: volume === 0 ? '0' : "-1px !important",
+  ml: volume === 0 ? '0' : '-1px !important',
   as: 'i',
   color: 'white',
   className: volume === 0 || isMuted ? 'fas fa-volume-xmark' : 'fa-solid fa-volume',
@@ -39,7 +39,7 @@ export const $volumeBoxAnimation: Variants = {
  * @constant {FlexProps} $volumeControlFlexStyles
  * @description FlexProps object for the container of the VolumeControl component.
  */
-export const $volumeControlFlexStyles: FlexProps ={
+export const $volumeControlFlexStyles: FlexProps = {
   gap: 1,
   alignContent: 'center',
   w: 'full',
@@ -82,14 +82,22 @@ export const $volumeControlSliderStyles = (value: number, defaultValue: number, 
   size: 'sm',
   ml: 1,
   mt: '-1 !important',
+
 });
 
+
+
+interface ExtendedSliderTrackProps extends SliderTrackProps {
+  'data-testid'?: string;
+}
+
 /**
- * @constant {SliderTrackProps} $volumeControlSliderTrackStyles
+ * @constant {ExtendedSliderTrackProps} $volumeControlSliderTrackStyles
  * @description SliderTrackProps object for the track of the volume control slider in the VolumeControl component.
  */
-export const $volumeControlSliderTrackStyles: SliderTrackProps = {
+export const $volumeControlSliderTrackStyles: ExtendedSliderTrackProps = {
   bg: 'heds.500',
+  'data-testid': 'ga-volume-control',
 };
 
 /**
@@ -100,6 +108,7 @@ export const $volumeControlSliderFilledTrackStyles: SliderInnerTrackProps = {
   bg: 'heds.100',
 };
 
+
 /**
  * @constant {SliderThumbProps} $volumeControlSliderThumbStyles
  * @description SliderThumbProps object for the thumb of the volume control slider in the VolumeControl component.
@@ -108,5 +117,6 @@ export const $volumeControlSliderThumbStyles: SliderThumbProps = {
   _focus: {
     boxShadow: 'none',
     outlineColor: 'transparent',
+
   },
 };
