@@ -8,3 +8,7 @@ export const getTapeById = (id: string) => {
 export const getSongsByTapeId = (id: string) => {
   return axios.get(`${API_PREFIX}/tapes/${id}/songs`);
 };
+
+export const getTapeCollectionArgs = () => {
+  return axios.get(`${API_PREFIX}/tapes/get-collection-args`);
+}

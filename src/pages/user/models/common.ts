@@ -1,4 +1,4 @@
-import { Song, User, UserEvents, UserSong } from '@/models/common';
+import { Song, TapeCollectionArg, User, UserEvents, UserSong } from '@/models/common';
 
 /**
  * @enum {number}
@@ -24,4 +24,6 @@ export interface UserModelState {
   user_songs: UserSong[];
   user_likes: Song[];
   user_events: UserEvents[];
+  collection_args: TapeCollectionArg[];
+  isFetchingCollection: boolean;
 }
