@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   Checkbox,
   Flex,
   Image,
@@ -29,25 +30,27 @@ export const Mint = () => {
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
-      <Modal isOpen={true} onClose={onClose} size="lg">
+      <Modal isOpen={true} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton color="white" />
           <ModalBody p={6}>
-            <Text color="#DC89FF">MINT:</Text>
-            <Stack direction="row" spacing={4}>
+            <Text color="#DC89FF">MINT</Text>
+            <Stack direction="row" spacing={4} justifyContent="space-around">
               <Stack direction="column" spacing={3} w="40%">
                 {sampleArtists.map((artist) => (
-                  <Box>
-                    <Avatar size="sm" src={artist.profile_picture} />
-                    <Text color="white">{artist.display_name}</Text>
+                  <Box display="flex" flexDirection="column" alignItems="center">
+                    <Avatar size="md" src={artist.profile_picture} />
+                    <Text color="white" size="xs" letterSpacing="widest">
+                      {artist.display_name}
+                    </Text>
                   </Box>
                 ))}
-                <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={3} borderRadius="md">
+                <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
                   <Text color="white">PRICE</Text>
                   <Text color="#DC89FF">0.005</Text>
                 </Box>
-                <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={3} borderRadius="md">
+                <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
                   <Text color="white">MINTED</Text>
                   <Text color="#DC89FF">100</Text>
                 </Box>
@@ -60,7 +63,9 @@ export const Mint = () => {
                   Mint
                 </Button>
               </Stack>
-              <Image src={cover} alt="tape-cover" boxSize="2xs" border="1px" borderColor="heds.400" />
+              <Center>
+                <Image src={cover} alt="tape-cover" boxSize="xs" border="1px" borderColor="heds.400" borderRadius="md" />
+              </Center>
             </Stack>
           </ModalBody>
         </ModalContent>
