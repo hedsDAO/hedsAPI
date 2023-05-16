@@ -3,7 +3,7 @@ import { TapeData } from './types';
 import schemaName from '../../../config';
 
 export const getAllTapes = async () => {
-    const { rows} = await pool.query('SELECT id, name, image FROM heds.tapes');
+    const { rows} = await pool.query(`SELECT id, name, image FROM ${schemaName}.tapes`);
     return rows;
 };
 
