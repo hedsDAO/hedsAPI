@@ -10,5 +10,5 @@ export const getSongsByTapeId = (id: string) => {
 };
 
 export const getTapeCollectionArgs = () => {
-  return axios.get(`${API_PREFIX}/tapes/get-collection-args`);
+  return axios.get(`${API_PREFIX}/tapes/collection-args`);
 }
