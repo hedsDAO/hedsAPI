@@ -1,11 +1,4 @@
 import { ButtonProps, FlexProps, StackProps, TextProps, Link } from '@chakra-ui/react';
-
-export interface ExtendedLinkButtonProps extends ButtonProps {
-  'data-testid'?: string;
-  target?: string;
-  href?: string;
-}
-
 /**
  * @constant {string} $twitterIcon
  * @description classname for the Twitter icon via fontawesome api.
@@ -72,23 +65,18 @@ export const $descriptionTextStyles: TextProps = {
  */
 export const $walletAndTwitterButtonsFlexStyles: FlexProps = {
   gap: 1,
-  alignItems: 'baseline',
+  alignItems: 'center',
 };
 
 /**
  * @function $twitterButtonStyles
- * @param {string} twitter_handle
- * @description Function that returns ExtendedLinkButtonProps object containing styles for the Twitter button.
- * @returns {ExtendedLinkButtonProps}
+ * @description Function that returns ButtonProps object containing styles for the Twitter button.
+ * @returns {ButtonProps}
  */
-export const $twitterButtonStyles = (twitter_handle: string): ExtendedLinkButtonProps => ({
-  'data-testid': 'twitter-button',
-  display: { base: 'flex', lg: 'none' },
-  as: Link,
+export const $twitterButtonStyles: ButtonProps = {
+  display: { base: 'none', lg: 'flex' },
   mb: { base: '0 !important', lg: '-1 !important' },
   rounded: 'full',
-  target: '_blank',
-  href: `https://www.twitter.com/${twitter_handle}`,
   _hover: { bg: 'heds.300', color: 'heds.bg' },
   border: 'solid 1px',
   color: 'heds.300',
@@ -96,28 +84,100 @@ export const $twitterButtonStyles = (twitter_handle: string): ExtendedLinkButton
   borderColor: 'transparent',
   size: 'xs',
   px: { base: 0, lg: 1 },
-});
+};
 
 /**
- * @function $walletButtonStyles
- * @param {string} address
- * @description Function that returns ExtendedLinkButtonProps object containing styles for the wallet button.
+ * @function $verifyTwitterButtonStyles
+ * @description Function that returns ButtonProps object containing styles for the verify Twitter button on desktop.
+ * @returns {ButtonProps}
+ */
+export const $verifyTwitterButtonStyles: ButtonProps = {
+  display: { base: 'none', lg: 'flex' },
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  _hover: { bg: 'heds.300', color: 'heds.bg' },
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  size: 'xs',
+  alignItems: 'center',
+  gap: 1,
+  letterSpacing: 'wide',
+  px: { base: 0, lg: 2 },
+};
+
+/**
+ * @function $verifyTwitterButtonMobileStyles
+ * @description Function that returns ButtonProps object containing styles for the Twitter button.
+ * @returns {ButtonProps}
+ */
+export const $verifyTwitterButtonMobileStyles: ButtonProps = {
+  display: { base: 'flex', lg: 'none' },
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  _hover: { bg: 'heds.300', color: 'heds.bg' },
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  size: 'xs',
+  alignItems: 'center',
+  gap: 1,
+  letterSpacing: 'wide',
+  px: { base: 2, lg: 0 },
+};
+
+/**
+ * @function $votingPowerStyles
+ * @description Function that returns ExtendedLinkButtonProps object containing styles for the voting power button.
  * @returns {ExtendedLinkButtonProps}
  */
+export const $votingPowerStyles: TextProps = {
+  display: { base: 'flex', lg: 'none' },
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  fontSize: 'xs',
+  px: { base: 1.5, lg: 0 },
+  py: 0.5,
+};
 
-export const $walletButtonStyles = (address: string): ExtendedLinkButtonProps => ({
-  'data-testid': 'wallet-button',
+/**
+ * @function $twitterButtonMobileStyles
+ * @description Function that returns ButtonProps object containing styles for the Twitter button.
+ * @returns {ButtonProps}
+ */
+export const $twitterButtonMobileStyles: ButtonProps = {
+  display: { base: 'flex', lg: 'none' },
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  _hover: { bg: 'heds.300', color: 'heds.bg' },
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  size: 'xs',
+  px: { base: 0, lg: 1 },
+};
+/**
+ * @function $walletButtonStyles
+ * @description Function that returns ButtonProps object containing styles for the wallet button.
+ * @returns {ButtonProps}
+ */
+
+export const $walletButtonStyles: ButtonProps = {
   display: { base: 'flex', lg: 'none' },
   mt: { base: '0 !important', lg: '-1.5 !important' },
-  as: Link,
   rounded: 'full',
-  target: '_blank',
   _hover: { bg: 'heds.300', color: 'heds.bg' },
-  href: `https://www.etherscan.com/address/${address}`,
   border: 'solid 1px',
   color: 'heds.300',
   bg: 'heds.bg2',
   borderColor: 'transparent',
   size: 'xs',
   px: 3,
-});
+};
