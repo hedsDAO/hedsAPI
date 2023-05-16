@@ -1,5 +1,6 @@
 import * as Twitter from 'twitter-v2';
 import { pool } from '../../database';
+import schemaName from '../../../config';
 
 export const authenticateTweet = async (tweetId: string): Promise<any> => {
   if (!process.env.TWITTER_CONSUMER_KEY ||  !process.env.TWITTER_CONSUMER_SECRET  || !process.env.TWITTER_ACCESS_KEY || !process.env.TWITTER_TOKEN_SECRET) {
@@ -24,7 +25,7 @@ export const authenticateTweet = async (tweetId: string): Promise<any> => {
 export const validateTwitterHandle = async (twitterHandle: string, userHash: string, response: any): Promise<boolean> => {
   try {
     const { rowCount } = await pool.query(
-      `SELECT 1 FROM heds.users WHERE twitter_handle = $1`,
+      `SELECT 1 FROM ${schemaName}.users WHERE twitter_handle = $1`,
       [twitterHandle]
     );
 

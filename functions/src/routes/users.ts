@@ -1,7 +1,16 @@
 import * as express from 'express';
-import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents, getUserListeningHistory, addSongToListeningHistory } from '../controllers/users';
+import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents, getUserListeningHistory, addSongToListeningHistory, getArtistsAndCurators } from '../controllers/users';
 
 const router = express.Router();
+
+router.get('/artists-curators', async (req, res) => {
+  try {
+    const result = await getArtistsAndCurators();
+    return res.json(result);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
 
 router.get('/:wallet', async (req, res) => {
   try {
