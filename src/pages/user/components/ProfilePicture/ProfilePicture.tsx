@@ -21,14 +21,16 @@ export const ProfilePicture = () => {
   return (
     <Skeleton {...styles.$skeletonStyles(hasProfilePictureLoaded)}>
       {connectedWallet === currentWallet ? (
-        <Box onClick={() => dispatch.modalModel.setModal(Modals.SETTINGS)} {...styles.$boxStyles(isHovering, setIsHovering.on, setIsHovering.off)}>
+        <Box onClick={() => dispatch.modalModel.setModal(Modals.SETTINGS)} {...styles.$editboxStyles(isHovering, setIsHovering.on, setIsHovering.off)}>
           <Image {...styles.$imageStyles(profile_picture, isHovering, setHasProfilePicturedLoaded.on)} />
           <Center {...styles.$centerStyles(isHovering)}>
             <Text {...styles.$textStyles}>Edit Profile</Text>
           </Center>
         </Box>
       ) : (
-        <Image {...styles.$imageStyles(profile_picture, false, setHasProfilePicturedLoaded.on)} />
+        <Box {...styles.$boxStyles}>
+          <Image {...styles.$imageStyles(profile_picture, false, setHasProfilePicturedLoaded.on)} />
+        </Box>
       )}
     </Skeleton>
   );
