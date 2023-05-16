@@ -1,7 +1,16 @@
 import * as express from 'express';
-import { getTapeById, createTape, updateTape, deleteTape, getTapeSongs } from '../controllers/tapes';
+import { getTapeById, createTape, updateTape, deleteTape, getTapeSongs, getTapeContractArgs } from '../controllers/tapes';
 
 const router = express.Router();
+
+router.get('/get-collection-args', async (req, res) => {
+  try {
+    const results = await getTapeContractArgs();
+    res.json(results);
+  } catch (err: any) {
+    res.status(500).send(err.message);
+  }
+});
 
 router.get('/:tape_id', async (req, res) => {
   try {
