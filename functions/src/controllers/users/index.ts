@@ -4,7 +4,6 @@ import { SongData } from '../songs/types';
 import schemaName from '../../../config';
 
 export const getArtistsAndCurators = async () => {
-  try {
     const artistsResult = await pool.query(`
       SELECT profile_picture, id, display_name 
       FROM ${schemaName}.users 
@@ -22,10 +21,6 @@ export const getArtistsAndCurators = async () => {
       artists: artistsResult.rows,
       curators: curatorsResult.rows
     };
-  } catch (err) {
-    console.error(err);
-    throw new Error('Error retrieving artists and curators information');
-  }
 };
 
 export const getUserByWallet = async (wallet: string) => {
