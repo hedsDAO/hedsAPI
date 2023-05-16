@@ -8,8 +8,8 @@ export { default as getCurrentImagePath } from './getCurrentImagePath';
 export { default as formatCyaniteGenres } from './formatCyaniteGenres';
 export { default as formatCyaniteSubGenres } from './formatCyaniteSubGenres';
 export { default as formatCyaniteKeys } from './formatCyaniteKeys';
-export { default as formatContractArgs } from './formatContractArgs';
 export { default as formatCollectionData } from "./formatCollectionData"
+export { default as formatContractArgs } from "./formatContractArgs"
 
 // GraphQL
 export { default as getCyaniteData } from './graphql/getCyaniteData';

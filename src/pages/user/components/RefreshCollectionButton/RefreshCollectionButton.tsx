@@ -16,7 +16,7 @@ export const RefreshCollectionButton = () => {
   const oneMinute = 60000;
 
   const { isLoading } = useContractReads({
-    contracts: formatContractArgs(currentWallet),
+    contracts: formatContractArgs(collectionArgs, currentWallet),
     cacheOnBlock: true,
     staleTime: 5000000,
     enabled: isFetchingCollection,
