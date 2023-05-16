@@ -3,6 +3,26 @@ import { UserData } from './types';
 import { SongData } from '../songs/types';
 import schemaName from '../../../config';
 
+export const getArtistsAndCurators = async () => {
+    const artistsResult = await pool.query(`
+      SELECT profile_picture, id, display_name 
+      FROM ${schemaName}.users 
+      WHERE role = 'artist'
+    `);
+    
+    const curatorsResult = await pool.query(`
+      SELECT u.profile_picture, u.id, u.display_name 
+      FROM ${schemaName}.users u
+      JOIN ${schemaName}.tape_sample_artists tsa ON u.id = tsa.user_id
+      WHERE u.role = 'artist'
+    `);
+
+    return {
+      artists: artistsResult.rows,
+      curators: curatorsResult.rows
+    };
+};
+
 export const getUserByWallet = async (wallet: string) => {
   console.log(schemaName);
   const query = `SELECT * FROM ${schemaName}.users WHERE wallet = $1`;
