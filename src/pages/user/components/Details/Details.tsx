@@ -3,6 +3,7 @@ import { Dispatch, RootState, store } from '@/store';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import * as styles from '@pages/user/components/Details/styles';
 import { Modals } from '@/modals/models/modalModel';
+import { Link } from 'react-router-dom';
 
 /**
  * @function Details
@@ -25,7 +26,13 @@ export const Details = () => {
         <Flex {...styles.$displayNameFlexStyles}>
           <Text {...styles.$displayNameTextStyles}>{display_name}</Text>
           {twitter_handle ? (
-            <Button {...styles.$twitterButtonStyles(twitter_handle)}>
+            <Button
+              as={Link}
+              target={'_blank'}
+              data-testid={'twitter-button'}
+              href={`https://www.twitter.com/${twitter_handle}`}
+              {...styles.$twitterButtonStyles}
+            >
               <i className={styles.$twitterIcon}></i>
             </Button>
           ) : wallet === connectedWallet ? (
@@ -43,13 +50,33 @@ export const Details = () => {
       {!isLoading && (
         <Flex {...styles.$walletAndTwitterButtonsFlexStyles}>
           <Text {...styles.$votingPowerStyles}>92</Text>
-          <Button {...styles.$walletButtonStyles(wallet)}>{wallet?.slice(0, 6)}</Button>
+          <Button
+            data-testid="user-wallet-button"
+            as={Link}
+            target="_blank"
+            href={`https://www.etherscan.com/address/${wallet}`}
+            {...styles.$walletButtonStyles}
+          >
+            {wallet?.slice(0, 6)}
+          </Button>
           {twitter_handle ? (
-            <Button {...styles.$twitterButtonMobileStyles(twitter_handle)}>
+            <Button
+              as={Link}
+              target="_blank"
+              href={`https://www.twitter.com/${twitter_handle}`}
+              data-testid="user-twitter-button"
+              {...styles.$twitterButtonMobileStyles}
+            >
               <i className={styles.$twitterIcon}></i>
             </Button>
           ) : wallet === connectedWallet ? (
-            <Button onClick={() => dispatch.modalModel.setModal(Modals.TWITTER)} {...styles.$verifyTwitterButtonMobileStyles}>
+            <Button
+              as={Link}
+              target="_blank"
+              data-testid="user-twitter-button"
+              onClick={() => dispatch.modalModel.setModal(Modals.TWITTER)}
+              {...styles.$verifyTwitterButtonMobileStyles}
+            >
               <i className={styles.$twitterIcon}></i> verify
             </Button>
           ) : (
