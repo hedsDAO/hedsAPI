@@ -72,7 +72,7 @@ export const $descriptionTextStyles: TextProps = {
  */
 export const $walletAndTwitterButtonsFlexStyles: FlexProps = {
   gap: 1,
-  alignItems: 'baseline',
+  alignItems: 'center',
 };
 
 /**
@@ -82,6 +82,96 @@ export const $walletAndTwitterButtonsFlexStyles: FlexProps = {
  * @returns {ExtendedLinkButtonProps}
  */
 export const $twitterButtonStyles = (twitter_handle: string): ExtendedLinkButtonProps => ({
+  'data-testid': 'twitter-button',
+  display: { base: 'none', lg: 'flex' },
+  as: Link,
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  target: '_blank',
+  href: `https://www.twitter.com/${twitter_handle}`,
+  _hover: { bg: 'heds.300', color: 'heds.bg' },
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  size: 'xs',
+  px: { base: 0, lg: 1 },
+});
+
+/**
+ * @function $verifyTwitterButtonStyles
+ * @param {string} twitter_handle
+ * @description Function that returns ExtendedLinkButtonProps object containing styles for the Twitter button on desktop.
+ * @returns {ExtendedLinkButtonProps}
+ */
+export const $verifyTwitterButtonStyles: ExtendedLinkButtonProps = {
+  display: { base: 'none', lg: 'flex' },
+  as: Link,
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  target: '_blank',
+  _hover: { bg: 'heds.300', color: 'heds.bg' },
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  size: 'xs',
+  alignItems: 'center',
+  gap: 1,
+  letterSpacing: 'wide',
+  px: { base: 0, lg: 2 },
+};
+
+/**
+ * @function $verifyTwitterButtonMobileStyles
+ * @param {string} twitter_handle
+ * @description Function that returns ExtendedLinkButtonProps object containing styles for the Twitter button.
+ * @returns {ExtendedLinkButtonProps}
+ */
+export const $verifyTwitterButtonMobileStyles: ExtendedLinkButtonProps = {
+  display: { base: 'flex', lg: 'none' },
+  as: Link,
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  target: '_blank',
+  _hover: { bg: 'heds.300', color: 'heds.bg' },
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  size: 'xs',
+  alignItems: 'center',
+  gap: 1,
+  letterSpacing: 'wide',
+  px: { base: 2, lg: 0 },
+};
+
+/**
+ * @function $votingPowerStyles
+ * @param {string} twitter_handle
+ * @description Function that returns ExtendedLinkButtonProps object containing styles for the Twitter button.
+ * @returns {ExtendedLinkButtonProps}
+ */
+export const $votingPowerStyles: TextProps = {
+  display: { base: 'flex', lg: 'none' },
+  mb: { base: '0 !important', lg: '-1 !important' },
+  rounded: 'full',
+  border: 'solid 1px',
+  color: 'heds.300',
+  bg: 'heds.bg2',
+  borderColor: 'transparent',
+  fontSize: 'xs',
+  px: { base: 1.5, lg: 0 },
+  py: 0.5
+};
+
+/**
+ * @function $twitterButtonMobileStyles
+ * @param {string} twitter_handle
+ * @description Function that returns ExtendedLinkButtonProps object containing styles for the Twitter button.
+ * @returns {ExtendedLinkButtonProps}
+ */
+export const $twitterButtonMobileStyles = (twitter_handle: string): ExtendedLinkButtonProps => ({
   'data-testid': 'twitter-button',
   display: { base: 'flex', lg: 'none' },
   as: Link,
@@ -97,7 +187,6 @@ export const $twitterButtonStyles = (twitter_handle: string): ExtendedLinkButton
   size: 'xs',
   px: { base: 0, lg: 1 },
 });
-
 /**
  * @function $walletButtonStyles
  * @param {string} address
