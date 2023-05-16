@@ -16,6 +16,8 @@ import { Tapes } from '@/pages/tapes/screens/Tapes';
 import { Footer } from '@/components/Footer/Footer';
 import { Navbar } from '@/components/Navbar/Navbar';
 import { Box } from '@chakra-ui/react';
+import { Landing } from './pages/landing/screens/Landing';
+import { Explore } from './pages/explore/screens/Explore';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -34,9 +36,18 @@ const App = (): JSX.Element => {
     </Fragment>
   );
 
+  const LandingExploreWrapper = (
+    <Fragment>
+      <Landing />
+      <Explore />
+    </Fragment>
+  );
+
   return (
     <Routes>
       <Route element={NavAndFooterWrapper}>
+        <Route path="/" element={LandingExploreWrapper} />
+        <Route path="/explore" element={LandingExploreWrapper} />
         <Route path="/u/:wallet" element={<User />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/tapes" element={<Tapes />} />
