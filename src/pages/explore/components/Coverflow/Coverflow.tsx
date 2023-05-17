@@ -2,7 +2,15 @@ import { Dispatch, store } from '@/store';
 import { Box, Center, Flex, Image, useBreakpointValue } from '@chakra-ui/react';
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { items } from '../../models/constants';
+import { items } from '@/pages/explore/models/constants';
+
+/**
+ * @function Coverflow
+ * @description Renders the image carousel in the style of a coverflow for the explore page.
+ * @returns {JSX.Element} - Rendered Coverflow component.
+ **/
+
+// TODO: refactor styles and logic - current: mvp
 
 const MotionBox = motion(Box);
 export const Coverflow = () => {
