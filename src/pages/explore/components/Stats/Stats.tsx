@@ -1,48 +1,24 @@
 import { SimpleGrid, GridItem, Stack, Text } from '@chakra-ui/react';
+import * as constants from '@/pages/explore/models/constants';
+import * as styles from '@/pages/explore/components/Stats/styles';
+
+/**
+ * @function Stats
+ * @description Renders the a grid of global stats for tapes, artists, value generated and submissions.
+ * @returns {JSX.Element} - Rendered Stats component.
+ **/
 
 export const Stats = () => {
   return (
-    <SimpleGrid gap={2} columns={{ base: 2, lg: 4 }}>
-      <GridItem colSpan={1}>
-        <Stack py={2} px={3.5} rounded="lg" maxW={{ base: '100%', lg: '10vw' }} minW={{ base: '100%', lg: '10vw' }} bg="heds.bg3">
-          <Text color="white" fontSize="xs" letterSpacing={'wide'} fontFamily="karla">
-            TAPES MINTED
-          </Text>
-          <Text mt={'0 !important'} color="heds.200" fontSize="2xs">
-            9999
-          </Text>
-        </Stack>
-      </GridItem>
-      <GridItem colSpan={1}>
-        <Stack py={2} px={3.5} rounded="lg" maxW={{ base: '100%', lg: '10vw' }} minW={{ base: '100%', lg: '10vw' }} bg="heds.bg3">
-          <Text color="white" fontSize="xs" letterSpacing={'wide'} fontFamily="karla">
-            VALUE GENERATED
-          </Text>
-          <Text mt={'0 !important'} color="heds.200" fontSize="2xs">
-            999,999 ETH
-          </Text>
-        </Stack>
-      </GridItem>
-      <GridItem colSpan={1}>
-        <Stack py={2} px={3.5} rounded="lg" maxW={{ base: '100%', lg: '10vw' }} minW={{ base: '100%', lg: '10vw' }} bg="heds.bg3">
-          <Text color="white" fontSize="xs" letterSpacing={'wide'} fontFamily="karla">
-            SUBMISSIONS
-          </Text>
-          <Text mt={'0 !important'} color="heds.200" fontSize="2xs">
-            9999
-          </Text>
-        </Stack>
-      </GridItem>
-      <GridItem colSpan={1}>
-        <Stack py={2} px={3.5} rounded="lg" maxW={{ base: '100%', lg: '10vw' }} minW={{ base: '100%', lg: '10vw' }} bg="heds.bg3">
-          <Text color="white" fontSize="xs" letterSpacing={'wide'} fontFamily="karla">
-            UNIQUE MINTERS
-          </Text>
-          <Text mt={'0 !important'} color="heds.200" fontSize="2xs">
-            9999
-          </Text>
-        </Stack>
-      </GridItem>
+    <SimpleGrid {...styles.$statsSimpleGridStyles}>
+      {Object.entries(constants.EXPLORE_STATS).map(([label, value]: [string, string]) => (
+        <GridItem key={label + value} {...styles.$statsGridItemStyles}>
+          <Stack {...styles.$statsStackStyles}>
+            <Text {...styles.$statsLabelStyles}>{label}</Text>
+            <Text {...styles.$statsValueStyles}>{value}</Text>
+          </Stack>
+        </GridItem>
+      ))}
     </SimpleGrid>
   );
 };
