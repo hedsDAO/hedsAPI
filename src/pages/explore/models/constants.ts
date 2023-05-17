@@ -13,13 +13,10 @@ export const EXPLORE_STATS = {
   'UNIQUE MINTERS': '9999',
 };
 
-export const FEATURED_ARTISTS_HEADER_TEXT = 'MOST FEATURED ARTISTS';
+export const FEATURED_ARTISTS_HEADER_TEXT = 'FEATURED ARTISTS';
 export const FEATURED_ARTISTS_DESCRIPTION_TEXT = 'These artists have been voted on to multiple hedsTAPES via our curation community.';
-
-export const EXPLORE_HEADER_TEXT = 'EXPLORE';
-export const EXPLORE_HEADER_DESCRIPTION_TEXT = 'DISCOVER NEW ARTISTS AND TAPES';
 
 export const COVERFLOW_NAV_ICON = 'fa-solid fa-circle';
 
-export const COVERFLOW_ARROW_LEFT_ICON = "fa-solid fa-chevron-left";
-export const COVERFLOW_ARROW_RIGHT_ICON = "fa-solid fa-chevron-right";
+export const COVERFLOW_ARROW_LEFT_ICON = 'fa-solid fa-chevron-left';
+export const COVERFLOW_ARROW_RIGHT_ICON = 'fa-solid fa-chevron-right';

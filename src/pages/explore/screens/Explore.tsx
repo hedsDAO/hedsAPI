@@ -1,9 +1,12 @@
 import { Box } from '@chakra-ui/react';
 import { Stats } from '@/pages/explore/components/Stats/Stats';
 import { Coverflow } from '@/pages/explore/components/Coverflow/Coverflow';
-import { ExploreHeader } from '@/pages/explore/components/ExploreHeader/ExploreHeader';
 import { FeaturedArtistsHeader } from '@/pages/explore/components/FeaturedArtistsHeader/FeaturedArtistsHeader';
 import { CoverflowNav } from '@/pages/explore/components/CoverflowNav/CoverflowNav';
+import { FeaturedArtists } from '@/pages/explore/components/FeaturedArtists/FeaturedArtists';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from '@/store';
 
 /**
  * @function Explore
@@ -12,13 +15,19 @@ import { CoverflowNav } from '@/pages/explore/components/CoverflowNav/CoverflowN
  **/
 
 export const Explore = () => {
+  const dispatch = useDispatch<Dispatch>();
+
+  useEffect(() => {
+    dispatch.exploreModel.getFeaturedArtists();
+  }, []);
+
   return (
     <Box>
-      <ExploreHeader />
       <Coverflow />
       <CoverflowNav />
       <Stats />
       <FeaturedArtistsHeader />
+      <FeaturedArtists />
     </Box>
   );
 };
