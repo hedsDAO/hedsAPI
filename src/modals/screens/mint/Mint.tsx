@@ -96,17 +96,17 @@ export const Mint = () => {
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
-      <Modal isOpen={true} onClose={onClose} size="xl">
+      <Modal isOpen={true} onClose={onClose} size="2xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent p={3}>
           <ModalCloseButton color="white" />
           <ModalBody p={6}>
             <Text color="#DC89FF">MINT</Text>
             <Stack direction="row" spacing={4} justifyContent="space-around">
-              <Stack direction="column" spacing={3} w="40%">
+              <Stack direction="column" spacing={3} w="30%">
                 {sampleArtists.map((artist) => (
-                  <Box display="flex" flexDirection="column" alignItems="center">
-                    <Avatar size="md" src={artist.profile_picture} />
+                  <Box display="flex" flexDirection="column" alignItems="center" key={artist.id}>
+                    <Avatar size="lg" src={artist.profile_picture} />
                     <Text color="white" size="xs" letterSpacing="widest">
                       {artist.display_name}
                     </Text>
