@@ -1,60 +1,62 @@
-import { useState } from 'react';
-import { Box, Flex, Image, Center, useBreakpointValue } from '@chakra-ui/react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-const MotionBox = motion(Box);
+import { Box, Flex, Text, Stack, Button } from '@chakra-ui/react';
+import { Stats } from '../components/Stats/Stats';
+import { items } from '../models/constants';
+import { Coverflow } from '../components/Coverflow/Coverflow';
+import { useSelector } from 'react-redux';
+import { store } from '@/store';
 
 export const Explore = () => {
-  const items = [
-    'https://www.heds.cloud/ipfs/QmSy3SvxY9HPvH2cEjb1NT8Y5rfcCmaWEge2vxhFvRvXj1',
-    'https://www.heds.cloud/ipfs/QmbnGKrUsfRwxcPNxdXuKwHFmtu29F7UYSAfY5aEMGZtPc',
-    'https://www.heds.cloud/ipfs/QmY2z5HEK6rD3SQ27MPpitZmqeqywKEwB7Ci1ABjqwe6J9',
-    'https://www.heds.cloud/ipfs/QmfDej1TKoo7Aqi1Pf5P6WGzPus4RzWi2tq77U3MzxzWt6',
-    'https://www.heds.cloud/ipfs/QmQTv6yF5rQCxwgXa6AKHJZGx1NUwS4KVAwjrg6muLzufJ',
-  ];
-  const [activeIndex, setActiveIndex] = useState(2);
-  const imageSize = useBreakpointValue({ base: '200px', md: '300px' });
-  const imageSizeInteger = useBreakpointValue({ base: 200, md: 300 });
-  const handlePrev = () => setActiveIndex((old) => (old === 0 ? items.length - 1 : old - 1));
-  const handleNext = () => setActiveIndex((old) => (old === items.length - 1 ? 0 : old + 1));
-  const calculateZIndex = (offset: number) => (offset === 0 ? 2 : offset === 1 || offset === -1 ? 1 : 0);
-  const calculateScale = (offset: number) => (offset === 0 ? 1.3 : 1);
+  const dispatch = store.dispatch.exploreModel;
+  const activeIndex = useSelector(store.select.exploreModel.selectActiveIndex);
 
   return (
-    <Center minH="400px" position="relative" style={{ perspective: 1000 }}>
-      <MotionBox position="absolute" left={0} onClick={handlePrev} p={4} cursor="pointer" fontSize="2xl" zIndex="1" color="white">
-        {'<'}
-      </MotionBox>
-      <Flex w="full" overflow="hidden" justifyContent="center" alignItems="center">
-        <AnimatePresence initial={false} custom={activeIndex}>
-          {items.map((src, i) => {
-            const offset = i - activeIndex;
-            const isCenter = offset === 0;
-            return (
-              <MotionBox
-                key={i}
-                position="absolute"
-                shadow="md"
-                zIndex={calculateZIndex(offset)} // Adjust zIndex based on position
-                initial={{ x: offset * 200 }} // Adjust x value here
-                animate={{
-                  x: offset * 200,
-                  scale: calculateScale(offset),
-                  rotateY: isCenter ? 0 : '45deg',
-                  // height: isCenter ? imageSize: '250px',
-                  // width: isCenter ? imageSize: '300px',
-                }}
-                transition={{ type: 'spring', damping: 20, stiffness: 100 }}
-              >
-                <Image onClick={() => setActiveIndex(i)} rounded={'lg'} src={src} h={imageSize} w={imageSize} />
-              </MotionBox>
-            );
-          })}
-        </AnimatePresence>
+    <Box pt={10}>
+      <Stack pb={2} alignItems={'center'} justifyContent={'center'} w="full">
+        <Text color="white" fontSize={{ base: 'xl', lg: '4xl' }} fontFamily={'poppins'} fontWeight="normal">
+          EXPLORE
+        </Text>
+        <Text letterSpacing={'wide'} fontWeight={'thin'} color="white" opacity={'75%'} fontSize={{ base: '2xs', lg: 'md' }}>
+          DISCOVER NEW ARTISTS AND TAPES
+        </Text>
+      </Stack>
+      <Coverflow />
+      <Flex gap={2} justifyContent={'center'} w="full">
+        {items?.map((image: string, i: number) => {
+          return (
+            <Button
+              key={image + 'pointer'}
+              opacity={activeIndex === i ? 0.75 : 0.5}
+              fontSize={'xs'}
+              color={activeIndex === i ? 'white' : 'heds.bg2'}
+              p={'0 !important'}
+              minW={'unset'}
+              h={'unset'}
+              bg="transparent"
+              _hover={{ bg: 'transparent', opacity: 1, color: activeIndex === i ? 'white' : 'heds.bg5' }}
+              onClick={() => dispatch.setActiveIndex(i)}
+            >
+              <i className="fa-solid fa-circle"></i>
+            </Button>
+          );
+        })}
       </Flex>
-      <MotionBox position="absolute" right={0} onClick={handleNext} p={4} cursor="pointer" fontSize="2xl" zIndex="1" color="white">
-        {'>'}
-      </MotionBox>
-    </Center>
+      <Flex mt={{ base: 10, lg: 20 }} justifyContent={'center'} gap={4} w="full">
+        <Stats />
+      </Flex>
+      <Stack
+        p={{ base: 5, lg: 20 }}
+        justifyContent={'center'}
+        alignItems={{ base: 'center', lg: 'start' }}
+        textAlign={{ base: 'center', lg: 'start' }}
+        mt={{ base: 10, lg: 20 }}
+      >
+        <Text color="white" fontSize={{ base: 'lg', lg: '2xl' }} fontFamily={'poppins'} fontWeight="normal">
+          MOST FEATURED ARTISTS
+        </Text>
+        <Text letterSpacing={'wide'} fontWeight={'thin'} color="white" opacity={'75%'} fontSize={{ base: '2xs', lg: 'md' }}>
+          These artists have been voted on to multiple hedsTAPES via our curation community.
+        </Text>
+      </Stack>
+    </Box>
   );
 };

@@ -10,7 +10,6 @@ export const Landing = () => {
   const handleScroll = () => {
     const scrollPosition = window.pageYOffset;
     const windowHeight = window.innerHeight;
-    console.log(scrollPosition, windowHeight);
     if (pathname === '/' && scrollPosition > windowHeight) {
       navigate('/explore');
     }
@@ -37,7 +36,7 @@ export const Landing = () => {
   }, [pathname]);
   return (
     <>
-      <Box position="relative" width="100vw" height="100vh" overflow="hidden">
+      <Box position="relative" width={{ base: '100%', lg: '100vw' }} height="100vh" overflow="hidden">
         <Image
           src="https://www.heds.cloud/ipfs/QmfMEiTip2jMB1xHL4ciaenMQxh5XghyUtSN4dAY4nqjDq" // Change this to your video path
           width="100%"
@@ -72,12 +71,20 @@ export const Landing = () => {
             </VStack>
           </Flex>
         </Box>
-        <Box position="absolute" bottom="20" right={{ base: '10', lg: '20' }} p={5}>
-          <VStack color="white" fontSize="3xl" align="center" spacing={10}>
+        <Box w={{ base: 'full', lg: 'unset' }} position="absolute" bottom="20" right={{ base: 'unset', lg: '20' }} p={5}>
+          <Flex
+            direction={{ base: 'row', lg: 'column' }}
+            w={{ base: 'full', lg: 'unset' }}
+            justifyContent={{ base: 'center', lg: 'unset' }}
+            color="white"
+            fontSize="3xl"
+            align="center"
+            gap={10}
+          >
             <i className="fa-regular fa-circle-user"></i>
             <i className="fa-sharp fa-light fa-cassette-tape"></i>
             <i className="fa-regular fa-circle-play"></i>
-          </VStack>
+          </Flex>
         </Box>
       </Box>
     </>
