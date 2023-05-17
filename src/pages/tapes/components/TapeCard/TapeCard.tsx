@@ -7,7 +7,7 @@ export const TapeCard = ({ tape }: { tape: Tape }) => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   return (
     <GridItem colSpan={1} key={tape.id + 'tapes'}>
-      <Stack p={2} rounded="lg" bg="heds.bg4" onClick={() => navigate(`/t/${tape.id}`)}>
+      <Stack border="solid 0.5px" borderColor="heds.100" p={2} rounded="lg" bg="heds.bg4" onClick={() => navigate(`/t/${tape.id}`)}>
         <AspectRatio ratio={1}>
           <Skeleton startColor="heds.bg2" endColor="heds.400" isLoaded={hasImageLoaded} fitContent rounded={'lg'}>
             <Image minH="full" minW="full" onLoad={setHasImageLoaded.on} rounded="lg" src={tape.image} objectFit="cover" />
