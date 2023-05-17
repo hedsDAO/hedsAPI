@@ -19,10 +19,15 @@ export const Tape = () => {
   const dispatch = useDispatch<Dispatch>();
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const isLoading = useSelector(store.select.tapeModel.selectIsLoading);
+  const tape = useSelector(store.select.tapeModel.selectCurrentTape);
 
   useEffect(() => {
     dispatch.tapeModel.getTape(id);
   }, [id]);
+
+  useEffect(() => {
+    console.log('tape', tape);
+  }, [tape]);
 
   return (
     <Box>
