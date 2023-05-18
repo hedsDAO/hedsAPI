@@ -15,7 +15,7 @@ export const exploreModel = createModel<RootModel>()({
   },
   selectors: (slice) => ({
     selectActiveIndex: () => slice((state) => state.activeIndex),
-    selectFeaturedArtists: () => slice((state) => state.featuredArtists),
+    selectFeaturedArtists: () => slice((state) => state?.featuredArtists),
   }),
   effects: () => ({
     async getFeaturedArtists() {

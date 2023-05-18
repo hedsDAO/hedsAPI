@@ -3,7 +3,6 @@ import { Dispatch, RootState, store } from '@/store';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import * as styles from '@pages/user/components/Details/styles';
 import { Modals } from '@/modals/models/modalModel';
-import { Link } from 'react-router-dom';
 
 /**
  * @function Details
@@ -27,7 +26,7 @@ export const Details = () => {
           <Text {...styles.$displayNameTextStyles}>{display_name}</Text>
           {twitter_handle ? (
             <Button
-              as={Link}
+              as={'a'}
               target={'_blank'}
               data-testid={'twitter-button'}
               href={`https://www.twitter.com/${twitter_handle}`}
@@ -52,16 +51,16 @@ export const Details = () => {
           <Text {...styles.$votingPowerStyles}>92</Text>
           <Button
             data-testid="user-wallet-button"
-            as={Link}
+            as={'a'}
             target="_blank"
             href={`https://www.etherscan.com/address/${wallet}`}
             {...styles.$walletButtonStyles}
           >
             {wallet?.slice(0, 6)}
           </Button>
-          {twitter_handle ? (
+          {twitter_handle?.length ? (
             <Button
-              as={Link}
+              as={'a'}
               target="_blank"
               href={`https://www.twitter.com/${twitter_handle}`}
               data-testid="user-twitter-button"
@@ -71,7 +70,7 @@ export const Details = () => {
             </Button>
           ) : wallet === connectedWallet ? (
             <Button
-              as={Link}
+              as={'a'}
               target="_blank"
               data-testid="user-twitter-button"
               onClick={() => dispatch.modalModel.setModal(Modals.TWITTER)}
