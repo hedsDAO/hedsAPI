@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 import { getTapeById } from '@/api/tape';
 import type { RootModel } from '@/models';
-import { Tape } from '@models/common';
+import { Tape, Song } from '@models/common';
 import { DateTime } from 'luxon';
 
 export const tapeModel = createModel<RootModel>()({
@@ -37,17 +37,18 @@ export const tapeModel = createModel<RootModel>()({
 
       const checkTimeline = () => {
         const now = DateTime.now().toMillis();
-        if (now >= submit.start && now < submit.end) {
+        if (submit !== undefined && now >= submit.start && now < submit.end) {
           return 'submit';
-        } else if (now >= vote.start && now < vote.end) {
+        } else if (vote !== undefined && now >= vote.start && now < vote.end) {
           return 'vote';
-        } else if (now >= mint.start && now < mint.end) {
+        } else if (mint !== undefined && now >= mint.start && now < mint.end) {
           return 'mint';
         } else {
           return 'end';
         }
       };
 
+      const tracks = songs.filter((song: Song) => song.type === 'track');
       const currentCycle = checkTimeline();
 
       const newTape = {
@@ -65,7 +66,7 @@ export const tapeModel = createModel<RootModel>()({
         splits,
         links,
         sampleArtists: sample_artists,
-        tracks: songs,
+        tracks,
       };
       return { ...state, cycle: currentCycle, tape: newTape };
     },
@@ -85,6 +86,7 @@ export const tapeModel = createModel<RootModel>()({
     async getTape(id: string) {
       this.setIsLoading(true);
       const response = await getTapeById(id);
+      console.log(response.data);
       this.setTape(response.data);
       console.log(response.data);
       this.setIsLoading(false);

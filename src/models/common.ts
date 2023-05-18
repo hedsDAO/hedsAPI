@@ -16,6 +16,25 @@ export interface Tape {
   tracks: Song[];
 }
 
+export interface TapeCollectionArg {
+  id: number;
+  contract: string;
+  name: string;
+  image: string;
+}
+export interface TapeCollectionItem {
+  id: number;
+  contract: string;
+  name: string;
+  image: string;
+  quantity: number;
+}
+
+export interface UserCollection {
+  items: { [key: string]: TapeCollectionItem };
+  lastUpdated: number;
+}
+
 interface Timeline {
   mint: { start: number; end: number };
   submit: { start: number; end: number };

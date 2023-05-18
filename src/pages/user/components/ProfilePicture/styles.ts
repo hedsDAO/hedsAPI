@@ -16,13 +16,13 @@ export const $skeletonStyles = (hasProfilePictureLoaded: boolean): SkeletonProps
 });
 
 /**
- * Styles for the Box component in ProfilePicture.
+ * Styles for the Box component in ProfilePicture + manage edit profile.
  * @param {boolean} isHovering - Whether the user is hovering over the profile picture or not.
  * @param {Function} onMouseEnter - Function to call when the mouse enters the Box component.
  * @param {Function} onMouseLeave - Function to call when the mouse leaves the Box component.
  * @returns {BoxProps} Box component properties.
  */
-export const $boxStyles = (isHovering: boolean, onMouseEnter: () => void, onMouseLeave: () => void): BoxProps => ({
+export const $editboxStyles = (isHovering: boolean, onMouseEnter: () => void, onMouseLeave: () => void): BoxProps => ({
   bg: 'black',
   pos: 'relative',
   w: '160px',
@@ -32,6 +32,18 @@ export const $boxStyles = (isHovering: boolean, onMouseEnter: () => void, onMous
   onMouseEnter,
   onMouseLeave,
 });
+
+/**
+ * Styles for the Box component in ProfilePicture.
+ * @returns {BoxProps} Box component properties.
+ */
+export const $boxStyles: BoxProps = {
+  bg: 'black',
+  pos: 'relative',
+  w: '160px',
+  h: '160px',
+  rounded: 'full',
+};
 
 /**
  * Styles for the Image component in ProfilePicture.

@@ -1,3 +1,4 @@
+import { getArtistsAndCurators } from '@/api/user';
 import type { RootModel } from '@/models';
 import { User } from '@/models/common';
 import { ArtistModelState } from '@pages/artists/models/common';
@@ -17,7 +18,18 @@ export const artistsModel = createModel<RootModel>()({
   }),
   effects: () => ({
     async getArtistsAndCurators() {
-      // add get call to get all artist and curators and set them in state
+      try {
+        const response = await getArtistsAndCurators();
+        const sortedArtists = response.data.artists.sort(function (a: any, b: any) {
+          var textA = a.display_name.toUpperCase();
+          var textB = b.display_name.toUpperCase();
+          return textA < textB ? -1 : textA > textB ? 1 : 0;
+        });
+        this.setArtists(sortedArtists);
+        this.setCurators(response.data.curators);
+      } catch (error: any) {
+        console.log(error);
+      }
     },
   }),
 });
