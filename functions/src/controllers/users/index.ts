@@ -5,13 +5,13 @@ import schemaName from '../../../config';
 
 export const getArtistsAndCurators = async () => {
     const artistsResult = await pool.query(`
-      SELECT profile_picture, id, display_name 
+      SELECT profile_picture, id, display_name, wallet 
       FROM ${schemaName}.users 
       WHERE role = 'artist'
     `);
     
     const curatorsResult = await pool.query(`
-      SELECT u.profile_picture, u.id, u.display_name 
+      SELECT u.profile_picture, u.id, u.display_name, u.wallet 
       FROM ${schemaName}.users u
       JOIN ${schemaName}.tape_sample_artists tsa ON u.id = tsa.user_id
       WHERE u.role = 'artist'
