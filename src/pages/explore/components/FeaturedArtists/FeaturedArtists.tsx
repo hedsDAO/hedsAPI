@@ -9,7 +9,7 @@ export const FeaturedArtists = () => {
 
   return (
     <SimpleGrid px={{ base: 5, lg: 0 }} gap={2} maxW={{ lg: '6xl' }} mx="auto" columns={{ base: 1, lg: 3 }}>
-      {featuredArtists?.map((user: User) => {
+      {featuredArtists?.length && featuredArtists?.map((user: User) => {
         return (
           <GridItem colSpan={1}>
             <AspectRatio h="full" ratio={1}>

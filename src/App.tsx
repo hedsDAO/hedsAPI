@@ -9,7 +9,7 @@ import { Tape } from '@/pages/tape/screens/Tape';
 import { Song } from '@/pages/song/screens/Song';
 import { User } from '@/pages/user/screens/User';
 import { NotFound } from '@/pages/404/screens/NotFound';
-import { FAQPage } from '@/pages/FAQ/screens/FAQ';
+import { FAQ } from '@/pages/faq/screens/FAQ';
 import { Artists } from '@/pages/artists/screens/Artists';
 import { Tapes } from '@/pages/tapes/screens/Tapes';
 
@@ -53,7 +53,7 @@ const App = (): JSX.Element => {
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/song/:id" element={<Song />} />
         <Route path="/t/:id" element={<Tape />} />
-        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/faq" element={<FAQ />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
