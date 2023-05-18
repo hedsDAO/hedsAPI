@@ -9,7 +9,7 @@ import { Tape } from '@/pages/tape/screens/Tape';
 import { Song } from '@/pages/song/screens/Song';
 import { User } from '@/pages/user/screens/User';
 import { NotFound } from '@/pages/404/screens/NotFound';
-import { FAQ } from '@/pages/FAQ/screens/FAQ';
+import { FAQ } from '@/pages/faq/screens/FAQ';
 import { Artists } from '@/pages/artists/screens/Artists';
 import { Tapes } from '@/pages/tapes/screens/Tapes';
 
