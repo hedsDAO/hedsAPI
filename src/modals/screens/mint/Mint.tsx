@@ -27,6 +27,7 @@ import { SoundAPI } from '@soundxyz/sdk/api';
 import { SoundClient } from '@soundxyz/sdk';
 import { mainnet, goerli } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import axios from 'axios';
 
 // Constants
 import { Dispatch, store } from '@/store';
@@ -43,6 +44,7 @@ export const Mint = () => {
   const [hasMinted, setHasMinted] = useState<boolean>(false);
   const [isWhiteListed, setIsWhiteListed] = useState<boolean>(false);
 
+  const connectedWallet = useSelector(store.select.userModel.selectWallet);
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
@@ -51,6 +53,18 @@ export const Mint = () => {
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
   });
+
+  const checkWalletInRoot = async () => {
+    const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
+
+    if (response.data.unhashedLeaves.includes(connectedWallet)) {
+      setIsWhiteListed.on();
+    }
+  };
+
+  useEffect(() => {
+    checkWalletInRoot();
+  }, []);
 
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
@@ -125,7 +139,7 @@ export const Mint = () => {
                   <option value="option2">2</option>
                   <option value="option3">3</option>
                 </Select>
-                <Button bgColor="#745CBA" color="white">
+                <Button bgColor="#745CBA" color="white" onClick={handleMintStatus}>
                   Mint
                 </Button>
               </Stack>
