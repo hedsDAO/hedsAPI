@@ -26,6 +26,10 @@ export const updateUserSettings = (user_id: number, userData: UserSettingsData) 
   return axios.put(`${API_PREFIX}/users/${user_id}`, userData);
 };
 
+export const getArtistsAndCurators = () => {
+  return axios.get(`${API_PREFIX}/users/artists-curators`);
+}
+
 export const getFeaturedArtists = () => {
   return axios.get(`${API_PREFIX}/users/featured-artists`);
 }
