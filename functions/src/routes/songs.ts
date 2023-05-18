@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong } from '../controllers/songs';
+import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById } from '../controllers/songs';
 const router = express.Router();
 
 router.get('/:audio', async (req, res) => {
@@ -63,6 +63,16 @@ router.delete('/:song_id/likes', async (req, res) => {
     const userId = parseInt(req.body.user_id);
     await unlikeSong(songId, userId);
     res.status(200).send('Song unliked successfully');
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.get('/:song_id/events', async (req, res) => {
+  try {
+    const song_id = parseInt(req.params.song_id);
+    const events = await getSongEventsById(song_id);
+    res.json(events);
   } catch (error: any) {
     res.status(500).send(error.message);
   }
