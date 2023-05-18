@@ -1,17 +1,18 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
+import { Modals } from '@/modals/models/modalModel';
 
 // Utils
 import { DateTime } from 'luxon';
-import { getTimePassed } from '@/utils';
-import { store } from '@/store';
+import { Dispatch, store } from '@/store';
 
 // Styles
 import * as styles from '@/pages/tape/components/TimelineButtons/styles';
 
 export const TimelineButtons = () => {
+  const dispatch = useDispatch<Dispatch>();
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
 
@@ -74,7 +75,7 @@ export const TimelineButtons = () => {
         </Text>
         <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.mint?.start)}</Text>
       </HStack>
-      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-solid fa-bell" />}>
+      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-solid fa-bell" />} onClick={() => dispatch.modalModel.setModal(Modals.MINT)}>
         {cycle === 'mint' ? 'MINT' : 'GET NOTIFIED'}
       </Button>
     </Stack>
