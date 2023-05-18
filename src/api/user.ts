@@ -18,7 +18,7 @@ export const getUserEventsById = (user_id: number) => {
   return axios.get(`${API_PREFIX}/users/${user_id}/events`);
 };
 
-export const updateUser = (user_id: number, userData: User) => {
+export const updateUser = (user_id: number, userData: Partial<User>) => {
   return axios.put(`${API_PREFIX}/users/${user_id}`, userData);
 };
 
@@ -28,4 +28,8 @@ export const updateUserSettings = (user_id: number, userData: UserSettingsData) 
 
 export const getArtistsAndCurators = () => {
   return axios.get(`${API_PREFIX}/users/artists-curators`);
+}
+
+export const getFeaturedArtists = () => {
+  return axios.get(`${API_PREFIX}/users/featured-artists`);
 }

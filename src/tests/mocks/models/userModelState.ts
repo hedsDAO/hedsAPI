@@ -1,7 +1,7 @@
-import { UserEventTypes } from "@/models/common";
-import { UserModelState } from "@/pages/user/models/common";
+import { UserEventTypes } from '@/models/common';
+import { UserModelState } from '@/pages/user/models/common';
 
-export const userModelState : UserModelState = {
+export const userModelState: UserModelState = {
   user: {
     id: 471,
     profile_picture:
@@ -1384,4 +1384,6 @@ export const userModelState : UserModelState = {
       event_timestamp: '2022-04-19T23:33:23.000Z',
     },
   ],
+  collection_args: [],
+  isFetchingCollection: false,
 };
