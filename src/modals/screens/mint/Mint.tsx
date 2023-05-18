@@ -48,23 +48,28 @@ export const Mint = () => {
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
+  const merkleRoot = '0x41F60DCB50D15915AE00B4F0C480C469F51F2A5A3D38B1B6BA54DBFD29C97334';
 
   const { isConnected } = useAccount();
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
   });
 
-  // const checkWalletInRoot = async () => {
-  //   const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
+  const checkWalletInRoot = async () => {
+    const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
 
-  //   if (response.data.unhashedLeaves.includes(connectedWallet)) {
-  //     setIsWhiteListed.on();
-  //   }
-  // };
+    if (response.data.unhashedLeaves.includes(connectedWallet)) {
+      setIsWhiteListed(true);
+    }
+  };
 
-  // useEffect(() => {
-  //   checkWalletInRoot();
-  // }, []);
+  useEffect(() => {
+    checkWalletInRoot();
+  }, []);
+
+  useEffect(() => {
+    onOpen();
+  }, []);
 
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
@@ -92,6 +97,7 @@ export const Mint = () => {
 
   const handleMintStatus = async () => {
     if (!isConnected) {
+      console.log('not connected');
       dispatch.modalModel.setModal(Modals.CONNECT);
       return;
     }
@@ -100,7 +106,8 @@ export const Mint = () => {
       await mintEdition(value);
       setIsMinting(false);
       setHasMinted(true);
-    } catch {
+    } catch (error) {
+      console.error(error);
       setIsMinting(false);
     }
 
@@ -108,48 +115,77 @@ export const Mint = () => {
   };
 
   return (
-    <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Modal isOpen={true} onClose={onClose} size="2xl">
-        <ModalOverlay />
-        <ModalContent p={3}>
-          <ModalCloseButton color="white" />
-          <ModalBody p={6}>
-            <Text color="#DC89FF">MINT</Text>
-            <Stack direction="row" spacing={4} justifyContent="space-around">
-              <Stack direction="column" spacing={3} w="30%">
-                {sampleArtists.map((artist) => (
-                  <Box display="flex" flexDirection="column" alignItems="center" key={artist.id}>
-                    <Avatar size="lg" src={artist.profile_picture} />
-                    <Text color="white" size="xs" letterSpacing="widest">
-                      {artist.display_name}
-                    </Text>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        setTimeout(() => {
+          dispatch.modalModel.setModal(null);
+        }, 500);
+      }}
+      size="2xl"
+    >
+      <ModalOverlay />
+      <ModalContent p={3}>
+        <ModalCloseButton color="white" />
+        <ModalBody p={6}>
+          <Text color="#DC89FF">MINT</Text>
+          <Stack direction="row" spacing={4} justifyContent="space-around">
+            <Stack direction="column" spacing={3} w="30%">
+              {sampleArtists.map((artist) => (
+                <Box display="flex" flexDirection="column" alignItems="center" key={artist.id}>
+                  <Avatar size="lg" src={artist.profile_picture} />
+                  <Text color="white" size="xs" letterSpacing="widest">
+                    {artist.display_name}
+                  </Text>
+                </Box>
+              ))}
+              {hasMinted ? (
+                <>
+                  <Text color="white" fontSize="xs" fontFamily="inter">
+                    View transaction on Etherscan:
+                  </Text>
+                  <Text color="white" fontSize="lg" textAlign="center" letterSpacing="wider" fontFamily="inter">
+                    Transaction was successful!
+                  </Text>
+                  <Button>Share on Twitter</Button>
+                </>
+              ) : (
+                <>
+                  <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
+                    <Text color="white">PRICE</Text>
+                    <Text color="#DC89FF">0.005</Text>
                   </Box>
-                ))}
-                <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
-                  <Text color="white">PRICE</Text>
-                  <Text color="#DC89FF">0.005</Text>
-                </Box>
-                <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
-                  <Text color="white">MINTED</Text>
-                  <Text color="#DC89FF">100</Text>
-                </Box>
-                <Select bgColor="#26232D" variant="filled" color="white" placeholder="Quantity">
-                  <option value="option1">1</option>
-                  <option value="option2">2</option>
-                  <option value="option3">3</option>
-                </Select>
-                <Button bgColor="#745CBA" color="white">
-                  Mint
-                </Button>
-              </Stack>
-              <Center>
-                <Image src={cover} alt="tape-cover" boxSize="xs" border="1px" borderColor="heds.400" borderRadius="md" />
-              </Center>
+                  <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
+                    <Text color="white">MINTED</Text>
+                    <Text color="#DC89FF">100</Text>
+                  </Box>
+                  <Select
+                    disabled={isMinting}
+                    bgColor="#26232D"
+                    variant="filled"
+                    color="white"
+                    placeholder="Quantity"
+                    onChange={(e) => setValue(parseInt(e.target.value))}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </Select>
+                  <Button bgColor="#745CBA" color="white" onClick={handleMintStatus} isLoading={isMinting}>
+                    Mint
+                  </Button>
+                </>
+              )}
             </Stack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+            <Center>
+              <Image src={cover} alt="tape-cover" boxSize="xs" border="1px" borderColor="heds.400" borderRadius="md" />
+            </Center>
+          </Stack>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
