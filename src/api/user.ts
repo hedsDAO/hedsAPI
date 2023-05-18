@@ -25,3 +25,7 @@ export const updateUser = (user_id: number, userData: Partial<User>) => {
 export const updateUserSettings = (user_id: number, userData: UserSettingsData) => {
   return axios.put(`${API_PREFIX}/users/${user_id}`, userData);
 };
+
+export const getFeaturedArtists = () => {
+  return axios.get(`${API_PREFIX}/users/featured-artists`);
+}
