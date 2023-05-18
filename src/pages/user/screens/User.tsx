@@ -13,6 +13,7 @@ import { ProfilePicture } from '@/pages/user/components/ProfilePicture/ProfilePi
 import { RecentEvents } from '@/pages/user/components/RecentEvents/RecentEvents';
 import { Spotlight } from '@/pages/user/components/Spotlight/Spotlight';
 import { WalletAndVP } from '@/pages/user/components/WalletAndVP/WalletAndVP';
+import { RefreshCollectionButton } from '@/pages/user/components/RefreshCollectionButton/RefreshCollectionButton';
 import { UserNavTabs } from '@/pages/user/models/common';
 import { Dispatch, store } from '@/store';
 
@@ -61,8 +62,9 @@ export const User = () => {
         <GridItem {...styles.$recentEventsItemStyles}>
           <RecentEvents />
         </GridItem>
-        <GridItem {...styles.$navItemStyles}>
+        <GridItem as={Flex} {...styles.$navItemStyles}>
           <Nav tabs={USER_NAV_TABS} />
+          <RefreshCollectionButton />
         </GridItem>
         <GridItem {...styles.$navItemStyles}>
           {currentTab === UserNavTabs.COLLECTION && <Collection />}
