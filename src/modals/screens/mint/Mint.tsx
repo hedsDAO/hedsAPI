@@ -54,17 +54,17 @@ export const Mint = () => {
     chains: [mainnet, goerli],
   });
 
-  const checkWalletInRoot = async () => {
-    const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
+  // const checkWalletInRoot = async () => {
+  //   const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
 
-    if (response.data.unhashedLeaves.includes(connectedWallet)) {
-      setIsWhiteListed.on();
-    }
-  };
+  //   if (response.data.unhashedLeaves.includes(connectedWallet)) {
+  //     setIsWhiteListed.on();
+  //   }
+  // };
 
-  useEffect(() => {
-    checkWalletInRoot();
-  }, []);
+  // useEffect(() => {
+  //   checkWalletInRoot();
+  // }, []);
 
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
@@ -139,7 +139,7 @@ export const Mint = () => {
                   <option value="option2">2</option>
                   <option value="option3">3</option>
                 </Select>
-                <Button bgColor="#745CBA" color="white" onClick={handleMintStatus}>
+                <Button bgColor="#745CBA" color="white">
                   Mint
                 </Button>
               </Stack>
