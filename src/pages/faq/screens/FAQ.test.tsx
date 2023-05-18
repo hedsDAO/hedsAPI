@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { FAQPage } from './FAQ';
+import { FAQ } from './FAQ';
 
-describe('FAQPage', () => {
-  it('renders the FAQPage component', () => {
-    render(<FAQPage />);
+describe('FAQ', () => {
+  it('renders the FAQ component', () => {
+    render(<FAQ />);
     const heading = screen.getByRole('heading', { name: /frequently asked questions/i });
     expect(heading).toBeInTheDocument();
   });
 
   it('renders all FAQ items', () => {
-    render(<FAQPage />);
+    render(<FAQ />);
     const faqItems = screen.getAllByRole('button');
     expect(faqItems.length).toBe(3);
   });
