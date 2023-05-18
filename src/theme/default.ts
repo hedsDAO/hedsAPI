@@ -1,4 +1,3 @@
-
 import { extendTheme } from '@chakra-ui/react';
 import buttonTheme from '@/theme/custom/connectButton';
 import modalTheme from './custom/modalTheme';
@@ -12,10 +11,10 @@ export const defaultTheme = extendTheme({
       bg: '#17151C',
       bg2: '#27252B',
       bg3: '#201C27',
-      bg4: "#060212",
-      bg5: "#686868",
-      bg6: "#1F1C26",
-      bg7: "#26232D",
+      bg4: '#060212',
+      bg5: '#686868',
+      bg6: '#1F1C26',
+      bg7: '#26232D',
       bg8: '#373737',
       100: '#9293FF',
       200: '#AC8FFF',
@@ -70,8 +69,10 @@ export const defaultTheme = extendTheme({
         maxWidth: '100vw',
         overscrollBehavior: 'none !important',
       },
+      '.marquee': {
+        minWidth: 'unset',
+      },
       ...gradientAnimations,
     }),
   },
 });
-

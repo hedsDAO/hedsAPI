@@ -75,4 +75,6 @@ export const $recentEventsItemStyles: GridItemProps = {
 
 export const $navItemStyles: GridItemProps = {
   colSpan: 6,
+  justifyContent: 'space-between',
+  alignItems: 'center'
 };

@@ -32,32 +32,42 @@ export const TimelineButtons = () => {
 
   return (
     <Stack {...styles.$timelineButtonsStackStyles}>
-      <HStack>
-        <Text {...styles.$cycleNameTextStyles}>Submit</Text>
-        {cycle === 'submit' ? (
-          <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
-        ) : (
-          <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
-        )}
-        <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.start)}</Text>
-      </HStack>
-      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-solid fa-arrow-down-to-line" />} isDisabled={!(cycle === 'submit')}>
-        UPLOAD SUBMISSION
-      </Button>
-      <HStack>
-        <Text color="#9293FF" fontFamily="sans-serif">
-          Vote
-        </Text>
-        {cycle === 'vote' ? (
-          <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
-        ) : (
-          <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
-        )}
-        <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
-      </HStack>
-      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'vote')}>
-        VOTE NOW
-      </Button>
+      {timeline?.submit && (
+        <>
+          <HStack>
+            <Text color="#9293FF" fontFamily="sans-serif">
+              Vote
+            </Text>
+            {cycle === 'vote' ? (
+              <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
+            ) : (
+              <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
+            )}
+            <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
+          </HStack>
+          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'vote')}>
+            VOTE NOW
+          </Button>
+        </>
+      )}
+      {timeline?.vote && (
+        <>
+          <HStack>
+            <Text color="#9293FF" fontFamily="sans-serif">
+              Vote
+            </Text>
+            {cycle === 'vote' ? (
+              <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
+            ) : (
+              <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
+            )}
+            <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
+          </HStack>
+          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'vote')}>
+            VOTE NOW
+          </Button>
+        </>
+      )}
       <HStack>
         <Text color="#9293FF" fontFamily="sans-serif">
           Mint
