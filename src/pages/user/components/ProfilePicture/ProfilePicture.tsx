@@ -13,17 +13,25 @@ import { Modals } from '@/modals/models/modalModel';
 
 export const ProfilePicture = () => {
   const dispatch = useDispatch<Dispatch>();
+  const connectedWallet = useSelector(store.select.authModel.selectWallet);
+  const currentWallet = useSelector(store.select.userModel.selectWallet);
   const profile_picture = useSelector(store.select.userModel.selectProfilePicture);
   const [isHovering, setIsHovering] = useBoolean();
   const [hasProfilePictureLoaded, setHasProfilePicturedLoaded] = useBoolean();
   return (
     <Skeleton {...styles.$skeletonStyles(hasProfilePictureLoaded)}>
-      <Box onClick={() => dispatch.modalModel.setModal(Modals.SETTINGS)} {...styles.$boxStyles(isHovering, setIsHovering.on, setIsHovering.off)}>
-        <Image {...styles.$imageStyles(profile_picture, isHovering, setHasProfilePicturedLoaded.on)} />
-        <Center {...styles.$centerStyles(isHovering)}>
-          <Text {...styles.$textStyles}>Edit Profile</Text>
-        </Center>
-      </Box>
+      {connectedWallet === currentWallet ? (
+        <Box onClick={() => dispatch.modalModel.setModal(Modals.SETTINGS)} {...styles.$editboxStyles(isHovering, setIsHovering.on, setIsHovering.off)}>
+          <Image {...styles.$imageStyles(profile_picture, isHovering, setHasProfilePicturedLoaded.on)} />
+          <Center {...styles.$centerStyles(isHovering)}>
+            <Text {...styles.$textStyles}>Edit Profile</Text>
+          </Center>
+        </Box>
+      ) : (
+        <Box {...styles.$boxStyles}>
+          <Image {...styles.$imageStyles(profile_picture, false, setHasProfilePicturedLoaded.on)} />
+        </Box>
+      )}
     </Skeleton>
   );
 };

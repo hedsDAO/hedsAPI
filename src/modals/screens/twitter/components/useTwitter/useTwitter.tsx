@@ -14,23 +14,17 @@ export const useTwitter = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector(store.select.authModel.selectUser);
-  const twitterState = useSelector(store.select.twitterModel.selectState);
 
   useEffect(() => {
     onOpen();
     dispatch.twitterModel.setUser(user);
   }, []);
 
-  useEffect(() => {
-    if (isOpen && twitterState === ({ currentStep: TwitterModalSteps.GENERATE_AND_COPY_TWEET } as TwitterModalState)) {
-      onClose();
-      setTimeout(() => {
-        dispatch.modalModel.setModal(null);
-      }, 500);
-    }
-  }, [twitterState]);
-
-  const handleClose = () => dispatch.twitterModel.clearState();
+  const handleClose = () => {
+    dispatch.twitterModel.clearState();
+    onClose();
+    setTimeout(() => dispatch.modalModel.clearState(), 500);
+  };
 
   return { isOpen, handleClose };
 };

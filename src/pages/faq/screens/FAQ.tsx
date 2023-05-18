@@ -26,7 +26,7 @@ const faqData: FAQData[] = [
   },
 ];
 
-export const FAQPage: FC = () => {
+export const FAQ = () => {
   return (
     <Container centerContent>
       <VStack {...styles.$stackStyles}>

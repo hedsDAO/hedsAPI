@@ -23,4 +23,4 @@ exports.newSubmission = newSubmission;
 exports.activeListings = activeListings;
 exports.users = users;
 
-exports.api = functions.https.onRequest(app);
+exports.api = app;
