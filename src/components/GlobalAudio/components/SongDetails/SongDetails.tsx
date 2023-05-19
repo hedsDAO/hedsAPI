@@ -10,12 +10,12 @@ import * as styles from '@/components/GlobalAudio/components/SongDetails/styles'
  */
 
 export const SongDetails = () => {
-  const songName = useSelector(store.select.globalAudioModel.selectCurrentSongName);
-  const songArtists = useSelector(store.select.globalAudioModel.selectCurrentSongArtists);
+  const songName = useSelector(store.select.audioModel.selectTrackName);
+  const artists = useSelector(store.select.audioModel.selectArtists);
   return (
     <Stack {...styles.$songDetailsStackStyles}>
       <Text {...styles.$songNameTextStyles}>{songName}</Text>
-      <Text {...styles.$songArtistsTextStyles}>{songArtists?.length && songArtists?.map((artist) => artist)?.join(', ')}</Text>
+      <Text {...styles.$songArtistsTextStyles}>{artists}</Text>
     </Stack>
   );
 };

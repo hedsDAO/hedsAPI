@@ -10,12 +10,12 @@ import * as styles from '@/components/GlobalAudio/components/SongCover/styles';
  */
 export const SongCover = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
-  const currentSong = useSelector(store.select.globalAudioModel.selectCurrentSong);
+  const cover = useSelector(store.select.audioModel.selectCover);
 
   return (
     <AspectRatio {...styles.$songCoverAspectRatioStyles}>
-      <Skeleton {...styles.$songCoverSkeletonStyles(!!currentSong && hasImageLoaded)}>
-        <Image onLoad={setHasImageLoaded.on} src={currentSong?.cover} {...styles.$songCoverImageStyles} />
+      <Skeleton {...styles.$songCoverSkeletonStyles(hasImageLoaded)}>
+        <Image onLoad={setHasImageLoaded.on} src={cover} {...styles.$songCoverImageStyles} />
       </Skeleton>
     </AspectRatio>
   );

@@ -11,9 +11,11 @@ export const defaultTheme = extendTheme({
       bg: '#17151C',
       bg2: '#27252B',
       bg3: '#201C27',
-      bg4: "#060212",
-      bg5: "#686868",
-      bg6: "#1F1C26",
+      bg4: '#060212',
+      bg5: '#686868',
+      bg6: '#1F1C26',
+      bg7: '#26232D',
+      bg8: '#373737',
       100: '#9293FF',
       200: '#AC8FFF',
       300: '#C48CFF',
@@ -21,7 +23,7 @@ export const defaultTheme = extendTheme({
       500: '#26232D',
       600: '#17151C',
       700: '#745CBA',
-      800: '#CDCDCD'
+      800: '#CDCDCD',
     },
     button: {
       primary: '#745CBA',
@@ -63,6 +65,12 @@ export const defaultTheme = extendTheme({
     global: (props: any) => ({
       'html, body': {
         background: 'heds.bg',
+        height: '100%',
+        maxWidth: '100vw',
+        overscrollBehavior: 'none !important',
+      },
+      '.marquee': {
+        minWidth: 'unset',
       },
       ...gradientAnimations,
     }),

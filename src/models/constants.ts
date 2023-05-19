@@ -1,1 +1,1 @@
-export const API_PREFIX = 'http://localhost:5001/heds-104d8/us-central1/api'
+export const API_PREFIX = 'https://us-central1-heds-104d8.cloudfunctions.net/api'

@@ -24,6 +24,7 @@ export const authModel = createModel<RootModel>()({
     selectDescription: () => slice((state) => state.user?.description),
     selectUserLikes: () => slice((state) => state.userLikes),
     selectUserId: () => slice((state) => state.user?.id),
+    selectWallet: () => slice((state) => state.user?.wallet),
   }),
   effects: () => ({
     async getUser(wallet: string) {
