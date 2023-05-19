@@ -197,3 +197,9 @@ export const unlikeSong = async (songId: number, userId: number) => {
     throw new Error(`Unable to unlike song: ${error.message}`);
   }
 };
+
+export const getSongEventsById = async (song_id: number) => {
+  const query = `SELECT * FROM ${schemaName}.song_events WHERE song_id = $1`;
+  const { rows } = await pool.query(query, [song_id]);
+  return rows;
+};
