@@ -2,7 +2,6 @@ import { Button } from '@chakra-ui/react';
 import { createClient } from 'hedsvote';
 import { useSigner } from 'wagmi';
 import mockProposal from './mocks';
-import { Proposal } from './models';
 
 export const Vote = () => {
   const { data: signer } = useSigner();
@@ -29,12 +28,6 @@ export const Vote = () => {
       console.error(e);
     }
   };
-
-  const takeProposal = (proposal: Proposal) => {
-    return proposal;
-  };
-
-  takeProposal(mockProposal);
 
   return <Button onClick={handleCreateProposal}>Click</Button>;
 };
