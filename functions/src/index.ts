@@ -23,9 +23,4 @@ exports.newSubmission = newSubmission;
 exports.activeListings = activeListings;
 exports.users = users;
 
-export default functions
-.runWith({
-  vpcConnector: "heds-app-connector",
-  vpcConnectorEgressSettings: "PRIVATE_RANGES_ONLY",
-})
-.https.onRequest(app);
+exports.api = functions.https.onRequest(app);

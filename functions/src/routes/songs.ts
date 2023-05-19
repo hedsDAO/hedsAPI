@@ -1,9 +1,11 @@
 import * as express from 'express';
+import * as functions from 'firebase-functions'
 import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById, getManySongs } from '../controllers/songs';
 const router = express.Router();
 
 router.get('/many-songs', async (req, res) => {
   try {
+    functions.logger.log(req.query?.songHashes, 'GET /many-songs')
     const songHashes = req.query?.songHashes?.toString().split(',');
     if (Array.isArray(songHashes)) {
       const requestedSongs = await getManySongs(songHashes);
