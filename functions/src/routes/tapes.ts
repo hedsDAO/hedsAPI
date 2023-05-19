@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { getTapeById, createTape, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs } from '../controllers/tapes';
 const router = express.Router();
+import * as functions from 'firebase-functions';
 
 router.get('/get-collection-args', async (req, res) => {
   try {
@@ -13,6 +14,7 @@ router.get('/get-collection-args', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
+    functions.logger.log('GET /tapes')
     const tapesInfo = await getAllTapes();
     res.json(tapesInfo);
   } catch (error: any) {

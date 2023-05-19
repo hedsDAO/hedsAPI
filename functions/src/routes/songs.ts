@@ -1,6 +1,22 @@
 import * as express from 'express';
-import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong } from '../controllers/songs';
+import * as functions from 'firebase-functions'
+import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById, getManySongs } from '../controllers/songs';
 const router = express.Router();
+
+router.get('/many-songs', async (req, res) => {
+  try {
+    functions.logger.log(req.query?.songHashes, 'GET /many-songs')
+    const songHashes = req.query?.songHashes?.toString().split(',');
+    functions.logger.log(songHashes, 'songHashes');
+    if (Array.isArray(songHashes)) {
+      const requestedSongs = await getManySongs(songHashes);
+      if (!requestedSongs) res.status(404).json({ error: 'Songs not found' });
+      res.json(requestedSongs);
+    }
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
 
 router.get('/:audio', async (req, res) => {
   try {
@@ -41,6 +57,16 @@ router.get('/:song_id/likes', async (req, res) => {
     const song_id = parseInt(req.params.song_id);
     const likes = await getLikesBySongId(song_id);
     res.json(likes);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.get('/:song_id/events', async (req, res) => {
+  try {
+    const song_id = parseInt(req.params.song_id);
+    const events = await getSongEventsById(song_id);
+    res.json(events);
   } catch (error: any) {
     res.status(500).send(error.message);
   }
