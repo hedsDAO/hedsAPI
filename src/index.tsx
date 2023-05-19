@@ -15,6 +15,7 @@ import { GlobalAudio } from '@/components/GlobalAudio/screens/GlobalAudio';
 import { AuthWrapper } from './auth/components/AuthWrapper';
 import { getPersistor } from '@rematch/persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import { AudioControllerProvider } from '@/hooks/useAudio/models/AudioContext';
 import { store } from './store';
 
 import App from '@/App';
@@ -22,7 +23,7 @@ import * as gaEvents from './events';
 
 import 'animate.css';
 import './index.css';
-import '../build/app/output.css';
+// import '../build/app/output.css';
 import '@fontsource/space-mono';
 import '@fontsource/inter';
 import '@fontsource/poppins';
@@ -49,13 +50,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ChakraProvider theme={defaultTheme}>
         <BrowserRouter>
           <PersistGate persistor={persistor}>
-            <AuthWrapper>
-              <ModalWrapper>
-                <GlobalAudio>
-                  <App />
-                </GlobalAudio>
-              </ModalWrapper>
-            </AuthWrapper>
+            <AudioControllerProvider>
+              <AuthWrapper>
+                <ModalWrapper>
+                  <GlobalAudio>
+                    <App />
+                  </GlobalAudio>
+                </ModalWrapper>
+              </AuthWrapper>
+            </AudioControllerProvider>
           </PersistGate>
         </BrowserRouter>
       </ChakraProvider>

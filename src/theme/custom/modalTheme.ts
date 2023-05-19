@@ -1,4 +1,3 @@
-import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
 import { modalAnatomy as parts } from '@chakra-ui/anatomy';
 import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
 
@@ -6,7 +5,7 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 
 const baseStyle = definePartsStyle({
   overlay: {
-    bg: 'heds.500',
+    bg: 'heds.bg4',
     opacity: '10%',
   },
   dialog: {

@@ -1,7 +1,16 @@
 import * as express from 'express';
-import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents } from '../controllers/users';
+import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents, getUserListeningHistory, addSongToListeningHistory, getArtistsAndCurators } from '../controllers/users';
 
 const router = express.Router();
+
+router.get('/artists-curators', async (req, res) => {
+  try {
+    const result = await getArtistsAndCurators();
+    return res.json(result);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
 
 router.get('/:wallet', async (req, res) => {
   try {
@@ -20,6 +29,17 @@ router.post('/', async (req, res) => {
     return res.status(201).json(newUser);
   } catch (error: any) {
     return res.status(500).send(error.message);
+  }
+});
+
+router.post('/:user_id/listening-history', async (req, res) => {
+  try {
+    const user_id = parseInt(req.params.user_id);
+    const { song_id } = req.body;
+    const result = await addSongToListeningHistory(user_id, song_id);
+    res.status(201).json(result);
+  } catch (error: any) {
+    res.status(500).send(error.message);
   }
 });
 
@@ -64,6 +84,16 @@ router.get('/:user_id/likes', async (req, res) => {
   }
 });
 
+router.get('/:user_id/listening-history', async (req, res) => {
+  try {
+    const user_id = parseInt(req.params.user_id);
+    const listeningHistory = await getUserListeningHistory(user_id);
+    res.json(listeningHistory);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
 router.get('/:user_id/events', async (req, res) => {
   try {
     const user_id = parseInt(req.params.user_id);
@@ -73,5 +103,6 @@ router.get('/:user_id/events', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 export default router;

@@ -2,6 +2,11 @@ import { pool } from '../../database';
 import { TapeData } from './types';
 import schemaName from '../../../config';
 
+export const getAllTapes = async () => {
+    const { rows} = await pool.query(`SELECT id, name, image FROM ${schemaName}.tapes`);
+    return rows;
+};
+
 export const getTapeById = async (tapeId: number) => {
   const query = `
     SELECT t.*, u.id AS sample_artist_id, u.display_name AS sample_artist_display_name, u.profile_picture AS sample_artist_profile_picture
@@ -102,4 +107,11 @@ export const updateTape = async (tape_id: number, tapeData: Partial<TapeData>): 
 export const deleteTape = async (tape_id: number): Promise<any> => {
   const { rows } = await pool.query(`DELETE FROM ${schemaName}.tapes WHERE id = $1 RETURNING *`, [tape_id]);
   return rows[0];
+};
+
+export const getTapeContractArgs = async (): Promise<any> => {
+  const { rows } = await pool.query(`
+    SELECT id, contract, name, image FROM ${schemaName}.tapes
+  `);
+  return rows;
 };

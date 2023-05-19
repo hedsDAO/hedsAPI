@@ -2,16 +2,50 @@ export interface Tape {
   id: number;
   contract: string;
   name: string;
-  merkle_root: string;
+  merkleRoot: string;
   description: string;
   image: string;
-  proposal_id: string;
+  proposalId: string;
   video: string;
   bpm: number;
-  timeline: string;
+  timeline: Timeline;
   type: string;
   splits: string;
   links: string;
+  sampleArtists: Artist[];
+  tracks: Song[];
+}
+
+export interface TapeCollectionArg {
+  id: number;
+  contract: string;
+  name: string;
+  image: string;
+}
+export interface TapeCollectionItem {
+  id: number;
+  contract: string;
+  name: string;
+  image: string;
+  quantity: number;
+}
+
+export interface UserCollection {
+  items: { [key: string]: TapeCollectionItem };
+  lastUpdated: number;
+}
+
+interface Timeline {
+  mint: { start: number; end: number };
+  submit: { start: number; end: number };
+  vote: { start: number; end: number };
+  premint?: { start: number; end: number };
+}
+
+export interface Artist {
+  display_name: string;
+  id: number;
+  profile_picture: string;
 }
 
 export interface User {
@@ -44,12 +78,18 @@ export interface Song {
     proposalId?: string;
   };
   cyanite_id: string;
-  track_data: any;
+  track_data: {
+    track_no?: number;
+    tape_name: string;
+  };
   total_likes: number | null;
   artists?: SongArtist[];
   type: any;
   created: any;
   video?: string;
+  artist_id?: number;
+  artist_display_name?: string;
+  artist_display_picture?: string;
 }
 
 export interface UserSong extends Song {
@@ -81,4 +121,52 @@ export enum UserEventTypes {
   USER_CREATED = 'user_created',
 }
 
+export interface SongEvents {
+  id: number;
+  user_id: number;
+  song_id: number;
+  event_type: SongEventTypes;
+  event_data: {
+    message: string;
+    subject: string;
+  };
+  event_timestamp: string;
+}
+
+export enum SongEventTypes {
+  SUBMISSION = 'tape_submission',
+  PLACEMENT = 'tape_placement',
+  SONG_LIKE = 'song_like',
+}
+
 export type UserSettingsData = Partial<Pick<User, 'profile_picture' | 'banner' | 'description'>>;
+
+export interface CyaniteData {
+  bpmRangeAdjusted: number;
+  bpmPrediction: { value: number; confidence: number };
+  genreTags: string[];
+  subgenreTags: string[];
+  emotionalProfile: string;
+  keyPrediction: { value: string; confidence: number };
+  mood: {
+    aggressive: number;
+    calm: number;
+    chilled: number;
+    dark: number;
+    energetic: number;
+    epic: number;
+    ethereal: number;
+    happy: number;
+    romantic: number;
+    sad: number;
+    scary: number;
+    sexy: number;
+    uplifting: number;
+  };
+  moodAdvancedTags: string[];
+  musicalEraTag: string;
+  timeSignature: string;
+  transformerCaption: string;
+}
+
+
