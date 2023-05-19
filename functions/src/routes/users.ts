@@ -1,10 +1,12 @@
 import * as express from 'express';
 import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents, getUserListeningHistory, addSongToListeningHistory, getArtistsAndCurators } from '../controllers/users';
+import * as functions from 'firebase-functions';
 
 const router = express.Router();
 
 router.get('/artists-curators', async (req, res) => {
   try {
+    functions.logger.log('GET /artists-curators')
     const result = await getArtistsAndCurators();
     return res.json(result);
   } catch (error: any) {

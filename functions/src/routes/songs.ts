@@ -1,10 +1,13 @@
 import * as express from 'express';
+import * as functions from 'firebase-functions'
 import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById, getManySongs } from '../controllers/songs';
 const router = express.Router();
 
 router.get('/many-songs', async (req, res) => {
   try {
+    functions.logger.log(req.query?.songHashes, 'GET /many-songs')
     const songHashes = req.query?.songHashes?.toString().split(',');
+    functions.logger.log(songHashes, 'songHashes');
     if (Array.isArray(songHashes)) {
       const requestedSongs = await getManySongs(songHashes);
       if (!requestedSongs) res.status(404).json({ error: 'Songs not found' });
@@ -86,16 +89,6 @@ router.delete('/:song_id/likes', async (req, res) => {
     const userId = parseInt(req.body.user_id);
     await unlikeSong(songId, userId);
     res.status(200).send('Song unliked successfully');
-  } catch (error: any) {
-    res.status(500).send(error.message);
-  }
-});
-
-router.get('/:song_id/events', async (req, res) => {
-  try {
-    const song_id = parseInt(req.params.song_id);
-    const events = await getSongEventsById(song_id);
-    res.json(events);
   } catch (error: any) {
     res.status(500).send(error.message);
   }

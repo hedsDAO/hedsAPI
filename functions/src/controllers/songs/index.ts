@@ -214,9 +214,7 @@ export const getManySongs = async (songHashes: string[]) => {
   try {
     const prefixedSongHashes = songHashes.map((hash) => `https://www.heds.cloud/ipfs/${hash}`);
     const placeholders = prefixedSongHashes.map((_, i) => `$${i + 1}`).join(',');
-    console.log(placeholders, 'placeholders');
     const songResult = await pool.query(`SELECT * FROM heds.songs WHERE audio IN (${placeholders})`, songHashes);
-    console.log(songResult, 'results');
     if (songResult.rows.length === 0) return null;
 
     const songs = songResult.rows;
