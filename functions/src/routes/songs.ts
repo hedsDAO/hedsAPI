@@ -91,14 +91,4 @@ router.delete('/:song_id/likes', async (req, res) => {
   }
 });
 
-router.get('/:song_id/events', async (req, res) => {
-  try {
-    const song_id = parseInt(req.params.song_id);
-    const events = await getSongEventsById(song_id);
-    res.json(events);
-  } catch (error: any) {
-    res.status(500).send(error.message);
-  }
-});
-
 export default router;
