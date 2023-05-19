@@ -1,6 +1,17 @@
 import * as express from 'express';
-import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById } from '../controllers/songs';
+import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById, getManySongs } from '../controllers/songs';
 const router = express.Router();
+
+
+router.get('/many-songs', async (req, res) => {
+  try {
+    const songHashes = req.query?.songHashes?.toString().split(',');
+    if (Array.isArray(songHashes)) {
+      const requestedSongs = await getManySongs(songHashes);
+      if (!requestedSongs) res.status(404).json({ error: 'Songs not found' });
+      res.json(requestedSongs);
+  }
+});
 
 router.get('/:audio', async (req, res) => {
   try {
@@ -46,6 +57,16 @@ router.get('/:song_id/likes', async (req, res) => {
   }
 });
 
+router.get('/:song_id/events', async (req, res) => {
+  try {
+    const song_id = parseInt(req.params.song_id);
+    const events = await getSongEventsById(song_id);
+    res.json(events);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
 router.post('/:song_id/likes', async (req, res) => {
   try {
     const songId = parseInt(req.params.song_id);
@@ -67,7 +88,7 @@ router.delete('/:song_id/likes', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
+  
 router.get('/:song_id/events', async (req, res) => {
   try {
     const song_id = parseInt(req.params.song_id);
