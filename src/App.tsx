@@ -12,7 +12,8 @@ import { NotFound } from '@/pages/404/screens/NotFound';
 import { FAQ } from '@/pages/faq/screens/FAQ';
 import { Artists } from '@/pages/artists/screens/Artists';
 import { Tapes } from '@/pages/tapes/screens/Tapes';
-import { Vote } from '@/pages/vote/screens/Vote';
+import { TestSDK } from '@/pages/vote/screens/TestSDK';
+// import { Vote } from '@/pages/vote/screens/Vote';
 
 import { Footer } from '@/components/Footer/Footer';
 import { Navbar } from '@/components/Navbar/Navbar';
@@ -55,7 +56,8 @@ const App = (): JSX.Element => {
         <Route path="/song/:id" element={<Song />} />
         <Route path="/t/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/vote" element={<Vote />} />
+        <Route path="/sdk" element={<TestSDK />} />
+        {/* <Route path="/Vote" element={<Vote />} /> */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

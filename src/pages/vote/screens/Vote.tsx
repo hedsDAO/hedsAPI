@@ -1,33 +1,107 @@
-import { Button } from '@chakra-ui/react';
-import { createClient } from 'hedsvote';
-import { useSigner } from 'wagmi';
-import mockProposal from './mocks';
+import { useSelector } from 'react-redux';
+// Components
+import { Box, Divider, Flex, Heading, Stack, Text, Tooltip, useBoolean, Button, Avatar } from '@chakra-ui/react';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { formatWallet } from '@/utils';
+
+import { Header } from '@/pages/song/components/Header/Header';
+import { Waveform } from '@pages/song/components/Waveform/Waveform';
+import { useParams } from 'react-router-dom';
+
+import * as styles from '@pages/vote/screens/styles';
+
+// Utils
+import { Dispatch, store } from '@/store';
+
+// Models
+import { QuadraticVote } from 'hedsvote';
+import { useNavigate } from 'react-router-dom';
+
+// Constants
+// import { OLD_TAPES } from '@pages/vote/store/constants';
 
 export const Vote = () => {
-  const { data: signer } = useSigner();
-  const { createSpace, createProposal } = createClient();
+  const { id } = useParams();
+  const [isShowingAllResults, setIsShowingAllResults] = useBoolean();
+  const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
+  const proposal = useSelector(store.select.voteModel.selectProposal);
+  const song = useSelector(store.select.songModel.selectSong);
 
-  const handleCreateSpace = async () => {
-    try {
-      const spaceData = {
-        name: 'test',
-        authors: ['0x6402fE3Af805FcEe00E9b4b635e689Dc0d1FFFbF', '0x55C59AE5b124261d021421f07C6cad699C993b3d', '0x3a62e7e7Ff39927f687C560C106fCdBC820BB976'],
-      };
-      const newSpace = await createSpace(signer, spaceData);
-      console.log(newSpace);
-    } catch (e) {
-      console.error(e);
-    }
+  // const isOldTape = OLD_TAPES.includes(id);
+
+  return (
+    <Box>
+      <Header />
+      {song && <Waveform />}
+      <Divider {...styles.$dividerStyles} />
+
+      <Stack>
+        <Heading
+          mt={{ base: 5, lg: 10 }}
+          py={{ base: 0, lg: 1 }}
+          className="animate__animated animate__fadeIn"
+          fontWeight="medium"
+          letterSpacing="widest"
+          size={['xs', 'sm']}
+          color={'gray.900'}
+        >
+          RESULTS
+        </Heading>
+        <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1}>
+          {votes
+            .sort((a, b) => b.vp - a.vp)
+            .slice(0, isShowingAllResults ? -1 : 5)
+            .map((vote) => (
+              <VoterCard vote={vote} key={vote.voter} />
+            ))}
+        </Stack>
+        <Button borderColor="gray.500" fontWeight={'normal'} fontSize={'xs'} size="sm" variant={'outline'} onClick={setIsShowingAllResults.toggle}>
+          {isShowingAllResults ? 'show less' : 'show all'}
+        </Button>
+      </Stack>
+    </Box>
+  );
+};
+
+const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
+  const { voter, vp } = vote;
+  const choices = useSelector(store.select.voteModel.selectProposalChoices);
+  const resultsUserData = useSelector(store.select.voteModel.selectResultsUserData);
+  const navigate = useNavigate();
+  const formatChoiceSelection = (voteObject: { [id: string]: number }) => {
+    const totalScore = Object.values(voteObject).reduce((a, b) => a + b, 0);
+    const selectedChoices = Object.keys(voteObject).map((id) => {
+      const choiceId = parseInt(id) - 1;
+      const choice = choices[choiceId];
+      const percentage = +((voteObject[id] / totalScore) * 100).toFixed(2);
+      return `${percentage}% for ${choice?.name ? choice.name : ''}`;
+    });
+    return selectedChoices.join(', ');
   };
 
-  const handleCreateProposal = async () => {
-    try {
-      const proposal = await createProposal(signer, mockProposal);
-      console.log(proposal);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  return <Button onClick={handleCreateProposal}>Click</Button>;
+  return (
+    <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
+      <Flex justifyContent="space-between" px={1} py={2}>
+        <Flex gap={2} alignItems={'center'}>
+          <Avatar
+            onClick={() => navigate(`/u/${vote.voter.toLowerCase()}`)}
+            borderRadius={'sm'}
+            src={resultsUserData?.[vote.voter.toLowerCase()]?.profilePicture}
+            size="xs"
+          />
+          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
+            {resultsUserData?.[vote.voter.toLowerCase()]?.displayName || formatWallet(voter)}
+          </Text>
+        </Flex>
+        <Flex gap={2} alignItems="center">
+          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
+            {vp} HED
+          </Text>
+          <Tooltip label={formatChoiceSelection(vote.choice)}>
+            <InfoOutlineIcon color="gray.500" boxSize={3} />
+          </Tooltip>
+        </Flex>
+      </Flex>
+    </Box>
+  );
 };
