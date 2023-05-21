@@ -48,6 +48,10 @@ interface VoteChoice {
   amount: number;
 }
 
+interface ChoiceWithScore extends Choice {
+  score: number;
+}
+
 const voteObj = {
   ipfs_hash: 'QmXPniiThBcS8KfD7CqsunVB2LoA1mbsyh1KGsuRP9Wfjr',
   space_id: 1,
@@ -1658,13 +1662,57 @@ const voteObj = {
 };
 
 export const voteModel = createModel<RootModel>()({
-  state: {} as VoteState,
-  reducers: {},
+  state: { vote: {} as VoteState, calculatedScores: [] as ChoiceWithScore[] },
+  reducers: {
+    setProposal(state, vote) {
+      return { ...state, vote };
+    },
+  },
+  selectors: (slice, createSelector, hasProps) => ({
+    selectCurrentVote: () => slice((state) => state.vote),
+    selectChoices: () => slice((state) => state.vote.choices),
+    selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tapeTrackIds }) {
+      return slice((voteModel) => {
+        if (!voteModel || !scores) return [];
+        const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
+        const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
+
+        // const sortedChoicesByResults: ChoiceWithScore[][] = choices.reduce(
+        //   (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
+        //     const scorePercentage = (scores[choice.id] / totalScore) * 100;
+        //     const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
+        //     if (tapeTrackIds.includes(choice.walletId)) {
+        //       choice.score = roundedPercentage;
+        //       acc[0].push(choice);
+        //       return acc;
+        //     } else if (topVotedScores.includes(scores[choice.id])) {
+        //       choice.score = roundedPercentage;
+        //       acc[1].push(choice);
+        //       return acc;
+        //     } else {
+        //       choice.score = roundedPercentage;
+        //       acc[2].push(choice);
+        //       return acc;
+        //     }
+        //   },
+        //   [[], [], []],
+        // );
+
+        // for (const array of sortedChoicesByResults) {
+        //   array.sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
+        // }
+
+        // return sortedChoicesByResults;
+      });
+    }),
+  }),
   effects: () => ({
     async getProposalById(ipfsHash: string) {
       try {
         const { getProposal } = createClient();
         const response = await getProposal(ipfsHash);
+        this.setProposal(response.data);
+        console.log(response.data);
       } catch (e) {
         console.error(e);
       }

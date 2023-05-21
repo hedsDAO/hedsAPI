@@ -1,106 +1,58 @@
-import { useSelector } from 'react-redux';
-// Components
-import { Box, Divider, Flex, Heading, Stack, Text, Tooltip, useBoolean, Button, Avatar } from '@chakra-ui/react';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { formatWallet } from '@/utils';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
+// Component
+import { Box, Divider, Flex, Skeleton, Progress, Stack, Text, Image } from '@chakra-ui/react';
 import { Header } from '@/pages/song/components/Header/Header';
 import { Waveform } from '@pages/song/components/Waveform/Waveform';
-import { useParams } from 'react-router-dom';
 
 import * as styles from '@pages/vote/screens/styles';
 
 // Utils
 import { Dispatch, store } from '@/store';
 
-// Models
-import { QuadraticVote } from 'hedsvote';
-import { useNavigate } from 'react-router-dom';
-
-// Constants
-// import { OLD_TAPES } from '@pages/vote/store/constants';
-
 export const Vote = () => {
-  const { id } = useParams();
-  const [isShowingAllResults, setIsShowingAllResults] = useBoolean();
-  const votes = useSelector(store.select.voteModel.selectQuadraticVotes);
-  const proposal = useSelector(store.select.voteModel.selectProposal);
+  const { ipfs } = useParams<{ ipfs: string }>();
+  const dispatch = useDispatch<Dispatch>();
   const song = useSelector(store.select.songModel.selectSong);
+  const choices = useSelector(store.select.voteModel.selectChoices);
 
-  // const isOldTape = OLD_TAPES.includes(id);
+  useEffect(() => {
+    dispatch.voteModel.getProposalById(ipfs);
+  }, [ipfs]);
 
   return (
     <Box>
       <Header />
       {song && <Waveform />}
       <Divider {...styles.$dividerStyles} />
-
-      <Stack>
-        <Heading
-          mt={{ base: 5, lg: 10 }}
-          py={{ base: 0, lg: 1 }}
-          className="animate__animated animate__fadeIn"
-          fontWeight="medium"
-          letterSpacing="widest"
-          size={['xs', 'sm']}
-          color={'gray.900'}
-        >
-          RESULTS
-        </Heading>
-        <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1}>
-          {votes
-            .sort((a, b) => b.vp - a.vp)
-            .slice(0, isShowingAllResults ? -1 : 5)
-            .map((vote) => (
-              <VoterCard vote={vote} key={vote.voter} />
-            ))}
-        </Stack>
-        <Button borderColor="gray.500" fontWeight={'normal'} fontSize={'xs'} size="sm" variant={'outline'} onClick={setIsShowingAllResults.toggle}>
-          {isShowingAllResults ? 'show less' : 'show all'}
-        </Button>
-      </Stack>
-    </Box>
-  );
-};
-
-const VoterCard = ({ vote }: { vote: QuadraticVote }) => {
-  const { voter, vp } = vote;
-  const choices = useSelector(store.select.voteModel.selectProposalChoices);
-  const resultsUserData = useSelector(store.select.voteModel.selectResultsUserData);
-  const navigate = useNavigate();
-  const formatChoiceSelection = (voteObject: { [id: string]: number }) => {
-    const totalScore = Object.values(voteObject).reduce((a, b) => a + b, 0);
-    const selectedChoices = Object.keys(voteObject).map((id) => {
-      const choiceId = parseInt(id) - 1;
-      const choice = choices[choiceId];
-      const percentage = +((voteObject[id] / totalScore) * 100).toFixed(2);
-      return `${percentage}% for ${choice?.name ? choice.name : ''}`;
-    });
-    return selectedChoices.join(', ');
-  };
-
-  return (
-    <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
-      <Flex justifyContent="space-between" px={1} py={2}>
-        <Flex gap={2} alignItems={'center'}>
-          <Avatar
-            onClick={() => navigate(`/u/${vote.voter.toLowerCase()}`)}
-            borderRadius={'sm'}
-            src={resultsUserData?.[vote.voter.toLowerCase()]?.profilePicture}
-            size="xs"
-          />
-          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
-            {resultsUserData?.[vote.voter.toLowerCase()]?.displayName || formatWallet(voter)}
-          </Text>
-        </Flex>
-        <Flex gap={2} alignItems="center">
-          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
-            {vp} HED
-          </Text>
-          <Tooltip label={formatChoiceSelection(vote.choice)}>
-            <InfoOutlineIcon color="gray.500" boxSize={3} />
-          </Tooltip>
-        </Flex>
+      <Flex>
+        {choices.map((choice) => {
+          return (
+            <Box key={choice.media} border="1px" borderRadius="md" borderColor="gray.500" bg="purple.100" _hover={{ cursor: 'pointer' }}>
+              <Stack flexDirection="row">
+                <Box p={2}>
+                  <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
+                </Box>
+                <Flex w="full" direction="column" pl={1} pr={2}>
+                  <Text mt={'-1px !important'} fontSize="xs">
+                    {choice.name}
+                  </Text>
+                  {/* <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
+                    <Text fontSize="2xs" textColor={'gray.700'}>
+                      {showArtist ? choice.artist : ''}
+                    </Text>
+                    <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
+                      {+choice.score.toFixed(2)}%
+                    </Text>
+                  </Flex> */}
+                  <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
+                </Flex>
+              </Stack>
+            </Box>
+          );
+        })}
       </Flex>
     </Box>
   );
