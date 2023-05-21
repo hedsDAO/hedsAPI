@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { createClient } from 'hedsvote';
 import { useSigner } from 'wagmi';
 import mockProposal from './mocks';
@@ -38,5 +38,9 @@ export const TestSDK = () => {
     }
   };
 
-  return <Button onClick={handleGetProposal}>Click</Button>;
+  return (
+    <Box>
+      <Button onClick={handleGetProposal}>Click</Button>
+    </Box>
+  );
 };
