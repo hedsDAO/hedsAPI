@@ -36,6 +36,10 @@ export const Vote = () => {
     console.log(tracks);
   }, [tracks]);
 
+  useEffect(() => {
+    console.log(sortedChoicesByResults);
+  }, [sortedChoicesByResults]);
+
   return (
     <Box>
       <Header />
