@@ -57,7 +57,7 @@ export const getTapeSongs = async (tape_id: number): Promise<any> => {
       s.*,
       u.id as artist_id,
       u.display_name as artist_display_name,
-      u.profile_picture as artist_profile_picture
+      u.profile_picture as artist_profile_picture,
       u.wallet as artist_wallet
     FROM ${schemaName}.songs s
     INNER JOIN ${schemaName}.song_artists sa ON s.id = sa.song_id
