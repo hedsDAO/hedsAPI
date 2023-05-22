@@ -1665,43 +1665,44 @@ export const voteModel = createModel<RootModel>()({
   state: { vote: {} as VoteState, calculatedScores: [] as ChoiceWithScore[] },
   reducers: {
     setProposal(state, vote) {
+      const { scores, choices } = vote;
+      const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
+
       return { ...state, vote };
     },
   },
   selectors: (slice, createSelector, hasProps) => ({
     selectCurrentVote: () => slice((state) => state.vote),
     selectChoices: () => slice((state) => state.vote.choices),
+    selectScores: () => slice((state) => state.vote.scores),
     selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tapeTrackIds }) {
       return slice((voteModel) => {
         if (!voteModel || !scores) return [];
         const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
-
-        // const sortedChoicesByResults: ChoiceWithScore[][] = choices.reduce(
-        //   (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
-        //     const scorePercentage = (scores[choice.id] / totalScore) * 100;
-        //     const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
-        //     if (tapeTrackIds.includes(choice.walletId)) {
-        //       choice.score = roundedPercentage;
-        //       acc[0].push(choice);
-        //       return acc;
-        //     } else if (topVotedScores.includes(scores[choice.id])) {
-        //       choice.score = roundedPercentage;
-        //       acc[1].push(choice);
-        //       return acc;
-        //     } else {
-        //       choice.score = roundedPercentage;
-        //       acc[2].push(choice);
-        //       return acc;
-        //     }
-        //   },
-        //   [[], [], []],
-        // );
-
+        const sortedChoicesByResults: ChoiceWithScore[][] = choices.reduce(
+          (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
+            const scorePercentage = (scores[choice.id] / totalScore) * 100;
+            const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
+            if (tapeTrackIds.includes(choice.wallet_id)) {
+              choice.score = roundedPercentage;
+              acc[0].push(choice);
+              return acc;
+            } else if (topVotedScores.includes(scores[choice.id])) {
+              choice.score = roundedPercentage;
+              acc[1].push(choice);
+              return acc;
+            } else {
+              choice.score = roundedPercentage;
+              acc[2].push(choice);
+              return acc;
+            }
+          },
+          [[], [], []],
+        );
         // for (const array of sortedChoicesByResults) {
         //   array.sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
         // }
-
         // return sortedChoicesByResults;
       });
     }),
