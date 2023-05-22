@@ -20,7 +20,7 @@ export const Vote = () => {
   const tracks = useSelector(store.select.tapeModel.selectTracks);
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
   const scores = useSelector(store.select.voteModel.selectScores);
-  const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
+  const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tapeTrackIds: tracks }));
 
   useEffect(() => {
     dispatch.tapeModel.getTape(id);
