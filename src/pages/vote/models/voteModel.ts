@@ -1700,10 +1700,10 @@ export const voteModel = createModel<RootModel>()({
           },
           [[], [], []],
         );
-        // for (const array of sortedChoicesByResults) {
-        //   array.sort((a: SubmissionChoice, b: SubmissionChoice) => b.score - a.score);
-        // }
-        // return sortedChoicesByResults;
+        for (const array of sortedChoicesByResults) {
+          array.sort((a: ChoiceWithScore, b: ChoiceWithScore) => b.score - a.score);
+        }
+        return sortedChoicesByResults;
       });
     }),
   }),
