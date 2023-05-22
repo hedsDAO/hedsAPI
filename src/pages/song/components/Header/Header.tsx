@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { AspectRatio, Avatar, Box, Button, Divider, Flex, GridItem, Image, SimpleGrid, Skeleton, Stack, Text, useBoolean } from '@chakra-ui/react';
+import { AspectRatio, Avatar, Box, Button, Divider, Flex, GridItem, Image, SimpleGrid, Skeleton, Stack, Text, Tooltip, useBoolean } from '@chakra-ui/react';
 import { User } from '@/models/common';
-import { ARTIST_HEADER_TEXT } from '@pages/song/models/constants';
+import { ARTIST_HEADER_TEXT, PRIVATE_TRACK_LABEL } from '@pages/song/models/constants';
 import * as styles from '@pages/song/components/Header/styles';
 import { useAudio } from '@/hooks/useAudio/useAudio';
 
@@ -30,6 +30,7 @@ export const Header = () => {
   const songHash = useSelector(store.select.songModel.selectSongHash);
   const songLikes = useSelector(store.select.songModel.selectSongLikes);
   const isLoading = useSelector(store.select.songModel.selectIsLoading);
+  const isSongPublic = useSelector(store.select.songModel.selectIsSongPublic);
   const handleNavigate = (user: User) => () => navigate(`/u/${user?.wallet}`);
   const handleLikeAndUnlike = () => {
     songLikes?.map((like: any) => like.user_id).includes(connectedUserId)
@@ -60,11 +61,17 @@ export const Header = () => {
             <Stack {...styles.$stackStyles}>
               <Flex {...styles.$flexStyles}>
                 <Text {...styles.$artistLabelTextStyles}>{ARTIST_HEADER_TEXT}</Text>
-                {songArtists?.map((artist) => (
-                  <Text key={songHash + artist.wallet} {...styles.$artistNameTextStyles} onClick={handleNavigate(artist)}>
-                    {artist?.display_name}
-                  </Text>
-                ))}
+                {isSongPublic ? (
+                  songArtists?.map((artist) => (
+                    <Text key={songHash + artist.wallet} {...styles.$artistNameTextStyles} onClick={handleNavigate(artist)}>
+                      {artist?.display_name}
+                    </Text>
+                  ))
+                ) : (
+                  <Tooltip {...styles.$privateTooltipStyles} label={PRIVATE_TRACK_LABEL} hasArrow>
+                    <Box {...styles.$privateLabelStyles} />
+                  </Tooltip>
+                )}
               </Flex>
               <Divider {...styles.$dividerStyles} />
             </Stack>
