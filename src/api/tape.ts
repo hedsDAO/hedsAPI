@@ -15,5 +15,4 @@ export const getAllTapes = () => {
 
 export const getTapeCollectionArgs = () => {
   return axios.get(`${API_PREFIX}/tapes/collection-args`);
-}
-
+};
