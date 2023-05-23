@@ -1,4 +1,4 @@
-import { SimpleGridProps, StackProps, ImageProps, TextProps, FlexProps, BoxProps, DividerProps, GridItemProps, Stack } from '@chakra-ui/react';
+import { SimpleGridProps, StackProps, ImageProps, TextProps, FlexProps, BoxProps, DividerProps, GridItemProps, Stack, ButtonProps } from '@chakra-ui/react';
 
 export interface ExtendedTextProps extends TextProps {
   'data-testid'?: string;
@@ -13,6 +13,10 @@ export const $simpleGridStyles: SimpleGridProps = {
   py: { base: 5, xl: 5 },
   columns: { base: 6, xl: 5 },
   gap: { base: 4, xl: 8 },
+  border: 'solid 1px',
+  borderColor: 'heds.bg2',
+  rounded: 'lg',
+  opacity: '70%', // temp: remove when spotlight functionality is added
 };
 
 /**
@@ -32,7 +36,7 @@ export const $gridItemStackStyles: GridItemProps = {
 export const $imageStyles: ImageProps = {
   alt: 'spotlight cover',
   border: 'solid 1px',
-  borderColor: 'heds.100',
+  borderColor: 'heds.bg2',
   shadow: 'md',
   rounded: 'lg',
   objectFit: 'cover',
@@ -47,6 +51,13 @@ export const $gridItemTextStyles: GridItemProps = {
 };
 
 /**
+ * @name TEMP_HEADER_STYLES
+ * @description Temporary styles for the header Text elements. remove when spotlight functionality is added.
+ */
+
+const TEMP_HEADER_STYLES = { fontSize: { base: 'md', lg: 'lg !important' }, mb: { base: '-4 !important', lg: '0 !important' }, mt: { lg: '-1 !important' } };
+
+/**
  * @type {TextProps}
  * @description Styles for the 'TRACK' Text element.
  */
@@ -57,6 +68,7 @@ export const $trackTextStyles: TextProps = {
   fontWeight: 'bold',
   opacity: '40%',
   color: 'white',
+  ...TEMP_HEADER_STYLES, // remove when spotlight functionality is added
 };
 
 /**
@@ -84,6 +96,13 @@ export const $dividerStyles: DividerProps = {
 };
 
 /**
+ * @name TEMP_DESC_STYLES
+ * @description Temporary styles for the description Text elements. remove when spotlight functionality is added.
+ */
+
+const TEMP_DESC_STYLES = { fontSize: { base: '2xs', lg: 'xs' }, mt: '-1.5 !important', fontWeight: 'light' };
+
+/**
  * @type {TextProps}
  * @description Styles for the 'ARTIST' Text element.
  */
@@ -93,6 +112,7 @@ export const $artistTextStyles: TextProps = {
   fontWeight: 'bold',
   opacity: '40%',
   color: 'white',
+  ...TEMP_DESC_STYLES, // remove when spotlight functionality is added
 };
 
 /**
@@ -134,31 +154,43 @@ export const $flexStyles: FlexProps = {
  */
 export const $flexIconsStyles: FlexProps = {
   display: { base: 'flex', xl: 'none' },
-  gap: 2.5,
+  gap: 1,
   justifyContent: 'end',
 };
 
 /**
- * @type {BoxProps}
+ * @type {ButtonProps}
  * @description Styles for the play-circle icon Box element.
  */
-export const $playCircleIconStyles: BoxProps = {
+export const $playCircleIconStyles: ButtonProps = {
   as: 'i',
   className: 'fa-solid fa-play-circle',
   color: 'heds.200',
   fontSize: '2xl',
+  px: '0',
+  py: '0',
+  isDisabled: true,
+  backgroundColor: 'transparent',
+  _hover: { bg: 'transparent' },
+  minH: 'unset !important',
 };
 
 /**
- * @type {BoxProps}
+ * @type {ButtonProps}
  * @description Styles for the heart icon Box element.
  */
-export const $heartIconStyles: BoxProps = {
+export const $heartIconStyles: ButtonProps = {
   as: 'i',
   className: 'fa-solid fa-heart',
   color: 'heds.100',
   opacity: '40%',
   fontSize: '2xl',
+  px: '0',
+  py: '0',
+  isDisabled: true,
+  backgroundColor: 'transparent',
+  _hover: { bg: 'transparent' },
+  minH: 'unset !important',
 };
 
 /**
@@ -181,25 +213,35 @@ export const $flexIconLargeStyles: FlexProps = {
 };
 
 /**
- * @type {BoxProps}
+ * @type {ButtonProps}
  * @description Styles for the play-circle icon Box element for larger screens.
  */
-export const $playCircleIconLargeStyles: BoxProps = {
+export const $playCircleIconLargeStyles: ButtonProps = {
   as: 'i',
   className: 'fa-solid fa-play-circle',
   color: 'heds.200',
   fontSize: '4xl',
+  px: '0',
+  py: '0',
+  isDisabled: true,
+  backgroundColor: 'transparent',
+  _hover: { bg: 'transparent' },
 };
 
 /**
- * @type {BoxProps}
+ * @type {ButtonProps}
  * @description Styles for the heart icon Box element for larger screens.
  */
-export const $heartIconLargeStyles: BoxProps = {
+export const $heartIconLargeStyles: ButtonProps = {
   as: 'i',
   className: 'fa-solid fa-heart',
   color: 'heds.100',
   opacity: '40%',
   fontSize: '4xl',
-  ml: 5,
+  ml: 3,
+  px: '0',
+  py: '0',
+  isDisabled: true,
+  backgroundColor: 'transparent',
+  _hover: { bg: 'transparent' },
 };
