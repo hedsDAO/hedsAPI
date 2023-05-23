@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Box, Heading, Flex, Stack, Text, Tooltip, useBoolean, Button, Avatar } from '@chakra-ui/react';
+import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { store } from '@/store';
 import { Vote } from '@/pages/vote/models/voteModel';
 import { formatWallet } from '@/utils';

@@ -21,14 +21,13 @@ export const Vote = () => {
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
 
   useEffect(() => {
-    dispatch.tapeModel.getTape(id);
-  }, [id]);
+    const retrieveProposalData = async () => {
+      await dispatch.tapeModel.getTape(id);
+      await dispatch.voteModel.getProposalById(proposalId);
+    };
 
-  useEffect(() => {
-    if (proposalId) {
-      dispatch.voteModel.getProposalById(proposalId);
-    }
-  }, [proposalId]);
+    retrieveProposalData();
+  }, [id, proposalId]);
 
   return (
     <Box>
