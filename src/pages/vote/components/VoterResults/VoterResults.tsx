@@ -1,11 +1,25 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Flex, Stack, Text } from '@chakra-ui/react';
-import { store } from '@/store';
+import { Dispatch, store } from '@/store';
 import { Vote } from '@/pages/vote/models/voteModel';
 import { formatWallet } from '@/utils';
+import { getManyUsersByWalletId } from '@api/user';
 
 export const VoterResults = () => {
+  const dispatch = useDispatch<Dispatch>();
   const votes = useSelector(store.select.voteModel.selectVotes);
+
+  const handleFetch = async () => {
+    if (votes.length) {
+      const wallets = votes.map((vote) => vote.voter);
+      const response = await getManyUsersByWalletId(wallets);
+      console.log('response', response);
+    }
+  };
+  useEffect(() => {
+    handleFetch();
+  }, []);
 
   return (
     <Box pt={4}>

@@ -14,7 +14,7 @@ router.get('/get-collection-args', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    functions.logger.log('GET /tapes')
+    functions.logger.log('GET /tapes');
     const tapesInfo = await getAllTapes();
     res.json(tapesInfo);
   } catch (error: any) {
@@ -27,7 +27,7 @@ router.get('/:tape_id', async (req, res) => {
     const tape_id = parseInt(req.params.tape_id);
     const tape = await getTapeById(tape_id);
     const songs = await getTapeSongs(tape_id);
-    res.json({...tape,songs});
+    res.json({ ...tape, songs });
   } catch (error: any) {
     res.status(500).send(error.message);
   }

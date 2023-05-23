@@ -20,14 +20,25 @@ export const Vote = () => {
   const song = useSelector(store.select.songModel.selectSong);
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
 
-  useEffect(() => {
-    const retrieveProposalData = async () => {
-      await dispatch.tapeModel.getTape(id);
-      await dispatch.voteModel.getProposalById(proposalId);
-    };
+  // useEffect(() => {
+  //   const retrieveProposalData = async () => {
+  //     await dispatch.tapeModel.getTape(id);
 
-    retrieveProposalData();
-  }, [id, proposalId]);
+  //     await dispatch.voteModel.getProposalById(proposalId);
+  //   };
+
+  //   retrieveProposalData();
+  // }, [id, proposalId]);
+
+  useEffect(() => {
+    dispatch.tapeModel.getTape(id);
+  }, [id]);
+
+  useEffect(() => {
+    if (proposalId) {
+      dispatch.voteModel.getProposalById(proposalId);
+    }
+  }, [proposalId]);
 
   return (
     <Box>
