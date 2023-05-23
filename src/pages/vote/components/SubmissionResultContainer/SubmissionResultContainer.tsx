@@ -14,8 +14,8 @@ export const SubmissionResultContainer = () => {
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
 
   return (
-    <Flex direction="row" justifyContent="space-around" mt={4} px={16}>
-      <Box w="70%">
+    <Flex direction={['column', 'row']} justifyContent="space-around" mt={{ lg: 4 }} px={{ base: 12, lg: 16 }}>
+      <Box w={['100%', '70%']}>
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           SUBMISSIONS
         </Text>
@@ -25,7 +25,7 @@ export const SubmissionResultContainer = () => {
         {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} />}
       </Box>
 
-      <Box maxWidth="20%">
+      <Box width={['100', '20%']} mt={{ base: 6 }}>
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           RESULTS
         </Text>
