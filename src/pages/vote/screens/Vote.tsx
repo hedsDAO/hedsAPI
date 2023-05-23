@@ -49,7 +49,7 @@ export const Vote = () => {
       <Header />
       {song && <Waveform />}
       <Divider {...styles.$dividerStyles} />
-      <Flex direction="row" gap={8} justifyContent="space-around" p={12}>
+      <Flex direction="row" justifyContent="space-around" p={16}>
         <Flex w="70%" gap={2}>
           <Stack w="35%">
             <Text fontSize="5xl" letterSpacing="wider" fontFamily="monospace" color="#9293FF">
@@ -74,15 +74,35 @@ export const Vote = () => {
         <Flex w="20%">
           <Stack>
             <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={8} borderRadius="md">
-              <Text color="white">SAMPLE</Text>
-              <Text color="white">Listen to the sample provided by the artist</Text>
+              <Text color="white" fontFamily="poppins">
+                SAMPLE
+              </Text>
+              <Text color="white" fontSize="xs">
+                Listen to the sample provided by the artist
+              </Text>
             </Box>
           </Stack>
         </Flex>
       </Flex>
-      <Flex direction="row" justifyContent="space-around">
-        {sortedChoicesByResults.length && <Submissions choices={sortedChoicesByResults} />}
-        {votes?.length > 0 && <VoterResults />}
+      <Flex direction="row" justifyContent="space-around" p={16}>
+        <Box w="70%">
+          <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
+            SUBMISSIONS
+          </Text>
+          <Text color="white" fontFamily="inter" fontSize="sm">
+            Listen to the songs and like the songs you’d want to vote for
+          </Text>
+          {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} />}
+        </Box>
+        <Box maxWidth="20%">
+          <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
+            RESULTS
+          </Text>
+          <Text color="white" fontFamily="inter" fontSize="sm">
+            Voting has been closed and here are the results
+          </Text>
+          {votes?.length > 0 && <VoterResults />}
+        </Box>
       </Flex>
     </Box>
   );

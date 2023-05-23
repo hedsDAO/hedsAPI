@@ -4,7 +4,7 @@ import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
 export const Submissions = ({ choices }: { choices: ChoiceWithScore[][] }) => {
   const [tracks, selected, submissions] = choices;
   return (
-    <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={2} width="70%">
+    <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={1} pt={4}>
       {/* <Flex flexWrap="wrap" mx={{ base: 2, lg: 8 }} px={['20px', '60px', '100px', '120px']}> */}
       {tracks.map((choice) => (
         <Track key={choice.name + choice.image} choice={choice} />
