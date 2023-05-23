@@ -80,7 +80,7 @@ export const Vote = () => {
           </Stack>
         </Flex>
       </Flex>
-      <Flex direction="row" p={12} justifyContent="space-around">
+      <Flex direction="row" justifyContent="space-around">
         {sortedChoicesByResults.length && <Submissions choices={sortedChoicesByResults} />}
         {votes?.length > 0 && <VoterResults />}
       </Flex>
