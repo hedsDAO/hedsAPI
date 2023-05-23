@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 // Component
-import { Box, Divider, Flex, Skeleton, Progress, Stack, Text, Image } from '@chakra-ui/react';
+import { Avatar, Box, Divider, Flex, Heading, Skeleton, Progress, Stack, Text, Image } from '@chakra-ui/react';
 import { Header } from '@/pages/song/components/Header/Header';
 import { Waveform } from '@pages/song/components/Waveform/Waveform';
+import { Submissions } from '@/pages/vote/components/Submission/Submissions';
+import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults';
 
 import * as styles from '@pages/vote/screens/styles';
 
@@ -20,7 +22,9 @@ export const Vote = () => {
   const tracks = useSelector(store.select.tapeModel.selectTracks);
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
   const scores = useSelector(store.select.voteModel.selectScores);
-  const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tapeTrackIds: tracks }));
+  const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
+  const votes = useSelector(store.select.voteModel.selectVotes);
+  const tape = useSelector(store.select.tapeModel.selectCurrentTape);
 
   useEffect(() => {
     dispatch.tapeModel.getTape(id);
@@ -33,8 +37,8 @@ export const Vote = () => {
   }, [proposalId]);
 
   useEffect(() => {
-    console.log(tracks);
-  }, [tracks]);
+    console.log(votes);
+  }, [votes]);
 
   useEffect(() => {
     console.log(sortedChoicesByResults);
@@ -45,32 +49,40 @@ export const Vote = () => {
       <Header />
       {song && <Waveform />}
       <Divider {...styles.$dividerStyles} />
-      <Flex>
-        {/* {choices.map((choice) => {
-          return (
-            <Box key={choice.media} border="1px" borderRadius="md" borderColor="gray.500" bg="purple.100" _hover={{ cursor: 'pointer' }}>
-              <Stack flexDirection="row">
-                <Box p={2}>
-                  <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
-                </Box>
-                <Flex w="full" direction="column" pl={1} pr={2}>
-                  <Text mt={'-1px !important'} fontSize="xs">
-                    {choice.name}
-                  </Text>
-                  <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
-                    <Text fontSize="2xs" textColor={'gray.700'}>
-                      {showArtist ? choice.artist : ''}
-                    </Text>
-                    <Text mt={1} fontSize="2xs" textColor={'gray.800'}>
-                      {+choice.score.toFixed(2)}%
-                    </Text>
-                  </Flex>
-                  <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
-                </Flex>
+      <Flex direction="row" gap={8} justifyContent="space-around" p={12}>
+        <Flex w="70%" gap={2}>
+          <Stack w="35%">
+            <Text fontSize="5xl" letterSpacing="wider" fontFamily="monospace" color="#9293FF">
+              {tape.name}
+            </Text>
+            {tape.sampleArtists.map((artist) => (
+              <Stack key={artist.id} {...styles.$artistStackStyles}>
+                <Avatar src={artist.profile_picture} name={artist.display_name} />
+                <Text {...styles.$artistNameTextStyles}>{artist.display_name}</Text>
               </Stack>
+            ))}
+          </Stack>
+          <Stack w="45%">
+            <Text color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
+              Description
+            </Text>
+            <Text color="white" fontFamily="inter" fontWeight="300" fontSize="sm">
+              {tape.description}
+            </Text>
+          </Stack>
+        </Flex>
+        <Flex w="20%">
+          <Stack>
+            <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={8} borderRadius="md">
+              <Text color="white">SAMPLE</Text>
+              <Text color="white">Listen to the sample provided by the artist</Text>
             </Box>
-          );
-        })} */}
+          </Stack>
+        </Flex>
+      </Flex>
+      <Flex direction="row" p={12} justifyContent="space-around">
+        {sortedChoicesByResults.length && <Submissions choices={sortedChoicesByResults} />}
+        {votes?.length > 0 && <VoterResults />}
       </Flex>
     </Box>
   );

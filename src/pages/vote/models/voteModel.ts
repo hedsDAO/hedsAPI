@@ -1,6 +1,7 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { createClient } from 'hedsvote';
+import { Song } from '@/models/common';
 
 interface VoteState {
   ipfs_hash: string;
@@ -31,7 +32,7 @@ interface Choice {
   media: string;
 }
 
-interface Vote {
+export interface Vote {
   id: number;
   proposal_id: string;
   signature: string;
@@ -48,7 +49,7 @@ interface VoteChoice {
   amount: number;
 }
 
-interface ChoiceWithScore extends Choice {
+export interface ChoiceWithScore extends Choice {
   score: number;
 }
 
@@ -1665,9 +1666,6 @@ export const voteModel = createModel<RootModel>()({
   state: { vote: {} as VoteState, calculatedScores: [] as ChoiceWithScore[] },
   reducers: {
     setProposal(state, vote) {
-      const { scores, choices } = vote;
-      const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
-
       return { ...state, vote };
     },
   },
@@ -1675,20 +1673,22 @@ export const voteModel = createModel<RootModel>()({
     selectCurrentVote: () => slice((state) => state.vote),
     selectChoices: () => slice((state) => state.vote.choices),
     selectScores: () => slice((state) => state.vote.scores),
-    selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tapeTrackIds }) {
+    selectVotes: () => slice((state) => state.vote.votes),
+    selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tracks }) {
       return slice((voteModel) => {
         if (!voteModel || !scores) return [];
         const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
         const sortedChoicesByResults: ChoiceWithScore[][] = choices.reduce(
           (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
-            const scorePercentage = (scores[choice.id] / totalScore) * 100;
+            const scorePercentage = (scores[choice.id - 1] / totalScore) * 100;
             const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
-            if (tapeTrackIds.includes(choice.wallet_id)) {
+            const tracksWalletIds = tracks.map((track: Song) => track.artist_wallet);
+            if (tracksWalletIds.includes(choice.wallet_id)) {
               choice.score = roundedPercentage;
               acc[0].push(choice);
               return acc;
-            } else if (topVotedScores.includes(scores[choice.id])) {
+            } else if (topVotedScores.includes(scores[choice.id - 1])) {
               choice.score = roundedPercentage;
               acc[1].push(choice);
               return acc;
@@ -1708,10 +1708,10 @@ export const voteModel = createModel<RootModel>()({
     }),
   }),
   effects: () => ({
-    async getProposalById(ipfsHash: string) {
+    async getProposalById(proposalId: string) {
       try {
         const { getProposal } = createClient();
-        const response = await getProposal(ipfsHash);
+        const response = await getProposal(proposalId);
         this.setProposal(response.data);
         console.log(response.data);
       } catch (e) {
