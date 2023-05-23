@@ -8,9 +8,21 @@ export const VoterResults = () => {
   const votes = useSelector(store.select.voteModel.selectVotes);
 
   return (
-    <Stack my={2} border="1px" borderColor="gray.700" borderRadius="md" p={1} overflow="scroll" maxWidth="20%" height="500px">
-      {votes.length > 0 && votes.sort((a, b) => b.vp - a.vp).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
-    </Stack>
+    <Box pt={4}>
+      <Box border="1px" borderRadius="md" p={4} borderColor="#745CBA" bgColor="#4F4F4F">
+        <Text color="white" fontSize="xs" textAlign="center">
+          Voting is closed. For more info please visit heds twitter or discord
+        </Text>
+        <Box borderRadius="md" textAlign="center" bgColor="#3C3C3C" py={2} mt={2}>
+          <Text color="white" fontSize="xs">
+            VOTING IS CLOSED
+          </Text>
+        </Box>
+      </Box>
+      <Stack my={2} border="1px" borderColor="#745CBA" borderRadius="md" bgColor="#4F4F4F" p={1} overflowY="scroll" height="500px" py={2} px={4}>
+        {votes.length > 0 && votes.sort((a, b) => b.vp - a.vp).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
+      </Stack>
+    </Box>
   );
 };
 
@@ -31,7 +43,7 @@ const VoterCard = ({ vote }: { vote: Vote }) => {
   // };
 
   return (
-    <Box border="1px" borderColor="gray.400" borderRadius="md" px={1} bgColor="gray.50">
+    <Box border="1px" borderColor="#9293FF" borderRadius="md" px={1} bgColor="#745CBA">
       <Flex justifyContent="space-between" px={1} py={2}>
         {/* <Flex gap={2} alignItems={'center'}>
           <Avatar
@@ -46,7 +58,7 @@ const VoterCard = ({ vote }: { vote: Vote }) => {
         </Flex> */}
         <Text>{formatWallet(voter)}</Text>
         <Flex gap={2} alignItems="center">
-          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide">
+          <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide" color="white">
             {vp} HED
           </Text>
         </Flex>
