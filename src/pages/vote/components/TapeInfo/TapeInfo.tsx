@@ -8,10 +8,10 @@ export const TapeInfo = () => {
   const tape = useSelector(store.select.tapeModel.selectCurrentTape);
 
   return (
-    <Flex direction="row" justifyContent="space-around" p={16}>
-      <Flex w="70%" gap={2}>
-        <Stack w="35%">
-          <Text fontSize="5xl" letterSpacing="wider" fontFamily="monospace" color="#9293FF">
+    <Flex direction={['column', 'row']} justifyContent="space-around" p={{ base: 12, lg: 16 }}>
+      <Flex direction={['column', 'row']} w={['100', '70%']} gap={[6, 2]}>
+        <Stack w={['100%', '35%']}>
+          <Text fontSize={['3xl', '5xl']} letterSpacing={['wide', 'wider']} fontFamily="monospace" color="#9293FF">
             {tape.name}
           </Text>
           {tape.sampleArtists.map((artist) => (
@@ -21,7 +21,7 @@ export const TapeInfo = () => {
             </Stack>
           ))}
         </Stack>
-        <Stack w="45%">
+        <Stack w={['100%', '45%']}>
           <Text color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
             Description
           </Text>
@@ -30,9 +30,9 @@ export const TapeInfo = () => {
           </Text>
         </Stack>
       </Flex>
-      <Flex w="20%">
+      <Flex w={['100%', '20%']} mt={{ base: 6 }}>
         <Stack>
-          <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={8} borderRadius="md">
+          <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={[2, 8]} borderRadius="md">
             <Text color="white" fontFamily="poppins">
               SAMPLE
             </Text>
