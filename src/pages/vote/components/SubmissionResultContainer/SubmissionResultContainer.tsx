@@ -25,7 +25,7 @@ export const SubmissionResultContainer = () => {
         {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} />}
       </Box>
 
-      <Box width={['100', '20%']} mt={{ base: 6 }}>
+      <Box width={['100', '20%']}>
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           RESULTS
         </Text>
