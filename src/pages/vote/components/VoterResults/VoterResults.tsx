@@ -19,7 +19,7 @@ export const VoterResults = () => {
           </Text>
         </Box>
       </Box>
-      <Stack my={2} border="1px" borderColor="#745CBA" borderRadius="md" bgColor="#4F4F4F" p={1} overflowY="scroll" height="500px" py={2} px={4}>
+      <Stack my={2} border="1px" borderColor="#745CBA" borderRadius="md" bgColor="#4F4F4F" overflowY="scroll" height="500px" py={2} px={2}>
         {votes.length > 0 && votes.sort((a, b) => b.vp - a.vp).map((vote) => <VoterCard vote={vote} key={vote.voter} />)}
       </Stack>
     </Box>
@@ -44,7 +44,7 @@ const VoterCard = ({ vote }: { vote: Vote }) => {
 
   return (
     <Box border="1px" borderColor="#9293FF" borderRadius="md" px={1} bgColor="#745CBA">
-      <Flex justifyContent="space-between" px={1} py={2}>
+      <Flex justifyContent="space-between" p={1}>
         {/* <Flex gap={2} alignItems={'center'}>
           <Avatar
             onClick={() => navigate(`/u/${vote.voter.toLowerCase()}`)}
