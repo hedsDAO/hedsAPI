@@ -26,14 +26,17 @@ import * as styles from '@/modals/screens/download/styles';
 
 // Utils
 import { DateTime } from 'luxon';
+import axios from 'axios';
 
 export const Download = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const currentCycle = useSelector(store.select.tapeModel.selectCurrentCycle);
+  const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
 
   useEffect(() => {
     if (currentCycle !== 'submit') setIsChecked(true);
@@ -42,6 +45,27 @@ export const Download = () => {
   useEffect(() => {
     onOpen();
   }, []);
+
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      const response = await axios.get(sample.audio, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${sample.track_name}.mp3`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setIsDownloading(false);
+    } catch (error) {
+      console.error('Error occurred while downloading the audio file:', error);
+      setIsDownloading(false);
+    }
+  };
 
   const formatTime = (time: number) => {
     if (time !== 0) {
@@ -111,7 +135,13 @@ export const Download = () => {
           )}
         </ModalBody>
         <ModalFooter>
-          <Button leftIcon={<i className="fa-solid fa-arrow-down-to-line" />} {...styles.$downloadButtonStyles} isDisabled={!isChecked}>
+          <Button
+            leftIcon={<i className="fa-solid fa-arrow-down-to-line" />}
+            {...styles.$downloadButtonStyles}
+            isDisabled={!isChecked}
+            isLoading={isDownloading}
+            onClick={handleDownload}
+          >
             DOWNLOAD
           </Button>
         </ModalFooter>

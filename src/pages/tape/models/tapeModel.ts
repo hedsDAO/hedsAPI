@@ -26,6 +26,7 @@ export const tapeModel = createModel<RootModel>()({
       splits: '',
       links: undefined,
       sampleArtists: [],
+      sample: undefined,
     } as Tape,
     isLoading: false,
     cycle: '',
@@ -49,6 +50,7 @@ export const tapeModel = createModel<RootModel>()({
       };
 
       const tracks = songs.filter((song: Song) => song.type === 'track');
+      const sample = songs.find((song: Song) => song.type === 'sample');
       const currentCycle = checkTimeline();
 
       const newTape = {
@@ -67,6 +69,7 @@ export const tapeModel = createModel<RootModel>()({
         links,
         sampleArtists: sample_artists,
         tracks,
+        sample,
       };
       return { ...state, cycle: currentCycle, tape: newTape };
     },
@@ -80,12 +83,12 @@ export const tapeModel = createModel<RootModel>()({
     selectSampleArtists: () => slice((state) => state.tape.sampleArtists),
     selectIsLoading: () => slice((state) => state.isLoading),
     selectCurrentCycle: () => slice((state) => state.cycle),
+    selectCurrentTapeSample: () => slice((state) => state.tape.sample),
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
       this.setIsLoading(true);
       const response = await getTapeById(id);
-      console.log(response.data);
       this.setTape(response.data);
       this.setIsLoading(false);
     },
