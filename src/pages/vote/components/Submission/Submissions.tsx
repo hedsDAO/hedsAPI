@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Image, Progress, Stack, Text, IconButton, Center, useBoolean, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Grid, Image, Progress, Stack, Text } from '@chakra-ui/react';
 import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
 
 export const Submissions = ({ choices }: { choices: ChoiceWithScore[][] }) => {
