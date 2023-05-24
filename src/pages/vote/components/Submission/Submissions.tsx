@@ -30,9 +30,14 @@ const Track = ({ choice }: { choice: ChoiceWithScore }) => (
         <Text mt={'-1px !important'} fontSize="xs" color="#DFDFDF" fontFamily="monospace">
           {choice.name}
         </Text>
-        <Text fontSize="2xs" textColor="#FFFFFF" fontFamily="inter" letterSpacing="widest">
-          {choice.artist}
-        </Text>
+        <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
+          <Text fontSize="2xs" textColor="#FFFFFF" fontFamily="inter" letterSpacing="widest">
+            {choice.artist}
+          </Text>
+          <Text mt={1} fontSize="2xs" textColor="white">
+            {+choice.score.toFixed(2)}%
+          </Text>
+        </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
       </Flex>
     </Stack>
@@ -49,9 +54,14 @@ const SelectedSubmission = ({ choice }: { choice: ChoiceWithScore }) => (
         <Text mt={'-1px !important'} fontSize="xs" color="#DFDFDF" fontFamily="monospace">
           {choice.name}
         </Text>
-        <Text fontSize="2xs" textColor="#FFFFFF" fontFamily="inter" letterSpacing="widest">
-          {choice.artist}
-        </Text>
+        <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
+          <Text fontSize="2xs" textColor="#FFFFFF" fontFamily="inter" letterSpacing="widest">
+            {choice.artist}
+          </Text>
+          <Text mt={1} fontSize="2xs" textColor="white">
+            {+choice.score.toFixed(2)}%
+          </Text>
+        </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
       </Flex>
     </Stack>
@@ -68,9 +78,14 @@ const SubmissionCard = ({ choice }: { choice: ChoiceWithScore }) => (
         <Text mt={'-1px !important'} fontSize="xs" color="#DFDFDF" fontFamily="monospace">
           {choice.name}
         </Text>
-        <Text fontSize="2xs" textColor="#FFFFFF" fontFamily="inter" letterSpacing="widest">
-          {choice.artist}
-        </Text>
+        <Flex mt={-0.5} minW="full" justifyContent={'space-between'}>
+          <Text fontSize="2xs" textColor="#FFFFFF" fontFamily="inter" letterSpacing="widest">
+            {choice.artist}
+          </Text>
+          <Text mt={1} fontSize="2xs" textColor="white">
+            {+choice.score.toFixed(2)}%
+          </Text>
+        </Flex>
         <Progress mt={1} size="sm" value={choice.score} colorScheme="gray" borderRadius="md" />
       </Flex>
     </Stack>
