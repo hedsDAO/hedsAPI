@@ -161,6 +161,6 @@ export const getUserListeningHistory = async (user_id: number) => {
 
 export const getManyUsersByWalletId = async (walletIds: string[]) => {
   const lowercaseWalletIds = walletIds.map((walletId) => walletId.toLowerCase());
-  const { rows } = await pool.query(`SELECT profile_picture, display_name FROM ${schemaName}.users WHERE wallet = ANY($1)`, [lowercaseWalletIds]);
+  const { rows } = await pool.query(`SELECT profile_picture, display_name, wallet FROM ${schemaName}.users WHERE wallet = ANY($1)`, [lowercaseWalletIds]);
   return rows;
 };
