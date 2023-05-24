@@ -34,7 +34,11 @@ export const VoterResults = () => {
           votes
             .sort((a, b) => b.vp - a.vp)
             .map((vote) => {
-              const { vp, voter } = vote;
+              const { vp, voter, vote_choices } = vote;
+              const votesObject = vote_choices.reduce((acc, curr) => {
+                acc[curr.choice_id] = curr.amount;
+                return acc;
+              }, {} as { [id: number]: number });
               const wallet = voter.toLowerCase();
               console.log(vote);
               return (
@@ -44,6 +48,7 @@ export const VoterResults = () => {
                   vp={vp}
                   wallet={voter}
                   key={voter}
+                  votesObject={votesObject}
                 />
               );
             })}
