@@ -15,6 +15,21 @@ import {
 import * as functions from 'firebase-functions';
 
 const router = express.Router();
+router.get('/manyUsers', async (req, res) => {
+  functions.logger.log('inside many-users');
+  try {
+    const walletIds = req.query?.walletIds?.toString().split(',');
+    if (Array.isArray(walletIds)) {
+      functions.logger.log('walletIds', walletIds);
+      const users = await getManyUsersByWalletId(walletIds);
+      functions.logger.log('users', users);
+      return res.json(users);
+    }
+    return res.status(400).send('walletIds must be an array');
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
 
 router.get('/artists-curators', async (req, res) => {
   try {
@@ -115,22 +130,6 @@ router.get('/:user_id/events', async (req, res) => {
     res.json(events);
   } catch (error: any) {
     res.status(500).send(error.message);
-  }
-});
-
-router.get('/many-users', async (req, res) => {
-  functions.logger.log('inside many-users');
-  try {
-    const walletIds = req.query?.walletIds?.toString().split(',');
-    if (Array.isArray(walletIds)) {
-      functions.logger.log('walletIds', walletIds);
-      const users = await getManyUsersByWalletId(walletIds);
-      functions.logger.log('users', users);
-      return res.json(users);
-    }
-    return res.status(400).send('walletIds must be an array');
-  } catch (error: any) {
-    return res.status(500).send(error.message);
   }
 });
 
