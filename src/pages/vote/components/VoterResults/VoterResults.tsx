@@ -28,7 +28,7 @@ export const VoterResults = () => {
           </Text>
         </Box>
       </Box>
-      <Stack my={2} border="1px" borderColor="#745CBA" borderRadius="md" bgColor="#4F4F4F" overflowY="scroll" height="500px" py={2} px={2}>
+      <Stack my={2} border="1px" borderColor="#745CBA" borderRadius="md" bgColor="#4F4F4F" overflowY="scroll" height="450px" py={2} px={2}>
         {votes.length > 0 &&
           Object.keys(userResultsInfo).length > 0 &&
           votes
@@ -40,7 +40,6 @@ export const VoterResults = () => {
                 return acc;
               }, {} as { [id: number]: number });
               const wallet = voter.toLowerCase();
-              console.log(vote);
               return (
                 <VoterCard
                   displayName={userResultsInfo[wallet].display_name}

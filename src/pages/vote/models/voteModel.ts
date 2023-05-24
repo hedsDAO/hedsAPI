@@ -119,7 +119,6 @@ export const voteModel = createModel<RootModel>()({
         const { getProposal } = createClient();
         const response = await getProposal(proposalId);
         this.setProposal(response.data);
-        console.log(response.data);
       } catch (e) {
         console.error(e);
       }
@@ -130,13 +129,3 @@ export const voteModel = createModel<RootModel>()({
     },
   }),
 });
-
-// instead of when someone clicks on a choice
-// instead of grabbing audio source from choice
-// grab the associated song of that choice (make a call when someone clicks)
-
-// OR
-// grab all the songs from the tape (getTapeSongs)
-// and just map it (onClick)
-
-// load that into global audio
