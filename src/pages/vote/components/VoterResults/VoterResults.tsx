@@ -16,10 +16,6 @@ export const VoterResults = () => {
     }
   }, [votes]);
 
-  useEffect(() => {
-    console.log(Object.keys(userResultsInfo).length > 0);
-  }, [userResultsInfo]);
-
   return (
     <Box pt={4}>
       <Box border="1px" borderRadius="md" p={4} borderColor="#745CBA" bgColor="#4F4F4F">
@@ -40,6 +36,7 @@ export const VoterResults = () => {
             .map((vote) => {
               const { vp, voter } = vote;
               const wallet = voter.toLowerCase();
+              console.log(vote);
               return (
                 <VoterCard
                   displayName={userResultsInfo[wallet].display_name}
