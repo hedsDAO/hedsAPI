@@ -12,7 +12,6 @@ import { NotFound } from '@/pages/404/screens/NotFound';
 import { FAQ } from '@/pages/faq/screens/FAQ';
 import { Artists } from '@/pages/artists/screens/Artists';
 import { Tapes } from '@/pages/tapes/screens/Tapes';
-import { TestSDK } from '@/pages/vote/screens/TestSDK';
 import { Vote } from '@/pages/vote/screens/Vote';
 
 import { Footer } from '@/components/Footer/Footer';
@@ -56,7 +55,6 @@ const App = (): JSX.Element => {
         <Route path="/song/:id" element={<Song />} />
         <Route path="/t/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/sdk" element={<TestSDK />} />
         <Route path="/vote/:id" element={<Vote />} />
         <Route path="*" element={<NotFound />} />
       </Route>
