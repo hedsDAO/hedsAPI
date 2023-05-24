@@ -10,15 +10,22 @@ export const VoterResults = () => {
   const dispatch = useDispatch<Dispatch>();
   const votes = useSelector(store.select.voteModel.selectVotes);
 
-  const handleFetch = async () => {
+  // const handleFetch = async () => {
+  //   if (votes.length) {
+  //     const wallets = votes.map((vote) => vote.voter);
+  //     const response = await getManyUsersByWalletId(wallets);
+  //     console.log('response', response);
+  //   }
+  // };
+  // useEffect(() => {
+  //   handleFetch();
+  // }, []);
+
+  useEffect(() => {
     if (votes.length) {
       const wallets = votes.map((vote) => vote.voter);
-      const response = await getManyUsersByWalletId(wallets);
-      console.log('response', response);
+      dispatch.userModel.getManyUsers(wallets);
     }
-  };
-  useEffect(() => {
-    handleFetch();
   }, []);
 
   return (
