@@ -173,7 +173,7 @@ export const CastVoteContainer = () => {
                     </Text>
                   ) : (
                     <Text fontSize="xs" fontFamily={'"Space Mono", monospace'}>
-                      You have no HEDS power for this cycle. To participate in the future, collect a hedeTAPE for the current cycle when the mint begins.
+                      You have no HEDS power for this cycle. To participate in the future, collect a hedsTAPE for the current cycle when the mint begins.
                     </Text>
                   )}
                 </Box>
