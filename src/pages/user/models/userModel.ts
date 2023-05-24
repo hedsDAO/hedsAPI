@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { getSongByHash } from '@/api/song';
-import { getUserByWallet, getUserEventsById, getUserLikesById, getUserSongsById, updateUser } from '@/api/user';
+import { getUserByWallet, getUserEventsById, getUserLikesById, getUserSongsById, updateUser, getManyUsersByWalletId } from '@/api/user';
 import { formatCollectionData, isEmpty } from '@/utils';
 import { Song, TapeCollectionArg, TapeCollectionItem, User, UserCollection, UserEvents } from '@models/common';
 import { UserModelState } from '@pages/user/models/common';
@@ -105,6 +105,11 @@ export const userModel = createModel<RootModel>()({
       } catch (e) {
         console.log(e);
       }
+    },
+    async getManyUsers(wallets: string[]) {
+      const response = await getManyUsersByWalletId(wallets);
+      console.log('response', response.data);
+      return response.data;
     },
   }),
 });

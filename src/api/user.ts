@@ -45,10 +45,11 @@ export const getFeaturedArtists = () => {
 
 export const getManyUsersByWalletId = (wallets: string[]) => {
   // const string = parameterizeArray('walletIds', wallets);
-  return axios.get(`${API_PREFIX}/users/many-users?walletIds=${wallets.join(',')}`);
+  return axios.get(`${API_PREFIX}/users/manyUsers?walletIds=${wallets.join(',')}`);
   // const string = '?walletIds=' + encodeURIComponent(JSON.stringify(wallets));
   // return axios.get(`${API_PREFIX}/users/many-users/${string}`);
 
   // return axios.get(`${API_PREFIX}/users/many-users/?${string}`);
   // return axios.get(`${API_PREFIX}/users/many-users`);
+  // return axios.get(`${API_PREFIX}/users/all}`);
 };
