@@ -13,8 +13,6 @@ export const SubmissionResultContainer = () => {
 
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
 
-  console.log('choices', choices);
-
   return (
     <Flex direction={['column', 'row']} justifyContent="space-around" mt={{ lg: 4 }} px={{ base: 12, lg: 16 }}>
       <Box w={['100%', '70%']}>

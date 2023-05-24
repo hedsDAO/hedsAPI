@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Avatar, Box, Flex, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import * as styles from '@pages/vote/components/TapeInfo/styles';
 import { store } from '@/store';
 
@@ -32,13 +32,18 @@ export const TapeInfo = () => {
       </Flex>
       <Flex w={['100%', '20%']} mt={{ base: 6 }}>
         <Stack>
-          <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={[2, 8]} borderRadius="md">
-            <Text color="white" fontFamily="poppins">
-              SAMPLE
-            </Text>
-            <Text color="white" fontSize="xs">
-              Listen to the sample provided by the artist
-            </Text>
+          <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={[2, 4]} borderRadius="md">
+            <Stack direction="row">
+              <Stack justifyContent="center">
+                <Text color="white" fontFamily="poppins" fontWeight="bold">
+                  SAMPLE
+                </Text>
+                <Text color="white" fontSize="xs">
+                  Listen to the sample provided by the artist
+                </Text>
+              </Stack>
+              <Image src={tape.image} alt="tape-cover" boxSize="100px" />
+            </Stack>
           </Box>
         </Stack>
       </Flex>
