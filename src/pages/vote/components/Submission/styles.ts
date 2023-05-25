@@ -40,7 +40,7 @@ export const $cardTextStyles: Record<string, TextProps> = {
     mt: '-1px !important',
     fontSize: 'xs',
     color: '#DFDFDF',
-    fontFamily: 'monospace',
+    fontFamily: 'space',
   },
   artist: {
     fontSize: '2xs',

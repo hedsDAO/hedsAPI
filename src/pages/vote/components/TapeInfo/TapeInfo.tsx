@@ -11,7 +11,7 @@ export const TapeInfo = () => {
     <Flex direction={['column', 'row']} justifyContent="space-around" p={{ base: 12, lg: 16 }}>
       <Flex direction={['column', 'row']} w={['100', '70%']} gap={[6, 2]}>
         <Stack w={['100%', '35%']}>
-          <Text fontSize={['3xl', '5xl']} letterSpacing={['wide', 'wider']} fontFamily="monospace" color="#9293FF">
+          <Text fontSize={['3xl', '5xl']} letterSpacing={['wide', 'wider']} fontFamily="space" color="#9293FF">
             {tape.name}
           </Text>
           {tape.sampleArtists.map((artist) => (

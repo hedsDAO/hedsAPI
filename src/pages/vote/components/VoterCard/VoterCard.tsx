@@ -35,12 +35,12 @@ export const VoterCard = ({ displayName, profilePicture, wallet, vp, votesObject
               src={profilePicture}
               size="md"
             />
-            <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide" textColor="white">
+            <Text fontSize="xs" fontFamily="space" letterSpacing="wide" textColor="white">
               {displayName || formatWallet(wallet)}
             </Text>
           </Flex>
           <Flex gap={2} alignItems="center">
-            <Text fontSize="xs" fontFamily="monospace" letterSpacing="wide" color="white">
+            <Text fontSize="xs" fontFamily="space" letterSpacing="wide" color="white">
               {vp} HED
             </Text>
           </Flex>
