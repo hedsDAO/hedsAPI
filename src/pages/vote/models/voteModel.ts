@@ -61,7 +61,7 @@ interface UserResultsInfo {
 }
 
 export const voteModel = createModel<RootModel>()({
-  state: { vote: {} as VoteState, calculatedScores: [] as ChoiceWithScore[], userResultsInfo: {} as { [key: string]: UserResultsInfo } },
+  state: { vote: {} as VoteState, calculatedScores: [] as ChoiceWithScore[], userResultsInfo: {} as { [key: string]: UserResultsInfo }, isLoading: false },
   reducers: {
     setProposal(state, vote) {
       return { ...state, vote };
@@ -73,6 +73,7 @@ export const voteModel = createModel<RootModel>()({
       });
       return { ...state, userResultsInfo: userResultsData };
     },
+    setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
   },
   selectors: (slice, createSelector, hasProps) => ({
     selectCurrentVote: () => slice((state) => state.vote),
@@ -80,6 +81,7 @@ export const voteModel = createModel<RootModel>()({
     selectScores: () => slice((state) => state.vote.scores),
     selectVotes: () => slice((state) => state.vote.votes),
     selectUserResultsInfo: () => slice((state) => state.userResultsInfo),
+    selectIsLoading: () => slice((state) => state.isLoading),
     selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tracks }) {
       return slice((voteModel) => {
         if (!voteModel || !scores) return [];
@@ -116,11 +118,14 @@ export const voteModel = createModel<RootModel>()({
   effects: () => ({
     async getProposalById(proposalId: string) {
       try {
+        this.setIsLoading(true);
         const { getProposal } = createClient();
         const response = await getProposal(proposalId);
         this.setProposal(response.data);
+        this.setIsLoading(false);
       } catch (e) {
         console.error(e);
+        this.setIsLoading(false);
       }
     },
     async getManyUsers(wallets: string[]) {
