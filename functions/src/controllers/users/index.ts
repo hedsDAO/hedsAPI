@@ -4,23 +4,23 @@ import { SongData } from '../songs/types';
 import schemaName from '../../../config';
 
 export const getArtistsAndCurators = async () => {
-    const artistsResult = await pool.query(`
+  const artistsResult = await pool.query(`
       SELECT profile_picture, id, display_name, wallet 
       FROM ${schemaName}.users 
       WHERE role = 'artist'
     `);
-    
-    const curatorsResult = await pool.query(`
+
+  const curatorsResult = await pool.query(`
       SELECT u.profile_picture, u.id, u.display_name, u.wallet 
       FROM ${schemaName}.users u
       JOIN ${schemaName}.tape_sample_artists tsa ON u.id = tsa.user_id
       WHERE u.role = 'artist'
     `);
 
-    return {
-      artists: artistsResult.rows,
-      curators: curatorsResult.rows
-    };
+  return {
+    artists: artistsResult.rows,
+    curators: curatorsResult.rows,
+  };
 };
 
 export const getUserByWallet = async (wallet: string) => {
@@ -132,7 +132,7 @@ export const addSongToListeningHistory = async (user_id: number, song_id: number
     await pool.query(
       `INSERT INTO ${schemaName}.listening_history (user_id, song_id, last_played)
        VALUES ($1, $2, NOW());`,
-      [user_id, song_id]
+      [user_id, song_id],
     );
 
     return { message: 'Song added to listening history' };
@@ -156,5 +156,11 @@ export const getUserListeningHistory = async (user_id: number) => {
     ORDER BY ${schemaName}.listening_history.last_played DESC
   `;
   const { rows } = await pool.query(query, [user_id]);
+  return rows;
+};
+
+export const getManyUsersByWalletId = async (walletIds: string[]) => {
+  const lowercaseWalletIds = walletIds.map((walletId) => walletId.toLowerCase());
+  const { rows } = await pool.query(`SELECT profile_picture, display_name, wallet FROM ${schemaName}.users WHERE wallet = ANY($1)`, [lowercaseWalletIds]);
   return rows;
 };

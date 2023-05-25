@@ -91,6 +91,7 @@ export interface Song {
   artist_id?: number;
   artist_display_name?: string;
   artist_display_picture?: string;
+  artist_wallet?: string;
 }
 
 export interface UserSong extends Song {

@@ -28,8 +28,12 @@ export const updateUserSettings = (user_id: number, userData: UserSettingsData) 
 
 export const getArtistsAndCurators = () => {
   return axios.get(`${API_PREFIX}/users/artists-curators`);
-}
+};
 
 export const getFeaturedArtists = () => {
   return axios.get(`${API_PREFIX}/users/featured-artists`);
-}
+};
+
+export const getManyUsersByWalletId = (wallets: string[]) => {
+  return axios.get(`${API_PREFIX}/users/manyUsers?walletIds=${wallets.join(',')}`);
+};
