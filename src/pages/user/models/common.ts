@@ -24,6 +24,7 @@ export interface UserModelState {
   user_songs: UserSong[];
   user_likes: Song[];
   user_events: UserEvents[];
+  user_vp: number;
   collection_args: TapeCollectionArg[];
   isFetchingCollection: boolean;
 }
