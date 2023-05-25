@@ -3,7 +3,7 @@ import { CollectionItem } from '@/common/media/CollectionItem';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { store } from '@/store';
 import { isEmpty } from '@/utils';
-import { GridItem, SimpleGrid } from '@chakra-ui/react';
+import { AspectRatio, Box, GridItem, SimpleGrid, Text } from '@chakra-ui/react';
 import * as styles from '@pages/user/components/Collection/styles';
 import { TapeCollectionItem } from '@/models/common';
 
@@ -23,12 +23,22 @@ export const Collection = () => {
   return (
     <GridItem {...styles.$mainContainerStyles}>
       <SimpleGrid {...styles.$collectionGridStyles}>
-        {!isEmpty(collection) &&
-          Object.values(collection)
-            .slice(start, end)
-            .map((item: TapeCollectionItem) => (
-              <GridItem key={item.name + item.image}>
-                <CollectionItem item={item} />
+        {!isEmpty(collection)
+          ? Object.values(collection)
+              .slice(start, end)
+              .map((item: TapeCollectionItem) => (
+                <GridItem key={item.name + item.image}>
+                  <CollectionItem item={item} />
+                </GridItem>
+              ))
+          : [0, 1, 2, 3].map((_, index: number) => (
+              <GridItem {...styles.$gridItemStyles} key={index}>
+                <Box {...styles.$emptyCollectionBoxStyles}>
+                  <AspectRatio ratio={1}>
+                    <Box {...styles.$emptyBoxStyles} />
+                  </AspectRatio>
+                  <Text {...styles.$emptyTextStyles} />
+                </Box>
               </GridItem>
             ))}
       </SimpleGrid>
