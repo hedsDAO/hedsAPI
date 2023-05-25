@@ -14,7 +14,11 @@ export const getSongLikesById = (song_id: number) => {
 };
 
 export const getManySongs = (song_hashes: string[]) => {
-  return axios.get(`${API_PREFIX}/songs/get-many-songs/${song_hashes}`);
+  return axios.get(`${API_PREFIX}/songs/get-many-songs`, {
+    params: {
+      songHashes: song_hashes.join(','),
+    },
+  });
 };
 
 export const likeSong = (song_id: number, user_id: number) => {

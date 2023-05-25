@@ -15,7 +15,7 @@ export const $countdownStackStyles: StackProps = {
  */
 export const $countdownBigTextStyles: TextProps = {
   fontSize: '2xl',
-  fontFamily: 'monospace',
+  fontFamily: 'space',
   color: 'heds.200',
   letterSpacing: 'wide',
 };
