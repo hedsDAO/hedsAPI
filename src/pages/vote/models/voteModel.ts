@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 
@@ -12,8 +12,8 @@ interface VoteState {
   start_time: string;
   end_time: string;
   block: number;
-  state: string; // Might be enum
-  method: string; // Might be enum
+  state: ProposalState;
+  method: VoteMethod;
   title: string;
   description: string;
   scores: number[];
