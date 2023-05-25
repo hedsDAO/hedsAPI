@@ -11,6 +11,7 @@ import {
   StackProps,
   TextProps,
   Flex,
+  StyleProps,
 } from '@chakra-ui/react';
 
 interface ExtendedButtonProps extends ButtonProps {
@@ -191,4 +192,14 @@ export const $gridItemImageStyles: GridItemProps = {
 export const $coverImageStyles: ImageProps = {
   opacity: { base: '35%', xl: '30%' },
   rounded: 'none',
+};
+
+export const $privateLabelStyles: BoxProps = {
+  width: '60px',
+  h: { base: '9px', lg: '11px' },
+  bg: { base: 'heds.bg5', lg: 'heds.bg3' },
+};
+
+export const $privateTooltipStyles: StyleProps = {
+  fontSize: 'xs',
 };

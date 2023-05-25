@@ -14,6 +14,7 @@ export interface Tape {
   links: string;
   sampleArtists: Artist[];
   tracks: Song[];
+  sample?: Song;
 }
 
 export interface TapeCollectionArg {
@@ -90,6 +91,7 @@ export interface Song {
   artist_id?: number;
   artist_display_name?: string;
   artist_display_picture?: string;
+  artist_wallet?: string;
 }
 
 export interface UserSong extends Song {
@@ -168,5 +170,3 @@ export interface CyaniteData {
   timeSignature: string;
   transformerCaption: string;
 }
-
-

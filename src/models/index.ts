@@ -14,6 +14,7 @@ import { waveformModel } from '@/hooks/useWaveform/models/waveformModel';
 import { artistsModel } from '@/pages/artists/models/artistsModel';
 import { tapesModel } from '@/pages/tapes/models/tapesModel';
 import { exploreModel } from '@/pages/explore/models/exploreModel';
+import { voteModel } from '@/pages/vote/models/voteModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
@@ -31,6 +32,7 @@ export interface RootModel extends Models<RootModel> {
   artistsModel: typeof artistsModel;
   tapesModel: typeof tapesModel;
   exploreModel: typeof exploreModel;
+  voteModel: typeof voteModel;
 }
 
 export const models: RootModel = {
@@ -49,4 +51,5 @@ export const models: RootModel = {
   artistsModel,
   tapesModel,
   exploreModel,
+  voteModel,
 };

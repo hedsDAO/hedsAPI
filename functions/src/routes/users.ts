@@ -1,10 +1,39 @@
 import * as express from 'express';
-import { getUserByWallet, createUser, updateUser, deleteUser, getUserSongs, getUserLikes, getUserEvents, getUserListeningHistory, addSongToListeningHistory, getArtistsAndCurators } from '../controllers/users';
+import {
+  getUserByWallet,
+  createUser,
+  updateUser,
+  deleteUser,
+  getUserSongs,
+  getUserLikes,
+  getUserEvents,
+  getUserListeningHistory,
+  addSongToListeningHistory,
+  getArtistsAndCurators,
+  getManyUsersByWalletId,
+} from '../controllers/users';
+import * as functions from 'firebase-functions';
 
 const router = express.Router();
+router.get('/manyUsers', async (req, res) => {
+  functions.logger.log('inside many-users');
+  try {
+    const walletIds = req.query?.walletIds?.toString().split(',');
+    if (Array.isArray(walletIds)) {
+      functions.logger.log('walletIds', walletIds);
+      const users = await getManyUsersByWalletId(walletIds);
+      functions.logger.log('users', users);
+      return res.json(users);
+    }
+    return res.status(400).send('walletIds must be an array');
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
 
 router.get('/artists-curators', async (req, res) => {
   try {
+    functions.logger.log('GET /artists-curators');
     const result = await getArtistsAndCurators();
     return res.json(result);
   } catch (error: any) {
@@ -103,6 +132,5 @@ router.get('/:user_id/events', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
 
 export default router;
