@@ -3,7 +3,7 @@ import { LikedItem } from '@/common/media/LikedItem';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { Song } from '@/models/common';
 import { store } from '@/store';
-import { GridItem, SimpleGrid } from '@chakra-ui/react';
+import { AspectRatio, Box, GridItem, SimpleGrid, Text } from '@chakra-ui/react';
 import * as styles from '@pages/user/components/Likes/styles';
 
 /**
@@ -22,11 +22,22 @@ export const Likes = () => {
   return (
     <GridItem {...styles.$mainContainerStyles}>
       <SimpleGrid {...styles.$likesGridStyles}>
-        {likes?.slice(start, end).map((item: Song) => (
-          <GridItem key={item.id + item.cover}>
-            <LikedItem name={item.submission_data.sub_id} image={item.cover} />
-          </GridItem>
-        ))}
+        {likes?.length
+          ? likes?.slice(start, end).map((item: Song) => (
+              <GridItem key={item.id + item.cover}>
+                <LikedItem name={item.submission_data.sub_id} image={item.cover} />
+              </GridItem>
+            ))
+          : [0, 1, 2, 3].map((_, index: number) => (
+              <GridItem {...styles.$gridItemStyles} key={index}>
+                <Box {...styles.$emptyCollectionBoxStyles}>
+                  <AspectRatio ratio={1}>
+                    <Box {...styles.$emptyBoxStyles} />
+                  </AspectRatio>
+                  <Text {...styles.$emptyTextStyles} />
+                </Box>
+              </GridItem>
+            ))}
       </SimpleGrid>
       {numOfLikes > 4 && (
         <GridItem {...styles.$paginationContainerStyles}>
