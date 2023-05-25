@@ -1,4 +1,4 @@
-import { StackProps, TextProps } from '@chakra-ui/react';
+import { BoxProps, StackProps, StyleProps, TextProps } from '@chakra-ui/react';
 
 /**
  * @constant {StackProps} $songDetailsStackStyles
@@ -30,4 +30,15 @@ export const $songArtistsTextStyles: TextProps = {
   color: 'white',
   opacity: '60%',
   mt: '0 !important',
+};
+
+export const $privateLabelStyles: BoxProps = {
+  width: '60px',
+  h: { base: '9px', lg: '11px' },
+  bg: { base: 'heds.bg5', lg: 'heds.bg3' },
+};
+
+export const $privateTooltipStyles: StyleProps = {
+  fontSize: 'xs',
+  zIndex: 20,
 };
