@@ -11,6 +11,7 @@ import {
   Flex,
   Image,
   Select,
+  Skeleton,
   Stack,
   Text,
   Modal,
@@ -48,6 +49,7 @@ export const Mint = () => {
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
+  const isLoading = useSelector(store.select.tapeModel.selectIsLoading);
   const merkleRoot = '0x41F60DCB50D15915AE00B4F0C480C469F51F2A5A3D38B1B6BA54DBFD29C97334';
 
   const { isConnected } = useAccount();
@@ -132,14 +134,16 @@ export const Mint = () => {
           <Text color="#DC89FF">MINT</Text>
           <Stack direction="row" spacing={4} justifyContent="space-around">
             <Stack direction="column" spacing={3} w="30%">
-              {sampleArtists.map((artist) => (
-                <Box display="flex" flexDirection="column" alignItems="center" key={artist.id}>
-                  <Avatar size="lg" src={artist.profile_picture} />
-                  <Text color="white" size="xs" letterSpacing="widest">
-                    {artist.display_name}
-                  </Text>
-                </Box>
-              ))}
+              <Flex justifyContent="space-around">
+                {sampleArtists.map((artist) => (
+                  <Box display="flex" flexDirection="column" alignItems="center" key={artist.id}>
+                    <Avatar size="lg" src={artist.profile_picture} />
+                    <Text color="white" size="xs" letterSpacing="widest">
+                      {artist.display_name}
+                    </Text>
+                  </Box>
+                ))}
+              </Flex>
               {hasMinted ? (
                 <>
                   <Text color="white" fontSize="xs" fontFamily="inter">
@@ -181,7 +185,9 @@ export const Mint = () => {
               )}
             </Stack>
             <Center>
-              <Image src={cover} alt="tape-cover" boxSize="xs" border="1px" borderColor="heds.400" borderRadius="md" />
+              <Skeleton isLoaded={!isLoading}>
+                <Image src={cover} alt="tape-cover" boxSize="xs" border="1px" borderColor="heds.400" borderRadius="md" />
+              </Skeleton>
             </Center>
           </Stack>
         </ModalBody>
