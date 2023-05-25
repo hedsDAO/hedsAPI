@@ -95,6 +95,9 @@ export const audioModel = createModel<RootModel>()({
     selectSongHash() {
       return slice((state): string => state.song?.audio?.split('/ipfs/')[1]);
     },
+    selectIsSongPublic() {
+      return slice((state): boolean => state?.song?.public);
+    },
   }),
   effects: () => ({
     async getNextSong(song: Song) {
