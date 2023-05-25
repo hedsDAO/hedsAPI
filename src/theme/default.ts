@@ -55,8 +55,8 @@ export const defaultTheme = extendTheme({
       dark: '#BEBEBE',
     },
   },
-  fontFaces: {
-    space: "'Space Mono', monospace",
+  fonts: {
+    space: "'Space Mono', sans-serif",
     inter: "'Inter', sans-serif",
     karla: "'Karla', sans-serif",
     poppins: "'Poppins', sans-serif",

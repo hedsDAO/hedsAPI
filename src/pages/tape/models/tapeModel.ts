@@ -83,6 +83,7 @@ export const tapeModel = createModel<RootModel>()({
     selectSampleArtists: () => slice((state) => state.tape.sampleArtists),
     selectIsLoading: () => slice((state) => state.isLoading),
     selectCurrentCycle: () => slice((state) => state.cycle),
+    selectTapeProposalId: () => slice((state) => state.tape.proposalId),
     selectCurrentTapeSample: () => slice((state) => state.tape.sample),
   }),
   effects: (dispatch) => ({
@@ -90,6 +91,7 @@ export const tapeModel = createModel<RootModel>()({
       this.setIsLoading(true);
       const response = await getTapeById(id);
       this.setTape(response.data);
+      console.log(response.data);
       this.setIsLoading(false);
     },
   }),
