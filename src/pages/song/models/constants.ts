@@ -12,4 +12,4 @@ export const DETAILS_TEXT_KEY = 'KEY';
 export const DETAILS_TEXT_GENRE = 'GENRE';
 export const DETAILS_TEXT_SUBGENRE = 'SUBGENRE';
 
-export const PRIVATE_TRACK_LABEL = 'This track is private.'
+export const PRIVATE_TRACK_LABEL = 'This track is private'
