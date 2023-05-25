@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAccount } from 'wagmi';
+import { useAccount, useContractRead, erc721ABI } from 'wagmi';
 
 // Components
 import {
@@ -49,12 +49,18 @@ export const Mint = () => {
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
-  const isLoading = useSelector(store.select.tapeModel.selectIsLoading);
+  const isTapeLoading = useSelector(store.select.tapeModel.selectIsLoading);
   const merkleRoot = '0x41F60DCB50D15915AE00B4F0C480C469F51F2A5A3D38B1B6BA54DBFD29C97334';
 
   const { isConnected } = useAccount();
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
+  });
+
+  const { data, isLoading, refetch, isRefetching } = useContractRead({
+    address: contract as `0x${string}`,
+    abi: erc721ABI,
+    functionName: 'totalSupply',
   });
 
   const checkWalletInRoot = async () => {
@@ -185,7 +191,7 @@ export const Mint = () => {
               )}
             </Stack>
             <Center>
-              <Skeleton isLoaded={!isLoading}>
+              <Skeleton isLoaded={!isTapeLoading}>
                 <Image src={cover} alt="tape-cover" boxSize="xs" border="1px" borderColor="heds.400" borderRadius="md" />
               </Skeleton>
             </Center>
