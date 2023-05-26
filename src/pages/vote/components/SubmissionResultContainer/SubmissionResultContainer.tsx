@@ -1,15 +1,15 @@
 import { useSelector } from 'react-redux';
 
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { Submissions } from '@/pages/vote/components/Submission/Submissions';
+import { Submissions } from '@/pages/vote/components/Submissions/Submissions';
 import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults';
 import { store } from '@/store';
 
 export const SubmissionResultContainer = () => {
   const choices = useSelector(store.select.voteModel.selectChoices);
   const scores = useSelector(store.select.voteModel.selectScores);
-  const tracks = useSelector(store.select.tapeModel.selectTracks);
   const votes = useSelector(store.select.voteModel.selectVotes);
+  const tracks = useSelector(store.select.tapeModel.selectTracks);
 
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
 
