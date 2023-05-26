@@ -18,6 +18,7 @@ export const Details = () => {
   const wallet = useSelector(store.select.userModel.selectWallet);
   const connectedWallet = useSelector(store.select.authModel.selectUser)?.wallet as string;
   const isLoading = useSelector((state: RootState) => state.loading.effects.userModel.getUser);
+  const userVp = useSelector(store.select.userModel.selectUserVp);
 
   return (
     <Stack {...styles.$detailsStackStyles}>
@@ -48,7 +49,7 @@ export const Details = () => {
       </Flex>
       {!isLoading && (
         <Flex {...styles.$walletAndTwitterButtonsFlexStyles}>
-          <Text {...styles.$votingPowerStyles}>92</Text>
+          <Text {...styles.$votingPowerStyles}>{userVp || 0}</Text>
           <Button
             data-testid="user-wallet-button"
             as={'a'}

@@ -1384,6 +1384,7 @@ export const userModelState: UserModelState = {
       event_timestamp: '2022-04-19T23:33:23.000Z',
     },
   ],
+  user_vp: 0,
   collection_args: [],
   isFetchingCollection: false,
 };

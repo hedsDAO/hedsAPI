@@ -7,7 +7,7 @@ const formatCollectionData = (data: any[], allTapeData: TapeCollectionArg[]) => 
   collectionData =
     allTapeData
       .filter((tape) => tape?.contract?.length)
-      .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name, id: cur.id } }), {}) || {};
+      .reduce((acc, cur) => ({ ...acc, [cur.contract]: { image: cur.image, name: cur.name, id: cur.id, contract: cur.contract } }), {}) || {};
   const userCollectionTank = {} as { [key: string]: TapeCollectionItem };
   Object.keys(collectionData).map((key: string, index: number) => {
     if (data?.[index] !== null) {

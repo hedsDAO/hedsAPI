@@ -6,8 +6,7 @@ import { Song, TapeCollectionArg, TapeCollectionItem, User, UserCollection, User
 import { UserModelState } from '@pages/user/models/common';
 import { createModel } from '@rematch/core';
 import { getTapeCollectionArgs } from '@/api/tape';
-import { Result } from 'ethers/lib/utils';
-import { DateTime } from 'luxon';
+import { tapesAndVpWeights } from '@/pages/user/models/constants';
 
 /**
  * reducers
@@ -50,6 +49,7 @@ export const userModel = createModel<RootModel>()({
     setUserCollection: (state, collection: UserCollection) => ({ ...state, collection: collection }),
     setCollectionArgs: (state, collection_args: TapeCollectionArg[]) => ({ ...state, collection_args }),
     setIsFetchingCollection: (state, isFetchingCollection: boolean) => ({ ...state, isFetchingCollection }),
+    setUserVp: (state, user_vp: number) => ({ ...state, user_vp }),
   },
   selectors: (slice) => ({
     selectUser: () => slice((state) => state.user),
@@ -69,6 +69,7 @@ export const userModel = createModel<RootModel>()({
     selectCollectionArgs: () => slice((state): TapeCollectionArg[] => state.collection_args),
     selectCollection: () => slice((state): TapeCollectionItem => state.user?.collection?.items),
     selectNumOfCollections: () => slice((state): number => (!isEmpty(state.user?.collection) ? Object.values(state.user?.collection?.items)?.length : 0)),
+    selectUserVp: () => slice((state): number => state.user_vp),
   }),
   effects: (dispatch) => ({
     async getUser(wallet: string) {
@@ -81,6 +82,26 @@ export const userModel = createModel<RootModel>()({
           user_likes = await getUserLikesById(response.data.id);
           user_events = await getUserEventsById(response.data.id);
           collection_args = await getTapeCollectionArgs();
+          if (isEmpty(response?.data?.collection)) this.setIsFetchingCollection(true);
+          else {
+            // Calculate user VP via collection/songs/badges(og)
+            const isOG = Object.values(response.data.badges)
+              .map((badge: any) => badge?.name === 'OG')
+              .includes(true);
+            const isArtist = !isEmpty(user_songs);
+            const userCollection = response?.data?.collection?.items;
+            let totalVp = 0;
+            for (let contract in userCollection) {
+              let itemVp = tapesAndVpWeights[contract.toLowerCase()];
+              if (itemVp > 0) {
+                itemVp * userCollection[contract.toLowerCase()]?.quantity;
+                totalVp += itemVp;
+              }
+            }
+            if (isOG) totalVp += 10;
+            if (isArtist) totalVp += 15;
+            this.setUserVp(totalVp);
+          }
         } catch (e) {
           console.log(e);
         }
@@ -90,7 +111,6 @@ export const userModel = createModel<RootModel>()({
       this.setUserLikes(user_likes?.data || []);
       this.setUserEvents(user_events?.data || []);
       this.setCollectionArgs(collection_args?.data || []);
-      if (isEmpty(response?.data?.collection)) this.setIsFetchingCollection(true);
     },
     async updateUserCollection([data, allTapeData, prevUserData]: [any[], TapeCollectionArg[], User]) {
       const { id } = prevUserData;
