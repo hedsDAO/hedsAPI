@@ -5,16 +5,17 @@ import * as constants from '@/pages/song/models/constants';
 import * as styles from '@/pages/vote/components/Submission/styles';
 
 interface OwnProps extends ChoiceWithScore {
-  $submissionType: string;
+  submissionType: string;
+  selected: boolean;
   isSongPublic?: boolean;
   handlePlaySubmission: (id: string) => void;
 }
 
 export const Submission = (props: OwnProps) => {
-  const { image, name, artist, score, media, handlePlaySubmission, isSongPublic, $submissionType } = props;
+  const { image, name, artist, score, media, handlePlaySubmission, isSongPublic, submissionType, selected } = props;
 
   return (
-    <Box {...styles.$submissionBoxStyles($submissionType)} onClick={() => handlePlaySubmission(media)}>
+    <Box {...styles.$submissionBoxStyles(submissionType, selected)} onClick={() => handlePlaySubmission(media)}>
       <Stack {...styles.$cardStackStyles}>
         <Box {...styles.$cardImageBoxStyles}>
           <Image {...styles.$cardImageStyles} src={image} alt="Submission Image" />

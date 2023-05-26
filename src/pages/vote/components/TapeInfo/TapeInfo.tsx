@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux';
-
-import { Avatar, Box, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Avatar, Box, Flex, Image, Stack, Skeleton, Text } from '@chakra-ui/react';
 import * as styles from '@pages/vote/components/TapeInfo/styles';
-import { store } from '@/store';
+import { Dispatch, store } from '@/store';
 
 export const TapeInfo = () => {
+  const dispatch = useDispatch<Dispatch>();
   const tape = useSelector(store.select.tapeModel.selectCurrentTape);
+  const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
 
   return (
     <Flex direction={['column', 'row']} justifyContent="space-around" p={{ base: 12, lg: 16 }}>
@@ -32,7 +33,15 @@ export const TapeInfo = () => {
       </Flex>
       <Flex w={['100%', '20%']} mt={{ base: 6 }}>
         <Stack>
-          <Box border="1px" bgColor="#4F4F4F" color="#745CBA" p={[2, 4]} borderRadius="md">
+          <Box
+            border="1px"
+            bgColor="#4F4F4F"
+            color="#745CBA"
+            p={[2, 4]}
+            borderRadius="md"
+            _hover={{ cursor: 'pointer' }}
+            onClick={() => dispatch.songModel.setSong(sample)}
+          >
             <Stack direction="row">
               <Stack justifyContent="center">
                 <Text color="white" fontFamily="poppins" fontWeight="bold">

@@ -7,10 +7,11 @@ import { Song } from '@models/common';
 import { Dispatch, store } from '@/store';
 import * as styles from '@/pages/vote/components/Submissions/styles';
 
-export const Submissions = ({ choices }: { choices: ChoiceWithScore[][] }) => {
+export const Submissions = ({ choices, voterChoices }: { choices: ChoiceWithScore[][]; voterChoices: { [key: number]: number } }) => {
   const [tracks, selected, submissions] = choices;
   const songs = useSelector(store.select.tapeModel.selectSongs);
   const isLoading = useSelector(store.select.voteModel.selectIsLoading);
+  const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
 
   const dispatch = useDispatch<Dispatch>();
 
@@ -27,9 +28,7 @@ export const Submissions = ({ choices }: { choices: ChoiceWithScore[][] }) => {
   };
 
   useEffect(() => {
-    const firstTrackIpfs = tracks[0].media;
-    const firstSong = songsByIpfsHash[firstTrackIpfs];
-    dispatch.songModel.setSong(firstSong);
+    dispatch.songModel.setSong(sample);
   }, []);
 
   return (
@@ -39,27 +38,30 @@ export const Submissions = ({ choices }: { choices: ChoiceWithScore[][] }) => {
           <Submission
             key={choice.name + choice.image}
             {...choice}
-            $submissionType={'track'}
+            submissionType={'track'}
             handlePlaySubmission={handlePlaySubmission}
             isSongPublic={songsByIpfsHash?.[choice.media]?.public}
+            selected={!!voterChoices[choice.id]}
           />
         ))}
         {selected.map((choice) => (
           <Submission
             key={choice.name + choice.image}
             {...choice}
-            $submissionType={'selected'}
+            submissionType={'selected'}
             handlePlaySubmission={handlePlaySubmission}
             isSongPublic={songsByIpfsHash?.[choice.media]?.public}
+            selected={!!voterChoices[choice.id]}
           />
         ))}
         {submissions.map((choice) => (
           <Submission
             key={choice.name + choice.image}
             {...choice}
-            $submissionType={'submission'}
+            submissionType={'submission'}
             handlePlaySubmission={handlePlaySubmission}
             isSongPublic={songsByIpfsHash?.[choice.media]?.public}
+            selected={!!voterChoices[choice.id]}
           />
         ))}
       </Grid>
