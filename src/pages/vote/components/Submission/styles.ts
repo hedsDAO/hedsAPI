@@ -4,7 +4,7 @@ export const $submissionBoxStyles = (type: string, selected: boolean): BoxProps 
   border: `${selected ? '2px' : '1px'}`,
   borderRadius: 'md',
   borderColor: `${selected ? 'white' : '#9293FF'}`,
-  bg: `${selected ? 'white' : type === 'track' ? '#745CBA' : type === 'selected' ? '#4F4F4F' : '#17141B'}`,
+  bg: `${type === 'track' ? '#745CBA' : type === 'selected' ? '#4F4F4F' : '#17141B'}`,
   _hover: { cursor: 'pointer' },
 });
 
