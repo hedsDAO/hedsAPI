@@ -27,6 +27,7 @@ export const tapeModel = createModel<RootModel>()({
       links: undefined,
       sampleArtists: [],
       sample: undefined,
+      songs: [],
     } as Tape,
     isLoading: false,
     cycle: '',
@@ -70,6 +71,7 @@ export const tapeModel = createModel<RootModel>()({
         sampleArtists: sample_artists,
         tracks,
         sample,
+        songs,
       };
       return { ...state, cycle: currentCycle, tape: newTape };
     },
@@ -80,6 +82,7 @@ export const tapeModel = createModel<RootModel>()({
     selectTapeCover: () => slice((state) => state.tape.image),
     selectTimeline: () => slice((state) => state.tape.timeline),
     selectTracks: () => slice((state) => state.tape.tracks),
+    selectSongs: () => slice((state) => state.tape.songs),
     selectSampleArtists: () => slice((state) => state.tape.sampleArtists),
     selectIsLoading: () => slice((state) => state.isLoading),
     selectCurrentCycle: () => slice((state) => state.cycle),
@@ -91,7 +94,6 @@ export const tapeModel = createModel<RootModel>()({
       this.setIsLoading(true);
       const response = await getTapeById(id);
       this.setTape(response.data);
-      console.log(response.data);
       this.setIsLoading(false);
     },
   }),
