@@ -126,12 +126,10 @@ export const $songNameTextStyles: TextProps = {
 
 export const $likeButtonStyles = (connectedUserId: number | null): ExtendedButtonProps => ({
   isDisabled: !connectedUserId,
-  mr: 3,
   bg: 'transparent',
   _hover: { bg: 'transparent' },
   _active: { bg: 'transparent' },
   _focus: { bg: 'transparent' },
-  ml: 'auto',
   mb: { base: 4, lg: 0 },
   'data-testid': 'song-like-button',
 });
@@ -142,6 +140,22 @@ export const $likeIconStyles = (songLikes: any[], connectedUserId: number | null
   as: 'i',
   className: 'fas fa-heart',
 });
+
+export const $fullscreenButtonStyles: ButtonProps ={
+  bg: 'transparent',
+  px: 1, 
+  _hover: { bg: 'transparent' },
+  _active: { bg: 'transparent' },
+  _focus: { bg: 'transparent' },
+  mb: { base: 4, lg: 0 },
+};
+
+export const $fullscreenIconStyles: TextProps = {
+  fontSize: { base: '2xl', lg: '3xl' },
+  color: 'heds.bg5',
+  as: 'i',
+  className: 'fas fa-expand',
+};
 
 export const $playButtonIconStyles = (isLoading: boolean, isPlaying: boolean): TextProps => ({
   fontSize: '3xl',
