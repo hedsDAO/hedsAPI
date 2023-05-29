@@ -126,10 +126,12 @@ export const $songNameTextStyles: TextProps = {
 
 export const $likeButtonStyles = (connectedUserId: number | null): ExtendedButtonProps => ({
   isDisabled: !connectedUserId,
+  mr: 3,
   bg: 'transparent',
   _hover: { bg: 'transparent' },
   _active: { bg: 'transparent' },
   _focus: { bg: 'transparent' },
+  ml: 'auto',
   mb: { base: 4, lg: 0 },
   'data-testid': 'song-like-button',
 });
