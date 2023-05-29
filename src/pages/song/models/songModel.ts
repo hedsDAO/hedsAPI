@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
-import { getSongByHash, getSongEventsById, getSongLikesById, likeSong, unlikeSong } from '@api/song';
+import { getManySongs, getSongByHash, getSongEventsById, getSongLikesById, likeSong, unlikeSong } from '@api/song';
 import { CyaniteData, Song, SongEvents, User } from '@/models/common';
 import { getCyaniteData, getRelatedTracks } from '@/utils';
 import { DEFAULT_NAV_TABS, APPEARS_ON_TAB } from '@pages/song/models/constants';
@@ -68,14 +68,13 @@ export const songModel = createModel<RootModel>()({
         const cyaniteResponse = await getCyaniteData(parseInt(cyaniteId));
         this.setCyaniteData(cyaniteResponse.result);
       }
-      // WORK IN PROGRESS - waiting on firebase functions to be deployed
-      // if (cyaniteId) {
-      //   const song_hashes = await getRelatedTracks(parseInt(cyaniteId));
-      //   if (song_hashes?.length) {
-      //     const relatedSongsResponse = await getManySongsByHash(song_hashes);
-      //     this.setRelatedSongs(relatedSongsResponse?.data);
-      //   }
-      // }
+      if (cyaniteId) {
+        const song_hashes = await getRelatedTracks(parseInt(cyaniteId));
+        if (song_hashes?.length) {
+          const relatedSongsResponse = await getManySongs(song_hashes);
+          this.setRelatedSongs(relatedSongsResponse?.data);
+        }
+      }
       const navbarTabs = [...DEFAULT_NAV_TABS];
       if (response.data?.track_data?.track_no) navbarTabs.push(APPEARS_ON_TAB);
       this.setNavbarTabs(navbarTabs);
