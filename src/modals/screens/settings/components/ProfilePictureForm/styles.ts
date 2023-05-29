@@ -32,7 +32,7 @@ export const $inputStyles: ExtendedInputProps = {
   type: 'file',
   'data-testid': 'profile-picture-input',
   accept: 'image/*',
-  className: 'hidden',
+  hidden: true,
 };
 
 /**
@@ -45,7 +45,7 @@ export const $imageStyles = (src: string, profilePictureError?: string, isHoveri
   zIndex: 20,
   src: src,
   borderColor: profilePictureError?.length ? 'red.500' : 'transparent',
-  opacity: profilePictureError?.length ? '10%' : isHoveringProfilePicture ? '60%' : '100%',
+  opacity: profilePictureError?.length ? '10%' : isHoveringProfilePicture ? '80%' : '100%',
   height: { base: '24', lg: '32' },
   width: { base: '24', lg: '32' },
   transitionDuration: '0.2s',
