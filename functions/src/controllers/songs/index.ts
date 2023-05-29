@@ -148,6 +148,7 @@ export const likeSong = async (songId: number, userId: number) => {
     const songDataQuery = `SELECT track_name FROM ${schemaName}.songs WHERE id = $1`;
     const songResult = await pool.query(songDataQuery, [songId]);
     const trackName = songResult.rows[0].track_name;
+    const isPublic = songResult.rows[0].public;
     const artistIdQuery = `SELECT user_id FROM ${schemaName}.song_artists WHERE song_id = $1`;
     const artistIdResult = await pool.query(artistIdQuery, [songId]);
     const artistId = artistIdResult.rows[0].user_id;
@@ -159,7 +160,7 @@ export const likeSong = async (songId: number, userId: number) => {
     const eventType = 'song_like';
     const eventData = {
       message: `${displayName} liked a track`,
-      subject: `${trackName} by ${artistName}`,
+      subject: `${trackName} by ${isPublic ? artistName : "Anonymous"}`,
     };
 
     const songEventQuery = `
