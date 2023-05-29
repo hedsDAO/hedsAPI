@@ -141,22 +141,6 @@ export const $likeIconStyles = (songLikes: any[], connectedUserId: number | null
   className: 'fas fa-heart',
 });
 
-export const $fullscreenButtonStyles: ButtonProps ={
-  bg: 'transparent',
-  px: 1, 
-  _hover: { bg: 'transparent' },
-  _active: { bg: 'transparent' },
-  _focus: { bg: 'transparent' },
-  mb: { base: 4, lg: 0 },
-};
-
-export const $fullscreenIconStyles: TextProps = {
-  fontSize: { base: '2xl', lg: '3xl' },
-  color: 'heds.bg5',
-  as: 'i',
-  className: 'fas fa-expand',
-};
-
 export const $playButtonIconStyles = (isLoading: boolean, isPlaying: boolean): TextProps => ({
   fontSize: '3xl',
   color: 'white',
