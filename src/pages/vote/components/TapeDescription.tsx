@@ -75,11 +75,11 @@ export const TapeDescription = () => {
         Description
       </Text>
       <Text fontSize="xs"> {isOldTape ? ABOUT_VOTING_OLD_TAPES : isHedsTAPE06 ? ABOUT_VOTING_HT6 : ABOUT_VOTING}</Text>
-      {proposal?.state === ProposalState.CLOSED ? (
+      {!scores ? (
         <Flex mt={4} p={2} border={'1px'} borderColor={'gray.300'} rounded="sm" gap={2} alignItems={'center'} bg="gray.100">
           <InfoIcon height="3.5" width="3.5" />
           <Text letterSpacing={'wide'} fontSize="2xs">
-            {isHedsTAPE14 && !scores ? 'Results will be live shortly' : 'Results will be public after the voting period ends.'}
+            {proposal.state === ProposalState.CLOSED ? 'Results will be live shortly' : 'Results will be public after the voting period ends.'}
           </Text>
         </Flex>
       ) : (
