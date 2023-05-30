@@ -4,7 +4,7 @@ import { Box, Stack, Text } from '@chakra-ui/react';
 import { VoterCard } from '@/pages/vote/components/VoterCard/VoterCard';
 import { Dispatch, store } from '@/store';
 
-export const VoterResults = () => {
+export const VoterResults = ({ handleVoterChoices }: { handleVoterChoices: (votesObj: { [key: number]: number }) => void }) => {
   const dispatch = useDispatch<Dispatch>();
   const votes = useSelector(store.select.voteModel.selectVotes);
   const userResultsInfo = useSelector(store.select.voteModel.selectUserResultsInfo);
@@ -48,6 +48,7 @@ export const VoterResults = () => {
                   wallet={voter}
                   key={voter}
                   votesObject={votesObject}
+                  handleVoterChoices={handleVoterChoices}
                 />
               );
             })}

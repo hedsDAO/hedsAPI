@@ -1,16 +1,11 @@
-import { BoxProps, FlexProps, GridProps, ImageProps, ProgressProps, StackProps, TextProps } from '@chakra-ui/react';
+import { BoxProps, FlexProps, ImageProps, ProgressProps, StackProps, StyleProps, TextProps } from '@chakra-ui/react';
 
-export const $submissionsGridStyles: GridProps = {
-  templateColumns: { base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
-  gap: 1,
-  pt: 4,
-};
-
-export const $submissionBoxStyles = (type: string): BoxProps => ({
-  border: '1px',
+export const $submissionBoxStyles = (type: string, selected: boolean): BoxProps => ({
+  border: `${selected ? '2px' : '1px'}`,
   borderRadius: 'md',
-  borderColor: '#9293FF',
+  borderColor: `${selected ? 'white' : '#9293FF'}`,
   bg: `${type === 'track' ? '#745CBA' : type === 'selected' ? '#4F4F4F' : '#17141B'}`,
+  _hover: { cursor: 'pointer' },
 });
 
 export const $cardStackStyles: StackProps = {
@@ -66,4 +61,15 @@ export const $cardProgressStyles: ProgressProps = {
   size: 'sm',
   colorScheme: 'gray',
   borderRadius: 'md',
+};
+
+export const $privateTooltipStyles: StyleProps = {
+  fontSize: 'xs',
+  zIndex: 20,
+};
+
+export const $privateLabelStyles: BoxProps = {
+  width: '60px',
+  h: { base: '9px', lg: '11px' },
+  bg: { base: 'heds.bg5', lg: 'heds.bg3' },
 };
