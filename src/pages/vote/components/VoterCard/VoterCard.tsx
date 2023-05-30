@@ -9,9 +9,10 @@ interface OwnProps {
   wallet: string;
   vp: number;
   votesObject: { [id: number]: number };
+  handleVoterChoices: (votesObj: { [id: number]: number }) => void;
 }
 
-export const VoterCard = ({ displayName, profilePicture, wallet, vp, votesObject }: OwnProps) => {
+export const VoterCard = ({ displayName, profilePicture, wallet, vp, votesObject, handleVoterChoices }: OwnProps) => {
   const choices = useSelector(store.select.voteModel.selectChoices);
   const formatChoiceSelection = (voteObject: { [id: string]: number }) => {
     const totalScore = Object.values(voteObject).reduce((a, b) => a + b, 0);
@@ -26,7 +27,15 @@ export const VoterCard = ({ displayName, profilePicture, wallet, vp, votesObject
 
   return (
     <Tooltip label={formatChoiceSelection(votesObject)}>
-      <Box border="1px" borderColor="#9293FF" borderRadius="md" px={1} bgColor="#745CBA">
+      <Box
+        border="1px"
+        borderColor="#9293FF"
+        borderRadius="md"
+        px={1}
+        bgColor="#745CBA"
+        _hover={{ cursor: 'pointer' }}
+        onClick={() => handleVoterChoices(votesObject)}
+      >
         <Flex justifyContent="space-between" p={1}>
           <Flex gap={2} alignItems={'center'}>
             <Avatar

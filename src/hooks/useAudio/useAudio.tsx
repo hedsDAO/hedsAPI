@@ -18,7 +18,7 @@ export const useAudio = () => {
   const song = useSelector(store.select.audioModel.selectSong);
   const upNext = useSelector(store.select.audioModel.selectUpNext);
   const previous = useSelector(store.select.audioModel.selectPrevious);
-  const isOnOwnSongPage: boolean = song?.audio?.split('/ipfs/')[1] === pathname?.split('/song/')[1];
+  const isOnOwnSongPage: boolean = song?.audio?.split('/ipfs/')[1] === pathname?.split('/song/')[1] || pathname.includes('/vote');
 
   useEffect(() => {
     if (state.howlerInstance) {

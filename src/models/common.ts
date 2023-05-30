@@ -15,6 +15,7 @@ export interface Tape {
   sampleArtists: Artist[];
   tracks: Song[];
   sample?: Song;
+  songs?: Song[];
 }
 
 export interface TapeCollectionArg {
