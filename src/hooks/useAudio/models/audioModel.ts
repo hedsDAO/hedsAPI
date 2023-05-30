@@ -83,6 +83,9 @@ export const audioModel = createModel<RootModel>()({
     selectArtists() {
       return slice((state): string => state.song?.artists?.map((artist) => artist.display_name).join(', '));
     },
+    selectArtistWallets() {
+      return slice((state): string[] => state.song?.artists?.map((artist) => artist.wallet));
+    },
     selectTapeName() {
       return slice((state): string => state.song?.track_data?.tape_name);
     },
