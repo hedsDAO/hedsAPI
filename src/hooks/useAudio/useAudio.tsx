@@ -41,7 +41,7 @@ export const useAudio = () => {
 
   useEffect(() => {
     if (isOnOwnSongPage) dispatch.globalAudioModel.setIsOpen(false);
-    else if (!isOnOwnSongPage && song) dispatch.globalAudioModel.setIsOpen(true);
+    else if (!isOnOwnSongPage && song && progress) dispatch.globalAudioModel.setIsOpen(true);
     else dispatch.globalAudioModel.setIsOpen(false);
   }, [song.audio, pathname]);
 

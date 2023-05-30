@@ -55,7 +55,7 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
             <GridItem as={Flex} alignItems={'center'} colSpan={2}>
               <PlayerButtons />
             </GridItem>
-            <GridItem ml={3} gap={1} as={Flex} alignItems={'center'} colSpan={3}>
+            <GridItem ml={{base: 6, lg:3}} gap={1} as={Flex} alignItems={'center'} colSpan={3}>
               <LikeButton />
               <VolumeControl
                 handleMute={() => {

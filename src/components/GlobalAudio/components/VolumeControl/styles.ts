@@ -44,6 +44,7 @@ export const $volumeControlFlexStyles: FlexProps = {
   alignContent: 'center',
   w: 'full',
   mr: 10,
+  display: {base: 'none', lg: 'flex'}
 };
 
 /**
