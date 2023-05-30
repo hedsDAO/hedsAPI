@@ -4,7 +4,10 @@ import { BoxProps, StackProps, StyleProps, TextProps } from '@chakra-ui/react';
  * @constant {StackProps} $songDetailsStackStyles
  * @description StackProps object that contains styles for the SongDetails component container.
  */
-export const $songDetailsStackStyles: StackProps = {};
+export const $songDetailsStackStyles: StackProps = {
+  minW: { base: 'fit-content', lg: 'unset' },
+  px: { base: 2, lg: 0 },
+};
 
 /**
  * @constant {TextProps} $songNameTextStyles
