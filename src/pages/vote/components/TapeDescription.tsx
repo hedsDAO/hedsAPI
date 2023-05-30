@@ -25,7 +25,7 @@ export const TapeDescription = () => {
 
   const isOldTape = OLD_TAPES.includes(id);
   const isHedsTAPE06 = id === '6';
-  const isHedsTAPE13 = id === '13';
+  const isHedsTAPE14 = id === '14';
 
   const handleProposalState = (state: ProposalState) => {
     if (state === ProposalState.OPEN) return <OpenDateBox end={timeline?.vote?.end} />;
@@ -78,7 +78,7 @@ export const TapeDescription = () => {
         <Flex mt={4} p={2} border={'1px'} borderColor={'gray.300'} rounded="sm" gap={2} alignItems={'center'} bg="gray.100">
           <InfoIcon height="3.5" width="3.5" />
           <Text letterSpacing={'wide'} fontSize="2xs">
-            {isHedsTAPE13 && proposal.votes?.length ? 'Results will be live shortly' : 'Results will be public after the voting period ends.'}
+            {isHedsTAPE14 && proposal.votes?.length ? 'Results will be live shortly' : 'Results will be public after the voting period ends.'}
           </Text>
         </Flex>
       ) : (
