@@ -1,6 +1,7 @@
 import * as Twitter from 'twitter-v2';
 import { pool } from '../../database';
 import schemaName from '../../../config';
+import * as functions from 'firebase-functions';
 
 export const authenticateTweet = async (tweetId: string): Promise<any> => {
   if (!process.env.TWITTER_CONSUMER_KEY ||  !process.env.TWITTER_CONSUMER_SECRET  || !process.env.TWITTER_ACCESS_KEY || !process.env.TWITTER_TOKEN_SECRET) {
@@ -38,5 +39,24 @@ export const validateTwitterHandle = async (twitterHandle: string, userHash: str
     }
   } catch (error: any) {
     throw new Error(`Failed to validate Twitter handle: ${error.message}`);
+  }
+};
+
+export const validateUserByDisplayName = async (displayName: string): Promise<boolean> => {
+  try {
+    functions.logger.info(`validateUserByDisplayName: ${displayName}`);
+    const { rowCount } = await pool.query(
+      `SELECT 1 FROM ${schemaName}.users WHERE LOWER(display_name) = LOWER($1)`,
+      [displayName]
+    );
+    functions.logger.info(`validateUserByDisplayName: ${rowCount}`);
+
+    if (rowCount > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to validate display name: ${error.message}`);
   }
 };

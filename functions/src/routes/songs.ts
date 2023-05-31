@@ -10,6 +10,7 @@ router.get('/many-songs', async (req, res) => {
     functions.logger.log(songHashes, 'songHashes');
     if (Array.isArray(songHashes)) {
       const requestedSongs = await getManySongs(songHashes);
+      functions.logger.log("requestedSongs", requestedSongs);
       if (!requestedSongs) res.status(404).json({ error: 'Songs not found' });
       res.json(requestedSongs);
     }
