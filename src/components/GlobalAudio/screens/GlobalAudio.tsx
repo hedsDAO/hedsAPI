@@ -55,7 +55,7 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
             <GridItem as={Flex} alignItems={'center'} colSpan={1}>
               <PlayerButtons />
             </GridItem>
-            <GridItem ml={{base: 4, lg:2}} gap={1} as={Flex} alignItems={'center'} colSpan={2}>
+            <GridItem ml={{ base: 4, lg: 2 }} gap={1} as={Flex} alignItems={'center'} colSpan={2}>
               <LikeButton />
               <VolumeControl
                 handleMute={() => {
@@ -71,7 +71,7 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
               />
             </GridItem>
           </SimpleGrid>
-          <Flex display={{base: 'flex', lg: 'none'}} p={2} gap={2} alignItems="center">
+          <Flex width={{ base: '92vw', lg: 'unset' }} display={{ base: 'flex', lg: 'none' }} p={2} gap={2} alignItems="center">
             <SongCover />
             <SongDetails />
             <Flex px={4} gap={3} alignItems={'center'}>
