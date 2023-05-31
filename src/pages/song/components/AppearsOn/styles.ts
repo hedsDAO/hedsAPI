@@ -12,7 +12,7 @@ export interface ExtendedImageProps extends ImageProps {
 export const $appearsOnSimpleGridStyles: SimpleGridProps = {
   gap: { base: 3, lg: 5 },
   pt: { base: 6, lg: 12 },
-  columns: { base: 2, lg: 6 },
+  columns: { base: 2, lg: 4 },
 };
 
 export const $appearsOnGridItemStyles: ExtendedGridItemProps = {
