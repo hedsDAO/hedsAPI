@@ -214,7 +214,7 @@ export const unlikeSong = async (songId: number, userId: number) => {
 export const getManySongs = async (songHashes: string[]) => {
   try {
     const prefixedSongHashes = songHashes.map((hash) => `https://www.heds.cloud/ipfs/${hash}`);
-    const songResult = await pool.query(`SELECT * FROM heds.songs WHERE audio = ANY($1)`, [prefixedSongHashes]);
+    const songResult = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE audio = ANY($1)`, [prefixedSongHashes]);
     if (songResult.rows.length === 0) return null;
     return songResult.rows;
   } catch (error) {
