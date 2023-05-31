@@ -92,7 +92,6 @@ export const tapeModel = createModel<RootModel>()({
       this.setIsLoading(true);
       const response = await getTapeById(id);
       this.setTape(response.data);
-      console.log(response.data);
       this.setIsLoading(false);
     },
   }),

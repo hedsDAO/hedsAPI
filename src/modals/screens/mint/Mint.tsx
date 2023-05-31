@@ -42,6 +42,8 @@ export const Mint = () => {
   const [hasMinted, setHasMinted] = useState<boolean>(false);
   const [mintPrice, setMintPrice] = useState<string>('0');
   const [amountMinted, setAmountMinted] = useState<number>(0);
+  const [client, setClient] = useState(null);
+  const [activeSchedule, setActiveSchedule] = useState(null);
 
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
@@ -66,13 +68,12 @@ export const Mint = () => {
           apiKey: SOUND_KEY,
         }),
       });
-
-      const editionAddress = '0x00396A23e204f3cf9E3a768C0218525501f45af1';
       const { activeSchedules } = await client.edition.mintSchedules({
-        editionAddress,
+        editionAddress: contract,
       });
-
       const activeSchedule = activeSchedules.shift();
+      setClient(client);
+      setActiveSchedule(activeSchedule);
       setMintPrice(ethers.utils.formatEther(activeSchedule?.price.toNumber()) || '0');
       setAmountMinted(activeSchedule?.totalMinted || 0);
     };
@@ -80,24 +81,10 @@ export const Mint = () => {
   }, [contract]);
 
   const mintEdition = async (quantity: number) => {
-    const signer = await connector?.getSigner();
-    const client = SoundClient({
-      signer,
-      soundAPI: SoundAPI({
-        apiKey: SOUND_KEY,
-      }),
-    });
-
-    const editionAddress = '0x00396A23e204f3cf9E3a768C0218525501f45af1';
-    const { activeSchedules } = await client.edition.mintSchedules({
-      editionAddress,
-    });
-
     const mintTransaction = await client.edition.mint({
-      mintSchedule: activeSchedules.shift(),
+      mintSchedule: activeSchedule,
       quantity,
     });
-
     return await mintTransaction.wait();
   };
 
@@ -116,7 +103,6 @@ export const Mint = () => {
       console.error(error);
       setIsMinting(false);
     }
-
     return;
   };
 
