@@ -19,17 +19,21 @@ export const useAudio = () => {
   const upNext = useSelector(store.select.audioModel.selectUpNext);
   const previous = useSelector(store.select.audioModel.selectPrevious);
   const isOnOwnSongPage: boolean = song?.audio?.split('/ipfs/')[1] === pathname?.split('/song/')[1] || pathname.includes('/vote');
+  const isOnHomePage: boolean = pathname === '/';
 
   useEffect(() => {
     if (state.howlerInstance) {
       state.howlerInstance.on('end', () => {
         if (upNext) {
+          dispatch.audioModel.setIsPlaying(false);
           createHowlerInstance(upNext.audio);
           dispatch.audioModel.setSong(upNext);
           dispatch.audioModel.setIsPlaying(true);
         } else {
           dispatch.audioModel.setIsPlaying(false);
           dispatch.audioModel.setProgress(0);
+          dispatch.audioModel.clearState();
+          dispatch.globalAudioModel.setIsOpen(false);
         }
       });
     }
@@ -40,7 +44,7 @@ export const useAudio = () => {
    */
 
   useEffect(() => {
-    if (isOnOwnSongPage) dispatch.globalAudioModel.setIsOpen(false);
+    if (isOnOwnSongPage || isOnHomePage) dispatch.globalAudioModel.setIsOpen(false);
     else if (!isOnOwnSongPage && song && progress) dispatch.globalAudioModel.setIsOpen(true);
     else dispatch.globalAudioModel.setIsOpen(false);
   }, [song.audio, pathname]);
@@ -84,30 +88,16 @@ export const useAudio = () => {
     if (song?.audio === requestedSong?.audio && state.howlerInstance instanceof Howl) {
       dispatch.audioModel.setIsPlaying(!isPlaying);
     } else {
-      dispatch.audioModel.getNextSong(requestedSong);
       createHowlerInstance(requestedSong.audio);
+      dispatch.audioModel.getNextAndPreviousSong([requestedSong, upNext, previous]);
       dispatch.audioModel.setSong(requestedSong);
       dispatch.audioModel.setIsPlaying(true);
     }
   };
 
-  const handlePrevious = () => {
-    if (previous) {
-      dispatch.audioModel.getNextSong(previous);
-      createHowlerInstance(previous.audio);
-      dispatch.audioModel.setSong(previous);
-      dispatch.audioModel.setIsPlaying(true);
-    }
-  };
+  const handlePrevious = () => {};
 
-  const handleUpNext = () => {
-    if (upNext) {
-      dispatch.audioModel.getNextSong(upNext);
-      createHowlerInstance(upNext.audio);
-      dispatch.audioModel.setSong(upNext);
-      dispatch.audioModel.setIsPlaying(true);
-    }
-  };
+  const handleUpNext = () => {};
 
   useEffect(() => {
     if (state.howlerInstance instanceof Howl) {

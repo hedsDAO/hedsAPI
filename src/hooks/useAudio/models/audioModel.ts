@@ -1,4 +1,4 @@
-import { getSongByHash } from '@/api/song';
+import { getManySongs, getSongByHash } from '@/api/song';
 import type { RootModel } from '@/models';
 import { Song } from '@/models/common';
 import { getRelatedTracks } from '@/utils';
@@ -103,12 +103,16 @@ export const audioModel = createModel<RootModel>()({
     },
   }),
   effects: () => ({
-    async getNextSong(song: Song) {
+    async getNextAndPreviousSong([song, upNext, previous]: [Song, Song, Song]) {
       let relatedSongHashes: string[];
       let nextSongResponse;
       let nextSong;
-      if (song?.cyanite_id) relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 3);
-      if (relatedSongHashes?.length) nextSongResponse = await getSongByHash(relatedSongHashes[2]);
+      relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
+      if (relatedSongHashes?.length) {
+        const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1]);
+        nextSongResponse = await getManySongs(nextUniqueTrack);
+        console.log(nextSongResponse, 'res')
+      }
       if (nextSongResponse?.data) nextSong = nextSongResponse?.data;
       if (nextSong) this.setUpNext(nextSong);
     },
