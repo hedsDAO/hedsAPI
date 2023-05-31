@@ -75,7 +75,12 @@ export const TimelineButtons = () => {
         </Text>
         <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.mint?.start)}</Text>
       </HStack>
-      <Button {...styles.$buttonStyles} leftIcon={<i className="fa-solid fa-bell" />} onClick={() => dispatch.modalModel.setModal(Modals.MINT)}>
+      <Button
+        {...styles.$buttonStyles}
+        leftIcon={<i className="fa-solid fa-bell" />}
+        isDisabled={!(cycle === 'mint')}
+        onClick={() => dispatch.modalModel.setModal(Modals.MINT)}
+      >
         {cycle === 'mint' ? 'MINT' : 'GET NOTIFIED'}
       </Button>
     </Stack>

@@ -60,12 +60,6 @@ export const Mint = () => {
     chains: [mainnet, goerli],
   });
 
-  const { data, isLoading, refetch, isRefetching } = useContractRead({
-    address: contract as `0x${string}`,
-    abi: erc721ABI,
-    functionName: 'totalSupply',
-  });
-
   const checkWalletInRoot = async () => {
     const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
 
@@ -93,7 +87,7 @@ export const Mint = () => {
         }),
       });
 
-      const editionAddress = contract;
+      const editionAddress = '0x00396A23e204f3cf9E3a768C0218525501f45af1';
       const { activeSchedules } = await client.edition.mintSchedules({
         editionAddress,
       });
@@ -115,7 +109,7 @@ export const Mint = () => {
       }),
     });
 
-    const editionAddress = contract;
+    const editionAddress = '0x00396A23e204f3cf9E3a768C0218525501f45af1';
     const { activeSchedules } = await client.edition.mintSchedules({
       editionAddress,
     });
