@@ -25,7 +25,7 @@ export const Related = () => {
   const handleNavigate = (song: Song) => () => navigate(`/song/${song?.audio?.split('/ipfs/')[1]}`);
   const handleEmptyRelatedTracks = () => {
     const itemsOnCurrentPage = relatedSongs?.slice(start, end)?.length;
-    return relatedSongs?.length < 6 ? 6 - relatedSongs?.length : itemsOnCurrentPage < 6 ? 6 - itemsOnCurrentPage : 0;
+    return relatedSongs?.length < 4 ? 4 - relatedSongs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
   };
 
   return (
@@ -43,7 +43,7 @@ export const Related = () => {
               </Box>
             </GridItem>
           ))
-        : [0, 1, 2, 3, 4, 5].map((_, index: number) => (
+        : [0, 1, 2, 3].map((_, index: number) => (
             <GridItem key={index + relatedSongs?.[0].audio || 0 + songHash} {...styles.$gridItemStyles}>
               <Box {...styles.$placeholderBoxStyles}>
                 <AspectRatio {...styles.$aspectRatioStyles}>

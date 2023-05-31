@@ -7,7 +7,7 @@ interface ExtendedSimpleGridProps extends SimpleGridProps {
 export const $likesGridStyles: ExtendedSimpleGridProps = {
   gap: { base: 3, lg: 5 },
   pt: { base: 6, lg: 12 },
-  columns: { base: 2, lg: 6 },
+  columns: { base: 2, lg: 4 },
   'data-testid': 'song-likes-grid',
 };
 

@@ -27,7 +27,7 @@ export const AppearsOn = () => {
           <Text {...styles.$appearsOnTextStyles}>{tapeName}</Text>
         </Box>
       </GridItem>
-      {Array.from(Array(5).keys()).map((i) => (
+      {Array.from(Array(3).keys()).map((i) => (
         <GridItem key={songHash + i} {...styles.$appearsOnGridItemStyles}>
           <Box {...styles.$appearsOnBoxStyles(true)}>
             <AspectRatio {...styles.$appearsOnAspectRatioStyles}>
