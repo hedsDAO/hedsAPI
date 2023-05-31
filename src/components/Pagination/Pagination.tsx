@@ -49,6 +49,10 @@ export const Pagination = ({ totalItems }: { totalItems: number }) => {
   useEffect(() => {
     dispatch.paginationModel.setCurrentPage(0);
     dispatch.paginationModel.setItemsPerPage(4);
+    return () => {
+      dispatch.paginationModel.setCurrentPage(0);
+      dispatch.paginationModel.setItemsPerPage(4);
+    }
   }, []);
 
   return (
