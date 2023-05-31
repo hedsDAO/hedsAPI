@@ -45,8 +45,12 @@ export const useAudio = () => {
 
   useEffect(() => {
     if (isOnOwnSongPage || isOnHomePage) dispatch.globalAudioModel.setIsOpen(false);
-    else if (!isOnOwnSongPage && song && progress) dispatch.globalAudioModel.setIsOpen(true);
-    else dispatch.globalAudioModel.setIsOpen(false);
+    else if (!isOnOwnSongPage && song?.audio && progress >= 0) {
+      dispatch.globalAudioModel.setIsOpen(true);
+      if (!previous) dispatch.audioModel.setPrevious(song);
+      if (!upNext) dispatch.audioModel.getNextSong(song);
+      dispatch.audioModel.setIsLoading(false);
+    } else dispatch.globalAudioModel.setIsOpen(false);
   }, [song.audio, pathname]);
 
   /**
@@ -89,15 +93,26 @@ export const useAudio = () => {
       dispatch.audioModel.setIsPlaying(!isPlaying);
     } else {
       createHowlerInstance(requestedSong.audio);
-      dispatch.audioModel.getNextAndPreviousSong([requestedSong, upNext, previous]);
       dispatch.audioModel.setSong(requestedSong);
       dispatch.audioModel.setIsPlaying(true);
     }
   };
 
-  const handlePrevious = () => {};
+  const handlePrevious = () => {
+    dispatch.audioModel.setIsLoading(true)
+    createHowlerInstance(previous.audio);
+    dispatch.audioModel.setSong(previous);
+    dispatch.audioModel.getNextSong(song);
+    dispatch.audioModel.setProgress(0);
+  };
 
-  const handleUpNext = () => {};
+  const handleUpNext = () => {
+    dispatch.audioModel.setIsLoading(true)
+    createHowlerInstance(upNext.audio);
+    dispatch.audioModel.setSong(upNext);
+    dispatch.audioModel.getNextSong(upNext);
+    dispatch.audioModel.setProgress(0);
+  };
 
   useEffect(() => {
     if (state.howlerInstance instanceof Howl) {

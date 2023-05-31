@@ -15,6 +15,8 @@ interface ExtendedSkeletonProps extends SkeletonProps {
 export const $songCoverAspectRatioStyles: AspectRatioProps = {
   minH: '80px',
   minW: '80px',
+  maxW: '80px',
+  maxH: '80px',
   ratio: 1,
 };
 

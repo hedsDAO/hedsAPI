@@ -46,16 +46,16 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
         <MotionBox animate={boxControls} transition={styles.$getMotionBoxTransition()}>
           <CloseButton handleClose={() => dispatch.globalAudioModel.setIsOpen(false)} />
           <SimpleGrid {...styles.$globalAudioSimpleGridStyles}>
-            <GridItem as={Flex} alignItems={'center'} m={1.5} colSpan={2}>
+            <GridItem as={Flex} alignItems={'center'} m={1.5} colSpan={1}>
               <SongCover />
             </GridItem>
-            <GridItem as={Flex} alignItems={'center'} colSpan={4}>
+            <GridItem as={Flex} alignItems={'center'} colSpan={2}>
               <SongDetails />
             </GridItem>
-            <GridItem as={Flex} alignItems={'center'} colSpan={2}>
+            <GridItem as={Flex} alignItems={'center'} colSpan={1}>
               <PlayerButtons />
             </GridItem>
-            <GridItem ml={{base: 6, lg:3}} gap={1} as={Flex} alignItems={'center'} colSpan={3}>
+            <GridItem ml={{base: 4, lg:2}} gap={1} as={Flex} alignItems={'center'} colSpan={2}>
               <LikeButton />
               <VolumeControl
                 handleMute={() => {
