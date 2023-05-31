@@ -8,6 +8,7 @@ export const VerifyTweet = () => {
   const isLoading = useSelector(store.select.twitterModel.selectIsLoading);
   const tweetUrl = useSelector(store.select.twitterModel.selectTweetUrl);
   const twitterWindowUrl = useSelector(store.select.twitterModel.selectTwitterWindowUrl);
+  const userHash = useSelector(store.select.twitterModel.selectHash);
   const error = useSelector(store.select.twitterModel.selectError);
   const dispatch = useDispatch<Dispatch>();
   return (
@@ -41,7 +42,7 @@ export const VerifyTweet = () => {
           <Button
             isDisabled={!tweetUrl || isLoading}
             {...styles.$verifyTweetButtonStyles(!tweetUrl || isLoading)}
-            onClick={() => dispatch.twitterModel.verifyTweet(tweetUrl)}
+            onClick={() => dispatch.twitterModel.verifyTweet([tweetUrl, userHash])}
           >
             {constants.VERIFY_TWEET_BUTTON_TEXT}
           </Button>

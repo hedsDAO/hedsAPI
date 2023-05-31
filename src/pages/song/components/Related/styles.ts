@@ -8,7 +8,7 @@ interface ExtendedSimpleGridProps extends SimpleGridProps {
 export const $simpleGridStyles: SimpleGridProps = {
   gap: { base: 3, lg: 5 },
   pt: { base: 6, lg: 12 },
-  columns: { base: 2, lg: 6 },
+  columns: { base: 2, lg: 4 },
 
 };
 
@@ -97,6 +97,6 @@ export const $loadingBoxStyles: BoxProps = {
   h: 'full',
   w: 'full',
   border: 'solid 1px',
-  borderColor: 'heds.100',
+  borderColor: 'heds.bg3',
   rounded: 'md',
 };

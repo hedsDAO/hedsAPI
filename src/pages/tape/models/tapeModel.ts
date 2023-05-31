@@ -84,6 +84,7 @@ export const tapeModel = createModel<RootModel>()({
     selectTracks: () => slice((state) => state.tape.tracks),
     selectSongs: () => slice((state) => state.tape.songs),
     selectSampleArtists: () => slice((state) => state.tape.sampleArtists),
+    selectCurrentTapeContract: () => slice((state) => state.tape.contract),
     selectIsLoading: () => slice((state) => state.isLoading),
     selectCurrentCycle: () => slice((state) => state.cycle),
     selectTapeProposalId: () => slice((state) => state.tape.proposalId),

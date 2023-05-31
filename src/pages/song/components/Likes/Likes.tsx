@@ -26,7 +26,7 @@ export const Likes = () => {
   const handleNavigate = (wallet: string) => () => navigate(`/u/${wallet}`);
   const handleLikeEmptyStates = () => {
     const itemsOnCurrentPage = songLikes?.slice(start, end)?.length;
-    return songLikes?.length < 6 ? 6 - songLikes?.length : itemsOnCurrentPage < 6 ? 6 - itemsOnCurrentPage : 0;
+    return songLikes?.length < 4 ? 4 - songLikes?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
   };
   return (
     <SimpleGrid {...styles.$likesGridStyles}>
@@ -43,7 +43,7 @@ export const Likes = () => {
               </Box>
             </GridItem>
           ))
-        : [0, 1, 2, 3, 4, 5].map((_, index: number) => (
+        : [0, 1, 2, 3].map((_, index: number) => (
             <GridItem key={songHash + index} {...styles.$gridItemStyles}>
               <Box {...styles.$likesBoxStyles(() => {}, true)}>
                 <AspectRatio ratio={1}>
