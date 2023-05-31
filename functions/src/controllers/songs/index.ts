@@ -214,35 +214,9 @@ export const unlikeSong = async (songId: number, userId: number) => {
 export const getManySongs = async (songHashes: string[]) => {
   try {
     const prefixedSongHashes = songHashes.map((hash) => `https://www.heds.cloud/ipfs/${hash}`);
-    const placeholders = prefixedSongHashes.map((_, i) => `$${i + 1}`).join(',');
-    const songResult = await pool.query(`SELECT * FROM heds.songs WHERE audio IN (${placeholders})`, songHashes);
+    const songResult = await pool.query(`SELECT * FROM heds.songs WHERE audio = ANY($1)`, [prefixedSongHashes]);
     if (songResult.rows.length === 0) return null;
-
-    const songs = songResult.rows;
-    const songIds = songs.map((song) => song.id);
-    const artistResult = await pool.query(
-      `SELECT song_artists.song_id, users.*
-       FROM heds.song_artists AS song_artists
-       JOIN heds.users AS users ON users.id = song_artists.user_id
-       WHERE song_artists.song_id = ANY($1)`,
-      [songIds],
-    );
-
-    const artistsBySongId = artistResult.rows.reduce((acc, row) => {
-      const { song_id, ...artist } = row;
-      if (!acc[song_id]) {
-        acc[song_id] = [];
-      }
-      acc[song_id].push(artist);
-      return acc;
-    }, {});
-
-    const songsWithArtists = songs.map((song) => ({
-      ...song,
-      artists: artistsBySongId[song.id] || [],
-    }));
-
-    return songsWithArtists;
+    return songResult.rows;
   } catch (error) {
     console.log(error);
     return;
