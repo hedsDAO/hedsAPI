@@ -1,7 +1,6 @@
 import { pool } from '../../database';
 import { LikeData, SongData } from './types';
 import schemaName from '../../../config';
-import * as functions from 'firebase-functions';
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
