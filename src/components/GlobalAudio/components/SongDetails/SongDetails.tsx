@@ -20,10 +20,10 @@ export const SongDetails = () => {
   return (
     <Stack {...styles.$songDetailsStackStyles}>
       <Link style={{ marginTop: '0' }} to={`/song/${songHash}`}>
-        <Text {...styles.$songNameTextStyles}>{songName}</Text>
+        <Text title={songName} {...styles.$songNameTextStyles}>{songName}</Text>
       </Link>
       {isSongPublic ? (
-        <Link style={{ marginTop: '0' }} to={`/song/${artistWallets[0]}`}>
+        <Link style={{ marginTop: '0' }} to={`/u/${artistWallets[0]}`}>
           <Text {...styles.$songArtistsTextStyles}>{artists}</Text>
         </Link>
       ) : (

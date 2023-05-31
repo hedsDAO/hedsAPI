@@ -103,18 +103,17 @@ export const audioModel = createModel<RootModel>()({
     },
   }),
   effects: () => ({
-    async getNextAndPreviousSong([song, upNext, previous]: [Song, Song, Song]) {
+    async updateQueue([previous, song, upNext]) {},
+    async getNextSong(song: Song) {
       let relatedSongHashes: string[];
-      let nextSongResponse;
-      let nextSong;
+      let nextSongResponse: Song;
       relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
       if (relatedSongHashes?.length) {
-        const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1]);
-        nextSongResponse = await getManySongs(nextUniqueTrack);
-        console.log(nextSongResponse, 'res')
+        const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
+        var rand = Math.floor(Math.random() * 10) + 1;
+        nextSongResponse = (await (await getSongByHash(nextUniqueTrack[rand]))?.data) as Song;
+        this.setUpNext(nextSongResponse);
       }
-      if (nextSongResponse?.data) nextSong = nextSongResponse?.data;
-      if (nextSong) this.setUpNext(nextSong);
     },
   }),
 });

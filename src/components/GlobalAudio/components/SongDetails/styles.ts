@@ -14,11 +14,14 @@ export const $songDetailsStackStyles: StackProps = {
  * @description TextProps object that contains styles for the song name text in the SongDetails component.
  */
 export const $songNameTextStyles: TextProps = {
-  fontSize: { base: '2xs', lg: 'sm' },
+  fontSize: { base: '2xs', lg: 'xs' },
   letterSpacing: 'widest',
   fontFamily: 'inter',
   fontWeight: 'medium',
   color: 'white',
+  isTruncated: true,
+  textOverflow: 'ellipsis',
+  maxW: '25ch',
   mt: '0 !important',
 };
 
@@ -27,7 +30,7 @@ export const $songNameTextStyles: TextProps = {
  * @description TextProps object that contains styles for the song artists text in the SongDetails component.
  */
 export const $songArtistsTextStyles: TextProps = {
-  fontSize: { base: '2xs', lg: 'sm' },
+  fontSize: { base: '2xs', lg: 'xs' },
   fontFamily: 'inter',
   fontWeight: 'hairline',
   color: 'white',
