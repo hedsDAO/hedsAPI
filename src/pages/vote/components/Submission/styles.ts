@@ -1,10 +1,10 @@
 import { BoxProps, FlexProps, ImageProps, ProgressProps, StackProps, StyleProps, TextProps } from '@chakra-ui/react';
 
 export const $submissionBoxStyles = (type: string, selected: boolean): BoxProps => ({
-  border: `${selected ? '2px' : '1px'}`,
+  border: '1px',
   borderRadius: 'md',
   borderColor: `${selected ? 'white' : '#9293FF'}`,
-  bg: `${type === 'track' ? '#745CBA' : type === 'selected' ? '#4F4F4F' : '#17141B'}`,
+  bg: `${selected ? '#DC89FF' : type === 'track' ? '#745CBA' : type === 'selected' ? '#4F4F4F' : '#17141B'}`,
   _hover: { cursor: 'pointer' },
 });
 
