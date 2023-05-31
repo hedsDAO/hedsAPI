@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAccount, useContractRead, erc721ABI } from 'wagmi';
+import * as ethers from 'ethers';
 
 // Components
 import {
@@ -44,6 +45,8 @@ export const Mint = () => {
   const [isMinting, setIsMinting] = useState<boolean>(false);
   const [hasMinted, setHasMinted] = useState<boolean>(false);
   const [isWhiteListed, setIsWhiteListed] = useState<boolean>(false);
+  const [mintPrice, setMintPrice] = useState<string>('0');
+  const [amountMinted, setAmountMinted] = useState<number>(0);
 
   const connectedWallet = useSelector(store.select.userModel.selectWallet);
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
@@ -79,6 +82,29 @@ export const Mint = () => {
     onOpen();
   }, []);
 
+  useEffect(() => {
+    const getMintInfo = async () => {
+      const signer = await connector?.getSigner();
+      const client = SoundClient({
+        merkleProvider: LanyardMerkleProofProvider,
+        signer,
+        soundAPI: SoundAPI({
+          apiKey: SOUND_KEY,
+        }),
+      });
+
+      const editionAddress = contract;
+      const { activeSchedules } = await client.edition.mintSchedules({
+        editionAddress,
+      });
+
+      const activeSchedule = activeSchedules.shift();
+      setMintPrice(ethers.utils.formatEther(activeSchedule?.price.toNumber()) || '0');
+      setAmountMinted(activeSchedule?.totalMinted || 0);
+    };
+    getMintInfo();
+  }, [contract]);
+
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
     const client = SoundClient({
@@ -90,17 +116,16 @@ export const Mint = () => {
     });
 
     const editionAddress = contract;
-    const mintSchedule = (await client.activeMintSchedules({ editionAddress })).shift();
-    if (!mintSchedule) throw Error(`No active mint schedule available!`);
+    const { activeSchedules } = await client.edition.mintSchedules({
+      editionAddress,
+    });
 
-    // Transaction
-    const mintTransaction = await (
-      await client.mint({
-        mintSchedule,
-        quantity,
-      })
-    ).wait();
-    return mintTransaction;
+    const mintTransaction = await client.edition.mint({
+      mintSchedule: activeSchedules.shift(),
+      quantity,
+    });
+
+    return await mintTransaction.wait();
   };
 
   const handleMintStatus = async () => {
@@ -164,11 +189,11 @@ export const Mint = () => {
                 <>
                   <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
                     <Text color="white">PRICE</Text>
-                    <Text color="#DC89FF">0.005</Text>
+                    <Text color="#DC89FF">{mintPrice}</Text>
                   </Box>
                   <Box display="flex" flexDirection="row" justifyContent="space-around" bgColor="#26232D" p={2} borderRadius="md">
                     <Text color="white">MINTED</Text>
-                    <Text color="#DC89FF">100</Text>
+                    <Text color="#DC89FF">{amountMinted}</Text>
                   </Box>
                   <Select
                     disabled={isMinting}
