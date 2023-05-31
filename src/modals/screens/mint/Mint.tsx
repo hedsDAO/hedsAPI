@@ -24,19 +24,15 @@ import {
 } from '@chakra-ui/react';
 
 // Utils
-import { LanyardMerkleProofProvider } from '@soundxyz/sdk/merkle/lanyard';
 import { SoundAPI } from '@soundxyz/sdk/api';
 import { SoundClient } from '@soundxyz/sdk';
 import { mainnet, goerli } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import axios from 'axios';
 
 // Constants
 import { Dispatch, store } from '@/store';
 import { Modals } from '@/modals/models/modalModel';
-
 const SOUND_KEY = '3ca9ceee-35f2-4db0-8277-fc1fc553484a';
-const LANYARD_API = 'https://lanyard.org/api/v1/tree?root=';
 
 export const Mint = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -44,33 +40,18 @@ export const Mint = () => {
   const [value, setValue] = useState<number>(1);
   const [isMinting, setIsMinting] = useState<boolean>(false);
   const [hasMinted, setHasMinted] = useState<boolean>(false);
-  const [isWhiteListed, setIsWhiteListed] = useState<boolean>(false);
   const [mintPrice, setMintPrice] = useState<string>('0');
   const [amountMinted, setAmountMinted] = useState<number>(0);
 
-  const connectedWallet = useSelector(store.select.userModel.selectWallet);
   const contract = useSelector(store.select.tapeModel.selectCurrentTapeContract);
   const cover = useSelector(store.select.tapeModel.selectTapeCover);
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
   const isTapeLoading = useSelector(store.select.tapeModel.selectIsLoading);
-  const merkleRoot = '0x41F60DCB50D15915AE00B4F0C480C469F51F2A5A3D38B1B6BA54DBFD29C97334';
 
   const { isConnected } = useAccount();
   const connector = new MetaMaskConnector({
     chains: [mainnet, goerli],
   });
-
-  const checkWalletInRoot = async () => {
-    const response = await axios.get(`${LANYARD_API}${merkleRoot}`);
-
-    if (response.data.unhashedLeaves.includes(connectedWallet)) {
-      setIsWhiteListed(true);
-    }
-  };
-
-  useEffect(() => {
-    checkWalletInRoot();
-  }, []);
 
   useEffect(() => {
     onOpen();
@@ -80,7 +61,6 @@ export const Mint = () => {
     const getMintInfo = async () => {
       const signer = await connector?.getSigner();
       const client = SoundClient({
-        merkleProvider: LanyardMerkleProofProvider,
         signer,
         soundAPI: SoundAPI({
           apiKey: SOUND_KEY,
@@ -102,7 +82,6 @@ export const Mint = () => {
   const mintEdition = async (quantity: number) => {
     const signer = await connector?.getSigner();
     const client = SoundClient({
-      merkleProvider: LanyardMerkleProofProvider,
       signer,
       soundAPI: SoundAPI({
         apiKey: SOUND_KEY,
