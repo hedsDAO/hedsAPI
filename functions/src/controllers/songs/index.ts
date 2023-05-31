@@ -1,6 +1,7 @@
 import { pool } from '../../database';
 import { LikeData, SongData } from './types';
 import schemaName from '../../../config';
+import * as functions from 'firebase-functions';
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
@@ -214,7 +215,8 @@ export const unlikeSong = async (songId: number, userId: number) => {
 export const getManySongs = async (songHashes: string[]) => {
   try {
     const prefixedSongHashes = songHashes.map((hash) => `https://www.heds.cloud/ipfs/${hash}`);
-    const songResult = await pool.query(`SELECT * FROM heds.songs WHERE audio = ANY($1)`, [prefixedSongHashes]);
+    const songResult = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE audio = ANY($1)`, [prefixedSongHashes]);
+    functions.logger.log(songResult.rows);
     if (songResult.rows.length === 0) return null;
     return songResult.rows;
   } catch (error) {
