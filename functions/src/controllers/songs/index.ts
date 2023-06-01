@@ -144,8 +144,7 @@ export const likeSong = async (songId: number, userId: number) => {
     const userDataQuery = `SELECT display_name FROM ${schemaName}.users WHERE id = $1`;
     const userResult = await pool.query(userDataQuery, [userId]);
     const displayName = userResult.rows[0].display_name;
-
-    const songDataQuery = `SELECT track_name FROM ${schemaName}.songs WHERE id = $1`;
+    const songDataQuery = `SELECT track_name, public FROM ${schemaName}.songs WHERE id = $1`;
     const songResult = await pool.query(songDataQuery, [songId]);
     const trackName = songResult.rows[0].track_name;
     const isPublic = songResult.rows[0].public;
