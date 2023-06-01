@@ -26,8 +26,9 @@ export const Explore = () => {
       <Coverflow />
       <CoverflowNav />
       <Stats />
-      <FeaturedArtistsHeader />
-      <FeaturedArtists />
+      {/* TODO: add featured artists section */}
+      {/* <FeaturedArtistsHeader />
+      <FeaturedArtists /> */}
     </Box>
   );
 };

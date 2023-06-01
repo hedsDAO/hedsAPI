@@ -19,7 +19,8 @@ export const IconButtons = () => {
         <Box to={`/t/16`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.TAPES_ICON}></i>
         </Box>
-        <Box to={`/song/sample`} as={Link} {...styles.$iconButtonStyles}>
+        {/* update to sample song page */}
+        <Box to={`/t/16`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.PLAY_ICON}></i>
         </Box>
       </Flex>
