@@ -19,8 +19,7 @@ export const IconButtons = () => {
         <Box to={`/t/16`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.TAPES_ICON}></i>
         </Box>
-        {/* update to sample song page */}
-        <Box to={`/t/16`} as={Link} {...styles.$iconButtonStyles}>
+        <Box to={`/song/QmV3B2qXnDchtAv6exot8HbX6iFhBi4uwrYPpVXAYYh5kG`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.PLAY_ICON}></i>
         </Box>
       </Flex>
