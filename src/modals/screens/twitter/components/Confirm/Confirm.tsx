@@ -19,8 +19,12 @@ export const Confirm = () => {
         <Text {...styles.$headingTextStyles}>{constants.CONFIRM_HEADING}</Text>
         <Text {...styles.$descriptionTextStyles}>{constants.CONFIRM_DESCRIPTION}</Text>
       </Stack>
-      <Button onClick={() => dispatch.twitterModel.linkTwitterHandle([twitterHandle, user?.id])} {...styles.$confirmButtonStyles}>
-        {constants.CONFIRM_BUTTON_TEXT}
+      <Button onClick={() => {
+        dispatch.twitterModel.linkTwitterHandle([twitterHandle, user?.id])
+        dispatch.modalModel.clearState();
+        }}
+        {...styles.$confirmButtonStyles}>
+          {constants.CONFIRM_BUTTON_TEXT}
       </Button>
     </Stack>
   );
