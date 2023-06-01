@@ -4,7 +4,6 @@ export interface UserData {
   collection: any;
   description: string;
   display_name: string;
-  history: any;
   joined: number;
   profile_picture: string;
   votes: any;

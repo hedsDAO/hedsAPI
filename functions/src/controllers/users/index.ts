@@ -67,17 +67,17 @@ export const getUserEvents = async (userId: number) => {
 };
 
 export async function createUser(userData: UserData) {
-  const { badges, banner, collection, description, display_name, history, joined, profile_picture, votes, wallet, spotlight, role } = userData;
+  const { badges, banner, collection, description, display_name, joined, profile_picture, votes, wallet, spotlight, role } = userData;
 
   const query = `
       INSERT INTO ${schemaName}.users (
-        badges, banner, collection, description, display_name, history,
+        badges, banner, collection, description, display_name,
         joined, profile_picture, votes, wallet, spotlight, role
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING *;
     `;
 
-  const values = [badges, banner, collection, description, display_name, history, joined, profile_picture, votes, wallet, spotlight, role];
+  const values = [badges, banner, collection, description, display_name, joined, profile_picture, votes, wallet, spotlight, role];
 
   try {
     const result = await pool.query(query, values);
