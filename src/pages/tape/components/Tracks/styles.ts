@@ -23,6 +23,7 @@ export const $trackBoxStyles: BoxProps = {
   borderRadius: 'md',
   p: 2,
   w: { base: '100%', sm: '100%', md: '32%', lg: '19%' },
+  _hover: { cursor: 'pointer', bgColor: 'black.lightGray' },
 };
 
 /**

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Components
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
@@ -12,6 +13,8 @@ import { Dispatch, store } from '@/store';
 import * as styles from '@/pages/tape/components/TimelineButtons/styles';
 
 export const TimelineButtons = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch>();
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
@@ -37,17 +40,17 @@ export const TimelineButtons = () => {
         <>
           <HStack>
             <Text color="#9293FF" fontFamily="sans-serif">
-              Vote
+              Submit
             </Text>
-            {cycle === 'vote' ? (
+            {cycle === 'submit' ? (
               <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
             ) : (
               <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
             )}
-            <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
+            <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.start)}</Text>
           </HStack>
-          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'vote')}>
-            VOTE NOW
+          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'submit')}>
+            UPLOAD SUBMISSION
           </Button>
         </>
       )}
@@ -64,8 +67,8 @@ export const TimelineButtons = () => {
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
           </HStack>
-          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'vote')}>
-            VOTE NOW
+          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} onClick={() => navigate(`/vote/${id}`)}>
+            {cycle === 'vote' ? 'VOTE NOW' : 'RESULTS'}
           </Button>
         </>
       )}
@@ -81,7 +84,7 @@ export const TimelineButtons = () => {
         isDisabled={!(cycle === 'mint')}
         onClick={() => dispatch.modalModel.setModal(Modals.MINT)}
       >
-        {cycle === 'mint' ? 'MINT' : 'GET NOTIFIED'}
+        {cycle === 'submit' || cycle === 'vote' ? 'UPCOMING' : cycle === 'mint' ? 'MINT' : 'CLOSED'}
       </Button>
     </Stack>
   );
