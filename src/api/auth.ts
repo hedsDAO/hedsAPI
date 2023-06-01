@@ -7,4 +7,4 @@ export const verifyTweet = (tweetId: string, twitterHandle: string, userHash: st
 
 export const verifyDisplayName = (displayName: string) => {
   return axios.get(`${API_PREFIX}/auth/validate-display-name/${displayName}`);
-}
+};
