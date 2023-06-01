@@ -25,7 +25,7 @@ export const Likes = () => {
         {likes?.length
           ? likes?.slice(start, end).map((item: Song) => (
               <GridItem key={item.id + item.cover}>
-                <LikedItem name={item.submission_data.sub_id} image={item.cover} />
+                <LikedItem link={item?.audio?.split('/ipfs/')[1]} name={item.submission_data.sub_id} image={item.cover} />
               </GridItem>
             ))
           : [0, 1, 2, 3].map((_, index: number) => (
