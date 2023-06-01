@@ -16,7 +16,7 @@ export const IconButtons = () => {
         <Box to={`/u/${constants.ARTIST_WALLET}`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.ARTISTS_ICON} />
         </Box>
-        <Box to={`/t/16`} as={Link} {...styles.$iconButtonStyles}>
+        <Box to={`/tape/16`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.TAPES_ICON}></i>
         </Box>
         <Box to={`/song/sample`} as={Link} {...styles.$iconButtonStyles}>
