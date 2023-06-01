@@ -3,6 +3,7 @@ import { Box, Center, Flex, Image, useBreakpointValue } from '@chakra-ui/react';
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { items } from '@/pages/explore/models/constants';
+import { Link } from 'react-router-dom';
 
 /**
  * @function Coverflow
@@ -29,6 +30,7 @@ export const Coverflow = () => {
       else dispatch.exploreModel.setActiveIndex(activeIndex === items.length - 1 ? 0 : activeIndex + 1);
     }
   };
+  
   return (
     <Center
       mt={{ base: 5, lg: -10 }}
@@ -70,9 +72,14 @@ export const Coverflow = () => {
                 onClick={i === activeIndex ? () => {} : () => dispatch.exploreModel.setActiveIndex(i)}
               >
                 <Box position="relative">
-                  <Box overflow="hidden">
-                    <Image draggable={false} objectFit={'cover'} rounded={'lg'} src={src} h={imageSize} w={imageSize} />
+                  { activeIndex === i ? 
+                    <Box overflow="hidden" to={src.link} as={Link}>
+                      <Image draggable={false} objectFit={'cover'} rounded={'lg'} src={src.cover} h={imageSize} w={imageSize} />
+                    </Box> :
+                    <Box overflow="hidden">
+                    <Image draggable={false} objectFit={'cover'} rounded={'lg'} src={src.cover} h={imageSize} w={imageSize} />
                   </Box>
+                  }
                   <Box
                     position="absolute"
                     top="100%"
@@ -88,7 +95,7 @@ export const Coverflow = () => {
                       left: 0,
                       width: '100%',
                       height: '100%',
-                      background: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url(${src})`,
+                      background: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url(${src.cover})`,
                       backgroundSize: 'cover',
                       backgroundRepeat: 'no-repeat',
                       backgroundPosition: 'center',
