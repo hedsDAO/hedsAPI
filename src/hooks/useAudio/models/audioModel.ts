@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { getManySongs, getSongByHash } from '@/api/song';
 import type { RootModel } from '@/models';
 import { Song } from '@/models/common';
@@ -103,16 +104,15 @@ export const audioModel = createModel<RootModel>()({
     },
   }),
   effects: () => ({
-    async updateQueue([previous, song, upNext]) {},
     async getNextSong(song: Song) {
       let relatedSongHashes: string[];
-      let nextSongResponse: Song;
+      let nextSongResponse: AxiosResponse<Song>;
       relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
       if (relatedSongHashes?.length) {
         const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
         var rand = Math.floor(Math.random() * 10) + 1;
-        nextSongResponse = (await (await getSongByHash(nextUniqueTrack[rand]))?.data) as Song;
-        this.setUpNext(nextSongResponse);
+        nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
+        this.setUpNext(nextSongResponse.data);
       }
     },
   }),
