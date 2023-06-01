@@ -110,7 +110,7 @@ export const audioModel = createModel<RootModel>()({
       relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
       if (relatedSongHashes?.length) {
         const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
-        var rand = Math.floor(Math.random() * 10) + 1;
+        let rand = Math.floor(Math.random() * 10) + 1;
         nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
         this.setUpNext(nextSongResponse.data);
       }
