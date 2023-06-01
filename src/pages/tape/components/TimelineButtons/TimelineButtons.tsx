@@ -68,7 +68,7 @@ export const TimelineButtons = () => {
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
           </HStack>
           <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} onClick={() => navigate(`/vote/${id}`)}>
-            {cycle === 'vote' ? 'VOTE NOW' : 'SEE RESULTS'}
+            {cycle === 'vote' ? 'VOTE NOW' : 'RESULTS'}
           </Button>
         </>
       )}
@@ -84,7 +84,7 @@ export const TimelineButtons = () => {
         isDisabled={!(cycle === 'mint')}
         onClick={() => dispatch.modalModel.setModal(Modals.MINT)}
       >
-        {cycle === 'mint' ? 'MINT' : 'GET NOTIFIED'}
+        {cycle === 'submit' || cycle === 'vote' ? 'UPCOMING' : cycle === 'mint' ? 'MINT' : 'CLOSED'}
       </Button>
     </Stack>
   );
