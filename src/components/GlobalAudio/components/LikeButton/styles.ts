@@ -17,6 +17,7 @@ export const $likeButtonStyles = (liked: boolean, onClick: () => void): Extended
   mt: '0.5 !important',
   mr: 2.5,
   color: 'white',
+  fontSize: {base: 'sm', lg: 'md'},
   as: 'i',
   className: liked ? 'fas fa-heart' : 'fal fa-heart',
 });

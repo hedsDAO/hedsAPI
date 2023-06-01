@@ -2,7 +2,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { Box, Flex, GridItem, SimpleGrid, useTheme } from '@chakra-ui/react';
+import { Box, Flex, GridItem, SimpleGrid, Stack, useTheme } from '@chakra-ui/react';
 import { CloseButton } from '@/components/GlobalAudio/components/CloseButton/CloseButton';
 import { LikeButton } from '@/components/GlobalAudio/components/LikeButton/LikeButton';
 import { PlayerButtons } from '@/components/GlobalAudio/components/PlayerButtons/PlayerButtons';
@@ -46,16 +46,16 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
         <MotionBox animate={boxControls} transition={styles.$getMotionBoxTransition()}>
           <CloseButton handleClose={() => dispatch.globalAudioModel.setIsOpen(false)} />
           <SimpleGrid {...styles.$globalAudioSimpleGridStyles}>
-            <GridItem as={Flex} alignItems={'center'} m={1.5} colSpan={2}>
+            <GridItem as={Flex} alignItems={'center'} m={1.5} colSpan={1}>
               <SongCover />
             </GridItem>
-            <GridItem as={Flex} alignItems={'center'} colSpan={4}>
+            <GridItem as={Flex} alignItems={'center'} colSpan={2}>
               <SongDetails />
             </GridItem>
-            <GridItem as={Flex} alignItems={'center'} colSpan={2}>
+            <GridItem as={Flex} alignItems={'center'} colSpan={1}>
               <PlayerButtons />
             </GridItem>
-            <GridItem ml={3} gap={1} as={Flex} alignItems={'center'} colSpan={3}>
+            <GridItem ml={{ base: 4, lg: 2 }} gap={1} as={Flex} alignItems={'center'} colSpan={2}>
               <LikeButton />
               <VolumeControl
                 handleMute={() => {
@@ -71,6 +71,14 @@ export const GlobalAudio = ({ children }: { children: React.ReactNode }) => {
               />
             </GridItem>
           </SimpleGrid>
+          <Flex width={{ base: '92vw', lg: 'unset' }} display={{ base: 'flex', lg: 'none' }} p={2} gap={2} alignItems="center">
+            <SongCover />
+            <SongDetails />
+            <Flex px={4} gap={3} alignItems={'center'}>
+              <PlayerButtons />
+              <LikeButton />
+            </Flex>
+          </Flex>
           <Flex minW="100%">
             <ProgressBar />
           </Flex>

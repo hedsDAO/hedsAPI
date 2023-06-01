@@ -44,6 +44,7 @@ export const $volumeControlFlexStyles: FlexProps = {
   alignContent: 'center',
   w: 'full',
   mr: 10,
+  display: {base: 'none', lg: 'flex'}
 };
 
 /**
@@ -75,10 +76,9 @@ export const $volumeControlMotionBoxStyles: BoxProps = {
  * @constant {SliderProps} $volumeControlSliderStyles
  * @description SliderProps object for the volume control slider in the VolumeControl component.
  */
-export const $volumeControlSliderStyles = (value: number, defaultValue: number, onChange: (e: number) => void): SliderProps => ({
+export const $volumeControlSliderStyles = (value: number, defaultValue: number): SliderProps => ({
   value,
   defaultValue,
-  onChange,
   size: 'sm',
   ml: 1,
   mt: '-1 !important',

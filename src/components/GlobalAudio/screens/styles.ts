@@ -29,7 +29,8 @@ export const $globalAudioContainerStyles: BoxProps = {
  */
 export const $globalAudioSimpleGridStyles: SimpleGridProps = {
   gap: 4,
-  columns: 11,
+  columns: 6,
+  display: {base: 'none', lg: 'grid'}
 };
 
 /**

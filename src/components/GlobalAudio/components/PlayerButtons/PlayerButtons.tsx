@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import * as styles from '@/components/GlobalAudio/components/PlayerButtons/styles';
 import { useAudio } from '@/hooks/useAudio/useAudio';
 
@@ -13,12 +13,19 @@ export const PlayerButtons = () => {
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const song = useSelector(store.select.audioModel.selectSong);
   const { handlePlayPause, handlePrevious, handleUpNext } = useAudio();
+  const isLoading = useSelector(store.select.audioModel.selectIsLoading);
 
   return (
     <Flex {...styles.$playerButtonsFlexStyles}>
-      <Text data-testid="ga-backward-button" {...styles.$backwardButtonStyles(() => handlePrevious())} />
-      <Text data-testid="ga-play-pause-button" {...styles.$playPauseButtonStyles(isPlaying, () => handlePlayPause(song))} />
-      <Text data-testid="ga-forward-button" {...styles.$forwardButtonStyles(() => handleUpNext())} />
+      <Button isDisabled={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
+        <Text data-testid="ga-backward-button" {...styles.$backwardButtonStyles(() => handlePrevious())} />
+      </Button>
+      <Button isLoading={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
+        <Text data-testid="ga-play-pause-button" {...styles.$playPauseButtonStyles(isPlaying, () => handlePlayPause(song))} />
+      </Button>
+      <Button isDisabled={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
+        <Text data-testid="ga-forward-button" {...styles.$forwardButtonStyles(() => handleUpNext())} />
+      </Button>
     </Flex>
   );
 };
