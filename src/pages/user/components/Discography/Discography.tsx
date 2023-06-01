@@ -24,7 +24,7 @@ export const Discography = () => {
         {songs?.length
           ? songs?.slice(start, end).map((item) => (
               <GridItem key={item.id + item.cover}>
-                <TrackItem name={item.submission_data.sub_id} image={item.cover} />
+                <TrackItem link={item.audio.split('/ipfs/')[1]} name={item.submission_data.sub_id} image={item.cover} />
               </GridItem>
             ))
           : [0, 1, 2, 3].map((_, index: number) => (
