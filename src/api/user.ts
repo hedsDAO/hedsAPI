@@ -2,6 +2,10 @@ import axios from 'axios';
 import { API_PREFIX } from '@/models/constants';
 import { User, UserSettingsData } from '@/models/common';
 
+export const createUser = (userData: Partial<User>) => {
+  return axios.post(`${API_PREFIX}/users`, userData);
+};
+
 export const getUserByWallet = (wallet: string) => {
   return axios.get(`${API_PREFIX}/users/${wallet}`);
 };
