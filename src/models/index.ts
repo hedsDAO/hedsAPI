@@ -15,6 +15,7 @@ import { artistsModel } from '@/pages/artists/models/artistsModel';
 import { tapesModel } from '@/pages/tapes/models/tapesModel';
 import { exploreModel } from '@/pages/explore/models/exploreModel';
 import { voteModel } from '@/pages/vote/models/voteModel';
+import { connectModel } from '@/modals/screens/connect/models/connectModel';
 
 export interface RootModel extends Models<RootModel> {
   songModel: typeof songModel;
@@ -33,6 +34,7 @@ export interface RootModel extends Models<RootModel> {
   tapesModel: typeof tapesModel;
   exploreModel: typeof exploreModel;
   voteModel: typeof voteModel;
+  connectModel: typeof connectModel;
 }
 
 export const models: RootModel = {
@@ -52,4 +54,5 @@ export const models: RootModel = {
   tapesModel,
   exploreModel,
   voteModel,
+  connectModel,
 };

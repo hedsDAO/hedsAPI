@@ -1,7 +1,9 @@
-import { getUserByWallet, getUserLikesById, updateUser } from '@/api/user';
+import { createUser, getUserByWallet, getUserLikesById, updateUser } from '@/api/user';
 import { Song, User } from '@models/common';
 import { createModel } from '@rematch/core';
 import type { RootModel } from '@/models';
+import { DateTime } from 'luxon';
+import { createNewUserData } from './constants';
 
 interface AuthModelState {
   user: User;
@@ -25,14 +27,24 @@ export const authModel = createModel<RootModel>()({
     selectUserLikes: () => slice((state) => state.userLikes),
     selectUserId: () => slice((state) => state.user?.id),
     selectWallet: () => slice((state) => state.user?.wallet),
+    selectUserDisplayName: () => slice((state) => state.user?.display_name || ''),
   }),
   effects: () => ({
     async getUser(wallet: string) {
       const response = await getUserByWallet(wallet?.toLowerCase());
-      this.setUser(response.data);
-      const { id } = response.data;
-      const likes = await getUserLikesById(id);
-      if (likes?.data) this.setUserLikes(likes.data);
+      if (response.data === '') {
+        const newUserData = createNewUserData(wallet);
+        const newUserResponse = await createUser(newUserData);
+        this.setUser(newUserResponse.data);
+        const { id } = response.data;
+        const likes = await getUserLikesById(id);
+        if (likes?.data) this.setUserLikes(likes.data);
+      } else if (response.data?.id) {
+        this.setUser(response.data);
+        const { id } = response.data;
+        const likes = await getUserLikesById(id);
+        if (likes?.data) this.setUserLikes(likes.data);
+      }
     },
     async updateUser(newUserData: User) {
       const response = await updateUser(newUserData.id, newUserData);
