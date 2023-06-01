@@ -15,7 +15,7 @@ export const CoverflowNav = () => {
   const activeIndex = useSelector(store.select.exploreModel.selectActiveIndex);
   return (
     <Flex {...styles.$coverflowNavFlexStyles}>
-      {constants.items?.map((item: {cover:string, tapeId: number}, i: number) => (
+      {constants.items?.map((item: {cover:string, link: string}, i: number) => (
         <Button key={item.cover + i} {...styles.buttonStyles(activeIndex === i)} onClick={() => dispatch.exploreModel.setActiveIndex(i)}>
           <i className={constants.COVERFLOW_NAV_ICON}></i>
         </Button>
