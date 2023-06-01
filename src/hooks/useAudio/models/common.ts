@@ -10,6 +10,6 @@ export interface AudioModelState {
   volume: number;
   autoplay: boolean;
   duration?: number;
-  upNext?: Song;
-  previous?: Song;
+  upNext?: Song | null;
+  previous?: Song | null;
 }

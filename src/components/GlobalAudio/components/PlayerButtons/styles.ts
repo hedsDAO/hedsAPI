@@ -31,7 +31,7 @@ export const $playPauseButtonStyles = (isPlaying: boolean, onClick: () => void):
   role: 'button',
   pointerEvents: 'auto',
   color: 'white',
-  fontSize: {base: 'lg', lg:'2xl'},
+  fontSize: { base: 'lg', lg: '2xl' },
   w: '16px',
   as: 'i',
   className: isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play',
@@ -48,5 +48,4 @@ export const $forwardButtonStyles = (onClick: () => void): TextProps => ({
   as: 'i',
   onClick,
   className: 'fa-solid fa-forward',
-
 });

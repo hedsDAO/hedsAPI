@@ -1,4 +1,5 @@
-import { getSongByHash } from '@/api/song';
+import { AxiosResponse } from 'axios';
+import { getManySongs, getSongByHash } from '@/api/song';
 import type { RootModel } from '@/models';
 import { Song } from '@/models/common';
 import { getRelatedTracks } from '@/utils';
@@ -83,6 +84,9 @@ export const audioModel = createModel<RootModel>()({
     selectArtists() {
       return slice((state): string => state.song?.artists?.map((artist) => artist.display_name).join(', '));
     },
+    selectArtistWallets() {
+      return slice((state): string[] => state.song?.artists?.map((artist) => artist.wallet));
+    },
     selectTapeName() {
       return slice((state): string => state.song?.track_data?.tape_name);
     },
@@ -102,12 +106,14 @@ export const audioModel = createModel<RootModel>()({
   effects: () => ({
     async getNextSong(song: Song) {
       let relatedSongHashes: string[];
-      let nextSongResponse;
-      let nextSong;
-      if (song?.cyanite_id) relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 3);
-      if (relatedSongHashes?.length) nextSongResponse = await getSongByHash(relatedSongHashes[2]);
-      if (nextSongResponse?.data) nextSong = nextSongResponse?.data;
-      if (nextSong) this.setUpNext(nextSong);
+      let nextSongResponse: AxiosResponse<Song>;
+      relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
+      if (relatedSongHashes?.length) {
+        const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
+        let rand = Math.floor(Math.random() * 10) + 1;
+        nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
+        this.setUpNext(nextSongResponse.data);
+      }
     },
   }),
 });

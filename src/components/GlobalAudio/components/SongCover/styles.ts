@@ -13,8 +13,10 @@ interface ExtendedSkeletonProps extends SkeletonProps {
  * @description AspectRatioProps object that contains styles for the SongCover component container.
  */
 export const $songCoverAspectRatioStyles: AspectRatioProps = {
-  h: '80px',
-  width: '80px',
+  minH: '80px',
+  minW: '80px',
+  maxW: '80px',
+  maxH: '80px',
   ratio: 1,
 };
 

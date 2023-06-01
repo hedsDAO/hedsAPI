@@ -32,7 +32,7 @@ export const VolumeControl = ({ handleVolume, handleMute }: { handleVolume: (e: 
     <Flex {...styles.$volumeControlFlexStyles} onMouseLeave={setIsHoverVolume.off} onMouseEnter={setIsHoverVolume.on}>
       <Text {...styles.$volumeIconTextStyles(handleMute, volume, isMuted)} />
       <MotionBox animate={volumeBoxControls} transition={{ type: 'spring', damping: 0, stiffness: 100 }}>
-        <Slider defaultValue={100} {...styles.$volumeControlSliderStyles(volume * 100 || 0, volume * 100 || 0, (val: number) => handleVolume(val))}>
+        <Slider onChange={(val: number) => handleVolume(val / 100)} defaultValue={100} {...styles.$volumeControlSliderStyles(volume * 100 || 0, volume * 100 || 0)}>
           <SliderTrack {...styles.$volumeControlSliderTrackStyles}>
             <SliderFilledTrack {...styles.$volumeControlSliderFilledTrackStyles} />
           </SliderTrack>
