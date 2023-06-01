@@ -77,14 +77,17 @@ export const useWaveform = ({ waveformRef, song }: { waveformRef: React.RefObjec
    * Initialize and manage the waveform instance
    */
   useEffect(() => {
-    dispatch.audioModel.setIsLoading(true);
+    dispatch.songModel.setIsLoading(true);
     if (!waveformRef.current || !song.audio) return;
     if (song.audio !== currentSong?.audio && waveformRef.current) wavesurfer.current?.destroy();
     const options = formWaveSurferOptions(waveformRef.current);
     wavesurfer.current = WaveSurfer.create(options);
     wavesurfer.current.load(song.audio);
-    wavesurfer.current.on('waveform-ready', () => dispatch.audioModel.setIsLoading(false));
-    wavesurfer.current.on('ready', () => wavesurfer?.current?.setVolume(0));
+    wavesurfer.current.on('ready', () => {
+      dispatch.songModel.setIsLoading(false)
+      wavesurfer?.current?.setVolume(0)
+    });    
+    wavesurfer.current.on('waveform-ready', () => dispatch.songModel.setIsLoading(false));
     wavesurfer.current.on('seek', (e) => setSeekPosition(e));
     waveformRef.current.addEventListener('click', () => (isUserSeeking.current = true));
     return () => {
