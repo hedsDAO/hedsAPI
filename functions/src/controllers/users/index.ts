@@ -80,9 +80,32 @@ export async function createUser(userData: UserData) {
   const values = [badges, banner, collection, description, display_name, joined, profile_picture, votes, wallet, spotlight, role];
 
   try {
+    await pool.query('BEGIN');
+
     const result = await pool.query(query, values);
-    return result.rows[0];
+    const user = result.rows[0];
+    const dateObject = new Date(joined);
+    const joinedDate = `${dateObject.getMonth() + 1}/${dateObject.getDate()}/${dateObject.getFullYear()}`;
+
+    const eventType = 'user_created';
+    const eventData = {
+      message: `joined heds`,
+      subject: joinedDate,
+    };
+
+    const userEventQuery = `
+      INSERT INTO ${schemaName}.user_events (event_type, event_data, event_timestamp, user_id)
+      VALUES ($1, $2, $3, $4);
+    `;
+
+    const userEventValues = [eventType, JSON.stringify(eventData), new Date().toISOString().slice(0, 19).replace('T', ' '), user.id];
+    await pool.query(userEventQuery, userEventValues);
+
+    await pool.query('COMMIT');
+
+    return user;
   } catch (error: any) {
+    await pool.query('ROLLBACK');
     throw new Error(`Unable to create user: ${error.message}`);
   }
 }
