@@ -20,7 +20,7 @@ export const PlayerButtons = () => {
       <Button isDisabled={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
         <Text data-testid="ga-backward-button" {...styles.$backwardButtonStyles(() => handlePrevious())} />
       </Button>
-      <Button isLoading={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
+      <Button color='white' isLoading={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
         <Text data-testid="ga-play-pause-button" {...styles.$playPauseButtonStyles(isPlaying, () => handlePlayPause(song))} />
       </Button>
       <Button isDisabled={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
