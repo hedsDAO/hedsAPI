@@ -17,7 +17,7 @@ export const $tapeStackStyles: StackProps = {
  * @description ImageProps object contains styles for the tape cover image.
  */
 export const $tapeImageStyles: ImageProps = {
-  boxSize: ['xs', 'sm', 'md', 'lg'],
+  boxSize: ['xs', 'sm', 'md'],
   border: '1px',
   borderColor: 'heds.400',
 };
