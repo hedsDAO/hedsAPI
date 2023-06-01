@@ -7,7 +7,17 @@ export const CuratorCard = ({ curator }: { curator: User }) => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   return (
     <GridItem colSpan={1} mr={2}>
-      <Stack border="solid 0.5px" borderColor="heds.300" px={2} pt={2} pb={1.5} rounded="md" bg="heds.bg3" onClick={() => navigate(`/u/${curator.wallet}`)}>
+      <Stack
+        border="solid 0.5px"
+        borderColor="heds.300"
+        px={2}
+        pt={2}
+        pb={1.5}
+        rounded="md"
+        bg="heds.bg3"
+        onClick={() => navigate(`/u/${curator.wallet}`)}
+        _hover={{ cursor: 'pointer' }}
+      >
         <AspectRatio ratio={1}>
           <Skeleton startColor="heds.bg2" endColor="heds.400" isLoaded={hasImageLoaded} fitContent rounded={'sm'}>
             <Image minH="full" minW="full" rounded="sm" onLoad={setHasImageLoaded.on} src={curator.profile_picture} objectFit="cover" />
