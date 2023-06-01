@@ -1,16 +1,16 @@
 export const items = [
-  'https://www.heds.cloud/ipfs/QmSy3SvxY9HPvH2cEjb1NT8Y5rfcCmaWEge2vxhFvRvXj1',
-  'https://www.heds.cloud/ipfs/QmbnGKrUsfRwxcPNxdXuKwHFmtu29F7UYSAfY5aEMGZtPc',
-  'https://www.heds.cloud/ipfs/QmY2z5HEK6rD3SQ27MPpitZmqeqywKEwB7Ci1ABjqwe6J9',
-  'https://www.heds.cloud/ipfs/QmfDej1TKoo7Aqi1Pf5P6WGzPus4RzWi2tq77U3MzxzWt6',
-  'https://www.heds.cloud/ipfs/QmQTv6yF5rQCxwgXa6AKHJZGx1NUwS4KVAwjrg6muLzufJ',
+  {cover: 'https://www.heds.cloud/ipfs/QmSy3SvxY9HPvH2cEjb1NT8Y5rfcCmaWEge2vxhFvRvXj1', link: `/t/16`},
+  {cover: 'https://www.heds.cloud/ipfs/QmbnGKrUsfRwxcPNxdXuKwHFmtu29F7UYSAfY5aEMGZtPc', link: `/t/2`},
+  {cover: 'https://www.heds.cloud/ipfs/QmY2z5HEK6rD3SQ27MPpitZmqeqywKEwB7Ci1ABjqwe6J9', link: `/t/15`},
+  {cover: 'https://www.heds.cloud/ipfs/QmfDej1TKoo7Aqi1Pf5P6WGzPus4RzWi2tq77U3MzxzWt6', link: `/u/0x6822d2d69508a086d4c329ea8969484b62cc0f94`},
+  {cover: 'https://www.heds.cloud/ipfs/QmQTv6yF5rQCxwgXa6AKHJZGx1NUwS4KVAwjrg6muLzufJ', link: `/t/14`},
 ];
 
 export const EXPLORE_STATS = {
-  'TAPES MINTED': '9999',
-  'VALUE GENERATED': '999,999 ETH',
-  SUBMISSIONS: '9999',
-  'UNIQUE MINTERS': '9999',
+  'TOTAL MINTED': '1,581',
+  'VALUE GENERATED': '110 ETH',
+  SUBMISSIONS: '340',
+  'UNIQUE MINTERS': '311',
 };
 
 export const FEATURED_ARTISTS_HEADER_TEXT = 'FEATURED ARTISTS';
