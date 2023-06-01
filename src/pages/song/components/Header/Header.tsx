@@ -6,6 +6,7 @@ import { User } from '@/models/common';
 import { ARTIST_HEADER_TEXT, PRIVATE_TRACK_LABEL } from '@pages/song/models/constants';
 import * as styles from '@pages/song/components/Header/styles';
 import { useAudio } from '@/hooks/useAudio/useAudio';
+import { Video } from '../Video/Video';
 
 /**
  * @function Header
@@ -31,6 +32,7 @@ export const Header = () => {
   const songLikes = useSelector(store.select.songModel.selectSongLikes);
   const isLoading = useSelector(store.select.songModel.selectIsLoading);
   const isSongPublic = useSelector(store.select.songModel.selectIsSongPublic);
+  const songVideo = useSelector(store.select.songModel.selectSongVideo);
   const handleNavigate = (user: User) => () => navigate(`/u/${user?.wallet}`);
   const handleLikeAndUnlike = () => {
     songLikes?.map((like: any) => like.user_id).includes(connectedUserId)
@@ -41,11 +43,16 @@ export const Header = () => {
   return (
     <Box {...styles.$outerBoxStyles}>
       <Box {...styles.$innerBoxStyles}>
-        <Skeleton {...styles.$skeletonStyles(hasLargeCoverLoaded, isLoading)}>
-          <AspectRatio ratio={1}>
-            <Image {...styles.$imageStyles(cover, setHasLargeCoverLoaded.on)} />
-          </AspectRatio>
-        </Skeleton>
+        {songVideo ? (
+          <Video />
+        ) : (
+          <Skeleton {...styles.$skeletonStyles(hasLargeCoverLoaded, isLoading)}>
+            <AspectRatio ratio={1}>
+              <Image {...styles.$imageStyles(cover, setHasLargeCoverLoaded.on)} />
+            </AspectRatio>
+          </Skeleton>
+        )}
+
         <Box {...styles.$absoluteBoxStyles}>
           <Skeleton {...styles.$smallSkeletonStyles(hasSmallCoverLoaded)}>
             <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} />
@@ -82,14 +89,18 @@ export const Header = () => {
           </Button>
         </GridItem>
         <GridItem {...styles.$gridItemImageStyles}>
-          <AspectRatio ratio={1}>
-            <Box>
-              <Skeleton {...styles.$skeletonStyles} isLoaded={!isLoading || hasLargeCoverLoaded}>
-                <Image onLoad={setHasLargeCoverLoaded.on} {...styles.$coverImageStyles} src={cover} />
-              </Skeleton>
-              <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} />
-            </Box>
-          </AspectRatio>
+          {songVideo ? (
+            <Video />
+          ) : (
+            <AspectRatio ratio={1}>
+              <Box>
+                <Skeleton {...styles.$skeletonStyles} isLoaded={!isLoading || hasLargeCoverLoaded}>
+                  <Image onLoad={setHasLargeCoverLoaded.on} {...styles.$coverImageStyles} src={cover} />
+                </Skeleton>
+                <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} />
+              </Box>
+            </AspectRatio>
+          )}
         </GridItem>
       </SimpleGrid>
     </Box>
