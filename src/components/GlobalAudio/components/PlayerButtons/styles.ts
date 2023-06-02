@@ -13,23 +13,17 @@ export const $playerButtonsFlexStyles: FlexProps = {
  * @constant {ExtendedTextProps} $backwardButtonStyles
  * @description TextProps object that contains styles for the backward button in the PlayerButtons component.
  */
-export const $backwardButtonStyles = (onClick: () => void): TextProps => ({
-  role: 'button',
-  pointerEvents: 'auto',
+export const $backwardButtonStyles: TextProps = {
   color: 'white',
   as: 'i',
-  onClick,
   className: 'fa-solid fa-backward',
-});
+};
 
 /**
  * @constant {TextProps} $playPauseButtonStyles
  * @description TextProps object that contains styles for the play/pause button in the PlayerButtons component.
  */
-export const $playPauseButtonStyles = (isPlaying: boolean, onClick: () => void): TextProps => ({
-  onClick,
-  role: 'button',
-  pointerEvents: 'auto',
+export const $playPauseButtonStyles = (isPlaying: boolean): TextProps => ({
   color: 'white',
   fontSize: { base: 'lg', lg: '2xl' },
   w: '16px',
@@ -41,11 +35,10 @@ export const $playPauseButtonStyles = (isPlaying: boolean, onClick: () => void):
  * @constant {TextProps} $forwardButtonStyles
  * @description TextProps object that contains styles for the forward button in the PlayerButtons component.
  */
-export const $forwardButtonStyles = (onClick: () => void): TextProps => ({
+export const $forwardButtonStyles: TextProps = {
   role: 'button',
   pointerEvents: 'auto',
   color: 'white',
   as: 'i',
-  onClick,
   className: 'fa-solid fa-forward',
-});
+};

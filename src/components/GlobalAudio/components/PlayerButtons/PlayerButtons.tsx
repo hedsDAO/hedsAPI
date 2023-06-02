@@ -12,19 +12,36 @@ import { useAudio } from '@/hooks/useAudio/useAudio';
 export const PlayerButtons = () => {
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const song = useSelector(store.select.audioModel.selectSong);
-  const { handlePlayPause, handlePrevious, handleUpNext } = useAudio();
+  const { handlePlayPause, handlePrevious, handleUpNext, getProgress } = useAudio();
   const isLoading = useSelector(store.select.audioModel.selectIsLoading);
 
   return (
     <Flex {...styles.$playerButtonsFlexStyles}>
-      <Button isDisabled={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
-        <Text data-testid="ga-backward-button" {...styles.$backwardButtonStyles(() => handlePrevious())} />
+      <Button
+        isDisabled={isLoading}
+        minW="unset"
+        onClick={() => handlePrevious()}
+        minH="unset"
+        bg="transparent"
+        _hover={{ bg: 'transparent' }}
+        p="0 !important"
+      >
+        <Text data-testid="ga-backward-button" {...styles.$backwardButtonStyles} />
       </Button>
-      <Button color='white' isLoading={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
-        <Text data-testid="ga-play-pause-button" {...styles.$playPauseButtonStyles(isPlaying, () => handlePlayPause(song))} />
+      <Button
+        color="white"
+        isLoading={isLoading || (isPlaying && getProgress() === 0)}
+        minW="unset"
+        minH="unset"
+        bg="transparent"
+        _hover={{ bg: 'transparent' }}
+        p="0 !important"
+        onClick={() => handlePlayPause(song)}
+      >
+        <Text data-testid="ga-play-pause-button" {...styles.$playPauseButtonStyles(isPlaying)} />
       </Button>
-      <Button isDisabled={isLoading} minW='unset' minH='unset' bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
-        <Text data-testid="ga-forward-button" {...styles.$forwardButtonStyles(() => handleUpNext())} />
+      <Button isDisabled={isLoading} minW="unset" onClick={() => handleUpNext()} minH="unset" bg="transparent" _hover={{ bg: 'transparent' }} p="0 !important">
+        <Text data-testid="ga-forward-button" {...styles.$forwardButtonStyles} />
       </Button>
     </Flex>
   );
