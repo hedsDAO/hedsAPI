@@ -25,9 +25,9 @@ export const SubmissionResultContainer = () => {
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           SUBMISSIONS
         </Text>
-        <Text color="white" fontFamily="inter" fontSize="sm">
+        {/* <Text color="white" fontFamily="inter" fontSize="sm">
           Listen to the songs and like the songs you’d want to vote for
-        </Text>
+        </Text> */}
         {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />}
       </Box>
 
