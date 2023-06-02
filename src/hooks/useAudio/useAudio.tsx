@@ -47,6 +47,7 @@ export const useAudio = () => {
     if (isOnOwnSongPage || isOnHomePage) dispatch.globalAudioModel.setIsOpen(false);
     else if (!isOnOwnSongPage && song?.audio && progress >= 0) {
       dispatch.globalAudioModel.setIsOpen(true);
+      if (!isPlaying) dispatch.globalAudioModel.setIsMinimized(false);
       if (!previous) dispatch.audioModel.setPrevious(song);
       if (!upNext) dispatch.audioModel.getNextSong(song);
       dispatch.audioModel.setIsLoading(false);
@@ -99,7 +100,7 @@ export const useAudio = () => {
   };
 
   const handlePrevious = () => {
-    dispatch.audioModel.setIsLoading(true)
+    dispatch.audioModel.setIsLoading(true);
     createHowlerInstance(previous.audio);
     dispatch.audioModel.setSong(previous);
     dispatch.audioModel.getNextSong(song);
@@ -107,7 +108,7 @@ export const useAudio = () => {
   };
 
   const handleUpNext = () => {
-    dispatch.audioModel.setIsLoading(true)
+    dispatch.audioModel.setIsLoading(true);
     createHowlerInstance(upNext.audio);
     dispatch.audioModel.setSong(upNext);
     dispatch.audioModel.getNextSong(upNext);
@@ -148,13 +149,39 @@ export const useAudio = () => {
     if (state.howlerInstance) state.howlerInstance.seek(e * state.howlerInstance.duration());
   };
 
+  /**
+   * Toggle mute for the current audio
+   */
+
   const handleMute = () => {
     if (state.howlerInstance) {
       const requestedMuteAction = !state.howlerInstance.mute();
       dispatch.audioModel.setIsMuted(requestedMuteAction);
       state.howlerInstance.mute(requestedMuteAction);
+      dispatch.globalAudioModel.setIsMuted(requestedMuteAction);
+      if (requestedMuteAction) dispatch.globalAudioModel.setVolume(0);
+      else dispatch.globalAudioModel.setVolume(1);
     }
   };
 
-  return { handlePlayPause, getProgress, getDuration, seek, handleMute, handlePrevious, handleUpNext, isOnOwnSongPage };
+  /**
+   * Set the desired volume of the audio player
+   * @param {number} e - A value between 0 and 1 representing the volume level
+   */
+
+  const handleVolume = (e: number) => {
+    dispatch.globalAudioModel.setVolume(e);
+    state?.howlerInstance?.volume(e);
+  };
+
+  /**
+   * Closes and mutes the global audio player
+   */
+
+  const handleClose = () => {
+    dispatch.globalAudioModel.setIsPlaying(false);
+    dispatch.globalAudioModel.setIsOpen(false);
+  };
+
+  return { handlePlayPause, getProgress, getDuration, seek, handleMute, handlePrevious, handleUpNext, handleVolume, handleClose, isOnOwnSongPage };
 };
