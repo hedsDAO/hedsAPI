@@ -66,7 +66,7 @@ export const $emptyEventStyles = (dataTestIdIndex: number): ExtendedFlexProps =>
   bg: 'heds.bg3',
   minH: 'full',
   opacity: '50%',
-  'data-testid': `empty-event-${dataTestIdIndex}`
+  'data-testid': `empty-event-${dataTestIdIndex}`,
 });
 
 export const $attributesGridStyles: ExtendedGridProps = {

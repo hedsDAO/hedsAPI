@@ -89,6 +89,7 @@ export const tapeModel = createModel<RootModel>()({
     selectCurrentCycle: () => slice((state) => state.cycle),
     selectTapeProposalId: () => slice((state) => state.tape.proposalId),
     selectCurrentTapeSample: () => slice((state) => state.tape.sample),
+    selectTapeVideo: () => slice((state) => state.tape.video),
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
