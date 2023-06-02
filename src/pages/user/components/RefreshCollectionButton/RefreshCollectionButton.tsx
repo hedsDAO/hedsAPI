@@ -26,6 +26,7 @@ export const RefreshCollectionButton = () => {
       dispatch.userModel.updateUserCollection([data, collectionArgs, prevUserData]);
     },
     onError(err) {
+      console.log(err);
       dispatch.userModel.setIsFetchingCollection(false);
     },
   });
