@@ -50,7 +50,7 @@ export const songModel = createModel<RootModel>()({
         const keyPrediction = 1;
         return subGenreTags + genreTags + bpmPrediction + keyPrediction;
       }),
-    selectTapeName: () => slice((state: SongModelState): string => state.song?.track_data?.tape_name),
+    selectTapeName: () => slice((state: SongModelState): string => state.song?.track_data?.tape_name)
   }),
   effects: (dispatch) => ({
     async getSongData(hash: string) {
