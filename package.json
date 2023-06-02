@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development --open --hot --config ./webpack.config.js",
-    "build:staging": "NODE_ENV=production webpack --mode production --config ./webpack.config.js",
+    "build:prod": "npm run swap-prod && NODE_ENV=production webpack --mode production --config ./webpack.config.js",
+    "build:staging": "npm run swap-staging && NODE_ENV=production webpack --mode production --config ./webpack.config.js",
     "test": "NODE_ENV=development jest --config=jest.config.js --runInBand --detectOpenHandles --forceExit",
-    "test:watch": "NODE_ENV=development jest --config=jest.config.js --watch"
+    "test:watch": "NODE_ENV=development jest --config=jest.config.js --watch",
+    "swap-prod": "cp ./firebase/prod.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts ./src/firebaseConfig.ts",
+    "swap-staging": "cp ./firebase/staging.firebase.json firebase.json && cp ./firebase/prod.firebaseConfig.ts ./src/firebaseConfig.ts"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.16",
