@@ -94,10 +94,11 @@ export const userModel = createModel<RootModel>()({
             for (let contract in userCollection) {
               let itemVp = tapesAndVpWeights[contract.toLowerCase()];
               if (itemVp > 0) {
-                itemVp * userCollection[contract.toLowerCase()]?.quantity;
+                itemVp *= userCollection[contract]?.quantity;
                 totalVp += itemVp;
               }
             }
+            
             if (isOG) totalVp += 10;
             if (isArtist) totalVp += 15;
             this.setUserVp(totalVp);

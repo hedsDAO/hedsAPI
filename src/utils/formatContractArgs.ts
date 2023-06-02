@@ -3,13 +3,15 @@ import { erc721ABI } from 'wagmi';
 
 const formatContractArgs = (collectionArgs: TapeCollectionArg[], wallet: string) => {
   if (collectionArgs?.length)
-    return Object.keys(collectionArgs).map((key) => ({
-      address: key.toLowerCase() as `0x${string}`,
-      functionName: 'balanceOf',
-      abi: erc721ABI,
-      args: [wallet],
-      chainId: 1,
-    }));
+    return collectionArgs
+      .filter(collection => collection.contract)
+      .map((collection) => ({
+        address: collection.contract.toLowerCase() as `0x${string}`,
+        functionName: 'balanceOf',
+        abi: erc721ABI,
+        args: [wallet],
+        chainId: 1,
+      }));
   else return [];
 };
 

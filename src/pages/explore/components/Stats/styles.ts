@@ -26,7 +26,7 @@ export const $statsLabelStyles: TextProps = {
   color: 'white',
   fontSize: 'l',
   letterSpacing: 'wide',
-  fontFamily: 'karla',
+  fontFamily: 'space mono',
 };
 
 export const $statsValueStyles: TextProps = {
