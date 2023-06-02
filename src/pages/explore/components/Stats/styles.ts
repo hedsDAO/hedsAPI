@@ -14,6 +14,8 @@ export const $statsGridItemStyles: GridItemProps = {
 };
 
 export const $statsStackStyles: StackProps = {
+  flex: 1,
+  alignItems: 'center',
   py: 2,
   px: 3.5,
   rounded: 'lg',
@@ -22,7 +24,7 @@ export const $statsStackStyles: StackProps = {
 
 export const $statsLabelStyles: TextProps = {
   color: 'white',
-  fontSize: 'xs',
+  fontSize: 'l',
   letterSpacing: 'wide',
   fontFamily: 'karla',
 };
@@ -30,5 +32,5 @@ export const $statsLabelStyles: TextProps = {
 export const $statsValueStyles: TextProps = {
   mt: '0 !important',
   color: 'heds.200',
-  fontSize: '2xs',
+  fontSize: 'm',
 };
