@@ -10,6 +10,7 @@ export interface GlobalAudioState {
   isLoading: boolean;
   progress: number;
   isOpen: boolean;
+  isMinimized?: boolean;
 }
 
 export const globalAudioModel = createModel<RootModel>()({
@@ -25,6 +26,7 @@ export const globalAudioModel = createModel<RootModel>()({
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
     setProgresss: (state, progress: number) => ({ ...state, progress }),
     setIsMuted: (state, isMuted: boolean) => ({ ...state, isMuted }),
+    setIsMinimized: (state, isMinimized: boolean) => ({ ...state, isMinimized }),
     clearState: () => ({} as GlobalAudioState),
   },
   selectors: (slice) => ({
@@ -54,6 +56,9 @@ export const globalAudioModel = createModel<RootModel>()({
     },
     selectIsPlaying() {
       return slice((state): boolean => state.isPlaying);
+    },
+    selectIsMinimized() {
+      return slice((state): boolean => state.isMinimized);
     },
   }),
   effects: () => ({}),
