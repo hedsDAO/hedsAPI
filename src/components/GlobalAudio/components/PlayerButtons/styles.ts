@@ -15,6 +15,7 @@ export const $playerButtonsFlexStyles: FlexProps = {
  */
 export const $backwardButtonStyles: TextProps = {
   color: 'white',
+  fontSize: {base: 'xs', lg: 'md'},
   as: 'i',
   className: 'fa-solid fa-backward',
 };
@@ -39,6 +40,7 @@ export const $forwardButtonStyles: TextProps = {
   role: 'button',
   pointerEvents: 'auto',
   color: 'white',
+  fontSize: {base: 'xs', lg: 'md'},
   as: 'i',
   className: 'fa-solid fa-forward',
 };
