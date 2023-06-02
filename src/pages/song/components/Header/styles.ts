@@ -54,20 +54,20 @@ export const $relativeBoxStyles: BoxProps = {
   right: '50%',
 };
 
-export const $smallSkeletonStyles = (hasSmallCoverLoaded: boolean): SkeletonProps => ({
-  isLoaded: hasSmallCoverLoaded,
-  w: '16',
-  h: '16',
-});
+// export const $smallSkeletonStyles = (hasSmallCoverLoaded: boolean): SkeletonProps => ({
+//   isLoaded: hasSmallCoverLoaded,
+//   w: '16',
+//   h: '16',
+// });
 
-export const $avatarStyles = (subCover: string, onLoad: () => void): AvatarProps => ({
-  onLoad,
-  size: 'lg',
-  position: 'absolute',
-  shadow: 'md',
-  borderRadius: '0',
-  src: subCover,
-});
+// export const $avatarStyles = (subCover: string, onLoad: () => void): AvatarProps => ({
+//   onLoad,
+//   size: 'lg',
+//   position: 'absolute',
+//   shadow: 'md',
+//   borderRadius: '0',
+//   src: subCover,
+// });
 
 export const $simpleGridStyles: SimpleGridProps = {
   columns: { base: 1, lg: 10 },
@@ -131,7 +131,6 @@ export const $likeButtonStyles = (connectedUserId: number | null): ExtendedButto
   _hover: { bg: 'transparent' },
   _active: { bg: 'transparent' },
   _focus: { bg: 'transparent' },
-  ml: 'auto',
   mb: { base: 4, lg: 0 },
   'data-testid': 'song-like-button',
 });
@@ -141,6 +140,7 @@ export const $likeIconStyles = (songLikes: any[], connectedUserId: number | null
   color: songLikes?.map((like: any) => like.user_id)?.includes(connectedUserId) ? 'red.500' : 'heds.bg5',
   as: 'i',
   className: 'fas fa-heart',
+  _hover: { color: 'red', transition: '0.35s ease-in-out', fontSize: '2em' },
 });
 
 export const $playButtonIconStyles = (isLoading: boolean, isPlaying: boolean): TextProps => ({

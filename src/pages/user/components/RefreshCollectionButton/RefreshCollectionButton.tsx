@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { Button } from '@chakra-ui/react';
+import { Button, Tooltip } from '@chakra-ui/react';
 import { useContractReads } from 'wagmi';
 import { DateTime } from 'luxon';
 import { formatContractArgs } from '@/utils';
@@ -31,14 +31,14 @@ export const RefreshCollectionButton = () => {
     },
   });
 
+  const isDisabled = now - prevUserData?.collection?.lastUpdated < oneMinute;
+  const label = isDisabled ? 'Wait < 60s' : 'Refresh collection';
+
   return (
-    <Button
-      {...styles.$buttonStyles}
-      isDisabled={now - prevUserData?.collection?.lastUpdated < oneMinute}
-      onClick={() => dispatch.userModel.setIsFetchingCollection(true)}
-      isLoading={isLoading}
-    >
-      <i className="fas fa-arrows-rotate" />
-    </Button>
+    <Tooltip label={label} aria-label="Refresh Collection" fontFamily="space">
+      <Button {...styles.$buttonStyles} isDisabled={isDisabled} onClick={() => dispatch.userModel.setIsFetchingCollection(true)} isLoading={isLoading}>
+        <i className="fas fa-arrows-rotate" />
+      </Button>
+    </Tooltip>
   );
 };

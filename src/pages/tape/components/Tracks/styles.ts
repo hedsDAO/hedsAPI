@@ -9,7 +9,7 @@ export const $tracksFlexStyles: FlexProps = {
   flexWrap: 'wrap',
   mx: { base: 2, lg: 8 },
   px: ['20px', '60px', '100px', '120px'],
-  pt: 8,
+  pt: 2,
 };
 
 /**
@@ -17,13 +17,14 @@ export const $tracksFlexStyles: FlexProps = {
  * @description BoxProps object contains styles for each track box.
  */
 export const $trackBoxStyles: BoxProps = {
-  border: '1px',
-  borderColor: 'button.primary',
-  bgColor: 'button.dark',
+  // border: '1px',
+  // borderColor: 'button.primary',
+  bgColor: 'heds.bg',
   borderRadius: 'md',
   p: 2,
   w: { base: '100%', sm: '100%', md: '32%', lg: '19%' },
-  _hover: { cursor: 'pointer', bgColor: 'black.lightGray' },
+  _hover: { cursor: 'pointer', bgColor: 'button.dark' },
+  boxShadow: '0px 2px 6px #745CBA',
 };
 
 /**
@@ -45,6 +46,8 @@ export const $trackNameTextStyles: TextProps = {
   fontSize: 'xs',
   fontWeight: 500,
   letterSpacing: 'wider',
+  fontFamily: 'inter',
+  opacity: '80%',
 };
 
 /**
@@ -56,4 +59,19 @@ export const $artistNameTextStyles: TextProps = {
   fontSize: 'xs',
   fontWeight: 200,
   letterSpacing: 'wider',
+  fontFamily: 'space',
+};
+
+export const $tracksheadingStyles: TextProps = {
+  mx: { base: 2, lg: 8 },
+  px: ['20px', '60px', '100px', '120px'],
+  textTransform: 'uppercase',
+  fontFamily: 'karla',
+  fontWeight: 'medium',
+  letterSpacing: 'wide',
+  color: 'white',
+  opacity: '50%',
+  fontSize: 'lg',
+  mt: 5,
+  mb: 2,
 };

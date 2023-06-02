@@ -20,6 +20,7 @@ export const $tapeImageStyles: ImageProps = {
   boxSize: ['xs', 'sm', 'md'],
   border: '1px',
   borderColor: 'heds.400',
+  borderRadius: 'md',
 };
 
 /**

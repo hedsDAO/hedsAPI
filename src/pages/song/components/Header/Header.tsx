@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { AspectRatio, Avatar, Box, Button, Divider, Flex, GridItem, Image, SimpleGrid, Skeleton, Stack, Text, Tooltip, useBoolean } from '@chakra-ui/react';
+import { AspectRatio, Box, Button, Divider, Flex, GridItem, Image, SimpleGrid, Skeleton, Stack, Text, Tooltip, useBoolean } from '@chakra-ui/react';
 import { User } from '@/models/common';
 import { ARTIST_HEADER_TEXT, PRIVATE_TRACK_LABEL } from '@pages/song/models/constants';
 import * as styles from '@pages/song/components/Header/styles';
@@ -19,11 +19,11 @@ export const Header = () => {
   const navigate = useNavigate();
   const { handlePlayPause, isOnOwnSongPage } = useAudio();
   const [hasLargeCoverLoaded, setHasLargeCoverLoaded] = useBoolean();
-  const [hasSmallCoverLoaded, setHasSmallCoverLoaded] = useBoolean();
+  // const [hasSmallCoverLoaded, setHasSmallCoverLoaded] = useBoolean();
   const song = useSelector(store.select.songModel.selectSong);
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const cover = useSelector(store.select.songModel.selectSongCover);
-  const subCover = useSelector(store.select.songModel.selectSongSubmissionCover);
+  // const subCover = useSelector(store.select.songModel.selectSongSubmissionCover);
   const songArtists = useSelector(store.select.songModel.selectSongArtists);
   const songName = useSelector(store.select.songModel.selectSongTrackName);
   const songId = useSelector(store.select.songModel.selectSongId);
@@ -52,12 +52,12 @@ export const Header = () => {
             </AspectRatio>
           </Skeleton>
         )}
-
+        {/* 
         <Box {...styles.$absoluteBoxStyles}>
           <Skeleton {...styles.$smallSkeletonStyles(hasSmallCoverLoaded)}>
             <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} />
           </Skeleton>
-        </Box>
+        </Box> */}
       </Box>
       <SimpleGrid {...styles.$simpleGridStyles}>
         <GridItem {...styles.$gridItemStyles}>
@@ -97,7 +97,7 @@ export const Header = () => {
                 <Skeleton {...styles.$skeletonStyles} isLoaded={!isLoading || hasLargeCoverLoaded}>
                   <Image onLoad={setHasLargeCoverLoaded.on} {...styles.$coverImageStyles} src={cover} />
                 </Skeleton>
-                <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} />
+                {/* <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} /> */}
               </Box>
             </AspectRatio>
           )}
