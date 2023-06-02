@@ -48,6 +48,7 @@ export interface Artist {
   display_name: string;
   id: number;
   profile_picture: string;
+  wallet?: string;
 }
 
 export interface User {

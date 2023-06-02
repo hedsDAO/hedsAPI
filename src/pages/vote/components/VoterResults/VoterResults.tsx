@@ -42,11 +42,10 @@ export const VoterResults = ({ handleVoterChoices }: { handleVoterChoices: (vote
               const wallet = voter.toLowerCase();
               return (
                 <VoterCard
-                  displayName={userResultsInfo[wallet].display_name}
-                  profilePicture={userResultsInfo[wallet].profile_picture}
+                  displayName={userResultsInfo[wallet]?.display_name}
+                  profilePicture={userResultsInfo[wallet]?.profile_picture}
                   vp={vp}
                   wallet={voter}
-                  key={voter}
                   votesObject={votesObject}
                   handleVoterChoices={handleVoterChoices}
                 />
