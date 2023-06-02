@@ -53,7 +53,7 @@ const App = (): JSX.Element => {
         <Route path="/artists" element={<Artists />} />
         <Route path="/tapes" element={<Tapes />} />
         <Route path="/song/:id" element={<Song />} />
-        <Route path="/t/:id" element={<Tape />} />
+        <Route path="/tape/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/vote/:id" element={<Vote />} />
         <Route path="*" element={<NotFound />} />

@@ -91,7 +91,7 @@ export interface Song {
   video?: string;
   artist_id?: number;
   artist_display_name?: string;
-  artist_display_picture?: string;
+  artist_profile_picture?: string;
   artist_wallet?: string;
 }
 
