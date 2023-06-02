@@ -1,5 +1,6 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { formatWallet } from '@/utils';
+import { Link } from 'react-router-dom';
 
 interface OwnProps {
   displayName: string;
@@ -20,12 +21,14 @@ export const VoterCard = ({ displayName, profilePicture, wallet, vp, votesObject
       bgColor="#745CBA"
       onMouseEnter={() => handleVoterChoices(votesObject)}
       onMouseLeave={() => handleVoterChoices({})}
-      _hover={{ cursor: 'pointer', bgColor: '#DC89FF' }}
+      _hover={{ cursor: 'auto', bgColor: '#DC89FF' }}
     >
       <Flex justifyContent="space-between" p={1}>
         <Flex gap={2} alignItems={'center'}>
           <Avatar
-            // onClick={() => navigate(`/u/${vote.voter.toLowerCase()}`)}
+            as={Link}
+            to={`/u/${wallet.toLowerCase()}`}
+            _hover={{ cursor: 'pointer' }}
             borderRadius={'sm'}
             src={profilePicture}
             size="md"
