@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, Flex, Image, Stack, Skeleton, Text } from '@chakra-ui/react';
 import * as styles from '@pages/vote/components/TapeInfo/styles';
 import { Dispatch, store } from '@/store';
+import { Link } from 'react-router-dom';
 
 export const TapeInfo = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -17,14 +18,14 @@ export const TapeInfo = () => {
           </Text>
           {tape.sampleArtists.map((artist) => (
             <Stack key={artist.id} {...styles.$artistStackStyles}>
-              <Avatar src={artist.profile_picture} name={artist.display_name} />
+              <Avatar  as={Link} to={`/u/${artist.wallet}`} src={artist.profile_picture} name={artist.display_name} />
               <Text {...styles.$artistNameTextStyles}>{artist.display_name}</Text>
             </Stack>
           ))}
         </Stack>
         <Stack w={['100%', '45%']}>
           <Text color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
-            Description
+            About The Tape
           </Text>
           <Text color="white" fontFamily="inter" fontWeight="300" fontSize="sm">
             {tape.description}
