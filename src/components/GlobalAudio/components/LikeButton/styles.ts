@@ -16,6 +16,7 @@ export const $likeButtonStyles = (liked: boolean, onClick: () => void): Extended
   pointerEvents: 'auto',
   mt: '0.5 !important',
   mr: 2.5,
+  ml: {base: 2, lg: 0},
   color: 'white',
   fontSize: {base: 'sm', lg: 'md'},
   as: 'i',
