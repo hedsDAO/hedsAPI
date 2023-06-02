@@ -19,7 +19,7 @@ export const IconButtons = () => {
         <Box to={`/tape/16`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.TAPES_ICON}></i>
         </Box>
-        <Box to={`/song/sample`} as={Link} {...styles.$iconButtonStyles}>
+        <Box to={`/song/QmV3B2qXnDchtAv6exot8HbX6iFhBi4uwrYPpVXAYYh5kG`} as={Link} {...styles.$iconButtonStyles}>
           <i className={constants.PLAY_ICON}></i>
         </Box>
       </Flex>
