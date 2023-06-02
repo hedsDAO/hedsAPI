@@ -105,15 +105,34 @@ export const audioModel = createModel<RootModel>()({
   }),
   effects: () => ({
     async getNextSong(song: Song) {
-      let relatedSongHashes: string[];
-      let nextSongResponse: AxiosResponse<Song>;
-      relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
-      if (relatedSongHashes?.length) {
-        const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
-        let rand = Math.floor(Math.random() * 10) + 1;
-        nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
-        this.setUpNext(nextSongResponse.data);
+      this.setIsLoading(true);
+      if (song?.cyanite_id) {
+        let relatedSongHashes: string[];
+        let nextSongResponse: AxiosResponse<Song>;
+        relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
+        if (relatedSongHashes?.length) {
+          const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
+          let rand = Math.floor(Math.random() * 10) + 1;
+          nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
+          this.setUpNext(nextSongResponse.data);
+        }
       }
+      this.setIsLoading(false);
+    },
+    async getPrevious(song: Song) {
+      this.setIsLoading(true);
+      if (song?.cyanite_id) {
+        let relatedSongHashes: string[];
+        let previousSongResponse: AxiosResponse<Song>;
+        relatedSongHashes = await getRelatedTracks(parseInt(song?.cyanite_id), 10);
+        if (relatedSongHashes?.length) {
+          const previousUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
+          let rand = Math.floor(Math.random() * 10) + 1;
+          previousSongResponse = await getSongByHash(previousUniqueTrack[rand]);
+          this.setPrevious(previousSongResponse.data);
+        }
+      }
+      this.setIsLoading(false);
     },
   }),
 });

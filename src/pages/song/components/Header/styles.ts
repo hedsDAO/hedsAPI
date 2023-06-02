@@ -43,9 +43,9 @@ export const $imageStyles = (cover: string, onLoad: () => void): ImageProps => (
 });
 
 export const $absoluteBoxStyles: BoxProps = {
-  position: 'absolute',
-  top: 4,
-  right: 4,
+  // position: 'absolute',
+  // top: 4,
+  // right: 4,
 };
 
 export const $relativeBoxStyles: BoxProps = {
@@ -78,7 +78,6 @@ export const $gridItemStyles: GridItemProps = {
   as: Flex,
   gap: 7,
   alignItems: 'center',
-  colSpan: 7,
   position: { base: 'absolute', lg: 'static' },
   bottom: { base: 32, lg: 'auto' },
   left: { base: 0, lg: 'auto' },
@@ -131,7 +130,7 @@ export const $likeButtonStyles = (connectedUserId: number | null): ExtendedButto
   _hover: { bg: 'transparent' },
   _active: { bg: 'transparent' },
   _focus: { bg: 'transparent' },
-  mb: { base: 4, lg: 0 },
+  // mb: { base: 4, lg: 0 },
   'data-testid': 'song-like-button',
 });
 
@@ -148,6 +147,11 @@ export const $playButtonIconStyles = (isLoading: boolean, isPlaying: boolean): T
   color: 'white',
   as: 'i',
   className: isLoading ? 'fas fa-circle-notch fa-spin' : isPlaying ? 'fas fa-pause' : 'fas fa-play',
+});
+
+
+export const $smallSkeletonStyles = (hasSmallCoverLoaded: boolean): SkeletonProps => ({
+  isLoaded: hasSmallCoverLoaded,
 });
 
 export const $stackWrapperStyles: StackProps = {
@@ -190,8 +194,8 @@ export const $gridItemImageStyles: GridItemProps = {
 };
 
 export const $coverImageStyles: ImageProps = {
-  opacity: { base: '35%', xl: '30%' },
-  rounded: 'none',
+  opacity: { base: '50%', xl: '90%' },
+  rounded: 'lg',
 };
 
 export const $privateLabelStyles: BoxProps = {
