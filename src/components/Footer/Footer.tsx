@@ -7,12 +7,12 @@ export const Footer = () => {
       <Flex display={{ base: 'none', lg: 'flex' }} ml={-1} gap={4} alignItems={'center'}>
         <Avatar borderRadius={'none'} size="xs" src={HedLogo} />
         <Flex gap={2} alignItems={'baseline'}>
-          <Text letterSpacing={'wide'} fontFamily={'karla'} opacity={'80%'} fontWeight={100} fontSize={'md'} color="white">
+          <Text letterSpacing={'wide'} fontFamily={'space mono'} opacity={'80%'} fontWeight={100} fontSize={'md'} color="white">
             heds
           </Text>
         </Flex>
       </Flex>
-      <Flex justifyContent={'space-between'} minW={{ base: 'full', lg: 'auto' }} gap={6}>
+      <Flex justifyContent={'space-between'} fontFamily={'space mono'} minW={{ base: 'full', lg: 'auto' }} gap={6}>
         <Flex alignItems={'center'} gap={3}>
           <Text letterSpacing={'widest'} opacity={'70%'} fontSize={'2xs'} color={'white'}>
             FAQ
