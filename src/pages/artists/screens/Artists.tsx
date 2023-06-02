@@ -26,7 +26,7 @@ export const Artists = () => {
           <SimpleGrid columns={curators?.length}>
             {curators?.length &&
               curators.map((curator) => {
-                return <CuratorCard curator={curator} />;
+                return <CuratorCard curator={curator} key={curator.wallet + 'curators'} />;
               })}
           </SimpleGrid>
         </Marquee>

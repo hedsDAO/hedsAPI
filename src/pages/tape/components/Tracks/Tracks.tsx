@@ -14,7 +14,7 @@ export const Tracks = () => {
         return (
           <Box key={song.id} {...styles.$trackBoxStyles} data-testid="track-box" onClick={() => navigate(`/song/${ipfsHash}`)}>
             <HStack>
-              <Image src={song.cover} alt="song-over" {...styles.$trackImageStyles} />
+              <Image src={song.artist_profile_picture} alt="song-over" {...styles.$trackImageStyles} />
               <Stack>
                 <Text {...styles.$trackNameTextStyles}>{song.track_name}</Text>
                 <Text {...styles.$artistNameTextStyles}>{song.artist_display_name}</Text>

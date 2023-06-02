@@ -32,8 +32,8 @@ export const $trackBoxStyles: BoxProps = {
  */
 export const $trackImageStyles: ImageProps = {
   boxSize: '4rem',
-  border: '1px',
   borderColor: 'heds.400',
+  borderRadius: 'md',
 };
 
 /**
