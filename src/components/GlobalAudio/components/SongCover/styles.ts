@@ -13,10 +13,10 @@ interface ExtendedSkeletonProps extends SkeletonProps {
  * @description AspectRatioProps object that contains styles for the SongCover component container.
  */
 export const $songCoverAspectRatioStyles: AspectRatioProps = {
-  minH: '80px',
-  minW: '80px',
-  maxW: '80px',
-  maxH: '80px',
+  minH: {base: '60px', lg:'80px'},
+  minW: {base: '60px', lg:'80px'},
+  maxW: {base: '60px', lg:'80px'},
+  maxH: {base: '60px', lg:'80px'},
   ratio: 1,
 };
 
@@ -38,7 +38,7 @@ export const $songCoverSkeletonStyles = (isLoaded: boolean): ExtendedSkeletonPro
  * @description ImageProps object that contains styles for the SongCover image component.
  */
 export const $songCoverImageStyles: ExtendedImageProps = {
-  h: '80px',
+  h: {base: '60px', lg:'80px'},
   rounded: 'md',
   objectFit: 'cover',
   "data-testid": 'ga-cover-image'

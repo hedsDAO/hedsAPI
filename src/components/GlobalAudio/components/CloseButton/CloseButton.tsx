@@ -9,5 +9,5 @@ import { $closeButtonStyles } from '@/components/GlobalAudio/components/CloseBut
  */
 
 export const CloseButton = ({ handleClose }: { handleClose: () => void }) => {
-  return <Text {...$closeButtonStyles(handleClose)} />;
+  return <Text data-testid="ga-close-button" onClick={handleClose} {...$closeButtonStyles} />;
 };
