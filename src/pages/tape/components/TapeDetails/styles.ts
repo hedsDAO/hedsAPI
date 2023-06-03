@@ -16,7 +16,7 @@ export const $mainStackStyles: StackProps = {
  */
 export const $tapeNameTextStyles: TextProps = {
   color: '#D3D3FF',
-  letterSpacing: 'widest',
+  letterSpacing: 'tight',
   fontSize: '3xl',
   fontWeight: 'bold',
 };
