@@ -17,7 +17,7 @@ export const $statsStackStyles: StackProps = {
   flex: 1,
   alignItems: 'center',
   py: 2,
-  px: 3.5,
+  px: 3,
   rounded: 'lg',
   bg: 'heds.bg3',
 };
@@ -25,7 +25,7 @@ export const $statsStackStyles: StackProps = {
 export const $statsLabelStyles: TextProps = {
   color: 'white',
   fontSize: 'l',
-  letterSpacing: 'wide',
+  // letterSpacing: '0.05em',
   fontFamily: 'space mono',
 };
 
