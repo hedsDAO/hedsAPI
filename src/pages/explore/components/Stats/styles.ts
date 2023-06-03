@@ -25,7 +25,6 @@ export const $statsStackStyles: StackProps = {
 export const $statsLabelStyles: TextProps = {
   color: 'white',
   fontSize: 'l',
-  // letterSpacing: '0.05em',
   fontFamily: 'space mono',
 };
 
