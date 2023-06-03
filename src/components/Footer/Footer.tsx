@@ -22,7 +22,7 @@ export const Footer = () => {
                   if (window) window?.scrollTo(0, 0);
                   navigate(`/faq`)
                 }} 
-                letterSpacing={'widest'} opacity={'70%'} fontSize={'2xs'} color={'white'}>
+                letterSpacing={'widest'} opacity={'70%'} fontSize={'2xs'} color={'white'}  _hover={{ cursor: 'pointer' }}>
             FAQ
           </Text>
           {/* <Text letterSpacing={'widest'} opacity={'70%'} fontSize={'2xs'} color={'white'}>
