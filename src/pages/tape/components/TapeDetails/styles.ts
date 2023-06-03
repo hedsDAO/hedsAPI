@@ -70,6 +70,7 @@ export const $aboutTheTapeTextStyles: TextProps = {
  * @description TextProps object contains styles for the tape description text.
  */
 export const $tapeDescriptionTextStyles: TextProps = {
+  marginTop: "0 !important",
   color: 'white',
   fontSize: 'xs',
   lineHeight: '20px',
