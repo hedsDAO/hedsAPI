@@ -9,7 +9,7 @@ export const getAllTapes = async () => {
 
 export const getTapeById = async (tapeId: number) => {
   const query = `
-    SELECT t.*, u.id AS sample_artist_id, u.display_name AS sample_artist_display_name, u.profile_picture AS sample_artist_profile_picture
+    SELECT t.*, u.id AS sample_artist_id, u.wallet AS sample_artist_wallet, u.display_name AS sample_artist_display_name, u.profile_picture AS sample_artist_profile_picture
     FROM ${schemaName}.tapes t
     LEFT JOIN ${schemaName}.tape_sample_artists tsa ON t.id = tsa.tape_id
     LEFT JOIN ${schemaName}.users u ON tsa.user_id = u.id
