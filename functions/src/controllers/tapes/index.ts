@@ -44,6 +44,7 @@ export const getTapeById = async (tapeId: number) => {
         id: row.sample_artist_id,
         display_name: row.sample_artist_display_name,
         profile_picture: row.sample_artist_profile_picture,
+        wallet: row.sample_artist_wallet,
       });
     }
   });
