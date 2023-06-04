@@ -38,8 +38,8 @@ export const TimelineButtons = () => {
     <Stack {...styles.$timelineButtonsStackStyles}>
       {timeline?.submit && (
         <>
-          <HStack>
-            <Text color="#9293FF" fontFamily="sans-serif">
+          <HStack {...styles.$timelineHeaderStackStyles}>
+            <Text color="#9293FF" fontFamily="sans-serif" mt="2px">
               Submit
             </Text>
             {cycle === 'submit' ? (
@@ -56,7 +56,7 @@ export const TimelineButtons = () => {
       )}
       {timeline?.vote && (
         <>
-          <HStack>
+          <HStack {...styles.$timelineHeaderStackStyles}>
             <Text color="#9293FF" fontFamily="sans-serif">
               Vote
             </Text>
@@ -72,7 +72,7 @@ export const TimelineButtons = () => {
           </Button>
         </>
       )}
-      <HStack>
+      <HStack {...styles.$timelineHeaderStackStyles}>
         <Text color="#9293FF" fontFamily="sans-serif">
           Mint
         </Text>
