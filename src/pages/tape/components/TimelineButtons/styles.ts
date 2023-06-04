@@ -9,6 +9,11 @@ export const $timelineButtonsStackStyles: StackProps = {
   alignItems: 'flex-start',
 };
 
+export const $timelineHeaderStackStyles: StackProps = {
+  justifyContent: 'center',
+  alignItems: 'baseline',
+};
+
 /**
  * @constant {TextProps} $cycleNameTextStyles
  * @description TextProps object contains styles for the cycle name text.
