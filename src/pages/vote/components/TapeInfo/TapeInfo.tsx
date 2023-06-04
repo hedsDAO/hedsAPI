@@ -24,7 +24,7 @@ export const TapeInfo = () => {
           ))}
         </Stack>
         <Stack w={['100%', '45%']}>
-          <Text color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
+          <Text mt={[0,"16px"]} mb={["4px", 0]} color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
             About The Tape
           </Text>
           <Text color="white" fontFamily="inter" fontWeight="300" fontSize="sm">
