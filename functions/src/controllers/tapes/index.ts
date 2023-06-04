@@ -44,6 +44,7 @@ export const getTapeById = async (tapeId: number) => {
         id: row.sample_artist_id,
         display_name: row.sample_artist_display_name,
         profile_picture: row.sample_artist_profile_picture,
+        wallet: row.sample_artist_wallet,
       });
     }
   });
@@ -51,22 +52,40 @@ export const getTapeById = async (tapeId: number) => {
   return tapeData;
 };
 
-export const getTapeSongs = async (tape_id: number): Promise<any> => {
-  const query = `
-    SELECT
-      s.*,
-      u.id as artist_id,
-      u.display_name as artist_display_name,
-      u.profile_picture as artist_profile_picture,
-      u.wallet as artist_wallet
-    FROM ${schemaName}.songs s
-    INNER JOIN ${schemaName}.song_artists sa ON s.id = sa.song_id
-    INNER JOIN ${schemaName}.users u ON sa.user_id = u.id
-    WHERE s.tape_id = $1
-  `;
-  const { rows } = await pool.query(query, [tape_id]);
+export const getTapeSongs = async (tape_id: number) => {
+  try {
+    const songQuery = `
+      SELECT
+        s.*
+      FROM ${schemaName}.songs s
+      WHERE s.tape_id = $1
+    `;
+    const songResult = await pool.query(songQuery, [tape_id]);
 
-  return rows;
+    // Map over the songs and fetch artist details for each
+    const songsWithArtists = await Promise.all(songResult.rows.map(async (song) => {
+      const artistQuery = `
+        SELECT
+          u.id as artist_id,
+          u.display_name as artist_display_name,
+          u.profile_picture as artist_profile_picture,
+          u.wallet as artist_wallet
+        FROM ${schemaName}.song_artists sa
+        INNER JOIN ${schemaName}.users u ON sa.user_id = u.id
+        WHERE sa.song_id = $1
+      `;
+      const artistResult = await pool.query(artistQuery, [song.id]);
+      const artists = artistResult.rows;
+
+      // Return the song with its associated artists
+      return { ...song, artists };
+    }));
+
+    return songsWithArtists;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const createTape = async (tapeData: TapeData): Promise<any> => {
