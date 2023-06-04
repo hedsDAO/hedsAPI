@@ -50,7 +50,7 @@ export const tapeModel = createModel<RootModel>()({
         }
       };
 
-      const tracks = songs.filter((song: Song) => song.type === 'track');
+      const tracks = songs.filter((song: Song) => song.type === 'track' || song.type === 'collab');
       const sample = songs.find((song: Song) => song.type === 'sample');
       const currentCycle = checkTimeline();
 
