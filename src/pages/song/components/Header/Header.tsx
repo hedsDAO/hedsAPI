@@ -7,6 +7,8 @@ import { ARTIST_HEADER_TEXT, PRIVATE_TRACK_LABEL } from '@pages/song/models/cons
 import * as styles from '@pages/song/components/Header/styles';
 import { useAudio } from '@/hooks/useAudio/useAudio';
 import { Video } from '../Video/Video';
+import { useAnimation, motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 /**
  * @function Header
@@ -14,16 +16,17 @@ import { Video } from '../Video/Video';
  * @returns {JSX.Element} - Rendered component.
  **/
 
+const MotionBox = motion.div;
+const VideoBox = motion.div;
+
 export const Header = () => {
   const dispatch = useDispatch<Dispatch>();
   const navigate = useNavigate();
   const { handlePlayPause, isOnOwnSongPage } = useAudio();
   const [hasLargeCoverLoaded, setHasLargeCoverLoaded] = useBoolean();
-  // const [hasSmallCoverLoaded, setHasSmallCoverLoaded] = useBoolean();
   const song = useSelector(store.select.songModel.selectSong);
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const cover = useSelector(store.select.songModel.selectSongCover);
-  // const subCover = useSelector(store.select.songModel.selectSongSubmissionCover);
   const songArtists = useSelector(store.select.songModel.selectSongArtists);
   const songName = useSelector(store.select.songModel.selectSongTrackName);
   const songId = useSelector(store.select.songModel.selectSongId);
@@ -39,12 +42,58 @@ export const Header = () => {
       ? dispatch.songModel.handleUnlikeSong([songId, connectedUserId, songHash])
       : dispatch.songModel.handleLikeSong([songId, connectedUserId, songHash]);
   };
+  const boxControls = useAnimation();
+  const videoControls = useAnimation();
+
+  useEffect(() => {
+    boxControls.set({
+      width: '100vw',
+      overflow: 'hidden',
+      position: 'relative',
+      zIndex: '0',
+    });
+
+    boxControls.start({
+      height: isPlaying && isOnOwnSongPage && songVideo ? '85vh' : 'initial',
+    });
+    videoControls.start({
+      height: isPlaying && isOnOwnSongPage && songVideo ? '85vh' : 'initial',
+    });
+
+    return () => {
+      boxControls.stop();
+      videoControls.stop();
+    };
+  }, [isPlaying, boxControls, videoControls, MotionBox, VideoBox, songVideo, isOnOwnSongPage]);
 
   return (
-    <Box {...styles.$outerBoxStyles}>
+    <MotionBox
+      animate={boxControls}
+      transition={{
+        type: 'spring',
+        stiffness: 100,
+        damping: 20,
+      }}
+    >
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        right={0}
+        left={0}
+        backgroundImage={`url(${cover})`}
+        backgroundRepeat="no-repeat"
+        backgroundSize="cover"
+        backgroundPosition="center center"
+        filter="blur(40px)"
+        opacity={0.55}
+        zIndex="-1"
+      />
       <Box {...styles.$innerBoxStyles}>
         {songVideo ? (
-          <Video />
+          <VideoBox animate={videoControls} transition={{ type: 'spring', stiffness: 100, damping: 20 }}>
+            <Video />
+          </VideoBox>
         ) : (
           <Skeleton {...styles.$skeletonStyles(hasLargeCoverLoaded, isLoading)}>
             <AspectRatio ratio={1}>
@@ -52,15 +101,9 @@ export const Header = () => {
             </AspectRatio>
           </Skeleton>
         )}
-        {/* 
-        <Box {...styles.$absoluteBoxStyles}>
-          <Skeleton {...styles.$smallSkeletonStyles(hasSmallCoverLoaded)}>
-            <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} />
-          </Skeleton>
-        </Box> */}
       </Box>
       <SimpleGrid {...styles.$simpleGridStyles}>
-        <GridItem {...styles.$gridItemStyles}>
+        <GridItem {...styles.$gridItemStyles} colSpan={isPlaying && songVideo && isOnOwnSongPage ? 6 : 7}>
           <Button {...styles.$playPauseButtonStyles(isLoading, () => handlePlayPause(song))}>
             <Text {...styles.$playButtonIconStyles(isLoading, isPlaying && isOnOwnSongPage)} />
           </Button>
@@ -84,25 +127,30 @@ export const Header = () => {
             </Stack>
             <Text {...styles.$songNameTextStyles}>{songName}</Text>
           </Stack>
-          <Button {...styles.$likeButtonStyles(connectedUserId)} onClick={handleLikeAndUnlike}>
-            <Text {...styles.$likeIconStyles(songLikes, connectedUserId)} />
-          </Button>
+          <Flex alignItems={'center'}>
+            <Button {...styles.$likeButtonStyles(connectedUserId)} onClick={handleLikeAndUnlike}>
+              <Text {...styles.$likeIconStyles(songLikes, connectedUserId)} />
+            </Button>
+          </Flex>
         </GridItem>
-        <GridItem {...styles.$gridItemImageStyles}>
-          {songVideo ? (
-            <Video />
-          ) : (
+        {songVideo ? (
+          <GridItem {...styles.$gridItemImageStyles}>
+            <VideoBox animate={videoControls} transition={{ type: 'spring', stiffness: 100, damping: 20 }}>
+              <Video />
+            </VideoBox>
+          </GridItem>
+        ) : (
+          <GridItem {...styles.$gridItemImageStyles}>
             <AspectRatio ratio={1}>
-              <Box>
+              <Box p={4}>
                 <Skeleton {...styles.$skeletonStyles} isLoaded={!isLoading || hasLargeCoverLoaded}>
                   <Image onLoad={setHasLargeCoverLoaded.on} {...styles.$coverImageStyles} src={cover} />
                 </Skeleton>
-                {/* <Avatar {...styles.$avatarStyles(subCover, setHasSmallCoverLoaded.on)} /> */}
               </Box>
             </AspectRatio>
-          )}
-        </GridItem>
+          </GridItem>
+        )}
       </SimpleGrid>
-    </Box>
+    </MotionBox>
   );
 };

@@ -2,7 +2,7 @@ import { WaveSurferParams } from 'wavesurfer.js/types/params';
 
 const formWaveSurferOptions = (ref: any): WaveSurferParams => ({
   container: ref,
-  waveColor: '#4D4D4D',
+  waveColor: '#1F1C2660',
   progressColor: '#AC8FFF',
   cursorColor: 'transparent',
   barWidth: 4,

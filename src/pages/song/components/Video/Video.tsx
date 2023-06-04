@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
 import { useAudio } from '@/hooks/useAudio/useAudio';
@@ -8,27 +8,28 @@ import { AspectRatio, useBreakpointValue } from '@chakra-ui/react';
 export const Video = () => {
   const videoRef = useRef(null);
   const opacity = useBreakpointValue({ base: 0.1, lg: 0.8 });
-  const songVideo = useSelector(store.select.songModel.selectSongVideo);
+  const { isOnOwnSongPage } = useAudio();
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
-  const cover = useSelector(store.select.songModel.selectSongCover);
-  const { isOnOwnSongPage, getProgress } = useAudio();
+  const song = useSelector(store.select.songModel.selectSong);
+
   return (
-    <AspectRatio h="100%" w="100%" ratio={1}>
+    <AspectRatio height="100%" w="100%" ratio={1}>
       <ReactPlayer
-        playing={isPlaying && isOnOwnSongPage && getProgress() > 0.005}
+        key={song?.cover}
+        playing={isPlaying && isOnOwnSongPage}
         width="100%"
         height="100%"
         style={{ opacity }}
         config={{
           file: {
             attributes: {
-              poster: cover,
+              poster: song?.cover,
             },
           },
         }}
         controls={false}
         ref={videoRef}
-        url={songVideo}
+        url={song?.video}
         volume={0}
       />
     </AspectRatio>

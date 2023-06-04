@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import WaveSurfer from 'wavesurfer.js';
 import { useAudioController } from '@/hooks/useAudio/models/AudioContext';
@@ -15,17 +15,29 @@ import { formWaveSurferOptions } from '@/utils';
  * @returns {Object} - Returns an object containing the `isWaveformLoading` state
  */
 export const useWaveform = ({ waveformRef, song }: { waveformRef: React.RefObject<HTMLDivElement>; song: Song }) => {
+  const seekPosition = useSelector(store.select.waveformModel.selectSeekPosition);
+  const playbackPosition = useSelector(store.select.waveformModel.selectPlaybackPosition);
   const { isOnOwnSongPage } = useAudio();
   const { state } = useAudioController();
-  const [seekPosition, setSeekPosition] = useState(0);
   const dispatch = useDispatch<Dispatch>();
-  const [playbackPosition, setPlaybackPosition] = useState(0);
   const isUserSeeking = useRef(false);
   const playbackPositionRef = useRef(0);
   const wavesurfer = useRef<WaveSurfer | null>(null);
   const isWaveformLoading = useSelector(store.select.waveformModel.selectIsLoading);
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const currentSong = useSelector(store.select.audioModel.selectSong);
+  const isOpen = useSelector(store.select.globalAudioModel.selectIsOpen);
+  const upNext = useSelector(store.select.audioModel.selectUpNext);
+
+  useEffect(() => {
+    if (isOpen && isPlaying) {
+      if (wavesurfer.current) {
+        wavesurfer.current.seekTo(0);
+        dispatch.waveformModel.setSeekPosition(0);
+        dispatch.waveformModel.setPlaybackPosition(0);
+      }
+    }
+  }, [isOpen, isPlaying]);
 
   /**
    * Handle updating the playback position of the waveform
@@ -36,10 +48,10 @@ export const useWaveform = ({ waveformRef, song }: { waveformRef: React.RefObjec
       positionInterval = setInterval(() => {
         if (!isUserSeeking.current) {
           dispatch.audioModel.setProgress(state.howlerInstance?.seek());
-          setPlaybackPosition(state.howlerInstance?.seek());
+          dispatch.waveformModel.setPlaybackPosition(state.howlerInstance?.seek());
           playbackPositionRef.current = state.howlerInstance?.seek();
         }
-      }, 100);
+      }, 50);
     } else clearInterval(positionInterval);
 
     return () => {
@@ -84,11 +96,13 @@ export const useWaveform = ({ waveformRef, song }: { waveformRef: React.RefObjec
     wavesurfer.current = WaveSurfer.create(options);
     wavesurfer.current.load(song.audio);
     wavesurfer.current.on('ready', () => {
-      dispatch.songModel.setIsLoading(false)
-      wavesurfer?.current?.setVolume(0)
-    });    
-    wavesurfer.current.on('waveform-ready', () => dispatch.songModel.setIsLoading(false));
-    wavesurfer.current.on('seek', (e) => setSeekPosition(e));
+      dispatch.songModel.setIsLoading(false);
+      wavesurfer?.current?.setVolume(0);
+    });
+    wavesurfer.current.on('waveform-ready', () => {
+      dispatch.songModel.setIsLoading(false);
+    });
+    wavesurfer.current.on('seek', (e) => dispatch.waveformModel.setSeekPosition(e));
     waveformRef.current.addEventListener('click', () => (isUserSeeking.current = true));
     return () => {
       isUserSeeking.current = false;
