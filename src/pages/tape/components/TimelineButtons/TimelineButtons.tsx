@@ -39,7 +39,7 @@ export const TimelineButtons = () => {
       {timeline?.submit && (
         <>
           <HStack {...styles.$timelineHeaderStackStyles}>
-            <Text color="#9293FF" fontFamily="sans-serif" mt="2px">
+            <Text color="#9293FF" fontFamily="sans-serif">
               Submit
             </Text>
             {cycle === 'submit' ? (
