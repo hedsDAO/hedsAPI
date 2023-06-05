@@ -46,8 +46,9 @@ const App = (): JSX.Element => {
   useEffect(() => {
     if (window?.localStorage) {
       const audioState = window.localStorage.getItem('persist:root');
-      if (!JSON.parse(JSON.parse(audioState)['audioModel'])?.song?.audio) {
-        window.localStorage.removeItem('persist:root');
+      if (JSON.parse(audioState)?.['audioModel']) {
+        const audioModelState = JSON.parse(audioState)['audioModel'];
+        if (!JSON.parse(audioModelState)?.song?.audio) window.localStorage.removeItem('persist:root');
       }
     }
   }, []);
