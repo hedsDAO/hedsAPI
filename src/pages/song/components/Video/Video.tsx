@@ -34,6 +34,7 @@ export const Video = () => {
               },
             },
           }}
+          playsinline={true}
           controls={false}
           url={song?.video}
           ref={videoRef}
