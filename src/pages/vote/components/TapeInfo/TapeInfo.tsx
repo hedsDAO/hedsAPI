@@ -18,13 +18,13 @@ export const TapeInfo = () => {
           </Text>
           {tape.sampleArtists.map((artist) => (
             <Stack key={artist.id} {...styles.$artistStackStyles}>
-              <Avatar  as={Link} to={`/u/${artist.wallet}`} src={artist.profile_picture} name={artist.display_name} />
+              <Avatar as={Link} to={`/u/${artist.wallet}`} src={artist.profile_picture} name={artist.display_name} />
               <Text {...styles.$artistNameTextStyles}>{artist.display_name}</Text>
             </Stack>
           ))}
         </Stack>
         <Stack w={['100%', '45%']}>
-          <Text mt={[0,"16px"]} mb={["4px", 0]} color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
+          <Text mt={[0, '16px']} mb={['4px', 0]} color="white" fontFamily="inter" fontWeight="600" fontSize="lg">
             About The Tape
           </Text>
           <Text color="white" fontFamily="inter" fontWeight="300" fontSize="sm">
@@ -49,10 +49,10 @@ export const TapeInfo = () => {
                   SAMPLE
                 </Text>
                 <Text color="white" fontSize="xs">
-                  Listen to the sample provided by the artist
+                  Listen to the sample provided by the curator
                 </Text>
               </Stack>
-              <Image src={tape.image} alt="tape-cover" boxSize="100px" />
+              <Image src={tape.image} alt="tape-cover" boxSize="100px" borderRadius="md" />
             </Stack>
           </Box>
         </Stack>
