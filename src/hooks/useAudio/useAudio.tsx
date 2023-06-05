@@ -53,7 +53,7 @@ export const useAudio = () => {
    */
 
   useEffect(() => {
-    if (song) {
+    if (song?.audio) {
       dispatch.audioModel.getNextSong(song);
       dispatch.audioModel.getPrevious(song);
     }
@@ -65,7 +65,7 @@ export const useAudio = () => {
       if (!upNext) dispatch.audioModel.getNextSong(song);
       dispatch.audioModel.setIsLoading(false);
     } else dispatch.globalAudioModel.setIsOpen(false);
-  }, [song.audio, pathname]);
+  }, [song?.audio, pathname]);
 
   /**
    * Update audio progress in audioModel
