@@ -34,6 +34,7 @@ const setIsPlayingFalseTransform = createTransform(
           isPlaying: false,
         };
     }
+    return inboundState;
   },
 );
 
