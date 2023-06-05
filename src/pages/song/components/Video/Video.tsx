@@ -9,7 +9,6 @@ export const Video = () => {
   const opacity = useBreakpointValue({ base: 0.6, lg: 0.8 });
   const song = useSelector(store.select.songModel.selectSong);
   const progress = useSelector(store.select.audioModel.selectProgress);
-  const isLoading = useSelector(store.select.songModel.selectIsLoading);
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
 
   useEffect(() => {
@@ -21,26 +20,24 @@ export const Video = () => {
   }, [progress]);
   return (
     <>
-      {!isLoading && (
-        <ReactPlayer
-          playing={isPlaying}
-          width="100%"
-          height="100%"
-          style={{ opacity, zIndex: 1 }}
-          config={{
-            file: {
-              attributes: {
-                poster: song?.cover,
-              },
+      <ReactPlayer
+        playing={isPlaying}
+        width="100%"
+        height="100%"
+        style={{ opacity, zIndex: 1 }}
+        config={{
+          file: {
+            attributes: {
+              poster: song?.cover,
             },
-          }}
-          playsinline={true}
-          controls={false}
-          url={song?.video}
-          ref={videoRef}
-          volume={0}
-        />
-      )}
+          },
+        }}
+        playsinline={true}
+        controls={false}
+        url={song?.video}
+        ref={videoRef}
+        volume={0}
+      />
     </>
   );
 };
