@@ -1,24 +1,26 @@
-import { TextProps } from '@chakra-ui/react';
-
-interface ExtendedTextProps extends TextProps {
-  'data-testid'?: string;
-}
+import { ButtonProps, TextProps } from '@chakra-ui/react';
 
 /**
- * @constant {ExtendedTextProps} $likeButtonStyles
- * @description TextProps object that contains styles for the LikeButton component.
+ * @constant {ButtonProps} $likeButtonStyles
+ * @description ButtonProps object that contains styles for the LikeButton component.
  */
 
-export const $likeButtonStyles = (liked: boolean, onClick: () => void): ExtendedTextProps => ({
-  'data-testid': 'ga-like-button',
-  onClick,
-  role: 'button',
-  pointerEvents: 'auto',
+export const $likeButtonStyles: ButtonProps = {
   mt: '0.5 !important',
+  bg: 'transparent',
+  _hover: { bg: 'transparent' },
   mr: 2.5,
-  ml: {base: 2, lg: 0},
+  ml: { base: 2, lg: 0 },
+};
+
+/**
+ * @constant {TextProps} $likeButtonIconStyles
+ * @description TextProps object that contains styles for the LikeButton Icon Heart.
+ */
+
+export const $likeButtonIconStyles = (liked: boolean): TextProps => ({
   color: 'white',
-  fontSize: {base: 'sm', lg: 'md'},
+  fontSize: { base: 'sm', lg: 'md' },
   as: 'i',
   className: liked ? 'fas fa-heart' : 'fal fa-heart',
 });
