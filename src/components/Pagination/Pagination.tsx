@@ -2,8 +2,10 @@ import { Dispatch, store } from '@/store';
 import { Flex, Button, Box, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 export const Pagination = ({ totalItems }: { totalItems: number }) => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
   const currentPage = useSelector(store.select.paginationModel.selectCurrentPage);
   const itemsPerPage = useSelector(store.select.paginationModel.selectItemsPerPage);
@@ -47,13 +49,18 @@ export const Pagination = ({ totalItems }: { totalItems: number }) => {
     return pageNumbers;
   };
   useEffect(() => {
-    dispatch.paginationModel.setCurrentPage(0);
-    dispatch.paginationModel.setItemsPerPage(4);
-    return () => {
+    if (pathname.includes('song')) {
+      dispatch.paginationModel.setCurrentPage(0);
+      dispatch.paginationModel.setItemsPerPage(6);
+    } else {
       dispatch.paginationModel.setCurrentPage(0);
       dispatch.paginationModel.setItemsPerPage(4);
     }
-  }, []);
+    return () => {
+      dispatch.paginationModel.setCurrentPage(0);
+      dispatch.paginationModel.setItemsPerPage(4);
+    };
+  }, [pathname]);
 
   return (
     <Box data-testid="pagination" w="full">
