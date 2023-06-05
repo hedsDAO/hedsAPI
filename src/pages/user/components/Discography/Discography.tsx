@@ -25,23 +25,29 @@ export const Discography = () => {
   const end = start + itemsPerPage;
 
   const handleLikeEmptyStates = () => {
-    const itemsOnCurrentPage = publicSongs?.slice(start, end)?.length;
-    return publicSongs?.length < 4 ? 4 - publicSongs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+    if (isOwnWallet) {
+      const itemsOnCurrentPage = allSongs?.slice(start, end)?.length;
+      return allSongs?.length < 4 ? 4 - allSongs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+    } else {
+      const itemsOnCurrentPage = publicSongs?.slice(start, end)?.length;
+      return publicSongs?.length < 4 ? 4 - publicSongs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+    }
   };
   return (
     <GridItem {...styles.$mainContainerStyles}>
       <SimpleGrid {...styles.$discographyGridStyles}>
         {allSongs?.length
-          ? isOwnWallet ? allSongs?.slice(start, end).map((item) => (
-              <GridItem key={item.id + item.cover}>
-                <TrackItem link={item.audio.split('/ipfs/')[1]} name={item.submission_data.sub_id} image={item.cover} />
-              </GridItem>
-            )) : 
-            publicSongs?.slice(start, end).map((item) => (
-              <GridItem key={item.id + item.cover}>
-                <TrackItem link={item.audio.split('/ipfs/')[1]} name={item.track_name} image={item.cover} />
-              </GridItem>
-            ))
+          ? isOwnWallet
+            ? allSongs?.slice(start, end).map((item) => (
+                <GridItem key={item.id + item.cover}>
+                  <TrackItem link={item.audio.split('/ipfs/')[1]} name={item.submission_data.sub_id} image={item.cover} />
+                </GridItem>
+              ))
+            : publicSongs?.slice(start, end).map((item) => (
+                <GridItem key={item.id + item.cover}>
+                  <TrackItem link={item.audio.split('/ipfs/')[1]} name={item.track_name} image={item.cover} />
+                </GridItem>
+              ))
           : [0, 1, 2, 3].map((_, index: number) => (
               <GridItem {...styles.$gridItemStyles} key={index}>
                 <Box {...styles.$emptyCollectionBoxStyles}>
@@ -52,7 +58,7 @@ export const Discography = () => {
                 </Box>
               </GridItem>
             ))}
-        {publicSongs?.length > 0 &&
+        {isOwnWallet && allSongs?.length > 0 ? (
           Array.from(Array(handleLikeEmptyStates()).keys()).map((i: number) => (
             <GridItem {...styles.$gridItemStyles} key={i + 'discog-empty'}>
               <Box {...styles.$emptyCollectionBoxStyles}>
@@ -62,7 +68,21 @@ export const Discography = () => {
                 <Text {...styles.$emptyTextStyles} />
               </Box>
             </GridItem>
-          ))}
+          ))
+        ) : publicSongs?.length > 0 ? (
+          Array.from(Array(handleLikeEmptyStates()).keys()).map((i: number) => (
+            <GridItem {...styles.$gridItemStyles} key={i + 'discog-empty'}>
+              <Box {...styles.$emptyCollectionBoxStyles}>
+                <AspectRatio ratio={1}>
+                  <Box {...styles.$emptyBoxStyles} />
+                </AspectRatio>
+                <Text {...styles.$emptyTextStyles} />
+              </Box>
+            </GridItem>
+          ))
+        ) : (
+          <></>
+        )}
       </SimpleGrid>
       {numOfSongs > 4 && (
         <GridItem {...styles.$paginationContainerStyles}>
