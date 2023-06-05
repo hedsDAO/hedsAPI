@@ -24,7 +24,7 @@ export const Video = () => {
         playing={isPlaying}
         width="100%"
         height="100%"
-        style={{ opacity, zIndex: 1 }}
+        style={{ opacity, zIndex: 1, position: 'relative' }}
         config={{
           file: {
             attributes: {
