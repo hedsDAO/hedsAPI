@@ -1,5 +1,6 @@
+import { SongLikeData } from './../../../pages/song/models/common';
 import { AxiosResponse } from 'axios';
-import { getManySongs, getSongByHash } from '@/api/song';
+import { getManySongs, getSongByHash, getSongLikesById, likeSong, unlikeSong } from '@/api/song';
 import type { RootModel } from '@/models';
 import { Song } from '@/models/common';
 import { getRelatedTracks } from '@/utils';
@@ -30,6 +31,7 @@ export const audioModel = createModel<RootModel>()({
     setVolume: (state, volume: number) => ({ ...state, volume }),
     setUpNext: (state, upNext: Song) => ({ ...state, upNext }),
     setDuration: (state, duration: number) => ({ ...state, duration }),
+    setSongLikes: (state: AudioModelState, likes: SongLikeData[]) => ({ ...state, likes }),
     setState: (state, payload): AudioModelState => ({ ...state, ...payload }),
     clearState: () => ({
       song: {} as Song,
@@ -41,6 +43,7 @@ export const audioModel = createModel<RootModel>()({
       progress: 0,
       duration: 0,
       volume: 1,
+      likes: [],
     }),
   },
   selectors: (slice) => ({
@@ -102,8 +105,11 @@ export const audioModel = createModel<RootModel>()({
     selectIsSongPublic() {
       return slice((state): boolean => state?.song?.public);
     },
+    selectSongLikes() {
+      return slice((state) => state?.likes || []);
+    },
   }),
-  effects: () => ({
+  effects: (dispatch) => ({
     async getNextSong(song: Song) {
       this.setIsLoading(true);
       if (song?.cyanite_id) {
@@ -113,8 +119,10 @@ export const audioModel = createModel<RootModel>()({
         if (relatedSongHashes?.length) {
           const nextUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
           let rand = Math.floor(Math.random() * 10) + 1;
-          nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
-          this.setUpNext(nextSongResponse.data);
+          if (nextUniqueTrack[rand]) {
+            nextSongResponse = await getSongByHash(nextUniqueTrack[rand]);
+            this.setUpNext(nextSongResponse.data);
+          }
         }
       }
       this.setIsLoading(false);
@@ -128,11 +136,33 @@ export const audioModel = createModel<RootModel>()({
         if (relatedSongHashes?.length) {
           const previousUniqueTrack = relatedSongHashes.filter((hash) => hash !== song?.audio?.split('/ipfs/')[1] && hash);
           let rand = Math.floor(Math.random() * 10) + 1;
-          previousSongResponse = await getSongByHash(previousUniqueTrack[rand]);
-          this.setPrevious(previousSongResponse.data);
+          if (previousUniqueTrack[rand]) {
+            previousSongResponse = await getSongByHash(previousUniqueTrack[rand]);
+            this.setPrevious(previousSongResponse.data);
+          }
         }
       }
       this.setIsLoading(false);
+    },
+    async getSongLikes(song: Song) {
+      const songLikes = await getSongLikesById(song?.id);
+      this.setSongLikes(songLikes?.data);
+    },
+    async handleLikeSong([song_id, user_id, hash]: [number, number, string]) {
+      await likeSong(song_id, user_id);
+      const updatedLikes = await getSongLikesById(song_id);
+      dispatch.authModel.getUserLikes(user_id);
+      const updatedSongData = await getSongByHash(hash);
+      this.setSong(updatedSongData?.data);
+      this.setSongLikes(updatedLikes?.data || []);
+    },
+    async handleUnlikeSong([song_id, user_id, hash]: [number, number, string]) {
+      await unlikeSong(song_id, user_id);
+      const updatedLikes = await getSongLikesById(song_id);
+      dispatch.authModel.getUserLikes(user_id);
+      const updatedSongData = await getSongByHash(hash);
+      this.setSong(updatedSongData?.data);
+      this.setSongLikes(updatedLikes?.data || []);
     },
   }),
 });

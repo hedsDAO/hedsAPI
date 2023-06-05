@@ -1,7 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
-import { AspectRatio, Box, Button, Divider, Flex, GridItem, Image, SimpleGrid, Skeleton, Stack, Text, Tooltip, useBoolean } from '@chakra-ui/react';
+import {
+  AspectRatio,
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  GridItem,
+  Image,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+  Tooltip,
+  useBoolean,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { User } from '@/models/common';
 import { ARTIST_HEADER_TEXT, PRIVATE_TRACK_LABEL } from '@pages/song/models/constants';
 import * as styles from '@pages/song/components/Header/styles';
@@ -22,8 +38,10 @@ const VideoBox = motion.div;
 export const Header = () => {
   const dispatch = useDispatch<Dispatch>();
   const navigate = useNavigate();
+  const mobileAnimationVariants = useBreakpointValue({ base: '100%', lg: '85vh' });
   const { handlePlayPause, isOnOwnSongPage } = useAudio();
   const [hasLargeCoverLoaded, setHasLargeCoverLoaded] = useBoolean();
+  const [hasSmallCoverLoaded, setHasSmallCoverLoaded] = useBoolean();
   const song = useSelector(store.select.songModel.selectSong);
   const isPlaying = useSelector(store.select.audioModel.selectIsPlaying);
   const cover = useSelector(store.select.songModel.selectSongCover);
@@ -46,24 +64,20 @@ export const Header = () => {
   const videoControls = useAnimation();
 
   useEffect(() => {
+    boxControls.mount();
+    videoControls.mount();
     boxControls.set({
       width: '100vw',
       overflow: 'hidden',
       position: 'relative',
       zIndex: '0',
     });
-
     boxControls.start({
-      height: isPlaying && isOnOwnSongPage && songVideo ? '85vh' : 'initial',
+      height: isPlaying && songVideo && isOnOwnSongPage ? mobileAnimationVariants : '100%',
     });
     videoControls.start({
-      height: isPlaying && isOnOwnSongPage && songVideo ? '85vh' : 'initial',
+      height: isPlaying && songVideo && isOnOwnSongPage ? mobileAnimationVariants : '100%',
     });
-
-    return () => {
-      boxControls.stop();
-      videoControls.stop();
-    };
   }, [isPlaying, boxControls, videoControls, MotionBox, VideoBox, songVideo, isOnOwnSongPage]);
 
   return (
@@ -101,6 +115,11 @@ export const Header = () => {
             </AspectRatio>
           </Skeleton>
         )}
+        <Box {...styles.$absoluteBoxStyles}>
+          <Skeleton {...styles.$smallSkeletonStyles(hasSmallCoverLoaded)}>
+            <Avatar {...styles.$avatarStyles(cover, setHasSmallCoverLoaded.on)} />
+          </Skeleton>
+        </Box>
       </Box>
       <SimpleGrid {...styles.$simpleGridStyles}>
         <GridItem {...styles.$gridItemStyles} colSpan={isPlaying && songVideo && isOnOwnSongPage ? 6 : 7}>
@@ -127,7 +146,7 @@ export const Header = () => {
             </Stack>
             <Text {...styles.$songNameTextStyles}>{songName}</Text>
           </Stack>
-          <Flex alignItems={'center'}>
+          <Flex mt={{ base: '-4 !important', lg: '6 !important' }} alignItems={'center'}>
             <Button {...styles.$likeButtonStyles(connectedUserId)} onClick={handleLikeAndUnlike}>
               <Text {...styles.$likeIconStyles(songLikes, connectedUserId)} />
             </Button>
