@@ -62,6 +62,7 @@ export const userModel = createModel<RootModel>()({
     selectSpotlight: () => slice((state): Song => state.user?.spotlight),
     selectWallet: () => slice((state) => state.user?.wallet),
     selectSongs: () => slice((state) => state.user_songs.filter(song => song.public === true)),
+    selectAllSongs: () => slice((state) => state.user_songs),
     selectNumOfSongs: () => slice((state) => state.user_songs?.length),
     selectLikes: () => slice((state) => state.user_likes),
     selectNumOfLikes: () => slice((state) => state.user_likes?.length),
