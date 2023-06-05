@@ -108,6 +108,8 @@ export interface SongArtist extends User {
   user_id: number;
   verified: boolean;
   ownership_percent: number;
+  artist_profile_picture?: string;
+  artist_display_name?: string;
 }
 
 export interface UserEvents {
