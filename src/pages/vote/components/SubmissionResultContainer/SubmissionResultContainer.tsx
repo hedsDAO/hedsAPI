@@ -21,13 +21,13 @@ export const SubmissionResultContainer = () => {
 
   return (
     <Flex direction={['column', 'row']} justifyContent="space-around" mt={{ lg: 4 }} px={{ base: 12, lg: 16 }}>
-      <Box w={['100%', '70%']}>
+      <Box w={['100%', '70%']} mb={8}>
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           SUBMISSIONS
         </Text>
-        {/* <Text color="white" fontFamily="inter" fontSize="sm">
-          Listen to the songs and like the songs you’d want to vote for
-        </Text> */}
+        <Text color="white" fontFamily="inter" fontSize="sm">
+          Listen to the submissions for this tape
+        </Text>
         {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />}
       </Box>
 
