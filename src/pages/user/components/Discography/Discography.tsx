@@ -25,8 +25,8 @@ export const Discography = () => {
   const end = start + itemsPerPage;
 
   const handleLikeEmptyStates = () => {
-    const itemsOnCurrentPage = songs?.slice(start, end)?.length;
-    return songs?.length < 4 ? 4 - songs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+    const itemsOnCurrentPage = publicSongs?.slice(start, end)?.length;
+    return publicSongs?.length < 4 ? 4 - publicSongs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
   };
   return (
     <GridItem {...styles.$mainContainerStyles}>
@@ -52,7 +52,7 @@ export const Discography = () => {
                 </Box>
               </GridItem>
             ))}
-        {songs?.length > 0 &&
+        {publicSongs?.length > 0 &&
           Array.from(Array(handleLikeEmptyStates()).keys()).map((i: number) => (
             <GridItem {...styles.$gridItemStyles} key={i + 'discog-empty'}>
               <Box {...styles.$emptyCollectionBoxStyles}>
