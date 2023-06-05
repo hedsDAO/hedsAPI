@@ -1,7 +1,8 @@
 import { Dispatch, store } from '@/store';
-import { Text } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { $likeButtonStyles } from '@/components/GlobalAudio/components/LikeButton/styles';
+import { $likeButtonIconStyles, $likeButtonStyles } from '@/components/GlobalAudio/components/LikeButton/styles';
+import { useEffect } from 'react';
 
 /**
  * @function LikeButton
@@ -10,16 +11,26 @@ import { $likeButtonStyles } from '@/components/GlobalAudio/components/LikeButto
  */
 export const LikeButton = () => {
   const dispatch = useDispatch<Dispatch>();
-  const songLikes = useSelector(store.select.songModel.selectSongLikes);
+  const songLikes = useSelector(store.select.audioModel.selectSongLikes);
   const connectedUserId = useSelector(store.select.authModel.selectUserId);
-  const isLiked = songLikes?.map((like: any) => like.user_id)?.includes(connectedUserId);
   const songId = useSelector(store.select.audioModel.selectSongId);
   const songHash = useSelector(store.select.audioModel.selectSongHash);
+  const isLoading = useSelector(store.select.audioModel.selectIsLoading);
   const handleLikeAndUnlike = () => {
     songLikes?.map((like: any) => like.user_id).includes(connectedUserId)
-      ? dispatch.songModel.handleUnlikeSong([songId, connectedUserId, songHash])
-      : dispatch.songModel.handleLikeSong([songId, connectedUserId, songHash]);
+      ? dispatch.audioModel.handleUnlikeSong([songId, connectedUserId, songHash])
+      : dispatch.audioModel.handleLikeSong([songId, connectedUserId, songHash]);
   };
-
-  return <>{connectedUserId ? <Text {...$likeButtonStyles(isLiked, handleLikeAndUnlike)} /> : <></>}</>;
+  
+  return (
+    <>
+      {connectedUserId ? (
+        <Button {...$likeButtonStyles} isDisabled={!connectedUserId} isLoading={isLoading} data-testid="ga-like-button" onClick={handleLikeAndUnlike}>
+          <Text {...$likeButtonIconStyles(songLikes?.map((like: any) => like.user_id)?.includes(connectedUserId))} />
+        </Button>
+      ) : (
+        <></>
+      )}
+    </>
+  );
 };

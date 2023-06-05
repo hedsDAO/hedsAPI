@@ -43,7 +43,7 @@ export const useAudio = () => {
         }
       });
       state.howlerInstance.on('load', () => {
-        dispatch.audioModel.setIsLoading(false)
+        dispatch.audioModel.setIsLoading(false);
       });
     }
   }, [state.howlerInstance]);
@@ -118,13 +118,15 @@ export const useAudio = () => {
     dispatch.audioModel.setIsPlaying(false);
     dispatch.audioModel.setIsLoading(true);
     if (!previous) {
-      await dispatch.audioModel.getPrevious(song);
-      createHowlerInstance(previous.audio);
+      await dispatch.audioModel.getPrevious(previous);
+      await dispatch.audioModel.getSongLikes(previous);
       dispatch.audioModel.setSong(previous);
+      createHowlerInstance(previous.audio);
       dispatch.audioModel.setProgress(0);
       dispatch.audioModel.setIsLoading(false);
     } else {
       createHowlerInstance(previous.audio);
+      await dispatch.audioModel.getSongLikes(previous);
       dispatch.audioModel.setSong(previous);
       dispatch.audioModel.setProgress(0);
       dispatch.audioModel.setIsLoading(false);
@@ -136,6 +138,7 @@ export const useAudio = () => {
     dispatch.audioModel.setIsLoading(true);
     if (!upNext) {
       await dispatch.audioModel.getNextSong(upNext);
+      await dispatch.audioModel.getSongLikes(upNext);
       createHowlerInstance(upNext.audio);
       dispatch.audioModel.setPrevious(song);
       dispatch.audioModel.setSong(upNext);
@@ -144,6 +147,7 @@ export const useAudio = () => {
     } else {
       dispatch.audioModel.setIsLoading(true);
       dispatch.audioModel.setPrevious(song);
+      await dispatch.audioModel.getSongLikes(upNext);
       createHowlerInstance(upNext.audio);
       dispatch.audioModel.setSong(upNext);
       dispatch.audioModel.setProgress(0);
@@ -166,11 +170,6 @@ export const useAudio = () => {
   const getProgress = () => {
     if (state.howlerInstance) return state.howlerInstance.seek() as number;
     else return 0;
-  };
-
-  const getIsPlaying = () => {
-    if (state.howlerInstance) return state.howlerInstance.playing();
-    else return false;
   };
 
   /**

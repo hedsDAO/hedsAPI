@@ -1,7 +1,9 @@
 import { Song } from '@/models/common';
+import { SongLikeData } from '@/pages/song/models/common';
 
 export interface AudioModelState {
   song: Song;
+  likes: SongLikeData[],
   isPlaying: boolean;
   isMuted: boolean;
   isLoading: boolean;
