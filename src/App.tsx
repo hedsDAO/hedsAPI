@@ -26,7 +26,6 @@ export const storage = getStorage(app);
 const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const isOnHomeOrExplore = pathname === '/' || pathname === '/explore';
-  
   const NavAndFooterWrapper = (
     <Fragment>
       <Navbar />
