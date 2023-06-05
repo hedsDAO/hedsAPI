@@ -25,12 +25,10 @@ const setIsPlayingFalseTransform = createTransform(
     if (key === 'audioModel') {
       const castedState = inboundState as AudioModelState;
       if (castedState?.song?.audio) {
-        return {
-          ...castedState,
-          isPlaying: false,
-        };
+        return {};
       } else
         return {
+          ...castedState,
           isPlaying: false,
         };
     }
