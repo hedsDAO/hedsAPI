@@ -13,14 +13,10 @@ const setIsPlayingFalseTransform = createTransform(
   (outboundState: unknown, key) => {
     if (key === 'audioModel') {
       const castedState = outboundState as AudioModelState;
-      if (castedState?.song?.audio)
-        return {
-          ...castedState,
-          isPlaying: false,
-        };
-      else {
-        localStorage.removeItem('audioModel');
-      }
+      return {
+        ...castedState,
+        isPlaying: false,
+      };
     }
     return outboundState;
   },
@@ -28,14 +24,10 @@ const setIsPlayingFalseTransform = createTransform(
   (inboundState: unknown, key) => {
     if (key === 'audioModel') {
       const castedState = inboundState as AudioModelState;
-      if (castedState?.song?.audio)
-        return {
+      if (castedState?.song?.audio) return {
           ...castedState,
           isPlaying: false,
         };
-      else {
-        localStorage.removeItem('audioModel');
-      }
     }
     return inboundState;
   },
