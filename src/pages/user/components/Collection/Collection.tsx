@@ -20,6 +20,12 @@ export const Collection = () => {
   const itemsPerPage = useSelector(store.select.paginationModel.selectItemsPerPage);
   const start = currentPage * itemsPerPage;
   const end = start + itemsPerPage;
+
+  const handleLikeEmptyStates = () => {
+    const itemsOnCurrentPage = Object.values(collection)?.slice(start, end)?.length;
+    return Object.values(collection)?.length < 4 ? 4 - Object.values(collection)?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+  };
+
   return (
     <GridItem {...styles.$mainContainerStyles}>
       <SimpleGrid {...styles.$collectionGridStyles}>
@@ -41,6 +47,17 @@ export const Collection = () => {
                 </Box>
               </GridItem>
             ))}
+        {numOfItems > 0 &&
+          Array.from(Array(handleLikeEmptyStates()).keys()).map((i: number) => (
+            <GridItem {...styles.$gridItemStyles} key={i + 'collection-empty'}>
+              <Box {...styles.$emptyCollectionBoxStyles}>
+                <AspectRatio ratio={1}>
+                  <Box {...styles.$emptyBoxStyles} />
+                </AspectRatio>
+                <Text {...styles.$emptyTextStyles} />
+              </Box>
+            </GridItem>
+          ))}
       </SimpleGrid>
       {numOfItems > 4 ? (
         <GridItem {...styles.$paginationContainerStyles}>
