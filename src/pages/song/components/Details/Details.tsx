@@ -33,7 +33,7 @@ export const Details = () => {
         <Stack {...styles.$stackStyles}>
           <Text {...styles.$sectionTitleStyles('song-recent-heading')}>{constants.RECENT_HEADING}</Text>
           <Stack {...styles.$stackInnerStyles}>
-            {songEvents?.map((event) => (
+            {songEvents?.slice(0, 3)?.map((event) => (
               <Skeleton key={event?.event_timestamp + event?.id} {...styles.$skeletonSongEventStyles(isLoading)}>
                 <SongEvent {...event} />
               </Skeleton>
