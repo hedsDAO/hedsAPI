@@ -60,7 +60,7 @@ export const useAudio = () => {
     if (isOnOwnSongPage || isOnHomePage) dispatch.globalAudioModel.setIsOpen(false);
     else if (!isOnOwnSongPage && song?.audio && progress >= 0) {
       dispatch.globalAudioModel.setIsOpen(true);
-      if (!isPlaying) dispatch.globalAudioModel.setIsMinimized(false);
+      dispatch.audioModel.getSongLikes(song);
       if (!previous) dispatch.audioModel.setPrevious(song);
       if (!upNext) dispatch.audioModel.getNextSong(song);
       dispatch.audioModel.setIsLoading(false);
