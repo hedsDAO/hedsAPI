@@ -25,6 +25,7 @@ export const songModel = createModel<RootModel>()({
   selectors: (slice) => ({
     selectSong: () => slice((state: SongModelState) => state.song),
     selectSongId: () => slice((state: SongModelState) => state.song?.id),
+    selectSongTapeId: () => slice((state: SongModelState) => state.song?.tape_id),
     selectSongCover: () => slice((state: SongModelState) => state.song?.cover),
     selectSongHash: () => slice((state: SongModelState): string => state.song?.audio?.split('/ipfs/')[1]),
     selectSongSubmissionCover: () => slice((state: SongModelState) => state.song?.submission_data?.sub_image),

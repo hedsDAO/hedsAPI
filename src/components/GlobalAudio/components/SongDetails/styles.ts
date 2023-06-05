@@ -15,7 +15,6 @@ export const $songDetailsStackStyles: StackProps = {
  */
 export const $songNameTextStyles: TextProps = {
   fontSize: { base: '2xs', lg: 'xs' },
-  letterSpacing: 'wide',
   fontFamily: 'inter',
   fontWeight: 'medium',
   color: 'white',

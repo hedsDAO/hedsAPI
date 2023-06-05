@@ -27,7 +27,7 @@ export const SongDetails = () => {
           <Text {...styles.$songArtistsTextStyles}>{artists}</Text>
         </Link>
       ) : (
-        <Tooltip label={constants.PRIVATE_TRACK_LABEL} hasArrow {...styles.$privateTooltipStyles}>
+        <Tooltip hasArrow label={constants.PRIVATE_TRACK_LABEL} {...styles.$privateTooltipStyles}>
           <Box {...styles.$privateLabelStyles} />
         </Tooltip>
       )}
