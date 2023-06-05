@@ -19,6 +19,11 @@ export const Likes = () => {
   const itemsPerPage = useSelector(store.select.paginationModel.selectItemsPerPage);
   const start = currentPage * itemsPerPage;
   const end = start + itemsPerPage;
+  const handleLikeEmptyStates = () => {
+    const itemsOnCurrentPage = likes?.slice(start, end)?.length;
+    return likes?.length < 4 ? 4 - likes?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+  };
+
   return (
     <GridItem {...styles.$mainContainerStyles}>
       <SimpleGrid {...styles.$likesGridStyles}>
@@ -38,6 +43,16 @@ export const Likes = () => {
                 </Box>
               </GridItem>
             ))}
+        {likes?.length > 0 && Array.from(Array(handleLikeEmptyStates()).keys()).map((i: number) => (
+          <GridItem {...styles.$gridItemStyles} key={i + 'likes-empty'}>
+            <Box {...styles.$emptyCollectionBoxStyles}>
+              <AspectRatio ratio={1}>
+                <Box {...styles.$emptyBoxStyles} />
+              </AspectRatio>
+              <Text {...styles.$emptyTextStyles} />
+            </Box>
+          </GridItem>
+        ))}
       </SimpleGrid>
       {numOfLikes > 4 && (
         <GridItem {...styles.$paginationContainerStyles}>

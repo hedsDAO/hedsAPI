@@ -21,11 +21,11 @@ export const Related = () => {
   const itemsPerPage = useSelector(store.select.paginationModel.selectItemsPerPage);
   const start = currentPage * itemsPerPage;
   const end = start + itemsPerPage;
-
+  
   const handleNavigate = (song: Song) => () => navigate(`/song/${song?.audio?.split('/ipfs/')[1]}`);
   const handleEmptyRelatedTracks = () => {
     const itemsOnCurrentPage = relatedSongs?.slice(start, end)?.length;
-    return relatedSongs?.length < 4 ? 4 - relatedSongs?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+    return relatedSongs?.length < 6 ? 6 - relatedSongs?.length : itemsOnCurrentPage < 6 ? 6 - itemsOnCurrentPage : 0;
   };
 
   return (
