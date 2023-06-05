@@ -61,7 +61,7 @@ export const userModel = createModel<RootModel>()({
     selectTwitterHandle: () => slice((state) => state.user?.twitter_handle),
     selectSpotlight: () => slice((state): Song => state.user?.spotlight),
     selectWallet: () => slice((state) => state.user?.wallet),
-    selectSongs: () => slice((state) => state.user_songs),
+    selectSongs: () => slice((state) => state.user_songs.filter(song => song.public === true)),
     selectNumOfSongs: () => slice((state) => state.user_songs?.length),
     selectLikes: () => slice((state) => state.user_likes),
     selectNumOfLikes: () => slice((state) => state.user_likes?.length),
