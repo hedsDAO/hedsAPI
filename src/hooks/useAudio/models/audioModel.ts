@@ -48,34 +48,34 @@ export const audioModel = createModel<RootModel>()({
   },
   selectors: (slice) => ({
     selectSong() {
-      return slice((state): Song => state.song);
+      return slice((state): Song => state?.song);
     },
     selectIsPlaying() {
-      return slice((state): boolean => state.isPlaying);
+      return slice((state): boolean => state?.isPlaying);
     },
     selectIsLoading() {
-      return slice((state): boolean => state.isLoading);
+      return slice((state): boolean => state?.isLoading);
     },
     selectIsMuted() {
-      return slice((state): boolean => state.isMuted);
+      return slice((state): boolean => state?.isMuted);
     },
     selectProgress() {
-      return slice((state): number => state.progress);
+      return slice((state): number => state?.progress);
     },
     selectDuration() {
-      return slice((state): number => state.duration);
+      return slice((state): number => state?.duration);
     },
     selectVolume() {
-      return slice((state): number => state.volume);
+      return slice((state): number => state?.volume);
     },
     selectAutoplay() {
-      return slice((state): boolean => state.autoplay);
+      return slice((state): boolean => state?.autoplay);
     },
     selectUpNext() {
-      return slice((state): Song => state.upNext);
+      return slice((state): Song => state?.upNext);
     },
     selectPrevious() {
-      return slice((state): Song => state.previous);
+      return slice((state): Song => state?.previous);
     },
     // song data selectors
     selectTrackName() {
