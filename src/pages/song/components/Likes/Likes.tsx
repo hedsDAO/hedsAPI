@@ -1,5 +1,4 @@
 import { Pagination } from '@/components/Pagination/Pagination';
-import { User } from '@/models/common';
 import { store } from '@/store';
 import { AspectRatio, Box, GridItem, Image, SimpleGrid, Skeleton, Text, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
@@ -26,8 +25,8 @@ export const Likes = () => {
   const handleNavigate = (wallet: string) => () => navigate(`/u/${wallet}`);
   const handleLikeEmptyStates = () => {
     const itemsOnCurrentPage = songLikes?.slice(start, end)?.length;
-    return songLikes?.length < 6 ? 6 - songLikes?.length : itemsOnCurrentPage < 6 ? 6 - itemsOnCurrentPage : 0;
-  };  
+    return songLikes?.length < 6 ? 6 - songLikes?.length : itemsOnCurrentPage < 4 ? 4 - itemsOnCurrentPage : 0;
+  };
   return (
     <SimpleGrid {...styles.$likesGridStyles}>
       {songLikes?.length
