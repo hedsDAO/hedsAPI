@@ -1,6 +1,7 @@
 import { store } from '@/store';
 import { AspectRatio, Box, GridItem, Image, SimpleGrid, Skeleton, Text, useBoolean } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as styles from './styles';
 
 /**
@@ -13,15 +14,16 @@ export const AppearsOn = () => {
   const [hasImageLoaded, setHasImageLoaded] = useBoolean();
   const tapeName = useSelector(store.select.songModel.selectTapeName);
   const songHash = useSelector(store.select.songModel.selectSongHash);
+  const tapeId = useSelector(store.select.songModel.selectSongTapeId);
   const cover = useSelector(store.select.songModel.selectSongCover);
 
   return (
     <SimpleGrid {...styles.$appearsOnSimpleGridStyles}>
-      <GridItem {...styles.$appearsOnGridItemStyles}>
+      <GridItem {...styles.$appearsOnGridItemStyles} as={Link} to={`/tape/${tapeId}`} onLoad={setHasImageLoaded.on}>
         <Box {...styles.$appearsOnBoxStyles(false)}>
           <AspectRatio {...styles.$appearsOnAspectRatioStyles}>
             <Skeleton {...styles.$appearsOnSkeletonStyles} isLoaded={hasImageLoaded}>
-              <Image onLoad={setHasImageLoaded.on} {...styles.$appearsOnImageStyles} src={cover} />
+              <Image  {...styles.$appearsOnImageStyles} src={cover} />
             </Skeleton>
           </AspectRatio>
           <Text {...styles.$appearsOnTextStyles}>{tapeName}</Text>

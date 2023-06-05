@@ -18,4 +18,5 @@ export interface SampleArtist {
   id: number;
   display_name: string;
   profile_picture: string;
+  wallet: string;
 }
