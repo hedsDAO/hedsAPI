@@ -1,10 +1,11 @@
 import ReactPlayer from 'react-player';
-import { useSelector } from 'react-redux';
-import { store } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, store } from '@/store';
 import { useBreakpointValue } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
 export const Video = () => {
+  const dispatch = useDispatch<Dispatch>();
   const videoRef = useRef(null);
   const opacity = useBreakpointValue({ base: 0.6, lg: 0.8 });
   const song = useSelector(store.select.songModel.selectSong);
@@ -18,6 +19,7 @@ export const Video = () => {
       }
     }
   }, [progress]);
+  
   return (
     <>
       <ReactPlayer
@@ -32,6 +34,8 @@ export const Video = () => {
             },
           },
         }}
+        onBuffer={() => dispatch.audioModel.setIsLoading(true)}
+        onBufferEnd={() => dispatch.audioModel.setIsLoading(false)}
         playsinline={true}
         controls={false}
         url={song?.video}
