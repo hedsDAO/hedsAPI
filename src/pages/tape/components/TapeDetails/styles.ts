@@ -16,7 +16,7 @@ export const $mainStackStyles: StackProps = {
  */
 export const $tapeNameTextStyles: TextProps = {
   color: '#D3D3FF',
-  letterSpacing: 'widest',
+  letterSpacing: 'tight',
   fontSize: '3xl',
   fontWeight: 'bold',
 };
@@ -70,6 +70,7 @@ export const $aboutTheTapeTextStyles: TextProps = {
  * @description TextProps object contains styles for the tape description text.
  */
 export const $tapeDescriptionTextStyles: TextProps = {
+  marginTop: "0 !important",
   color: 'white',
   fontSize: 'xs',
   lineHeight: '20px',
