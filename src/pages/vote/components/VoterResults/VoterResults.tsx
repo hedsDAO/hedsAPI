@@ -48,6 +48,7 @@ export const VoterResults = ({ handleVoterChoices }: { handleVoterChoices: (vote
                   wallet={voter}
                   votesObject={votesObject}
                   handleVoterChoices={handleVoterChoices}
+                  key={voter}
                 />
               );
             })}
