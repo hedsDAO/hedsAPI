@@ -91,7 +91,7 @@ export const voteModel = createModel<RootModel>()({
           (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
             const scorePercentage = (scores[choice.id - 1] / totalScore) * 100;
             const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
-            const tracksWalletIds = tracks.map((track: Song) => track.artist_wallet);
+            const tracksWalletIds = tracks.map((track: Song) => track.artists.map((artist) => artist.artist_wallet)).flat();
             if (tracksWalletIds.includes(choice.wallet_id)) {
               choice.score = roundedPercentage;
               acc[0].push(choice);
