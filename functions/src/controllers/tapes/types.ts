@@ -6,10 +6,10 @@ export interface TapeData {
   image: string;
   proposal_id: string;
   merkle_root?: string;
-  video: string;
+  tape_video: string;
   bpm: number;
   timeline: any;
-  type: 'submission' | 'track' | 'collab' | 'sample' | 'hedsolo';
+  tape_type: string;
   splits: string;
   links: any;
   sample_artists: SampleArtist[];
