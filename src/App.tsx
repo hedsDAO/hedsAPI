@@ -20,6 +20,8 @@ import { Box } from '@chakra-ui/react';
 import { Landing } from './pages/landing/screens/Landing';
 import { Explore } from './pages/explore/screens/Explore';
 
+import { CreateTape } from './pages/admin/screens/CreateTape';
+
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
@@ -64,6 +66,7 @@ const App = (): JSX.Element => {
         <Route path="/tape/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/vote/:id" element={<Vote />} />
+        <Route path="/admin" element={<CreateTape />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
