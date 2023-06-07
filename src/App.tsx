@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
@@ -26,7 +26,6 @@ export const storage = getStorage(app);
 const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const isOnHomeOrExplore = pathname === '/' || pathname === '/explore';
-
   const NavAndFooterWrapper = (
     <Fragment>
       <Navbar />
@@ -44,6 +43,15 @@ const App = (): JSX.Element => {
     </Fragment>
   );
 
+  useEffect(() => {
+    if (window?.localStorage) {
+      const audioState = window.localStorage.getItem('persist:root');
+      if (JSON.parse(audioState)?.['audioModel']) {
+        const audioModelState = JSON.parse(audioState)['audioModel'];
+        if (!JSON.parse(audioModelState)?.song?.audio) window.localStorage.removeItem('persist:root');
+      }
+    }
+  }, []);
   return (
     <Routes>
       <Route element={NavAndFooterWrapper}>

@@ -51,7 +51,7 @@ export const songModel = createModel<RootModel>()({
         const keyPrediction = 1;
         return subGenreTags + genreTags + bpmPrediction + keyPrediction;
       }),
-    selectTapeName: () => slice((state: SongModelState): string => state.song?.track_data?.tape_name)
+    selectTapeName: () => slice((state: SongModelState): string => state.song?.track_data?.tape_name),
   }),
   effects: (dispatch) => ({
     async getSongData(hash: string) {
@@ -87,14 +87,14 @@ export const songModel = createModel<RootModel>()({
       const updatedLikes = await getSongLikesById(song_id);
       dispatch.authModel.getUserLikes(user_id);
       dispatch.songModel.getSongData(hash);
-      this.setSongLikes(updatedLikes?.data);
+      this.setSongLikes(updatedLikes?.data || []);
     },
     async handleUnlikeSong([song_id, user_id, hash]: [number, number, string]) {
       await unlikeSong(song_id, user_id);
       const updatedLikes = await getSongLikesById(song_id);
       dispatch.authModel.getUserLikes(user_id);
       dispatch.songModel.getSongData(hash);
-      this.setSongLikes(updatedLikes?.data);
+      this.setSongLikes(updatedLikes?.data || []);
     },
   }),
 });

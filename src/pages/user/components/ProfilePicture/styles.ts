@@ -60,6 +60,7 @@ export const $imageStyles = (profile_picture: string, isHovering: boolean, onLoa
   rounded: 'full',
   w: '160px',
   h: '160px',
+  objectFit: 'cover',
   src: profile_picture,
   opacity: isHovering ? 0.2 : 1,
 });
