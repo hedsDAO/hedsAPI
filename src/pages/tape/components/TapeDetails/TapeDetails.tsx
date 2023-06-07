@@ -11,6 +11,7 @@ import * as styles from '@pages/tape/components/TapeDetails/styles';
 export const TapeDetails = () => {
   const dispatch = useDispatch<Dispatch>();
   const tape = useSelector(store.select.tapeModel.selectCurrentTape);
+  const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
 
   return (
     <Stack {...styles.$mainStackStyles}>
@@ -21,13 +22,13 @@ export const TapeDetails = () => {
           <Text {...styles.$artistNameTextStyles}>{artist.display_name}</Text>
         </Stack>
       ))}
-      <Button
+      {sample && <Button
         {...styles.$downloadButtonStyles}
         leftIcon={<i className="fa-solid fa-arrow-down-to-line" style={{ color: '#745CBA' }} />}
         onClick={() => dispatch.modalModel.setModal(Modals.DOWNLOAD)}
       >
         DOWNLOAD SAMPLE
-      </Button>
+      </Button>}
       <Text {...styles.$aboutTheTapeTextStyles}>About The Tape</Text>
       <Text {...styles.$tapeDescriptionTextStyles}>{tape.description}</Text>
     </Stack>

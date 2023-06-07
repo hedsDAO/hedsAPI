@@ -15,7 +15,6 @@ export const $songDetailsStackStyles: StackProps = {
  */
 export const $songNameTextStyles: TextProps = {
   fontSize: { base: '2xs', lg: 'xs' },
-  letterSpacing: 'widest',
   fontFamily: 'inter',
   fontWeight: 'medium',
   color: 'white',
@@ -41,7 +40,7 @@ export const $songArtistsTextStyles: TextProps = {
 export const $privateLabelStyles: BoxProps = {
   width: '60px',
   h: { base: '9px', lg: '11px' },
-  bg: { base: 'heds.bg5', lg: 'heds.bg3' },
+  bg: { base: 'heds.bg3', lg: 'heds.bg3' },
 };
 
 export const $privateTooltipStyles: StyleProps = {

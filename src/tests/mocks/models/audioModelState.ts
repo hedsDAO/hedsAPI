@@ -1,6 +1,8 @@
 import { AudioModelState } from '@/hooks/useAudio/models/common';
+import { SongLikeData } from '@/pages/song/models/common';
 
 export const audioModelState: AudioModelState = {
+  likes: [],
   song: {
     id: 176,
     tape_id: 13,
