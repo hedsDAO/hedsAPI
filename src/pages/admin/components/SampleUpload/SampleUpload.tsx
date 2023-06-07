@@ -5,7 +5,7 @@ export const SampleUpload = () => {
 
   return (
     <Box maxW="sm">
-      <Button onClick={() => inputRef.current?.click()}>Upload cover image</Button>
+      <Button onClick={() => inputRef.current?.click()}>Upload sample</Button>
       <Input ref={inputRef} type="file" accept=".mp3,audio/*" hidden color="white" />
     </Box>
   );
