@@ -1239,7 +1239,7 @@ export const userModelState: UserModelState = {
         track_no: 9,
         tape_name: 'hedsTAPE 08',
       },
-      video: 'https://www.heds.cloud/ipfs/QmUrbmvPQ6qoaQxD6fwimvBraXJXEqU4tREscNh5oH8JL1',
+      song_video: 'https://www.heds.cloud/ipfs/QmUrbmvPQ6qoaQxD6fwimvBraXJXEqU4tREscNh5oH8JL1',
       song_id: 241,
       user_id: 471,
       verified: true,
@@ -1266,7 +1266,7 @@ export const userModelState: UserModelState = {
         track_no: 4,
         tape_name: 'hedsTAPE 04',
       },
-      video: 'https://www.heds.cloud/ipfs/QmWs6j9AXwdavNomHNbMwN5vjb5x9bgJMGaxDkDk1oRHEq',
+      song_video: 'https://www.heds.cloud/ipfs/QmWs6j9AXwdavNomHNbMwN5vjb5x9bgJMGaxDkDk1oRHEq',
       song_id: 240,
       user_id: 471,
       verified: true,
@@ -1292,7 +1292,7 @@ export const userModelState: UserModelState = {
       track_data: {
         tape_name: 'hedsTAPE 07',
       },
-      video: null,
+      song_video: null,
       song_id: 242,
       user_id: 471,
       verified: true,
@@ -1318,7 +1318,7 @@ export const userModelState: UserModelState = {
       track_data: {
         tape_name: 'hedsTAPE 10',
       },
-      video: null,
+      song_video: null,
       song_id: 243,
       user_id: 471,
       verified: true,
@@ -1347,7 +1347,7 @@ export const userModelState: UserModelState = {
         track_no: 1,
         tape_name: 'hedsTAPE 04',
       },
-      video: 'https://www.heds.cloud/ipfs/QmefAoRNErYzD4LwzmM81gv4rP6oV3zKZrRZucpo4bgSRf',
+      song_video: 'https://www.heds.cloud/ipfs/QmefAoRNErYzD4LwzmM81gv4rP6oV3zKZrRZucpo4bgSRf',
     },
     {
       id: 242,
@@ -1369,7 +1369,7 @@ export const userModelState: UserModelState = {
       track_data: {
         tape_name: 'hedsTAPE 07',
       },
-      video: null,
+      song_video: null,
     },
   ],
   user_events: [

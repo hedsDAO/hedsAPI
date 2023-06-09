@@ -24,7 +24,7 @@ export const audioModelState: AudioModelState = {
       track_no: 9,
       tape_name: 'hedsTAPE 11',
     },
-    video: 'https://www.heds.cloud/ipfs/QmPd9QHEs6iDJ4vzJ3CDYB4PKuUXFToqHfJgJKf7JCmKjH',
+    song_video: 'https://www.heds.cloud/ipfs/QmPd9QHEs6iDJ4vzJ3CDYB4PKuUXFToqHfJgJKf7JCmKjH',
     artists: [
       {
         id: 400,

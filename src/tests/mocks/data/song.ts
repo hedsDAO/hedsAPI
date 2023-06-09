@@ -21,5 +21,5 @@ export const song: Song = {
     track_no: 9,
     tape_name: 'hedsTAPE 08',
   },
-  video: 'https://www.heds.cloud/ipfs/QmUrbmvPQ6qoaQxD6fwimvBraXJXEqU4tREscNh5oH8JL1',
+  song_video: 'https://www.heds.cloud/ipfs/QmUrbmvPQ6qoaQxD6fwimvBraXJXEqU4tREscNh5oH8JL1',
 };

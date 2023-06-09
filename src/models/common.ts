@@ -89,7 +89,7 @@ export interface Song {
   artists?: SongArtist[];
   type: SongType;
   created: any;
-  video?: string;
+  song_video: string;
   artist_id?: number;
   artist_display_name?: string;
   artist_profile_picture?: string;
