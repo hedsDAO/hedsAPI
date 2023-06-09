@@ -1,7 +1,6 @@
 import { pool } from '../../database';
 import { TapeData } from './types';
 import { SongData } from '../songs/types';
-import { verifySignature } from '../utils/verifySignature';
 import schemaName from '../../../config';
 
 export const getAllTapes = async () => {
@@ -90,25 +89,9 @@ export const getTapeSongs = async (tape_id: number) => {
   }
 };
 
-export const createTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, adminWallet: string, signature: string): Promise<any> => {
+export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, adminUserId: number): Promise<any> => {
   await pool.query('BEGIN');
   try {
-  // Still need to add the pin cover image and pin audio to IPFS somwhere here
-  // Verify signature
-  const isSignatureValid = verifySignature(adminWallet, signature);
-  if (!isSignatureValid) {
-    throw new Error('Invalid signature');
-  }
-
-  // Verify if the user is an admin and get the user id
-  const { rows: adminRows } = await pool.query(`SELECT id, role FROM ${schemaName}.users WHERE wallet = $1`, [adminWallet]);
-
-  if (adminRows.length === 0 || adminRows[0].role !== 'admin') {
-    throw new Error('User is not an admin');
-  }
-
-  // Get the admin's user id
-  const adminUserId = adminRows[0].id;
 
   const { name, description, image, proposal_id, bpm, timeline, tape_type, splits, links } = tapeData;
 
