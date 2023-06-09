@@ -20,7 +20,7 @@ export const currentSong: Song = {
   track_data: {
     tape_name: 'hedsTAPE 08',
   },
-  video: null,
+  song_video: null,
   artists: [
     {
       id: 395,
