@@ -2,6 +2,10 @@ import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import FormData from 'form-data';
 
+/**
+  * Pins a file to the Pinata IPFS gateway.
+  * @param {string} fieldName The name of the field in the request body that contains the file.
+ */
 export function pinFileToGateway(fieldName: string) {
   return async (req: Request, res: Response, next: NextFunction) => {
 

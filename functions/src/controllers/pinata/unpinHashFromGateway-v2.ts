@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+/**
+  * Unpin an IPFS hash from Pinata's gateway.
+  * @param {string} ipfsCid The IPFS hash to unpin.
+ */
 export const unpinHashFromGateway = async (ipfsCid: string) => {
   const config = {
     method: 'delete',
