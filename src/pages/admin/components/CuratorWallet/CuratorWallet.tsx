@@ -1,13 +1,16 @@
-import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react';
 
-export const CuratorWallet = ({ goToNext }: { goToNext: () => void }) => {
+export const CuratorWallet = ({ goToNext, goToPrevious }: { goToNext: () => void; goToPrevious: () => void }) => {
   return (
-    <Box maxW="sm">
+    <Box maxW="md" mx="auto" mt={12}>
       <FormControl>
         <FormLabel color="white">Curator wallet address</FormLabel>
         <Input />
       </FormControl>
-      <Button onClick={goToNext}>next</Button>
+      <Flex justifyContent="space-between" maxW="lg" mt={12} mx="auto">
+        <Button onClick={goToPrevious}>back</Button>
+        <Button onClick={goToNext}>next</Button>
+      </Flex>
     </Box>
   );
 };

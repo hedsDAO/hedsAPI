@@ -1,4 +1,4 @@
-import { Box, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps } from '@chakra-ui/react';
+import { Box, Step, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Text } from '@chakra-ui/react';
 import { TapeDetailsForm } from '@/pages/admin/components/TapeDetailsForm/TapeDetailsForm';
 import { CuratorWallet } from '@/pages/admin/components/CuratorWallet/CuratorWallet';
 import { SampleUpload } from '@/pages/admin/components/SampleUpload/SampleUpload';
@@ -19,7 +19,7 @@ const steps = [
 ];
 
 export const CreateTape = () => {
-  const { goToNext, activeStep } = useSteps({
+  const { goToNext, goToPrevious, activeStep } = useSteps({
     index: 0,
     count: steps.length,
   });
@@ -29,20 +29,20 @@ export const CreateTape = () => {
       <Stepper index={activeStep}>
         {steps.map((step, index) => (
           <Step key={index}>
-            <StepIndicator>
+            <StepIndicator color="white">
               <StepStatus complete={<StepIcon />} incomplete={<StepNumber />} active={<StepNumber />} />
             </StepIndicator>
-            <Box flexShrink="0">
+            <Box flexShrink="0" color="white">
               <StepTitle>{step.title}</StepTitle>
-              <StepDescription>{step.description}</StepDescription>
+              <Text fontSize="xs">{step.description}</Text>
             </Box>
             <StepSeparator />
           </Step>
         ))}
       </Stepper>
       {activeStep === 0 && <TapeDetailsForm goToNext={goToNext} />}
-      {activeStep === 1 && <CuratorWallet goToNext={goToNext} />}
-      {activeStep === 2 && <SampleUpload />}
+      {activeStep === 1 && <CuratorWallet goToNext={goToNext} goToPrevious={goToPrevious} />}
+      {activeStep === 2 && <SampleUpload goToPrevious={goToPrevious} />}
     </Box>
   );
 };
