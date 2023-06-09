@@ -6,35 +6,14 @@ import { DateTime } from 'luxon';
 
 export const tapeModel = createModel<RootModel>()({
   state: {
-    tape: {
-      id: undefined,
-      contract: '',
-      name: '',
-      merkleRoot: '',
-      description: '',
-      image: '',
-      proposalId: '',
-      video: '',
-      bpm: undefined,
-      tracks: [],
-      timeline: {
-        mint: { start: 0, end: 0 },
-        submit: { start: 0, end: 0 },
-        vote: { start: 0, end: 0 },
-      },
-      type: undefined,
-      splits: '',
-      links: undefined,
-      sampleArtists: [],
-      sample: undefined,
-      songs: [],
-    } as Tape,
+    tape: {} as Tape,
     isLoading: false,
     cycle: '',
   },
   reducers: {
     setTape: (state, tape) => {
-      const { id, contract, name, merkle_root, description, image, proposal_id, video, bpm, timeline, type, splits, links, sample_artists, songs } = tape;
+      const { id, contract, name, merkle_root, description, image, proposal_id, tape_video, bpm, timeline, tape_type, splits, links, sample_artists, songs } =
+        tape;
       const { mint, submit, vote } = timeline;
 
       const checkTimeline = () => {
@@ -62,10 +41,10 @@ export const tapeModel = createModel<RootModel>()({
         description,
         image,
         proposalId: proposal_id,
-        video,
+        tape_video,
         bpm,
         timeline,
-        type,
+        tape_type,
         splits,
         links,
         sampleArtists: sample_artists,
@@ -89,7 +68,7 @@ export const tapeModel = createModel<RootModel>()({
     selectCurrentCycle: () => slice((state) => state.cycle),
     selectTapeProposalId: () => slice((state) => state.tape.proposalId),
     selectCurrentTapeSample: () => slice((state) => state.tape.sample),
-    selectTapeVideo: () => slice((state) => state.tape.video),
+    selectTapeVideo: () => slice((state) => state.tape.tape_video),
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {

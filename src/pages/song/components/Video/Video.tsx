@@ -19,7 +19,7 @@ export const Video = () => {
       }
     }
   }, [progress]);
-  
+
   return (
     <>
       <ReactPlayer
@@ -38,7 +38,7 @@ export const Video = () => {
         onBufferEnd={() => dispatch.audioModel.setIsLoading(false)}
         playsinline={true}
         controls={false}
-        url={song?.video}
+        url={song?.song_video}
         ref={videoRef}
         volume={0}
       />
