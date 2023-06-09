@@ -6,7 +6,29 @@ import { DateTime } from 'luxon';
 
 export const tapeModel = createModel<RootModel>()({
   state: {
-    tape: {} as Tape,
+    tape: {
+      id: undefined,
+      contract: '',
+      name: '',
+      merkleRoot: '',
+      description: '',
+      image: '',
+      proposalId: '',
+      tape_video: '',
+      bpm: undefined,
+      tracks: [],
+      timeline: {
+        mint: { start: 0, end: 0 },
+        submit: { start: 0, end: 0 },
+        vote: { start: 0, end: 0 },
+      },
+      tape_type: undefined,
+      splits: '',
+      links: undefined,
+      sampleArtists: [],
+      sample: undefined,
+      songs: [],
+    } as Tape,
     isLoading: false,
     cycle: '',
   },
@@ -72,6 +94,7 @@ export const tapeModel = createModel<RootModel>()({
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
+      console.log('inside getTape');
       this.setIsLoading(true);
       const response = await getTapeById(id);
       this.setTape(response.data);
