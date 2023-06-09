@@ -94,7 +94,6 @@ export const tapeModel = createModel<RootModel>()({
   }),
   effects: (dispatch) => ({
     async getTape(id: string) {
-      console.log('inside getTape');
       this.setIsLoading(true);
       const response = await getTapeById(id);
       this.setTape(response.data);
