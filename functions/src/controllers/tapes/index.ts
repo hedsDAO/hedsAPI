@@ -93,6 +93,7 @@ export const getTapeSongs = async (tape_id: number) => {
 export const createTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, adminWallet: string, signature: string): Promise<any> => {
   await pool.query('BEGIN');
   try {
+  // Still need to add the pin cover image and pin audio to IPFS somwhere here
   // Verify signature
   const isSignatureValid = verifySignature(adminWallet, signature);
   if (!isSignatureValid) {
