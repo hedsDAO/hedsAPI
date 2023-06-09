@@ -24,7 +24,7 @@ export const songModelState: SongModelState = {
       track_no: 1,
       tape_name: 'hedsTAPE 08',
     },
-    video: 'https://www.heds.cloud/ipfs/QmV252ThEG2zDtufSGQ66R1BMcqosKNvdHLMoYUtPchHcX',
+    song_video: 'https://www.heds.cloud/ipfs/QmV252ThEG2zDtufSGQ66R1BMcqosKNvdHLMoYUtPchHcX',
     artists: [
       {
         id: 434,
@@ -679,7 +679,7 @@ export const songModelState: SongModelState = {
         track_no: 4,
         tape_name: 'hedsTAPE 08',
       },
-      video: 'https://www.heds.cloud/ipfs/QmdMkqfUbo8mmipY19xNTV83TgeKSe8uHVvReAYk4VHwn2',
+      song_video: 'https://www.heds.cloud/ipfs/QmdMkqfUbo8mmipY19xNTV83TgeKSe8uHVvReAYk4VHwn2',
       artists: [
         {
           id: 229,
@@ -1302,7 +1302,7 @@ export const songModelState: SongModelState = {
       track_data: {
         tape_name: 'hedsTAPE 08',
       },
-      video: null,
+      song_video: null,
       artists: [
         {
           id: 341,
@@ -1355,7 +1355,7 @@ export const songModelState: SongModelState = {
         track_no: 3,
         tape_name: 'hedsTAPE 08',
       },
-      video: 'https://www.heds.cloud/ipfs/QmbfcM6N8Ysa3tCdD28agJU3BHQDH39cmxiGTqpfXcVvD7',
+      song_video: 'https://www.heds.cloud/ipfs/QmbfcM6N8Ysa3tCdD28agJU3BHQDH39cmxiGTqpfXcVvD7',
       artists: [
         {
           id: 113,
@@ -1476,7 +1476,7 @@ export const songModelState: SongModelState = {
         track_no: 5,
         tape_name: 'hedsTAPE 07',
       },
-      video: 'https://www.heds.cloud/ipfs/QmUhxrsUoCvzBwqVWzFsNuuh1LJoMWxNRqn52ETf6mkiC3',
+      song_video: 'https://www.heds.cloud/ipfs/QmUhxrsUoCvzBwqVWzFsNuuh1LJoMWxNRqn52ETf6mkiC3',
       artists: [
         {
           id: 327,
@@ -1579,7 +1579,7 @@ export const songModelState: SongModelState = {
       track_data: {
         tape_name: 'hedsTAPE 12',
       },
-      video: 'https://www.heds.cloud/ipfs/Qmar8iPCwrhobo7cMT91qdbMYJhNiRQvr2bBuosfNCkKuo',
+      song_video: 'https://www.heds.cloud/ipfs/Qmar8iPCwrhobo7cMT91qdbMYJhNiRQvr2bBuosfNCkKuo',
       artists: [
         {
           id: 226,
@@ -1632,7 +1632,7 @@ export const songModelState: SongModelState = {
         track_no: 8,
         tape_name: 'hedsTAPE 05',
       },
-      video: 'https://www.heds.cloud/ipfs/QmQbyB892jmTcDuCJHytGNyxKcvEFkTCHFgz4Z8BiRTHJZ',
+      song_video: 'https://www.heds.cloud/ipfs/QmQbyB892jmTcDuCJHytGNyxKcvEFkTCHFgz4Z8BiRTHJZ',
       artists: [
         {
           id: 434,
@@ -2179,7 +2179,7 @@ export const songModelState: SongModelState = {
       track_data: {
         tape_name: 'hedsTAPE 12',
       },
-      video: '',
+      song_video: '',
       artists: [
         {
           id: 186,
@@ -2276,7 +2276,7 @@ export const songModelState: SongModelState = {
       track_data: {
         tape_name: 'hedsTAPE 12',
       },
-      video: 'https://www.heds.cloud/ipfs/QmRXVAbp51Y5Q1PMt33Hvu28N7ipzTeRwVKXyJj3ey6rx8',
+      song_video: 'https://www.heds.cloud/ipfs/QmRXVAbp51Y5Q1PMt33Hvu28N7ipzTeRwVKXyJj3ey6rx8',
       artists: [
         {
           id: 434,
@@ -2824,7 +2824,7 @@ export const songModelState: SongModelState = {
         track_no: 5,
         tape_name: 'hedsTAPE 08',
       },
-      video: 'https://www.heds.cloud/ipfs/QmW5H7QJcUTndPEZZNcyYzZpXGVZHteppeoAZ64gMec2Ck',
+      song_video: 'https://www.heds.cloud/ipfs/QmW5H7QJcUTndPEZZNcyYzZpXGVZHteppeoAZ64gMec2Ck',
       artists: [
         {
           id: 357,
@@ -2931,7 +2931,7 @@ export const songModelState: SongModelState = {
         track_no: 8,
         tape_name: 'hedsTAPE 08',
       },
-      video: 'https://www.heds.cloud/ipfs/QmSaQVusYT2rviYYJjLakYs9HGxbMWYLK24s716h1p8y4y',
+      song_video: 'https://www.heds.cloud/ipfs/QmSaQVusYT2rviYYJjLakYs9HGxbMWYLK24s716h1p8y4y',
       artists: [
         {
           id: 412,

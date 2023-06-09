@@ -42,7 +42,7 @@ export const songModel = createModel<RootModel>()({
     selectIsMuted: () => slice((state: SongModelState) => state.isMuted),
     selectNavbarTabs: () => slice((state: SongModelState) => state?.navbarTabs),
     selectIsSongPublic: () => slice((state: SongModelState) => state?.song?.public),
-    selectSongVideo: () => slice((state: SongModelState) => state?.song?.video),
+    selectSongVideo: () => slice((state: SongModelState) => state?.song?.song_video),
     selectNumberOfAttributes: () =>
       slice((state: SongModelState) => {
         const subGenreTags = state.cyaniteData?.subgenreTags?.length || 0;
