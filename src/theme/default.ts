@@ -72,6 +72,17 @@ export const defaultTheme = extendTheme({
       '.marquee': {
         minWidth: 'unset',
       },
+      '.chakra-input[type="search"]::-webkit-search-cancel-button': {
+        display: 'none',
+      },
+      '.highlight': {
+        '.ais-Highlight-highlighted': {
+          backgroundColor: 'heds.bg3',
+          color: 'white',
+          fontStyle: 'normal',
+          
+        },
+      },
       ...gradientAnimations,
     }),
   },
