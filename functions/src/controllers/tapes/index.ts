@@ -1,5 +1,6 @@
 import { pool } from '../../database';
 import { TapeData } from './types';
+import { SongData } from '../songs/types';
 import schemaName from '../../../config';
 
 export const getAllTapes = async () => {
@@ -29,10 +30,10 @@ export const getTapeById = async (tapeId: number) => {
     description: rows[0].description,
     image: rows[0].image,
     proposal_id: rows[0].proposal_id,
-    video: rows[0].video,
+    tape_video: rows[0].video,
     bpm: rows[0].bpm,
     timeline: rows[0].timeline,
-    type: rows[0].type,
+    tape_type: rows[0].type,
     splits: rows[0].splits,
     links: rows[0].links,
     sample_artists: [],
@@ -88,15 +89,40 @@ export const getTapeSongs = async (tape_id: number) => {
   }
 };
 
-export const createTape = async (tapeData: TapeData): Promise<any> => {
-  const { contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links } = tapeData;
+export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, adminUserId: number): Promise<any> => {
+  await pool.query('BEGIN');
+  try {
 
-  const { rows } = await pool.query(
+  const { name, description, image, proposal_id, bpm, timeline, tape_type, splits, links } = tapeData;
+
+  const { rows: tapeRows } = await pool.query(
     `INSERT INTO ${schemaName}.tapes (contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
-    [contract, name, description, image, proposal_id, video, bpm, timeline, type, splits, links],
+    ["", name, description, image, proposal_id, "", bpm, timeline, tape_type, splits, links],
   );
 
-  return rows[0];
+  const newTape = tapeRows[0];
+
+  await pool.query(`INSERT INTO ${schemaName}.tape_sample_artists (tape_id, user_id) VALUES ($1, $2)`, [newTape.id, adminUserId]);
+  
+  // Create a new song
+  const { audio, cover, duration, track_name, song_type, submission_data, cyanite_id, track_data } = songData;
+  
+  const {rows: songId} = await pool.query(
+    `INSERT INTO ${schemaName}.songs ( tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 0, $12) RETURNING id`,
+    [ newTape.id, audio, cover, duration, true, track_name, song_type, submission_data, cyanite_id, new Date(), track_data, ""],
+  );
+
+  // Add entry to song_artists table
+  await pool.query(
+    `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`,
+    [songId, adminUserId, true, 100],
+  );
+
+  return newTape;
+  } catch (error: any) {
+    await pool.query('ROLLBACK');
+    throw new Error(`Unable to create tape: ${error.message}`);
+  }
 };
 
 export const updateTape = async (tape_id: number, tapeData: Partial<TapeData>): Promise<any> => {

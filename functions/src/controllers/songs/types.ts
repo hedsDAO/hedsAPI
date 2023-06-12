@@ -4,11 +4,18 @@ export interface SongData {
   duration: number;
   isPublic: boolean;
   track_name: string;
-  type: string;
+  song_type:'submission' | 'track' | 'collab' | 'sample' | 'hedsolo';
   submission_data: any;
   cyanite_id: string;
   created: Date;
   total_likes: number;
+  song_video: string;
+  track_data: TrackData;
+}
+
+export interface TrackData {
+  track_no?: string;
+  tape_name: string;
 }
 
 export interface SongArtistData {
