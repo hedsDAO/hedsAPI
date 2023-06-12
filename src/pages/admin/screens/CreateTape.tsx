@@ -24,6 +24,16 @@ export const CreateTape = () => {
     count: steps.length,
   });
 
+  const handleTapeDetails = (cover: File, name: string, description: string, bpm: string, submitDate: Date, voteDate: Date, mintDate: Date) => {
+    console.log(cover, name, description, bpm, submitDate, voteDate, mintDate);
+    goToNext();
+  };
+
+  const handleCuratorWallet = (walletAddress: string) => {
+    console.log(walletAddress);
+    goToNext();
+  };
+
   return (
     <Box pt={2} px={5} maxW="7xl" mx="auto">
       <Stepper index={activeStep}>
@@ -40,8 +50,8 @@ export const CreateTape = () => {
           </Step>
         ))}
       </Stepper>
-      {activeStep === 0 && <TapeDetailsForm goToNext={goToNext} />}
-      {activeStep === 1 && <CuratorWallet goToNext={goToNext} goToPrevious={goToPrevious} />}
+      {activeStep === 0 && <TapeDetailsForm handleTapeDetails={handleTapeDetails} />}
+      {activeStep === 1 && <CuratorWallet handleCuratorWallet={handleCuratorWallet} goToPrevious={goToPrevious} />}
       {activeStep === 2 && <SampleUpload goToPrevious={goToPrevious} />}
     </Box>
   );
