@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs } from '../controllers/tapes';
 import * as functions from 'firebase-functions';
-import { verifySignature } from '../controllers/utils/verifySignature';
+// import { verifySignature } from '../controllers/utils/verifySignature';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
 import { pinFileToGateway } from '../controllers/pinata/pinFileToGateway';
 import { unpinHashFromGateway } from '../controllers/pinata/unpinHashFromGateway-v2';
@@ -51,7 +51,7 @@ router.get('/:tape_id/songs', async (req, res) => {
 
 router.post(
   '/',
-  verifySignature,
+  // verifySignature,
   checkAdminStatus,
   upload.fields([
     { name: 'coverImage', maxCount: 1 },
@@ -61,13 +61,14 @@ router.post(
   pinFileToGateway('sampleAudio'),
   async (req, res, next) => {
     try {
+      const curatorWallet = req.body.curatorWallet;
       const gateway = 'https://www.heds.cloud/ipfs/'
       const tapeData = req.body.tapeData;
       tapeData.image = gateway + res.locals['coverImageIpfsHash'];
       const songData = req.body.songData;
       songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
-      const adminUserId = res.locals.adminId;
-      const newTape = await saveTapeAndSampleSong(tapeData, songData, adminUserId);
+      songData.cover = tapeData.image;
+      const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
       
       res.status(201).json(newTape);
     } catch (error: any) {
