@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
-import { Button, Text } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { useScrollPosition } from '@/components/Navbar/components/useScrollPosition/useScrollPosition';
 import * as styles from '@/components/Navbar/components/NavLinks/styles';
 import { Link } from 'react-router-dom';
@@ -18,20 +17,19 @@ import { Link } from 'react-router-dom';
 
 export const NavLinks = ({ text, link }: { text: string; link: string }) => {
   const { scrollPosition, isHomePageOrScrolled } = useScrollPosition();
-  const { pathname } = useLocation();
   const textControls = useAnimation();
   const MotionText = motion.p;
 
   useEffect(() => {
-    const textMarginTop = isHomePageOrScrolled ? 0 : 8;
+    const textMarginTop = scrollPosition === 0 ? '0.5px' : '2.5px';
     textControls.start({
       marginTop: textMarginTop,
     });
-  }, [scrollPosition, pathname]);
+  }, [scrollPosition, MotionText, isHomePageOrScrolled]);
 
   return (
     <Button as={Link} to={link} {...styles.$textStyles}>
-      <MotionText animate={textControls} transition={{ type: 'spring', damping: 20, stiffness: 100 }}>
+      <MotionText animate={textControls} transition={{ type: 'spring', damping: 10, stiffness: 100 }}>
         {text}
       </MotionText>
     </Button>
