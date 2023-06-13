@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import { Box, Button, Stack, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import DateTimePicker from 'react-datetime-picker';
 import styled from 'styled-components';
+import axios from 'axios';
+import { API_PREFIX } from '@/models/constants';
 
 export const TapeDetailsForm = ({
   handleTapeDetails,
@@ -21,18 +23,34 @@ export const TapeDetailsForm = ({
     handleTapeDetails(cover, name, description, bpm, submitDate, voteDate, mintDate);
   };
 
-  const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCover(e.target.files[0]);
+  // const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setCover(e.target.files[0]);
+  // };
+
+  const testSubmit = () => {
+    console.log('cover', cover);
+    const formData = new FormData();
+    formData.append('coverImage', cover);
+    console.log('formData', formData.get('coverImage'));
+
+    return axios.post(`${API_PREFIX}/tapes/test`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   };
 
   return (
     <Box>
       <Stack spacing={5} maxW="md" mx="auto" mt={12}>
-        <FormControl isRequired>
+        {/* <Button onClick={() => inputRef.current?.click()}>Choose file</Button> */}
+
+        <form encType="multipart/form-data">
+          <input ref={inputRef} type="file" onChange={(e) => setCover(e.target.files[0])} />
+        </form>
+        {/* <FormControl isRequired>
           <FormLabel color="gray.200">Upload tape cover image</FormLabel>
           <Button onClick={() => inputRef.current?.click()}>Choose file</Button>
           <Input ref={inputRef} type="file" accept="image/*" hidden color="white" onChange={(e) => handleCoverChange(e)} />
-        </FormControl>
+        </FormControl> */}
         <FormControl isRequired>
           <FormLabel color="gray.200">Name</FormLabel>
           <Input borderColor="gray.400" color="white" value={name} onChange={(e) => setName(e.target.value)} />
