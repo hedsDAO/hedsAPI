@@ -49,7 +49,12 @@ export const TimelineButtons = () => {
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.start)}</Text>
           </HStack>
-          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} isDisabled={!(cycle === 'submit')}>
+          <Button
+            {...styles.$buttonStyles}
+            leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
+            isDisabled={cycle === 'submit'}
+            onClick={() => dispatch.modalModel.setModal(Modals.SUBMIT)}
+          >
             UPLOAD SUBMISSION
           </Button>
         </>
