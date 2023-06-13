@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import FormData from 'form-data';
+import * as functions from 'firebase-functions';
 
 /**
   * Pins a file to the Pinata IPFS gateway.
@@ -8,6 +9,8 @@ import FormData from 'form-data';
  */
 export function pinFileToGateway(fieldName: string) {
   return async (req: Request, res: Response, next: NextFunction) => {
+    functions.logger.info(`Pinning file to gateway for field name: ${fieldName}`);
+    functions.logger.info(`req.files: ${JSON.stringify(req.files)}`);
 
     if (!req.files) {
         return res.status(400).send(`No file uploaded for field name: ${fieldName}`);
