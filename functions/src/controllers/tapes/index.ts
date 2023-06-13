@@ -89,9 +89,12 @@ export const getTapeSongs = async (tape_id: number) => {
   }
 };
 
-export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, adminUserId: number): Promise<any> => {
+export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, curatorWallet: string): Promise<any> => {
   await pool.query('BEGIN');
   try {
+
+  const { rows: curatorRow } = await pool.query(`SELECT id FROM ${schemaName}.users WHERE wallet = $1`, [curatorWallet]);
+  const curatorId = curatorRow[0].id;
 
   const { name, description, image, proposal_id, bpm, timeline, tape_type, splits, links } = tapeData;
 
@@ -102,7 +105,7 @@ export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongDa
 
   const newTape = tapeRows[0];
 
-  await pool.query(`INSERT INTO ${schemaName}.tape_sample_artists (tape_id, user_id) VALUES ($1, $2)`, [newTape.id, adminUserId]);
+  await pool.query(`INSERT INTO ${schemaName}.tape_sample_artists (tape_id, user_id) VALUES ($1, $2)`, [newTape.id, curatorId]);
   
   // Create a new song
   const { audio, cover, duration, track_name, song_type, submission_data, cyanite_id, track_data } = songData;
@@ -115,7 +118,7 @@ export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongDa
   // Add entry to song_artists table
   await pool.query(
     `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`,
-    [songId, adminUserId, true, 100],
+    [songId, curatorId, true, 100],
   );
 
   return newTape;

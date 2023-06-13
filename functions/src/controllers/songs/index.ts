@@ -59,7 +59,7 @@ export const getSongEventsById = async (song_id: number) => {
 };
 
 export async function createSong(songData: SongData, user_id: number) {
-  const { audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes } = songData;
+  const { audio, cover, duration, isPublic, track_name, song_type, submission_data, cyanite_id, created, total_likes } = songData;
 
   // Begin a transaction
   await pool.query('BEGIN');
@@ -74,7 +74,7 @@ export async function createSong(songData: SongData, user_id: number) {
         RETURNING id;
       `;
 
-    const songValues = [audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes];
+    const songValues = [audio, cover, duration, isPublic, track_name, song_type, submission_data, cyanite_id, created, total_likes];
 
     const songResult = await pool.query(songQuery, songValues);
     const songId = songResult.rows[0].id;
