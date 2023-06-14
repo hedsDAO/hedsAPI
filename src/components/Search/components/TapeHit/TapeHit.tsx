@@ -40,7 +40,7 @@ const CustomTapeHit = ({ hits }: { hits: TapeHitProps[] }) => {
                   }}
                   key={hit.name + hit.image}
                 >
-                  <Avatar {...styles.$customTapeHitAvatarStyles} src={hit.image} title={hit.name} />
+                  <Avatar name={hit.name} {...styles.$customTapeHitAvatarStyles} src={hit.image} title={hit.name} />
                   <Text {...styles.$customTapeHitTextStyles}>
                     <span className="highlight">
                       <Highlight attribute="name" hit={hit} />

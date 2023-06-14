@@ -1,3 +1,5 @@
+import { SearchModelState } from '@components/Search/models/common';
+
 /**
  * Constants for Algolia app id and search api key
  * @constant {string} ALGOLIA_APP_ID - Algolia app id
@@ -49,4 +51,18 @@ export const TAPE_HIT_ATTRIBUTE = 'name';
 
 export const handleEmptySearch = (query: string) => {
   return `No results found for your search "${query}"`;
+};
+
+/**
+ * @const {SearchModelState} emptySearchState - Default state for search model
+ */
+
+export const emptySearchState: SearchModelState = {
+  query: '',
+  searchState: { indices: {}, page: 1, query: '' },
+  searchFocus: false,
+  isSearchOpen: false,
+  tapeHits: [],
+  songHits: [],
+  artistHits: [],
 };

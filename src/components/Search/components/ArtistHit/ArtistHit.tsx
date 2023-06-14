@@ -6,6 +6,7 @@ import { Dispatch, store } from '@/store';
 import { Avatar, Flex, Stack, Text } from '@chakra-ui/react';
 import { ArtistHitProps } from '@components/Search/models/common';
 import * as styles from '@components/Search/components/ArtistHit/styles';
+import * as constants from '@components/Search/models/constants';
 
 /**
  * @function CustomArtistHit
@@ -27,7 +28,7 @@ const CustomArtistHit = ({ hits }: { hits: ArtistHitProps[] }) => {
     <Fragment>
       {hits?.length ? (
         <Stack {...styles.$customArtistHitStackStyles}>
-          <Text {...styles.$customArtistHitTitleTextStyles}>Artists</Text>
+          <Text {...styles.$customArtistHitTitleTextStyles}>{constants.ARTIST_HIT_TITLE}</Text>
           {hits?.map((hit: ArtistHitProps) => {
             if (hit?.display_name && hit?.profile_picture)
               return (
@@ -38,9 +39,9 @@ const CustomArtistHit = ({ hits }: { hits: ArtistHitProps[] }) => {
                     navigate(`/u/${hit.wallet}`);
                     dispatch.searchModel.setIsSearchOpen(false);
                   }}
-                  key={'hit' + hit.display_name + hit.profile_picture}
+                  key={hit.display_name + hit.profile_picture}
                 >
-                  <Avatar {...styles.$customArtistHitAvatarStyles} src={hit.profile_picture} title={hit.display_name} />
+                  <Avatar name={hit.display_name} {...styles.$customArtistHitAvatarStyles} src={hit.profile_picture} title={hit.display_name} />
                   <Text {...styles.$customArtistHitTextStyles}>
                     <span className="highlight">
                       <Highlight attribute="display_name" hit={hit} />
