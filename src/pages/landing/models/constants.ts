@@ -1,4 +1,4 @@
-export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmQRN6kGVJBhcTTKpHJsJMRcFvym8EsWrzuAhiaKJkQwcr';
+export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmXztcYBANafrL6jMaegFtPNk16qTHeqHhheNASUhv5t3F';
 
 export const ARTIST_NAME_TEXT = 'live';
 export const ARTIST_WALLET = '0x8e09b494f20aeadb8d9b3c8b3bec7cb6c7e18e83';
