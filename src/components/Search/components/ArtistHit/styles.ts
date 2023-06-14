@@ -14,10 +14,12 @@ export const $customArtistHitStackStyles: StackProps = {
  * @description TextProps object for the Text Title components in the CustomArtistHit component.
  */
 export const $customArtistHitTitleTextStyles: TextProps = {
-  fontSize: 'sm',
-  fontFamily: 'space',
+  fontSize: 'xs',
+  letterSpacing: 'widest',
+  fontFamily: 'inter',
   color: 'white',
   mb: 2,
+  pl: 0.5,
 };
 
 /**

@@ -3,10 +3,12 @@ import { connectHits, Highlight } from 'react-instantsearch-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Dispatch, store } from '@/store';
-import { Avatar, Flex, Stack, Text } from '@chakra-ui/react';
+import { Flex, Stack, Text } from '@chakra-ui/react';
+import { CustomHitImage } from '@components/Search/components/CustomHitImage/CustomHitImage';
 import { ArtistHitProps } from '@components/Search/models/common';
 import * as styles from '@components/Search/components/ArtistHit/styles';
 import * as constants from '@components/Search/models/constants';
+
 
 /**
  * @function CustomArtistHit
@@ -41,7 +43,7 @@ const CustomArtistHit = ({ hits }: { hits: ArtistHitProps[] }) => {
                   }}
                   key={hit.display_name + hit.profile_picture}
                 >
-                  <Avatar name={hit.display_name} {...styles.$customArtistHitAvatarStyles} src={hit.profile_picture} title={hit.display_name} />
+                  <CustomHitImage name={hit.display_name} src={hit.profile_picture} title={hit.display_name} styles={styles.$customArtistHitAvatarStyles} />
                   <Text {...styles.$customArtistHitTextStyles}>
                     <span className="highlight">
                       <Highlight attribute="display_name" hit={hit} />

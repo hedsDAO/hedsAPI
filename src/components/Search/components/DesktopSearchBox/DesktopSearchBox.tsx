@@ -34,7 +34,7 @@ export const DesktopSearchBox = () => {
             <Text {...styles.textStyles}>{constants.handleEmptySearch(query)}</Text>
           </ModalBody>
         ) : (
-          <ModalBody as={Stack}>
+          <ModalBody gap={2} as={Stack}>
             <Index indexName={constants.TAPE_INDEX}>
               <Configure hitsPerPage={5} />
               <TapeHit />

@@ -15,10 +15,12 @@ export const $customTapeHitStackStyles: StackProps = {
  * @description TextProps object for the Text Title components in the CustomTapeHit component.
  */
 export const $customTapeHitTitleTextStyles: TextProps = {
-    fontFamily: 'space',
-    color: 'white',
-    fontSize: 'sm',
-    mb: 2, 
+  fontSize: 'xs',
+  letterSpacing: 'widest',
+  fontFamily: 'inter',
+  color: 'white',
+  mb: 2,
+  pl: 0.5,
   };
 
 /**
