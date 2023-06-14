@@ -1,13 +1,18 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import multer from 'multer';
 import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs } from '../controllers/tapes';
 import * as functions from 'firebase-functions';
 // import { verifySignature } from '../controllers/utils/verifySignature';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
 import { pinFileToGateway } from '../controllers/pinata/pinFileToGateway';
 import { unpinHashFromGateway } from '../controllers/pinata/unpinHashFromGateway-v2';
-const router = Router();
-const upload = multer();
+import {IncomingForm} from 'formidable';
+ const router = Router();
+import * as os from 'os';
+
+export interface RequestWithFile extends Request {
+  files?: any;
+}
+
 
 router.get('/get-collection-args', async (req, res) => {
   try {
@@ -52,11 +57,25 @@ router.get('/:tape_id/songs', async (req, res) => {
 router.post(
   '/',
   // verifySignature,
+  (req: RequestWithFile, res , next) => {
+    const form = new IncomingForm({ multiples: true, uploadDir: os.tmpdir() });
+  
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        return res.status(500).json({ error: err });
+      }
+      
+      req.body = fields;
+      req.files = files;
+      functions.logger.info(`body: ${req.body}`);
+      functions.logger.info(`songData: ${req.body.songData}`);
+      functions.logger.info(`tapeData: ${req.body.tapeData}`);
+      functions.logger.info(`wallet: ${req.body.curatorWallet}`);
+      functions.logger.info(`files: ${req.files}`);
+      return next();
+    });
+  },
   checkAdminStatus,
-  upload.fields([
-    { name: 'coverImage', maxCount: 1 },
-    { name: 'sampleAudio', maxCount: 1 },
-  ]),
   pinFileToGateway('coverImage'),
   pinFileToGateway('sampleAudio'),
   async (req, res, next) => {
