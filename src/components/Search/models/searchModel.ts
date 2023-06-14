@@ -1,17 +1,10 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { ArtistHitProps, SearchModelState, SearchProps, SongHitProps, TapeHitProps } from './common';
+import { ArtistHitProps, SearchModelState, SongHitProps, TapeHitProps } from '@components/Search/models/common';
+import * as constants from '@components/Search/models/constants';
 
 export const searchModel = createModel<RootModel>()({
-  state: {
-    query: '',
-    searchState: { indices: {}, page: 1, query: '' },
-    searchFocus: false,
-    isSearchOpen: false,
-    tapeHits: [],
-    songHits: [],
-    artistHits: [],
-  } as SearchModelState,
+  state: { ...constants.emptySearchState } as SearchModelState,
   reducers: {
     setSearchState: (state: SearchModelState, searchState) => ({ ...state, searchState }),
     setIsSearchOpen: (state: SearchModelState, isSearchOpen: boolean) => ({ ...state, isSearchOpen }),
@@ -19,15 +12,7 @@ export const searchModel = createModel<RootModel>()({
     setTapeHits: (state: SearchModelState, tapeHits: TapeHitProps[]) => ({ ...state, tapeHits }),
     setSongHits: (state: SearchModelState, songHits: SongHitProps[]) => ({ ...state, songHits }),
     setArtistHits: (state: SearchModelState, artistHits: ArtistHitProps[]) => ({ ...state, artistHits }),
-    clearSearchState: (_) => ({
-      query: '',
-      tapeHits: [],
-      songHits: [],
-      artistHits: [],
-      searchState: { indices: {}, page: 1, query: '' },
-      searchFocus: false,
-      isSearchOpen: false,
-    }),
+    clearSearchState: (_) => ({ ...constants.emptySearchState }),
   },
   selectors: (slice) => ({
     selectSearchState() {
@@ -48,11 +33,11 @@ export const searchModel = createModel<RootModel>()({
     selectArtistHits() {
       return slice((state) => state?.artistHits);
     },
-    selectAreAllHitsEmpty() {
-      return slice((state) => state?.artistHits?.length === 0 && state?.tapeHits?.length === 0 && state?.songHits?.length === 0);
-    },
     selectQuery() {
       return slice((state) => state?.query);
+    },
+    selectAreAllHitsEmpty() {
+      return slice((state) => state?.artistHits?.length === 0 && state?.tapeHits?.length === 0 && state?.songHits?.length === 0);
     },
   }),
   effects: () => ({}),

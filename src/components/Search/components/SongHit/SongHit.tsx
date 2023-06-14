@@ -38,9 +38,9 @@ const CustomSongHit = ({ hits }: { hits: SongHitProps[] }) => {
                     navigate(`/song/${hit.audio?.split('/ipfs/')[1]}`);
                     dispatch.searchModel.setIsSearchOpen(false);
                   }}
-                  key={'hit' + hit.track_name + hit.cover}
+                  key={hit.track_name + hit.cover}
                 >
-                  <Avatar {...styles.$customSongHitAvatarStyles} src={hit.cover} title={hit.track_name} />
+                  <Avatar name={hit.track_name} {...styles.$customSongHitAvatarStyles} src={hit.cover} title={hit.track_name} />
                   <Text {...styles.$customSongHitTextStyles}>
                     <span className="highlight">
                       <Highlight attribute="track_name" hit={hit} />
