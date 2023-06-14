@@ -4,7 +4,6 @@ import { TapeDetailsForm } from '@/pages/admin/components/TapeDetailsForm/TapeDe
 import { CuratorWallet } from '@/pages/admin/components/CuratorWallet/CuratorWallet';
 import { SampleUpload } from '@/pages/admin/components/SampleUpload/SampleUpload';
 import { createTape } from '@/api/tape';
-import FormData from 'form-data';
 
 const steps = [
   {
@@ -23,7 +22,6 @@ const steps = [
 
 export const CreateTape = () => {
   const [tapeDetails, setTapeDetails] = useState({
-    coverImage: new File([], ''),
     name: '',
     description: '',
     bpm: 0,
@@ -32,7 +30,6 @@ export const CreateTape = () => {
       vote: { end: 1679684400000, start: 1679338800000 },
       submit: { end: 1679252400000, start: 1678564800000 },
     },
-    curatorWallet: '',
     type: 'hedstape',
   });
   const [curatorWallet, setCuratorWallet] = useState('');
@@ -42,31 +39,28 @@ export const CreateTape = () => {
     count: steps.length,
   });
 
-  const handleTapeDetails = (cover: File, name: string, description: string, bpm: string, submitDate: Date, voteDate: Date, mintDate: Date) => {
+  // Need to add other date pickers
+  const handleTapeDetails = (name: string, description: string, bpm: number, submitDate: Date, voteDate: Date, mintDate: Date) => {
     const timeline = {
       mint: { end: 1680634800000, start: 1680202800000 },
       vote: { end: 1679684400000, start: 1679338800000 },
       submit: { end: 1679252400000, start: 1678564800000 },
       premint: { end: 1679684400000, start: 1679338800000 },
     };
-    const curatorWallet = '0x55c59ae5b124261d021421f07c6cad699c993b3d';
-    const tape = { coverImage: cover, name, description, bpm: Number(bpm), timeline, curatorWallet, type: 'hedstape' };
-
+    const tape = { name, description, bpm, timeline, type: 'hedstape' };
     setTapeDetails(tape);
     goToNext();
   };
 
   const handleCuratorWallet = (walletAddress: string) => {
-    // console.log(walletAddress);
     setCuratorWallet(walletAddress);
     goToNext();
   };
 
-  const handleSubmit = (sample: File) => {
-    const { coverImage, name, description, bpm, timeline, type } = tapeDetails;
-    const tape = { name, description, bpm, timeline, type };
-    console.log('tape', tape);
-
+  // Need to add form for curator details
+  const handleSubmit = () => {
+    const { name, description, bpm, timeline, type } = tapeDetails;
+    const tapeData = { name, description, bpm, timeline, type };
     const songData = {
       duration: 10,
       track_name: 'smomething',
@@ -77,15 +71,15 @@ export const CreateTape = () => {
         tape_name: 'something name',
       },
     };
+    const curatorWallet = '0x55c59ae5b124261d021421f07c6cad699c993b3d';
 
-    const formData = new FormData();
-    formData.append('coverImage', coverImage);
-    formData.append('sampleAudio', sample);
-    formData.append('tapeData', JSON.stringify(tape));
-    formData.append('curatorWallet', curatorWallet);
-    formData.append('songData', JSON.stringify(songData));
-
-    createTape(formData);
+    createTape({
+      songData,
+      tapeData,
+      curatorWallet,
+      coverImage: 'https://storage.googleapis.com/hedsdev.appspot.com/cover-img.png',
+      sampleAudio: 'https://storage.googleapis.com/hedsdev.appspot.com/sample-audio.mp3',
+    });
   };
 
   return (
@@ -105,6 +99,7 @@ export const CreateTape = () => {
         ))}
       </Stepper>
       {activeStep === 0 && <TapeDetailsForm handleTapeDetails={handleTapeDetails} />}
+      {/* {activeStep === 0 && <Test />} */}
       {activeStep === 1 && <CuratorWallet handleCuratorWallet={handleCuratorWallet} goToPrevious={goToPrevious} />}
       {activeStep === 2 && <SampleUpload goToPrevious={goToPrevious} handleSubmit={handleSubmit} />}
     </Box>

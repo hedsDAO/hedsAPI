@@ -37,7 +37,7 @@ export interface UserCollection {
   lastUpdated: number;
 }
 
-interface Timeline {
+export interface Timeline {
   mint: { start: number; end: number };
   submit: { start: number; end: number };
   vote: { start: number; end: number };

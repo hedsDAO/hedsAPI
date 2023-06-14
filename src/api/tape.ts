@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_PREFIX } from '@/models/constants';
-import FormData from 'form-data';
+import { Timeline } from '@/models/common';
 
 export const getTapeById = (id: string) => {
   return axios.get(`${API_PREFIX}/tapes/${id}`);
@@ -18,11 +18,31 @@ export const getTapeCollectionArgs = () => {
   return axios.get(`${API_PREFIX}/tapes/get-collection-args`);
 };
 
-export const createTape = async (tape: FormData) => {
-  return axios.post(`${API_PREFIX}/tapes`, tape);
+interface Tape {
+  name: string;
+  description: string;
+  bpm: number;
+  timeline: Timeline;
+  type: string;
+}
 
-  // await fetch(`${API_PREFIX}/tapes`, {
-  //   method: 'POST',
-  //   body: JSON.stringify(tape),
-  // });
+interface Song {
+  duration: number;
+  track_name: string;
+  song_type: string;
+  submission_data?: any;
+  cyanite_id: string;
+  track_data: { tape_name: string };
+}
+
+interface TapePayload {
+  coverImage: string;
+  sampleAudio: string;
+  tapeData: Tape;
+  songData: Song;
+  curatorWallet: string;
+}
+
+export const createTape = async (tape: TapePayload) => {
+  return axios.post(`${API_PREFIX}/tapes`, tape);
 };

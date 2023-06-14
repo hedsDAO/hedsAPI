@@ -2,40 +2,24 @@ import { useRef, useState } from 'react';
 import { Box, Button, Stack, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import DateTimePicker from 'react-datetime-picker';
 import styled from 'styled-components';
-import axios from 'axios';
-import { API_PREFIX } from '@/models/constants';
+import { storage } from '@/App';
+import { ref, uploadBytes } from 'firebase/storage';
 
 export const TapeDetailsForm = ({
   handleTapeDetails,
 }: {
-  handleTapeDetails: (cover: File, name: string, description: string, bpm: string, submitDate: Date, voteDate: Date, mintDate: Date) => void;
+  handleTapeDetails: (name: string, description: string, bpm: number, submitDate: Date, voteDate: Date, mintDate: Date) => void;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [cover, setCover] = useState<File>(undefined);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [bpm, setBpm] = useState<string>('');
+  const [bpm, setBpm] = useState<number>(0);
   const [submitDate, setSubmitDate] = useState(new Date());
   const [voteDate, setVoteDate] = useState(new Date());
   const [mintDate, setMintDate] = useState(new Date());
 
   const handleClick = () => {
-    handleTapeDetails(cover, name, description, bpm, submitDate, voteDate, mintDate);
-  };
-
-  // const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCover(e.target.files[0]);
-  // };
-
-  const testSubmit = () => {
-    console.log('cover', cover);
-    const formData = new FormData();
-    formData.append('coverImage', cover);
-    console.log('formData', formData.get('coverImage'));
-
-    return axios.post(`${API_PREFIX}/tapes/test`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    handleTapeDetails(name, description, bpm, submitDate, voteDate, mintDate);
   };
 
   return (
@@ -44,7 +28,7 @@ export const TapeDetailsForm = ({
         {/* <Button onClick={() => inputRef.current?.click()}>Choose file</Button> */}
 
         <form encType="multipart/form-data">
-          <input ref={inputRef} type="file" onChange={(e) => setCover(e.target.files[0])} />
+          <input type="file" onChange={(e) => uploadBytes(ref(storage, 'cover-img.png'), e.target.files[0])} />
         </form>
         {/* <FormControl isRequired>
           <FormLabel color="gray.200">Upload tape cover image</FormLabel>
@@ -61,7 +45,7 @@ export const TapeDetailsForm = ({
         </FormControl>
         <FormControl isRequired>
           <FormLabel color="gray.200">BPM</FormLabel>
-          <Input borderColor="gray.400" color="white" value={bpm} onChange={(e) => setBpm(e.target.value)} />
+          <Input borderColor="gray.400" color="white" type="number" value={bpm} onChange={(e) => setBpm(Number(e.target.value))} />
         </FormControl>
         <Box>
           <FormLabel color="gray.200">Select date for submit</FormLabel>
