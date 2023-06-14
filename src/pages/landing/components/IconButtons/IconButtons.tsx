@@ -1,4 +1,4 @@
-import { Box, Flex, Tooltip } from '@chakra-ui/react';
+import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
 import * as constants from '@/pages/landing/models/constants';
 import * as styles from '@/pages/landing/components/IconButtons/styles';
 import { Link } from 'react-router-dom';
@@ -14,11 +14,16 @@ export const IconButtons = () => {
     <Box {...styles.$iconButtonsBoxStyles}>
       <Flex {...styles.$iconButtonsFlexStyles}>
         {/* PROMO ICONS */}
-        <Tooltip label="RSVP" fontSize="xs" fontFamily="space">
-          <Box to={{ pathname: 'https://partiful.com/e/lRwwTBm5OE1NqH7aHLAk' }} target="_blank" as={Link} {...styles.$iconButtonStyles}>
-            <i className={constants.TICKET_ICON} />
-          </Box>
-        </Tooltip>
+        <Flex alignItems={'center'} gap={3}>
+          <Text fontWeight={'bold'} fontSize="22px" fontFamily={'karla'} color="heds.bg">
+            RVSP
+          </Text>
+          <Tooltip label="RSVP" fontSize="xs" fontFamily="space">
+            <Box href={'https://partiful.com/e/lRwwTBm5OE1NqH7aHLAk'} target="_blank" as={'a'} {...styles.$promoIconButtonStyles}>
+              <i className={constants.TICKET_ICON} />
+            </Box>
+          </Tooltip>
+        </Flex>
         {/* TAPE ICONS */}
         {/* <Tooltip label="View Artist" fontSize="xs" fontFamily="space">
           <Box to={`/u/${constants.ARTIST_WALLET}`} as={Link} {...styles.$iconButtonStyles}>

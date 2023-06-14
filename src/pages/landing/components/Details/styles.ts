@@ -6,6 +6,7 @@ export const $detailsBoxStyles: BoxProps = {
   bottom: { base: 'unset', lg: '20' },
   left: { base: '10', lg: '20' },
   p: 5,
+  pr: { base: 5, lg: 12 },
   bg: 'heds.bg',
 };
 
