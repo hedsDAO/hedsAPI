@@ -11,6 +11,7 @@ import * as functions from 'firebase-functions';
  */
 export const checkAdminStatus = async (req: Request, res: Response, next: NextFunction) => {
     const adminWallet = "0x55c59ae5b124261d021421f07c6cad699c993b3d"  // get the signer address from res.locals
+    functions.logger.info(`body: ${req.body}`);
     functions.logger.info(`songData: ${req.body.songData}`);
     functions.logger.info(`tapeData: ${req.body.tapeData}`);
     functions.logger.info(`wallet: ${req.body.curatorWallet}`);
