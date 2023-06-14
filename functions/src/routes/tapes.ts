@@ -5,6 +5,8 @@ import * as functions from 'firebase-functions';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
 import { pinFileToGateway } from '../controllers/pinata/pinFileToGateway';
 import { unpinHashFromGateway } from '../controllers/pinata/unpinHashFromGateway-v2';
+// import axios from 'axios';
+// import FormData from 'form-data';
  const router = Router();
 
 export interface RequestWithFile extends Request {
@@ -55,20 +57,48 @@ router.get('/:tape_id/songs', async (req, res) => {
 router.post(
   '/',
   // verifySignature,
-  (req, res , next) => {
+  //  async (req, res , next) => {
 
-      functions.logger.info(`body exists: ${Buffer.isBuffer(req.body)}`);
-      functions.logger.info(`body: ${(req.body)}`);
-      functions.logger.info(`body buffer: ${Buffer.from(req.body.data)}`);
-      // functions.logger.info(`songData: ${req.body.songData}`);
-      // functions.logger.info(`tapeData: ${req.body.tapeData}`);
-      // functions.logger.info(`wallet: ${req.body.curatorWallet}`);
-      return next();
-    })
-  ,
+  //   try {
+  //     // Download file from URL as a buffer
+  //     functions.logger.log("link: ", req.body.link)
+  //     const response = await axios.get(req.body.link, { responseType: 'arraybuffer' });
+  //     const buffer = Buffer.from(response.data, 'binary');
+  //     console.log("buffer", buffer);
+  //     functions.logger.log("response", response.data)
+
+
+  //     const data = new FormData();
+  //   // Metadata for pinata can be customized as needed
+  //   const pinataMetadata = {
+  //     name: "test cover image pin"
+  //   };
+
+  //   data.append('pinataMetadata', JSON.stringify(pinataMetadata));
+  //   data.append('file', response.data, "test cover image pin");
+
+  //   try {
+  //     const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
+  //       maxBodyLength: Infinity,
+  //       headers: {
+  //         ...data.getHeaders(),
+  //         pinata_api_key: process.env.PINATA_API_KEY,
+  //         pinata_secret_api_key: process.env.PINATA_API_SECRET,
+  //       },
+  //     });
+
+  //     functions.logger.log("data pinned: ", response)
+  // } catch (error) {
+  //     console.log(error);
+  // }
+  //     return next();
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // },
   checkAdminStatus,
-  pinFileToGateway('coverImage'),
-  pinFileToGateway('sampleAudio'),
+  (req,res) => pinFileToGateway(req.body.coverImage,'coverImage'),
+  (req,res) => pinFileToGateway(req.body.sampleAudio,'sampleAudio'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const curatorWallet = req.body.curatorWallet;
@@ -84,7 +114,7 @@ router.post(
     } catch (error: any) {
       res.status(500).json(error.message);
     }
-  }
+  })
 
 
 router.put('/:tape_id', async (req, res) => {
