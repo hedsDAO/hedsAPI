@@ -8,6 +8,7 @@ import { CustomSearchBox } from '@components/Search/components/CustomSearchBar/C
 import { SongHit } from '@components/Search/components/SongHit/SongHit';
 import { TapeHit } from '@components/Search/components/TapeHit/TapeHit';
 import * as styles from '@components/Search/components/MobileDrawer/styles';
+import * as constants from '@components/Search/models/constants';
 
 /**
  * @function MobileDrawer
@@ -32,10 +33,10 @@ export const MobileDrawer = () => {
           </Flex>
           {isSearchEmpty && query?.length > 1 ? (
             <Stack {...styles.$stackStyles}>
-              <Text {...styles.$textStyles}>No results found for your search "{query}"</Text>
+              <Text {...styles.$textStyles}>{constants.handleEmptySearch(query)}</Text>
             </Stack>
           ) : (
-            <Stack>
+            <Stack gap={2}>
               <Index indexName="artists">
                 <Configure hitsPerPage={5} />
                 <ArtistHit />

@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Dispatch, store } from '@/store';
 import { Avatar, Flex, Stack, Text } from '@chakra-ui/react';
 import { TapeHitProps } from '@components/Search/models/common';
+import { CustomHitImage } from '@components/Search/components/CustomHitImage/CustomHitImage';
 import * as styles from '@components/Search/components/TapeHit/styles';
+import * as constants from '@components/Search/models/constants';
 
 /**
  * @function CustomTapeHit
@@ -27,7 +29,7 @@ const CustomTapeHit = ({ hits }: { hits: TapeHitProps[] }) => {
     <Fragment>
       {hits?.length ? (
         <Stack {...styles.$customTapeHitStackStyles}>
-          <Text {...styles.$customTapeHitTitleTextStyles}>Tapes</Text>
+          <Text {...styles.$customTapeHitTitleTextStyles}>{constants.TAPE_HIT_TITLE}</Text>
           {hits?.map((hit: TapeHitProps) => {
             if (hit?.image && hit?.name)
               return (
@@ -40,7 +42,7 @@ const CustomTapeHit = ({ hits }: { hits: TapeHitProps[] }) => {
                   }}
                   key={hit.name + hit.image}
                 >
-                  <Avatar name={hit.name} {...styles.$customTapeHitAvatarStyles} src={hit.image} title={hit.name} />
+                  <CustomHitImage name={hit.name} styles={styles.$customTapeHitAvatarStyles} src={hit.image} title={hit.name} />
                   <Text {...styles.$customTapeHitTextStyles}>
                     <span className="highlight">
                       <Highlight attribute="name" hit={hit} />

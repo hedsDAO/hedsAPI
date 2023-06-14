@@ -5,7 +5,9 @@ import { connectHits, Highlight } from 'react-instantsearch-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 import { SongHitProps } from '@components/Search/models/common';
+import { CustomHitImage } from '@components/Search/components/CustomHitImage/CustomHitImage';
 import * as styles from '@components/Search/components/SongHit/styles';
+import * as constants from '@components/Search/models/constants';
 
 /**
  * @function CustomSongHit
@@ -27,7 +29,7 @@ const CustomSongHit = ({ hits }: { hits: SongHitProps[] }) => {
     <Fragment>
       {hits?.length ? (
         <Stack {...styles.$customSongHitStackStyles}>
-          <Text {...styles.$customSongHitTitleTextStyles}>Songs</Text>
+          <Text {...styles.$customSongHitTitleTextStyles}>{constants.SONG_HIT_TITLE}</Text>
           {hits?.map((hit: SongHitProps) => {
             if (hit?.cover && hit?.track_name)
               return (
@@ -40,7 +42,7 @@ const CustomSongHit = ({ hits }: { hits: SongHitProps[] }) => {
                   }}
                   key={hit.track_name + hit.cover}
                 >
-                  <Avatar name={hit.track_name} {...styles.$customSongHitAvatarStyles} src={hit.cover} title={hit.track_name} />
+                  <CustomHitImage name={hit.track_name} styles={styles.$customSongHitAvatarStyles} src={hit.cover} title={hit.track_name} />
                   <Text {...styles.$customSongHitTextStyles}>
                     <span className="highlight">
                       <Highlight attribute="track_name" hit={hit} />

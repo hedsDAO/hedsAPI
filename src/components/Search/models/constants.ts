@@ -25,9 +25,9 @@ export const TAPE_INDEX = 'tapes';
  * @constant {string} SONG_HIT_TITLE - Title for songs
  * @constant {string} TAPE_HIT_TITLE - Title for tapes
  */
-export const ARTIST_HIT_TITLE = 'Artists';
-export const SONG_HIT_TITLE = 'Songs';
-export const TAPE_HIT_TITLE = 'Tapes';
+export const ARTIST_HIT_TITLE = 'ARTISTS';
+export const SONG_HIT_TITLE = 'SONGS';
+export const TAPE_HIT_TITLE = 'TAPES';
 
 /**
  * Constants for search placeholder text and hit attribute names
