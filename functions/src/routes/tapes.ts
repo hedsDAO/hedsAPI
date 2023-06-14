@@ -57,48 +57,25 @@ router.get('/:tape_id/songs', async (req, res) => {
 router.post(
   '/',
   // verifySignature,
-  //  async (req, res , next) => {
+   async (req, res , next) => {
+    try {
+      functions.logger.log("cover image: ", req.body.coverImage)
+      functions.logger.log("sample audio: ", req.body.sampleAudio)
+      const imageHash = await pinFileToGateway(req.body.coverImage,'coverImage');
+      const audioHash = await pinFileToGateway(req.body.sampleAudio,'sampleAudio');
+      functions.logger.log("Ipfs Hashes", { imageHash, audioHash});
+      res.locals["coverImageIpfsHash"] = imageHash;
+      res.locals["sampleAudioIpfsHash"] = audioHash;
+      return next();
+   } catch (e) {
+    functions.logger.log("error", e)
+    return next(e)
+   }
 
-  //   try {
-  //     // Download file from URL as a buffer
-  //     functions.logger.log("link: ", req.body.link)
-  //     const response = await axios.get(req.body.link, { responseType: 'arraybuffer' });
-  //     const buffer = Buffer.from(response.data, 'binary');
-  //     console.log("buffer", buffer);
-  //     functions.logger.log("response", response.data)
-
-
-  //     const data = new FormData();
-  //   // Metadata for pinata can be customized as needed
-  //   const pinataMetadata = {
-  //     name: "test cover image pin"
-  //   };
-
-  //   data.append('pinataMetadata', JSON.stringify(pinataMetadata));
-  //   data.append('file', response.data, "test cover image pin");
-
-  //   try {
-  //     const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
-  //       maxBodyLength: Infinity,
-  //       headers: {
-  //         ...data.getHeaders(),
-  //         pinata_api_key: process.env.PINATA_API_KEY,
-  //         pinata_secret_api_key: process.env.PINATA_API_SECRET,
-  //       },
-  //     });
-
-  //     functions.logger.log("data pinned: ", response)
-  // } catch (error) {
-  //     console.log(error);
-  // }
-  //     return next();
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // },
+   },
   checkAdminStatus,
-  (req,res) => pinFileToGateway(req.body.coverImage,'coverImage'),
-  (req,res) => pinFileToGateway(req.body.sampleAudio,'sampleAudio'),
+  // (req,res) => pinFileToGateway(req.body.coverImage,'coverImage'),
+  // (req,res) => pinFileToGateway(req.body.sampleAudio,'sampleAudio'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const curatorWallet = req.body.curatorWallet;

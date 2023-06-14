@@ -1,17 +1,16 @@
 import axios from 'axios';
-import { Request, Response, NextFunction } from 'express';
+// import { Request, Response, NextFunction } from 'express';
 import FormData from 'form-data';
 import * as functions from 'firebase-functions';
-export interface RequestWithFile extends Request {
-  files?: any;
-}
+// export interface RequestWithFile extends Request {
+//   files?: any;
+// }
 
 /**
   * Pins a file to the Pinata IPFS gateway.
   * @param {string} fieldName The name of the field in the request body that contains the file.
  */
-export function pinFileToGateway(link: string, name: string) {
-  return async (req: RequestWithFile, res: Response, next: NextFunction) => {
+export async function pinFileToGateway(link: string, name: string) {
     const response = await axios.get(link, { responseType: 'arraybuffer' });
     functions.logger.info(`Pinning file to gateway for field name: ${name}`);
 
@@ -39,14 +38,13 @@ export function pinFileToGateway(link: string, name: string) {
       });
 
       // Save the IPFS hash (CID) to res.locals
-      res.locals[`${name}IpfsHash`] = response.data.IpfsHash;
+      // res.locals[`${name}IpfsHash`] = response.data.IpfsHash;
       functions.logger.log("IpfsHash: ", response.data.IpfsHash);
 
-      return next();
+      return response.data.IpfsHash;
     } catch (error) {
       // Error handling
       console.error(error);
-      next(error)
+      // next(error)
     }
   };
-}
