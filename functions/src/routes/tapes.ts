@@ -5,9 +5,7 @@ import * as functions from 'firebase-functions';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
 import { pinFileToGateway } from '../controllers/pinata/pinFileToGateway';
 import { unpinHashFromGateway } from '../controllers/pinata/unpinHashFromGateway-v2';
-import {IncomingForm} from 'formidable';
  const router = Router();
-import * as os from 'os';
 
 export interface RequestWithFile extends Request {
   files?: any;
@@ -57,28 +55,21 @@ router.get('/:tape_id/songs', async (req, res) => {
 router.post(
   '/',
   // verifySignature,
-  (req: RequestWithFile, res , next) => {
-    const form = new IncomingForm({ multiples: true, uploadDir: os.tmpdir() });
-  
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        return res.status(500).json({ error: err });
-      }
-      
-      req.body = fields;
-      req.files = files;
-      functions.logger.info(`body: ${req.body}`);
-      functions.logger.info(`songData: ${req.body.songData}`);
-      functions.logger.info(`tapeData: ${req.body.tapeData}`);
-      functions.logger.info(`wallet: ${req.body.curatorWallet}`);
-      functions.logger.info(`files: ${req.files}`);
+  (req, res , next) => {
+
+      functions.logger.info(`body exists: ${Buffer.isBuffer(req.body)}`);
+      functions.logger.info(`body: ${(req.body)}`);
+      functions.logger.info(`body buffer: ${Buffer.from(req.body.data)}`);
+      // functions.logger.info(`songData: ${req.body.songData}`);
+      // functions.logger.info(`tapeData: ${req.body.tapeData}`);
+      // functions.logger.info(`wallet: ${req.body.curatorWallet}`);
       return next();
-    });
-  },
+    })
+  ,
   checkAdminStatus,
   pinFileToGateway('coverImage'),
   pinFileToGateway('sampleAudio'),
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const curatorWallet = req.body.curatorWallet;
       const gateway = 'https://www.heds.cloud/ipfs/'
@@ -94,7 +85,6 @@ router.post(
       res.status(500).json(error.message);
     }
   }
-);
 
 
 router.put('/:tape_id', async (req, res) => {
