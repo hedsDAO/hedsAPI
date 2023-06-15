@@ -61,8 +61,8 @@ router.post(
     try {
       functions.logger.log("cover image: ", req.body.coverImage)
       functions.logger.log("sample audio: ", req.body.sampleAudio)
-      const imageHash = await pinFileToGateway(req.body.coverImage,'coverImage');
-      const audioHash = await pinFileToGateway(req.body.sampleAudio,'sampleAudio');
+      const imageHash = await pinFileToGateway(req.body.coverImage, req.body.tapeData.name);
+      const audioHash = await pinFileToGateway(req.body.sampleAudio,req.body.songData.track_name);
       functions.logger.log("Ipfs Hashes", { imageHash, audioHash});
       res.locals["coverImageIpfsHash"] = imageHash;
       res.locals["sampleAudioIpfsHash"] = audioHash;
@@ -71,12 +71,9 @@ router.post(
     functions.logger.log("error", e)
     return next(e)
    }
-
-   },
+  },
   checkAdminStatus,
-  // (req,res) => pinFileToGateway(req.body.coverImage,'coverImage'),
-  // (req,res) => pinFileToGateway(req.body.sampleAudio,'sampleAudio'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     try {
       const curatorWallet = req.body.curatorWallet;
       const gateway = 'https://www.heds.cloud/ipfs/'
@@ -85,6 +82,7 @@ router.post(
       const songData = req.body.songData;
       songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
       songData.cover = tapeData.image;
+      functions.logger.log("all the data: ", {tapeData, songData, curatorWallet})
       const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
       
       res.status(201).json(newTape);

@@ -10,22 +10,22 @@ import * as functions from 'firebase-functions';
   * Pins a file to the Pinata IPFS gateway.
   * @param {string} fieldName The name of the field in the request body that contains the file.
  */
-export async function pinFileToGateway(link: string, name: string) {
+export async function pinFileToGateway(link: string, title: string) {
     const response = await axios.get(link, { responseType: 'arraybuffer' });
-    functions.logger.info(`Pinning file to gateway for field name: ${name}`);
+    functions.logger.info(`Pinning file to gateway for field name: ${title}`);
 
     const data = new FormData();
     
     // Metadata for pinata can be customized as needed
     const pinataMetadata = {
-      name: name,
+      name: title,
       keyvalues: {
-        fieldName: name,
+        fieldName: title,
       },
     };
 
     data.append('pinataMetadata', JSON.stringify(pinataMetadata));
-    data.append('file', response.data, name);
+    data.append('file', response.data, title);
 
     try {
       const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
@@ -37,8 +37,6 @@ export async function pinFileToGateway(link: string, name: string) {
         },  
       });
 
-      // Save the IPFS hash (CID) to res.locals
-      // res.locals[`${name}IpfsHash`] = response.data.IpfsHash;
       functions.logger.log("IpfsHash: ", response.data.IpfsHash);
 
       return response.data.IpfsHash;
