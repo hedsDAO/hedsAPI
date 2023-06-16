@@ -2,7 +2,6 @@ import { pool } from '../../database';
 import { TapeData } from './types';
 import { SongData } from '../songs/types';
 import schemaName from '../../../config';
-import * as functions from "firebase-functions";
 
 export const getAllTapes = async () => {
   const { rows } = await pool.query(`SELECT id, name, image FROM ${schemaName}.tapes`);
@@ -106,20 +105,17 @@ export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongDa
 
   const newTape = tapeRows[0];
 
-  functions.logger.log("new tape ID ", newTape.id)
-  functions.logger.log("curator ID ", curatorId)
-
   await pool.query(`INSERT INTO ${schemaName}.tape_sample_artists (tape_id, user_id) VALUES ($1, $2)`, [newTape.id, curatorId]);
   
   // Create a new song
   const { audio, cover, duration, track_name, song_type, submission_data, cyanite_id, track_data } = songData;
   
-  const {rows: songId} = await pool.query(
+  const {rows: songRow} = await pool.query(
     `INSERT INTO ${schemaName}.songs ( tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
     [ newTape.id, audio, cover, duration, true, track_name, song_type, submission_data, cyanite_id, new Date(), 0, track_data, ""],
   );
+  const songId = songRow[0].id;
 
-  functions.logger.log("song Id: ", songId)
   // Add entry to song_artists table
   await pool.query(
     `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`,
