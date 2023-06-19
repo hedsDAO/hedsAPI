@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs } from '../controllers/tapes';
 import * as functions from 'firebase-functions';
-// import { verifySignature } from '../controllers/utils/verifySignature';
+import { verifySignature } from '../controllers/utils/verifySignature';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
 import { pinFileToGateway } from '../controllers/pinata/pinFileToGateway';
 import { unpinHashFromGateway } from '../controllers/pinata/unpinHashFromGateway-v2';
@@ -56,14 +56,13 @@ router.get('/:tape_id/songs', async (req, res) => {
 
 router.post(
   '/',
-  // verifySignature,
+  verifySignature,
+  checkAdminStatus,
    async (req, res , next) => {
+
     try {
-      functions.logger.log("cover image: ", req.body.coverImage)
-      functions.logger.log("sample audio: ", req.body.sampleAudio)
       const imageHash = await pinFileToGateway(req.body.coverImage, req.body.tapeData.name);
       const audioHash = await pinFileToGateway(req.body.sampleAudio,req.body.songData.track_name);
-      functions.logger.log("Ipfs Hashes", { imageHash, audioHash});
       res.locals["coverImageIpfsHash"] = imageHash;
       res.locals["sampleAudioIpfsHash"] = audioHash;
       return next();
@@ -72,8 +71,7 @@ router.post(
     return next(e)
    }
   },
-  checkAdminStatus,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const curatorWallet = req.body.curatorWallet;
       const gateway = 'https://www.heds.cloud/ipfs/'
@@ -82,11 +80,11 @@ router.post(
       const songData = req.body.songData;
       songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
       songData.cover = tapeData.image;
-      functions.logger.log("all the data: ", {tapeData, songData, curatorWallet})
       const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
       
       res.status(201).json(newTape);
     } catch (error: any) {
+      next(error)
       res.status(500).json(error.message);
     }
   })
