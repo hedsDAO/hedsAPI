@@ -3,16 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 import { Button, Stack } from '@chakra-ui/react';
 import { VALID_FILE_EXT } from '../../models/constants';
-import FileDropzone from '../FileDropzone/FileDropzone';
-import { SubmitModelSteps } from '../../models/submitModel';
+import { FileDropzone } from '@common/forms/FileDropzone';
+import { SubmitModelSteps } from '../../models/common';
 
-const UploadSub = () => {
+export const UploadScreen = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
   const isLoading = useSelector(store.select.submitModel.selectIsLoading);
   const error = useSelector(store.select.submitModel.selectError);
   const file = useSelector(store.select.submitModel.selectFile);
-  const hasAcceptedTerms = useSelector(store.select.submitModel.selectHasAcceptedTerms);
 
   return (
     <Stack gap={1}>
@@ -38,4 +37,3 @@ const UploadSub = () => {
     </Stack>
   );
 };
-export default UploadSub;

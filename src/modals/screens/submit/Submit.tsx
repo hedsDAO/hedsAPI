@@ -1,17 +1,16 @@
 import { store } from '@/store';
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack, Text } from '@chakra-ui/react';
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { ContinueButton } from './components/ContinueButton/ContinueButton';
-import { CountdownClock } from './components/CountdownClock/CountdownClock';
-import { CuratorBox } from './components/CuratorBox/CuratorBox';
-import { DisclaimerRadio } from './components/DisclaimerRadio/DisclaimerRadio';
-import { DisclaimerText } from './components/DisclaimerText/DisclaimerText';
-import { PreviewSubmission } from './components/PreviewSubmission/PreviewSubmission';
-import { SuccessScreen } from './components/SuccessScreen/SuccessScreen';
-import { UploadingScreen } from './components/UploadingScreen/UploadingScreen';
-import UploadSub from './components/UploadSubmission/UploadSubmission';
-import * as constants from './models/constants';
-import { SubmitModelSteps } from './models/submitModel';
+import { SubmitModelSteps } from '@/modals/screens/submit/models/common';
+import { TermScreen } from '@/modals/screens/submit/components/TermsScreen/TermsScreen';
+import { PreviewScreen } from '@/modals/screens/submit/components/PreviewScreen/PreviewScreen';
+import { SuccessScreen } from '@/modals/screens/submit/components/SuccessScreen/SuccessScreen';
+import { LoadingScreen } from '@/modals/screens/submit/components/LoadingScreen/LoadingScreen';
+import { UploadScreen } from '@/modals/screens/submit/components/UploadScreen/UploadScreen';
+import { useSubmit } from '@/modals/screens/submit/components/useSubmit/useSubmit';
+import { ReplaceScreen } from '@/modals/screens/submit/components/ReplaceScreen/ReplaceScreen';
+import * as constants from '@/modals/screens/submit/models/constants';
+import * as styles from './styles';
 
 /**
  * @function Submit
@@ -20,34 +19,23 @@ import { SubmitModelSteps } from './models/submitModel';
  */
 
 export const Submit = () => {
-  const tape = useSelector(store.select.tapeModel.selectCurrentTape);
+  const { isOpen, handleClose } = useSubmit();
   const currentStep = useSelector(store.select.submitModel.selectCurrentStep);
   return (
-    <Modal size="md" motionPreset="slideInBottom" isCentered isOpen={true} onClose={() => {}}>
-      <ModalOverlay bg="heds.bg" />
-      <ModalContent rounded="2xl" bg="heds.bg4" m={1} p={2}>
-        <ModalHeader fontSize={'md'}>
-          <Text color="heds.100" fontFamily={'poppins'} fontWeight="bold" letterSpacing="widest">
-            {constants.handleModalHeader(currentStep)}
-          </Text>
+    <Modal {...styles.$modalStyles} isOpen={isOpen} onClose={handleClose}>
+      <ModalOverlay {...styles.$modalOverlayStyles} />
+      <ModalContent {...styles.$modalContentStyles}>
+        <ModalHeader {...styles.$modalHeaderStyles}>
+          <Text {...styles.$textStyles}>{constants.handleModalHeader(currentStep)}</Text>
         </ModalHeader>
-        <ModalCloseButton m={2} color="white" />
-        <ModalBody gap={8} pb={5} as={Stack}>
-          {currentStep === SubmitModelSteps.TERMS && (
-            <>
-              <CuratorBox />
-              <CountdownClock milliseconds={1687287078000} />
-              <DisclaimerText />
-              <Stack gap={4} alignItems={'center'}>
-                <DisclaimerRadio />
-                <ContinueButton />
-              </Stack>
-            </>
-          )}
-          {currentStep === SubmitModelSteps.UPLOAD && <UploadSub />}
-          {currentStep === SubmitModelSteps.PREVIEW && <PreviewSubmission />}
-          {currentStep === SubmitModelSteps.UPLOADING && <UploadingScreen />}
+        <ModalCloseButton {...styles.$modalCloseButtonStyles} />
+        <ModalBody {...styles.$modalBodyStyles}>
+          {currentStep === SubmitModelSteps.TERMS && <TermScreen />}
+          {currentStep === SubmitModelSteps.UPLOAD && <UploadScreen />}
+          {currentStep === SubmitModelSteps.PREVIEW && <PreviewScreen />}
+          {currentStep === SubmitModelSteps.LOADING && <LoadingScreen />}
           {currentStep === SubmitModelSteps.SUCCESS && <SuccessScreen />}
+          {currentStep === SubmitModelSteps.REPLACE && <ReplaceScreen />}
         </ModalBody>
       </ModalContent>
     </Modal>

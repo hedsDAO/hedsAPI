@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Box, Button, Center, Container, Flex, FormControl, HStack, Icon, Spinner, Square, Text, VStack } from '@chakra-ui/react';
-import { IconAlertTriangle, IconUpload, IconWaveSawTool, IconCloudUpload } from '@tabler/icons';
+import { Box, Center, Container, Flex, FormControl, Icon, Square, Text, VStack } from '@chakra-ui/react';
+import { IconAlertTriangle, IconWaveSawTool, IconCloudUpload } from '@tabler/icons';
 
 interface FileDropzone {
   inputRef?: React.MutableRefObject<HTMLInputElement>;
@@ -14,7 +14,7 @@ interface FileDropzone {
   isLoading?: boolean;
 }
 
-const FileDropzone = ({ inputRef, validation, accept, file, error, onRetry, isLoading, maxFiles }: FileDropzone) => {
+export const FileDropzone = ({ inputRef, validation, accept, file, error, onRetry, isLoading, maxFiles }: FileDropzone) => {
   const [fileData, setFileData] = useState<{ size: number; name: string }>();
   const handleClick = () => inputRef?.current?.click();
   const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
@@ -48,11 +48,11 @@ const FileDropzone = ({ inputRef, validation, accept, file, error, onRetry, isLo
                     <Icon as={error ? IconAlertTriangle : file ? IconWaveSawTool : IconCloudUpload} boxSize="5" color={error ? 'red.500' : 'whiteAlpha.700'} />
                   </Square>
                   <VStack pb={2}>
-                    <Text fontSize="2xs" color={error?.length ? 'red.500' : 'white'}>
+                    <Text textOverflow={'elipsis'} maxW='10ch' isTruncated fontSize="2xs" color={error?.length ? 'red.500' : 'white'}>
                       {error ? error : fileData ? `${fileData?.name} - ${fileData?.size?.toString().slice(0, 2)}mb` : ''}
                     </Text>
                     <Text mt={'1 !important'} fontSize="2xs" color="whiteAlpha.700">
-                      {isDragActive ? 'drop files here...' : '.mp3, .wav up to 20mb'}
+                      {isDragActive ? 'drop files here...' : 'mp3, wav up to 20mb'}
                     </Text>
                   </VStack>
                 </VStack>
@@ -65,4 +65,3 @@ const FileDropzone = ({ inputRef, validation, accept, file, error, onRetry, isLo
   );
 };
 
-export default FileDropzone;
