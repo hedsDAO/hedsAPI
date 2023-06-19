@@ -2,20 +2,19 @@ import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { storage } from '@/App';
 import { ref, uploadBytes } from 'firebase/storage';
-
-interface AdminState {
-  coverImage: string;
-  sampleAudio: string;
-}
+import { CreateTapePayload } from '@/pages/admin/model/common';
 
 export const adminModel = createModel<RootModel>()({
-  state: {} as AdminState,
+  state: {
+    tape: {} as CreateTapePayload,
+  },
   reducers: {
-    setCoverImage: (state, payload) => ({ ...state, coverImage: payload }),
-    setSampleAudio: (state, payload) => ({ ...state, sampleAudio: payload }),
+    setTapeDetails: (state, tapeData) => ({ ...state, tape: { ...state.tape, tapeData } }),
+    setCuratorWallet: (state, curatorWallet) => ({ ...state, tape: { ...state.tape, curatorWallet } }),
+    setSampleDetails: (state, songData) => ({ ...state, tape: { ...state.tape, songData } }),
   },
   selectors: (slice) => ({
-    selectAdmins: () => slice((state) => state),
+    selectTapePayload: () => slice((state) => state.tape),
   }),
   effects: (dispatch) => ({
     async uploadCoverImage(file: File) {
