@@ -13,18 +13,16 @@ import HedLogo from '@public/logo.svg';
  */
 
 export const BrandLogo = () => {
-  const { pathname } = useLocation();
-  const imageSize = useBreakpointValue({ base: '50px', lg: '60px' });
-  const { scrollPosition, isScrolled } = useScrollPosition();
+  const { scrollPosition } = useScrollPosition();
   const MotionImage = motion.img;
   const brandLogoControls = useAnimation();
 
   useEffect(() => {
-    const brandImageWidth = isScrolled ? '35px' : imageSize;
+    const brandImageWidth = scrollPosition === 0 ? '55px' : '45px';
     brandLogoControls.start({
       width: brandImageWidth,
     });
-  }, [pathname, brandLogoControls, scrollPosition]);
+  }, [brandLogoControls, scrollPosition]);
 
   return (
     <Flex alignItems={'center'} as={Link} to="/">
