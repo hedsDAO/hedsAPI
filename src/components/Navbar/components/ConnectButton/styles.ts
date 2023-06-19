@@ -7,7 +7,7 @@ export const $buttonStyles: ButtonProps = {
   mr: { base: 2, lg: 0 },
   h: 7,
   size: 'xs',
-  px: 4,
+  px: {base: 10, lg:4},
   bg: 'heds.bg6',
   letterSpacing: 'widest',
   color: 'heds.400',
