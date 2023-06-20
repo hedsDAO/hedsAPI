@@ -6,10 +6,10 @@ export interface Tape {
   description: string;
   image: string;
   proposalId: string;
-  video: string;
+  tape_video: string;
   bpm: number;
   timeline: Timeline;
-  type: string;
+  tape_type: string;
   splits: string;
   links: string;
   sampleArtists: Artist[];
@@ -87,14 +87,16 @@ export interface Song {
   };
   total_likes: number | null;
   artists?: SongArtist[];
-  type: any;
+  type: SongType;
   created: any;
-  video?: string;
+  song_video: string;
   artist_id?: number;
   artist_display_name?: string;
   artist_profile_picture?: string;
   artist_wallet?: string;
 }
+
+type SongType = 'submission' | 'track' | 'collab' | 'sample' | 'hedsolo';
 
 export interface UserSong extends Song {
   song_id: number;
