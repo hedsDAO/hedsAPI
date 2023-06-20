@@ -14,7 +14,7 @@ interface CreateSongDetails {
   song_type: string;
   submission_data?: any;
   cyanite_id: string;
-  track_data?: { tape_name: string };
+  track_data: { tape_name: string };
 }
 
 export interface CreateTapePayload {
@@ -23,8 +23,8 @@ export interface CreateTapePayload {
   tapeData: CreateTapeDetails;
   songData: CreateSongDetails;
   curatorWallet: string;
-  signature?: string;
-  message?: string;
+  signature: string;
+  message: string;
   adminWallet?: string;
 }
 

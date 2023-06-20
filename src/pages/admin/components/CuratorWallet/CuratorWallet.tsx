@@ -21,8 +21,8 @@ export const CuratorWallet = ({ goToNext, goToPrevious }: { goToNext: () => void
         <Input borderColor="gray.400" color="white" value={wallet} onChange={(e) => setWallet(e.target.value)} />
       </FormControl>
       <Flex justifyContent="space-between" maxW="lg" mt={12} mx="auto">
-        <Button onClick={goToPrevious}>back</Button>
-        <Button colorScheme="teal" onClick={handleClick}>
+        <Button onClick={goToPrevious}>Back</Button>
+        <Button colorScheme="blue" onClick={handleClick}>
           Next
         </Button>
       </Flex>

@@ -15,18 +15,19 @@ import { useSignMessage } from 'wagmi';
 import { createTapeSteps, signMessageForTapeCreation } from '@/pages/admin/model/constants';
 
 export const CreateTape = () => {
-  const { data, isError, isLoading, isSuccess, signMessageAsync } = useSignMessage({
-    message: signMessageForTapeCreation,
-  });
-  const connectedWallet = useSelector(store.select.authModel.selectWallet);
+  const adminWallet = useSelector(store.select.authModel.selectWallet);
   const tapePayload = useSelector(store.select.adminModel.selectTapePayload);
+  const coverImage = useSelector(store.select.adminModel.selectCoverImage);
+  const sampleAudio = useSelector(store.select.adminModel.selectSampleAudio);
   const { goToNext, goToPrevious, activeStep } = useSteps({
     index: 0,
     count: createTapeSteps.length,
   });
+  const { signMessageAsync } = useSignMessage({
+    message: signMessageForTapeCreation,
+  });
 
   const handleSubmit = () => {
-    console.log('submit', tapePayload);
     signMessageAsync().then((signature) => {
       handleCreateTape(signature);
     });
@@ -34,15 +35,21 @@ export const CreateTape = () => {
 
   const handleCreateTape = (signature: string) => {
     const { tapeData, songData, curatorWallet } = tapePayload;
+    const formattedSongData = {
+      ...songData,
+      track_data: {
+        tape_name: tapeData.name,
+      },
+    };
     createTape({
-      songData,
       tapeData,
+      songData: formattedSongData,
       curatorWallet,
       signature,
-      adminWallet: connectedWallet,
-      message: 'gm wagmi frens',
-      coverImage: 'https://storage.googleapis.com/hedsdev.appspot.com/cover-img.png',
-      sampleAudio: 'https://storage.googleapis.com/hedsdev.appspot.com/sample-audio.mp3',
+      adminWallet,
+      message: signMessageForTapeCreation,
+      coverImage,
+      sampleAudio,
     });
   };
 
