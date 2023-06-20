@@ -5,11 +5,7 @@ export const createTapeSteps = [
   },
   {
     title: 'Step 2',
-    description: 'Curator wallet',
-  },
-  {
-    title: 'Step 3',
-    description: 'Sample upload',
+    description: 'Sample Details',
   },
 ];
 

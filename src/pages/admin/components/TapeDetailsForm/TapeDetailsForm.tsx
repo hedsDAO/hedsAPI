@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
-import { Box, Button, Stack, Select, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Stack, Select, Textarea, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import './calendarStyles.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,13 +15,13 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [bpm, setBpm] = useState<string>('');
-  const [tapeType, setTapeType] = useState<string>('');
-  const [submitStart, setSubmitStart] = useState(new Date());
-  const [submitEnd, setSubmitEnd] = useState(new Date());
-  const [voteStart, setVoteStart] = useState(new Date());
-  const [voteEnd, setVoteEnd] = useState(new Date());
-  const [mintStart, setMintStart] = useState(new Date());
-  const [mintEnd, setMintEnd] = useState(new Date());
+  const [tapeType, setTapeType] = useState<string>('hedstape');
+  const [submitStart, setSubmitStart] = useState(null);
+  const [submitEnd, setSubmitEnd] = useState(null);
+  const [voteStart, setVoteStart] = useState(null);
+  const [voteEnd, setVoteEnd] = useState(null);
+  const [mintStart, setMintStart] = useState(null);
+  const [mintEnd, setMintEnd] = useState(null);
 
   const handleClick = () => {
     const numberBpm = Number(bpm);
@@ -48,6 +48,13 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
     setFileName(e.target.files[0].name);
   };
 
+  const formValidation = () => {
+    if (!fileName || !name || !description || !bpm || !tapeType || !submitStart || !submitEnd || !voteStart || !voteEnd || !mintStart || !mintEnd) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Box>
       <Stack spacing={5} maxW="md" mx="auto" mt={12}>
@@ -65,7 +72,7 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
         </FormControl>
         <FormControl isRequired>
           <FormLabel color="gray.200">Description</FormLabel>
-          <Input borderColor="gray.400" color="white" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <Textarea borderColor="gray.400" color="white" value={description} onChange={(e) => setDescription(e.target.value)} />
         </FormControl>
         <FormControl isRequired>
           <FormLabel color="gray.200">BPM</FormLabel>
@@ -74,43 +81,90 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
         <FormControl isRequired>
           <FormLabel color="gray.200">Tape type</FormLabel>
           <Select borderColor="gray.400" placeholder="Select tape type" value={tapeType} onChange={(e) => setTapeType(e.target.value)} color="white">
-            <option value="hedstape">Heds tape</option>
-            <option value="collabtape">Collab tape</option>
+            <option value="hedstape">hedsTAPE</option>
+            <option value="collabtape">collabTAPE</option>
           </Select>
         </FormControl>
-        <Flex justifyContent="space-between">
-          <Box>
-            <FormLabel color="gray.200">Submit start</FormLabel>
-            <DatePicker showTimeSelect selected={submitStart} onChange={(date) => setSubmitStart(date)} />
-          </Box>
-          <Box>
-            <FormLabel color="gray.200">Submit end</FormLabel>
-            <DatePicker showTimeSelect selected={submitEnd} onChange={(date) => setSubmitEnd(date)} />
-          </Box>
-        </Flex>
-        <Flex justifyContent="space-between">
-          <Box>
-            <FormLabel color="gray.200">Vote start</FormLabel>
-            <DatePicker showTimeSelect selected={voteStart} onChange={(date) => setVoteStart(date)} />
-          </Box>
-          <Box>
-            <FormLabel color="gray.200">Vote end</FormLabel>
-            <DatePicker showTimeSelect selected={voteEnd} onChange={(date) => setVoteEnd(date)} />
-          </Box>
-        </Flex>
-        <Flex justifyContent="space-between">
-          <Box>
-            <FormLabel color="gray.200">Mint start</FormLabel>
-            <DatePicker showTimeSelect selected={mintStart} onChange={(date) => setMintStart(date)} />
-          </Box>
-          <Box>
-            <FormLabel color="gray.200">Mint end</FormLabel>
-            <DatePicker showTimeSelect selected={mintEnd} onChange={(date) => setMintEnd(date)} />
-          </Box>
-        </Flex>
+        <FormControl isRequired>
+          <FormLabel color="gray.200">Submission</FormLabel>
+          <Flex justifyContent="space-between">
+            <DatePicker
+              showTimeSelect
+              selected={submitStart}
+              onChange={(date) => setSubmitStart(date)}
+              selectsStart
+              startDate={submitStart}
+              endDate={submitEnd}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+            <Text color="white">-</Text>
+            <DatePicker
+              showTimeSelect
+              selected={submitEnd}
+              onChange={(date) => setSubmitEnd(date)}
+              selectsEnd
+              startDate={submitStart}
+              endDate={submitEnd}
+              minDate={submitStart}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </Flex>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel color="gray.200">Vote</FormLabel>
+          <Flex justifyContent="space-between" alignItems="center">
+            <DatePicker
+              showTimeSelect
+              selected={voteStart}
+              onChange={(date) => setVoteStart(date)}
+              selectsStart
+              startDate={voteStart}
+              endDate={voteEnd}
+              minDate={submitEnd}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+            <Text color="white">-</Text>
+            <DatePicker
+              showTimeSelect
+              selected={voteEnd}
+              onChange={(date) => setVoteEnd(date)}
+              selectsEnd
+              startDate={voteStart}
+              endDate={voteEnd}
+              minDate={voteStart}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </Flex>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel color="gray.200">Mint</FormLabel>
+          <Flex justifyContent="space-between">
+            <DatePicker
+              showTimeSelect
+              selected={mintStart}
+              onChange={(date) => setMintStart(date)}
+              selectsStart
+              startDate={mintStart}
+              endDate={mintEnd}
+              minDate={voteEnd}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+            <Text color="white">-</Text>
+            <DatePicker
+              showTimeSelect
+              selected={mintEnd}
+              onChange={(date) => setMintEnd(date)}
+              selectsEnd
+              startDate={mintStart}
+              endDate={mintEnd}
+              minDate={mintStart}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </Flex>
+        </FormControl>
       </Stack>
       <Flex justifyContent="flex-end" maxW="lg" mt={12} mx="auto">
-        <Button colorScheme="blue" onClick={handleClick}>
+        <Button colorScheme="blue" onClick={handleClick} isDisabled={formValidation()}>
           Next
         </Button>
       </Flex>
