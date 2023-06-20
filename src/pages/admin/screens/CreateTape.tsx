@@ -4,7 +4,6 @@ import { store } from '@/store';
 // Components
 import { Box, Step, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Text } from '@chakra-ui/react';
 import { TapeDetailsForm } from '@/pages/admin/components/TapeDetailsForm/TapeDetailsForm';
-import { CuratorWallet } from '@/pages/admin/components/CuratorWallet/CuratorWallet';
 import { SampleDetails } from '@/pages/admin/components/SampleDetails/SampleDetails';
 
 // Utils
@@ -70,8 +69,7 @@ export const CreateTape = () => {
         ))}
       </Stepper>
       {activeStep === 0 && <TapeDetailsForm goToNext={goToNext} />}
-      {activeStep === 1 && <CuratorWallet goToNext={goToNext} goToPrevious={goToPrevious} />}
-      {activeStep === 2 && <SampleDetails goToPrevious={goToPrevious} handleSubmit={handleSubmit} />}
+      {activeStep === 1 && <SampleDetails goToPrevious={goToPrevious} handleSubmit={handleSubmit} />}
     </Box>
   );
 };
