@@ -33,23 +33,28 @@ export const CreateTape = () => {
   };
 
   const handleCreateTape = (signature: string) => {
-    const { tapeData, songData, curatorWallet } = tapePayload;
-    const formattedSongData = {
-      ...songData,
-      track_data: {
-        tape_name: tapeData.name,
-      },
-    };
-    createTape({
-      tapeData,
-      songData: formattedSongData,
-      curatorWallet,
-      signature,
-      adminWallet,
-      message: signMessageForTapeCreation,
-      coverImage,
-      sampleAudio,
-    });
+    console.log('tapePayload', tapePayload);
+    console.log('signature', signature);
+    console.log('adminWallet', adminWallet);
+    console.log('coverImage', coverImage);
+    console.log('sampleAudio', sampleAudio);
+    // const { tapeData, songData, curatorWallet } = tapePayload;
+    // const formattedSongData = {
+    //   ...songData,
+    //   track_data: {
+    //     tape_name: tapeData.name,
+    //   },
+    // };
+    // createTape({
+    //   tapeData,
+    //   songData: formattedSongData,
+    //   curatorWallet,
+    //   signature,
+    //   adminWallet,
+    //   message: signMessageForTapeCreation,
+    //   coverImage,
+    //   sampleAudio,
+    // });
   };
 
   return (
