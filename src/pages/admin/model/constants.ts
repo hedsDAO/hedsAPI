@@ -14,3 +14,5 @@ export const createTapeSteps = [
 ];
 
 export const signMessageForTapeCreation = 'Sign this message to create a tape';
+
+export const storageLink = 'https://storage.googleapis.com';
