@@ -28,3 +28,11 @@ export const likeSong = (song_id: number, user_id: number) => {
 export const unlikeSong = (song_id: number, user_id: number) => {
   return axios.delete(`${API_PREFIX}/songs/${song_id}/likes`, { data: { user_id: user_id } });
 };
+
+export const createSubmission = (tempAudioRef: string, user_id: number, tape_id: number, duration: number) => {
+  return axios.post(`${API_PREFIX}/songs`, { tempAudioRef, user_id, tape_id, duration });
+};
+
+export const deleteSubmission = (id: number) => {
+  return axios.delete(`${API_PREFIX}/songs/${id}`);
+}
