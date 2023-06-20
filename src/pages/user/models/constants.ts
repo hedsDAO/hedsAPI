@@ -44,4 +44,5 @@ export const tapesAndVpWeights: { [key: string]: number } = {
     '0xfdf7d7ffe3d363f858644057ebc62afabb99152a': 7,
     '0xb18510437452dad3fe78e518afab1f314540db68': 7,
     '0xdac992430bd547e91e9a4631d92f7613ffa47e47': 5,
+    '0x904d764440ad567091c7f1f5265b6cce445efc96': 5,
   };
