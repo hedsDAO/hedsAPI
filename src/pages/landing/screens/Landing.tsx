@@ -3,6 +3,7 @@ import { BackgroundImage } from '@/pages/landing/components/BackgroundImage/Back
 import { Details } from '@/pages/landing/components/Details/Details';
 import { IconButtons } from '@/pages/landing/components/IconButtons/IconButtons';
 import { ScrollWrapper } from '@/pages/landing/components/ScrollWrapper/ScrollWrapper';
+import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 import * as styles from '@/pages/landing/screens/styles';
 
 /**
@@ -13,12 +14,14 @@ import * as styles from '@/pages/landing/screens/styles';
 
 export const Landing = () => {
   return (
-    <Box {...styles.$landingBoxStyles}>
-      <ScrollWrapper>
-        <BackgroundImage />
-        <Details />
-        <IconButtons />
-      </ScrollWrapper>
-    </Box>
+    <Metatags type={MetatagTypes.LANDING}>
+      <Box {...styles.$landingBoxStyles}>
+        <ScrollWrapper>
+          <BackgroundImage />
+          <Details />
+          <IconButtons />
+        </ScrollWrapper>
+      </Box>
+    </Metatags>
   );
 };

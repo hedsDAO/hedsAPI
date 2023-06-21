@@ -4,7 +4,7 @@ import { createClient, ProposalState, VoteMethod } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 
-interface VoteState {
+export interface VoteState {
   ipfs_hash: string;
   space_id: number;
   signature: string;

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ArtistCard } from '../components/ArtistCard/ArtistCard';
 import { CuratorCard } from '../components/CuratorCard/CuratorCard';
 import { BannerImage } from '../components/BannerImage/BannerImage';
+import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 import Marquee from 'react-fast-marquee';
 
 export const Artists = () => {
@@ -16,32 +17,34 @@ export const Artists = () => {
   }, []);
 
   return (
-    <Box pt={2} px={5} maxW="7xl" mx="auto">
-      <BannerImage />
-      <Text mb={3} mt={10} color="heds.100" fontWeight={'bold'} fontSize="lg" fontFamily="poppins" letterSpacing={'widest'}>
-        SAMPLE CURATORS
-      </Text>
-      <Box maxW="7xl" mx="auto">
-        <Marquee speed={25} gradient={false}>
-          <SimpleGrid columns={curators?.length}>
-            {curators?.length &&
-              curators.map((curator) => {
-                return <CuratorCard curator={curator} key={curator.wallet + 'curators'} />;
+    <Metatags type={MetatagTypes.ARTISTS}>
+      <Box pt={2} px={5} maxW="7xl" mx="auto">
+        <BannerImage />
+        <Text mb={3} mt={10} color="heds.100" fontWeight={'bold'} fontSize="lg" fontFamily="poppins" letterSpacing={'widest'}>
+          SAMPLE CURATORS
+        </Text>
+        <Box maxW="7xl" mx="auto">
+          <Marquee speed={25} gradient={false}>
+            <SimpleGrid columns={curators?.length}>
+              {curators?.length &&
+                curators.map((curator) => {
+                  return <CuratorCard curator={curator} key={curator.wallet + 'curators'} />;
+                })}
+            </SimpleGrid>
+          </Marquee>
+        </Box>
+        <Text mb={3} mt={10} color="heds.100" fontWeight={'bold'} fontSize="lg" fontFamily="poppins" letterSpacing={'widest'}>
+          ARTISTS
+        </Text>
+        <Box maxW="7xl" mx="auto">
+          <SimpleGrid columns={{ base: 2, lg: 7 }} spacing={2}>
+            {artists?.length &&
+              artists.map((artist) => {
+                return <ArtistCard key={artist.wallet + 'artists'} artist={artist} />;
               })}
           </SimpleGrid>
-        </Marquee>
+        </Box>
       </Box>
-      <Text mb={3} mt={10} color="heds.100" fontWeight={'bold'} fontSize="lg" fontFamily="poppins" letterSpacing={'widest'}>
-        ARTISTS
-      </Text>
-      <Box maxW="7xl" mx="auto">
-        <SimpleGrid columns={{ base: 2, lg: 7 }} spacing={2}>
-          {artists?.length &&
-            artists.map((artist) => {
-              return <ArtistCard key={artist.wallet + 'artists'} artist={artist} />;
-            })}
-        </SimpleGrid>
-      </Box>
-    </Box>
+    </Metatags>
   );
 };

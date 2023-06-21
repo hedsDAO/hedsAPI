@@ -20,6 +20,7 @@ import { Dispatch, store } from '@/store';
 // Models & Constants
 import { Box, Flex, Grid, GridItem, Stack } from '@chakra-ui/react';
 import { USER_NAV_TABS } from '@pages/user/models/constants';
+import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 import * as styles from '@pages/user/screens/styles';
 
 /**
@@ -33,6 +34,7 @@ export const User = () => {
   const { wallet } = useParams<{ wallet: string }>();
   const dispatch = useDispatch<Dispatch>();
   const currentTab = useSelector(store.select.navModel.selectCurrentTab);
+  const user = useSelector(store.select.userModel.selectUser);
 
   // Get user data when wallet changes
   useEffect(() => {
@@ -46,32 +48,40 @@ export const User = () => {
   }, [currentTab]);
 
   return (
-    <Box>
-      <Banner />
-      <Flex {...styles.$flexStyles}>
-        <Stack {...styles.$stackStyles}>
-          <ProfilePicture />
-          <Details />
-        </Stack>
-        <WalletAndVP />
-      </Flex>
-      <Grid {...styles.$gridStyles}>
-        <GridItem {...styles.$spotlightItemStyles}>
-          <Spotlight />
-        </GridItem>
-        <GridItem {...styles.$recentEventsItemStyles}>
-          <RecentEvents />
-        </GridItem>
-        <GridItem as={Flex} {...styles.$navItemStyles}>
-          <Nav tabs={USER_NAV_TABS} />
-          <RefreshCollectionButton />
-        </GridItem>
-        <GridItem {...styles.$navItemStyles}>
-          {currentTab === UserNavTabs.COLLECTION && <Collection />}
-          {currentTab === UserNavTabs.LIKES && <Likes />}
-          {currentTab === UserNavTabs.DISCOGRAPHY && <Discography />}
-        </GridItem>
-      </Grid>
-    </Box>
+    <>
+      {user ? (
+        <Metatags user={user} type={MetatagTypes.USER}>
+          <Box>
+            <Banner />
+            <Flex {...styles.$flexStyles}>
+              <Stack {...styles.$stackStyles}>
+                <ProfilePicture />
+                <Details />
+              </Stack>
+              <WalletAndVP />
+            </Flex>
+            <Grid {...styles.$gridStyles}>
+              <GridItem {...styles.$spotlightItemStyles}>
+                <Spotlight />
+              </GridItem>
+              <GridItem {...styles.$recentEventsItemStyles}>
+                <RecentEvents />
+              </GridItem>
+              <GridItem as={Flex} {...styles.$navItemStyles}>
+                <Nav tabs={USER_NAV_TABS} />
+                <RefreshCollectionButton />
+              </GridItem>
+              <GridItem {...styles.$navItemStyles}>
+                {currentTab === UserNavTabs.COLLECTION && <Collection />}
+                {currentTab === UserNavTabs.LIKES && <Likes />}
+                {currentTab === UserNavTabs.DISCOGRAPHY && <Discography />}
+              </GridItem>
+            </Grid>
+          </Box>
+        </Metatags>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };

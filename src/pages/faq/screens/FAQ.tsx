@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { VStack, Heading, Container } from '@chakra-ui/react';
 import { FAQItem } from '@/pages/faq/components/FAQItem/FAQItem';
+import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 import * as styles from '@/pages/faq/screens/styles';
 
 type FAQData = {
@@ -28,15 +29,17 @@ const faqData: FAQData[] = [
 
 export const FAQ = () => {
   return (
-    <Container centerContent>
-      <VStack {...styles.$stackStyles}>
-        <Heading as="h1" {...styles.$headingStyles}>
-          Frequently Asked Questions
-        </Heading>
-        {faqData.map((faqItem, index) => (
-          <FAQItem key={index} {...faqItem} />
-        ))}
-      </VStack>
-    </Container>
+    <Metatags type={MetatagTypes.FAQ}>
+      <Container centerContent>
+        <VStack {...styles.$stackStyles}>
+          <Heading as="h1" {...styles.$headingStyles}>
+            Frequently Asked Questions
+          </Heading>
+          {faqData.map((faqItem, index) => (
+            <FAQItem key={index} {...faqItem} />
+          ))}
+        </VStack>
+      </Container>
+    </Metatags>
   );
 };
