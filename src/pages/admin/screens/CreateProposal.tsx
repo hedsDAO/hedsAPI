@@ -1,16 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
+import { useAccount } from 'wagmi';
 
 // Components
 import { Box, Button, Select, Stack, Flex, FormControl, FormLabel, Textarea } from '@chakra-ui/react';
 
+// Utils
+import { createClient } from 'hedsvote';
+import { mainnet, goerli } from 'wagmi/chains';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+
 export const CreateProposal = () => {
   const dispatch = useDispatch<Dispatch>();
+  const adminWallet = useSelector(store.select.authModel.selectWallet);
   const tapes = useSelector(store.select.tapesModel.selectAllTapes);
   const currentTape = useSelector(store.select.tapeModel.selectCurrentTape);
   const [tapeId, setTapeId] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const client = createClient();
+
+  const connector = new MetaMaskConnector({
+    chains: [mainnet, goerli],
+  });
 
   useEffect(() => {
     dispatch.tapesModel.getTapes();
@@ -20,8 +32,11 @@ export const CreateProposal = () => {
     if (tapeId) dispatch.tapeModel.getTape(tapeId);
   }, [tapeId]);
 
-  const handleClick = () => {
-    console.log('currentTape', currentTape);
+  const handleClick = async () => {
+    const signer = await connector?.getSigner();
+
+    // const proposalId = client.createProposal(signer)
+    console.log(currentTape);
   };
 
   return (
