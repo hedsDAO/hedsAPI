@@ -31,3 +31,5 @@ export interface CreateTapePayload {
 export interface AdminState {
   tape: CreateTapePayload;
 }
+
+// export interface CreateProposalPayload {}
