@@ -1,6 +1,14 @@
-import { pool } from '../../database';
-import { LikeData, SongData } from './types';
+import { Configuration, OpenAIApi } from 'openai';
 import schemaName from '../../../config';
+import * as common from '../../common';
+import * as randomData from '../../data/randomData';
+import { pool } from '../../database';
+import { pinAudioToGateway } from '../pinata/pinAudioToGateway-v2';
+import { pinImageToGateway } from '../pinata/pinImageToGateway-v2';
+import { unpinHashFromGateway } from '../pinata/unpinHashFromGateway-v2';
+import { TapeData } from '../tapes/types';
+
+import { CreateSongRequestBody, LikeData } from './types';
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
@@ -58,49 +66,69 @@ export const getSongEventsById = async (song_id: number) => {
   return rows;
 };
 
-export async function createSong(songData: SongData, user_id: number) {
-  const { audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes } = songData;
-
+export async function createSong(requestData: CreateSongRequestBody) {
   // Begin a transaction
   await pool.query('BEGIN');
 
-  try {
-    // Insert the new song into the song table
-    const songQuery = `
-        INSERT INTO ${schemaName}.songs (
-          audio, cover, duration, public, track_name, type,
-          submission_data, cyanite_id, created, total_likes
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-        RETURNING id;
+  // generate random submission id
+  const { tempAudioRef, user_id, tape_id, duration } = requestData;
+  const { adjectives, animals } = randomData;
+  const randomAdj = Math.ceil(Math.random() * adjectives.length);
+  const randomAnimal = Math.ceil(Math.random() * animals.length);
+  const submissionId = [adjectives[randomAdj], animals[randomAnimal]].join(' ');
+
+  // generate image from submission id
+  const openai: OpenAIApi = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
+  const prompt = common.generatePrompt(submissionId);
+  const generatedImage = await openai.createImage({ prompt, n: 1, size: '256x256' });
+  const imageUrl: string | undefined = generatedImage?.data?.data?.[0]?.url;
+  const splitWords = submissionId.split(' ');
+  const formattedSubId: string = splitWords[0]?.toLowerCase() + splitWords[1]?.toUpperCase();
+
+  if (imageUrl && submissionId) {
+    try {
+      const tapeQuery = `SELECT * FROM ${schemaName}.tapes WHERE id = $1`;
+      const songArtistQuery = `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`;
+      const songEventsQuery = `INSERT INTO ${schemaName}.song_events (event_type, event_data, event_timestamp, song_id, user_id) VALUES ($1, $2, $3, $4, $5)`;
+      const songQuery = `INSERT INTO ${schemaName}.songs (tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, 
+        total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *
       `;
 
-    const songValues = [audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes];
+      // query tape and get tape name
+      const tapeQueryResponse = await pool.query(tapeQuery, [tape_id]);
+      const tapeData: TapeData = tapeQueryResponse.rows[0];
+      const { image, name: tapeName } = tapeData;
 
-    const songResult = await pool.query(songQuery, songValues);
-    const songId = songResult.rows[0].id;
+      // pin audio and image to IPFS
+      const audioIpfsHash = await pinAudioToGateway(tempAudioRef, user_id, tape_id, submissionId);
+      const imageIpfsHash = await pinImageToGateway(imageUrl, user_id, tape_id, submissionId);
 
-    // Insert the song artist into the song_artists table
-    const artistQuery = `
-        INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent)
-        VALUES ($1, $2, $3, $4);
-      `;
+      // add track to song table
+      const song_type = 'submission';
+      const audio = `${common.ipfsPrefix}${audioIpfsHash}`;
+      const sub_image = `${common.ipfsPrefix}${imageIpfsHash}`;
+      const submission_data = JSON.stringify({ sub_image, sub_id: formattedSubId });
+      const track_data = JSON.stringify({ tape_name: tapeName });
+      const newSongData = [tape_id, audio, image, duration, false, formattedSubId, song_type, submission_data, null, new Date(), 0, track_data, null];
+      const newSongQueryResult = await pool.query(songQuery, newSongData);
 
-    // Assuming the user is verified and has 100% ownership by default
-    const verified = true;
-    const ownership_percent = 100;
+      // add artist to song_artists table
+      const songId = newSongQueryResult?.rows?.[0]?.id;
+      const songArtistData = [songId, user_id, true, 100];
+      await pool.query(songArtistQuery, songArtistData);
 
-    const artistValues = [songId, user_id, verified, ownership_percent];
-    await pool.query(artistQuery, artistValues);
+      // add event to song_events table
+      const event_type = 'tape_submission';
+      const eventData = JSON.stringify({ message: 'submitted to a tape', subject: tapeName });
+      await pool.query(songEventsQuery, [event_type, eventData, new Date(), songId, user_id]);
 
-    // Commit the transaction
-    await pool.query('COMMIT');
-
-    return { songId, ...songData, user_id, verified, ownership_percent };
-  } catch (error: any) {
-    // Rollback the transaction in case of an error
-    await pool.query('ROLLBACK');
-    throw new Error(`Unable to create song: ${error.message}`);
-  }
+      await pool.query('COMMIT');
+      return { newSubmission: newSongQueryResult };
+    } catch (error: any) {
+      await pool.query('ROLLBACK');
+      throw new Error(`Unable to delete song: ${error.message}`);
+    }
+  } else throw new Error('Unable to create song');
 }
 
 export async function deleteSong(song_id: number) {
@@ -108,22 +136,34 @@ export async function deleteSong(song_id: number) {
   await pool.query('BEGIN');
 
   try {
+    const songQuery = `SELECT * FROM ${schemaName}.songs WHERE id = $1`;
+    const songResult = await pool.query(songQuery, [song_id]);
+    const song = songResult.rows[0];
+    const { submission_data, audio } = song;
+    const { sub_image } = JSON.parse(submission_data);
+
+    // parse hashes from song and image urls
+    const audioHash = audio.split(common.ipfsPrefix)[1];
+    const imageHash = sub_image.split(common.ipfsPrefix)[1];
+
+    // Unpin files from IPFS
+    await unpinHashFromGateway(audioHash);
+    await unpinHashFromGateway(imageHash);
+
     // Delete song's likes
-    const deleteLikesQuery = `
-        DELETE FROM ${schemaName}.likes WHERE song_id = $1;
-      `;
+    const deleteLikesQuery = `DELETE FROM ${schemaName}.likes WHERE song_id = $1`;
     await pool.query(deleteLikesQuery, [song_id]);
 
+    // Delete song's events
+    const deleteEventsQuery = `DELETE FROM ${schemaName}.song_events WHERE song_id = $1`;
+    await pool.query(deleteEventsQuery, [song_id]);
+
     // Delete song's artists entries
-    const deleteSongArtistsQuery = `
-        DELETE FROM ${schemaName}.song_artists WHERE song_id = $1;
-      `;
+    const deleteSongArtistsQuery = `DELETE FROM ${schemaName}.song_artists WHERE song_id = $1`;
     await pool.query(deleteSongArtistsQuery, [song_id]);
 
     // Delete song
-    const deleteSongQuery = `
-        DELETE FROM ${schemaName}.songs WHERE id = $1;
-      `;
+    const deleteSongQuery = `DELETE FROM ${schemaName}.songs WHERE id = $1`;
     await pool.query(deleteSongQuery, [song_id]);
 
     // Commit the transaction
@@ -221,4 +261,3 @@ export const getManySongs = async (songHashes: string[]) => {
     return;
   }
 };
-

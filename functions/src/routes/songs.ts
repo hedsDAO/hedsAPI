@@ -33,12 +33,16 @@ router.get('/:audio', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const songData = req.body.songData;
-    const user_id = parseInt(req.body.user_id);
-    const newSong = await createSong(songData, user_id);
-    res.status(201).json(newSong);
+    const { tempAudioRef, user_id, tape_id, duration } = req.body;
+    if (!tempAudioRef || !user_id || !tape_id || !duration) {
+      return res.status(400).send('Missing required fields');
+    } else {
+      const { newSubmission } = await createSong({ tempAudioRef, user_id, tape_id, duration });
+      if (newSubmission) return res.json({ newSubmission });
+      else return res.status(404).send('Error creating song');
+    }
   } catch (error: any) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 

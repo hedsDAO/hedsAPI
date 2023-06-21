@@ -31,3 +31,10 @@ export interface LikeData {
   profile_picture: string;
   wallet: string;
 }
+
+export interface CreateSongRequestBody {
+  tempAudioRef: string;
+  user_id: number;
+  tape_id: number;
+  duration: number;
+}
