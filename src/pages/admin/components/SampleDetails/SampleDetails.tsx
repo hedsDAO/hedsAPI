@@ -40,7 +40,7 @@ export const SampleDetails = ({ goToPrevious, handleSubmit }: { goToPrevious: ()
           </Flex>
           <Input ref={inputRef} type="file" accept=".mp3,audio/*" hidden color="white" onChange={(e) => handleFileChange(e)} />
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel color="white">Curator wallet address</FormLabel>
           <Input borderColor="gray.400" color="white" value={wallet} onChange={(e) => setWallet(e.target.value)} />
         </FormControl>
