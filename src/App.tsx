@@ -21,6 +21,7 @@ import { Landing } from './pages/landing/screens/Landing';
 import { Explore } from './pages/explore/screens/Explore';
 
 import { CreateTape } from './pages/admin/screens/CreateTape';
+import { CreateProposal } from './pages/admin/screens/CreateProposal';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -67,6 +68,7 @@ const App = (): JSX.Element => {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/vote/:id" element={<Vote />} />
         <Route path="/admin" element={<CreateTape />} />
+        <Route path="/proposal" element={<CreateProposal />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

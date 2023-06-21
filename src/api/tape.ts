@@ -21,3 +21,7 @@ export const getTapeCollectionArgs = () => {
 export const createTape = async (tape: CreateTapePayload) => {
   return axios.post(`${API_PREFIX}/tapes`, tape);
 };
+
+export const createProposal = (proposal) => {
+  return axios.post(`${API_PREFIX}/proposals`, proposal);
+};
