@@ -4,6 +4,7 @@ import { Coverflow } from '@/pages/explore/components/Coverflow/Coverflow';
 import { FeaturedArtistsHeader } from '@/pages/explore/components/FeaturedArtistsHeader/FeaturedArtistsHeader';
 import { CoverflowNav } from '@/pages/explore/components/CoverflowNav/CoverflowNav';
 import { FeaturedArtists } from '@/pages/explore/components/FeaturedArtists/FeaturedArtists';
+import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
@@ -22,13 +23,15 @@ export const Explore = () => {
   }, []);
 
   return (
-    <Box>
-      <Coverflow />
-      <CoverflowNav />
-      <Stats />
-      {/* TODO: add featured artists section */}
-      {/* <FeaturedArtistsHeader />
+    <Metatags type={MetatagTypes.EXPLORE}>
+      <Box>
+        <Coverflow />
+        <CoverflowNav />
+        <Stats />
+        {/* TODO: add featured artists section */}
+        {/* <FeaturedArtistsHeader />
       <FeaturedArtists /> */}
-    </Box>
+      </Box>
+    </Metatags>
   );
 };
