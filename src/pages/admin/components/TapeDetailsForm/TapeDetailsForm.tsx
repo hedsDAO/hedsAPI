@@ -3,9 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
 import { Box, Button, Stack, Select, Textarea, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
-import DatePicker from 'react-datepicker';
-import './calendarStyles.css';
-import 'react-datepicker/dist/react-datepicker.css';
+import { DateTimeRangePicker } from '@/pages/admin/components/DateTimeRangePicker/DateTimeRangePicker';
 
 export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -87,80 +85,15 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
         </FormControl>
         <FormControl isRequired>
           <FormLabel color="gray.200">Submission</FormLabel>
-          <Flex justifyContent="space-between">
-            <DatePicker
-              showTimeSelect
-              selected={submitStart}
-              onChange={(date) => setSubmitStart(date)}
-              selectsStart
-              startDate={submitStart}
-              endDate={submitEnd}
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
-            <Text color="white">-</Text>
-            <DatePicker
-              showTimeSelect
-              selected={submitEnd}
-              onChange={(date) => setSubmitEnd(date)}
-              selectsEnd
-              startDate={submitStart}
-              endDate={submitEnd}
-              minDate={submitStart}
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
-          </Flex>
+          <DateTimeRangePicker startDate={submitStart} endDate={submitEnd} changeStart={setSubmitStart} changeEnd={setSubmitEnd} minDate={new Date()} />
         </FormControl>
         <FormControl isRequired>
           <FormLabel color="gray.200">Vote</FormLabel>
-          <Flex justifyContent="space-between" alignItems="center">
-            <DatePicker
-              showTimeSelect
-              selected={voteStart}
-              onChange={(date) => setVoteStart(date)}
-              selectsStart
-              startDate={voteStart}
-              endDate={voteEnd}
-              minDate={submitEnd}
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
-            <Text color="white">-</Text>
-            <DatePicker
-              showTimeSelect
-              selected={voteEnd}
-              onChange={(date) => setVoteEnd(date)}
-              selectsEnd
-              startDate={voteStart}
-              endDate={voteEnd}
-              minDate={voteStart}
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
-          </Flex>
+          <DateTimeRangePicker startDate={voteStart} endDate={voteEnd} changeStart={setVoteStart} changeEnd={setVoteEnd} minDate={submitEnd} />
         </FormControl>
         <FormControl isRequired>
           <FormLabel color="gray.200">Mint</FormLabel>
-          <Flex justifyContent="space-between">
-            <DatePicker
-              showTimeSelect
-              selected={mintStart}
-              onChange={(date) => setMintStart(date)}
-              selectsStart
-              startDate={mintStart}
-              endDate={mintEnd}
-              minDate={voteEnd}
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
-            <Text color="white">-</Text>
-            <DatePicker
-              showTimeSelect
-              selected={mintEnd}
-              onChange={(date) => setMintEnd(date)}
-              selectsEnd
-              startDate={mintStart}
-              endDate={mintEnd}
-              minDate={mintStart}
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
-          </Flex>
+          <DateTimeRangePicker startDate={mintStart} endDate={mintEnd} changeStart={setMintStart} changeEnd={setMintEnd} minDate={voteEnd} />
         </FormControl>
       </Stack>
       <Flex justifyContent="flex-end" maxW="lg" mt={12} mx="auto">
