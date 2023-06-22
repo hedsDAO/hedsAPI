@@ -94,6 +94,7 @@ export interface Song {
   artist_display_name?: string;
   artist_profile_picture?: string;
   artist_wallet?: string;
+  song_id?: number;
 }
 
 type SongType = 'submission' | 'track' | 'collab' | 'sample' | 'hedsolo';
