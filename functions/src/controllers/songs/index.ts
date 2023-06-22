@@ -98,12 +98,12 @@ export async function createSong(requestData: CreateSongRequestBody) {
       const songQuery = `INSERT INTO ${schemaName}.songs (tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, 
         total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *
       `;
-
+      
       // query tape and get tape name
       const tapeQueryResponse = await pool.query(tapeQuery, [tape_id]);
-      const tapeData: TapeData = tapeQueryResponse.rows[0];
+      const tapeData: TapeData = tapeQueryResponse?.rows?.[0];
       const { image, name: tapeName } = tapeData;
-
+      functions.logger.log(tapeData, 'tapeData', tapeQueryResponse, 'tapeQueryResponse')
       // pin audio and image to IPFS
       const audioIpfsHash = await pinAudioToGateway(tempAudioRef, user_id, tape_id, submissionId);
       const imageIpfsHash = await pinImageToGateway(imageUrl, user_id, tape_id, submissionId);
