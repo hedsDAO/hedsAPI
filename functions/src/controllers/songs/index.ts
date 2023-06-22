@@ -180,14 +180,16 @@ export async function deleteSong(song_id: number) {
     const songQuery = `SELECT * FROM ${schemaName}.songs WHERE id = $1`;
     const songResult = await pool.query(songQuery, [song_id]);
     const song = songResult.rows[0];
-    const { submission_data, audio } = song;
-    functions.logger.log(song, 'song');
+    // const { submission_data, audio } = song;
+    const songAudio = song?.audio;
+    const songSubmissionData = song?.submission_data;
+    functions.logger.log(song, 'song', songAudio, 'songAudio', songSubmissionData, 'songSubmissionData');
     // parse hashes from song and image urls
-    const audioHash = audio.split(common.ipfsPrefix)[1];
+    const audioHash = songAudio.split(common.ipfsPrefix)[1];
 
     // if submission_data exists, unpin image from ipfs
-    if (submission_data && JSON.parse(submission_data)?.sub_image) {
-      const sub_image = JSON.parse(submission_data).sub_image;
+    if (songSubmissionData && JSON.parse(songSubmissionData)?.sub_image) {
+      const sub_image = JSON.parse(songSubmissionData).sub_image;
       const imageHash = sub_image.split(common.ipfsPrefix)[1];
       functions.logger.log(imageHash, 'unpinning imageHash');
       await unpinHashFromGateway(imageHash);
