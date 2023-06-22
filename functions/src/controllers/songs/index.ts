@@ -7,7 +7,6 @@ import { pool } from '../../database';
 import { pinAudioToGateway } from '../pinata/pinAudioToGateway-v2';
 import { pinImageToGateway } from '../pinata/pinImageToGateway-v2';
 import { unpinHashFromGateway } from '../pinata/unpinHashFromGateway-v2';
-import { TapeData } from '../tapes/types';
 
 import { CreateSongRequestBody, LikeData } from './types';
 
@@ -108,10 +107,9 @@ export async function createSong(requestData: CreateSongRequestBody) {
     // query tape and get tape name
     const tapeQuery = `SELECT * FROM ${schemaName}.tapes WHERE id = $1`;
     const tapeQueryResponse = await pool.query(tapeQuery, [tape_id]);
-    const tapeData: TapeData = tapeQueryResponse?.rows?.[0];
-    const { image, name } = tapeData;
-    tapeCover = image;
-    tapeName = name;
+    const tapeData = tapeQueryResponse?.rows?.[0];
+    tapeCover = tapeData?.image;
+    tapeName = tapeData?.name;
     functions.logger.log(tapeData, 'tapeData', tapeQueryResponse, 'tapeQueryResponse');
   } catch (error: any) {
     functions.logger.log('error getting tape data in createSong controller');
