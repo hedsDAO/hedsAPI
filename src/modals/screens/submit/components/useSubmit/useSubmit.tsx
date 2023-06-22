@@ -25,8 +25,10 @@ export const useSubmit = () => {
     if (!user) {
       dispatch.modalModel.setModal(Modals.CONNECT);
       dispatch.submitModel.clearState();
-    }
-    if (user) {
+    } else if (!user?.twitter_handle) {
+      dispatch.modalModel.setModal(Modals.TWITTER);
+      dispatch.submitModel.clearState();
+    } else {
       dispatch.submitModel.getUserSongs([user?.id, tape.id]);
       if (submitModalState?.currentStep === undefined) dispatch.submitModel.setCurrentStep(SubmitModelSteps.TERMS);
     }

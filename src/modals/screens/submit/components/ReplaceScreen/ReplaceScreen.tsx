@@ -71,6 +71,13 @@ export const ReplaceScreen = () => {
     };
   }, [isSoundPlaying, sound, soundId]);
 
+  const changeProgress = (value: number) => {
+    if (sound && soundId) {
+      sound.seek(value, soundId);
+      setProgress(value);
+    }
+  };
+
   return (
     <Stack {...styles.$replaceStackStyles}>
       <Flex {...styles.$replaceFlexStyles}>
@@ -85,7 +92,7 @@ export const ReplaceScreen = () => {
           <Text {...styles.$replaceSubIdTextStyles}>{prevSubmission?.submission_data?.sub_id}</Text>
         </Stack>
       </Flex>
-      <Slider {...styles.$replaceSliderStyles(progress, sound?.duration() || 60)}>
+      <Slider onChange={changeProgress} {...styles.$replaceSliderStyles(progress, sound?.duration() || 60)}>
         <SliderTrack {...styles.$sliderTrackStyles}>
           <SliderFilledTrack {...styles.$sliderFilledTrackStyles} />
         </SliderTrack>

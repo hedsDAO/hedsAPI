@@ -16,6 +16,9 @@ export const PreviewScreen = () => {
   const [sound, setSound] = useState<Howl | null>(null);
   const dispatch = useDispatch<Dispatch>();
   const displayName = useSelector(store.select.authModel.selectUserDisplayName);
+  const userId = useSelector(store.select.authModel.selectUserId);
+  const wallet = useSelector(store.select.authModel.selectWallet);
+  const tape = useSelector(store.select.tapeModel.selectCurrentTape);
   const userFile = useSelector(store.select.submitModel.selectFile);
 
   useEffect(() => {
@@ -77,6 +80,13 @@ export const PreviewScreen = () => {
     };
   }, [isSoundPlaying, sound, soundId]);
 
+  const changeProgress = (value: number) => {
+    if (sound && soundId) {
+      sound.seek(value, soundId);
+      setProgress(value);
+    }
+  };
+
   return (
     <Stack {...styles.$previewStackStyles}>
       <Flex {...styles.$previewFlexStyles}>
@@ -90,7 +100,7 @@ export const PreviewScreen = () => {
           <Box {...styles.$previewBoxStyles} />
         </Stack>
       </Flex>
-      <Slider {...styles.$previewSliderStyles(progress, sound?.duration() || 60)}>
+      <Slider onChange={changeProgress} {...styles.$previewSliderStyles(progress, sound?.duration() || 60)}>
         <SliderTrack {...styles.$sliderTrackStyles}>
           <SliderFilledTrack {...styles.$sliderFilledTrackStyles} />
         </SliderTrack>
@@ -98,7 +108,7 @@ export const PreviewScreen = () => {
       </Slider>
       <Button
         {...styles.$previewButtonStyles(() => {
-          dispatch.submitModel.setCurrentStep(SubmitModelSteps.LOADING);
+          dispatch.submitModel.uploadSubmission([userFile, wallet, userId, tape?.id]);
         })}
       >
         {constants.UPLOAD_BUTTON_TEXT}
