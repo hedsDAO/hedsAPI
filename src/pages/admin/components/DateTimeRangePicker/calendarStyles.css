@@ -1,0 +1,15 @@
+.react-datepicker__month-container {
+  float: left;
+}
+
+.react-datepicker__input-container {
+  padding: '2px';
+  border-radius: '50%';
+}
+
+input {
+  border: 1px solid #aeaeae;
+  border-radius: 5px;
+  line-height: 16px;
+  padding: 6px 10px 5px;
+}
