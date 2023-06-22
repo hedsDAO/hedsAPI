@@ -181,25 +181,23 @@ export async function deleteSong(song_id: number) {
     const songResult = await pool.query(songQuery, [song_id]);
     const song = songResult.rows[0];
     // const { submission_data, audio } = song;
-    const songAudio = song?.audio;
-    const songSubmissionData = song?.submission_data;
-    functions.logger.log(song, 'song', songAudio, 'songAudio', songSubmissionData, 'songSubmissionData');
+    const songHash = song?.audio?.split('/ipfs/')?.[1];
+    const subImageHash = song?.submission_data?.sub_image?.split('/ipfs/')?.[1];
+    functions.logger.log(song, 'song', songHash, 'songHash', subImageHash, 'subImageHash');
 
-    // if submission_data exists, unpin image from ipfs
-    if (songSubmissionData && songSubmissionData?.sub_image) {
-      const sub_image = songSubmissionData?.sub_image;
-      if (sub_image?.split?.(common.ipfsPrefix)?.[1]?.length) {
-        const imageHash = sub_image?.split?.(common.ipfsPrefix)?.[1];
-        functions.logger.log(imageHash, 'unpinning imageHash');
-        await unpinHashFromGateway(imageHash);
-      }
+    try {
+      functions.logger.log('upinning song audio from gateway');
+      if (songHash) await unpinHashFromGateway(songHash);
+    } catch (error: any) {
+      functions.logger.log('error unpinning song in deleteSong controller');
+      throw new Error(`Unable to unpin song: ${error.message}`);
     }
-
-    // Unpin audio from IPFS
-    if (songAudio?.split?.(common.ipfsPrefix)?.[1]?.length) {
-      const audioHash = songAudio?.split?.(common.ipfsPrefix)?.[1];
-      functions.logger.log(audioHash, 'unpinning imageHash');
-      await unpinHashFromGateway(audioHash);
+    try {
+      functions.logger.log('unpinning sub image from gateway');
+      if (subImageHash) await unpinHashFromGateway(subImageHash);
+    } catch (error: any) {
+      functions.logger.log('error unpinning sub image in deleteSong controller');
+      throw new Error(`Unable to unpin sub image: ${error.message}`);
     }
 
     // Delete song's likes
