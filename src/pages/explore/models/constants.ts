@@ -7,10 +7,10 @@ export const items = [
 ];
 
 export const EXPLORE_STATS = {
-  'TOTAL MINTED': '1,581',
+  'TOTAL MINTED': '1,473',
   'VALUE GENERATED': '110 ETH',
   SUBMISSIONS: '340',
-  'UNIQUE MINTERS': '311',
+  'UNIQUE MINTERS': '318',
 };
 
 export const FEATURED_ARTISTS_HEADER_TEXT = 'FEATURED ARTISTS';

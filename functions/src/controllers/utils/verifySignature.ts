@@ -9,14 +9,14 @@ import {Request, Response, NextFunction} from "express";
  */
  export const verifySignature = async (req: Request, res: Response, next:NextFunction) => {
     try {
-      const { message, signature, wallet } = req.body;
-      const signerAddress = ethers.utils.verifyMessage(message, signature);
-
-      if (signerAddress !== wallet) {
+      const { message, signature, adminWallet } = req.body;
+      const signerAddress = ethers.utils.verifyMessage(message, signature).toLowerCase();
+      if (signerAddress !== adminWallet) {
       return res.status(401).send('Unauthorized');
       }
 
       res.locals.signerAddress = signerAddress;
+
   
       return next();
     } catch (error) {

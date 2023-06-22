@@ -16,6 +16,7 @@ import { tapesModel } from '@/pages/tapes/models/tapesModel';
 import { exploreModel } from '@/pages/explore/models/exploreModel';
 import { voteModel } from '@/pages/vote/models/voteModel';
 import { connectModel } from '@/modals/screens/connect/models/connectModel';
+import { adminModel } from '@/pages/admin/model/adminModel';
 import { searchModel } from '@/components/Search/models/searchModel';
 
 export interface RootModel extends Models<RootModel> {
@@ -36,6 +37,7 @@ export interface RootModel extends Models<RootModel> {
   exploreModel: typeof exploreModel;
   voteModel: typeof voteModel;
   connectModel: typeof connectModel;
+  adminModel: typeof adminModel;
   searchModel: typeof searchModel;
 }
 
@@ -57,5 +59,6 @@ export const models: RootModel = {
   exploreModel,
   voteModel,
   connectModel,
+  adminModel,
   searchModel,
 };
