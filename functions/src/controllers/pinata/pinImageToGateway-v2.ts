@@ -6,14 +6,14 @@ import axiosRetry from 'axios-retry';
 /**
  * @function pinImageToGateway - Pin an image to IPFS through Pinata's gateway.
  * @version 2.0.0
- * 
+ *
  * @param {string} imageUrl - The url of the image file to pin to gateway.
  * @param {number} user_id - The user_id of the user who submitted the audio.
  * @param {number} tape_id - The tape_id of the tape the audio was submitted to.
  * @param {string} submissionId - The submissionId of the submission.
  */
 
-export const pinImageToGateway = async (imageUrl: string, user_id: number, tape_id: number, submissionId: string) => {
+export const pinImageToGateway = async (imageUrl: string, user_id: number, tape_id: number, submissionId: string): Promise<string | void> => {
   functions.logger.log('pinImageToGateway-v2: imageUrl', imageUrl);
   try {
     const data = new FormData();
@@ -29,7 +29,7 @@ export const pinImageToGateway = async (imageUrl: string, user_id: number, tape_
       responseType: 'stream',
     });
     data.append('file', sourceData.data);
-    await axios
+    return await axios
       .post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
         maxBodyLength: Infinity,
         headers: {
@@ -38,13 +38,10 @@ export const pinImageToGateway = async (imageUrl: string, user_id: number, tape_
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((response) => {
-        const ipfsImageUrl = response?.data?.IpfsHash;
-        return ipfsImageUrl;
-      })
+      .then((response): string => response?.data?.IpfsHash)
       .catch((error) => functions.logger.log(error));
   } catch (error) {
     functions.logger.log(error, 'error pinning image to gateway');
-    return;
+    return undefined;
   }
 };
