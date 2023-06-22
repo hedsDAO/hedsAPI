@@ -152,7 +152,7 @@ export async function createSong(requestData: CreateSongRequestBody) {
     await pool.query('ROLLBACK');
     throw new Error(`Unable to create song: ${error.message}`);
   }
-  
+
   try {
     // add event to song_events table
     functions.logger.log('update song_events table');
@@ -167,7 +167,7 @@ export async function createSong(requestData: CreateSongRequestBody) {
     throw new Error(`Unable to create song event: ${error.message}`);
   }
 
-  functions.logger.log('new submission', newSongQueryResult?.rows?.[0])
+  functions.logger.log('new submission', newSongQueryResult?.rows?.[0]);
   return { newSubmission: newSongQueryResult?.rows?.[0] };
 }
 
@@ -181,16 +181,22 @@ export async function deleteSong(song_id: number) {
     const songResult = await pool.query(songQuery, [song_id]);
     const song = songResult.rows[0];
     const { submission_data, audio } = song;
-    const { sub_image } = JSON.parse(submission_data);
-
+    functions.logger.log(song, 'song');
     // parse hashes from song and image urls
     const audioHash = audio.split(common.ipfsPrefix)[1];
-    const imageHash = sub_image.split(common.ipfsPrefix)[1];
-    functions.logger.log(audioHash, 'audioHash', imageHash, 'imageHash');
 
-    // Unpin files from IPFS
+    // if submission_data exists, unpin image from ipfs
+    if (submission_data && JSON.parse(submission_data)?.sub_image) {
+      const sub_image = JSON.parse(submission_data).sub_image;
+      const imageHash = sub_image.split(common.ipfsPrefix)[1];
+      functions.logger.log(imageHash, 'unpinning imageHash');
+      await unpinHashFromGateway(imageHash);
+    }
+
+    // Unpin audio from IPFS
     await unpinHashFromGateway(audioHash);
-    await unpinHashFromGateway(imageHash);
+    functions.logger.log(audioHash, 'unpinning imageHash');
+
 
     // Delete song's likes
     const deleteLikesQuery = `DELETE FROM ${schemaName}.likes WHERE song_id = $1`;
