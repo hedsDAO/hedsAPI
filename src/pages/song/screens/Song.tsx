@@ -13,6 +13,7 @@ import { Related } from '@pages/song/components/Related/Related';
 import { Waveform } from '@pages/song/components/Waveform/Waveform';
 import { SongNavbarTabs } from '@pages/song/models/common';
 import * as styles from '@pages/song/screens/styles';
+import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 
 /**
  * @function Song
@@ -36,21 +37,29 @@ export const Song = () => {
   }, [id]);
 
   return (
-    <Box>
-      <Header />
-      {song && <Waveform />}
-      <Skeleton fitContent {...styles.$navSkeletonStyles(navbarTabs, isLoading)}>
-        <Box {...styles.$navBoxStyles}>
-          <Nav tabs={navbarTabs || DEFAULT_NAV_TABS} />
-        </Box>
-      </Skeleton>
-      <Divider {...styles.$dividerStyles} />
-      <Box {...styles.$contentBoxStyles}>
-        {currentTab === SongNavbarTabs.DETAILS && <Details />}
-        {currentTab === SongNavbarTabs.RELATED && <Related />}
-        {currentTab === SongNavbarTabs.LIKES && <Likes />}
-        {currentTab === SongNavbarTabs.APPEARS_ON && <AppearsOn />}
-      </Box>
-    </Box>
+    <>
+      {song ? (
+        <Metatags song={song} type={MetatagTypes.SONG}>
+          <Box>
+            <Header />
+            {song && <Waveform />}
+            <Skeleton fitContent {...styles.$navSkeletonStyles(navbarTabs, isLoading)}>
+              <Box {...styles.$navBoxStyles}>
+                <Nav tabs={navbarTabs || DEFAULT_NAV_TABS} />
+              </Box>
+            </Skeleton>
+            <Divider {...styles.$dividerStyles} />
+            <Box {...styles.$contentBoxStyles}>
+              {currentTab === SongNavbarTabs.DETAILS && <Details />}
+              {currentTab === SongNavbarTabs.RELATED && <Related />}
+              {currentTab === SongNavbarTabs.LIKES && <Likes />}
+              {currentTab === SongNavbarTabs.APPEARS_ON && <AppearsOn />}
+            </Box>
+          </Box>
+        </Metatags>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
