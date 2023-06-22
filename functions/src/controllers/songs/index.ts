@@ -184,21 +184,23 @@ export async function deleteSong(song_id: number) {
     const songAudio = song?.audio;
     const songSubmissionData = song?.submission_data;
     functions.logger.log(song, 'song', songAudio, 'songAudio', songSubmissionData, 'songSubmissionData');
-    // parse hashes from song and image urls
-    const audioHash = songAudio.split(common.ipfsPrefix)[1];
 
     // if submission_data exists, unpin image from ipfs
-    if (songSubmissionData && JSON.parse(songSubmissionData)?.sub_image) {
-      const sub_image = JSON.parse(songSubmissionData).sub_image;
-      const imageHash = sub_image.split(common.ipfsPrefix)[1];
-      functions.logger.log(imageHash, 'unpinning imageHash');
-      await unpinHashFromGateway(imageHash);
+    if (songSubmissionData && JSON?.parse(songSubmissionData)?.sub_image) {
+      const sub_image = JSON?.parse(songSubmissionData)?.sub_image;
+      if (sub_image?.split?.(common.ipfsPrefix)?.[1]?.length) {
+        const imageHash = sub_image?.split?.(common.ipfsPrefix)?.[1];
+        functions.logger.log(imageHash, 'unpinning imageHash');
+        await unpinHashFromGateway(imageHash);
+      }
     }
 
     // Unpin audio from IPFS
-    await unpinHashFromGateway(audioHash);
-    functions.logger.log(audioHash, 'unpinning imageHash');
-
+    if (songAudio?.split?.(common.ipfsPrefix)?.[1]?.length) {
+      const audioHash = songAudio?.split?.(common.ipfsPrefix)?.[1]?.length;
+      functions.logger.log(audioHash, 'unpinning imageHash');
+      await unpinHashFromGateway(audioHash);
+    }
 
     // Delete song's likes
     const deleteLikesQuery = `DELETE FROM ${schemaName}.likes WHERE song_id = $1`;
