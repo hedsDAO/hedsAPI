@@ -61,6 +61,7 @@ export const submitModel = createModel<RootModel>()({
     },
     async uploadSubmission([file, wallet, tapeId, userId]: [File, string, number, number]) {
       this.setIsLoading(true);
+      this.setCurrentStep(SubmitModelSteps.LOADING);
       this.setIsUploading(true);
       const fileExt = constants.handleFileExt(file);
       const tempAudioRef = `temp/${tapeId}-${wallet}${fileExt}`;

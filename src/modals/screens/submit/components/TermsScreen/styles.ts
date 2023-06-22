@@ -77,6 +77,11 @@ export const $continueButtonStyles: ButtonProps = {
   colorScheme: 'whiteAlpha',
   size: 'sm',
   color: 'white',
+  bg: 'heds.200',
+  _hover: {
+    bg: 'heds.200',
+    opacity: '90%'
+  }
 };
 
 /**

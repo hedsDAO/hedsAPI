@@ -24,7 +24,7 @@ export const TermScreen = () => {
           <Text {...styles.$curatorWalletTextStyles}>{formatWallet(tape.sampleArtists?.[0]?.wallet)}</Text>
         </Stack>
       </Flex>
-      <CountdownClock milliseconds={1687287078000 || timeline?.submit?.end} header={constants.COUNTDOWN_HEADER_TEXT} />
+      <CountdownClock milliseconds={timeline?.submit?.end} header={constants.COUNTDOWN_HEADER_TEXT} />
       <Stack {...styles.$disclaimerTextStackProps}>
         <Text {...styles.$headerTextStyles}>{constants.DISCLAIMER_TEXT_TITLE}</Text>
         <Text {...styles.$textProps}>{bodyText}</Text>
