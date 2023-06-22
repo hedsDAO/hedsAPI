@@ -186,8 +186,8 @@ export async function deleteSong(song_id: number) {
     functions.logger.log(song, 'song', songAudio, 'songAudio', songSubmissionData, 'songSubmissionData');
 
     // if submission_data exists, unpin image from ipfs
-    if (songSubmissionData && JSON?.parse(songSubmissionData)?.sub_image) {
-      const sub_image = JSON?.parse(songSubmissionData)?.sub_image;
+    if (songSubmissionData && songSubmissionData?.sub_image) {
+      const sub_image = songSubmissionData?.sub_image;
       if (sub_image?.split?.(common.ipfsPrefix)?.[1]?.length) {
         const imageHash = sub_image?.split?.(common.ipfsPrefix)?.[1];
         functions.logger.log(imageHash, 'unpinning imageHash');
@@ -197,7 +197,7 @@ export async function deleteSong(song_id: number) {
 
     // Unpin audio from IPFS
     if (songAudio?.split?.(common.ipfsPrefix)?.[1]?.length) {
-      const audioHash = songAudio?.split?.(common.ipfsPrefix)?.[1]?.length;
+      const audioHash = songAudio?.split?.(common.ipfsPrefix)?.[1];
       functions.logger.log(audioHash, 'unpinning imageHash');
       await unpinHashFromGateway(audioHash);
     }
