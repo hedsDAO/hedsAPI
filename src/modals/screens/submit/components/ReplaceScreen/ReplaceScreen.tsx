@@ -107,7 +107,7 @@ export const ReplaceScreen = () => {
         <Button {...styles.$replaceBackButtonStyles(() => dispatch.modalModel.setModal(null))}>{constants.REPLACE_BACK_BUTTON_TEXT}</Button>
         <Button
           {...styles.$replaceSubmitButtonStyles(() => {
-            dispatch.submitModel.deleteSubmission(prevSubmission?.id);
+            dispatch.submitModel.deleteSubmission(prevSubmission?.song_id);
             dispatch.submitModel.setCurrentStep(SubmitModelSteps.TERMS);
           })}
         >
