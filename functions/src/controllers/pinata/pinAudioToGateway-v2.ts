@@ -13,14 +13,10 @@ import * as functions from 'firebase-functions';
  * @param {string} submissionId - The submissionId of the submission.
  */
 
-export const pinAudioToGateway = async (tempAudioRef: string, user_id: number, tape_id: number, submissionId: string) => {
+export const pinAudioToGateway = async (tempAudioRef: string, user_id: number, tape_id: number, submissionId: string): Promise<string | void> => {
   try {
-    const tempFile = await admin
-      .storage()
-      .bucket()
-      .file(tempAudioRef)
-      .get();
-    functions.logger.log('pinAudioToGateway-v2: tempFile', tempFile)
+    const tempFile = await admin.storage().bucket().file(tempAudioRef).get();
+    functions.logger.log('pinAudioToGateway-v2: tempFile', tempFile);
     const filePath = await tempFile[0].getMetadata().then((res) => res[0].name.split('temp/')[1]);
     functions.logger.log('pinAudioToGateway-v2: filePath', filePath);
     const fileStream = tempFile[0].createReadStream();
@@ -34,7 +30,7 @@ export const pinAudioToGateway = async (tempAudioRef: string, user_id: number, t
     };
     data.append('pinataMetadata', JSON.stringify({ ...pinataMetadata }));
     data.append('file', fileStream, { filepath: filePath });
-    await axios
+    return await axios
       .post('https://api.pinata.cloud/pinning/pinFileToIPFS', data, {
         maxBodyLength: Infinity,
         headers: {
@@ -47,7 +43,9 @@ export const pinAudioToGateway = async (tempAudioRef: string, user_id: number, t
         if (tempAudioRef !== 'test.mp3') await tempFile[0].delete();
         return response.data.IpfsHash;
       })
-      .catch((error) => functions.logger.log('error pinning audio to gateway', error));
+      .catch((error) => {
+        functions.logger.log('error pinning audio to gateway', error);
+      });
   } catch (error) {
     functions.logger.log('error pinning audio to gateway', error);
     return;
