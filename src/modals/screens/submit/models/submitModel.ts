@@ -59,7 +59,7 @@ export const submitModel = createModel<RootModel>()({
         console.log(error);
       }
     },
-    async uploadSubmission([file, wallet, tapeId, userId]: [File, string, number, number]) {
+    async uploadSubmission([file, wallet, userId, tapeId]: [File, string, number, number]) {
       this.setIsLoading(true);
       this.setCurrentStep(SubmitModelSteps.LOADING);
       this.setIsUploading(true);
