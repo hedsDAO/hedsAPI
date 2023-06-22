@@ -69,14 +69,16 @@ export const getSongEventsById = async (song_id: number) => {
 
 export async function createSong(requestData: CreateSongRequestBody) {
   // Begin a transaction
-  await pool.query('BEGIN');
   functions.logger.log('createSong controller')
+  await pool.query('BEGIN');
+
   // generate random submission id
   const { tempAudioRef, user_id, tape_id, duration } = requestData;
   const { adjectives, animals } = randomData;
   const randomAdj = Math.ceil(Math.random() * adjectives.length);
   const randomAnimal = Math.ceil(Math.random() * animals.length);
   const submissionId = [adjectives[randomAdj], animals[randomAnimal]].join(' ');
+  functions.logger.log(submissionId, 'submissionId');
 
   // generate image from submission id
   const openai: OpenAIApi = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
@@ -85,8 +87,10 @@ export async function createSong(requestData: CreateSongRequestBody) {
   const imageUrl: string | undefined = generatedImage?.data?.data?.[0]?.url;
   const splitWords = submissionId.split(' ');
   const formattedSubId: string = splitWords[0]?.toLowerCase() + splitWords[1]?.toUpperCase();
-  functions.logger.log(imageUrl, 'imageUrl', submissionId, 'submissionId', formattedSubId, 'formattedSubId');
-  if (imageUrl && submissionId) {
+  functions.logger.log(imageUrl, 'imageUrl');
+  
+  if (imageUrl) {
+    functions.logger.log('updating db with new submission');
     try {
       const tapeQuery = `SELECT * FROM ${schemaName}.tapes WHERE id = $1`;
       const songArtistQuery = `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`;

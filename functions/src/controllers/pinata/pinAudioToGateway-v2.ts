@@ -18,7 +18,7 @@ export const pinAudioToGateway = async (tempAudioRef: string, user_id: number, t
     const tempFile = await admin
       .storage()
       .bucket()
-      .file('temp/' + tempAudioRef)
+      .file(tempAudioRef)
       .get();
     const filePath = await tempFile[0].getMetadata().then((res) => res[0].name.split('temp/')[1]);
     const fileStream = tempFile[0].createReadStream();
