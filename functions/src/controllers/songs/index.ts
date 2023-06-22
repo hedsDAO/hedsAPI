@@ -70,15 +70,6 @@ export async function createSong(requestData: CreateSongRequestBody) {
   // Begin a transaction
   await pool.query('BEGIN');
   functions.logger.log('createSong controller');
-
-  // Query strings
-  const songArtistQuery = `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`;
-  const songEventsQuery = `INSERT INTO ${schemaName}.song_events (event_type, event_data, event_timestamp, song_id, user_id) VALUES ($1, $2, $3, $4, $5)`;
-  const songQuery = `INSERT INTO ${schemaName}.songs (tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, 
-      total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *
-    `;
-
-  // Declared variables
   let tapeCover, tapeName, audioIpfsHash, imageIpfsHash, imageUrl, formattedSubId, newSongQueryResult, songId;
 
   // generate random submission id
@@ -130,6 +121,10 @@ export async function createSong(requestData: CreateSongRequestBody) {
   try {
     // add track to song table
     functions.logger.log('update song table');
+
+    const songQuery = `INSERT INTO ${schemaName}.songs (tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, 
+      total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *
+    `;
     const song_type = 'submission';
     const audio = `${common.ipfsPrefix}${audioIpfsHash}`;
     const sub_image = `${common.ipfsPrefix}${imageIpfsHash}`;
@@ -146,6 +141,8 @@ export async function createSong(requestData: CreateSongRequestBody) {
   try {
     // add artist to song_artists table
     functions.logger.log('update song_artists table');
+
+    const songArtistQuery = `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`;
     songId = newSongQueryResult?.rows?.[0]?.id;
     const songArtistData = [songId, user_id, true, 100];
     await pool.query(songArtistQuery, songArtistData);
@@ -159,6 +156,8 @@ export async function createSong(requestData: CreateSongRequestBody) {
   try {
     // add event to song_events table
     functions.logger.log('update song_events table');
+
+    const songEventsQuery = `INSERT INTO ${schemaName}.song_events (event_type, event_data, event_timestamp, song_id, user_id) VALUES ($1, $2, $3, $4, $5)`;
     const event_type = 'tape_submission';
     const eventData = JSON.stringify({ message: 'submitted to a tape', subject: tapeName });
     await pool.query(songEventsQuery, [event_type, eventData, new Date(), songId, user_id]);
