@@ -2,6 +2,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import schemaName from '../../../config';
 import * as common from '../../common';
 import * as randomData from '../../data/randomData';
+import * as functions from 'firebase-functions';
 import { pool } from '../../database';
 import { pinAudioToGateway } from '../pinata/pinAudioToGateway-v2';
 import { pinImageToGateway } from '../pinata/pinImageToGateway-v2';
@@ -69,7 +70,7 @@ export const getSongEventsById = async (song_id: number) => {
 export async function createSong(requestData: CreateSongRequestBody) {
   // Begin a transaction
   await pool.query('BEGIN');
-
+  functions.logger.log('createSong controller')
   // generate random submission id
   const { tempAudioRef, user_id, tape_id, duration } = requestData;
   const { adjectives, animals } = randomData;
@@ -84,7 +85,7 @@ export async function createSong(requestData: CreateSongRequestBody) {
   const imageUrl: string | undefined = generatedImage?.data?.data?.[0]?.url;
   const splitWords = submissionId.split(' ');
   const formattedSubId: string = splitWords[0]?.toLowerCase() + splitWords[1]?.toUpperCase();
-
+  functions.logger.log(imageUrl, 'imageUrl', submissionId, 'submissionId', formattedSubId, 'formattedSubId');
   if (imageUrl && submissionId) {
     try {
       const tapeQuery = `SELECT * FROM ${schemaName}.tapes WHERE id = $1`;
@@ -102,6 +103,7 @@ export async function createSong(requestData: CreateSongRequestBody) {
       // pin audio and image to IPFS
       const audioIpfsHash = await pinAudioToGateway(tempAudioRef, user_id, tape_id, submissionId);
       const imageIpfsHash = await pinImageToGateway(imageUrl, user_id, tape_id, submissionId);
+      functions.logger.log(audioIpfsHash, 'audioIpfsHash', imageIpfsHash, 'imageIpfsHash')
 
       // add track to song table
       const song_type = 'submission';
@@ -125,8 +127,9 @@ export async function createSong(requestData: CreateSongRequestBody) {
       await pool.query('COMMIT');
       return { newSubmission: newSongQueryResult };
     } catch (error: any) {
+      functions.logger.log('error creating submission in createSong controller')
       await pool.query('ROLLBACK');
-      throw new Error(`Unable to delete song: ${error.message}`);
+      throw new Error(`Unable to create song: ${error.message}`);
     }
   } else throw new Error('Unable to create song');
 }
@@ -134,6 +137,7 @@ export async function createSong(requestData: CreateSongRequestBody) {
 export async function deleteSong(song_id: number) {
   // Begin a transaction
   await pool.query('BEGIN');
+  functions.logger.log('deleteSong controller')
 
   try {
     const songQuery = `SELECT * FROM ${schemaName}.songs WHERE id = $1`;
@@ -145,6 +149,7 @@ export async function deleteSong(song_id: number) {
     // parse hashes from song and image urls
     const audioHash = audio.split(common.ipfsPrefix)[1];
     const imageHash = sub_image.split(common.ipfsPrefix)[1];
+    functions.logger.log(audioHash, 'audioHash', imageHash, 'imageHash')
 
     // Unpin files from IPFS
     await unpinHashFromGateway(audioHash);
@@ -172,6 +177,7 @@ export async function deleteSong(song_id: number) {
     return { success: true, message: 'Song deleted successfully.' };
   } catch (error: any) {
     // Rollback the transaction in case of an error
+    functions.logger.log('error deleting song in deleteSong controller')
     await pool.query('ROLLBACK');
     throw new Error(`Unable to delete song: ${error.message}`);
   }
