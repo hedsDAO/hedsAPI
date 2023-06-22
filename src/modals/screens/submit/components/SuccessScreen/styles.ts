@@ -54,6 +54,7 @@ export const $displayNameTextStyles: TextProps = {
 export const $displayNameSecondaryTextStyles: TextProps = {
   mt: '0 !important',
   fontFamily: 'inter',
+  fontSize: 'xs',
   letterSpacing: 'wide',
   color: 'white',
   opacity: '75%',
