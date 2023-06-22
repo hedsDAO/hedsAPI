@@ -14,6 +14,7 @@ import axiosRetry from 'axios-retry';
  */
 
 export const pinImageToGateway = async (imageUrl: string, user_id: number, tape_id: number, submissionId: string) => {
+  functions.logger.log('pinImageToGateway-v2: imageUrl', imageUrl);
   try {
     const data = new FormData();
     const pinataMetadata = {
@@ -43,7 +44,7 @@ export const pinImageToGateway = async (imageUrl: string, user_id: number, tape_
       })
       .catch((error) => functions.logger.log(error));
   } catch (error) {
-    functions.logger.log(error);
+    functions.logger.log(error, 'error pinning image to gateway');
     return;
   }
 };

@@ -20,7 +20,9 @@ export const pinAudioToGateway = async (tempAudioRef: string, user_id: number, t
       .bucket()
       .file(tempAudioRef)
       .get();
+    functions.logger.log('pinAudioToGateway-v2: tempFile', tempFile)
     const filePath = await tempFile[0].getMetadata().then((res) => res[0].name.split('temp/')[1]);
+    functions.logger.log('pinAudioToGateway-v2: filePath', filePath);
     const fileStream = tempFile[0].createReadStream();
     const data = new FormData();
     const pinataMetadata = {
