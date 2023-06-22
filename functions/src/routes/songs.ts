@@ -32,9 +32,9 @@ router.get('/:audio', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  functions.logger.log('POST /songs')
+  functions.logger.log(req.body, 'req.body')
   try {
-    functions.logger.log('POST /songs')
-    functions.logger.log(req.body, 'req.body')
     const { tempAudioRef, user_id, tape_id, duration } = req.body;
     if (!tempAudioRef || !user_id || !tape_id || !duration) {
       functions.logger.log('Missing required fields')
