@@ -21,7 +21,7 @@ export const SuccessScreen = () => {
         </Skeleton>
         <Stack {...styles.$stackJustifyCenter}>
           <Text {...styles.$displayNameTextStyles}>{displayName}</Text>
-          <Text {...styles.$displayNameSecondaryTextStyles}>{displayName}</Text>
+          <Text {...styles.$displayNameSecondaryTextStyles}>{newSubmission?.track_name}</Text>
         </Stack>
       </Flex>
       <Button onClick={() => dispatch.submitModel.clearState()} {...styles.$exitButtonStyles}>
