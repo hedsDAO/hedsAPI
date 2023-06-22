@@ -174,7 +174,7 @@ export async function createSong(requestData: CreateSongRequestBody) {
 export async function deleteSong(song_id: number) {
   // Begin a transaction
   await pool.query('BEGIN');
-  functions.logger.log('deleteSong controller');
+  functions.logger.log('deleteSong controller', song_id);
 
   try {
     const songQuery = `SELECT * FROM ${schemaName}.songs WHERE id = $1`;
