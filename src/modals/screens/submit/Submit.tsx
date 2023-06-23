@@ -21,8 +21,10 @@ import * as styles from './styles';
 export const Submit = () => {
   const { isOpen, handleClose } = useSubmit();
   const currentStep = useSelector(store.select.submitModel.selectCurrentStep);
+  const isUploading = useSelector(store.select.submitModel.selectIsUploading);
+  const isLoading = useSelector(store.select.submitModel.selectIsLoading);
   return (
-    <Modal {...styles.$modalStyles} isOpen={isOpen} onClose={handleClose}>
+    <Modal closeOnOverlayClick={false} {...styles.$modalStyles} isOpen={isOpen} onClose={isUploading || isLoading ? () => {} : handleClose}>
       <ModalOverlay {...styles.$modalOverlayStyles} />
       <ModalContent {...styles.$modalContentStyles}>
         <ModalHeader {...styles.$modalHeaderStyles}>

@@ -31,6 +31,7 @@ export const $modalContentStyles: ModalContentProps = {
   bg: 'heds.bg4',
   m: 1,
   p: 1.5,
+  mx: {base: 3, lg: 0}
 };
 
 /**
