@@ -111,13 +111,5 @@ export const $successBackButtonStyles = (onClick: () => void): ButtonProps => ({
   colorScheme: 'whiteAlpha',
   size: 'sm',
   color: 'white',
-  width: '50%',
-});
-
-export const $successSubmitButtonStyles = (onClick: () => void): ButtonProps => ({
-  onClick,
-  colorScheme: 'red',
-  size: 'sm',
-  color: 'white',
-  width: '50%',
+  width: '100%',
 });
