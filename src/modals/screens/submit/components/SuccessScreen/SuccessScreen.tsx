@@ -16,11 +16,11 @@ export const SuccessScreen = () => {
   const [sound, setSound] = useState<Howl | null>(null);
   const dispatch = useDispatch<Dispatch>();
   const displayName = useSelector(store.select.authModel.selectUserDisplayName);
-  const prevSubmission = useSelector(store.select.submitModel.selectPrevSubmission);
+  const newSubmission = useSelector(store.select.submitModel.selectNewSubmission);
 
   useEffect(() => {
     const newSound = new Howl({
-      src: [prevSubmission?.audio],
+      src: [newSubmission?.audio],
       autoplay: false,
       format: ['mp3', 'wav'],
     });
@@ -83,13 +83,13 @@ export const SuccessScreen = () => {
       <Flex {...styles.$successFlexStyles}>
         <Skeleton {...styles.$successSkeletonStyles(hasSoundLoaded)}>
           <Center {...styles.$successCenterStyles}>
-            <Image {...styles.$successImageStyles(prevSubmission?.submission_data?.sub_image)} />
+            <Image {...styles.$successImageStyles(newSubmission?.submission_data?.sub_image)} />
             {isSoundPlaying ? <Text {...styles.$pauseIconStyles} onClick={pauseSound} /> : <Text {...styles.$playIconStyles} onClick={playSound} />}
           </Center>
         </Skeleton>
         <Stack {...styles.$successDisplayNameStackStyles}>
           <Text {...styles.$successDisplayNameTextStyles}>{displayName}</Text>
-          <Text {...styles.$successSubIdTextStyles}>{prevSubmission?.submission_data?.sub_id}</Text>
+          <Text {...styles.$successSubIdTextStyles}>{newSubmission?.submission_data?.sub_id}</Text>
         </Stack>
       </Flex>
       <Slider onChange={changeProgress} {...styles.$successSliderStyles(progress, sound?.duration() || 60)}>
@@ -105,14 +105,6 @@ export const SuccessScreen = () => {
       </Flex>
       <Flex {...styles.$successButtonsFlexStyles}>
         <Button {...styles.$successBackButtonStyles(() => dispatch.modalModel.setModal(null))}>{constants.REPLACE_BACK_BUTTON_TEXT}</Button>
-        <Button
-          {...styles.$successSubmitButtonStyles(() => {
-            dispatch.submitModel.deleteSubmission(prevSubmission?.song_id);
-            dispatch.submitModel.setCurrentStep(SubmitModelSteps.LOADING);
-          })}
-        >
-          {constants.REPLACE_BUTTON_TEXT}
-        </Button>
       </Flex>
     </Stack>
   );
