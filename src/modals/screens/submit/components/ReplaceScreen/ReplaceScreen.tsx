@@ -108,7 +108,7 @@ export const ReplaceScreen = () => {
         <Button
           {...styles.$replaceSubmitButtonStyles(() => {
             dispatch.submitModel.deleteSubmission(prevSubmission?.song_id);
-            dispatch.submitModel.setCurrentStep(SubmitModelSteps.TERMS);
+            dispatch.submitModel.setCurrentStep(SubmitModelSteps.LOADING);
           })}
         >
           {constants.REPLACE_BUTTON_TEXT}

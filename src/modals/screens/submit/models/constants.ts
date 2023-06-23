@@ -6,7 +6,7 @@ import { SubmitModelSteps } from '@/modals/screens/submit/models/common';
  */
 
 export const handleModalHeader = (step: SubmitModelSteps) => {
-  if (step === SubmitModelSteps.TERMS) return 'CURATED BY:';
+  if (step === SubmitModelSteps.TERMS) return 'CURATED BY';
   if (step === SubmitModelSteps.UPLOAD) return 'UPLOAD SUBMISSION';
   if (step === SubmitModelSteps.PREVIEW) return 'PREVIEW SUBMISSION';
   if (step === SubmitModelSteps.LOADING) return 'GENERATING SUBMISSION';
@@ -50,7 +50,8 @@ export const REPLACE_BUTTON_TEXT = 'REPLACE';
 export const REPLACE_BACK_BUTTON_TEXT = 'BACK';
 export const LOADING_SCREEN_TEXT = `this will take a few moments`;
 export const CONTINUE_BUTTON_TEXT = 'CONTINUE';
-export const SUCCESS_WARNING_TEXT = `DON'T SHARE THESE DETAILS, SUBMISSION NAMES MUST STAY ANONYMOUS.`;
+export const SUCCESS_TEXT = `DON'T SHARE THESE DETAILS.`;
+export const SUCCESS_WARNING_TEXT = `SUBMISSION NAMES MUST STAY ANONYMOUS.`;
 export const EXIT_BUTTON_TEXT = `EXIT`;
 export const UPLOAD_BUTTON_TEXT = `UPLOAD`;
 export const COUNTDOWN_HEADER_TEXT = 'SUBMISSIONS CLOSE IN';

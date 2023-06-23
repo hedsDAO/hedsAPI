@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 import { Box, Button, Flex, Skeleton, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Text, useBoolean } from '@chakra-ui/react';
-import { SubmitModelSteps } from '@/modals/screens/submit/models/common';
 import * as styles from '@/modals/screens/submit/components/PreviewScreen/styles';
 import * as constants from '@/modals/screens/submit/models/constants';
 
