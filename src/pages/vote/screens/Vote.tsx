@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 // Component
 import { Box, Divider } from '@chakra-ui/react';
@@ -16,7 +15,6 @@ import { Dispatch, store } from '@/store';
 import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 
 export const Vote = () => {
-  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
   const song = useSelector(store.select.songModel.selectSong);
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
@@ -24,14 +22,13 @@ export const Vote = () => {
 
   useEffect(() => {
     const retrieveProposalData = async () => {
-      await dispatch.tapeModel.getTape(id);
       if (proposalId) {
         await dispatch.voteModel.getProposalById(proposalId);
       }
     };
 
     retrieveProposalData();
-  }, [id, proposalId]);
+  }, [proposalId]);
 
   return (
     <>

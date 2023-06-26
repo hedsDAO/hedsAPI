@@ -18,6 +18,7 @@ export const TimelineButtons = () => {
   const dispatch = useDispatch<Dispatch>();
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
+  const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
 
   const formatTime = (time: number) => {
     if (time !== 0) {
@@ -67,7 +68,7 @@ export const TimelineButtons = () => {
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
           </HStack>
-          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} onClick={() => navigate(`/vote/${id}`)}>
+          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} onClick={() => navigate(`/vote/${proposalId}`)}>
             {cycle === 'vote' ? 'VOTE NOW' : 'RESULTS'}
           </Button>
         </>
