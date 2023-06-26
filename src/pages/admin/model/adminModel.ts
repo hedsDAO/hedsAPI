@@ -4,10 +4,13 @@ import { storage } from '@/App';
 import { ref, uploadBytes } from 'firebase/storage';
 import { CreateTapePayload } from '@/pages/admin/model/common';
 import { storageLink } from '@/pages/admin/model/constants';
+import { getArtistsAndCurators } from '@/api/user';
+import { User } from '@/models/common';
 
 export const adminModel = createModel<RootModel>()({
   state: {
     tape: {} as CreateTapePayload,
+    artists: [] as string[],
   },
   reducers: {
     setTapeDetails: (state, tapeData) => ({ ...state, tape: { ...state.tape, tapeData } }),
@@ -15,6 +18,7 @@ export const adminModel = createModel<RootModel>()({
     setSampleDetails: (state, songData) => ({ ...state, tape: { ...state.tape, songData } }),
     setCoverImage: (state, coverImage) => ({ ...state, tape: { ...state.tape, coverImage } }),
     setSampleAudio: (state, sampleAudio) => ({ ...state, tape: { ...state.tape, sampleAudio } }),
+    setArtistsWallets: (state, artists) => ({ ...state, artists: artists.map((artist: User) => artist.wallet) }),
   },
   selectors: (slice) => ({
     selectTapePayload: () => slice((state) => state.tape),
@@ -23,6 +27,7 @@ export const adminModel = createModel<RootModel>()({
     selectSongData: () => slice((state) => state.tape.songData),
     selectCoverImage: () => slice((state) => state.tape.coverImage),
     selectSampleAudio: () => slice((state) => state.tape.sampleAudio),
+    selectAllArtistsWallets: () => slice((state) => state.artists),
   }),
   effects: (dispatch) => ({
     async uploadCoverImage(file: File) {
@@ -43,6 +48,14 @@ export const adminModel = createModel<RootModel>()({
         });
       } catch (error: any) {
         console.log(error);
+      }
+    },
+    async getArtists() {
+      try {
+        const response = await getArtistsAndCurators();
+        this.setArtistsWallets(response.data.artists);
+      } catch (e) {
+        console.error(e);
       }
     },
   }),
