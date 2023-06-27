@@ -13,14 +13,12 @@ import * as styles from '@pages/vote/screens/styles';
 
 // Utils
 import { Dispatch, store } from '@/store';
-import { Metatags, MetatagTypes } from '@/common/utilities/Metatags';
 
 export const Vote = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
   const song = useSelector(store.select.songModel.selectSong);
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
-  const vote = useSelector(store.select.voteModel.selectCurrentVote);
 
   useEffect(() => {
     const retrieveProposalData = async () => {
@@ -34,20 +32,12 @@ export const Vote = () => {
   }, [id, proposalId]);
 
   return (
-    <>
-      {vote ? (
-        <Metatags vote={vote} type={MetatagTypes.VOTE}>
-          <Box>
-            <Header />
-            {song && <Waveform />}
-            <Divider {...styles.$dividerStyles} />
-            <TapeInfo />
-            <SubmissionResultContainer />
-          </Box>
-        </Metatags>
-      ) : (
-        <></>
-      )}
-    </>
+    <Box>
+      <Header />
+      {song && <Waveform />}
+      <Divider {...styles.$dividerStyles} />
+      <TapeInfo />
+      <SubmissionResultContainer />
+    </Box>
   );
 };
