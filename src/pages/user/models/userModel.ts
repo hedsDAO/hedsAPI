@@ -46,6 +46,7 @@ export const userModel = createModel<RootModel>()({
     setUserSongs: (state, user_songs: any) => ({ ...state, user_songs }),
     setUserLikes: (state, user_likes: any) => ({ ...state, user_likes }),
     setUserEvents: (state, user_events: any) => ({ ...state, user_events }),
+    setSpotlight: (state, spotlight: Song) => ({ ...state, spotlight }),
     setUserCollection: (state, collection: UserCollection) => ({ ...state, collection: collection }),
     setCollectionArgs: (state, collection_args: TapeCollectionArg[]) => ({ ...state, collection_args }),
     setIsFetchingCollection: (state, isFetchingCollection: boolean) => ({ ...state, isFetchingCollection }),
@@ -59,9 +60,9 @@ export const userModel = createModel<RootModel>()({
     selectDisplayName: () => slice((state) => state.user?.display_name),
     selectDescription: () => slice((state) => state.user?.description),
     selectTwitterHandle: () => slice((state) => state.user?.twitter_handle),
-    selectSpotlight: () => slice((state): Song => state.user?.spotlight),
+    selectSpotlight: () => slice((state): Song => state.spotlight),
     selectWallet: () => slice((state) => state.user?.wallet),
-    selectSongs: () => slice((state) => state.user_songs?.filter(song => song.public === true)),
+    selectSongs: () => slice((state) => state.user_songs?.filter((song) => song.public === true)),
     selectAllSongs: () => slice((state) => state.user_songs),
     selectNumOfSongs: () => slice((state) => state.user_songs?.length),
     selectLikes: () => slice((state) => state.user_likes),
@@ -99,7 +100,7 @@ export const userModel = createModel<RootModel>()({
                 totalVp += itemVp;
               }
             }
-            
+
             if (isOG) totalVp += 10;
             if (isArtist) totalVp += 15;
             this.setUserVp(totalVp);
@@ -108,6 +109,7 @@ export const userModel = createModel<RootModel>()({
           console.log(e);
         }
       }
+      if (spotlight?.data) this.setSpotlight(spotlight?.data);
       this.setUser({ ...response.data });
       this.setUserSongs(user_songs?.data || []);
       this.setUserLikes(user_likes?.data || []);

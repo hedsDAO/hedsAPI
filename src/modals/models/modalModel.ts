@@ -7,6 +7,7 @@ export enum Modals {
   TWITTER,
   DOWNLOAD,
   MINT,
+  SPOTLIGHT
 }
 
 export interface ModalState {

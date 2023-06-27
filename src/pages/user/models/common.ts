@@ -21,6 +21,7 @@ export enum UserNavTabs {
 
 export interface UserModelState {
   user: User;
+  spotlight?: Song; 
   user_songs: UserSong[];
   user_likes: Song[];
   user_events: UserEvents[];

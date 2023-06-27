@@ -96,23 +96,16 @@ export const $dividerStyles: DividerProps = {
 };
 
 /**
- * @name TEMP_DESC_STYLES
- * @description Temporary styles for the description Text elements. remove when spotlight functionality is added.
- */
-
-const TEMP_DESC_STYLES = { fontSize: { base: '2xs', lg: 'xs' }, mt: '-1.5 !important', fontWeight: 'light' };
-
-/**
  * @type {TextProps}
  * @description Styles for the 'ARTIST' Text element.
  */
 export const $artistTextStyles: TextProps = {
   fontSize: { base: '2xs', xl: 'xs' },
   fontFamily: 'karla',
-  fontWeight: 'bold',
+  fontWeight: 'medium',
   opacity: '40%',
   color: 'white',
-  ...TEMP_DESC_STYLES, // remove when spotlight functionality is added
+  mt: '0 !important',
 };
 
 /**
@@ -121,12 +114,12 @@ export const $artistTextStyles: TextProps = {
  */
 export const $artistNameTextStyles: ExtendedTextProps = {
   'data-testid': 'spotlight-artist-name',
-  opacity: '80%',
+  opacity: '70%',
   letterSpacing: 'wide',
   fontFamily: 'inter',
   mt: '-1 !important',
   color: 'white',
-  fontSize: { base: 'sm', md: 'md', xl: 'md' },
+  fontSize: { base: 'xs', md: 'sm', xl: 'sm' },
 };
 
 /**
@@ -160,11 +153,11 @@ export const $flexIconsStyles: FlexProps = {
 
 /**
  * @type {ButtonProps}
- * @description Styles for the play-circle icon Box element.
+ * @description Styles for the pen-circle icon Box element.
  */
-export const $playCircleIconStyles: ButtonProps = {
+export const $penCircleIconStyles: ButtonProps = {
   as: 'i',
-  className: 'fa-solid fa-play-circle',
+  className: 'fa-solid fa-pen-circle',
   color: 'heds.200',
   fontSize: '2xl',
   px: '0',
@@ -177,13 +170,12 @@ export const $playCircleIconStyles: ButtonProps = {
 
 /**
  * @type {ButtonProps}
- * @description Styles for the heart icon Box element.
+ * @description Styles for the play-circle icon Box element.
  */
-export const $heartIconStyles: ButtonProps = {
+export const $playCircleIconStyles: ButtonProps = {
   as: 'i',
-  className: 'fa-solid fa-heart',
-  color: 'heds.100',
-  opacity: '40%',
+  className: 'fa-solid fa-play-circle',
+  color: 'heds.200',
   fontSize: '2xl',
   px: '0',
   py: '0',
@@ -209,7 +201,25 @@ export const $gridItemIconStyles: GridItemProps = {
  */
 export const $flexIconLargeStyles: FlexProps = {
   h: 'full',
+  w: 'full',
+  pr: 3,
   alignItems: 'center',
+  justifyContent: 'end',
+};
+
+/**
+ * @type {ButtonProps}
+ * @description Styles for the play-circle icon Box element for larger screens.
+ */
+export const $penCircleIconLargeStyles: ButtonProps = {
+  as: 'i',
+  className: 'fa-solid fa-pen-circle',
+  color: 'heds.200',
+  fontSize: '4xl',
+  px: '0',
+  py: '0',
+  backgroundColor: 'transparent',
+  _hover: { bg: 'transparent' },
 };
 
 /**
@@ -222,24 +232,7 @@ export const $playCircleIconLargeStyles: ButtonProps = {
   color: 'heds.200',
   fontSize: '4xl',
   px: '0',
-  py: '0',
-  isDisabled: true,
-  backgroundColor: 'transparent',
-  _hover: { bg: 'transparent' },
-};
-
-/**
- * @type {ButtonProps}
- * @description Styles for the heart icon Box element for larger screens.
- */
-export const $heartIconLargeStyles: ButtonProps = {
-  as: 'i',
-  className: 'fa-solid fa-heart',
-  color: 'heds.100',
-  opacity: '40%',
-  fontSize: '4xl',
-  ml: 3,
-  px: '0',
+  ml: 2,
   py: '0',
   isDisabled: true,
   backgroundColor: 'transparent',

@@ -11,11 +11,6 @@ export const USER_NAV_TABS: string[] = ['Collection', 'Likes', 'Discography'];
  */
 export const ARTIST_TEXT: string = 'ARTIST';
 
-/**
- * @constant {string} TRACK_TEXT
- * @description String that contains the text for the 'TRACK' Text element on the spotlight component.
- */
-export const TRACK_TEXT: string = 'TRACK';
 
 /**
  * @constant {string} VP_TOOLTIP_TEXT
