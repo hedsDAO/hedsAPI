@@ -16,6 +16,7 @@ import { AuthWrapper } from './auth/components/AuthWrapper';
 import { getPersistor } from '@rematch/persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { AudioControllerProvider } from '@/hooks/useAudio/models/AudioContext';
+import { HelmetProvider } from 'react-helmet-async';
 import { store } from './store';
 
 import App from '@/App';
@@ -46,22 +47,24 @@ const client = createClient({ provider, autoConnect: true, connectors: [INJECTED
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiConfig client={client}>
-    <RematchProvider store={store}>
-      <ChakraProvider theme={defaultTheme}>
-        <BrowserRouter>
-          <PersistGate persistor={persistor}>
-            <AudioControllerProvider>
-              <AuthWrapper>
-                <ModalWrapper>
-                  <GlobalAudio>
-                    <App />
-                  </GlobalAudio>
-                </ModalWrapper>
-              </AuthWrapper>
-            </AudioControllerProvider>
-          </PersistGate>
-        </BrowserRouter>
-      </ChakraProvider>
-    </RematchProvider>
+    <HelmetProvider>
+      <RematchProvider store={store}>
+        <ChakraProvider theme={defaultTheme}>
+          <BrowserRouter>
+            <PersistGate persistor={persistor}>
+              <AudioControllerProvider>
+                <AuthWrapper>
+                  <ModalWrapper>
+                    <GlobalAudio>
+                      <App />
+                    </GlobalAudio>
+                  </ModalWrapper>
+                </AuthWrapper>
+              </AudioControllerProvider>
+            </PersistGate>
+          </BrowserRouter>
+        </ChakraProvider>
+      </RematchProvider>
+    </HelmetProvider>
   </WagmiConfig>,
 );
