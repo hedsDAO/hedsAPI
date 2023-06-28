@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
+import { store } from '@/store';
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react';
 import { ConfirmScreen } from '@/modals/screens/spotlight/components/ConfirmScreen/ConfirmScreen';
 import { ReplaceScreen } from '@/modals/screens/spotlight/components/ReplaceScreen/ReplaceScreen';
 import { SearchScreen } from '@/modals/screens/spotlight/components/SearchScreen/SearchScreen';
 import { useSpotlight } from '@/modals/screens/spotlight/components/useSpotlight/useSpotlight';
-import { store } from '@/store';
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react';
 import { SpotlightSteps } from '@/modals/screens/spotlight/models/common';
+import * as constants from '@/modals/screens/spotlight/models/constants';
+import * as styles from '@/modals/screens/spotlight/styles';
 
 /**
  * @function Spotlight
@@ -17,15 +19,13 @@ export const Spotlight = () => {
   const { isOpen, handleClose } = useSpotlight();
   const currentStep = useSelector(store.select.spotlightModel.selectCurrentStep);
   return (
-    <Modal size="lg" motionPreset="slideInBottom" isCentered isOpen={isOpen} onClose={handleClose}>
+    <Modal {...styles.$spotlightModalStyles} onClose={handleClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
-      <ModalContent minH="10vh" m={1}>
+      <ModalContent {...styles.$spotlightModalContentStyles}>
         <ModalHeader>
-          <Text color="white" fontSize={'sm'} fontFamily={'inter'} letterSpacing="widest">
-            SPOTLIGHT
-          </Text>
+          <Text {...styles.$spotlightHeaderTextStyles}>{constants.SPOTLIGHT_MODAL_HEADER}</Text>
         </ModalHeader>
-        <ModalCloseButton color="white" />
+        <ModalCloseButton {...styles.$spotlightCloseButtonStyles} />
         <ModalBody>
           {currentStep === SpotlightSteps.REPLACE && <ReplaceScreen />}
           {currentStep === SpotlightSteps.CONFIRM && <ConfirmScreen />}

@@ -39,6 +39,9 @@ export const User = () => {
   // Get user data when wallet changes
   useEffect(() => {
     if (wallet?.length) dispatch.userModel.getUser(wallet);
+    return () => {
+      dispatch.userModel.setSpotlight(null);
+    }
   }, [wallet]);
 
   // Reset pagination when tab changes

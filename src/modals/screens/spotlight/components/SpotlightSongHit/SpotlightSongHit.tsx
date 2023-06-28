@@ -1,15 +1,19 @@
-import { Configure, Index } from 'react-instantsearch-dom';
-import { Flex, Stack, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { Fragment, useEffect } from 'react';
-import { connectHits, Highlight } from 'react-instantsearch-dom';
+import { Configure, connectHits, Highlight, Index } from 'react-instantsearch-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { SpotlightSteps } from '@/modals/screens/spotlight/models/common';
 import { Dispatch, store } from '@/store';
-import { SongHitProps } from '@components/Search/models/common';
+import { Flex, Stack, Text } from '@chakra-ui/react';
 import { CustomHitImage } from '@components/Search/components/CustomHitImage/CustomHitImage';
+import { SongHitProps } from '@components/Search/models/common';
 import * as styles from '@components/Search/components/SongHit/styles';
 import * as constants from '@components/Search/models/constants';
-import { SpotlightSteps } from '../../models/common';
+
+/**
+ * @function SpotlightSongHit
+ * @description A component to display a hit for a song from search results.
+ * @returns {JSX.Element} - A component rendering a list of song hits or an empty fragment.
+ */
 
 export const SpotlightSongHit = () => {
   return (

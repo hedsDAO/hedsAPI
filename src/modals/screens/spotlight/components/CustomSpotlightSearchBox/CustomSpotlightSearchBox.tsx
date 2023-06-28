@@ -4,8 +4,8 @@ import { Flex, Spinner, Input, IconButton } from '@chakra-ui/react';
 import { Fragment, useEffect } from 'react';
 import { connectSearchBox } from 'react-instantsearch-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as styles from '@components/Search/components/CustomSearchBar/styles';
-import * as constants from '@components/Search/models/constants';
+import * as styles from '@/modals/screens/spotlight/components/CustomSpotlightSearchBox/styles';
+import * as constants from '@/modals/screens/spotlight/models/constants';
 
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }: any) => {
   const dispatch = useDispatch<Dispatch>();
@@ -18,10 +18,10 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }: any) => {
 
   return (
     <Fragment>
-      <Flex {...styles.$flexStyles} mb={4} as="form" action="" role="search" noValidate={true}>
+      <Flex {...styles.$flexStyles} as="form" action="" role="search" noValidate={true}>
         {isSearchStalled ? <Spinner {...styles.$spinnerStyles} /> : <SearchIcon {...styles.$searchIconStyles} />}
         <Input
-          placeholder={constants.SEARCH_PLACHOLDER}
+          placeholder={constants.SEARCH_PLACEHOLDER}
           {...styles.$inputStyles}
           onFocus={() => dispatch.spotlightModel.setSearchIsSearchOpen(true)}
           value={currentRefinement}

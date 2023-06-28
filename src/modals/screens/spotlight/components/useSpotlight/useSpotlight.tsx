@@ -24,7 +24,6 @@ export const useSpotlight = () => {
       dispatch.spotlightModel.setSpotlightId(userData?.spotlight);
       dispatch.spotlightModel.setCurrentStep(SpotlightSteps.REPLACE);
     }
-
     return () => {
       dispatch.spotlightModel.clearState();
     };

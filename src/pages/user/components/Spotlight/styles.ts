@@ -81,6 +81,8 @@ export const $submissionTextStyles: ExtendedTextProps = {
   fontFamily: 'inter',
   mt: '-1 !important',
   color: 'white',
+  maxW: '16ch',
+  isTruncated: true,
   fontSize: { base: 'sm', md: 'md', xl: 'md' },
 };
 
@@ -90,6 +92,7 @@ export const $submissionTextStyles: ExtendedTextProps = {
  */
 export const $dividerStyles: DividerProps = {
   opacity: '30%',
+  display: { base: 'none', lg: 'initial' },
   maxW: { base: '24', xl: '52' },
   w: 'full',
   borderColor: 'heds.100',
@@ -97,7 +100,7 @@ export const $dividerStyles: DividerProps = {
 
 /**
  * @type {TextProps}
- * @description Styles for the 'ARTIST' Text element.
+ * @description Styles for the 'There's nothing here' Text element.
  */
 export const $artistTextStyles: TextProps = {
   fontSize: { base: '2xs', xl: 'xs' },
@@ -105,7 +108,7 @@ export const $artistTextStyles: TextProps = {
   fontWeight: 'medium',
   opacity: '40%',
   color: 'white',
-  mt: '0 !important',
+  mt: { base: '1.5 !important', lg: '0 !important' },
 };
 
 /**
@@ -114,12 +117,13 @@ export const $artistTextStyles: TextProps = {
  */
 export const $artistNameTextStyles: ExtendedTextProps = {
   'data-testid': 'spotlight-artist-name',
+
   opacity: '70%',
   letterSpacing: 'wide',
   fontFamily: 'inter',
   mt: '-1 !important',
   color: 'white',
-  fontSize: { base: 'xs', md: 'sm', xl: 'sm' },
+  fontSize: { base: '2xs', md: 'xs', xl: 'xs' },
 };
 
 /**
@@ -128,6 +132,7 @@ export const $artistNameTextStyles: ExtendedTextProps = {
  */
 export const $detailsStackStyles: StackProps = {
   ml: { base: 3, md: 10, lg: 5, xl: 0 },
+  mt: { base: 1, lg: 0 },
   h: 'full',
   justifyContent: 'center',
 };
@@ -147,8 +152,8 @@ export const $flexStyles: FlexProps = {
  */
 export const $flexIconsStyles: FlexProps = {
   display: { base: 'flex', xl: 'none' },
-  gap: 1,
   justifyContent: 'end',
+  mt: '-5 !important',
 };
 
 /**
@@ -162,7 +167,7 @@ export const $penCircleIconStyles: ButtonProps = {
   fontSize: '2xl',
   px: '0',
   py: '0',
-  isDisabled: true,
+  mr: -1,
   backgroundColor: 'transparent',
   _hover: { bg: 'transparent' },
   minH: 'unset !important',
@@ -179,7 +184,6 @@ export const $playCircleIconStyles: ButtonProps = {
   fontSize: '2xl',
   px: '0',
   py: '0',
-  isDisabled: true,
   backgroundColor: 'transparent',
   _hover: { bg: 'transparent' },
   minH: 'unset !important',
@@ -218,8 +222,9 @@ export const $penCircleIconLargeStyles: ButtonProps = {
   fontSize: '4xl',
   px: '0',
   py: '0',
+  pointerEvents: 'auto',
   backgroundColor: 'transparent',
-  _hover: { bg: 'transparent' },
+  _hover: { bg: 'transparent', opacity: '80%' },
 };
 
 /**
@@ -234,7 +239,7 @@ export const $playCircleIconLargeStyles: ButtonProps = {
   px: '0',
   ml: 2,
   py: '0',
-  isDisabled: true,
+  pointerEvents: 'auto',
   backgroundColor: 'transparent',
-  _hover: { bg: 'transparent' },
+  _hover: { bg: 'transparent', opacity: '80%' },
 };

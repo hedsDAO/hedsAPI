@@ -1,12 +1,12 @@
+import type { RootModel } from '@/models';
+import { createModel } from '@rematch/core';
 import { getSongByHash } from '@/api/song';
 import { updateUser } from '@/api/user';
+import { Song } from '@/models/common';
+import { SpotlightSearchState, SpotlightState, SpotlightSteps } from '@/modals/screens/spotlight/models/common';
 import { SongHitProps } from '@/components/Search/models/common';
 import * as constants from '@/modals/screens/spotlight/models/constants';
-import { Song } from '@/models/common';
-import { createModel } from '@rematch/core';
-import { SpotlightSearchState, SpotlightState, SpotlightSteps } from './common';
 
-import type { RootModel } from '@/models';
 export const spotlightModel = createModel<RootModel>()({
   state: {
     currentStep: SpotlightSteps.SEARCH,
