@@ -29,5 +29,12 @@ export interface CreateTapePayload {
 }
 
 export interface AdminState {
-  tape: CreateTapePayload;
+  coverImage: string;
+  sampleAudio: string;
+  curatorWallet: string;
+  signature: string;
+  message: string;
+  tapeDetails: CreateTapeDetails;
+  songDetails: CreateSongDetails;
+  artists: string[];
 }

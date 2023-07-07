@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 import { Box, Button, FormControl, FormLabel, Flex, Input, Stack, Text } from '@chakra-ui/react';
 
-export const SampleDetails = ({ goToPrevious, handleSubmit }: { goToPrevious: () => void; handleSubmit: () => void }) => {
+export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => void; goToNext: () => void }) => {
   const [wallet, setWallet] = useState<string>('');
   const [fileName, setFileName] = useState<string>('');
   const [trackName, setTrackName] = useState<string>('');
@@ -14,7 +14,7 @@ export const SampleDetails = ({ goToPrevious, handleSubmit }: { goToPrevious: ()
   const handleClick = () => {
     dispatch.adminModel.setCuratorWallet(wallet);
     dispatch.adminModel.setSampleDetails({ trackName, duration });
-    handleSubmit();
+    goToNext();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,16 +23,16 @@ export const SampleDetails = ({ goToPrevious, handleSubmit }: { goToPrevious: ()
   };
 
   const formValidation = () => {
-    if (!wallet || !fileName || !trackName || !duration) {
-      return true;
-    }
+    // if (!wallet || !fileName || !trackName || !duration) {
+    //   return true;
+    // }
     return false;
   };
 
   return (
-    <Box maxW="md" mx="auto" mt={12}>
-      <Stack spacing={5} maxW="md" mx="auto" mt={12}>
-        <FormControl isRequired>
+    <Box w="full" mt={6}>
+      <Stack spacing={5} pl={12}>
+        <FormControl>
           <FormLabel color="white">Upload sample</FormLabel>
           <Flex alignItems="center" gap="1rem">
             <Button onClick={() => inputRef.current?.click()}>Choose file</Button>
@@ -40,25 +40,56 @@ export const SampleDetails = ({ goToPrevious, handleSubmit }: { goToPrevious: ()
           </Flex>
           <Input ref={inputRef} type="file" accept=".mp3,audio/*" hidden color="white" onChange={(e) => handleFileChange(e)} />
         </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="white">Curator wallet address</FormLabel>
-          <Input borderColor="gray.400" color="white" value={wallet} onChange={(e) => setWallet(e.target.value)} />
+        <FormControl>
+          <FormLabel color="gray.200">Sample Title</FormLabel>
+          <Input
+            placeholder="what's the sample title?"
+            variant="flushed"
+            borderTop="none"
+            borderLeft="none"
+            borderRight="none"
+            borderColor="gray.400"
+            color="white"
+            value={trackName}
+            onChange={(e) => setTrackName(e.target.value)}
+          />
         </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Track name</FormLabel>
-          <Input borderColor="gray.400" color="white" value={trackName} onChange={(e) => setTrackName(e.target.value)} />
+        <FormControl>
+          <FormLabel color="white">Curator Wallet Address</FormLabel>
+          <Input
+            placeholder="0x420..."
+            variant="flushed"
+            borderTop="none"
+            borderLeft="none"
+            borderRight="none"
+            borderColor="gray.400"
+            color="white"
+            value={wallet}
+            onChange={(e) => setWallet(e.target.value)}
+          />
         </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Duration</FormLabel>
-          <Input borderColor="gray.400" color="white" type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
+        <FormControl>
+          <FormLabel color="gray.200">Submission Duration (seconds)</FormLabel>
+          <Input
+            placeholder="60"
+            variant="flushed"
+            borderTop="none"
+            borderLeft="none"
+            borderRight="none"
+            borderColor="gray.400"
+            color="white"
+            value={duration}
+            type="number"
+            onChange={(e) => setDuration(e.target.value)}
+          />
         </FormControl>
+        <Flex justifyContent="space-between" mt={12}>
+          <Button onClick={goToPrevious}>BACK</Button>
+          <Button colorScheme="purple" onClick={handleClick} isDisabled={formValidation()}>
+            NEXT
+          </Button>
+        </Flex>
       </Stack>
-      <Flex justifyContent="space-between" maxW="lg" mt={12} mx="auto">
-        <Button onClick={goToPrevious}>Back</Button>
-        <Button colorScheme="blue" onClick={handleClick} isDisabled={formValidation()}>
-          Submit
-        </Button>
-      </Flex>
     </Box>
   );
 };

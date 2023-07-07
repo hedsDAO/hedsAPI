@@ -5,9 +5,9 @@ export const createTapeSteps = [
   },
   {
     title: 'Step 2',
-    description: 'Sample Details',
+    description: 'Sample',
   },
-  { title: 'Step 3', description: 'Review' },
+  { title: 'Step 3', description: 'Timeline' },
 ];
 
 export const signMessageForTapeCreation = 'Sign this message to create a tape';
@@ -75,3 +75,10 @@ export const ogAddressesAndVp = {
   '0xf6f5b3ce3cd7f8c17baef34eba9a2bac74c048ab': 10,
   '0xf8dca3189c747ee1d23bed5d7377121912519efd': 10,
 };
+
+export const adminWallets = [
+  '0xab4ed9b7d2b4b6b1deb06297313fa5559d92fb69',
+  '0xf089af48c0abd5fa41741c334e18083f6a502045',
+  '0x921fc6cf9334a6248d6b9f460aa32c5914778f82',
+  '0x55c59ae5b124261d021421f07c6cad699c993b3d',
+];
