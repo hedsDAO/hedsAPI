@@ -14,7 +14,7 @@ export const IconButtons = () => {
     <Box {...styles.$iconButtonsBoxStyles}>
       <Flex {...styles.$iconButtonsFlexStyles}>
         {/* PROMO ICONS */}
-        <Flex alignItems={'center'} gap={3}>
+        {/* <Flex alignItems={'center'} gap={3}>
           <Text fontWeight={'bold'} fontSize="22px" fontFamily={'karla'} color="heds.bg">
             RVSP
           </Text>
@@ -23,14 +23,14 @@ export const IconButtons = () => {
               <i className={constants.TICKET_ICON} />
             </Box>
           </Tooltip>
-        </Flex>
+        </Flex> */}
         {/* TAPE ICONS */}
-        {/* <Tooltip label="View Artist" fontSize="xs" fontFamily="space">
+        <Tooltip label="View Artist" fontSize="xs" fontFamily="space">
           <Box to={`/u/${constants.ARTIST_WALLET}`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.ARTISTS_ICON} />
           </Box>
         </Tooltip>
-        <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
+        {/* <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
           <Box to={`/tape/16`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.TAPES_ICON}></i>
           </Box>

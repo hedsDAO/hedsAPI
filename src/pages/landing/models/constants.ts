@@ -1,9 +1,9 @@
-export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmXztcYBANafrL6jMaegFtPNk16qTHeqHhheNASUhv5t3F';
+export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmPf7rjZ5MNkQdhTzV2s6oDaFRKzaR18jwvqfQY3QVrmAH';
 
-export const ARTIST_NAME_TEXT = 'live';
-export const ARTIST_WALLET = '0x8e09b494f20aeadb8d9b3c8b3bec7cb6c7e18e83';
-export const TAPE_NAME_TEXT = 'unison';
-export const HEDS_PRESENTS_TEXT = 'heds x hifi labs present:';
+export const ARTIST_NAME_TEXT = 'heds x lnrz';
+export const ARTIST_WALLET = '0x2acccdabc0acf92d670d430aaec6b440311cc7a5';
+export const TAPE_NAME_TEXT = 'hedsTAPE 15';
+export const HEDS_PRESENTS_TEXT = 'heds x lnrz present:';
 
 export const ARTISTS_ICON = 'fa-regular fa-circle-user';
 export const TAPES_ICON = 'fa-sharp fa-light fa-cassette-tape';
