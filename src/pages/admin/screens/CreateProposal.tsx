@@ -4,7 +4,7 @@ import { Dispatch, store } from '@/store';
 import { useBlockNumber } from 'wagmi';
 
 // Components
-import { Box, Button, Select, Stack, Flex, FormControl, FormLabel, Textarea } from '@chakra-ui/react';
+import { Box, Button, Select, Stack, Text, Flex, FormControl, FormLabel, Textarea } from '@chakra-ui/react';
 
 // Utils
 import { createClient, Proposal } from 'hedsvote';
@@ -12,6 +12,9 @@ import { mainnet, goerli } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { formatProposalPayload, formatStrategiesPayload } from '@/pages/admin/helpers';
 import { editTape } from '@/api/tape';
+
+// Constants
+import { adminWallets } from '@/pages/admin/model/constants';
 
 export const CreateProposal = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -67,32 +70,40 @@ export const CreateProposal = () => {
   };
 
   return (
-    <Box pt={2} px={5} maxW="7xl" mx="auto">
-      <Stack spacing={5} maxW="md" mx="auto" mt={12}>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Select tape</FormLabel>
-          {tapes.length && (
-            <Select borderColor="gray.400" color="white" placeholder="Select tape" onChange={(e) => setTapeId(e.target.value)}>
-              {tapes.map((tape) => {
-                return (
-                  <option key={tape.id} value={tape.id}>
-                    {tape.name}
-                  </option>
-                );
-              })}
-            </Select>
-          )}
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Description</FormLabel>
-          <Textarea borderColor="gray.400" color="white" value={description} onChange={(e) => setDescription(e.target.value)} />
-        </FormControl>
-      </Stack>
-      <Flex justifyContent="flex-end" maxW="lg" mt={12} mx="auto">
-        <Button colorScheme="blue" onClick={handleClick} isDisabled={isFormDisabled()}>
-          Submit
-        </Button>
-      </Flex>
+    <Box pt={12} px={5} maxW="3xl" mx="auto" height="fit-content">
+      {adminWallets.includes(adminWallet) ? (
+        <>
+          <Stack spacing={5} maxW="md" mx="auto" mt={12}>
+            <FormControl isRequired>
+              <FormLabel color="gray.200">Select tape</FormLabel>
+              {tapes.length && (
+                <Select borderColor="gray.400" color="white" placeholder="Select tape" onChange={(e) => setTapeId(e.target.value)}>
+                  {tapes.map((tape) => {
+                    return (
+                      <option key={tape.id} value={tape.id}>
+                        {tape.name}
+                      </option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel color="gray.200">Description</FormLabel>
+              <Textarea borderColor="gray.400" color="white" value={description} onChange={(e) => setDescription(e.target.value)} />
+            </FormControl>
+            <Flex justifyContent="flex-end" maxW="lg" mt={12} mx="auto">
+              <Button colorScheme="blue" onClick={handleClick} isDisabled={isFormDisabled()}>
+                Submit
+              </Button>
+            </Flex>
+          </Stack>
+        </>
+      ) : (
+        <Text fontFamily="mono" color="white" fontSize="3xl" fontWeight="bold">
+          You are not authorized to create a tape
+        </Text>
+      )}
     </Box>
   );
 };
