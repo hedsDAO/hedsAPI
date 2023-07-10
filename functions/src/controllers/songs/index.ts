@@ -1,6 +1,14 @@
-import { pool } from '../../database';
-import { LikeData, SongData } from './types';
+import { Configuration, OpenAIApi } from 'openai';
 import schemaName from '../../../config';
+import * as common from '../../common';
+import * as randomData from '../../data/randomData';
+import * as functions from 'firebase-functions';
+import { pool } from '../../database';
+import { pinAudioToGateway } from '../pinata/pinAudioToGateway-v2';
+import { pinImageToGateway } from '../pinata/pinImageToGateway-v2';
+import { unpinHashFromGateway } from '../pinata/unpinHashFromGateway-v2';
+
+import { CreateSongRequestBody, LikeData } from './types';
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
@@ -58,72 +66,154 @@ export const getSongEventsById = async (song_id: number) => {
   return rows;
 };
 
-export async function createSong(songData: SongData, user_id: number) {
-  const { audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes } = songData;
-
+export async function createSong(requestData: CreateSongRequestBody) {
   // Begin a transaction
   await pool.query('BEGIN');
+  functions.logger.log('createSong controller');
+  let tapeCover, tapeName, audioIpfsHash, imageIpfsHash, imageUrl, formattedSubId, newSongQueryResult, songId;
+
+  // generate random submission id
+  const { tempAudioRef, user_id, tape_id, duration } = requestData;
+  const { adjectives, animals } = randomData;
+  const randomAdj = Math.ceil(Math.random() * adjectives.length);
+  const randomAnimal = Math.ceil(Math.random() * animals.length);
+  const submissionId = [adjectives[randomAdj], animals[randomAnimal]].join(' ');
+  functions.logger.log(submissionId, 'submissionId');
 
   try {
-    // Insert the new song into the song table
-    const songQuery = `
-        INSERT INTO ${schemaName}.songs (
-          audio, cover, duration, public, track_name, type,
-          submission_data, cyanite_id, created, total_likes
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-        RETURNING id;
-      `;
-
-    const songValues = [audio, cover, duration, isPublic, track_name, type, submission_data, cyanite_id, created, total_likes];
-
-    const songResult = await pool.query(songQuery, songValues);
-    const songId = songResult.rows[0].id;
-
-    // Insert the song artist into the song_artists table
-    const artistQuery = `
-        INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent)
-        VALUES ($1, $2, $3, $4);
-      `;
-
-    // Assuming the user is verified and has 100% ownership by default
-    const verified = true;
-    const ownership_percent = 100;
-
-    const artistValues = [songId, user_id, verified, ownership_percent];
-    await pool.query(artistQuery, artistValues);
-
-    // Commit the transaction
-    await pool.query('COMMIT');
-
-    return { songId, ...songData, user_id, verified, ownership_percent };
+    // generate image from submission id
+    const openai: OpenAIApi = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
+    const prompt = common.generatePrompt(submissionId);
+    const generatedImage = await openai.createImage({ prompt, n: 1, size: '256x256' });
+    imageUrl = generatedImage?.data?.data?.[0]?.url;
+    const splitWords = submissionId.split(' ');
+    formattedSubId = splitWords[0]?.toLowerCase() + splitWords[1]?.toUpperCase();
+    functions.logger.log(imageUrl, 'imageUrl');
   } catch (error: any) {
-    // Rollback the transaction in case of an error
+    functions.logger.log('error generating image in createSong controller');
+    throw new Error(`Unable to generate image: ${error.message}`);
+  }
+
+  try {
+    // query tape and get tape name
+    const tapeQuery = `SELECT * FROM ${schemaName}.tapes WHERE id = $1`;
+    const tapeQueryResponse = await pool.query(tapeQuery, [tape_id]);
+    const tapeData = tapeQueryResponse?.rows?.[0];
+    tapeCover = tapeData?.image;
+    tapeName = tapeData?.name;
+    functions.logger.log(tapeData, 'tapeData', tapeQueryResponse, 'tapeQueryResponse');
+  } catch (error: any) {
+    functions.logger.log('error getting tape data in createSong controller');
+    throw new Error(`Unable to get tape data: ${error.message}`);
+  }
+
+  try {
+    // pin audio and image to IPFS
+    if (imageUrl) imageIpfsHash = await pinImageToGateway(imageUrl, user_id, tape_id, submissionId);
+    if (!imageIpfsHash) throw new Error(`Unable to pin image to gateway`);
+    audioIpfsHash = await pinAudioToGateway(tempAudioRef, user_id, tape_id, submissionId);
+    functions.logger.log(audioIpfsHash, 'audioIpfsHash', imageIpfsHash, 'imageIpfsHash');
+  } catch (error: any) {
+    functions.logger.log('error pinning audio or image to gateway in createSong controller');
+    throw new Error(`Unable to pin audio or image to gateway: ${error.message}`);
+  }
+
+  try {
+    // add track to song table
+    functions.logger.log('update song table');
+
+    const songQuery = `INSERT INTO ${schemaName}.songs (tape_id, audio, cover, duration, public, track_name, type, submission_data, cyanite_id, created, 
+      total_likes, track_data, video) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *
+    `;
+    const song_type = 'submission';
+    const audio = `${common.ipfsPrefix}${audioIpfsHash}`;
+    const sub_image = `${common.ipfsPrefix}${imageIpfsHash}`;
+    const submission_data = JSON.stringify({ sub_image, sub_id: formattedSubId });
+    const track_data = JSON.stringify({ tape_name: tapeName });
+    const newSongData = [tape_id, audio, tapeCover, duration, false, formattedSubId, song_type, submission_data, null, new Date(), 0, track_data, null];
+    newSongQueryResult = await pool.query(songQuery, newSongData);
+  } catch (error: any) {
+    functions.logger.log('error updating song table in createSong controller');
+    await pool.query('ROLLBACK');
+    throw new Error(`Unable to update song table: ${error.message}`);
+  }
+
+  try {
+    // add artist to song_artists table
+    functions.logger.log('update song_artists table');
+
+    const songArtistQuery = `INSERT INTO ${schemaName}.song_artists (song_id, user_id, verified, ownership_percent) VALUES ($1, $2, $3, $4)`;
+    songId = newSongQueryResult?.rows?.[0]?.id;
+    const songArtistData = [songId, user_id, true, 100];
+    await pool.query(songArtistQuery, songArtistData);
+    await pool.query('COMMIT');
+  } catch (error: any) {
+    functions.logger.log('error creating submission in createSong controller');
     await pool.query('ROLLBACK');
     throw new Error(`Unable to create song: ${error.message}`);
   }
+
+  try {
+    // add event to song_events table
+    functions.logger.log('update song_events table');
+
+    const songEventsQuery = `INSERT INTO ${schemaName}.song_events (event_type, event_data, event_timestamp, song_id, user_id) VALUES ($1, $2, $3, $4, $5)`;
+    const event_type = 'tape_submission';
+    const eventData = JSON.stringify({ message: 'submitted to a tape', subject: tapeName });
+    await pool.query(songEventsQuery, [event_type, eventData, new Date(), songId, user_id]);
+  } catch (error: any) {
+    functions.logger.log('error creating submission event in createSong controller');
+    await pool.query('ROLLBACK');
+    throw new Error(`Unable to create song event: ${error.message}`);
+  }
+
+  functions.logger.log('new submission', newSongQueryResult?.rows?.[0]);
+  return { newSubmission: newSongQueryResult?.rows?.[0] };
 }
 
 export async function deleteSong(song_id: number) {
   // Begin a transaction
   await pool.query('BEGIN');
+  functions.logger.log('deleteSong controller', song_id);
 
   try {
+    const songQuery = `SELECT * FROM ${schemaName}.songs WHERE id = $1`;
+    const songResult = await pool.query(songQuery, [song_id]);
+    const song = songResult.rows[0];
+    // const { submission_data, audio } = song;
+    const songHash = song?.audio?.split('/ipfs/')?.[1];
+    const subImageHash = song?.submission_data?.sub_image?.split('/ipfs/')?.[1];
+    functions.logger.log(song, 'song', songHash, 'songHash', subImageHash, 'subImageHash');
+
+    try {
+      functions.logger.log('upinning song audio from gateway');
+      if (songHash) await unpinHashFromGateway(songHash);
+    } catch (error: any) {
+      functions.logger.log('error unpinning song in deleteSong controller');
+      throw new Error(`Unable to unpin song: ${error.message}`);
+    }
+    try {
+      functions.logger.log('unpinning sub image from gateway');
+      if (subImageHash) await unpinHashFromGateway(subImageHash);
+    } catch (error: any) {
+      functions.logger.log('error unpinning sub image in deleteSong controller');
+      throw new Error(`Unable to unpin sub image: ${error.message}`);
+    }
+
     // Delete song's likes
-    const deleteLikesQuery = `
-        DELETE FROM ${schemaName}.likes WHERE song_id = $1;
-      `;
+    const deleteLikesQuery = `DELETE FROM ${schemaName}.likes WHERE song_id = $1`;
     await pool.query(deleteLikesQuery, [song_id]);
 
+    // Delete song's events
+    const deleteEventsQuery = `DELETE FROM ${schemaName}.song_events WHERE song_id = $1`;
+    await pool.query(deleteEventsQuery, [song_id]);
+
     // Delete song's artists entries
-    const deleteSongArtistsQuery = `
-        DELETE FROM ${schemaName}.song_artists WHERE song_id = $1;
-      `;
+    const deleteSongArtistsQuery = `DELETE FROM ${schemaName}.song_artists WHERE song_id = $1`;
     await pool.query(deleteSongArtistsQuery, [song_id]);
 
     // Delete song
-    const deleteSongQuery = `
-        DELETE FROM ${schemaName}.songs WHERE id = $1;
-      `;
+    const deleteSongQuery = `DELETE FROM ${schemaName}.songs WHERE id = $1`;
     await pool.query(deleteSongQuery, [song_id]);
 
     // Commit the transaction
@@ -132,6 +222,7 @@ export async function deleteSong(song_id: number) {
     return { success: true, message: 'Song deleted successfully.' };
   } catch (error: any) {
     // Rollback the transaction in case of an error
+    functions.logger.log('error deleting song in deleteSong controller');
     await pool.query('ROLLBACK');
     throw new Error(`Unable to delete song: ${error.message}`);
   }
@@ -159,7 +250,7 @@ export const likeSong = async (songId: number, userId: number) => {
     const eventType = 'song_like';
     const eventData = {
       message: `${displayName} liked a track`,
-      subject: `${trackName} by ${isPublic ? artistName : "Anonymous"}`,
+      subject: `${trackName} by ${isPublic ? artistName : 'Anonymous'}`,
     };
 
     const songEventQuery = `
@@ -221,4 +312,3 @@ export const getManySongs = async (songHashes: string[]) => {
     return;
   }
 };
-

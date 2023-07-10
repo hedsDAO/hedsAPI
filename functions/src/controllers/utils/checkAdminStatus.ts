@@ -9,7 +9,7 @@ import schemaName from '../../../config';
  * @param {NextFunction} next - The next function in the express middleware.
  */
 export const checkAdminStatus = async (req: Request, res: Response, next: NextFunction) => {
-    const adminWallet = res.locals.signerAddress;  // get the signer address from res.locals
+    const adminWallet = res.locals.signerAddress // get the signer address from res.locals
   
     try {
       const { rows: adminRows } = await pool.query(`SELECT id, role FROM ${schemaName}.users WHERE wallet = $1`, [adminWallet]);
@@ -20,6 +20,7 @@ export const checkAdminStatus = async (req: Request, res: Response, next: NextFu
   
       // If the user is an admin, attach their id to res.locals
       res.locals.adminId = adminRows[0].id;
+
   
       return next();
     } catch (error: any) {
