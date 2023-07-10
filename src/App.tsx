@@ -68,9 +68,9 @@ const App = (): JSX.Element => {
         <Route path="/tape/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/vote/:id" element={<Vote />} />
-        {/* <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/new-tape" element={<CreateTape />} />
-        <Route path="/new-proposal" element={<CreateProposal />} /> */}
+        <Route path="/new-proposal" element={<CreateProposal />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
