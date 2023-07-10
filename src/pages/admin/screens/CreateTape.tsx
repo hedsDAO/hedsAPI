@@ -6,7 +6,7 @@ import { store } from '@/store';
 import { Box, Flex, useSteps, Text, Stack, Divider, IconButton } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { TapeDetailsForm } from '@/pages/admin/components/TapeDetailsForm/TapeDetailsForm';
-import { SampleDetails } from '@/pages/admin/components/SampleDetails/SampleDetails';
+import { SampleDetailsForm } from '@/pages/admin/components/SampleDetailsForm/SampleDetailsForm';
 import { TimelineDetailsForm } from '@/pages/admin/components/TimelineDetailsForm/TimelineDetailsForm';
 import { CustomStepper } from '@/pages/admin/components/CustomStepper/CustomStepper';
 
@@ -77,7 +77,7 @@ export const CreateTape = () => {
               <CustomStepper currentStep={activeStep} steps={createTapeSteps} />
             </Box>
             {activeStep === 0 && <TapeDetailsForm goToNext={goToNext} />}
-            {activeStep === 1 && <SampleDetails goToPrevious={goToPrevious} goToNext={goToNext} />}
+            {activeStep === 1 && <SampleDetailsForm goToPrevious={goToPrevious} goToNext={goToNext} />}
             {activeStep === 2 && <TimelineDetailsForm goToPrevious={goToPrevious} handleSubmit={handleSubmit} />}
           </Stack>
         </>

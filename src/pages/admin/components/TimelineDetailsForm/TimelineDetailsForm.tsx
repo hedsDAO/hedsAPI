@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
-import { Button, Box, Stack, Select, Flex, FormControl, FormLabel, Text } from '@chakra-ui/react';
+import { Box, Stack, Flex, FormControl, FormLabel, Text } from '@chakra-ui/react';
+import { CustomFormInput } from '@pages/admin/components/CustomFormInput/CustomFormInput';
+import { NextStepButton } from '@pages/admin/components/NextStepButton/NextStepButton';
+import { PreviousStepButton } from '@pages/admin/components/PreviousStepButton/PreviousStepButton';
 import { DateTimePicker } from '@/pages/admin/components/DateTimeRangePicker/DateTimePicker';
 import { format } from 'date-fns';
 
@@ -57,17 +60,19 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
           </FormLabel>
           <DateTimePicker startDate={submitStart} setStartDate={setSubmitStart} minDate={new Date()} />
         </FormControl>
-        <FormControl>
-          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
-            Submission Duration
-          </FormLabel>
-          <Select bg="white" color="gray.800" borderRadius="xl" w="fit-content" value={submitDuration} onChange={(e) => setSubmitDuration(e.target.value)}>
-            <option value="86400000">1 DAY</option>
-            <option value="172800000">2 DAYS</option>
-            <option value="259200000">3 DAYS</option>
-            <option value="604800000">1 WEEK</option>
-          </Select>
-        </FormControl>
+        <CustomFormInput
+          label="Submission Duration"
+          value={submitDuration}
+          onChange={(e) => setSubmitDuration(e.target.value)}
+          formType="select"
+          options={[
+            { label: '1 DAY', value: '86400000' },
+            { label: '2 DAYS', value: '172800000' },
+            { label: '3 DAYS', value: '259200000' },
+            { label: '1 WEEK', value: '604800000' },
+          ]}
+        />
+
         <FormControl>
           <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
             Vote
@@ -76,28 +81,21 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
             {format(handleTimeChange(submitStart, Number(submitDuration)), 'MMMM d, yyyy h:mm aa')}
           </Text>
         </FormControl>
-        <FormControl>
-          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
-            Vote Duration
-          </FormLabel>
-          <Select
-            bg="white"
-            color="gray.800"
-            borderRadius="xl"
-            w="fit-content"
-            placeholder="Select tape type"
-            value={voteDuration}
-            onChange={(e) => setVoteDuration(e.target.value)}
-          >
-            <option value="86400000">1 DAY</option>
-            <option value="172800000">2 DAYS</option>
-            <option value="259200000">3 DAYS</option>
-            <option value="345600000">4 DAYS</option>
-            <option value="432000000">5 DAYS</option>
-            <option value="518400000">6 DAYS</option>
-            <option value="604800000">1 WEEK</option>
-          </Select>
-        </FormControl>
+        <CustomFormInput
+          label="Vote Duration"
+          value={voteDuration}
+          onChange={(e) => setVoteDuration(e.target.value)}
+          formType="select"
+          options={[
+            { label: '1 DAY', value: '86400000' },
+            { label: '2 DAYS', value: '172800000' },
+            { label: '3 DAYS', value: '259200000' },
+            { label: '4 DAYS', value: '345600000' },
+            { label: '5 DAYS', value: '432000000' },
+            { label: '6 DAYS', value: '518400000' },
+            { label: '1 WEEK', value: '604800000' },
+          ]}
+        />
         <FormControl>
           <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
             Mint
@@ -106,40 +104,20 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
             {format(handleTimeChange(submitStart, Number(submitDuration) + Number(voteDuration)), 'MMMM d, yyyy h:mm aa')}
           </Text>
         </FormControl>
-        <FormControl>
-          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
-            Mint Duration
-          </FormLabel>
-          <Select
-            bg="white"
-            color="gray.800"
-            borderRadius="xl"
-            w="fit-content"
-            placeholder="Select tape type"
-            value={mintDuration}
-            onChange={(e) => setMintDuration(e.target.value)}
-          >
-            <option value="86400000">1 DAY</option>
-            <option value="172800000">2 DAYS</option>
-            <option value="259200000">3 DAYS</option>
-          </Select>
-        </FormControl>
+        <CustomFormInput
+          label="Mint Duration"
+          value={mintDuration}
+          onChange={(e) => setMintDuration(e.target.value)}
+          formType="select"
+          options={[
+            { label: '1 DAY', value: '86400000' },
+            { label: '2 DAYS', value: '172800000' },
+            { label: '3 DAYS', value: '259200000' },
+          ]}
+        />
         <Flex justifyContent="space-between" mt={12}>
-          <Button fontFamily="space" fontWeight="light" letterSpacing="wider" borderRadius="lg" size="sm" onClick={goToPrevious}>
-            BACK
-          </Button>
-          <Button
-            colorScheme="purple"
-            fontFamily="space"
-            fontWeight="light"
-            letterSpacing="wider"
-            borderRadius="lg"
-            size="sm"
-            onClick={handleClick}
-            isDisabled={formValidation()}
-          >
-            SUBMIT
-          </Button>
+          <PreviousStepButton onClick={goToPrevious} />
+          <NextStepButton onClick={handleClick} disabled={formValidation()} text="SUBMIT" />
         </Flex>
       </Stack>
     </Box>
