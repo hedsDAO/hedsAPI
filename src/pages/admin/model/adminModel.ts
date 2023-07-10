@@ -2,27 +2,30 @@ import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
 import { storage } from '@/App';
 import { ref, uploadBytes } from 'firebase/storage';
-import { CreateTapePayload } from '@/pages/admin/model/common';
+import { AdminState } from '@/pages/admin/model/common';
 import { storageLink } from '@/pages/admin/model/constants';
+import { getArtistsAndCurators } from '@/api/user';
+import { User } from '@/models/common';
 
 export const adminModel = createModel<RootModel>()({
-  state: {
-    tape: {} as CreateTapePayload,
-  },
+  state: {} as AdminState,
   reducers: {
-    setTapeDetails: (state, tapeData) => ({ ...state, tape: { ...state.tape, tapeData } }),
-    setCuratorWallet: (state, curatorWallet) => ({ ...state, tape: { ...state.tape, curatorWallet } }),
-    setSampleDetails: (state, songData) => ({ ...state, tape: { ...state.tape, songData } }),
-    setCoverImage: (state, coverImage) => ({ ...state, tape: { ...state.tape, coverImage } }),
-    setSampleAudio: (state, sampleAudio) => ({ ...state, tape: { ...state.tape, sampleAudio } }),
+    setTapeDetails: (state, tapeDetails) => ({ ...state, tapeDetails }),
+    setTapeTimeline: (state, timeline) => ({ ...state, tapeDetails: { ...state.tapeDetails, timeline } }),
+    setCuratorWallet: (state, curatorWallet) => ({ ...state, curatorWallet }),
+    setSampleDetails: (state, songDetails) => ({ ...state, songDetails }),
+    setCoverImage: (state, coverImage) => ({ ...state, coverImage }),
+    setSampleAudio: (state, sampleAudio) => ({ ...state, sampleAudio }),
+    setArtistsWallets: (state, artists) => ({ ...state, artists: artists.map((artist: User) => artist.wallet) }),
   },
   selectors: (slice) => ({
-    selectTapePayload: () => slice((state) => state.tape),
-    selectTapeData: () => slice((state) => state.tape.tapeData),
-    selectCuratorWallet: () => slice((state) => state.tape.curatorWallet),
-    selectSongData: () => slice((state) => state.tape.songData),
-    selectCoverImage: () => slice((state) => state.tape.coverImage),
-    selectSampleAudio: () => slice((state) => state.tape.sampleAudio),
+    selectTapePayload: () => slice((state) => state),
+    selectTapeDetails: () => slice((state) => state.tapeDetails),
+    selectCuratorWallet: () => slice((state) => state.curatorWallet),
+    selectSongDetails: () => slice((state) => state.songDetails),
+    selectCoverImage: () => slice((state) => state.coverImage),
+    selectSampleAudio: () => slice((state) => state.sampleAudio),
+    selectAllArtistsWallets: () => slice((state) => state.artists),
   }),
   effects: (dispatch) => ({
     async uploadCoverImage(file: File) {
@@ -43,6 +46,14 @@ export const adminModel = createModel<RootModel>()({
         });
       } catch (error: any) {
         console.log(error);
+      }
+    },
+    async getArtists() {
+      try {
+        const response = await getArtistsAndCurators();
+        this.setArtistsWallets(response.data.artists);
+      } catch (e) {
+        console.error(e);
       }
     },
   }),

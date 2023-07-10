@@ -80,7 +80,6 @@ export const defaultTheme = extendTheme({
           backgroundColor: 'heds.bg3',
           color: 'white',
           fontStyle: 'normal',
-          
         },
       },
       ...gradientAnimations,

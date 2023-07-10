@@ -1,17 +1,21 @@
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { store } from '@/store';
 
 // Components
-import { Box, Step, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps, Text } from '@chakra-ui/react';
+import { Box, Flex, useSteps, Text, Stack, Divider, IconButton } from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { TapeDetailsForm } from '@/pages/admin/components/TapeDetailsForm/TapeDetailsForm';
-import { SampleDetails } from '@/pages/admin/components/SampleDetails/SampleDetails';
+import { SampleDetailsForm } from '@/pages/admin/components/SampleDetailsForm/SampleDetailsForm';
+import { TimelineDetailsForm } from '@/pages/admin/components/TimelineDetailsForm/TimelineDetailsForm';
+import { CustomStepper } from '@/pages/admin/components/CustomStepper/CustomStepper';
 
 // Utils
 import { createTape } from '@/api/tape';
 import { useSignMessage } from 'wagmi';
 
 // Contants
-import { createTapeSteps, signMessageForTapeCreation } from '@/pages/admin/model/constants';
+import { createTapeSteps, signMessageForTapeCreation, adminWallets } from '@/pages/admin/model/constants';
 
 export const CreateTape = () => {
   const adminWallet = useSelector(store.select.authModel.selectWallet);
@@ -58,23 +62,30 @@ export const CreateTape = () => {
   };
 
   return (
-    <Box pt={2} px={5} maxW="7xl" mx="auto">
-      <Stepper index={activeStep}>
-        {createTapeSteps.map((step, index) => (
-          <Step key={index}>
-            <StepIndicator color="white">
-              <StepStatus complete={<StepIcon />} incomplete={<StepNumber />} active={<StepNumber />} />
-            </StepIndicator>
-            <Box flexShrink="0" color="white">
-              <StepTitle>{step.title}</StepTitle>
-              <Text fontSize="xs">{step.description}</Text>
+    <Box pt={12} maxW="3xl" mx="auto" height="fit-content">
+      {adminWallets.includes(adminWallet) ? (
+        <>
+          <Flex>
+            <IconButton aria-label="Go back" variant="ghost" size="md" color="gray.200" icon={<ArrowBackIcon />} as={Link} to={`/admin`} />
+            <Text fontFamily="mono" color="white" fontSize="3xl" fontWeight="bold">
+              Create Tape
+            </Text>
+          </Flex>
+          <Divider />
+          <Stack direction="row" spacing={12}>
+            <Box mt={4} w="25%">
+              <CustomStepper currentStep={activeStep} steps={createTapeSteps} />
             </Box>
-            <StepSeparator />
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === 0 && <TapeDetailsForm goToNext={goToNext} />}
-      {activeStep === 1 && <SampleDetails goToPrevious={goToPrevious} handleSubmit={handleSubmit} />}
+            {activeStep === 0 && <TapeDetailsForm goToNext={goToNext} />}
+            {activeStep === 1 && <SampleDetailsForm goToPrevious={goToPrevious} goToNext={goToNext} />}
+            {activeStep === 2 && <TimelineDetailsForm goToPrevious={goToPrevious} handleSubmit={handleSubmit} />}
+          </Stack>
+        </>
+      ) : (
+        <Text fontFamily="mono" color="white" fontSize="3xl" fontWeight="bold">
+          You are not authorized to create a tape
+        </Text>
+      )}
     </Box>
   );
 };
