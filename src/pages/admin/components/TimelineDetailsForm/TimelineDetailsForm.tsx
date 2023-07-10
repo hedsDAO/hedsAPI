@@ -138,7 +138,7 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
             onClick={handleClick}
             isDisabled={formValidation()}
           >
-            Submit
+            SUBMIT
           </Button>
         </Flex>
       </Stack>
