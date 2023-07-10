@@ -1,13 +1,16 @@
 export const createTapeSteps = [
-  {
-    title: 'Step 1',
-    description: 'Tape Details',
-  },
-  {
-    title: 'Step 2',
-    description: 'Sample',
-  },
-  { title: 'Step 3', description: 'Timeline' },
+  'TAPE DETAILS',
+  'SAMPLE',
+  'TIMELINE',
+  // {
+  //   title: 'Step 1',
+  //   description: 'Tape Details',
+  // },
+  // {
+  //   title: 'Step 2',
+  //   description: 'Sample',
+  // },
+  // { title: 'Step 3', description: 'Timeline' },
 ];
 
 export const signMessageForTapeCreation = 'Sign this message to create a tape';

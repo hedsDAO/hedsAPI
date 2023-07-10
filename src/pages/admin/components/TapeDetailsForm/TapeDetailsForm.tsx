@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
-import { Box, Button, Stack, Select, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Stack, Select, Flex, FormControl, FormLabel, Icon, Input, Text } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
 export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,11 +37,27 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
       <Stack spacing={5} pl={12}>
         <FormControl>
           <FormLabel color="gray.200">Upload Cover</FormLabel>
-          <Flex alignItems="center" gap="1rem">
-            <Button onClick={() => inputRef.current?.click()}>Choose file</Button>
-            <Text color="white">{fileName ? fileName : 'No file chosen'}</Text>
-          </Flex>
-          <Input ref={inputRef} type="file" accept="image/*" hidden color="white" onChange={(e) => handleFileChange(e)} />
+          <Box
+            border="2px dashed"
+            borderColor="gray.200"
+            borderRadius="lg"
+            padding="1em"
+            width="200px"
+            height="200px"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+          >
+            <Input type="file" id="upload" accept="image/*" onChange={handleFileChange} hidden />
+            <Button as="label" htmlFor="upload" borderRadius="full" padding="1em" variant="unstyled" cursor="pointer" onClick={() => inputRef.current?.click()}>
+              <Icon as={AddIcon} boxSize={6} color="gray.200" />
+            </Button>
+            <Text marginTop="1em" fontSize="sm" isTruncated color="gray.400" flexWrap="wrap">
+              {fileName ? fileName : 'no file selected'}
+            </Text>
+          </Box>
         </FormControl>
         <FormControl>
           <FormLabel color="gray.200">Title</FormLabel>

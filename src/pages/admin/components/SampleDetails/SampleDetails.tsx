@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
-import { Box, Button, FormControl, FormLabel, Flex, Input, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Flex, Input, Icon, Stack, Text } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
 export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => void; goToNext: () => void }) => {
   const [wallet, setWallet] = useState<string>('');
@@ -33,12 +34,28 @@ export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => 
     <Box w="full" mt={6}>
       <Stack spacing={5} pl={12}>
         <FormControl>
-          <FormLabel color="white">Upload sample</FormLabel>
-          <Flex alignItems="center" gap="1rem">
-            <Button onClick={() => inputRef.current?.click()}>Choose file</Button>
-            <Text color="white">{fileName ? fileName : 'No file chosen'}</Text>
-          </Flex>
-          <Input ref={inputRef} type="file" accept=".mp3,audio/*" hidden color="white" onChange={(e) => handleFileChange(e)} />
+          <FormLabel color="white">Upload Sample</FormLabel>
+          <Box
+            border="2px dashed"
+            borderColor="gray.200"
+            borderRadius="lg"
+            padding="1em"
+            width="200px"
+            height="200px"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+          >
+            <Input type="file" id="upload" accept=".mp3,audio/*" onChange={handleFileChange} hidden />
+            <Button as="label" htmlFor="upload" borderRadius="full" padding="1em" variant="unstyled" cursor="pointer" onClick={() => inputRef.current?.click()}>
+              <Icon as={AddIcon} boxSize={6} color="gray.200" />
+            </Button>
+            <Text marginTop="1em" fontSize="sm" isTruncated color="gray.400" flexWrap="wrap">
+              {fileName ? fileName : 'no file selected'}
+            </Text>
+          </Box>
         </FormControl>
         <FormControl>
           <FormLabel color="gray.200">Sample Title</FormLabel>
