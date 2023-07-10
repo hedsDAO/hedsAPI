@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
 import { Box, Button, Stack, Select, Flex, FormControl, FormLabel, Icon, Input, Text } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
 export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,7 +36,9 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
     <Box w="full" mt={6}>
       <Stack spacing={5} pl={12}>
         <FormControl>
-          <FormLabel color="gray.200">Upload Cover</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Upload Cover
+          </FormLabel>
           <Box
             border="2px dashed"
             borderColor="gray.200"
@@ -60,7 +62,9 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
           </Box>
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Title</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Title
+          </FormLabel>
           <Input
             placeholder="what's the title?"
             variant="flushed"
@@ -74,7 +78,9 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Description</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Description
+          </FormLabel>
           <Input
             placeholder="write a description..."
             variant="flushed"
@@ -88,7 +94,9 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">BPM</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            BPM
+          </FormLabel>
           <Input
             placeholder="tempo?"
             variant="flushed"
@@ -103,7 +111,9 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Type of Tape</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Type of Tape
+          </FormLabel>
           <Select
             bg="white"
             color="gray.800"
@@ -118,7 +128,17 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
           </Select>
         </FormControl>
         <Flex justifyContent="flex-end" mt={12}>
-          <Button colorScheme="purple" onClick={handleClick} isDisabled={formValidation()}>
+          <Button
+            colorScheme="purple"
+            fontFamily="space"
+            fontWeight="light"
+            letterSpacing="wider"
+            borderRadius="lg"
+            size="sm"
+            rightIcon={<ArrowForwardIcon />}
+            onClick={handleClick}
+            isDisabled={formValidation()}
+          >
             NEXT
           </Button>
         </Flex>

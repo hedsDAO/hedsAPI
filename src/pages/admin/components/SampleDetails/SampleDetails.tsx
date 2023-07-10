@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 import { Box, Button, FormControl, FormLabel, Flex, Input, Icon, Stack, Text } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
 export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => void; goToNext: () => void }) => {
   const [wallet, setWallet] = useState<string>('');
@@ -34,7 +34,9 @@ export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => 
     <Box w="full" mt={6}>
       <Stack spacing={5} pl={12}>
         <FormControl>
-          <FormLabel color="white">Upload Sample</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Upload Sample
+          </FormLabel>
           <Box
             border="2px dashed"
             borderColor="gray.200"
@@ -58,7 +60,9 @@ export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => 
           </Box>
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Sample Title</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Sample Title
+          </FormLabel>
           <Input
             placeholder="what's the sample title?"
             variant="flushed"
@@ -72,7 +76,9 @@ export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => 
           />
         </FormControl>
         <FormControl>
-          <FormLabel color="white">Curator Wallet Address</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Curator Wallet Address
+          </FormLabel>
           <Input
             placeholder="0x420..."
             variant="flushed"
@@ -86,7 +92,9 @@ export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => 
           />
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Submission Duration (seconds)</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Submission Duration (seconds)
+          </FormLabel>
           <Input
             placeholder="60"
             variant="flushed"
@@ -101,8 +109,20 @@ export const SampleDetails = ({ goToPrevious, goToNext }: { goToPrevious: () => 
           />
         </FormControl>
         <Flex justifyContent="space-between" mt={12}>
-          <Button onClick={goToPrevious}>BACK</Button>
-          <Button colorScheme="purple" onClick={handleClick} isDisabled={formValidation()}>
+          <Button fontFamily="space" fontWeight="light" letterSpacing="wider" borderRadius="lg" size="sm" onClick={goToPrevious}>
+            BACK
+          </Button>
+          <Button
+            colorScheme="purple"
+            fontFamily="space"
+            fontWeight="light"
+            letterSpacing="wider"
+            borderRadius="lg"
+            size="sm"
+            rightIcon={<ArrowForwardIcon />}
+            onClick={handleClick}
+            isDisabled={formValidation()}
+          >
             NEXT
           </Button>
         </Flex>
