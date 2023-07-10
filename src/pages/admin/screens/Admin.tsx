@@ -8,7 +8,7 @@ import { adminWallets } from '@/pages/admin/model/constants';
 
 export const Admin = () => {
   const adminWallet = useSelector(store.select.authModel.selectWallet);
-
+  console.log('adminWallet', adminWallet);
   return (
     <Box pt={12} px={5} maxW="3xl" mx="auto" height="fit-content">
       {adminWallets.includes(adminWallet) ? (
