@@ -52,11 +52,15 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
     <Box w="full" mt={6}>
       <Stack spacing={5} pl={12}>
         <FormControl>
-          <FormLabel color="gray.200">Submission Start</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Submission Start
+          </FormLabel>
           <DateTimePicker startDate={submitStart} setStartDate={setSubmitStart} minDate={new Date()} />
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Submission Duration</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Submission Duration
+          </FormLabel>
           <Select bg="white" color="gray.800" borderRadius="xl" w="fit-content" value={submitDuration} onChange={(e) => setSubmitDuration(e.target.value)}>
             <option value="86400000">1 DAY</option>
             <option value="172800000">2 DAYS</option>
@@ -65,13 +69,17 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
           </Select>
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Vote</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Vote
+          </FormLabel>
           <Text bg="white" borderRadius="0.7rem" color="gray.800" p="6px 30px 6px 12px" w="fit-content">
             {format(handleTimeChange(submitStart, Number(submitDuration)), 'MMMM d, yyyy h:mm aa')}
           </Text>
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Vote Duration</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Vote Duration
+          </FormLabel>
           <Select
             bg="white"
             color="gray.800"
@@ -91,13 +99,17 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
           </Select>
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Mint</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Mint
+          </FormLabel>
           <Text bg="white" borderRadius="0.7rem" color="gray.800" p="6px 30px 6px 12px" w="fit-content">
             {format(handleTimeChange(submitStart, Number(submitDuration) + Number(voteDuration)), 'MMMM d, yyyy h:mm aa')}
           </Text>
         </FormControl>
         <FormControl>
-          <FormLabel color="gray.200">Mint Duration</FormLabel>
+          <FormLabel color="gray.200" fontFamily="mono" fontWeight="semibold" fontSize="sm" letterSpacing="tight">
+            Mint Duration
+          </FormLabel>
           <Select
             bg="white"
             color="gray.800"
@@ -113,8 +125,19 @@ export const TimelineDetailsForm = ({ goToPrevious, handleSubmit }: { goToPrevio
           </Select>
         </FormControl>
         <Flex justifyContent="space-between" mt={12}>
-          <Button onClick={goToPrevious}>Back</Button>
-          <Button colorScheme="purple" onClick={handleClick} isDisabled={formValidation()}>
+          <Button fontFamily="space" fontWeight="light" letterSpacing="wider" borderRadius="lg" size="sm" onClick={goToPrevious}>
+            BACK
+          </Button>
+          <Button
+            colorScheme="purple"
+            fontFamily="space"
+            fontWeight="light"
+            letterSpacing="wider"
+            borderRadius="lg"
+            size="sm"
+            onClick={handleClick}
+            isDisabled={formValidation()}
+          >
             Submit
           </Button>
         </Flex>
