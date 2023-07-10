@@ -20,7 +20,7 @@ export const $iconButtonsFlexStyles: FlexProps = {
 
 export const $iconButtonStyles: BoxProps = {
   pointerEvents: 'auto',
-  color: 'black',
+  color: 'heds.bg2',
 };
 
 export const $promoIconButtonStyles: BoxProps = {
