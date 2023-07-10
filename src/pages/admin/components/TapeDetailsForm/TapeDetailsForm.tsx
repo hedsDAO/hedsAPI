@@ -1,12 +1,13 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/store';
 
-import { Box, Button, Stack, Select, Textarea, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
-import { DateTimeRangePicker } from '@/pages/admin/components/DateTimeRangePicker/DateTimeRangePicker';
+import { Box, Stack, Flex } from '@chakra-ui/react';
+import { CustomUpload } from '@pages/admin/components/CustomUpload/CustomUpload';
+import { CustomFormInput } from '@pages/admin/components/CustomFormInput/CustomFormInput';
+import { NextStepButton } from '@pages/admin/components/NextStepButton/NextStepButton';
 
 export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
 
   const [fileName, setFileName] = useState<string>('');
@@ -14,30 +15,9 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
   const [description, setDescription] = useState<string>('');
   const [bpm, setBpm] = useState<string>('');
   const [tapeType, setTapeType] = useState<string>('hedstape');
-  const [submitStart, setSubmitStart] = useState(null);
-  const [submitEnd, setSubmitEnd] = useState(null);
-  const [voteStart, setVoteStart] = useState(null);
-  const [voteEnd, setVoteEnd] = useState(null);
-  const [mintStart, setMintStart] = useState(null);
-  const [mintEnd, setMintEnd] = useState(null);
 
   const handleClick = () => {
-    const numberBpm = Number(bpm);
-    const timeline = {
-      submit: {
-        start: submitStart.getTime(),
-        end: submitEnd.getTime(),
-      },
-      vote: {
-        start: voteStart.getTime(),
-        end: voteEnd.getTime(),
-      },
-      mint: {
-        start: mintStart.getTime(),
-        end: mintEnd.getTime(),
-      },
-    };
-    dispatch.adminModel.setTapeDetails({ name, description, bpm: numberBpm, timeline });
+    dispatch.adminModel.setTapeDetails({ name, description, bpm: Number(bpm), type_type: tapeType });
     goToNext();
   };
 
@@ -47,60 +27,39 @@ export const TapeDetailsForm = ({ goToNext }: { goToNext: () => void }) => {
   };
 
   const formValidation = () => {
-    if (!fileName || !name || !description || !bpm || !tapeType || !submitStart || !submitEnd || !voteStart || !voteEnd || !mintStart || !mintEnd) {
-      return true;
-    }
+    // if (!fileName || !name || !description || !bpm || !tapeType) {
+    //   return true;
+    // }
     return false;
   };
 
   return (
-    <Box>
-      <Stack spacing={5} maxW="md" mx="auto" mt={12}>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Upload tape cover image</FormLabel>
-          <Flex alignItems="center" gap="1rem">
-            <Button onClick={() => inputRef.current?.click()}>Choose file</Button>
-            <Text color="white">{fileName ? fileName : 'No file chosen'}</Text>
-          </Flex>
-          <Input ref={inputRef} type="file" accept="image/*" hidden color="white" onChange={(e) => handleFileChange(e)} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Name</FormLabel>
-          <Input borderColor="gray.400" color="white" value={name} onChange={(e) => setName(e.target.value)} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Description</FormLabel>
-          <Textarea borderColor="gray.400" color="white" value={description} onChange={(e) => setDescription(e.target.value)} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">BPM</FormLabel>
-          <Input borderColor="gray.400" color="white" type="number" value={bpm} onChange={(e) => setBpm(e.target.value)} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Tape type</FormLabel>
-          <Select borderColor="gray.400" placeholder="Select tape type" value={tapeType} onChange={(e) => setTapeType(e.target.value)} color="white">
-            <option value="hedstape">hedsTAPE</option>
-            <option value="collabtape">collabTAPE</option>
-          </Select>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Submission</FormLabel>
-          <DateTimeRangePicker startDate={submitStart} endDate={submitEnd} changeStart={setSubmitStart} changeEnd={setSubmitEnd} minDate={new Date()} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Vote</FormLabel>
-          <DateTimeRangePicker startDate={voteStart} endDate={voteEnd} changeStart={setVoteStart} changeEnd={setVoteEnd} minDate={submitEnd} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel color="gray.200">Mint</FormLabel>
-          <DateTimeRangePicker startDate={mintStart} endDate={mintEnd} changeStart={setMintStart} changeEnd={setMintEnd} minDate={voteEnd} />
-        </FormControl>
+    <Box w="full" mt={6}>
+      <Stack spacing={5} pl={12}>
+        <CustomUpload label="Upload Cover" onChange={handleFileChange} fileName={fileName} acceptFileType="image/*" />
+        <CustomFormInput label="Title" placeholder="what's the title?" value={name} onChange={(e) => setName(e.target.value)} />
+        <CustomFormInput
+          label="Description"
+          placeholder="write a description..."
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          formType="textarea"
+        />
+        <CustomFormInput label="BPM" placeholder="tempo?" value={bpm} onChange={(e) => setBpm(e.target.value)} />
+        <CustomFormInput
+          label="Type of Tape"
+          value={tapeType}
+          onChange={(e) => setTapeType(e.target.value)}
+          formType="select"
+          options={[
+            { value: 'hedstape', label: 'hedsTAPE' },
+            { value: 'collabtape', label: 'collabTAPE' },
+          ]}
+        />
+        <Flex justifyContent="flex-end" mt={12}>
+          <NextStepButton onClick={handleClick} disabled={formValidation()} text="NEXT" includeIcon />
+        </Flex>
       </Stack>
-      <Flex justifyContent="flex-end" maxW="lg" mt={12} mx="auto">
-        <Button colorScheme="blue" onClick={handleClick} isDisabled={formValidation()}>
-          Next
-        </Button>
-      </Flex>
     </Box>
   );
 };

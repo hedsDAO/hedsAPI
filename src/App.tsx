@@ -17,10 +17,12 @@ import { Vote } from '@/pages/vote/screens/Vote';
 import { Footer } from '@/components/Footer/Footer';
 import { Navbar } from '@/components/Navbar/Navbar';
 import { Box } from '@chakra-ui/react';
-import { Landing } from './pages/landing/screens/Landing';
-import { Explore } from './pages/explore/screens/Explore';
+import { Landing } from '@/pages/landing/screens/Landing';
+import { Explore } from '@/pages/explore/screens/Explore';
 
-import { CreateTape } from './pages/admin/screens/CreateTape';
+import { CreateTape } from '@/pages/admin/screens/CreateTape';
+import { CreateProposal } from '@/pages/admin/screens/CreateProposal';
+import { Admin } from '@/pages/admin/screens/Admin';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -66,7 +68,9 @@ const App = (): JSX.Element => {
         <Route path="/tape/:id" element={<Tape />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/vote/:id" element={<Vote />} />
-        <Route path="/admin" element={<CreateTape />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/new-tape" element={<CreateTape />} />
+        <Route path="/new-proposal" element={<CreateProposal />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
