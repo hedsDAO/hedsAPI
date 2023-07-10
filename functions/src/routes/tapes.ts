@@ -1,13 +1,18 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import multer from 'multer';
 import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs } from '../controllers/tapes';
 import * as functions from 'firebase-functions';
 import { verifySignature } from '../controllers/utils/verifySignature';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
 import { pinFileToGateway } from '../controllers/pinata/pinFileToGateway';
 import { unpinHashFromGateway } from '../controllers/pinata/unpinHashFromGateway-v2';
-const router = Router();
-const upload = multer();
+// import axios from 'axios';
+// import FormData from 'form-data';
+ const router = Router();
+
+export interface RequestWithFile extends Request {
+  files?: any;
+}
+
 
 router.get('/get-collection-args', async (req, res) => {
   try {
@@ -53,28 +58,36 @@ router.post(
   '/',
   verifySignature,
   checkAdminStatus,
-  upload.fields([
-    { name: 'coverImage', maxCount: 1 },
-    { name: 'sampleAudio', maxCount: 1 },
-  ]),
-  pinFileToGateway('coverImage'),
-  pinFileToGateway('sampleAudio'),
-  async (req, res, next) => {
+   async (req, res , next) => {
+
     try {
+      const imageHash = await pinFileToGateway(req.body.coverImage, req.body.tapeData.name);
+      const audioHash = await pinFileToGateway(req.body.sampleAudio,req.body.songData.track_name);
+      res.locals["coverImageIpfsHash"] = imageHash;
+      res.locals["sampleAudioIpfsHash"] = audioHash;
+      return next();
+   } catch (e) {
+    functions.logger.log("error", e)
+    return next(e)
+   }
+  },
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const curatorWallet = req.body.curatorWallet;
       const gateway = 'https://www.heds.cloud/ipfs/'
       const tapeData = req.body.tapeData;
       tapeData.image = gateway + res.locals['coverImageIpfsHash'];
       const songData = req.body.songData;
       songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
-      const adminUserId = res.locals.adminId;
-      const newTape = await saveTapeAndSampleSong(tapeData, songData, adminUserId);
+      songData.cover = tapeData.image;
+      const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
       
       res.status(201).json(newTape);
     } catch (error: any) {
+      next(error)
       res.status(500).json(error.message);
     }
-  }
-);
+  })
 
 
 router.put('/:tape_id', async (req, res) => {
