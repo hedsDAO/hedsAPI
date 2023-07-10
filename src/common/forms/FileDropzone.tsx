@@ -48,7 +48,7 @@ export const FileDropzone = ({ inputRef, validation, accept, file, error, onRetr
                     <Icon as={error ? IconAlertTriangle : file ? IconWaveSawTool : IconCloudUpload} boxSize="5" color={error ? 'red.500' : 'whiteAlpha.700'} />
                   </Square>
                   <VStack pb={2}>
-                    <Text textOverflow={'elipsis'} maxW="10ch" isTruncated fontSize="2xs" color={error?.length ? 'red.500' : 'white'}>
+                    <Text textOverflow={'elipsis'} maxW={error ? "unset" : "20ch"} isTruncated fontSize="2xs" color={error?.length ? 'red.500' : 'white'}>
                       {error ? error : fileData ? `${fileData?.name} - ${fileData?.size?.toString().slice(0, 2)}mb` : ''}
                     </Text>
                     <Text mt={'1 !important'} fontSize="2xs" color="whiteAlpha.700">
