@@ -49,7 +49,12 @@ export const TimelineButtons = () => {
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.start)}</Text>
           </HStack>
-          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} onClick={() => dispatch.modalModel.setModal(Modals.SUBMIT)} isDisabled={!(cycle === 'submit')}>
+          <Button
+            {...styles.$buttonStyles}
+            leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
+            onClick={() => dispatch.modalModel.setModal(Modals.SUBMIT)}
+            isDisabled={!(cycle === 'submit')}
+          >
             UPLOAD SUBMISSION
           </Button>
         </>
@@ -67,7 +72,12 @@ export const TimelineButtons = () => {
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
           </HStack>
-          <Button {...styles.$buttonStyles} leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>} onClick={() => navigate(`/vote/${id}`)}>
+          <Button
+            {...styles.$buttonStyles}
+            isDisabled={!(cycle === 'vote')}
+            leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
+            onClick={() => navigate(`/vote/${id}`)}
+          >
             {cycle === 'vote' ? 'VOTE NOW' : 'RESULTS'}
           </Button>
         </>
