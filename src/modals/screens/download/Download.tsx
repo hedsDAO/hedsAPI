@@ -52,11 +52,11 @@ export const Download = () => {
       const response = await axios.get(sample.audio, {
         responseType: 'blob',
       });
-
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
+      const audioType = response.data.type.split('/')[1];
       link.href = url;
-      link.setAttribute('download', `${sample.track_name}.mp3`);
+      link.setAttribute('download', `${sample.track_name}.${audioType}`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -129,7 +129,7 @@ export const Download = () => {
             </>
           ) : (
             <Flex justifyContent="center" gap={3} pt={6}>
-              <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSED </Text>
+              <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE </Text>
               <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.end)}</Text>
             </Flex>
           )}
