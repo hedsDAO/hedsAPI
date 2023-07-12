@@ -48,7 +48,6 @@ export const Download = () => {
   useEffect(() => {
     onOpen();
   }, []);
-  console.log(sample)
 
   const handleDownload = async () => {
     setIsDownloading(true);
