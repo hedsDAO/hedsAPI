@@ -108,7 +108,7 @@ export const Download = () => {
             <>
               <Box {...styles.$downloadBoxStyles}>
                 <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE IN</Text>
-                <Countdown epochTime={1754896800000} />
+                <Countdown epochTime={1689793200000} />
                 <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
                   BEFORE YOU DOWNLOAD
                 </Text>
