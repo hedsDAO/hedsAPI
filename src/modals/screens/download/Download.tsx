@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { getDownloadURL, ref, StorageReference } from 'firebase/storage';
 import { storage } from '@/App';
 
@@ -32,7 +31,6 @@ import { DateTime } from 'luxon';
 import axios from 'axios';
 
 export const Download = () => {
-  const { id } = useParams<{ id: string }>();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch>();
@@ -53,7 +51,6 @@ export const Download = () => {
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
-      console.log(id)
       if (sampleArtists[0].display_name === 'LNRZ') {
         const zip: StorageReference = ref(storage, `samples/ht15.zip`);
         await getDownloadURL(zip).then(async (url: string) => {
