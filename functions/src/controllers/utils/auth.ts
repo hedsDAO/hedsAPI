@@ -23,19 +23,16 @@ export const authenticateTweet = async (tweetId: string): Promise<any> => {
   }
 };
 
-export const validateTwitterHandle = async (twitterHandle: string, userHash: string, response: any): Promise<boolean> => {
+export const validateTwitterHandle = async (twitterHandle: string): Promise<boolean> => {
   try {
     const { rowCount } = await pool.query(
       `SELECT 1 FROM ${schemaName}.users WHERE twitter_handle = $1`,
       [twitterHandle]
     );
-
     if (rowCount > 0) {
-      throw new Error("Twitter handle already exists in the database");
-    } else if (response?.data?.[0]?.text?.split('HDS')[1] === userHash) {
-      return true;
+      return false;
     } else {
-      throw new Error("Twitter handle not found in the database");
+      return true;
     }
   } catch (error: any) {
     throw new Error(`Failed to validate Twitter handle: ${error.message}`);
