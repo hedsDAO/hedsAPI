@@ -4,7 +4,6 @@ import type { RootModel } from '@/models';
 export enum Modals {
   CONNECT = 0,
   SETTINGS,
-  TWITTER,
   DOWNLOAD,
   MINT,
   SUBMIT

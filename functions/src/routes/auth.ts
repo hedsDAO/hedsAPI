@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { authenticateTweet, validateTwitterHandle, validateUserByDisplayName } from '../controllers/utils/auth';
+import { validateTwitterHandle, validateUserByDisplayName } from '../controllers/utils/auth';
 
 const router = express.Router();
 
@@ -20,13 +20,10 @@ router.get('/validate-display-name/:displayName', async (req, res) => {
   }
 });
 
-router.get('/validate-twitter/:tweetId/:twitterHandle/:userHash', async (req, res) => {
-  const { tweetId, twitterHandle, userHash } = req.params;
-
+router.get('/validate-twitter/:twitterHandle', async (req, res) => {
+  const { twitterHandle } = req.params;
   try {
-    const response = await authenticateTweet(tweetId);
-    const validationResult = await validateTwitterHandle(twitterHandle, userHash, response);
-
+    const validationResult = await validateTwitterHandle(twitterHandle);
     if (validationResult) {
       return res.status(200).json({ validated: true });
     } else {
