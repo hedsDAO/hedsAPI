@@ -13,6 +13,8 @@ export const settingsModelState: SettingsModelState = {
   profilePictureFileType: '.png',
   profilePicturePreview: 'https://example.com/profile_picture_preview.png',
   profilePictureError: 'invalid file type',
+  twitterHandleCharacters: 18,
+  twitterHandleError: '',
   error: '',
   isLoading: false,
 };

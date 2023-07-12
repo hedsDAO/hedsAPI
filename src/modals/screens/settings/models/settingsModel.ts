@@ -1,12 +1,13 @@
 import type { RootModel } from '@/models';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { updateUserSettings } from '@/api/user';
+import { updateUser } from '@/api/user';
 import { storage } from '@/App';
 import { SettingsModelState } from '@/modals/screens/settings/models/common';
 import { regex } from '@/modals/screens/settings/models/constants';
-import { User, UserSettingsData } from '@/models/common';
+import { User } from '@/models/common';
 import { getCurrentImagePath } from '@/utils';
 import { createModel } from '@rematch/core';
+import { verifyTweet } from '@/api/auth';
 
 export const settingsModel = createModel<RootModel>()({
   state: {} as SettingsModelState,
@@ -14,6 +15,9 @@ export const settingsModel = createModel<RootModel>()({
     setDescription: (state, description: string) => ({ ...state, userData: { ...state.userData, description } }),
     setDescCharacters: (state, descCharacters: number) => ({ ...state, descCharacters }),
     setDescriptionError: (state, descriptionError: string) => ({ ...state, descriptionError }),
+    setTwitterHandle: (state, twitterHandle: string) => ({ ...state, userData: { ...state.userData, twitter_handle: twitterHandle } }),
+    setTwitterHandleCharacters: (state, twitterHandleCharacters: number) => ({ ...state, twitterHandleCharacters }),
+    setTwitterHandleError: (state, twitterHandleError: string) => ({ ...state, twitterHandleError }),
     setBanner: (state, banner: string) => ({ ...state, userData: { ...state.userData, banner } }),
     setBannerFile: (state, bannerFile: File) => ({ ...state, bannerFile }),
     setBannerFileType: (state, bannerFileType: string) => ({ ...state, bannerFileType }),
@@ -27,7 +31,7 @@ export const settingsModel = createModel<RootModel>()({
     setUserData: (state, userData: User) => ({ ...state, userData }),
     setError: (state, error: string) => ({ ...state, error }),
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
-    clearState: (state) => ({} as SettingsModelState),
+    clearState: (_) => ({} as SettingsModelState),
   },
   selectors: (slice) => ({
     selectUserData: () => slice((state): User => state.userData),
@@ -42,6 +46,9 @@ export const settingsModel = createModel<RootModel>()({
     selectBannerFileType: () => slice((state) => state.bannerFileType),
     selectBannerPreview: () => slice((state) => state.bannerPreview),
     selectBannerError: () => slice((state) => state.bannerError),
+    selectTwitterHandle: () => slice((state) => state.userData?.twitter_handle),
+    selectTwitterHandleCharacters: () => slice((state) => state.twitterHandleCharacters),
+    selectTwitterHandleError: () => slice((state) => state.twitterHandleError),
     selectProfilePicture: () => slice((state) => state.userData?.profile_picture),
     selectProfilePictureFile: () => slice((state) => state.profilePictureFile),
     selectProfilePictureFileType: () => slice((state) => state.profilePictureFileType),
@@ -51,33 +58,61 @@ export const settingsModel = createModel<RootModel>()({
   effects: (dispatch) => ({
     async handleSubmit([settingsState, currentUserData]: [SettingsModelState, User]) {
       this.setIsLoading(true);
-      const { bannerFile, bannerFileType, bannerPreview, profilePictureFile, profilePictureFileType, profilePicturePreview } = settingsState;
+      const { bannerFile, bannerFileType, bannerPreview, profilePictureFile, profilePictureFileType, profilePicturePreview, userData } = settingsState;
       const { profile_picture: prevProfilePicture, banner: prevBanner, wallet, id } = currentUserData;
-      const { profile_picture, banner, description } = currentUserData;
-      const newUserData = { ...settingsState.userData };
-      const updatedUserData = { profile_picture, banner, description } as UserSettingsData;
-      if (currentUserData?.description !== newUserData?.description) updatedUserData.description = newUserData?.description;
-      if (currentUserData?.profile_picture !== newUserData?.profile_picture) {
+      const { description, twitter_handle } = { ...userData };
+
+      if (currentUserData?.twitter_handle !== twitter_handle) {
+        try {
+          if (twitter_handle?.length === 0) await updateUser(id, { twitter_handle: '' });
+          else {
+            const res = await verifyTweet(twitter_handle);
+            if (res.data?.validated) await updateUser(id, { twitter_handle: twitter_handle });
+            else {
+              this.setIsLoading(false);
+              this.setTwitterHandleError('this twitter handle is linked to another account');
+              setTimeout(() => this.setTwitterHandleError(''), 3000);
+            }
+          }
+        } catch (error) {
+          this.setIsLoading(false);
+          this.setTwitterHandleError('this twitter handle is linked to another account');
+          setTimeout(() => this.setTwitterHandleError(''), 3000);
+          return;
+        }
+      }
+      if (currentUserData?.description !== description) {
+        await updateUser(id, { description: description });
+      }
+      if (profilePictureFile?.size > 0 && profilePictureFileType) {
         if (prevProfilePicture?.includes(wallet)) await deleteObject(ref(storage, 'profilePictures/' + getCurrentImagePath(prevProfilePicture, wallet)));
-        if (profilePicturePreview && !newUserData?.profile_picture?.includes(`0x${'0'.repeat(30)}`)) {
-          await uploadBytes(ref(storage, `profilePictures/${wallet}${profilePictureFileType}`), profilePictureFile).then((snapshot) =>
-            getDownloadURL(snapshot.ref).then((url) => (updatedUserData.profile_picture = url)),
-          );
+        try {
+          await uploadBytes(ref(storage, `profilePictures/${wallet}${profilePictureFileType}`), profilePictureFile).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then(async (url) => {
+              await updateUser(id, { profile_picture: url });
+            });
+          });
+        } catch (error) {
+          console.log(error, 'error uploading profile picture');
         }
       }
-      if (currentUserData?.banner !== newUserData?.banner) {
+      if (bannerFile?.size > 0 && bannerPreview) {
         if (prevBanner?.includes(wallet)) await deleteObject(ref(storage, 'banners/' + getCurrentImagePath(prevBanner, wallet)));
-        if (bannerPreview && !newUserData?.banner?.includes(`0x${'0'.repeat(30)}`)) {
-          await uploadBytes(ref(storage, `banners/${wallet}${bannerFileType}`), bannerFile).then((snapshot) =>
-            getDownloadURL(snapshot.ref).then((url) => (updatedUserData.banner = url)),
-          );
+        try {
+          await uploadBytes(ref(storage, `banners/${wallet}${bannerFileType}`), bannerFile).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then(async (url) => {
+              await updateUser(id, { banner: url });
+            });
+          });
+        } catch (error) {
+          console.log(error, 'error uploading banner');
         }
       }
-      const { data } = await updateUserSettings(id, updatedUserData);
-      await dispatch.userModel.getUser(data.wallet);
-      dispatch.authModel.setUser(data);
+      dispatch.userModel.getUser(wallet);
+      dispatch.authModel.getUser(wallet);
       this.setIsLoading(false);
-      dispatch.settingsModel.clearState();
+      this.clearState();
+      return;
     },
     async handleProfilePictureUpload(e: React.ChangeEvent<HTMLInputElement>) {
       const input = e.target as HTMLInputElement;
@@ -109,6 +144,7 @@ export const settingsModel = createModel<RootModel>()({
           this.setBannerError('max file size exceeded');
           setTimeout(() => this.setBannerError(''), 3000);
         } else {
+          console.log('fileType', fileType);
           this.setBanner(URL.createObjectURL(input.files[0]));
           this.setBannerFileType('.' + fileType.split('/')[1]);
           this.setBannerPreview(URL.createObjectURL(input.files[0]));
@@ -117,18 +153,17 @@ export const settingsModel = createModel<RootModel>()({
         }
       }
     },
-    async handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-      const input = e.target as HTMLTextAreaElement;
-      if (!regex.test(input.value)) {
+    async handleDescriptionChange(value: string) {
+      if (!regex.test(value)) {
         this.setDescriptionError('enter only letters, numbers, and spaces');
         setTimeout(() => this.setDescriptionError(''), 3000);
-      } else if (input.value.length > 130) {
+      } else if (value.length > 130) {
         this.setDescriptionError('max characters exceeded');
         setTimeout(() => this.setDescriptionError(''), 3000);
       } else {
         this.setDescriptionError('');
-        this.setDescription(input.value);
-        this.setDescCharacters(input.value.length);
+        this.setDescription(value);
+        this.setDescCharacters(value.length);
       }
     },
   }),
