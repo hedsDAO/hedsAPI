@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Dispatch, store } from '@/store';
-import { Button, Flex, Spinner } from '@chakra-ui/react';
+import { Box, Button, Flex, Spinner } from '@chakra-ui/react';
 import { DescriptionCharCount } from '@/modals/screens/settings/components/DescriptionCharCount/DescriptionCharCount';
 import { SAVE_BUTTON_TEXT } from '@/modals/screens/settings/models/constants';
 import * as styles from '@/modals/screens/settings/components/ButtonGroup/styles';
@@ -12,6 +13,7 @@ import * as styles from '@/modals/screens/settings/components/ButtonGroup/styles
  **/
 
 export const ButtonGroup = () => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
   const currentUserData = useSelector(store.select.authModel.selectUser);
   const newUserData = useSelector(store.select.settingsModel.selectUserData);
@@ -19,8 +21,8 @@ export const ButtonGroup = () => {
   const isLoading = useSelector(store.select.settingsModel.selectIsLoading);
 
   return (
-    <Flex {...styles.$flexContainerStyles}>
-      <DescriptionCharCount />
+    <Flex {...styles.$flexContainerStyles} mt={pathname?.includes('tape') ? 5 : 3}>
+      {pathname?.includes('tape') ? <Box /> : <DescriptionCharCount />}
       <Flex {...styles.$buttonsFlexStyles}>
         <Button
           data-testid="submit-button"
@@ -30,7 +32,7 @@ export const ButtonGroup = () => {
           {isLoading ? <Spinner {...styles.$spinnerSize} /> : SAVE_BUTTON_TEXT}
         </Button>
         <Button
-        data-testid="reset-button"
+          data-testid="reset-button"
           onClick={() => {
             dispatch.settingsModel.clearState();
             dispatch.settingsModel.setUserData(currentUserData);

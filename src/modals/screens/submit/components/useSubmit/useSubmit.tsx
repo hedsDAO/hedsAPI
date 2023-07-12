@@ -26,7 +26,7 @@ export const useSubmit = () => {
       dispatch.modalModel.setModal(Modals.CONNECT);
       dispatch.submitModel.clearState();
     } else if (!user?.twitter_handle) {
-      dispatch.modalModel.setModal(Modals.TWITTER);
+      dispatch.modalModel.setModal(Modals.SETTINGS);
       dispatch.submitModel.clearState();
     } else {
       dispatch.submitModel.getUserSongs([user?.id, tape.id]);

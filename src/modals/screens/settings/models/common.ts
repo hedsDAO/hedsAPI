@@ -19,6 +19,8 @@ export class SettingsModelState {
   profilePicturePreview: string;
   descCharacters: number;
   descriptionError: string;
+  twitterHandleCharacters: number;
+  twitterHandleError: string;
   isLoading = false;
   error = '';
 }
