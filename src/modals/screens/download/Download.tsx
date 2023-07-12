@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getDownloadURL, ref, StorageReference } from 'firebase/storage';
+import { storage } from '@/App';
 
 // Components
 import {
@@ -29,6 +32,7 @@ import { DateTime } from 'luxon';
 import axios from 'axios';
 
 export const Download = () => {
+  const { id } = useParams<{ id: string }>();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch>();
@@ -49,6 +53,28 @@ export const Download = () => {
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
+      console.log(id)
+      if (sampleArtists[0].display_name === 'LNRZ') {
+        const zip: StorageReference = ref(storage, `samples/ht15.zip`);
+        await getDownloadURL(zip).then(async (url: string) => {
+          fetch(url)
+            .then((resp) => resp.blob())
+            .then((blob) => {
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.style.display = 'none';
+              a.href = url;
+              a.download = 'ht15.zip';
+              document.body.appendChild(a);
+              a.click();
+              window.URL.revokeObjectURL(url);
+              setIsDownloading(false);
+            })
+            .catch((err) => console.log(err));
+        });
+        return;
+      }
+
       const response = await axios.get(sample.audio, {
         responseType: 'blob',
       });
