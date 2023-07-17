@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getDownloadURL, ref, StorageReference } from 'firebase/storage';
+import { storage } from '@/App';
 
 // Components
 import {
@@ -37,6 +39,7 @@ export const Download = () => {
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const currentCycle = useSelector(store.select.tapeModel.selectCurrentCycle);
   const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
+  const tapeBpm = useSelector(store.select.tapeModel.selectBpm);
 
   useEffect(() => {
     if (currentCycle !== 'submit') setIsChecked(true);
@@ -49,6 +52,27 @@ export const Download = () => {
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
+      if (sampleArtists[0].display_name === 'LNRZ') {
+        const zip: StorageReference = ref(storage, `samples/ht15.zip`);
+        await getDownloadURL(zip).then(async (url: string) => {
+          fetch(url)
+            .then((resp) => resp.blob())
+            .then((blob) => {
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.style.display = 'none';
+              a.href = url;
+              a.download = 'ht15.zip';
+              document.body.appendChild(a);
+              a.click();
+              window.URL.revokeObjectURL(url);
+              setIsDownloading(false);
+            })
+            .catch((err) => console.log(err));
+        });
+        return;
+      }
+
       const response = await axios.get(sample.audio, {
         responseType: 'blob',
       });
@@ -108,7 +132,7 @@ export const Download = () => {
             <>
               <Box {...styles.$downloadBoxStyles}>
                 <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE IN</Text>
-                <Countdown epochTime={1754896800000} />
+                <Countdown epochTime={1689793200000} />
                 <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
                   BEFORE YOU DOWNLOAD
                 </Text>
@@ -117,7 +141,7 @@ export const Download = () => {
                 <Text {...styles.$generalTextStyles}>and </Text>
                 <Text {...styles.$redTextStyles}>not contain any copyrighted content. </Text>
                 <Text {...styles.$generalTextStyles}>The track must be</Text>
-                <Text {...styles.$redTextStyles}> 135 BPM </Text>
+                <Text {...styles.$redTextStyles}> {tapeBpm} BPM </Text>
                 <Text {...styles.$generalTextStyles}>and have a length between </Text>
                 <Text {...styles.$redTextStyles}>60 to 90 seconds.</Text>
               </Box>
@@ -129,7 +153,7 @@ export const Download = () => {
             </>
           ) : (
             <Flex justifyContent="center" gap={3} pt={6}>
-              <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE </Text>
+              <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSED </Text>
               <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.end)}</Text>
             </Flex>
           )}

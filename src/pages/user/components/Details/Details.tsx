@@ -35,10 +35,6 @@ export const Details = () => {
             >
               <i className={styles.$twitterIcon}></i>
             </Button>
-          ) : wallet === connectedWallet ? (
-            <Button onClick={() => dispatch.modalModel.setModal(Modals.TWITTER)} {...styles.$verifyTwitterButtonStyles}>
-              <i className={styles.$twitterIcon}></i> verify
-            </Button>
           ) : (
             <></>
           )}
@@ -68,16 +64,6 @@ export const Details = () => {
               {...styles.$twitterButtonMobileStyles}
             >
               <i className={styles.$twitterIcon}></i>
-            </Button>
-          ) : wallet === connectedWallet ? (
-            <Button
-              as={'a'}
-              target="_blank"
-              data-testid="user-twitter-button"
-              onClick={() => dispatch.modalModel.setModal(Modals.TWITTER)}
-              {...styles.$verifyTwitterButtonMobileStyles}
-            >
-              <i className={styles.$twitterIcon}></i> verify
             </Button>
           ) : (
             <></>

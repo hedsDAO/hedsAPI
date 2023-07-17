@@ -11,6 +11,12 @@ export const regex: RegExp = /^[a-zA-Z0-9\s]*$/;
 export const SETTINGS_MODAL_TITLE: string = 'SETTINGS';
 
 /**
+ * @constant {string} SETTINGS_MODAL_TITLE_TAPE_REDIRECT
+ * @description String that contains the text "SETTINGS" for the settings modal title.
+ */
+export const SETTINGS_MODAL_TITLE_TAPE_REDIRECT: string = 'ADD A TWITTER HANDLE';
+
+/**
  * @constant {string} SAVE_BUTTON_TEXT
  * @description String that contains the text "SAVE" for the save button.
  */
@@ -45,3 +51,28 @@ export const UPDATE_DESCRIPTION_TEXT: string = 'Update your profile description.
  * @description Description title.
  */
 export const DESCRIPTION_TITLE: string = 'Description';
+
+/**
+ * @constant {string} TWITTER_DESCRIPTION_TEXT
+ * @description Message in input field for updating twitter.
+ */
+export const TWITTER_DESCRIPTION_TEXT: string = 'Add your twitter handle, we trust you.';
+
+/**
+ * @constant {string} TWITTER_TITLE
+ * @description Twitter title.
+ */
+export const TWITTER_TITLE: string = 'Twitter';
+
+/**
+ * @constant {string} TWITTER_HANDLE_CHAR_COUNT
+ * @description Twitter handle character count.
+ */
+
+export const TWITTER_HANDLE_CHAR_COUNT: number = 15;
+
+/**
+ * @constant {string} TWITTER_LINKED_ACCOUNTS_TEXT
+ * @description Linked accounts text.
+ */
+export const TWITTER_LINKED_ACCOUNTS_TEXT = 'Linked Accounts'
