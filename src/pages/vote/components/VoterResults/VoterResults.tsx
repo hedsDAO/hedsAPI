@@ -36,7 +36,7 @@ export const VoterResults = ({ handleVoterChoices }: { handleVoterChoices: (vote
             .map((vote) => {
               const { vp, voter, voteChoices } = vote;
               const votesObject = voteChoices.reduce((acc, curr) => {
-                acc[curr.choice_id] = curr.amount;
+                acc[curr.choiceId] = curr.amount;
                 return acc;
               }, {} as { [id: number]: number });
               const wallet = voter.toLowerCase();

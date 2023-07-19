@@ -8,7 +8,6 @@ import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults'
 import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
 import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/CastVoteContainer';
 
-import { TrialVote } from './test';
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
 
 import { Dispatch, store } from '@/store';

@@ -10,7 +10,6 @@ import { Choice } from '@/pages/vote/models/voteModel';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 import { calculateUserVotingPower } from 'hedsvote';
 
@@ -27,18 +26,22 @@ export const CastVoteContainer = () => {
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
   const votes = useSelector(store.select.voteModel.selectVotes);
   const proposal = useSelector(store.select.voteModel.selectCurrentVote);
-  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
-  const now = DateTime.now().toMillis();
+  // const vp = useSelector(store.select.voteModel.selectUserVotingPower);
+  const vp = 100;
+  const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
   const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
 
   const castVote = async () => {
+    const voteChoices = Object.entries(formattedVoteObject).map(([key, value]) => ({ choiceId: key, amount: value, proposalId }));
+
     const voteObject = {
       proposalId: proposal.ipfs_hash,
-      spaceId: proposal.space_id,
-      updatedVote: hasUserVoted,
       signature: '',
-      voteChoices: formattedVoteObject,
+      vp,
+      voter: connectedUserWallet,
+      voteChoices,
     };
+
     dispatch.voteModel.castVote({ vote: voteObject, signer });
   };
 
@@ -57,9 +60,9 @@ export const CastVoteContainer = () => {
       if (userVote) {
         const formattedChoicesTank: { [key: string]: number } = {};
         for (const choice of userVote.voteChoices) {
-          const { vote_id } = choice;
-          const newKey = `${+vote_id - 1}`;
-          formattedChoicesTank[newKey] = userVote.voteChoices[vote_id].amount;
+          const { voteId } = choice;
+          const newKey = `${+voteId - 1}`;
+          formattedChoicesTank[newKey] = userVote.voteChoices[voteId].amount;
         }
         dispatch.voteModel.setUserLikesById(formattedChoicesTank);
       }
@@ -75,9 +78,9 @@ export const CastVoteContainer = () => {
     if (previousVote) {
       const formattedChoicesTank: { [key: string]: number } = {};
       for (const choice of previousVote.voteChoices) {
-        const { vote_id } = choice;
-        const newKey = `${+vote_id - 1}`;
-        formattedChoicesTank[newKey] = previousVote.voteChoices[vote_id].amount;
+        const { voteId } = choice;
+        const newKey = `${+voteId - 1}`;
+        formattedChoicesTank[newKey] = previousVote.voteChoices[voteId].amount;
       }
       return JSON.stringify(formattedChoicesTank) === JSON.stringify(userLikes);
     } else return false;

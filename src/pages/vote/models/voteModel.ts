@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient, ProposalState, VoteMethod, Strategy, VoteObject, UpdatedVoteObject } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod, Strategy, Vote, VoteChoice } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 import { Signer } from 'ethers';
@@ -33,23 +33,6 @@ export interface Choice {
   name: string;
   location: string;
   media: string;
-}
-
-export interface Vote {
-  id: number;
-  proposal_id: string;
-  signature: string;
-  created: string;
-  vp: number;
-  voter: string;
-  voteChoices: VoteChoice[];
-}
-
-interface VoteChoice {
-  vote_id: number;
-  choice_id: number;
-  proposal_id: string;
-  amount: number;
 }
 
 export interface ChoiceWithScore extends Choice {
@@ -155,9 +138,9 @@ export const voteModel = createModel<RootModel>()({
         if (!userChoices) return {};
         const formattedChoicesTank: { [key: string]: number } = {};
         for (const choice of userChoices) {
-          const { vote_id } = choice;
-          const newKey = `${+vote_id - 1}`;
-          formattedChoicesTank[newKey] = userChoices[vote_id];
+          const { voteId } = choice;
+          const newKey = `${+voteId - 1}`;
+          formattedChoicesTank[newKey] = userChoices[voteId];
         }
         return formattedChoicesTank;
       });
@@ -185,7 +168,7 @@ export const voteModel = createModel<RootModel>()({
       const { castVote } = createClient();
       try {
         await castVote(signer, vote);
-        this.getProposal(vote.proposal_id);
+        this.getProposal(vote.proposalId);
         return;
       } catch (error) {
         console.log(error);
