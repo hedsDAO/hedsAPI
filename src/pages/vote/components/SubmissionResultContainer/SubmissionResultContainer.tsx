@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { Submissions } from '@/pages/vote/components/Submissions/Submissions';
 import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults';
-import { store } from '@/store';
+import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
+
+import { TrialVote } from './test';
+import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
+
+import { Dispatch, store } from '@/store';
 
 export const SubmissionResultContainer = () => {
+  const dispatch = useDispatch<Dispatch>();
+
   const [voterChoices, setVoterChoices] = useState({});
   const tracks = useSelector(store.select.tapeModel.selectTracks);
   const choices = useSelector(store.select.voteModel.selectChoices);
@@ -19,6 +26,10 @@ export const SubmissionResultContainer = () => {
     setVoterChoices(votesObj);
   };
 
+  const handleSelectedSubmission = (choice: ChoiceWithScore) => {
+    dispatch.voteModel.setCurrentTrack(choice);
+  };
+
   return (
     <Flex direction={['column', 'row']} justifyContent="space-around" mt={{ lg: 4 }} px={{ base: 12, lg: 16 }}>
       <Box w={['100%', '70%']} mb={8}>
@@ -28,17 +39,19 @@ export const SubmissionResultContainer = () => {
         <Text color="white" fontFamily="inter" fontSize="sm">
           Listen to the submissions for this tape
         </Text>
-        {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />}
+        {/* {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />} */}
+        {choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />}
       </Box>
 
       <Box width={['100', '20%']}>
-        <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
+        <TrialVote />
+        {/* <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           RESULTS
         </Text>
         <Text color="white" fontFamily="inter" fontSize="sm">
           Voting has been closed and here are the results
         </Text>
-        {votes?.length > 0 && <VoterResults handleVoterChoices={handleVoterChoices} />}
+        {votes?.length > 0 && <VoterResults handleVoterChoices={handleVoterChoices} />} */}
       </Box>
     </Flex>
   );
