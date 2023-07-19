@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient, ProposalState, VoteMethod, Strategy, Vote, VoteChoice } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod, Strategy, Vote } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 import { Signer } from 'ethers';
@@ -34,6 +34,23 @@ export interface Choice {
   location: string;
   media: string;
 }
+
+// export interface Vote {
+//   id: number;
+//   proposalId: string;
+//   signature: string;
+//   created: string;
+//   vp: number;
+//   voter: string;
+//   voteChoices: VoteChoice[];
+// }
+
+// interface VoteChoice {
+//   voteId: number;
+//   choiceId: number;
+//   proposalId: string;
+//   amount: number;
+// }
 
 export interface ChoiceWithScore extends Choice {
   score?: number;
