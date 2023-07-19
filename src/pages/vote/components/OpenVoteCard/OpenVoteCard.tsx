@@ -1,6 +1,5 @@
 import { Box, Flex, Grid, Image, Progress, Stack, Text, IconButton, Center } from '@chakra-ui/react';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, store } from '@/store';
 import { Choice, ChoiceWithScore } from '@/pages/vote/models/voteModel';
@@ -59,7 +58,7 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
                 ml={1}
               >
                 <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
-                  {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
+                  {userLikes?.[choice.id] >= 0 ? <HeartIcon height="16" width="16" fill="red" /> : <HeartIcon height="16" width="16" stroke="#808080" />}
                 </Center>
               </IconButton>
             )}
