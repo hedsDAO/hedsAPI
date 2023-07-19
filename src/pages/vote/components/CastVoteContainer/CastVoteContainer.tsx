@@ -7,8 +7,7 @@ import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, C
 
 // Models
 import { Choice } from '@/pages/vote/models/voteModel';
-import { HeartIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
+import { HeartIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
 import { calculateUserVotingPower } from 'hedsvote';
@@ -214,7 +213,7 @@ const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: s
             ml={1}
           >
             <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">
-              {userLikes?.[choice.id] >= 0 ? <FilledHeartIcon height="16" width="16" /> : <HeartIcon height="16" width="16" />}
+              <HeartIcon height="16" width="16" fill="red" />
             </Center>
           </IconButton>
         </Flex>
