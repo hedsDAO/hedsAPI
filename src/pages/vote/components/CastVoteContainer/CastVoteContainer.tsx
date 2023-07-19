@@ -32,7 +32,7 @@ export const CastVoteContainer = () => {
   const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
 
   const castVote = async () => {
-    const voteChoices = Object.entries(formattedVoteObject).map(([key, value]) => ({ choiceId: key, amount: value, proposalId }));
+    const voteChoices = Object.entries(formattedVoteObject).map(([key, value]) => ({ choiceId: Number(key), amount: value, proposalId }));
 
     const voteObject = {
       proposalId: proposal.ipfs_hash,
