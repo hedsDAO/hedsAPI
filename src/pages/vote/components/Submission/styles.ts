@@ -28,6 +28,7 @@ export const $cardFlexStyles: FlexProps = {
   direction: 'column',
   pl: 1,
   pr: 2,
+  justifyContent: 'center',
 };
 
 export const $cardTextStyles: Record<string, TextProps> = {
