@@ -6,6 +6,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { Submissions } from '@/pages/vote/components/Submissions/Submissions';
 import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults';
 import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
+import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/CastVoteContainer';
 
 import { TrialVote } from './test';
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
@@ -17,6 +18,7 @@ export const SubmissionResultContainer = () => {
 
   const [voterChoices, setVoterChoices] = useState({});
   const tracks = useSelector(store.select.tapeModel.selectTracks);
+  const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
   const choices = useSelector(store.select.voteModel.selectChoices);
   const scores = useSelector(store.select.voteModel.selectScores);
   const votes = useSelector(store.select.voteModel.selectVotes);
@@ -39,12 +41,14 @@ export const SubmissionResultContainer = () => {
         <Text color="white" fontFamily="inter" fontSize="sm">
           Listen to the submissions for this tape
         </Text>
-        {/* {sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />} */}
+        {/* {cycle === 'vote'
+          ? choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
+          : sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />} */}
         {choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />}
       </Box>
 
       <Box width={['100', '20%']}>
-        <TrialVote />
+        <CastVoteContainer />
         {/* <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           RESULTS
         </Text>

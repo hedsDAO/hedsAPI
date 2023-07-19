@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient, ProposalState, VoteMethod, Strategy, VoteObject } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod, Strategy, VoteObject, UpdatedVoteObject } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 import { Signer } from 'ethers';
@@ -42,7 +42,7 @@ export interface Vote {
   created: string;
   vp: number;
   voter: string;
-  vote_choices: VoteChoice[];
+  voteChoices: VoteChoice[];
 }
 
 interface VoteChoice {
@@ -72,10 +72,8 @@ export const voteModel = createModel<RootModel>()({
     vp: 0,
   },
   reducers: {
-    setProposal(state, vote) {
-      return { ...state, vote };
-    },
-    setUserResultsInfo(state, users) {
+    setProposal: (state, vote) => ({ ...state, vote }),
+    setUserResultsInfo: (state, users) => {
       const userResultsData = {} as { [key: string]: UserResultsInfo };
       users.forEach((user: UserResultsInfo) => {
         userResultsData[user.wallet] = { display_name: user.display_name, profile_picture: user.profile_picture, wallet: user.wallet };
@@ -98,6 +96,8 @@ export const voteModel = createModel<RootModel>()({
       delete likesByChoiceId[choice.id];
       return { ...state, likesByChoiceId };
     },
+    setUserLikesById: (state, likesByChoiceId) => ({ ...state, likesByChoiceId }),
+    setVp: (state, vp: number) => ({ ...state, vp }),
   },
   selectors: (slice, createSelector, hasProps) => ({
     selectCurrentVote: () => slice((state) => state.vote),
@@ -154,9 +154,10 @@ export const voteModel = createModel<RootModel>()({
       return createSelector(this.selectUserLikes, (userChoices) => {
         if (!userChoices) return {};
         const formattedChoicesTank: { [key: string]: number } = {};
-        for (const key in userChoices) {
-          const newKey = `${+key + 1}`;
-          formattedChoicesTank[newKey] = userChoices[key];
+        for (const choice of userChoices) {
+          const { vote_id } = choice;
+          const newKey = `${+vote_id - 1}`;
+          formattedChoicesTank[newKey] = userChoices[vote_id];
         }
         return formattedChoicesTank;
       });
@@ -184,7 +185,7 @@ export const voteModel = createModel<RootModel>()({
       const { castVote } = createClient();
       try {
         await castVote(signer, vote);
-        this.getProposal(vote.proposalId);
+        this.getProposal(vote.proposal_id);
         return;
       } catch (error) {
         console.log(error);

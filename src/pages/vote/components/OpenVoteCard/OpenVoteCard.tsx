@@ -31,18 +31,19 @@ export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSub
 const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
-  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
+  // const vp = useSelector(store.select.voteModel.selectUserVotingPower);
+  const vp = 100;
   const totalVpDistributed = Object.values(userLikes).reduce((num, acc) => num + acc, 0);
   const currentVpDistribution = userLikes[choice.id] / totalVpDistributed;
   return (
-    <Box border="1px" borderRadius="md" borderColor="gray.800" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
+    <Box border="1px" borderRadius="md" borderColor="#9293FF" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
       <Stack flexDirection="row">
         <Box p={2}>
           <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
         </Box>
         <Flex w="full" direction="column" pl={1} pr={2}>
           <Flex justifyContent={'space-between'} alignItems={'center'}>
-            <Text mt={'-0.5px !important'} fontSize="xs">
+            <Text mt={'-0.5px !important'} fontSize="xs" color="#DFDFDF" fontFamily="space">
               {choice.name}
             </Text>
             {vp > 0 && (
