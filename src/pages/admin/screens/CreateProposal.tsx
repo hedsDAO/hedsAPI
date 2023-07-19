@@ -51,7 +51,7 @@ export const CreateProposal = () => {
     const signer = await connector?.getSigner();
     const formattedProposal = formatProposalPayload(currentTape);
     const formattedStrategies = formatStrategiesPayload(artistsWallets);
-
+    console.log(formattedProposal)
     const proposalPayload: Proposal = {
       ...formattedProposal,
       author: adminWallet,
