@@ -6,7 +6,7 @@ import { useSigner } from 'wagmi';
 import { Box, Heading, Flex, Stack, Text, Tooltip, Button, Avatar, IconButton, Center, Badge } from '@chakra-ui/react';
 
 // Models
-import { Choice } from 'hedsvote';
+import { Choice } from '@/pages/vote/models/voteModel';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
@@ -30,33 +30,18 @@ export const CastVoteContainer = () => {
   const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const now = DateTime.now().toMillis();
   const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
+
   const castVote = async () => {
     const voteObject = {
       proposalId: proposal.ipfs_hash,
       spaceId: proposal.space_id,
       updatedVote: hasUserVoted,
-      vote: {
-        choice: formattedVoteObject,
-        created: now,
-        signature: '',
-        voter: connectedUserWallet,
-        vp,
-      },
+      signature: '',
+      voteChoices: formattedVoteObject,
     };
-    if (!hasUserVoted) {
-      await dispatch.voteModel.castVote({ vote: voteObject, signer });
-      // if (votes.find((vote) => vote.voter === connectedUserWallet).signature) voteToast();
-      // dispatch.userModel.addUserVote([voteObject, choices]);
-      return;
-    } else {
-      const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
-      const updatedVote = { ...voteObject, previousVote };
-      const success = await dispatch.voteModel.updateVote({ vote: updatedVote, signer });
-      // if (success) voteToast();
-      // dispatch.userModel.addUserVote([updatedVote, choices]);
-      return;
-    }
+    dispatch.voteModel.castVote({ vote: voteObject, signer });
   };
+
   useEffect(() => {
     if (proposal?.strategies) {
       calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
@@ -65,14 +50,16 @@ export const CastVoteContainer = () => {
       });
     }
   }, [proposal.strategies, connectedUserWallet]);
+
   useEffect(() => {
     if (hasUserVoted && connectedUserWallet) {
       const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
       if (userVote) {
         const formattedChoicesTank: { [key: string]: number } = {};
-        for (const key in userVote.choice) {
-          const newKey = `${+key - 1}`;
-          formattedChoicesTank[newKey] = userVote.choice[key];
+        for (const choice of userVote.voteChoices) {
+          const { vote_id } = choice;
+          const newKey = `${+vote_id - 1}`;
+          formattedChoicesTank[newKey] = userVote.voteChoices[vote_id].amount;
         }
         dispatch.voteModel.setUserLikesById(formattedChoicesTank);
       }
@@ -81,17 +68,21 @@ export const CastVoteContainer = () => {
       dispatch.voteModel.setUserLikesById({});
     }
   }, [hasUserVoted, connectedUserWallet]);
+
   const disableVoteButton = () => {
     const previousVote = votes.find((vote) => vote.voter === connectedUserWallet);
+
     if (previousVote) {
       const formattedChoicesTank: { [key: string]: number } = {};
-      for (const key in previousVote.choice) {
-        const newKey = `${+key - 1}`;
-        formattedChoicesTank[newKey] = previousVote.choice[key];
+      for (const choice of previousVote.voteChoices) {
+        const { vote_id } = choice;
+        const newKey = `${+vote_id - 1}`;
+        formattedChoicesTank[newKey] = previousVote.voteChoices[vote_id].amount;
       }
       return JSON.stringify(formattedChoicesTank) === JSON.stringify(userLikes);
     } else return false;
   };
+
   return (
     <>
       {isHedsTAPE13 && votes?.length ? (
@@ -163,7 +154,6 @@ export const CastVoteContainer = () => {
       )}
     </>
   );
-  // return <div>hello</div>;
 };
 
 const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: string]: number } }) => {
@@ -228,5 +218,4 @@ const VoterCard = ({ choice, userLikes }: { choice: Choice; userLikes: { [key: s
       </Flex>
     </Box>
   );
-  // return <div>hello</div>;
 };
