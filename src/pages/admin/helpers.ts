@@ -4,16 +4,24 @@ import { tapesAndVpWeights } from '@/pages/user/models/constants';
 import { StrategyName } from 'hedsvote';
 
 export const formatProposalPayload = (tape: Tape) => {
-  const choices = tape.songs.map((song) => {
+  const tapeNumber = tape.name.slice(tape.name.length - 2);
+  const choices = tape.songs
+  .filter((song) => song.type !== "sample")
+  .map((song) => {
+    const artist = song.artists.length > 1 ? song.artists.map((artist) => artist.artist_display_name) : song.artists.length ? song.artists[0].artist_display_name : null;
+    const walletId = song.artists.length > 1 ? song.artists.map((artist) => artist.artist_wallet) : song.artists.length ?  song.artists[0].artist_wallet : null;
+
     return {
-      artist: song.artists.map((artist) => artist.artist_display_name),
+      artist: artist,
       media: song.audio,
       id: song.id,
-      image: song.cover,
+      image: song.submission_data.sub_image,
       name: song.track_name,
-      wallet_id: song.artists.map((artist) => artist.artist_wallet),
+      walletId: walletId,
+      location: `heds/hedstape/${tapeNumber}`
     };
   });
+
   const startTime = new Date(tape.timeline.vote.start);
   const endTime = new Date(tape.timeline.vote.end);
   const method = 0;
