@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
@@ -9,6 +9,8 @@ import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
 import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/CastVoteContainer';
 
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
+
+import { Song } from '@models/common';
 
 import { Dispatch, store } from '@/store';
 
@@ -22,14 +24,29 @@ export const SubmissionResultContainer = () => {
   const scores = useSelector(store.select.voteModel.selectScores);
   const votes = useSelector(store.select.voteModel.selectVotes);
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
+  const songs = useSelector(store.select.tapeModel.selectSongs);
+  const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
 
   const handleVoterChoices = (votesObj: { [key: number]: number }) => {
     setVoterChoices(votesObj);
   };
 
+  const songsByIpfsHash = useMemo(() => {
+    return songs.reduce((acc, track) => {
+      acc[track.audio] = track;
+      return acc;
+    }, {} as { [key: string]: Song });
+  }, [songs]);
+
   const handleSelectedSubmission = (choice: ChoiceWithScore) => {
     dispatch.voteModel.setCurrentTrack(choice);
+    const song = songsByIpfsHash[choice.media];
+    dispatch.songModel.setSong(song);
   };
+
+  useEffect(() => {
+    dispatch.songModel.setSong(sample);
+  }, [sample]);
 
   return (
     <Flex direction={['column', 'row']} justifyContent="space-around" mt={{ lg: 4 }} px={{ base: 12, lg: 16 }}>
