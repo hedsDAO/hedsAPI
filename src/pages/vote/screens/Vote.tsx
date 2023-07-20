@@ -18,8 +18,7 @@ export const Vote = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<Dispatch>();
   const song = useSelector(store.select.songModel.selectSong);
-  // const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
-  const proposalId = "bafkreielvlkeohyzsv36nd6de6vpsmhjlyshlntk3im6hreqoxt2ubwb2m";
+  const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
 
   useEffect(() => {
     const retrieveProposalData = async () => {

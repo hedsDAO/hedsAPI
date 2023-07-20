@@ -37,8 +37,6 @@ export const CastVoteContainer = () => {
       voter: connectedUserWallet,
       voteChoices,
     };
-    console.log('voteChoices', voteChoices);
-
     dispatch.voteModel.castVote({ vote: voteObject, signer });
   };
 
@@ -53,7 +51,6 @@ export const CastVoteContainer = () => {
 
   useEffect(() => {
     if (hasUserVoted && connectedUserWallet) {
-      console.log('votes', votes);
       const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
       if (userVote) {
         const formattedChoicesTank: { [key: string]: number } = {};
@@ -80,7 +77,6 @@ export const CastVoteContainer = () => {
         const { choice_id, amount } = choice;
         formattedChoicesTank[choice_id] = amount;
       }
-      console.log(formattedChoicesTank, userLikes);
       return JSON.stringify(formattedChoicesTank) === JSON.stringify(userLikes);
     } else return false;
   };

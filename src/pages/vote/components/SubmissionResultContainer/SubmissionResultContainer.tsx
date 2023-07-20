@@ -37,7 +37,7 @@ export const SubmissionResultContainer = () => {
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           SUBMISSIONS
         </Text>
-        <Text color="white" fontFamily="inter" fontSize="sm">
+        <Text color="white" fontFamily="space" fontSize="sm" py={1.5}>
           Listen to the submissions for this tape
         </Text>
         {/* {cycle === 'vote'
