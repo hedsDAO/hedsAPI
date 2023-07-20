@@ -57,13 +57,15 @@ export const SubmissionResultContainer = () => {
         <Text color="white" fontFamily="space" fontSize="sm" pb={1.5}>
           Listen to the submissions for this tape
         </Text>
-        {cycle === 'vote'
+        {/* {cycle === 'vote'
           ? choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
-          : sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />}
+          : sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />} */}
+
+        {choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />}
       </Box>
 
       <Box width={['100', '20%']}>
-        {cycle === 'vote' ? (
+        {/* {cycle === 'vote' ? (
           <CastVoteContainer />
         ) : (
           <>
@@ -75,7 +77,8 @@ export const SubmissionResultContainer = () => {
             </Text>
             {votes?.length > 0 && <VoterResults handleVoterChoices={handleVoterChoices} />}
           </>
-        )}
+        )} */}
+        <CastVoteContainer />
       </Box>
     </Flex>
   );
