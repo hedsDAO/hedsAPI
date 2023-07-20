@@ -74,7 +74,7 @@ export const TimelineButtons = () => {
           </HStack>
           <Button
             {...styles.$buttonStyles}
-            isDisabled={cycle === 'submit'}
+            isDisabled={cycle !== 'submit'}
             leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
             onClick={() => navigate(`/vote/${id}`)}
           >
