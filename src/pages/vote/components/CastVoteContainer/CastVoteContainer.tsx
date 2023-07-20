@@ -25,8 +25,7 @@ export const CastVoteContainer = () => {
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
   const votes = useSelector(store.select.voteModel.selectVotes);
   const proposal = useSelector(store.select.voteModel.selectCurrentVote);
-  // const vp = useSelector(store.select.voteModel.selectUserVotingPower);
-  const vp = 100;
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
   const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
 
@@ -46,8 +45,8 @@ export const CastVoteContainer = () => {
 
   useEffect(() => {
     if (proposal?.strategies) {
-      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vp) => {
-        dispatch.voteModel.setVp(vp);
+      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vP) => {
+        dispatch.voteModel.setVp(vP);
         return;
       });
     }
