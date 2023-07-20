@@ -1,8 +1,9 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient, ProposalState, VoteMethod } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod, Strategy, Vote } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
+import { Signer } from 'ethers';
 
 export interface VoteState {
   ipfs_hash: string;
@@ -20,9 +21,10 @@ export interface VoteState {
   created_at: string;
   choices: Choice[];
   votes: Vote[];
+  strategies: Strategy[];
 }
 
-interface Choice {
+export interface Choice {
   id: number;
   proposal_id: string;
   image: string;
@@ -33,25 +35,25 @@ interface Choice {
   media: string;
 }
 
-export interface Vote {
-  id: number;
-  proposal_id: string;
-  signature: string;
-  created: string;
-  vp: number;
-  voter: string;
-  vote_choices: VoteChoice[];
-}
+// export interface Vote {
+//   id: number;
+//   proposalId: string;
+//   signature: string;
+//   created: string;
+//   vp: number;
+//   voter: string;
+//   voteChoices: VoteChoice[];
+// }
 
-interface VoteChoice {
-  vote_id: number;
-  choice_id: number;
-  proposal_id: string;
-  amount: number;
-}
+// interface VoteChoice {
+//   voteId: number;
+//   choiceId: number;
+//   proposalId: string;
+//   amount: number;
+// }
 
 export interface ChoiceWithScore extends Choice {
-  score: number;
+  score?: number;
 }
 
 interface UserResultsInfo {
@@ -61,12 +63,17 @@ interface UserResultsInfo {
 }
 
 export const voteModel = createModel<RootModel>()({
-  state: { vote: {} as VoteState, calculatedScores: [] as ChoiceWithScore[], userResultsInfo: {} as { [key: string]: UserResultsInfo }, isLoading: false },
+  state: {
+    vote: {} as VoteState,
+    calculatedScores: [] as ChoiceWithScore[],
+    userResultsInfo: {} as { [key: string]: UserResultsInfo },
+    isLoading: false,
+    likesByChoiceId: {} as { [key: string]: number },
+    vp: 0,
+  },
   reducers: {
-    setProposal(state, vote) {
-      return { ...state, vote };
-    },
-    setUserResultsInfo(state, users) {
+    setProposal: (state, vote) => ({ ...state, vote }),
+    setUserResultsInfo: (state, users) => {
       const userResultsData = {} as { [key: string]: UserResultsInfo };
       users.forEach((user: UserResultsInfo) => {
         userResultsData[user.wallet] = { display_name: user.display_name, profile_picture: user.profile_picture, wallet: user.wallet };
@@ -74,6 +81,23 @@ export const voteModel = createModel<RootModel>()({
       return { ...state, userResultsInfo: userResultsData };
     },
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
+    setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
+    increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
+      ...state,
+      likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: ++state.likesByChoiceId[choice.id] },
+    }),
+    decreaseChoiceWeightFromLikes: (state, choice: Choice) => ({
+      ...state,
+      likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: state.likesByChoiceId[choice.id] > 1 ? --state.likesByChoiceId[choice.id] : 1 },
+    }),
+    addChoiceToLikes: (state, choice: Choice) => ({ ...state, likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: 1 } }),
+    deleteChoiceFromLikes: (state, choice: Choice) => {
+      const likesByChoiceId = { ...state.likesByChoiceId };
+      delete likesByChoiceId[choice.id];
+      return { ...state, likesByChoiceId };
+    },
+    setUserLikesById: (state, likesByChoiceId) => ({ ...state, likesByChoiceId }),
+    setVp: (state, vp: number) => ({ ...state, vp }),
   },
   selectors: (slice, createSelector, hasProps) => ({
     selectCurrentVote: () => slice((state) => state.vote),
@@ -82,6 +106,8 @@ export const voteModel = createModel<RootModel>()({
     selectVotes: () => slice((state) => state.vote.votes),
     selectUserResultsInfo: () => slice((state) => state.userResultsInfo),
     selectIsLoading: () => slice((state) => state.isLoading),
+    selectUserLikes: () => slice((state) => state.likesByChoiceId),
+    selectUserVotingPower: () => slice((state) => state?.vp || 0),
     selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tracks }) {
       return slice((voteModel) => {
         if (!voteModel || !scores) return [];
@@ -114,6 +140,16 @@ export const voteModel = createModel<RootModel>()({
         return sortedChoicesByResults;
       });
     }),
+    selectHasUserVoted: hasProps(function (models, connectedUser) {
+      return slice((state) => {
+        if (!state.vote.votes || !connectedUser) return false;
+        if (state.vote.votes) {
+          return state.vote.votes.some((vote) => vote.voter === connectedUser.toLowerCase());
+        } else {
+          return false;
+        }
+      });
+    }),
   }),
   effects: () => ({
     async getProposalById(proposalId: string) {
@@ -131,6 +167,16 @@ export const voteModel = createModel<RootModel>()({
     async getManyUsers(wallets: string[]) {
       const response = await getManyUsersByWalletId(wallets);
       this.setUserResultsInfo(response.data);
+    },
+    async castVote({ vote, signer }: { vote: Vote; signer: Signer }) {
+      const { castVote } = createClient();
+      try {
+        await castVote(signer, vote);
+        this.getProposalById(vote.proposalId);
+        return;
+      } catch (error) {
+        console.log(error);
+      }
     },
   }),
 });
