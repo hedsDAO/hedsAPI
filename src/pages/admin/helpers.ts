@@ -34,13 +34,17 @@ export const formatStrategiesPayload = (artistsWallets: string[]) => {
   const whitelistArtists = {
     name: StrategyName.WHITELIST,
     network: '1',
-    addresses: artistsVp,
+    params: {
+      addresses: artistsVp
+    }
   };
 
   const whitelistOG = {
     name: StrategyName.WHITELIST,
     network: '1',
-    addresses: ogAddressesAndVp,
+    params: {
+      addresses: ogAddressesAndVp,
+    }
   };
 
   const ERC721 = {
