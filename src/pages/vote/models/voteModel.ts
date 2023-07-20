@@ -150,18 +150,6 @@ export const voteModel = createModel<RootModel>()({
         }
       });
     }),
-    selectVoteObject() {
-      return createSelector(this.selectUserLikes, (userChoices) => {
-        if (!userChoices) return {};
-        const formattedChoicesTank: { [key: string]: number } = {};
-        for (const choice of userChoices) {
-          const { voteId } = choice;
-          const newKey = `${+voteId - 1}`;
-          formattedChoicesTank[newKey] = userChoices[voteId];
-        }
-        return formattedChoicesTank;
-      });
-    },
   }),
   effects: () => ({
     async getProposalById(proposalId: string) {
@@ -185,7 +173,7 @@ export const voteModel = createModel<RootModel>()({
       const { castVote } = createClient();
       try {
         await castVote(signer, vote);
-        this.getProposal(vote.proposalId);
+        this.getProposalById(vote.proposalId);
         return;
       } catch (error) {
         console.log(error);
