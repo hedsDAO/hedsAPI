@@ -30,8 +30,7 @@ export const OpenVoteCards = ({ choices, handleSelectedSubmission }: OpenVoteSub
 const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const dispatch = useDispatch<Dispatch>();
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
-  // const vp = useSelector(store.select.voteModel.selectUserVotingPower);
-  const vp = 100;
+  const vp = useSelector(store.select.voteModel.selectUserVotingPower);
   const totalVpDistributed = Object.values(userLikes).reduce((num, acc) => num + acc, 0);
   const currentVpDistribution = userLikes[choice.id] / totalVpDistributed;
   return (
@@ -40,7 +39,7 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
         <Box p={2}>
           <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
         </Box>
-        <Flex w="full" direction="column" pl={1} pr={2}>
+        <Flex w="full" direction="column" pl={1} pr={2} justifyContent="center">
           <Flex justifyContent={'space-between'} alignItems={'center'}>
             <Text mt={'-0.5px !important'} fontSize="xs" color="#DFDFDF" fontFamily="space">
               {choice.name}
@@ -63,7 +62,13 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
               </IconButton>
             )}
           </Flex>
-          <Progress mt={vp > 0 ? 2 : 4} size="sm" value={currentVpDistribution > 0 ? currentVpDistribution * 100 : 0.01} colorScheme="gray" borderRadius="md" />
+          <Progress
+            mt={vp > 0 ? 2 : 4}
+            size="sm"
+            value={currentVpDistribution > 0 ? currentVpDistribution * 100 : 0.01}
+            colorScheme="purple"
+            borderRadius="md"
+          />
         </Flex>
       </Stack>
     </Box>
