@@ -37,24 +37,28 @@ export const SubmissionResultContainer = () => {
         <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
           SUBMISSIONS
         </Text>
-        <Text color="white" fontFamily="space" fontSize="sm" py={1.5}>
+        <Text color="white" fontFamily="space" fontSize="sm" pb={1.5}>
           Listen to the submissions for this tape
         </Text>
-        {/* {cycle === 'vote'
+        {cycle === 'vote'
           ? choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
-          : sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />} */}
-        {choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />}
+          : sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />}
       </Box>
 
       <Box width={['100', '20%']}>
-        <CastVoteContainer />
-        {/* <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
-          RESULTS
-        </Text>
-        <Text color="white" fontFamily="inter" fontSize="sm">
-          Voting has been closed and here are the results
-        </Text>
-        {votes?.length > 0 && <VoterResults handleVoterChoices={handleVoterChoices} />} */}
+        {cycle === 'vote' ? (
+          <CastVoteContainer />
+        ) : (
+          <>
+            <Text color="white" fontFamily="poppins" fontSize="lg" letterSpacing="wider">
+              RESULTS
+            </Text>
+            <Text color="white" fontFamily="inter" fontSize="sm">
+              Voting has been closed and here are the results
+            </Text>
+            {votes?.length > 0 && <VoterResults handleVoterChoices={handleVoterChoices} />}
+          </>
+        )}
       </Box>
     </Flex>
   );

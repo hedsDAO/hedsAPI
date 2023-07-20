@@ -157,7 +157,6 @@ export const voteModel = createModel<RootModel>()({
         this.setIsLoading(true);
         const { getProposal } = createClient();
         const response = await getProposal(proposalId);
-        console.log('response', response.data);
         this.setProposal(response.data);
         this.setIsLoading(false);
       } catch (e) {

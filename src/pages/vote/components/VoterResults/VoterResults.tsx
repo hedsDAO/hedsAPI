@@ -34,8 +34,10 @@ export const VoterResults = ({ handleVoterChoices }: { handleVoterChoices: (vote
           votes
             .sort((a, b) => b.vp - a.vp)
             .map((vote) => {
-              const { vp, voter, voteChoices } = vote;
-              const votesObject = voteChoices.reduce((acc, curr) => {
+              //@ts-ignore
+              const { vp, voter, vote_choices } = vote;
+              //@ts-ignore
+              const votesObject = vote_choices.reduce((acc, curr) => {
                 acc[curr.choiceId] = curr.amount;
                 return acc;
               }, {} as { [id: number]: number });
