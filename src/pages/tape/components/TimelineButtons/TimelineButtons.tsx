@@ -18,6 +18,7 @@ export const TimelineButtons = () => {
   const dispatch = useDispatch<Dispatch>();
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
+  const now = DateTime.now().toMillis();
 
   const formatTime = (time: number) => {
     if (time !== 0) {
@@ -65,20 +66,20 @@ export const TimelineButtons = () => {
             <Text color="#9293FF" fontFamily="sans-serif">
               Vote
             </Text>
-            {cycle === 'vote' ? (
-              <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
-            ) : (
+            {now <= timeline?.vote?.start ? (
               <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
+            ) : (
+              <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.start)}</Text>
           </HStack>
           <Button
             {...styles.$buttonStyles}
-            isDisabled={cycle !== 'submit'}
+            isDisabled={now <= timeline?.vote?.start}
             leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
             onClick={() => navigate(`/vote/${id}`)}
           >
-            {cycle === 'vote' ? 'VOTE NOW' : 'RESULTS'}
+            {now <= timeline?.vote?.end ? 'VOTE NOW' : 'RESULTS'}
           </Button>
         </>
       )}
@@ -94,7 +95,7 @@ export const TimelineButtons = () => {
         isDisabled={!(cycle === 'mint')}
         onClick={() => dispatch.modalModel.setModal(Modals.MINT)}
       >
-        {cycle === 'submit' || cycle === 'vote' ? 'UPCOMING' : cycle === 'mint' ? 'MINT' : 'CLOSED'}
+        {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
       </Button>
     </Stack>
   );
