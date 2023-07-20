@@ -21,7 +21,7 @@ export const CastVoteContainer = () => {
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const choices = useSelector(store.select.voteModel.selectChoices);
   const connectedUserWallet = useSelector(store.select.authModel.selectWallet);
-  const formattedVoteObject = useSelector(store.select.voteModel.selectVoteObject);
+  const formattedVoteObject = useSelector(store.select.voteModel.selectUserLikes);
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
   const votes = useSelector(store.select.voteModel.selectVotes);
   const proposal = useSelector(store.select.voteModel.selectCurrentVote);
@@ -30,8 +30,8 @@ export const CastVoteContainer = () => {
   const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
 
   const castVote = async () => {
-    const voteChoices = Object.entries(formattedVoteObject).map(([key, value]) => ({ choiceId: Number(key), amount: value, proposalId }));
-
+    const voteChoices = Object.entries(formattedVoteObject).map(([key, value]) => ({ choiceId: Number(key), amount: value, proposalId: proposal.ipfs_hash }));
+console.log(proposal.ipfs_hash)
     const voteObject = {
       proposalId: proposal.ipfs_hash,
       signature: '',
@@ -39,13 +39,14 @@ export const CastVoteContainer = () => {
       voter: connectedUserWallet,
       voteChoices,
     };
+    console.log(voteChoices)
 
     dispatch.voteModel.castVote({ vote: voteObject, signer });
   };
 
   useEffect(() => {
     if (proposal?.strategies) {
-      calculateUserVotingPower(connectedUserWallet.toLowerCase(), proposal?.strategies).then((vP) => {
+      calculateUserVotingPower(connectedUserWallet, proposal?.strategies).then((vP) => {
         dispatch.voteModel.setVp(vP);
         return;
       });
