@@ -21,7 +21,6 @@ export const CastVoteContainer = () => {
   const userLikes = useSelector(store.select.voteModel.selectUserLikes);
   const choices = useSelector(store.select.voteModel.selectChoices);
   const connectedUserWallet = useSelector(store.select.authModel.selectWallet);
-  const formattedVoteObject = useSelector(store.select.voteModel.selectUserLikes);
   const hasUserVoted = useSelector(store.select.voteModel.selectHasUserVoted(connectedUserWallet));
   const votes = useSelector(store.select.voteModel.selectVotes);
   const proposal = useSelector(store.select.voteModel.selectCurrentVote);
@@ -30,8 +29,7 @@ export const CastVoteContainer = () => {
   const isHedsTAPE13 = proposal?.title === 'hedsTAPE 13';
 
   const castVote = async () => {
-    const voteChoices = Object.entries(formattedVoteObject).map(([key, value]) => ({ choiceId: Number(key), amount: value, proposalId: proposal.ipfs_hash }));
-console.log(proposal.ipfs_hash)
+    const voteChoices = Object.entries(userLikes).map(([key, value]) => ({ choiceId: Number(key), amount: value, proposalId: proposal.ipfs_hash }));
     const voteObject = {
       proposalId: proposal.ipfs_hash,
       signature: '',
@@ -39,7 +37,7 @@ console.log(proposal.ipfs_hash)
       voter: connectedUserWallet,
       voteChoices,
     };
-    console.log(voteChoices)
+    console.log('voteChoices', voteChoices);
 
     dispatch.voteModel.castVote({ vote: voteObject, signer });
   };
@@ -55,13 +53,14 @@ console.log(proposal.ipfs_hash)
 
   useEffect(() => {
     if (hasUserVoted && connectedUserWallet) {
+      console.log('votes', votes);
       const userVote = votes.find((vote) => vote.voter === connectedUserWallet);
       if (userVote) {
         const formattedChoicesTank: { [key: string]: number } = {};
-        for (const choice of userVote.voteChoices) {
-          const { voteId } = choice;
-          const newKey = `${+voteId - 1}`;
-          formattedChoicesTank[newKey] = userVote.voteChoices[voteId].amount;
+        // @ts-ignore
+        for (const choice of userVote.vote_choices) {
+          const { choice_id, amount } = choice;
+          formattedChoicesTank[choice_id] = amount;
         }
         dispatch.voteModel.setUserLikesById(formattedChoicesTank);
       }
@@ -76,11 +75,12 @@ console.log(proposal.ipfs_hash)
 
     if (previousVote) {
       const formattedChoicesTank: { [key: string]: number } = {};
-      for (const choice of previousVote.voteChoices) {
-        const { voteId } = choice;
-        const newKey = `${+voteId - 1}`;
-        formattedChoicesTank[newKey] = previousVote.voteChoices[voteId].amount;
+      // @ts-ignore
+      for (const choice of previousVote.vote_choices) {
+        const { choice_id, amount } = choice;
+        formattedChoicesTank[choice_id] = amount;
       }
+      console.log(formattedChoicesTank, userLikes);
       return JSON.stringify(formattedChoicesTank) === JSON.stringify(userLikes);
     } else return false;
   };
