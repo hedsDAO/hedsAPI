@@ -38,7 +38,7 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
       border="1px"
       borderRadius="md"
       borderColor="#9293FF"
-      _hover={{ cursor: 'pointer', boxShadow: '0 0 5px #9293FF' }}
+      _hover={{ cursor: 'pointer', boxShadow: '0 0 8px #9293FF' }}
       onClick={() => handleSelectedSubmission(choice.media)}
     >
       <Stack flexDirection="row">
