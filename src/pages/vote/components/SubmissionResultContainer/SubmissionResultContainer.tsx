@@ -1,18 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAudio } from '@/hooks/useAudio/useAudio';
+import { Dispatch, store } from '@/store';
 
 // Components
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { Submissions } from '@/pages/vote/components/Submissions/Submissions';
 import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults';
-import { ChoiceWithScore } from '@/pages/vote/models/voteModel';
 import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/CastVoteContainer';
-
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
-
 import { Song } from '@models/common';
-
-import { Dispatch, store } from '@/store';
 
 export const SubmissionResultContainer = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -26,6 +23,7 @@ export const SubmissionResultContainer = () => {
   const sortedChoicesByResults = useSelector(store.select.voteModel.selectSortedChoicesByResults({ choices, scores, tracks }));
   const songs = useSelector(store.select.tapeModel.selectSongs);
   const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
+  const { handlePlayPause } = useAudio();
 
   const handleVoterChoices = (votesObj: { [key: number]: number }) => {
     setVoterChoices(votesObj);
@@ -38,9 +36,9 @@ export const SubmissionResultContainer = () => {
     }, {} as { [key: string]: Song });
   }, [songs]);
 
-  const handleSelectedSubmission = (choice: ChoiceWithScore) => {
-    dispatch.voteModel.setCurrentTrack(choice);
-    const song = songsByIpfsHash[choice.media];
+  const handleSelectedSubmission = (id: string) => {
+    const song = songsByIpfsHash[id];
+    handlePlayPause(song);
     dispatch.songModel.setSong(song);
   };
 
@@ -59,7 +57,9 @@ export const SubmissionResultContainer = () => {
         </Text>
         {cycle === 'vote'
           ? choices?.length && <OpenVoteCards choices={choices} handleSelectedSubmission={handleSelectedSubmission} />
-          : sortedChoicesByResults?.length && <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} />}
+          : sortedChoicesByResults?.length && (
+              <Submissions choices={sortedChoicesByResults} voterChoices={voterChoices} handleSelectedSubmission={handleSelectedSubmission} />
+            )}
       </Box>
 
       <Box width={['100', '20%']}>
