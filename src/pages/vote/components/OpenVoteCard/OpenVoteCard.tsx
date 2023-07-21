@@ -6,12 +6,12 @@ import { Choice, ChoiceWithScore } from '@/pages/vote/models/voteModel';
 
 interface OpenVoteSubmissionProps {
   choices: Choice[];
-  handleSelectedSubmission: (choice: ChoiceWithScore) => void;
+  handleSelectedSubmission: (id: string) => void;
 }
 
 interface CardProps {
   choice: ChoiceWithScore;
-  handleSelectedSubmission: (choice: ChoiceWithScore) => void;
+  handleSelectedSubmission: (id: string) => void;
   showArtist?: boolean;
 }
 
@@ -34,7 +34,13 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
   const totalVpDistributed = Object.values(userLikes).reduce((num, acc) => num + acc, 0);
   const currentVpDistribution = userLikes[choice.id] / totalVpDistributed;
   return (
-    <Box border="1px" borderRadius="md" borderColor="#9293FF" _hover={{ cursor: 'pointer' }} onClick={() => handleSelectedSubmission(choice)}>
+    <Box
+      border="1px"
+      borderRadius="md"
+      borderColor="#9293FF"
+      _hover={{ cursor: 'pointer', boxShadow: '0 0 5px #9293FF' }}
+      onClick={() => handleSelectedSubmission(choice.media)}
+    >
       <Stack flexDirection="row">
         <Box p={2}>
           <Image minW="3rem" minH="3rem" boxSize="3rem" borderRadius="md" src={choice.image} alt="Submission Image" />
@@ -53,7 +59,6 @@ const OpenSubmission = ({ choice, handleSelectedSubmission }: CardProps) => {
                 bg="transparent !important"
                 size="xs"
                 aria-label="like"
-                _hover={{ bg: 'gray.200' }}
                 ml={1}
               >
                 <Center _hover={{ transform: 'scale(1.1)' }} h="100%" w="100%">

@@ -81,7 +81,6 @@ export const voteModel = createModel<RootModel>()({
       return { ...state, userResultsInfo: userResultsData };
     },
     setIsLoading: (state, isLoading: boolean) => ({ ...state, isLoading }),
-    setCurrentTrack: (state, currentTrack: Choice) => ({ ...state, currentTrack }),
     increaseChoiceWeightFromLikes: (state, choice: Choice) => ({
       ...state,
       likesByChoiceId: { ...state.likesByChoiceId, [choice.id]: ++state.likesByChoiceId[choice.id] },
