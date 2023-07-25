@@ -87,16 +87,16 @@ export const voteModel = createModel<RootModel>()({
         if (!voteModel || !scores) return [];
         const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
+        const tracksWalletIds = tracks.map((track: Song) => track.artists.map((artist) => artist.artist_wallet)).flat();
         const sortedChoicesByResults: ChoiceWithScore[][] = choices.reduce(
-          (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
-            const scorePercentage = (scores[choice.id - 1] / totalScore) * 100;
+          (acc: ChoiceWithScore[][], choice: ChoiceWithScore, idx: number) => {
+            const scorePercentage = (scores[idx] / totalScore) * 100;
             const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
-            const tracksWalletIds = tracks.map((track: Song) => track.artists.map((artist) => artist.artist_wallet)).flat();
             if (tracksWalletIds.includes(choice.wallet_id)) {
               choice.score = roundedPercentage;
               acc[0].push(choice);
               return acc;
-            } else if (topVotedScores.includes(scores[choice.id - 1])) {
+            } else if (topVotedScores.includes(scores[idx])) {
               choice.score = roundedPercentage;
               acc[1].push(choice);
               return acc;
