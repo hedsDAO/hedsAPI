@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient, ProposalState, VoteMethod, Strategy, Vote } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod, Strategy, QuadraticVote, Vote } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 import { Signer } from 'ethers';
@@ -20,7 +20,7 @@ export interface VoteState {
   scores: number[];
   created_at: string;
   choices: Choice[];
-  votes: Vote[];
+  votes: QuadraticVote[];
   strategies: Strategy[];
 }
 
@@ -107,21 +107,23 @@ export const voteModel = createModel<RootModel>()({
     selectIsLoading: () => slice((state) => state.isLoading),
     selectUserLikes: () => slice((state) => state.likesByChoiceId),
     selectUserVotingPower: () => slice((state) => state?.vp || 0),
+    selectStrategies: () => slice((state) => state.vote.strategies),
     selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tracks }) {
       return slice((voteModel) => {
-        if (!voteModel || !scores) return [];
-        const topVotedScores = [...scores].sort((a, b) => b - a).slice(0, 20);
+        if (!voteModel || !scores || !choices) return [];
+        console.log(choices)
+        const topVotedScores = choices[0].location === "heds/hedstape/15" ? [...scores].sort((a, b) => b - a).slice(0, 15) : [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
+        const tracksWalletIds = tracks.map((track: Song) => track.artists.map((artist) => artist.artist_wallet)).flat();
         const sortedChoicesByResults: ChoiceWithScore[][] = choices.reduce(
-          (acc: ChoiceWithScore[][], choice: ChoiceWithScore) => {
-            const scorePercentage = (scores[choice.id - 1] / totalScore) * 100;
+          (acc: ChoiceWithScore[][], choice: ChoiceWithScore, idx: number) => {
+            const scorePercentage = (scores[idx] / totalScore) * 100;
             const roundedPercentage = Math.round((scorePercentage + Number.EPSILON) * 1000) / 1000;
-            const tracksWalletIds = tracks.map((track: Song) => track.artists.map((artist) => artist.artist_wallet)).flat();
             if (tracksWalletIds.includes(choice.wallet_id)) {
               choice.score = roundedPercentage;
               acc[0].push(choice);
               return acc;
-            } else if (topVotedScores.includes(scores[choice.id - 1])) {
+            } else if (topVotedScores.includes(scores[idx])) {
               choice.score = roundedPercentage;
               acc[1].push(choice);
               return acc;
