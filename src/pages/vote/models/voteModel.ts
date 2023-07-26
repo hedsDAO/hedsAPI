@@ -111,7 +111,6 @@ export const voteModel = createModel<RootModel>()({
     selectSortedChoicesByResults: hasProps(function (models, { choices, scores, tracks }) {
       return slice((voteModel) => {
         if (!voteModel || !scores || !choices) return [];
-        console.log(choices)
         const topVotedScores = choices[0].location === "heds/hedstape/15" ? [...scores].sort((a, b) => b - a).slice(0, 15) : [...scores].sort((a, b) => b - a).slice(0, 20);
         const totalScore = scores.reduce((acc: number, score: number) => acc + score, 0);
         const tracksWalletIds = tracks.map((track: Song) => track.artists.map((artist) => artist.artist_wallet)).flat();
