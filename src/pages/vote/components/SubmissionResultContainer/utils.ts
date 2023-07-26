@@ -33,28 +33,13 @@ export function QuadraticVoting(config: QuadraticVoteConfig) {
     return acc + vp;
   }, 0);
 
-  const isValidChoice = (voteChoice, voteWeight) => {
-    return (
-      typeof voteChoice === 'number' &&
-      // proposalChoices[voteChoice] !== undefined &&
-      voteWeight > 0
-    );
-  };
-
   /**
   Returns an object mapping each choice by ID with the value of the weight of that choice calculated as choice / total weight within a single vote across all votes
    */
   function calculateVoteWeightByChoiceId<
-    T extends 'normal' | 'strategy',
-    R extends Record<number, any> = T extends 'normal' ? Record<number, number> : Record<number, Record<number, number>>,
-  >(type: T): R {
-    const proposalChoices: { [key: number]: number } =
-      type === 'strategy'
-        ? choices.reduce((acc, { id }) => {
-            acc[id] = Object.fromEntries(strategies.map((_, idx) => [idx, 0]));
-            return acc;
-          }, {})
-        : Object.fromEntries(choices.map(({ id }) => [id + 1, 0]));
+    R extends Record<number, number>,
+  >(): R {
+    const proposalChoices: { [key: number]: number } = Object.fromEntries(choices.map(({ id }) => [id , 0]));
 
     return votes.reduce((acc, curr: _Vote) => {
       const { vote_choices, vp } = curr;
@@ -64,13 +49,7 @@ export function QuadraticVoting(config: QuadraticVoteConfig) {
       // Populating the proposal choices object with individual vote
       vote_choices.forEach((choice) => {
         const percentage = choice.amount / totalWeightPerVote;
-        if (type === 'normal') {
-          acc[choice.choice_id] ? (acc[choice.choice_id] += Math.sqrt(percentage * vp)) : (acc[choice.choice_id] = Math.sqrt(percentage * vp));
-        } else {
-          strategies.forEach((_, idx) => {
-            acc[choice.choice_id][idx] ? (acc[choice.choice_id][idx] += Math.sqrt(percentage)) : (acc[choice.choice_id][idx] = Math.sqrt(percentage));
-          });
-        }
+        acc[choice.choice_id] ? (acc[choice.choice_id] += Math.sqrt(percentage * vp)) : (acc[choice.choice_id] = Math.sqrt(percentage * vp));
       });
       return acc;
     }, proposalChoices) as unknown as R;
@@ -78,29 +57,13 @@ export function QuadraticVoting(config: QuadraticVoteConfig) {
 
   return {
     getScores() {
-      const voteWeightByChoice = calculateVoteWeightByChoiceId('normal');
+      const voteWeightByChoice = calculateVoteWeightByChoiceId();
       const squareTotalScoreByChoice = Object.values(voteWeightByChoice).map((score) => score * score);
       const totalScores = squareTotalScoreByChoice.reduce((acc, curr) => acc + curr, 0);
       const calculatedScoreByChoice = squareTotalScoreByChoice.map((score) => {
         const percentage = (score / totalScores) * 100;
         return parseFloat(((totalVp / 100) * percentage).toFixed(3));
       });
-
-      return calculatedScoreByChoice;
-    },
-
-    getScoresByStrategy() {
-      const voteWeightByChoice = calculateVoteWeightByChoiceId('strategy');
-      const squareTotalScoreByChoice = Object.values(voteWeightByChoice)
-        .map((choiceStrategies) => Object.values(choiceStrategies))
-        .map((choiceStrategies) => choiceStrategies.map((val) => val * val));
-      const totalScores = squareTotalScoreByChoice.flat().reduce((acc, curr) => acc + curr, 0);
-      const calculatedScoreByChoice = squareTotalScoreByChoice.map((choiceStrategies) =>
-        choiceStrategies.map((score) => {
-          const percentage = (score / totalScores) * 100;
-          return parseFloat(((totalVp / 100) * percentage).toFixed(3));
-        }),
-      );
 
       return calculatedScoreByChoice;
     },
