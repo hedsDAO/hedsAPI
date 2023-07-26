@@ -10,6 +10,7 @@ import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults'
 import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/CastVoteContainer';
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
 import { Song } from '@models/common';
+import { QuadraticVoting } from './utils';
 
 export const SubmissionResultContainer = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -24,6 +25,19 @@ export const SubmissionResultContainer = () => {
   const songs = useSelector(store.select.tapeModel.selectSongs);
   const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
   const { handlePlayPause } = useAudio();
+  const strategies = useSelector(store.select.voteModel.selectStrategies);
+
+  useEffect(() => {
+    if (choices && votes && strategies) {
+      const quadraticVoting = QuadraticVoting({
+        choices,
+        votes,
+        strategies,
+      });
+      console.log('scores', scores);
+      console.log('scores from quadratic', quadraticVoting.getScores());
+    }
+  }, [choices, votes, strategies]);
 
   const handleVoterChoices = (votesObj: { [key: number]: number }) => {
     setVoterChoices(votesObj);
