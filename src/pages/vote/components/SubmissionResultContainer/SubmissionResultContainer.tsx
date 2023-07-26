@@ -11,7 +11,7 @@ import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/Cas
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
 import { Song } from '@models/common';
 // import { QuadraticVoting } from './utils';
-import { quadratic} from 'hedsvote';
+// import { quadratic} from 'hedsvote';
 
 export const SubmissionResultContainer = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -26,18 +26,20 @@ export const SubmissionResultContainer = () => {
   const songs = useSelector(store.select.tapeModel.selectSongs);
   const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
   const { handlePlayPause } = useAudio();
-  const strategies = useSelector(store.select.voteModel.selectStrategies);
+  // const strategies = useSelector(store.select.voteModel.selectStrategies);
 
-  useEffect(() => {
-    if (choices && votes && strategies) {
-      const quadraticVoting = quadratic({
-        choices,
-        votes,
-      });
-      console.log('scores', scores);
-      console.log('scores from quadratic', quadraticVoting.getScores());
-    }
-  }, [choices, votes, strategies]);
+  // useEffect(() => {
+  //   if (choices && votes && strategies) {
+  //     const quadraticVoting = quadratic({
+  //       choices,
+  //       votes,
+  //     });
+
+  //     console.log("choices:", choices)
+  //     console.log('scores', scores);
+  //     console.log('scores from quadratic', quadraticVoting.getScores());
+  //   }
+  // }, [choices, votes, strategies]);
 
   const handleVoterChoices = (votesObj: { [key: number]: number }) => {
     setVoterChoices(votesObj);
