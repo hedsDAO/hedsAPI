@@ -1,6 +1,6 @@
 import type { RootModel } from '@/models';
 import { createModel } from '@rematch/core';
-import { createClient, ProposalState, VoteMethod, Strategy, Vote } from 'hedsvote';
+import { createClient, ProposalState, VoteMethod, Strategy, QuadraticVote, Vote } from 'hedsvote';
 import { Song } from '@/models/common';
 import { getManyUsersByWalletId } from '@/api/user';
 import { Signer } from 'ethers';
@@ -20,7 +20,7 @@ export interface VoteState {
   scores: number[];
   created_at: string;
   choices: Choice[];
-  votes: Vote[];
+  votes: QuadraticVote[];
   strategies: Strategy[];
 }
 

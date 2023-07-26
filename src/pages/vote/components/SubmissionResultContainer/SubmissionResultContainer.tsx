@@ -10,7 +10,8 @@ import { VoterResults } from '@/pages/vote/components/VoterResults/VoterResults'
 import { CastVoteContainer } from '@/pages/vote/components/CastVoteContainer/CastVoteContainer';
 import { OpenVoteCards } from '@/pages/vote/components/OpenVoteCard/OpenVoteCard';
 import { Song } from '@models/common';
-import { QuadraticVoting } from './utils';
+// import { QuadraticVoting } from './utils';
+import { quadratic} from 'hedsvote';
 
 export const SubmissionResultContainer = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -29,10 +30,9 @@ export const SubmissionResultContainer = () => {
 
   useEffect(() => {
     if (choices && votes && strategies) {
-      const quadraticVoting = QuadraticVoting({
+      const quadraticVoting = quadratic({
         choices,
         votes,
-        strategies,
       });
       console.log('scores', scores);
       console.log('scores from quadratic', quadraticVoting.getScores());
