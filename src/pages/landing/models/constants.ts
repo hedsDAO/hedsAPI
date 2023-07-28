@@ -1,9 +1,9 @@
-export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmPf7rjZ5MNkQdhTzV2s6oDaFRKzaR18jwvqfQY3QVrmAH';
+export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmeRUPYXieAv54xtUcccZvNrGfe4FCiwZbtRW1XpbYLGdu';
 
-export const ARTIST_NAME_TEXT = 'heds x lnrz';
-export const ARTIST_WALLET = '0x2acccdabc0acf92d670d430aaec6b440311cc7a5';
-export const TAPE_NAME_TEXT = 'hedsTAPE 15';
-export const HEDS_PRESENTS_TEXT = 'heds x lnrz present:';
+export const ARTIST_NAME_TEXT = 'Insowmya';
+export const ARTIST_WALLET = '0xe12b7aec386a468762b37cfcaadb459e1e09dc76';
+export const TAPE_NAME_TEXT = `Snowy's Dream`;
+export const HEDS_PRESENTS_TEXT = 'heds presents:';
 
 export const ARTISTS_ICON = 'fa-solid fa-circle-user';
 export const TAPES_ICON = 'fa-sharp fa-solid fa-cassette-tape';
