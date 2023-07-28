@@ -25,18 +25,18 @@ export const IconButtons = () => {
           </Tooltip>
         </Flex> */}
         {/* TAPE ICONS */}
-        <Tooltip label="View Curator" fontSize="xs" fontFamily="space">
+        <Tooltip label="View Artist" fontSize="xs" fontFamily="space">
           <Box to={`/u/${constants.ARTIST_WALLET}`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.ARTISTS_ICON} />
           </Box>
         </Tooltip>
-        <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
+        {/* <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
           <Box to={`/tape/17`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.TAPES_ICON}></i>
           </Box>
-        </Tooltip>
+        </Tooltip> */}
         <Tooltip label="View on Sound.xyz" fontSize="xs" fontFamily="space">
-          <Box as={'a'} href={"https://www.sound.xyz/heds/sample-for-hedstape-15-featuring-lnrz"} {...styles.$iconButtonStyles}>
+          <Box target="_blank" as={'a'} href={"https://www.sound.xyz/heds/insowmya-snowys-dream"} {...styles.$iconButtonStyles}>
             <i className={constants.SOUND_ICON}></i>
           </Box>
         </Tooltip>
