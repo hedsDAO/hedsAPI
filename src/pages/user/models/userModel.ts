@@ -89,7 +89,7 @@ export const userModel = createModel<RootModel>()({
             const isOG = Object.values(response.data.badges)
               .map((badge: any) => badge?.name === 'OG')
               .includes(true);
-            const isArtist = !isEmpty(user_songs);
+            const isArtist = !!user_songs.data.length;
             const userCollection = response?.data?.collection?.items;
             let totalVp = 0;
             for (let contract in userCollection) {
@@ -99,7 +99,6 @@ export const userModel = createModel<RootModel>()({
                 totalVp += itemVp;
               }
             }
-            
             if (isOG) totalVp += 10;
             if (isArtist) totalVp += 15;
             this.setUserVp(totalVp);

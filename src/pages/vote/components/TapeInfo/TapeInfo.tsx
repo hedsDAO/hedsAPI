@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Box, Flex, Image, Stack, Skeleton, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { useAudio } from '@/hooks/useAudio/useAudio';
 import * as styles from '@pages/vote/components/TapeInfo/styles';
 import { Dispatch, store } from '@/store';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ export const TapeInfo = () => {
   const dispatch = useDispatch<Dispatch>();
   const tape = useSelector(store.select.tapeModel.selectCurrentTape);
   const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
+  const { handlePlayPause } = useAudio();
 
   return (
     <Flex direction={['column', 'row']} justifyContent="space-around" p={{ base: 12, lg: 16 }}>
@@ -41,7 +43,10 @@ export const TapeInfo = () => {
             p={[2, 4]}
             borderRadius="md"
             _hover={{ cursor: 'pointer' }}
-            onClick={() => dispatch.songModel.setSong(sample)}
+            onClick={() => {
+              handlePlayPause(sample);
+              dispatch.songModel.setSong(sample);
+            }}
           >
             <Stack direction="row">
               <Stack justifyContent="center">
