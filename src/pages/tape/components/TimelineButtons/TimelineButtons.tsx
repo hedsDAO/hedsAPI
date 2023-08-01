@@ -18,6 +18,7 @@ export const TimelineButtons = () => {
   const dispatch = useDispatch<Dispatch>();
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
+  const tapeId = useSelector(store.select.tapeModel.selectCurrentTape).id;
   const now = DateTime.now().toMillis();
 
   const formatTime = (time: number) => {
@@ -89,14 +90,23 @@ export const TimelineButtons = () => {
         </Text>
         <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.mint?.start)}</Text>
       </HStack>
-      <Button
+      { tapeId === 17 ?
+        <Button
+          {...styles.$buttonStyles}
+          leftIcon={<i className="fa-solid fa-bell" />}
+          isDisabled={!(cycle === 'mint')}
+          target="_blank" as={'a'} href={"https://www.sound.xyz/heds/hedstape-15-feat-lnrz"}
+        >
+          {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
+        </Button> :
+        <Button
         {...styles.$buttonStyles}
         leftIcon={<i className="fa-solid fa-bell" />}
         isDisabled={!(cycle === 'mint')}
-        onClick={() => dispatch.modalModel.setModal(Modals.MINT)}
-      >
+        onClick={() => dispatch.modalModel.setModal(Modals.MINT)}>
         {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
       </Button>
+    }
     </Stack>
   );
 };
