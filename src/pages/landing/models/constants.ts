@@ -1,8 +1,8 @@
-export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmeRUPYXieAv54xtUcccZvNrGfe4FCiwZbtRW1XpbYLGdu';
+export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmSCoA8kwwA9EPQvU2ZuSHD6E6FbspcbcrfiuxTShXtfwQ';
 
-export const ARTIST_NAME_TEXT = 'Insowmya';
-export const ARTIST_WALLET = '0xe12b7aec386a468762b37cfcaadb459e1e09dc76';
-export const TAPE_NAME_TEXT = `Snowy's Dream`;
+export const ARTIST_NAME_TEXT = 'rage logic';
+export const ARTIST_WALLET = '0x0454c897dd47a6c60b1bda98703c10a3f135b4e0';
+export const TAPE_NAME_TEXT = `be there`;
 export const HEDS_PRESENTS_TEXT = 'heds presents:';
 
 export const ARTISTS_ICON = 'fa-solid fa-circle-user';
