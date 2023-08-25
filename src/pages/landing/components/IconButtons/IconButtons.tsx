@@ -36,7 +36,7 @@ export const IconButtons = () => {
           </Box>
         </Tooltip> */}
         <Tooltip label="View on Sound.xyz" fontSize="xs" fontFamily="space">
-          <Box target="_blank" as={'a'} href={"https://www.sound.xyz/heds/rage-logic-be-there"} {...styles.$iconButtonStyles}>
+          <Box target="_blank" as={'a'} href={"https://www.sound.xyz/heds/oshi-famous"} {...styles.$iconButtonStyles}>
             <i className={constants.SOUND_ICON}></i>
           </Box>
         </Tooltip>
