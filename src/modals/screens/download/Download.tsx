@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDownloadURL, ref, StorageReference } from 'firebase/storage';
 import { storage } from '@/App';
@@ -31,19 +31,14 @@ import { DateTime } from 'luxon';
 import axios from 'axios';
 
 export const Download = () => {
+  const [externalLinkRef] = useState(useRef<HTMLAnchorElement>(null));
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sampleArtists = useSelector(store.select.tapeModel.selectSampleArtists);
-  const timeline = useSelector(store.select.tapeModel.selectTimeline);
-  const currentCycle = useSelector(store.select.tapeModel.selectCurrentCycle);
   const sample = useSelector(store.select.tapeModel.selectCurrentTapeSample);
   const tapeBpm = useSelector(store.select.tapeModel.selectBpm);
-
-  useEffect(() => {
-    if (currentCycle !== 'submit') setIsChecked(true);
-  }, [currentCycle]);
 
   useEffect(() => {
     onOpen();
@@ -52,7 +47,13 @@ export const Download = () => {
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
-      if (sampleArtists[0].display_name === 'LNRZ') {
+      if (sampleArtists[0].display_name === 'kas rizvi') {
+        externalLinkRef.current.href = 'https://www.dropbox.com/scl/fo/wlu1aycqnrouchwatz3vy/h?dl=0&rlkey=2ai20ltddvyc8vvzbhnrujorc';
+        externalLinkRef.current.click();
+        setIsDownloading(false);
+        dispatch.modalModel.clearState();
+        return;
+      } else if (sampleArtists[0].display_name === 'LNRZ') {
         const zip: StorageReference = ref(storage, `samples/ht15.zip`);
         await getDownloadURL(zip).then(async (url: string) => {
           fetch(url)
@@ -105,6 +106,7 @@ export const Download = () => {
 
   return (
     <Modal
+      isCentered
       isOpen={isOpen}
       onClose={() => {
         onClose();
@@ -128,11 +130,8 @@ export const Download = () => {
               </Stack>
             ))}
           </Box>
-          {currentCycle === 'submit' ? (
             <>
               <Box {...styles.$downloadBoxStyles}>
-                <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSE IN</Text>
-                <Countdown epochTime={1689879600000} />
                 <Text fontFamily="poppins" fontWeight="700" fontSize="lg" pt={8}>
                   BEFORE YOU DOWNLOAD
                 </Text>
@@ -151,15 +150,12 @@ export const Download = () => {
                 </Checkbox>
               </Box>
             </>
-          ) : (
-            <Flex justifyContent="center" gap={3} pt={6}>
-              <Text {...styles.$submissionTextStyles}>SUBMISSIONS CLOSED </Text>
-              <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.submit?.end)}</Text>
-            </Flex>
-          )}
         </ModalBody>
         <ModalFooter>
+          <a target="_blank" ref={externalLinkRef} />
           <Button
+          size={'sm'}
+            mt={2}
             leftIcon={<i className="fa-solid fa-arrow-down-to-line" />}
             {...styles.$downloadButtonStyles}
             isDisabled={!isChecked}
