@@ -1,8 +1,8 @@
-export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmR3tMxrWxNEuFKjXxDzKH3DpsGA3HN9MbbMwLxdoZTToo';
+export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmXqPpKGjkchX4RBzPW9GS3GBnEFVCyN4agZDpDpCXhytV';
 
-export const ARTIST_NAME_TEXT = 'oshi';
-export const ARTIST_WALLET = '0x4d18f8f2aE19f1E166c97793cceeb70680A2b6D2';
-export const TAPE_NAME_TEXT = `FAMOUS`;
+export const ARTIST_NAME_TEXT = 'kas rizvi';
+export const ARTIST_WALLET = '0x79062a34a0376f76673dc64D3AB9004e979D06Bf';
+export const TAPE_NAME_TEXT = `hedsTAPE 16`;
 export const HEDS_PRESENTS_TEXT = 'heds presents:';
 
 export const ARTISTS_ICON = 'fa-solid fa-circle-user';

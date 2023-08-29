@@ -67,7 +67,7 @@ export const TimelineButtons = () => {
             <Text color="#9293FF" fontFamily="sans-serif">
               Vote
             </Text>
-            {now >= timeline?.vote?.end ? (
+            {now <= timeline?.vote?.end ? (
               <i className="fa-solid fa-lock-keyhole" style={{ color: '#F02A2A' }} />
             ) : (
               <i className="fa-solid fa-lock-keyhole-open" style={{ color: '#05FF00' }} />
