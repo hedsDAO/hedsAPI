@@ -30,21 +30,21 @@ export const IconButtons = () => {
             <i className={constants.ARTISTS_ICON} />
           </Box>
         </Tooltip>
-        {/* <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
-          <Box to={`/tape/17`} as={Link} {...styles.$iconButtonStyles}>
+        <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
+          <Box to={`/tape/18`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.TAPES_ICON}></i>
           </Box>
-        </Tooltip> */}
-        <Tooltip label="View on Sound.xyz" fontSize="xs" fontFamily="space">
+        </Tooltip>
+        {/* <Tooltip label="View on Sound.xyz" fontSize="xs" fontFamily="space">
           <Box target="_blank" as={'a'} href={"https://www.sound.xyz/heds/oshi-famous"} {...styles.$iconButtonStyles}>
             <i className={constants.SOUND_ICON}></i>
           </Box>
-        </Tooltip>
-        {/* <Tooltip label="Play" fontSize="xs" fontFamily="space">
-          <Box to={`/song/QmV3B2qXnDchtAv6exot8HbX6iFhBi4uwrYPpVXAYYh5kG`} as={Link} {...styles.$iconButtonStyles}>
+        </Tooltip> */}
+        <Tooltip label="Play" fontSize="xs" fontFamily="space">
+          <Box to={`/song/QmSNQgVhEyEpdgo35VVxQSu2BXQbuS7v4fTgxHRaeezG4B`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.PLAY_ICON}></i>
           </Box>
-        </Tooltip> */}
+        </Tooltip>
       </Flex>
     </Box>
   );
