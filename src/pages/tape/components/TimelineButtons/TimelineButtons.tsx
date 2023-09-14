@@ -11,12 +11,14 @@ import { Dispatch, store } from '@/store';
 
 // Styles
 import * as styles from '@/pages/tape/components/TimelineButtons/styles';
+import { useRef } from 'react';
 
 export const TimelineButtons = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const voteRef = useRef<HTMLAnchorElement>(null);
   const dispatch = useDispatch<Dispatch>();
   const timeline = useSelector(store.select.tapeModel.selectTimeline);
+  const proposalId = useSelector(store.select.tapeModel.selectTapeProposalId);
   const cycle = useSelector(store.select.tapeModel.selectCurrentCycle);
   const tapeId = useSelector(store.select.tapeModel.selectCurrentTape).id;
   const now = DateTime.now().toMillis();
@@ -74,11 +76,16 @@ export const TimelineButtons = () => {
             )}
             <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.vote?.end)}</Text>
           </HStack>
+          <a ref={voteRef} style={{ display: 'none' }} target="_blank" rel="noopener noreferrer" href={`https://heds.vote/heds/${proposalId}`} />
           <Button
+            onClick={() => {
+              if (now >= timeline?.vote?.start && voteRef?.current && proposalId?.length) {
+                voteRef.current?.click();
+              }
+            }}
             {...styles.$buttonStyles}
-            isDisabled={now <= timeline?.vote?.start}
+            isDisabled={now <= timeline?.vote?.start || proposalId?.length === 0}
             leftIcon={<i className="fa-sharp fa-solid fa-circle-check"></i>}
-            onClick={() => navigate(`/vote/${id}`)}
           >
             {now <= timeline?.vote?.end ? 'VOTE NOW' : 'RESULTS'}
           </Button>
@@ -90,23 +97,27 @@ export const TimelineButtons = () => {
         </Text>
         <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.mint?.start)}</Text>
       </HStack>
-      { tapeId === 17 ?
+      {tapeId === 17 ? (
         <Button
           {...styles.$buttonStyles}
           leftIcon={<i className="fa-solid fa-bell" />}
           isDisabled={!(cycle === 'mint')}
-          target="_blank" as={'a'} href={"https://www.sound.xyz/heds/hedstape-15-feat-lnrz"}
+          target="_blank"
+          as={'a'}
+          href={'https://www.sound.xyz/heds/hedstape-15-feat-lnrz'}
         >
           {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
-        </Button> :
+        </Button>
+      ) : (
         <Button
-        {...styles.$buttonStyles}
-        leftIcon={<i className="fa-solid fa-bell" />}
-        isDisabled={!(cycle === 'mint')}
-        onClick={() => dispatch.modalModel.setModal(Modals.MINT)}>
-        {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
-      </Button>
-    }
+          {...styles.$buttonStyles}
+          leftIcon={<i className="fa-solid fa-bell" />}
+          isDisabled={!(cycle === 'mint')}
+          onClick={() => dispatch.modalModel.setModal(Modals.MINT)}
+        >
+          {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
+        </Button>
+      )}
     </Stack>
   );
 };
