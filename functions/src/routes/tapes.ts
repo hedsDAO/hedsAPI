@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs } from '../controllers/tapes';
+import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs, countArtistTracks } from '../controllers/tapes';
 import * as functions from 'firebase-functions';
 import { verifySignature } from '../controllers/utils/verifySignature';
 import { checkAdminStatus } from '../controllers/utils/checkAdminStatus';
@@ -13,6 +13,14 @@ export interface RequestWithFile extends Request {
   files?: any;
 }
 
+router.get('/get-artists-tape-count', async (req, res) => {
+  try {
+    const results = await countArtistTracks();
+    return res.json(results);
+  } catch (err: any) {
+    return res.status(500).send(err.message);
+  }
+})
 
 router.get('/get-collection-args', async (req, res) => {
   try {
