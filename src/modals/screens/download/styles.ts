@@ -18,7 +18,7 @@ export const $downloadTextStyles: TextProps = {
  */
 export const $downloadBoxStyles: BoxProps = {
   textAlign: 'center',
-  pt: 7,
+  pt: 4,
 };
 
 /**

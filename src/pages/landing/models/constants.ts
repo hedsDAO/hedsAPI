@@ -1,8 +1,8 @@
-export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmSCoA8kwwA9EPQvU2ZuSHD6E6FbspcbcrfiuxTShXtfwQ';
+export const BACKGROUND_IMAGE_URL = 'https://www.heds.cloud/ipfs/QmXqPpKGjkchX4RBzPW9GS3GBnEFVCyN4agZDpDpCXhytV';
 
-export const ARTIST_NAME_TEXT = 'rage logic';
-export const ARTIST_WALLET = '0x0454c897dd47a6c60b1bda98703c10a3f135b4e0';
-export const TAPE_NAME_TEXT = `be there`;
+export const ARTIST_NAME_TEXT = 'kas rizvi';
+export const ARTIST_WALLET = '0x79062a34a0376f76673dc64D3AB9004e979D06Bf';
+export const TAPE_NAME_TEXT = `hedsTAPE 16`;
 export const HEDS_PRESENTS_TEXT = 'heds presents:';
 
 export const ARTISTS_ICON = 'fa-solid fa-circle-user';
