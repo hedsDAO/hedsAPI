@@ -2,6 +2,7 @@ import { pool } from '../../database';
 import { TapeData } from './types';
 import { SongData } from '../songs/types';
 import schemaName from '../../../config';
+import * as functions from "firebase-functions";
 
 export const getAllTapes = async () => {
   const { rows } = await pool.query(`SELECT id, name, image FROM ${schemaName}.tapes`);
@@ -164,4 +165,34 @@ export const getTapeContractArgs = async (): Promise<any> => {
     SELECT id, contract, name, image FROM ${schemaName}.tapes
   `);
   return rows;
+};
+
+export const countArtistTracks = async (): Promise<any> => {
+  try {
+    const query = `
+      SELECT 
+        u.id as user_id, 
+        u.display_name as artist_name,
+        u.wallet as wallet,
+        u.role as role,
+        COUNT(s.id) as track_count
+      FROM 
+        ${schemaName}.users u
+      INNER JOIN 
+        ${schemaName}.song_artists sa ON u.id = sa.user_id
+      INNER JOIN 
+        ${schemaName}.songs s ON sa.song_id = s.id
+      WHERE 
+        s.type = 'track'
+      GROUP BY 
+        u.id, u.display_name;
+    `;
+
+    const { rows } = await pool.query(query);
+    functions.logger.log("artistCount", rows);
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
