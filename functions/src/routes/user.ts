@@ -12,7 +12,7 @@ import {
   getArtistsAndCurators,
   getManyUsersByWalletId,
   getAllUsers,
-} from "../controllers/users/index-v2";
+} from "../controllers/user";
 import * as functions from "firebase-functions";
 
 const router = express.Router();
