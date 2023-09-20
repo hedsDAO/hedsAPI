@@ -1,10 +1,8 @@
-import {PrismaClient} from "@prisma/client";
 // import { UserData } from './types';
 // import { SongData } from '../songs/types';
 // import schemaName from '../../../config';
 import * as functions from "firebase-functions";
-
-const prisma = new PrismaClient();
+import {prisma} from "../../../prisma/client";
 
 export const getAllUsers = async () => {
   try {

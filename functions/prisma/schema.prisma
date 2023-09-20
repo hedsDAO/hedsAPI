@@ -129,10 +129,10 @@ model users {
   id                  Int                   @id @default(autoincrement())
   profile_picture     String?               @db.VarChar
   banner              String?               @db.VarChar
-  twitter_handle      String?               @db.VarChar
+  twitter_handle      String?               @unique @db.VarChar
   badges              Json?
   description         String?               @db.VarChar
-  display_name        String?               @db.VarChar
+  display_name        String?               @unique @db.VarChar
   role                user_role_type?
   wallet              String?               @unique @db.VarChar
   joined              Float?
