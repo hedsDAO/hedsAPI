@@ -1,6 +1,7 @@
 import {prisma} from "../../..//prisma/client";
 import functions from "firebase-functions";
 import twilio from "twilio";
+import axios from "axios";
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 
@@ -51,6 +52,16 @@ export const validateTwitterHandle = async (twitterHandle: string): Promise<bool
         return twilioClient.verify.v2
                 .services(process.env.TWILIO_VERIFY_SID as string)
                 .verificationChecks.create({ to: to, code: code })
+    } catch (e: any) {
+        functions.logger.error(e)
+        throw new Error(e);
+    }
+  }
+
+  export const getGoogleUserData = async (token: string) => {
+    try {
+        const userInfoResponse = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
+        return userInfoResponse.data;
     } catch (e: any) {
         functions.logger.error(e)
         throw new Error(e);

@@ -1,9 +1,9 @@
 import * as express from 'express';
-import axios from "axios";
 import * as functions from "firebase-functions";
 import { validateTwitterHandle, validateUserByDisplayName} from '../controllers/utils/auth';
-import { sendTwilioVerification, verifyTwilioCode } from '../controllers/auth';
+import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode } from '../controllers/auth';
 import { createUser, getUserByEmaill } from '../controllers/user';
+import { newUserObject } from '../common';
 
 const router = express.Router();
 
@@ -76,30 +76,18 @@ router.get("/google-oauth-callback", async (req, res) => {
     }
 
     const token = bearerToken.split('Bearer ')[1];
-    const userInfoResponse = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
-    const userInfo = userInfoResponse.data;
+    const userInfo = await getGoogleUserData(token);
     functions.logger.log("user info", userInfo)
     if (userInfo) {
       const email = userInfo['email'];
       const name = userInfo['name'];
 
-      // Now you have the user's details, here you would typically check if the user exists in your DB
-      // and if not create a new user record.
       const user = await getUserByEmaill(email);
       functions.logger.log(user);
       if (user) {
         return res.json(user);
       } else {
-        const newUser = {
-          profile_picture: "https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/profilePictures%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc",
-          banner: "https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=c2e9c947-5965-4d77-b0c3-047c2bc125d3",
-          display_name: name,
-          role: "user",
-          joined: new Date().getMilliseconds(),
-          email
-        };
-
-        const createdUser = await createUser(newUser);
+        const createdUser = await createUser({...newUserObject, display_name: name, email});
         return res.json(createdUser);
       }
 
