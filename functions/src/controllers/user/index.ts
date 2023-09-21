@@ -62,6 +62,30 @@ export const getUserByWallet = async (wallet: string) => {
   }
 };
 
+export const getUserByEmaill = async (email: string) => {
+  try {
+    const user = await prisma.users.findFirst({
+      where: {email},
+    });
+    return user;
+  } catch (e) {
+    functions.logger.log("error in controller", e);
+    return;
+  }
+};
+
+export const getUserByPhoneNumber = async (phone_number: string) => {
+  try {
+    const user = await prisma.users.findFirst({
+      where: {phone_number},
+    });
+    return user;
+  } catch (e) {
+    functions.logger.log("error in controller", e);
+    return;
+  }
+};
+
 export const updateUser = async (user_id: number, data: any) => {
   try {
     const updatedUser = await prisma.users.update({
