@@ -4,6 +4,11 @@
 import * as functions from "firebase-functions";
 import {prisma} from "../../../prisma/client";
 
+/**
+ * Retrieve all users from the database.
+ *
+ * @returns {Promise<Object[]>} Array of all users.
+ */
 export const getAllUsers = async () => {
   try {
     const allUsers = await prisma.users.findMany();
@@ -15,6 +20,11 @@ export const getAllUsers = async () => {
   }
 };
 
+/**
+ * Retrieve both artists and curators from the database.
+ *
+ * @returns {Promise<Object>} Object containing arrays of artists and curators.
+ */
 export const getArtistsAndCurators = async () => {
   try {
     const artists = await prisma.users.findMany({
@@ -50,6 +60,12 @@ export const getArtistsAndCurators = async () => {
   }
 };
 
+/**
+ * Retrieve a user by their wallet identifier.
+ *
+ * @param {string} wallet - User's wallet identifier.
+ * @returns {Promise<Object|null>} User object or null.
+ */
 export const getUserByWallet = async (wallet: string) => {
   try {
     const user = await prisma.users.findFirst({
@@ -62,6 +78,12 @@ export const getUserByWallet = async (wallet: string) => {
   }
 };
 
+/**
+ * Retrieve a user by their email address.
+ *
+ * @param {string} email - User's email address.
+ * @returns {Promise<Object|null>} User object or null.
+ */
 export const getUserByEmaill = async (email: string) => {
   try {
     const user = await prisma.users.findFirst({
@@ -74,6 +96,12 @@ export const getUserByEmaill = async (email: string) => {
   }
 };
 
+/**
+ * Retrieve a user by their phone number.
+ *
+ * @param {string} phone_number - User's phone number.
+ * @returns {Promise<Object|null>} User object or null.
+ */
 export const getUserByPhoneNumber = async (phone_number: string) => {
   try {
     const user = await prisma.users.findFirst({
@@ -86,6 +114,13 @@ export const getUserByPhoneNumber = async (phone_number: string) => {
   }
 };
 
+/**
+ * Update a user's data in the database.
+ *
+ * @param {number} user_id - ID of the user to update.
+ * @param {any} data - Data to update for the user.
+ * @returns {Promise<Object>} Updated user object.
+ */
 export const updateUser = async (user_id: number, data: any) => {
   try {
     const updatedUser = await prisma.users.update({
@@ -99,6 +134,12 @@ export const updateUser = async (user_id: number, data: any) => {
   }
 };
 
+/**
+ * Retrieve all songs associated with a specific user.
+ *
+ * @param {number} userId - ID of the user.
+ * @returns {Promise<Object[]>} Array of songs.
+ */
 export const getUserSongs = async (userId: number) => {
   try {
     const songs = await prisma.songs.findMany({
@@ -117,6 +158,12 @@ export const getUserSongs = async (userId: number) => {
   }
 };
 
+/**
+ * Retrieve all songs liked by a specific user.
+ *
+ * @param {number} user_id - ID of the user.
+ * @returns {Promise<Object[]>} Array of liked songs.
+ */
 export const getUserLikes = async (user_id: number) => {
   try {
     const likedSongIds = await prisma.likes.findMany({
@@ -145,6 +192,12 @@ export const getUserLikes = async (user_id: number) => {
   }
 };
 
+/**
+ * Retrieve all events associated with a specific user.
+ *
+ * @param {number} userId - ID of the user.
+ * @returns {Promise<Object[]>} Array of user events.
+ */
 export const getUserEvents = async (userId: number) => {
   try {
     const userEvents = await prisma.user_events.findMany({
@@ -157,6 +210,12 @@ export const getUserEvents = async (userId: number) => {
   }
 };
 
+/**
+ * Create a new user and log a user creation event.
+ *
+ * @param {any} userData - Data for the new user.
+ * @returns {Promise<Object>} Created user object.
+ */
 export const createUser = async (userData: any) => {
   try {
     const user = await prisma.users.create({
@@ -185,6 +244,12 @@ export const createUser = async (userData: any) => {
   }
 };
 
+/**
+ * Delete a user and their associated data from the database.
+ *
+ * @param {number} user_id - ID of the user to delete.
+ * @returns {Promise<Object>} Deletion status object.
+ */
 export const deleteUser = async (user_id: number) => {
   try {
     await prisma.$transaction([
@@ -201,6 +266,13 @@ export const deleteUser = async (user_id: number) => {
   }
 };
 
+/**
+ * Add a song to a user's listening history.
+ *
+ * @param {number} user_id - ID of the user.
+ * @param {number} song_id - ID of the song.
+ * @returns {Promise<Object>} Confirmation object.
+ */
 export const addSongToListeningHistory = async (user_id: number, song_id: number) => {
   try {
     await prisma.listening_history.create({
@@ -218,6 +290,12 @@ export const addSongToListeningHistory = async (user_id: number, song_id: number
   }
 };
 
+/**
+ * Retrieve a user's listening history.
+ *
+ * @param {number} user_id - ID of the user.
+ * @returns {Promise<Object[]>} Array of songs in the user's listening history.
+ */
 export const getUserListeningHistory = async (user_id: number) => {
   try {
     const history = await prisma.listening_history.findMany({
@@ -252,6 +330,12 @@ export const getUserListeningHistory = async (user_id: number) => {
   }
 };
 
+/**
+ * Retrieve multiple users by their wallet identifiers.
+ *
+ * @param {string[]} walletIds - Array of wallet identifiers.
+ * @returns {Promise<Object[]>} Array of user objects.
+ */
 export const getManyUsersByWalletId = async (walletIds: string[]) => {
   try {
     const users = await prisma.users.findMany({

@@ -5,6 +5,13 @@ import axios from "axios";
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 
+
+/**
+ * Validate if a Twitter handle exists in the database.
+ *
+ * @param {string} twitterHandle - The Twitter handle to check.
+ * @returns {Promise<boolean>} True if exists, false otherwise.
+ */
 export const validateTwitterHandle = async (twitterHandle: string): Promise<boolean> => {
     try {
       const users = await prisma.users.findMany({
@@ -20,6 +27,12 @@ export const validateTwitterHandle = async (twitterHandle: string): Promise<bool
     }
   };
   
+/**
+ * Validate if a display name exists in the database.
+ *
+ * @param {string} displayName - The display name to check.
+ * @returns {Promise<boolean>} True if exists, false otherwise.
+ */
   export const validateUserByDisplayName = async (displayName: string): Promise<boolean> => {
     try {
       const users = await prisma.users.findMany({
@@ -36,6 +49,12 @@ export const validateTwitterHandle = async (twitterHandle: string): Promise<bool
     }
   };
 
+/**
+ * Send a verification code via Twilio.
+ *
+ * @param {string} to - The phone number to which the code should be sent.
+ * @returns {Promise<Object>} Twilio verification response.
+ */
   export const sendTwilioVerification = async (to: string) => {
     try {
         return twilioClient.verify.v2
@@ -47,6 +66,13 @@ export const validateTwitterHandle = async (twitterHandle: string): Promise<bool
     }
   }
 
+/**
+ * Verify a given code for a phone number via Twilio.
+ *
+ * @param {string} to - The phone number to be verified.
+ * @param {string} code - The verification code.
+ * @returns {Promise<Object>} Twilio verification check response.
+ */
   export const verifyTwilioCode = async (to: string, code: string) => {
     try {
         return twilioClient.verify.v2
@@ -58,6 +84,12 @@ export const validateTwitterHandle = async (twitterHandle: string): Promise<bool
     }
   }
 
+/**
+ * Get user information from Google using a provided token.
+ *
+ * @param {string} token - The Google OAuth token.
+ * @returns {Promise<Object>} Google user information.
+ */
   export const getGoogleUserData = async (token: string) => {
     try {
         const userInfoResponse = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);

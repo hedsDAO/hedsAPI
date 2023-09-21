@@ -7,6 +7,13 @@ import { newUserObject } from '../common';
 
 const router = express.Router();
 
+/**
+ * Validate a given display name.
+ *
+ * @route GET /validate-display-name/:displayName
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
 router.get('/validate-display-name/:displayName', async (req, res) => {
   const { displayName } = req.params;
 
@@ -24,6 +31,13 @@ router.get('/validate-display-name/:displayName', async (req, res) => {
   }
 });
 
+/**
+ * Validate a given Twitter handle.
+ *
+ * @route GET /validate-twitter/:twitterHandle
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
 router.get('/validate-twitter/:twitterHandle', async (req, res) => {
   const { twitterHandle } = req.params;
   try {
@@ -39,6 +53,14 @@ router.get('/validate-twitter/:twitterHandle', async (req, res) => {
     }
 });
 
+
+/**
+ * Send a verification code via SMS.
+ *
+ * @route GET /sms/send/:to
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
 router.get("/sms/send/:to", async (req, res) => {
     const to = req.params.to;
     try {
@@ -51,6 +73,13 @@ router.get("/sms/send/:to", async (req, res) => {
     }
 });
 
+/**
+ * Verify an SMS code.
+ *
+ * @route GET /sms/verify/:to/:code
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
 router.get("/sms/verify/:to/:code", async (req, res) => {
     const to = req.params.to;
     const code = req.params.code;
@@ -66,6 +95,15 @@ router.get("/sms/verify/:to/:code", async (req, res) => {
     }
 });
 
+/**
+ * Google OAuth callback handler.
+ * Fetches user info using bearer token, 
+ * then either retrieves or creates a user based on the email.
+ *
+ * @route GET /google-oauth-callback
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
 router.get("/google-oauth-callback", async (req, res) => {
   try {
     const bearerToken = req.headers.authorization;
