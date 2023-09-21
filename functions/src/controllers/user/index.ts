@@ -172,7 +172,7 @@ export const createUser = async (userData: any) => {
     await prisma.user_events.create({
       data: {
         event_type: eventType,
-        event_data: JSON.stringify(eventData),
+        event_data: eventData,
         event_timestamp: new Date(),
         user_id: user.id,
       },
