@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as functions from "firebase-functions";
 import { validateTwitterHandle, validateUserByDisplayName} from '../controllers/utils/auth';
 import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode } from '../controllers/auth';
-import { createUser, getUserByEmaill } from '../controllers/user';
+import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../controllers/user';
 import { newUserObject } from '../common';
 
 const router = express.Router();
@@ -86,12 +86,19 @@ router.get("/sms/verify/:to/:code", async (req, res) => {
     try {
       const verification = await verifyTwilioCode(to, code);
       if (verification?.status === "approved") {
-          res.status(200).send("Verification approved.");
+        const user = await getUserByPhoneNumber(to);
+        if (user) {
+          return res.status(200).json(user);
+        } else {
+          const createdUser = await createUser({...newUserObject, phone_number: to});
+          return  res.status(200).json(createdUser);
+        }
+          
       } else {
-          res.status(400).send("Verification denied. Try again.");
+          return res.status(400).send("Verification denied. Try again.");
       }
     } catch (error) {
-        res.send(500).send("There was an error verifying your code.");
+        return res.send(500).send("There was an error verifying your code.");
     }
 });
 
