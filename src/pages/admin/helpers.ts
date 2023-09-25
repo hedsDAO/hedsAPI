@@ -37,7 +37,7 @@ export const formatStrategiesPayload = (artistsWallets: string[]) => {
   const artistsVp = artistsWallets.reduce((acc, wallet) => ({ ...acc, [wallet]: 15 }), {});
 
   const tapeContracts = Object.keys(tapesAndVpWeights);
-  const tapeVp = Object.values(tapesAndVpWeights);
+  const tapeVp = new Array(tapeContracts.length).fill(5);
 
   const whitelistArtists = {
     name: StrategyName.WHITELIST,

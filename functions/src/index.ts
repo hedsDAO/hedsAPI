@@ -3,24 +3,15 @@ import * as admin from 'firebase-admin';
 // import * as functions from 'firebase-functions';
 admin.initializeApp();
 
-// TWITTER CONTROLLER
-import twitterAuth from './servers/authentication';
+// AUTH API
+import auth from './servers/auth';
 
-// SUBMISSIONS CONTROLLER
-import newSubmission from './servers/submissions';
+// USERS API
+import user from './servers/user';
 
-// OPENSEA CONTROLLER
-import activeListings from './servers/opensea';
-
-// FIRESTORE CONTROLLER
-import users from './servers/users';
-
-// FIREBASE APP
+// API V1
 import app from './app';
 
-exports.twitterAuth = twitterAuth;
-exports.newSubmission = newSubmission;
-exports.activeListings = activeListings;
-exports.users = users;
-
 exports.api = app;
+exports.auth = auth;
+exports.user = user;

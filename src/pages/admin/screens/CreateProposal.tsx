@@ -60,12 +60,12 @@ export const CreateProposal = () => {
       title: currentTape.name,
       strategies: formattedStrategies,
     };
-    const newProposal = await client.createProposal(signer, proposalPayload);
+    // const newProposal = await client.createProposal(signer, proposalPayload);
 
-    if (typeof newProposal !== 'string') {
-      console.log(newProposal.data.ipfsHash);
-      // editTape(tapeId, newProposal.data.ipfsHash);
-    }
+    // if (typeof newProposal !== 'string') {
+    //   console.log(newProposal.data.ipfsHash);
+    //   // editTape(tapeId, newProposal.data.ipfsHash);
+    // }
   };
 
   return (

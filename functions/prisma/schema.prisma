@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model likes {
+  id      Int    @id @default(autoincrement())
+  user_id Int?
+  song_id Int?
+  songs   songs? @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model listening_history {
+  id          Int       @id @default(autoincrement())
+  user_id     Int?
+  song_id     Int?
+  last_played DateTime? @db.Timestamp(6)
+  songs       songs?    @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model song_artists {
+  id                Int      @id @default(autoincrement())
+  song_id           Int?
+  user_id           Int?
+  verified          Boolean?
+  ownership_percent Float?
+  songs             songs?   @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users             users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model song_events {
+  id              Int       @id @default(autoincrement())
+  song_id         Int?
+  user_id         Int?
+  event_type      String?   @db.VarChar(255)
+  event_data      Json?
+  event_timestamp DateTime? @db.Timestamp(6)
+  songs           songs?    @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model songs {
+  id                Int                 @id @default(autoincrement())
+  tape_id           Int?
+  audio             String?             @db.VarChar
+  cover             String?             @db.VarChar
+  duration          Float?
+  public            Boolean?
+  track_name        String?             @db.VarChar
+  type              song_type?
+  submission_data   Json?
+  cyanite_id        String?             @db.VarChar
+  created           DateTime?           @db.Timestamp(6)
+  total_likes       Int?
+  track_data        Json?
+  video             String?             @db.VarChar
+  likes             likes[]
+  listening_history listening_history[]
+  song_artists      song_artists[]
+  song_events       song_events[]
+}
+
+model tape_events {
+  id              Int       @id @default(autoincrement())
+  tape_id         Int?
+  user_id         Int?
+  event_type      String?   @db.VarChar(255)
+  event_data      Json?
+  event_timestamp DateTime? @db.Timestamp(6)
+  tapes           tapes?    @relation(fields: [tape_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tape_sample_artists {
+  id      Int    @id @default(autoincrement())
+  tape_id Int?
+  user_id Int?
+  tapes   tapes? @relation(fields: [tape_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tapes {
+  id                  Int                   @id @default(autoincrement())
+  contract            String?               @db.VarChar
+  name                String?               @db.VarChar
+  merkle_root         String?               @db.VarChar
+  description         String?               @db.VarChar
+  image               String?               @db.VarChar
+  proposal_id         String?               @db.VarChar
+  video               String?               @db.VarChar
+  bpm                 Int?
+  timeline            Json?
+  type                tape_type?
+  splits              String?               @db.VarChar
+  links               Json?
+  tape_events         tape_events[]
+  tape_sample_artists tape_sample_artists[]
+}
+
+model user_events {
+  id              Int       @id @default(autoincrement())
+  user_id         Int?
+  event_type      String?   @db.VarChar(255)
+  event_data      Json?
+  event_timestamp DateTime? @db.Timestamp(6)
+  users           users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_generations {
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  cyanite_id   Int
+  audio        String
+  image        String?
+  prompt       String
+  title        String
+  status       String?
+  cyanite_data Json?
+  created_at   DateTime? @db.Timestamp(6)
+}
+
+model users {
+  id                  Int                   @id @default(autoincrement())
+  profile_picture     String?               @db.VarChar
+  banner              String?               @db.VarChar
+  twitter_handle      String?               @unique @db.VarChar
+  badges              Json?
+  description         String?               @db.VarChar
+  display_name        String?               @unique @db.VarChar
+  role                user_role_type?
+  wallet              String?               @unique @db.VarChar
+  joined              Float?
+  spotlight           String?               @db.VarChar
+  collection          Json?
+  votes               Json?
+  email               String?               @unique @db.VarChar
+  phone_number        String?               @unique @db.VarChar
+  likes               likes[]
+  listening_history   listening_history[]
+  song_artists        song_artists[]
+  song_events         song_events[]
+  tape_events         tape_events[]
+  tape_sample_artists tape_sample_artists[]
+  user_events         user_events[]
+}
+
+enum song_type {
+  submission
+  track
+  collab
+  sample
+  hedsolo
+}
+
+enum tape_market_type {
+  opensea
+  sound
+}
+
+enum tape_type {
+  legacy
+  hedstape
+  collabtape
+}
+
+enum user_role_type {
+  user
+  artist
+  admin
+}
