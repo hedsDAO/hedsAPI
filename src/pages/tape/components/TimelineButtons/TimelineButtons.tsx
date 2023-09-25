@@ -97,14 +97,14 @@ export const TimelineButtons = () => {
         </Text>
         <Text {...styles.$cycleTimeTextStyles}>{formatTime(timeline?.mint?.start)}</Text>
       </HStack>
-      {tapeId === 17 ? (
+      {tapeId === 18 ? (
         <Button
           {...styles.$buttonStyles}
           leftIcon={<i className="fa-solid fa-bell" />}
           isDisabled={!(cycle === 'mint')}
           target="_blank"
           as={'a'}
-          href={'https://www.sound.xyz/heds/hedstape-15-feat-lnrz'}
+          href={'https://www.sound.xyz/heds/hedstape-16-feat-kas-rizvi'}
         >
           {now < timeline?.mint?.start ? 'UPCOMING' : now < timeline?.mint?.end ? 'MINT NOW' : 'CLOSED'}
         </Button>
