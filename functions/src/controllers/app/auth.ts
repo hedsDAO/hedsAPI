@@ -1,4 +1,4 @@
-import {prisma} from "../../..//prisma/client";
+import {prisma} from "../../../prisma/client";
 import functions from "firebase-functions";
 import twilio from "twilio";
 import axios from "axios";

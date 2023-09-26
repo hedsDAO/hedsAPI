@@ -1,8 +1,8 @@
 import * as express from 'express';
 import * as functions from "firebase-functions";
 import { validateTwitterHandle, validateUserByDisplayName} from '../../controllers/utils/auth';
-import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode } from '../../controllers/auth';
-import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/user';
+import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode } from '../../controllers/app/auth';
+import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/app/user';
 import { newUserObject } from '../../common';
 
 const router = express.Router();
