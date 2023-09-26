@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import * as functions from "firebase-functions";
-import authRoutes from './routes/auth';
+import authRoutes from './routes/app/auth';
 import userRoutes from './routes/users';
 import songRoutes from './routes/songs';
 import tapeRoutes from './routes/tapes';
