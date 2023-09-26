@@ -1,5 +1,5 @@
 import * as express from "express";
-import {getTokenOwners} from "../controllers/strategyController";
+import {getTokenOwners} from "../../controllers/vote/strategy";
 
 const router = express.Router();
 
