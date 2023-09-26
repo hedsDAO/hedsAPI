@@ -1,12 +1,12 @@
 import express from "express";
-import userRoutes from "../routes/user";
+import authRoutes from "../../routes/app/auth";
 import {onRequest} from "firebase-functions/v2/https";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use("/", userRoutes);
+app.use("/", authRoutes);
 
 export default onRequest({
   vpcConnector: "heds-app-connector",
