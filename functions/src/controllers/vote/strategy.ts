@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import * as functions from "firebase-functions";
 import { Strategy, StrategyName, Erc721MultiRegistryWeightedStrategy, WhitelistWeightedStrategy } from "hedsvote";
 import { PrismaClient } from '@prisma/client';
@@ -11,7 +11,13 @@ interface TypedRequestBody<T> extends Request {
 const prisma = new PrismaClient();
 let cursor = "";
 
-export async function fetchOwners(contractAddress: string) {
+/**
+ * Fetch owners of the specified contract address.
+ * 
+ * @param {string} contractAddress - Ethereum contract address.
+ * @returns {Promise<any>} A promise object that resolves to the response from moralis API.
+ */
+export const fetchOwners = async (contractAddress: string) => {
   const url = `https://deep-index.moralis.io/api/v2/nft/${contractAddress}/owners?chain=eth&format=decimal&limit=100`;
   const options = { headers: { "accept": "application/json", "X-API-Key": process.env.WEB3_API_KEY ? process.env.WEB3_API_KEY : "test", }};
   const response = await (await axios.get(`${url}${cursor ? `&cursor=${cursor}` : ""}`, options)).data;
@@ -20,14 +26,28 @@ export async function fetchOwners(contractAddress: string) {
   return response;
 }
 
-export async function getOwners(contractAddress: string) {
+/**
+ * Retrieve owners of a specified contract address.
+ * 
+ * @param {string} contractAddress - Ethereum contract address.
+ * @returns {Promise<any[]>} A promise object that resolves to an array of owners.
+ */
+export const getOwners = async (contractAddress: string) => {
   const response = await fetchOwners(contractAddress);
   const owners = (await includeNextNPages(response, 4, contractAddress)).result;
   functions.logger.log("owners", owners);
   return owners;
 }
 
-export async function includeNextNPages(previous: any, numPages: number, contractAddress: string) {
+/**
+ * Include next N pages of owners from the Moralis API response.
+ * 
+ * @param {any} previous - Previous page response.
+ * @param {number} numPages - Number of pages to include.
+ * @param {string} contractAddress - Ethereum contract address.
+ * @returns {Promise<any>} A promise object that resolves to combined response of owners.
+ */
+export const includeNextNPages = async (previous: any, numPages: number, contractAddress: string) => {
   const result = previous.result || [];
   functions.logger.log("result", result);
   let response = previous;
@@ -50,7 +70,14 @@ export async function includeNextNPages(previous: any, numPages: number, contrac
   return response;
 }
 
-export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strategy[], proposalId: string, spaceId: string }>, res: Response, next: NextFunction) => {
+/**
+ * Handle request to get token owners and save strategies to the database.
+ * 
+ * @param {TypedRequestBody<{ strategies: Strategy[], proposalId: string, spaceId: string }>} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<Response>} A promise that resolves to an express response object.
+ */
+export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strategy[], proposalId: string, spaceId: string }>, res: Response) => {
   const { strategies, proposalId } = req.body;
   const contracts = strategies.map((strategy: Strategy) => {
     if (strategy.name === StrategyName.ERC721) {
@@ -94,7 +121,14 @@ export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strateg
   return res.status(200).json({ message: "Successfully inserted strategies into the database" });
 };
 
-const addStrategiesToDB = async (strategies: Strategy[], proposalId: string) => {
+/**
+ * Add voting strategies to the database.
+ * 
+ * @param {Strategy[]} strategies - Array of voting strategies.
+ * @param {string} proposalId - Proposal identifier.
+ * @returns {Promise<void>} A promise that resolves when strategies are added to the database.
+ */
+export const addStrategiesToDB = async (strategies: Strategy[], proposalId: string) => {
   for (const strategy of strategies) {
     let params;
     if (strategy.name === StrategyName.ERC721) {
@@ -107,11 +141,11 @@ const addStrategiesToDB = async (strategies: Strategy[], proposalId: string) => 
       params = null;
     }
 
-    await prisma.strategy.create({
+    await prisma.strategies.create({
       data: {
         proposal_id: proposalId,
         name: strategy.name as StrategyName,
-        params: params,
+        params: JSON.stringify(params),
         network: parseInt(strategy.network)
       }
     });

@@ -1,29 +1,40 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
-import { verifyWalletSignature } from "../utils/verifySignature";
-import { checkSpaceAuthorization } from "../utils/checkSpaceAuthroization";
 
 const prisma = new PrismaClient();
 
 export async function getAllSpacesByAdmin(req: Request, res: Response) {
-    const walletId = req.params.walletId;
-    try {
-      const spaces = await prisma.space.findMany({
-        where: {
-          authors: {
-            has: walletId
+  const user_id = parseInt(req.params.user_id);
+
+  try {
+      const spaces = await prisma.spaces.findMany({
+          where: {
+              space_authors: {
+                  some: {
+                      user_id: user_id
+                  }
+              }
+          },
+          include: {
+              space_authors: true
           }
-        }
       });
-      res.json(spaces);
-    } catch (error) {
-      res.status(500).json({error: `Error fetching spaces for ${walletId}`});
-    }
+
+      if (!spaces || spaces.length === 0) {
+          return res.status(404).json({error: `No spaces found for user with user id ${user_id}`});
+      }
+
+      return res.json(spaces);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({error: `Error fetching spaces for user id ${user_id}`});
   }
+}
+
 
   export async function getSpaces(req: Request, res: Response) {
     try {
-      const spaces = await prisma.space.findMany();
+      const spaces = await prisma.spaces.findMany();
       res.json(spaces);
     } catch (error) {
       res.status(500).json({error: "Error fetching spaces"});
@@ -31,51 +42,79 @@ export async function getAllSpacesByAdmin(req: Request, res: Response) {
   }
   
   export async function createSpace(req: Request, res: Response) {
-    const {name, authors, message, signature} = req.body;
+    const { name, authors, image, description, banner, twitter, instagram, soundcloud, discord } = req.body;
     try {
-      const recoveredAddress = await verifyWalletSignature(message, signature);
-      if (!authors.includes(recoveredAddress)) {
-        return res.status(403).json({error: "User is not authorized to update this space"});
-      }
-      const space = await prisma.space.create({
-        data: {
-          name,
-          authors,
-          createdAt: new Date(),
-          image: req.body.image,
-          description: req.body.description,
-          banner: req.body.banner,
-          twitter: req.body.twitter,
-          instagram: req.body.instagram,
-          soundcloud: req.body.soundcloud,
-          discord: req.body.discord
-        }
+      const createdSpace = await prisma.$transaction(async (prisma) => {
+        const space = await prisma.spaces.create({
+          data: {
+            name,
+            created_at: new Date(),
+            image,
+            description,
+            banner,
+            twitter,
+            instagram,
+            soundcloud,
+            discord
+          }
+        });
+  
+        const authorPromises = authors.map((author_id: number) => {
+          return prisma.space_authors.create({
+            data: {
+              user_id: author_id,
+              space_id: space.id
+            }
+          });
+        });
+        await Promise.all(authorPromises);
+  
+        return space;
       });
-      return res.status(201).json(space);
+  
+      return res.status(201).json(createdSpace);
+  
     } catch (error) {
-      return res.status(500).json({error: "Error creating space"});
+      console.log(error);
+      return res.status(500).json({ error: "Error creating space" });
     }
   }
+  
 
   export async function updateSpace(req: Request, res: Response) {
-    const {name, authors, image, description, banner, twitter, instagram, soundcloud, discord, message, signature} = req.body;
+    const {name, authors, image, description, banner, twitter, instagram, soundcloud, discord} = req.body;
   
-    const space = await prisma.space.findUnique({ where: { name } });
+    const space = await prisma.spaces.findUnique({ where: { name }, include: { space_authors: true } });
   
     if (!space) return res.status(404).json({error: "Space not found"});
   
     try {
-      const recoveredAddress = await verifyWalletSignature(message, signature);
-      const isAuthorized = await checkSpaceAuthorization(prisma, name, recoveredAddress);
-      if (!isAuthorized) {
-        return res.status(403).json({error: "User is not authorized to update this space"});
-      }
+      const existingAuthorIds = space.space_authors.map(author => author.user_id);
+      const newAuthorIds = authors.map((author_id: number) => author_id);
   
-      const updatedSpace = await prisma.space.update({
+      const authorsToAdd = newAuthorIds.filter((id: number) => !existingAuthorIds.includes(id));
+      const authorsToDelete = existingAuthorIds.filter(id => !newAuthorIds.includes(id));
+  
+      await prisma.space_authors.deleteMany({
+        where: {
+          user_id: { in: authorsToDelete },
+          space_id: space.id
+        }
+      });
+  
+      const authorPromises = authorsToAdd.map((author_id: number) => {
+        return prisma.space_authors.create({
+          data: {
+            user_id: author_id,
+            space_id: space.id
+          }
+        });
+      });
+  
+      await prisma.spaces.update({
         where: { id: space.id },
         data: {
           name,
-          authors,
           image,
           description,
           banner,
@@ -85,30 +124,26 @@ export async function getAllSpacesByAdmin(req: Request, res: Response) {
           discord
         }
       });
+  
+      await Promise.all(authorPromises);
+  
+      const updatedSpace = await prisma.spaces.findUnique({ where: { id: space.id }, include: { space_authors: true } });
       return res.json(updatedSpace);
     } catch (error) {
       return res.status(500).json({error: "Error updating space"});
     }
   }
+  
 
   export async function deleteSpace(req: Request, res: Response) {
     const name = req.params.spaceName;
-    const message = req.query.message as string;
-    const signature = req.query.signature as `0x${string}`;
   
-    const space = await prisma.space.findUnique({ where: { name } });
+    const space = await prisma.spaces.findUnique({ where: { name } });
   
     if (!space) return res.status(404).json({error: "Space not found"});
   
     try {
-      const recoveredAddress = await verifyWalletSignature(message, signature);
-      const isAuthorized = await checkSpaceAuthorization(prisma, name, recoveredAddress);
-  
-      if (!isAuthorized) {
-        return res.status(403).json({error: "User is not authorized to delete this space"});
-      }
-  
-      await prisma.space.delete({ where: { id: space.id } });
+      await prisma.spaces.delete({ where: { id: space.id } });
       return res.status(204).end();
     } catch (error) {
       return res.status(500).json({error: "Error deleting space"});
@@ -118,12 +153,12 @@ export async function getAllSpacesByAdmin(req: Request, res: Response) {
   export async function getProposalsInSpace(req: Request, res: Response) {
     const name = req.params.spaceName;
   
-    const space = await prisma.space.findUnique({ where: { name } });
+    const space = await prisma.spaces.findUnique({ where: { name } });
   
     if (!space) return res.status(404).json({error: "Space not found"});
     try {
-      const proposals = await prisma.proposal.findMany({
-        where: { spaceId: space.id }
+      const proposals = await prisma.proposals.findMany({
+        where: { space_id: space.id }
       });
       return res.json(proposals);
     } catch (error) {
