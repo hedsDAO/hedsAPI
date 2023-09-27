@@ -10,19 +10,18 @@ const prisma = new PrismaClient();
 
 export async function getProposal(req: Request, res: Response) {
     const ipfsHash: string = req.params.ipfs_hash;
+
     try {
-        const proposal = await prisma.proposal.findUnique({
+        const proposal = await prisma.proposals.findUnique({
             where: { ipfs_hash: ipfsHash },
-            include: { choices: true, strategies: true, votes: { include: { vote_choices: true } } }
+            include: { choices: true, strategies: true, votes: { include: { vote_choices: true}}} 
         });
 
         if (!proposal) {
             return res.status(404).json({ error: "Proposal not found" });
         }
 
-        proposal.state = determineProposalStatus(proposal.start_time, proposal.end_time);
-
-        return res.status(200).json(proposal);
+        return res.status(200).json({...proposal, state: determineProposalStatus(proposal.start_time as Date, proposal.end_time as Date)});
     } catch (error: any) {
         return res.status(500).json({ error: error.message });
     }
@@ -32,24 +31,27 @@ export async function createProposal(req: Request, res: Response) {
     const { proposal, message, signature } = req.body;
 
     try {
-        const space = await prisma.space.findUnique({ where: { name: proposal.spaceName } });
+        const space = await prisma.spaces.findUnique({ where: { name: proposal.spaceName } });
+
         if (!space) {
             return res.status(404).json({ error: "Space not found" });
         }
 
-        const recoveredAddress = await verifyWalletSignature(message, signature);
-        const isAuthorized = await checkSpaceAuthorization(prisma, proposal.spaceName, recoveredAddress);
+        if (proposal.is_web3) {
+            const recoveredAddress = await verifyWalletSignature(message, signature);
+            const isAuthorized = await checkSpaceAuthorization(prisma, proposal.spaceName, recoveredAddress);
 
-        if (!isAuthorized) {
-            return res.status(403).json({ error: "User is not authorized to create a proposal in this space" });
+            if (!isAuthorized) {
+                return res.status(403).json({ error: "User is not authorized to create a proposal in this space" });
+            }
         }
 
         const ipfsHash = await pinProposalToIpfs(proposal);
 
-        const createdProposal = await prisma.proposal.create({
+        const createdProposal = await prisma.proposals.create({
             data: {
                 ipfs_hash: ipfsHash,
-                spaceId: space.id,
+                space_id: space.id,
                 signature: signature,
                 author: proposal.author,
                 start_time: proposal.startTime,
@@ -77,14 +79,22 @@ export async function updateProposal(req: Request, res: Response) {
     const ipfsHash: string = req.params.ipfs_hash;
 
     try {
-        const recoveredAddress = await verifyWalletSignature(message, signature);
-        const isAuthorized = await checkSpaceAuthorization(prisma, updatedProposal.spaceName, recoveredAddress);
+        const currentProposal = await prisma.proposals.findUnique({ where: { ipfs_hash: ipfsHash } });
 
-        if (!isAuthorized) {
-            return res.status(403).json({ error: "User is not authorized to update a proposal in this space" });
+        if (!currentProposal) {
+            return res.status(404).json({ error: "Proposal not found" });
         }
 
-        const result = await prisma.proposal.update({
+        if (currentProposal.is_web3) {
+            const recoveredAddress = await verifyWalletSignature(message, signature);
+            const isAuthorized = await checkSpaceAuthorization(prisma, updatedProposal.spaceName, recoveredAddress);
+
+            if (!isAuthorized) {
+                return res.status(403).json({ error: "User is not authorized to update a proposal in this space" });
+            }
+        }
+
+        const result = await prisma.proposals.update({
             where: { ipfs_hash: ipfsHash },
             data: {
                 signature: updatedProposal.signature,
@@ -108,16 +118,24 @@ export async function deleteProposal(req: Request, res: Response) {
     const signature = req.query.signature as `0x${string}`;
 
     try {
-        const recoveredAddress = await verifyWalletSignature(message, signature);
-        const isAuthorized = await checkSpaceAuthorization(prisma, spaceName, recoveredAddress);
+        const currentProposal = await prisma.proposals.findUnique({ where: { ipfs_hash: ipfsHash } });
 
-        if (!isAuthorized) {
-            return res.status(403).json({ error: "User is not authorized to delete a proposal in this space" });
+        if (!currentProposal) {
+            return res.status(404).json({ error: "Proposal not found" });
+        }
+
+        if (currentProposal.is_web3) {
+            const recoveredAddress = await verifyWalletSignature(message, signature);
+            const isAuthorized = await checkSpaceAuthorization(prisma, spaceName, recoveredAddress);
+
+            if (!isAuthorized) {
+                return res.status(403).json({ error: "User is not authorized to delete a proposal in this space" });
+            }
         }
 
         await unpinFromIpfs(ipfsHash);
 
-        await prisma.proposal.delete({ where: { ipfs_hash: ipfsHash } });
+        await prisma.proposals.delete({ where: { ipfs_hash: ipfsHash } });
 
         return res.json({ message: "Proposal deleted" });
     } catch (error) {

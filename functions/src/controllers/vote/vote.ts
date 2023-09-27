@@ -6,6 +6,18 @@ import { ProposalState } from "hedsvote";
 
 const prisma = new PrismaClient();
 
+/**
+ * Cast a vote for a proposal. 
+ * 
+ * This function allows a voter to cast or update their vote for a given proposal. 
+ * If the proposal is not in an open state or if the voter's signature does not match the recovered address,
+ * the function will return an error.
+ * 
+ * @param {Request} req - Express request object with the vote, voteChoices, message, and signature in the body.
+ * @param {Response} res - Express response object used to return the result of the vote casting operation.
+ * @async
+ * @returns {Promise<Response>} Express response object.
+ */
 export async function castVote(req: Request, res: Response) {
   const newVote = req.body.vote;
   const voteChoices = req.body.voteChoices;
@@ -14,18 +26,13 @@ export async function castVote(req: Request, res: Response) {
 
   const { vp, voter, proposal_id } = newVote;
 
-  const recoveredAddress = await verifyWalletSignature(message, signature);
-
-  if (recoveredAddress.toLowerCase() !== voter) {
-    return res.status(403).json({ error: "Unauthorized: Signature does not match address" });
-  }
-
   try {
     const proposal = await prisma.proposals.findUnique({
       where: { ipfs_hash: proposal_id },
       select: {
         start_time: true,
-        end_time: true
+        end_time: true,
+        is_web3: true
       }
     });
 
@@ -33,7 +40,14 @@ export async function castVote(req: Request, res: Response) {
       return res.status(404).json({ error: "Proposal not found" });
     }
 
-    const proposalState = determineProposalStatus(proposal.start_time, proposal.end_time);
+    if (proposal.is_web3) {
+      const recoveredAddress = await verifyWalletSignature(message, signature);
+      if (recoveredAddress.toLowerCase() !== voter) {
+        return res.status(403).json({ error: "Unauthorized: Signature does not match address" });
+      }
+    }
+
+    const proposalState = determineProposalStatus(proposal.start_time as Date, proposal.end_time as Date);
     if (proposalState !== ProposalState.OPEN) {
       return res.status(400).json({ error: "Proposal is not in an open state" });
     }
