@@ -27,7 +27,7 @@ import * as functions from "firebase-functions";
       method: "post",
       url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
       headers: {
-        "Content-Type": "application/json",
+        accept: 'application/json',
         "Authorization": `Bearer ${process.env.PINATA_JWT}`,
       },
       data: data,
@@ -41,7 +41,45 @@ import * as functions from "firebase-functions";
       throw new Error(e);
     }
   };
+
+/**
+ * Pins a file to IPFS using the Pinata service.
+ *
+ * @async
+ * @function
+ * @param {FormData} formData - The file encapsulated as FormData to be pinned to IPFS.
+ * @returns {Promise<Object>} Returns a promise that resolves into a response object from Pinata service. 
+ * The response object should contain information about the pinned file.
+ * @throws Will throw an error if pinning process to IPFS fails, or if there is a network error.
+ * @example
+ * try {
+ *   const pinResponse = await pinFileToIpfs(formData);
+ *   console.log(pinResponse);
+ * } catch (error) {
+ *   console.error('Failed to pin file to IPFS:', error);
+ * }
+ */
+  export const pinFileToIpfs = async (formData: FormData) => {
+    try {
+      const response = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
+        method: "POST",
+        body: formData,
+        headers: {
+          accept: 'application/json',
+          "Authorization": `Bearer ${process.env.PINATA_JWT}`,
+        },
+      });
   
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
   
   /**
    * Unpins a CID from IPFS
@@ -56,6 +94,7 @@ import * as functions from "firebase-functions";
       method: "delete",
       url: `https://api.pinata.cloud/pinning/unpin/${CID}`,
       headers: {
+        accept: 'application/json',
         "Authorization": `Bearer ${process.env.PINATA_JWT}`,
       },
     };

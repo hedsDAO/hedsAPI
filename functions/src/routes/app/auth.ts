@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as functions from "firebase-functions";
-import { validateTwitterHandle, validateUserByDisplayName} from '../../controllers/utils/auth';
-import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode } from '../../controllers/app/auth';
+import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode , validateUserByDisplayName, validateTwitterHandle} from '../../controllers/app/auth';
 import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/app/user';
 import { newUserObject } from '../../common';
 
@@ -21,9 +20,9 @@ router.get('/validate-display-name/:displayName', async (req, res) => {
     const validationResult = await validateUserByDisplayName(displayName);
 
     if (validationResult) {
-      return res.status(200).json({ validated: true });
+      return res.status(200).json({ displayNameExists: true });
     } else {
-      return res.status(400).json({ validated: false });
+      return res.status(400).json({ displayNameExists: false });
     }
   } catch (err: any) {
     console.error(err);

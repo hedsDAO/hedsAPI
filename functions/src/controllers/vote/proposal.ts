@@ -4,7 +4,7 @@ import { verifyWalletSignature } from "../utils/verifySignature";
 import { determineProposalStatus } from "../utils/determineProposalStatus";
 import { checkSpaceAuthorization } from "../utils/checkSpaceAuthroization";
 import { voteMethodEnumToString } from "../utils/voteMethodEnumToString";
-import { pinProposalToIpfs, unpinFromIpfs } from "../utils/ipfs";
+import { pinProposalToIpfs, unpinFromIpfs } from "../utils/pinata";
 
 const prisma = new PrismaClient();
 
@@ -28,7 +28,7 @@ export async function getProposal(req: Request, res: Response) {
 }
 
 export async function createProposal(req: Request, res: Response) {
-    const { proposal, message, signature } = req.body;
+    const { proposal, message, signature, user_id } = req.body;
 
     try {
         const space = await prisma.spaces.findUnique({ where: { name: proposal.spaceName } });
@@ -53,7 +53,7 @@ export async function createProposal(req: Request, res: Response) {
                 ipfs_hash: ipfsHash,
                 space_id: space.id,
                 signature: signature,
-                author: proposal.author,
+                author: user_id,
                 start_time: proposal.startTime,
                 end_time: proposal.endTime,
                 block: proposal.block,

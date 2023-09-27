@@ -1,5 +1,5 @@
 import * as express from "express";
-import {getSpaces, createSpace, updateSpace, deleteSpace, getProposalsInSpace, getAllSpacesByAdmin} from "../controllers/spaceController";
+import {getSpaces, createSpace, updateSpace, deleteSpace, getProposalsInSpace, getAllSpacesByAdmin} from "../../controllers/vote/space";
 
 const router = express.Router();
 

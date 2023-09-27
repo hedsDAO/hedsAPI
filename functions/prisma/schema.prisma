@@ -132,9 +132,9 @@ model users {
   twitter_handle      String?               @db.VarChar
   badges              Json?
   description         String?               @db.VarChar
-  display_name        String?               @db.VarChar
+  display_name        String?               @unique @db.VarChar
   role                user_role_type?
-  wallet              String?               @db.VarChar
+  wallet              String?               @unique @db.VarChar
   joined              Float?
   spotlight           String?               @db.VarChar
   collection          Json?
