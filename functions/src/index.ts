@@ -7,17 +7,23 @@ admin.initializeApp();
 import auth from './servers/app/auth';
 import user from './servers/app/user';
 
+/* UTIL SERVER */
+import pinata from './servers/utils/pinata';
+
 /*  VOTE SERVER */
 import proposal from './servers/vote/proposal';
 import space from './servers/vote/space';
 import strategy from './servers/vote/strategy';
 import vote from './servers/vote/vote';
 
+
+
 // API V1
 import app from './app';
 
 exports.api = app;
 exports.auth = auth;
+exports.pinata = pinata;
 exports.proposal = proposal;
 exports.space = space;
 exports.strategy = strategy;

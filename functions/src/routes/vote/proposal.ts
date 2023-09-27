@@ -1,5 +1,5 @@
 import * as express from "express";
-import {getProposal, createProposal, updateProposal, deleteProposal} from "../controllers/proposalController";
+import {getProposal, createProposal, updateProposal, deleteProposal} from "../../controllers/vote/proposal";
 
 const router = express.Router();
 
