@@ -4,7 +4,7 @@ import {getSpaces, createSpace, updateSpace, deleteSpace, getProposalsInSpace, g
 const router = express.Router();
 
 router.get("/:spaceName/proposals", getProposalsInSpace);
-router.get("/walletId", getAllSpacesByAdmin);
+router.get("/userId", getAllSpacesByAdmin);
 router.get("/", getSpaces);
 router.post("/", createSpace);
 router.put("/", updateSpace);
