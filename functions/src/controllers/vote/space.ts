@@ -4,15 +4,13 @@ import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 export async function getAllSpacesByAdmin(req: Request, res: Response) {
-  const user_id = parseInt(req.params.user_id);
+  const user_id = parseInt(req.params.userId);
 
   try {
       const spaces = await prisma.spaces.findMany({
           where: {
               space_authors: {
-                  some: {
-                      user_id: user_id
-                  }
+                  some: { user_id }
               }
           },
           include: {
@@ -48,7 +46,7 @@ export async function getAllSpacesByAdmin(req: Request, res: Response) {
         const space = await prisma.spaces.create({
           data: {
             name,
-            created_at: new Date(),
+            created_at: Date.now(),
             image,
             description,
             banner,

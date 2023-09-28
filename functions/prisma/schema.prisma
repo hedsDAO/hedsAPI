@@ -197,7 +197,7 @@ model proposals {
 model spaces {
   id            Int             @id @default(autoincrement())
   name          String          @unique @db.VarChar(255)
-  created_at    DateTime?       @db.Timestamp(6)
+  created_at    BigInt?         @db.BigInt
   image         String?         @db.VarChar
   description   String?         @db.VarChar
   banner        String?         @db.VarChar

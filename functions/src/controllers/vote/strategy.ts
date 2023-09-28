@@ -73,11 +73,11 @@ export const includeNextNPages = async (previous: any, numPages: number, contrac
 /**
  * Handle request to get token owners and save strategies to the database.
  * 
- * @param {TypedRequestBody<{ strategies: Strategy[], proposalId: string, spaceId: string }>} req - Express request object.
+ * @param {TypedRequestBody<{ strategies: Strategy[], proposalId: string }>} req - Express request object.
  * @param {Response} res - Express response object.
  * @returns {Promise<Response>} A promise that resolves to an express response object.
  */
-export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strategy[], proposalId: string, spaceId: string }>, res: Response) => {
+export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strategy[], proposalId: string }>, res: Response) => {
   const { strategies, proposalId } = req.body;
   const contracts = strategies.map((strategy: Strategy) => {
     if (strategy.name === StrategyName.ERC721) {

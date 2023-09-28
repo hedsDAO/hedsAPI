@@ -60,21 +60,25 @@ import * as functions from "firebase-functions";
  * }
  */
   export const pinFileToIpfs = async (formData: FormData) => {
+    const options = {
+      method: 'POST',
+      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
+        "Authorization": `Bearer ${process.env.PINATA_JWT}`
+      },
+      data: formData
+    };
+
     try {
-      const response = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
-        method: "POST",
-        body: formData,
-        headers: {
-          accept: 'application/json',
-          "Authorization": `Bearer ${process.env.PINATA_JWT}`,
-        },
-      });
+      const response = await axios(options);
   
-      if (!response.ok) {
-        throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+      if (!response.data) {
+        throw new Error("no repsonse after attempting to pin file");
       }
-  
-      return await response.json();
+      functions.logger.log("ipfs Object", response.data)
+      return response.data;
     } catch (error) {
       console.error(error);
       throw error;
