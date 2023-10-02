@@ -9,15 +9,15 @@ const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_A
 /**
  * Validate if a Twitter handle exists in the database.
  *
- * @param {string} twitterHandle - The Twitter handle to check.
+ * @param {string} twitter_handle - The Twitter handle to check.
  * @returns {Promise<boolean>} True if exists, false otherwise.
  */
-export const validateTwitterHandle = async (twitterHandle: string): Promise<boolean> => {
+export const validateTwitterHandle = async (twitter_handle: string): Promise<boolean> => {
     try {
       const users = await prisma.users.findMany({
         where: {
           twitter_handle: {
-            equals: twitterHandle,
+            equals: twitter_handle,
           },
         },
       });
@@ -30,15 +30,15 @@ export const validateTwitterHandle = async (twitterHandle: string): Promise<bool
 /**
  * Validate if a display name exists in the database.
  *
- * @param {string} displayName - The display name to check.
+ * @param {string} display_name - The display name to check.
  * @returns {Promise<boolean>} True if exists, false otherwise.
  */
-  export const validateUserByDisplayName = async (displayName: string): Promise<boolean> => {
+  export const validateUserByDisplayName = async (display_name: string): Promise<boolean> => {
     try {
       const users = await prisma.users.findMany({
         where: {
           display_name: {
-            equals: displayName,
+            equals: display_name,
             mode: "insensitive",
           },
         },
