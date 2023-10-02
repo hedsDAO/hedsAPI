@@ -17,8 +17,8 @@ router.post('/file', async (req, res) => {
 
   const pinataPinResult = await pinFileToIpfs(formData);
   functions.logger.log("pinata pin result", pinataPinResult);
-  if (pinataPinResult.data.IpfsHash) {
-    return res.status(200).json(pinataPinResult.data);
+  if (pinataPinResult.IpfsHash) {
+    return res.status(200).json(pinataPinResult);
   } else {
     return res.status(400).send("error pinning file");
   }

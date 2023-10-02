@@ -11,5 +11,6 @@ app.use("/", pinataRoutes);
 export default onRequest({
   vpcConnector: "heds-app-connector",
   vpcConnectorEgressSettings: "PRIVATE_RANGES_ONLY",
-  cors: true
+  cors: true,
+  memory: "512MiB"
 }, app);

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Proposal } from "hedsvote";
 import * as functions from "firebase-functions";
+import { Readable } from "stream";
+import FormData  from "form-data";
 
 /**
  * Pins a proposal to IPFS
@@ -59,20 +61,29 @@ import * as functions from "firebase-functions";
  *   console.error('Failed to pin file to IPFS:', error);
  * }
  */
-  export const pinFileToIpfs = async (formData: FormData) => {
+  export const pinFileToIpfs = async (data: Buffer) => {
+    const stream = Readable.from(data)
+    const formData = new FormData();
+    formData.append('file', stream, { filepath: 'test.png'});
     const options = {
       method: 'POST',
       url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      maxBodyLength: Infinity,
       headers: {
-        accept: 'application/json',
-        'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
-        "Authorization": `Bearer ${process.env.PINATA_JWT}`
+        'Content-Type': `multipart/form-data`,
+        Authorization: process.env.PINATA_JWT,
       },
-      data: formData
+      formData
     };
 
     try {
-      const response = await axios(options);
+      const response = await axios.post(options.url, formData, {
+        maxBodyLength: Infinity,
+        headers: {
+          'Content-Type': `multipart/form-data`,
+          Authorization: `Bearer ${process.env.PINATA_JWT}`,
+        },
+      });
   
       if (!response.data) {
         throw new Error("no repsonse after attempting to pin file");

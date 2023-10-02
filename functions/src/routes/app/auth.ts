@@ -124,14 +124,13 @@ router.get("/google-oauth-callback", async (req, res) => {
     functions.logger.log("user info", userInfo)
     if (userInfo) {
       const email = userInfo['email'];
-      const name = userInfo['name'];
 
       const user = await getUserByEmaill(email);
       functions.logger.log(user);
       if (user) {
         return res.json(user);
       } else {
-        const createdUser = await createUser({...newUserObject, display_name: name, email});
+        const createdUser = await createUser({...newUserObject, email});
         return res.json(createdUser);
       }
 
