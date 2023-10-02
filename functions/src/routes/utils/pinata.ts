@@ -11,11 +11,20 @@ const router = express.Router();
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
-router.post('/file', async (req, res) => {
+router.post('/file/:type/:name/:id', async (req, res) => {
   functions.logger.log("body", req.body);
-  const formData = req.body;
+  functions.logger.log("params", req.params);
+  const buffer = req.body;
+  const { id, name, type } = req.params;
+  const metadata = {
+    name,
+    keyvalues: {
+      id,
+      type
+    }
+  }
 
-  const pinataPinResult = await pinFileToIpfs(formData);
+  const pinataPinResult = await pinFileToIpfs(buffer, metadata);
   functions.logger.log("pinata pin result", pinataPinResult);
   if (pinataPinResult.IpfsHash) {
     return res.status(200).json(pinataPinResult);

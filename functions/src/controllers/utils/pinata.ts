@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Proposal } from "hedsvote";
 import * as functions from "firebase-functions";
-import { Readable } from "stream";
+// import { Readable } from "stream";
 import FormData  from "form-data";
 
 /**
@@ -49,7 +49,7 @@ import FormData  from "form-data";
  *
  * @async
  * @function
- * @param {FormData} formData - The file encapsulated as FormData to be pinned to IPFS.
+ * @param {data} Buffer - The file as a Buffer to be pinned to IPFS.
  * @returns {Promise<Object>} Returns a promise that resolves into a response object from Pinata service. 
  * The response object should contain information about the pinned file.
  * @throws Will throw an error if pinning process to IPFS fails, or if there is a network error.
@@ -61,10 +61,11 @@ import FormData  from "form-data";
  *   console.error('Failed to pin file to IPFS:', error);
  * }
  */
-  export const pinFileToIpfs = async (data: Buffer) => {
-    const stream = Readable.from(data)
+  export const pinFileToIpfs = async (buffer: Buffer, metadata: { name: string, keyvalues: { id: string, type: string}}) => {
+    // const stream = Readable.from(buffer)
     const formData = new FormData();
-    formData.append('file', stream, { filepath: 'test.png'});
+    formData.append('file', buffer, { filepath: metadata.name});
+    formData.append("pinataMetadata", JSON.stringify(metadata));
     const options = {
       method: 'POST',
       url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
