@@ -1,8 +1,10 @@
 import axios from "axios";
 import { Proposal } from "hedsvote";
 import * as functions from "firebase-functions";
-// import { Readable } from "stream";
 import FormData  from "form-data";
+
+const PINATA_PIN_JSON_URL = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
+const PINATA_PIN_FILE_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
 /**
  * Pins a proposal to IPFS
@@ -27,7 +29,7 @@ import FormData  from "form-data";
   
     const config = {
       method: "post",
-      url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+      url: PINATA_PIN_JSON_URL,
       headers: {
         accept: 'application/json',
         "Authorization": `Bearer ${process.env.PINATA_JWT}`,
@@ -50,6 +52,7 @@ import FormData  from "form-data";
  * @async
  * @function
  * @param {data} Buffer - The file as a Buffer to be pinned to IPFS.
+ * @param {metadata} Object - Pinata metadata associated with the file.
  * @returns {Promise<Object>} Returns a promise that resolves into a response object from Pinata service. 
  * The response object should contain information about the pinned file.
  * @throws Will throw an error if pinning process to IPFS fails, or if there is a network error.
@@ -62,26 +65,14 @@ import FormData  from "form-data";
  * }
  */
   export const pinFileToIpfs = async (buffer: Buffer, metadata: { name: string, keyvalues: { id: string, type: string}}) => {
-    // const stream = Readable.from(buffer)
     const formData = new FormData();
-    formData.append('file', buffer, { filepath: metadata.name});
+    formData.append("file", buffer, { filepath: metadata.name});
     formData.append("pinataMetadata", JSON.stringify(metadata));
-    const options = {
-      method: 'POST',
-      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
-      maxBodyLength: Infinity,
-      headers: {
-        'Content-Type': `multipart/form-data`,
-        Authorization: process.env.PINATA_JWT,
-      },
-      formData
-    };
-
     try {
-      const response = await axios.post(options.url, formData, {
+      const response = await axios.post(PINATA_PIN_FILE_URL, formData, {
         maxBodyLength: Infinity,
         headers: {
-          'Content-Type': `multipart/form-data`,
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${process.env.PINATA_JWT}`,
         },
       });
@@ -110,7 +101,7 @@ import FormData  from "form-data";
       method: "delete",
       url: `https://api.pinata.cloud/pinning/unpin/${CID}`,
       headers: {
-        accept: 'application/json',
+        accept: "application/json",
         "Authorization": `Bearer ${process.env.PINATA_JWT}`,
       },
     };
