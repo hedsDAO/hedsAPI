@@ -25,7 +25,11 @@ export const getSongByAudio = async (audio: string): Promise<any> => {
       [songId],
     );
 
-    const artists = artistResult.rows.map((row) => row);
+    const artists = artistResult.rows.map((row) => {
+      if (row?.collection) delete row.collection;
+      if (row?.votes) delete row.votes;
+      return row;
+    });
 
     return { ...songResult.rows[0], artists };
   } catch (error) {
@@ -300,13 +304,37 @@ export const unlikeSong = async (songId: number, userId: number) => {
     throw new Error(`Unable to unlike song: ${error.message}`);
   }
 };
-
 export const getManySongs = async (songHashes: string[]) => {
   try {
     const prefixedSongHashes = songHashes.map((hash) => `https://www.heds.cloud/ipfs/${hash}`);
     const songResult = await pool.query(`SELECT * FROM ${schemaName}.songs WHERE audio = ANY($1)`, [prefixedSongHashes]);
     if (songResult.rows.length === 0) return null;
-    return songResult.rows;
+
+    const songIds = songResult.rows.map((song) => song.id);
+    const artistResult = await pool.query(
+      `SELECT *
+     FROM ${schemaName}.song_artists AS song_artists
+     JOIN ${schemaName}.users AS users ON users.id = song_artists.user_id
+     WHERE song_artists.song_id = ANY($1)`,
+      [songIds],
+    );
+
+    const artistMap: { [key: number]: any } = {};
+    artistResult.rows.forEach((row) => {
+      if (!artistMap[row.song_id]) {
+        artistMap[row.song_id] = [];
+      }
+      if (row?.collections) delete row.collections;
+      if (row?.votes) delete row.votes;
+      artistMap[row.song_id].push(row);
+    });
+
+    const songsWithArtists = songResult.rows.map((song) => ({
+      ...song,
+      artists: artistMap[song.id] || [],
+    }));
+
+    return songsWithArtists;
   } catch (error) {
     console.log(error);
     return;
