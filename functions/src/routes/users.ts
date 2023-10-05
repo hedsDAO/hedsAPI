@@ -11,6 +11,7 @@ import {
   addSongToListeningHistory,
   getArtistsAndCurators,
   getManyUsersByWalletId,
+  getUserById,
 } from '../controllers/users';
 import * as functions from 'firebase-functions';
 
@@ -50,6 +51,18 @@ router.get('/:wallet', async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
+
+
+router.get('/id/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await getUserById(id);
+    return res.json(user);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
+
 
 router.post('/', async (req, res) => {
   try {
