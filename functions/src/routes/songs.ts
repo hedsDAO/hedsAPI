@@ -1,11 +1,21 @@
 import * as express from 'express';
-import * as functions from 'firebase-functions'
-import { getSongByAudio, createSong, deleteSong, getLikesBySongId, likeSong, unlikeSong, getSongEventsById, getManySongs } from '../controllers/songs';
+import * as functions from 'firebase-functions';
+import {
+  getSongByAudio,
+  createSong,
+  deleteSong,
+  getLikesBySongId,
+  likeSong,
+  unlikeSong,
+  getSongEventsById,
+  getManySongs,
+  getLatestTrackSong,
+} from '../controllers/songs';
 const router = express.Router();
 
 router.get('/many-songs', async (req, res) => {
   try {
-    functions.logger.log(req.query?.songHashes, 'GET /many-songs')
+    functions.logger.log(req.query?.songHashes, 'GET /many-songs');
     const songHashes = req.query?.songHashes?.toString().split(',');
     functions.logger.log(songHashes, 'songHashes');
     if (Array.isArray(songHashes)) {
@@ -13,6 +23,16 @@ router.get('/many-songs', async (req, res) => {
       if (!requestedSongs) res.status(404).json({ error: 'Songs not found' });
       res.json(requestedSongs);
     }
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+router.get('/latest', async (req, res) => {
+  try {
+    const latestSong = await getLatestTrackSong();
+    if (latestSong) res.status(200).json(latestSong);
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -32,23 +52,23 @@ router.get('/:audio', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  functions.logger.log('POST /songs')
-  functions.logger.log(req.body, 'req.body')
+  functions.logger.log('POST /songs');
+  functions.logger.log(req.body, 'req.body');
   try {
     const { tempAudioRef, user_id, tape_id, duration } = req.body;
     if (!tempAudioRef || !user_id || !tape_id || !duration) {
-      functions.logger.log('Missing required fields')
+      functions.logger.log('Missing required fields');
       return res.status(400).send('Missing required fields');
     } else {
       const { newSubmission } = await createSong({ tempAudioRef, user_id, tape_id, duration });
       if (newSubmission) return res.json({ newSubmission });
       else {
-        functions.logger.log('Error creating song')
+        functions.logger.log('Error creating song');
         return res.status(404).send('Error creating song');
       }
     }
   } catch (error: any) {
-    functions.logger.log('Error in POST /songs')
+    functions.logger.log('Error in POST /songs');
     return res.status(500).send(error.message);
   }
 });
@@ -104,5 +124,6 @@ router.delete('/:song_id/likes', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 export default router;

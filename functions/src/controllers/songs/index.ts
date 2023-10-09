@@ -70,6 +70,23 @@ export const getSongEventsById = async (song_id: number) => {
   return rows;
 };
 
+export const getLatestTrackSong = async () => {
+  const query = `SELECT * FROM ${schemaName}.songs 
+    WHERE type = 'track' ORDER BY created DESC LIMIT 1`;
+  try {
+    const result = await pool.query(query);
+    console.log(result.rows.length, 'here')
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    } else {
+      return null;
+    }
+  } catch (err) {
+    functions.logger.log('Error executing latest song query', err);
+    throw err;
+  }
+};
+
 export async function createSong(requestData: CreateSongRequestBody) {
   // Begin a transaction
   await pool.query('BEGIN');
