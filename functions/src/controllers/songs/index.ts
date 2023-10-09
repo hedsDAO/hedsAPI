@@ -71,19 +71,45 @@ export const getSongEventsById = async (song_id: number) => {
 };
 
 export const getLatestTrackSong = async () => {
-  const query = `SELECT * FROM ${schemaName}.songs 
-    WHERE type = 'track' ORDER BY created DESC LIMIT 1`;
   try {
-    const result = await pool.query(query);
-    console.log(result.rows.length, 'here')
-    if (result.rows.length > 0) {
-      return result.rows[0];
+    const songQuery = `
+      SELECT * 
+      FROM ${schemaName}.songs 
+      WHERE type = 'track' 
+      ORDER BY created DESC 
+      LIMIT 1;
+    `;
+
+    const songResult = await pool.query(songQuery);
+    if (songResult.rows.length === 0) return null;
+    const songId = songResult?.rows?.[0]?.id;
+    
+    if (songId) {
+      const artistResult = await pool.query(
+        `SELECT *
+       FROM ${schemaName}.song_artists AS song_artists
+       JOIN ${schemaName}.users AS users ON users.id = song_artists.user_id
+       WHERE song_artists.song_id = $1`,
+        [songId],
+      );
+
+      const artists = artistResult.rows.map((row) => {
+        if (row?.collections) delete row.collections;
+        if (row?.votes) delete row.votes;
+        return row;
+      });
+
+      const songWithArtists = {
+        ...songResult.rows[0],
+        artists: artists,
+      };
+      return songWithArtists;
     } else {
       return null;
     }
-  } catch (err) {
-    functions.logger.log('Error executing latest song query', err);
-    throw err;
+  } catch (error) {
+    functions.logger.log(error, 'error in getLatestTrackSong');
+    return;
   }
 };
 
