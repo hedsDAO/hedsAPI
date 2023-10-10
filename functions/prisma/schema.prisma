@@ -129,7 +129,7 @@ model users {
   id                  Int                   @id @default(autoincrement())
   profile_picture     String?               @db.VarChar
   banner              String?               @db.VarChar
-  twitter_handle      String?               @unique @db.VarChar
+  twitter_handle      String?               @db.VarChar
   badges              Json?
   description         String?               @db.VarChar
   display_name        String?               @unique @db.VarChar
@@ -138,16 +138,118 @@ model users {
   joined              Float?
   spotlight           String?               @db.VarChar
   collection          Json?
-  votes               Json?
-  email               String?               @unique @db.VarChar
-  phone_number        String?               @unique @db.VarChar
+  email               String?               @db.VarChar
+  phone_number        String?               @db.VarChar
+  choices             choices[]
   likes               likes[]
   listening_history   listening_history[]
+  proposals           proposals[]
   song_artists        song_artists[]
   song_events         song_events[]
+  space_authors       space_authors[]
   tape_events         tape_events[]
   tape_sample_artists tape_sample_artists[]
   user_events         user_events[]
+  votes               votes[]
+}
+
+model choices {
+  id           Int
+  proposal_id  String         @db.VarChar(255)
+  image        String?        @db.VarChar(255)
+  artist       String?        @db.VarChar(255)
+  name         String?        @db.VarChar(255)
+  location     String?        @db.VarChar(255)
+  media        String?        @db.VarChar(255)
+  user_id      Int?
+  proposals    proposals      @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: Cascade, onUpdate: NoAction)
+  users        users?         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_choices_user_id")
+  vote_choices vote_choices[]
+
+  @@id([id, proposal_id])
+}
+
+model proposals {
+  ipfs_hash    String         @id @db.VarChar(255)
+  space_id     Int?
+  signature    String?        @db.VarChar(255)
+  author       Int?
+  start_time   DateTime?      @db.Timestamp(6)
+  end_time     DateTime?      @db.Timestamp(6)
+  block        Int?
+  method       method_enum?
+  title        String?
+  description  String?
+  scores       Float[]
+  created_at   DateTime?      @db.Timestamp(6)
+  cover        String?        @db.VarChar
+  choice_type  String?        @db.VarChar
+  show_results Boolean?
+  is_web3      Boolean?
+  choices      choices[]
+  users        users?         @relation(fields: [author], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "proposals_fk")
+  spaces       spaces?        @relation(fields: [space_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  strategies   strategies[]
+  vote_choices vote_choices[]
+  votes        votes[]
+}
+
+model spaces {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique @db.VarChar(255)
+  created_at    BigInt?         @db.BigInt
+  image         String?         @db.VarChar
+  description   String?         @db.VarChar
+  banner        String?         @db.VarChar
+  twitter       String?         @db.VarChar
+  instagram     String?         @db.VarChar
+  soundcloud    String?         @db.VarChar
+  discord       String?         @db.VarChar
+  proposals     proposals[]
+  space_authors space_authors[]
+}
+
+model strategies {
+  id          Int       @id @default(autoincrement())
+  proposal_id String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  params      Json?
+  network     Int?
+  proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model vote_choices {
+  vote_id     Int
+  choice_id   Int
+  proposal_id String    @db.VarChar(255)
+  amount      Int
+  proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: Cascade, onUpdate: NoAction, map: "fk_vote_choices_proposals")
+  choices     choices   @relation(fields: [choice_id, proposal_id], references: [id, proposal_id], onDelete: Cascade, onUpdate: NoAction)
+  votes       votes     @relation(fields: [vote_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([vote_id, choice_id, proposal_id])
+}
+
+model votes {
+  id                 Int            @id @default(autoincrement())
+  signature          String         @db.VarChar(255)
+  created            DateTime       @db.Timestamp(6)
+  vp                 Int
+  voter              Int
+  vote_choices       vote_choices[]
+  users              users          @relation(fields: [voter], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_votes_voter")
+  proposals          proposals?     @relation(fields: [proposalsIpfs_hash], references: [ipfs_hash])
+  proposalsIpfs_hash String?        @db.VarChar(255)
+}
+
+model space_authors {
+  user_id  Int
+  space_id Int
+  id       Int    @default(autoincrement())
+  spaces   spaces @relation(fields: [space_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users    users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([user_id, space_id])
 }
 
 enum song_type {
@@ -155,7 +257,7 @@ enum song_type {
   track
   collab
   sample
-  hedsolo
+  devolo
 }
 
 enum tape_market_type {
@@ -165,7 +267,7 @@ enum tape_market_type {
 
 enum tape_type {
   legacy
-  hedstape
+  devtape
   collabtape
 }
 
@@ -173,4 +275,16 @@ enum user_role_type {
   user
   artist
   admin
+}
+
+enum method_enum {
+  linear
+  quadratic
+  single_choice @map("single choice")
+}
+
+enum state_enum {
+  pending
+  open
+  closed
 }

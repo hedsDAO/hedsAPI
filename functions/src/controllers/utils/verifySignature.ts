@@ -1,4 +1,5 @@
 import {ethers} from "ethers-ts";
+import { recoverMessageAddress } from "viem"
 import {Request, Response, NextFunction} from "express";
 
 /**
@@ -23,4 +24,14 @@ import {Request, Response, NextFunction} from "express";
       return next(error);
     }
   };
+
+  /**
+ * Verifies the provided signature and recovers the address that signed the message.
+ * @param {string} message - The message that was signed.
+ * @param {string} signature - The signature provided by the signer.
+ * @return {Promise<string>} The recovered address of the signer.
+ */
+export async function verifyWalletSignature(message: string, signature: `0x${string}`): Promise<string> {
+  return recoverMessageAddress({message, signature});
+}
   

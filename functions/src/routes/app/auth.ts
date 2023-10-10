@@ -1,9 +1,8 @@
 import * as express from 'express';
 import * as functions from "firebase-functions";
-import { validateTwitterHandle, validateUserByDisplayName} from '../controllers/utils/auth';
-import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode } from '../controllers/auth';
-import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../controllers/user';
-import { newUserObject } from '../common';
+import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode , validateUserByDisplayName, validateTwitterHandle} from '../../controllers/app/auth';
+import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/app/user';
+import { newUserObject } from '../../common';
 
 const router = express.Router();
 
@@ -21,9 +20,9 @@ router.get('/validate-display-name/:displayName', async (req, res) => {
     const validationResult = await validateUserByDisplayName(displayName);
 
     if (validationResult) {
-      return res.status(200).json({ validated: true });
+      return res.status(200).json({ displayNameExists: true });
     } else {
-      return res.status(400).json({ validated: false });
+      return res.status(400).json({ displayNameExists: false });
     }
   } catch (err: any) {
     console.error(err);
@@ -38,10 +37,10 @@ router.get('/validate-display-name/:displayName', async (req, res) => {
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
-router.get('/validate-twitter/:twitterHandle', async (req, res) => {
-  const { twitterHandle } = req.params;
+router.get('/validate-twitter/:twitter_handle', async (req, res) => {
+  const { twitter_handle } = req.params;
   try {
-    const validationResult = await validateTwitterHandle(twitterHandle);
+    const validationResult = await validateTwitterHandle(twitter_handle);
     if (validationResult) {
       return res.status(200).json({ validated: true });
     } else {
@@ -125,15 +124,14 @@ router.get("/google-oauth-callback", async (req, res) => {
     functions.logger.log("user info", userInfo)
     if (userInfo) {
       const email = userInfo['email'];
-      const name = userInfo['name'];
 
       const user = await getUserByEmaill(email);
       functions.logger.log(user);
       if (user) {
         return res.json(user);
       } else {
-        const createdUser = await createUser({...newUserObject, display_name: name, email});
-        return res.json(createdUser);
+        const createdUser = await createUser({...newUserObject, email});
+        return res.status(200).json(createdUser);
       }
 
     } else {
@@ -143,5 +141,75 @@ router.get("/google-oauth-callback", async (req, res) => {
      return res.status(400).json({message: 'Token verification failed',error: e});
   }
 })
+
+/**
+ * Link an existing user with an email via Google OAuth or phoneNumber via SMS.
+ *
+ * @route PUT /link/:link-user
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
+ router.put("/link-user", async (req, res) => {
+  const { link_type, user } = req.body;
+
+  try {
+    if (!user) {
+      return res.status(404).json({ message: "Missing User Data" });
+    }
+
+    if (link_type === "email") {
+      const bearerToken = req.headers.authorization;
+
+      if (!bearerToken || !bearerToken.startsWith('Bearer ')) {
+        throw new Error('Bearer token not found');
+      }
+
+      const token = bearerToken.split('Bearer ')[1];
+      const userInfo = await getGoogleUserData(token);
+
+      if (userInfo) {
+        const email = userInfo['email'];
+
+        const existingUser = await getUserByEmaill(email);
+
+        if (existingUser) {
+          return res.status(400).json({ message: "Email is already associated with another user" });
+        }
+
+        if (user.email) {
+          return res.status(400).json({ message: "User already has an email linked" });
+        }
+
+        user.email = email;
+        const createdUser = await createUser({...newUserObject, email});
+        return res.status(200).json(createdUser);
+
+      } else {
+        throw new Error('Invalid ID token userInfo');
+      }
+
+    } else {
+      const { phone_number } = req.body;
+
+      const existingUser = await getUserByPhoneNumber(phone_number);
+
+      if (existingUser) {
+        return res.status(400).json({ message: "Phone number is already associated with another user" });
+      }
+
+      if (user.phone_number) {
+        return res.status(400).json({ message: "User already has a phone number linked" });
+      }
+
+      await sendTwilioVerification(phone_number);
+      return res.status(200).send("Verification code sent.");
+    }
+
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).send({ message: "Internal server error", error: error.message });
+  }
+});
+
 
 export default router;

@@ -10,9 +10,9 @@ import {
   getUserListeningHistory,
   addSongToListeningHistory,
   getArtistsAndCurators,
-  getManyUsersByWalletId,
+  getManyUsersByUserId,
   getAllUsers,
-} from "../controllers/user";
+} from "../../controllers/app/user";
 import * as functions from "firebase-functions";
 
 const router = express.Router();
@@ -26,10 +26,10 @@ router.get("/", async (req, res) => {
 router.get('/manyUsers', async (req, res) => {
   functions.logger.log('inside many-users');
   try {
-    const walletIds = req.query?.walletIds?.toString().split(',');
-    if (Array.isArray(walletIds)) {
-      functions.logger.log('walletIds', walletIds);
-      const users = await getManyUsersByWalletId(walletIds);
+    const userIds = req.query?.walletIds?.toString().split(',').map(userId => parseInt(userId))
+    if (Array.isArray(userIds)) {
+      functions.logger.log('userIds', userIds);
+      const users = await getManyUsersByUserId(userIds);
       functions.logger.log('users', users);
       return res.json(users);
     }
