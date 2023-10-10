@@ -188,7 +188,7 @@ router.get("/google-oauth-callback", async (req, res) => {
         throw new Error('Invalid ID token userInfo');
       }
 
-    } else if (link_type === "phoneNumber") {
+    } else {
       const { phone_number } = req.body;
 
       const existingUser = await getUserByPhoneNumber(phone_number);
@@ -203,8 +203,6 @@ router.get("/google-oauth-callback", async (req, res) => {
 
       await sendTwilioVerification(phone_number);
       return res.status(200).send("Verification code sent.");
-    } else {
-      return res.status(400).json({ message: "Invalid link type" });
     }
 
   } catch (error: any) {
