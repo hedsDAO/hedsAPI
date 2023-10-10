@@ -53,6 +53,12 @@ export const Download = () => {
         setIsDownloading(false);
         dispatch.modalModel.clearState();
         return;
+      } else if (sampleArtists[0].display_name === 'ThysMusic') {
+        externalLinkRef.current.href = 'https://www.dropbox.com/scl/fo/i7rz7005upzzk1qhj0ns6/h?rlkey=bhdx4ex689fu3bl4qvld2rakp&dl=0';
+        externalLinkRef.current.click();
+        setIsDownloading(false);
+        dispatch.modalModel.clearState();
+        return;
       } else if (sampleArtists[0].display_name === 'LNRZ') {
         const zip: StorageReference = ref(storage, `samples/ht15.zip`);
         await getDownloadURL(zip).then(async (url: string) => {
@@ -139,8 +145,8 @@ export const Download = () => {
                 <Text {...styles.$redTextStyles}> original </Text>
                 <Text {...styles.$generalTextStyles}>and </Text>
                 <Text {...styles.$redTextStyles}>not contain any copyrighted content. </Text>
-                <Text {...styles.$generalTextStyles}>The track must be</Text>
-                <Text {...styles.$redTextStyles}> {tapeBpm} BPM </Text>
+                <Text {...styles.$generalTextStyles}>The track {tapeBpm === 0 ? "can" : "must"} be</Text>
+                <Text {...styles.$redTextStyles}> {tapeBpm === 0 ? tapeBpm : "ANY"} BPM </Text>
                 <Text {...styles.$generalTextStyles}>and have a length between </Text>
                 <Text {...styles.$redTextStyles}>60 to 90 seconds.</Text>
               </Box>
