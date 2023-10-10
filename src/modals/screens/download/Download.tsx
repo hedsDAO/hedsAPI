@@ -146,7 +146,7 @@ export const Download = () => {
                 <Text {...styles.$generalTextStyles}>and </Text>
                 <Text {...styles.$redTextStyles}>not contain any copyrighted content. </Text>
                 <Text {...styles.$generalTextStyles}>The track {tapeBpm === 0 ? "can" : "must"} be</Text>
-                <Text {...styles.$redTextStyles}> {tapeBpm === 0 ? tapeBpm : "ANY"} BPM </Text>
+                <Text {...styles.$redTextStyles}> {tapeBpm === 0 ? "ANY" : tapeBpm} BPM </Text>
                 <Text {...styles.$generalTextStyles}>and have a length between </Text>
                 <Text {...styles.$redTextStyles}>60 to 90 seconds.</Text>
               </Box>
