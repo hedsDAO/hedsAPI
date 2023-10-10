@@ -187,3 +187,9 @@ export const getManyUsersByWalletId = async (walletIds: string[]) => {
   const { rows } = await pool.query(`SELECT profile_picture, display_name, wallet FROM ${schemaName}.users WHERE wallet = ANY($1)`, [lowercaseWalletIds]);
   return rows;
 };
+
+export const getUserById = async (user_id: string) => {
+  const query = `SELECT * FROM ${schemaName}.users WHERE id = $1`;
+  const { rows } = await pool.query(query, [+user_id]);
+  return rows[0];
+}
