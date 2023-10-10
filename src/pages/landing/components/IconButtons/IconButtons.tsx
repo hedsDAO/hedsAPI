@@ -31,7 +31,7 @@ export const IconButtons = () => {
           </Box>
         </Tooltip>
         <Tooltip label="View Tape" fontSize="xs" fontFamily="space">
-          <Box to={`/tape/18`} as={Link} {...styles.$iconButtonStyles}>
+          <Box to={`/tape/19`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.TAPES_ICON}></i>
           </Box>
         </Tooltip>
@@ -41,7 +41,7 @@ export const IconButtons = () => {
           </Box>
         </Tooltip> */}
         <Tooltip label="Play" fontSize="xs" fontFamily="space">
-          <Box to={`/song/QmSNQgVhEyEpdgo35VVxQSu2BXQbuS7v4fTgxHRaeezG4B`} as={Link} {...styles.$iconButtonStyles}>
+          <Box to={`/song/Qmab2W2MdvkRSaXpJpMVeejyBVVeAFmfQMJ8nBoS9jNiMn`} as={Link} {...styles.$iconButtonStyles}>
             <i className={constants.PLAY_ICON}></i>
           </Box>
         </Tooltip>
