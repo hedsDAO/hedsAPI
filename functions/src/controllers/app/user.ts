@@ -1,8 +1,36 @@
 // import { UserData } from './types';
 // import { SongData } from '../songs/types';
 // import schemaName from '../../../config';
+import { user_role_type } from "@prisma/client";
 import * as functions from "firebase-functions";
-import {prisma} from "../../../prisma/client";
+import { prisma } from "../../../prisma/client";
+
+/**
+ * Creates a new user data object with the provided wallet address.
+ *
+ * @param {string} wallet - The wallet address of the new user.
+ * @returns {Object} - The new user data object.
+ */
+ export const createNewUserData = (wallet: string) => {
+  return {
+    badges: JSON.stringify([
+      {
+        name: 'Visitor',
+        image: 'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/badges%2Fvisitor.png?alt=media&token=468508bd-2831-4bd2-b943-329e5608cad1',
+        description: 'Welcome to heds.',
+      },
+    ]),
+    banner: 'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=c2e9c947-5965-4d77-b0c3-047c2bc125d3',
+    collection: {},
+    description: '',
+    display_name: '',
+    joined: Date.now(),
+    profile_picture: 'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/profilePictures%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc',
+    wallet: wallet.toLowerCase(),
+    spotlight: null,
+    role: 'user' as user_role_type,
+  };
+};
 
 /**
  * Retrieve all users from the database.
@@ -66,17 +94,24 @@ export const getArtistsAndCurators = async () => {
  * @param {string} wallet - User's wallet identifier.
  * @returns {Promise<Object|null>} User object or null.
  */
-export const getUserByWallet = async (wallet: string) => {
+ export const getUserByWallet = async (wallet: string) => {
   try {
-    const user = await prisma.users.findFirst({
+    let user = await prisma.users.findFirst({
       where: {wallet},
     });
+
+    if (!user) {
+      const newUser = createNewUserData(wallet);
+      user = await prisma.users.create({ data: newUser });
+    };
+
     return user;
   } catch (e) {
     functions.logger.log("error in controller", e);
     return;
   }
 };
+
 
 /**
  * Retrieve a user by their email address.
@@ -331,20 +366,21 @@ export const getUserListeningHistory = async (user_id: number) => {
 };
 
 /**
- * Retrieve multiple users by their wallet identifiers.
+ * Retrieve multiple users by their user identifiers.
  *
- * @param {string[]} walletIds - Array of wallet identifiers.
+ * @param {number[]} userIds - Array of wallet identifiers.
  * @returns {Promise<Object[]>} Array of user objects.
  */
-export const getManyUsersByWalletId = async (walletIds: string[]) => {
+export const getManyUsersByUserId = async (userIds: number[]) => {
   try {
     const users = await prisma.users.findMany({
       where: {
-        wallet: {
-          in: walletIds.map((walletId) => walletId.toLowerCase()),
+        id: {
+          in: userIds.map((userId) => userId),
         },
       },
       select: {
+        id: true,
         profile_picture: true,
         display_name: true,
         wallet: true,
@@ -354,6 +390,6 @@ export const getManyUsersByWalletId = async (walletIds: string[]) => {
     return users;
   } catch (error: any) {
     functions.logger.log("error in controller", error);
-    throw new Error(`Unable to get users by wallet ID: ${error.message}`);
+    throw new Error(`Unable to get users by user id: ${error.message}`);
   }
 };
