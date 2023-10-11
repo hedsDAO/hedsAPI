@@ -6,6 +6,7 @@ admin.initializeApp();
 /* APP SERVER */
 import auth from './servers/app/auth';
 import user from './servers/app/user';
+import tape from './servers/app/tape';
 
 /* UTIL SERVER */
 import pinata from './servers/utils/pinata';
@@ -22,10 +23,12 @@ import vote from './servers/vote/vote';
 import app from './app';
 
 exports.api = app;
+
 exports.auth = auth;
 exports.pinata = pinata;
 exports.proposal = proposal;
 exports.space = space;
 exports.strategy = strategy;
+exports.tape = tape;
 exports.user = user;
 exports.vote = vote;
