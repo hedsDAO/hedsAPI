@@ -1,6 +1,9 @@
 import * as express from "express";
 import {
   getUserByWallet,
+  getUserByEmaill,
+  getUserByPhoneNumber,
+  getUserById,
   createUser,
   updateUser,
   deleteUser,
@@ -49,10 +52,41 @@ router.get('/artists-curators', async (req, res) => {
   }
 });
 
-router.get('/:wallet', async (req, res) => {
+router.get('/walllet/:wallet', async (req, res) => {
   try {
     const wallet = req.params.wallet;
+    functions.logger.log("route-wallet", wallet)
     const user = await getUserByWallet(wallet);
+    return res.json(user);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.get('/id/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const user = await getUserById(id);
+    return res.json(user);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.get('/email/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await getUserByEmaill(email);
+    return res.json(user);
+  } catch (error: any) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.get('/phone/:phone_number', async (req, res) => {
+  try {
+    const phone_number = req.params.phone_number;
+    const user = await getUserByPhoneNumber(phone_number);
     return res.json(user);
   } catch (error: any) {
     return res.status(500).send(error.message);
