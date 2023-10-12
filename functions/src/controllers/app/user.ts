@@ -95,14 +95,16 @@ export const getArtistsAndCurators = async () => {
  * @returns {Promise<Object|null>} User object or null.
  */
  export const getUserByWallet = async (wallet: string) => {
+  functions.logger.log("wallet", wallet)
   try {
     let user = await prisma.users.findFirst({
       where: {wallet},
     });
-
+    functions.logger.log("existing user", user)
     if (!user) {
       const newUser = createNewUserData(wallet);
       user = await prisma.users.create({ data: newUser });
+      functions.logger.log("new user", user)
     };
 
     return user;
@@ -141,6 +143,24 @@ export const getUserByPhoneNumber = async (phone_number: string) => {
   try {
     const user = await prisma.users.findFirst({
       where: {phone_number},
+    });
+    return user;
+  } catch (e) {
+    functions.logger.log("error in controller", e);
+    return;
+  }
+};
+
+/**
+ * Retrieve a user by id.
+ *
+ * @param {string} id - User's id.
+ * @returns {Promise<Object|null>} User object or null.
+ */
+ export const getUserById = async (id: number) => {
+  try {
+    const user = await prisma.users.findFirst({
+      where: {id},
     });
     return user;
   } catch (e) {
