@@ -52,7 +52,7 @@ router.get('/artists-curators', async (req, res) => {
   }
 });
 
-router.get('/walllet/:wallet', async (req, res) => {
+router.get('/wallet/:wallet', async (req, res) => {
   try {
     const wallet = req.params.wallet;
     functions.logger.log("route-wallet", wallet)
