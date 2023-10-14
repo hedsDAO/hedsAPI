@@ -63,8 +63,8 @@ export const DISCLAIMER_TEXT_BODY = (bpm: string | number) => [
   `original `,
   `and `,
   `not contain any copyrighted content. `,
-  `The track must be `,
-  `${bpm} BPM `,
+  `The track ${bpm === 0 ? "can": "must"} be `,
+  `${bpm === 0 ? "ANY": bpm} BPM `,
   `and have a length between `,
   `60 to 90 seconds. `,
 ];
