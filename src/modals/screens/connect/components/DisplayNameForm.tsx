@@ -1,6 +1,5 @@
 import { Dispatch, store } from '@/store';
 import { Flex, Input, Button, Text, Stack } from '@chakra-ui/react';
-import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const DisplayNameForm = () => {
@@ -21,7 +20,7 @@ export const DisplayNameForm = () => {
           - must not contain numbers or spaces.
         </Text>
         <Text color="white" fontSize={'2xs'} fontFamily={'inter'} letterSpacing="widest">
-          - choose wisely, you won't be able to change it.
+          - {`choose wisely, you won't be able to change it.`}
         </Text>
       </Stack>
       <Flex my={2} gap={2}>
