@@ -26,6 +26,10 @@ export const Connect = () => {
     }
   }, [userDisplayName]);
 
+  const handleClose = () => {
+    dispatch.modalModel.setModal(null);
+    onClose();
+  };
   return (
     <Modal
       size="sm"
@@ -33,17 +37,7 @@ export const Connect = () => {
       isCentered
       lockFocusAcrossFrames
       isOpen={isOpen}
-      onClose={
-        // if no display name, lock the modal, otherwise close on click.
-        isConnected && userDisplayName?.length === 0
-          ? () => {}
-          : () => {
-              onClose();
-              setTimeout(() => {
-                dispatch.modalModel.setModal(null);
-              }, 500);
-            }
-      }
+      onClose={isConnected && userDisplayName?.length === 0 ? null : () => handleClose()}
     >
       <ModalOverlay />
       <ModalContent mx={2}>
