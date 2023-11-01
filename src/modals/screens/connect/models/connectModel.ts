@@ -28,14 +28,14 @@ export const connectModel = createModel<RootModel>()({
       this.setIsLoading(true);
       try {
         const res = await verifyDisplayName(displayName);
-        if (res.data?.validated) {
+        if (res.data?.displayNameExists) {
           console.log('this name is taken');
           this.setError('This name is already taken');
           this.setIsLoading(false);
           setTimeout(() => this.setError(''), 3000);
         }
       } catch (e) {
-        if (e.response.data?.validated === false) {
+        if (e.response.data?.displayNameExists === false) {
           console.log('this name is available');
           await updateUser(userId, { display_name: displayName });
           dispatch.authModel.getUser(wallet);
