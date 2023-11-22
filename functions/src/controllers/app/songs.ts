@@ -343,10 +343,7 @@ export const getManySongs = async (songHashes: string[]) => {
       },
     });
 
-    return songs.map((song) => ({
-      ...song,
-      artists: song.song_artists || [],
-    }));
+    return songs;
   } catch (error) {
     console.error('Error in getManySongs:', error);
     return null;
