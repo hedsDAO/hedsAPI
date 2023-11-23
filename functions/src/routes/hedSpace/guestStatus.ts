@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { createRSVP, updateRSVP, deleteRSVP, addToWaitlist, removeFromWaitlist } from '../controllers/guestStatus';
+import { createRSVP, updateRSVP, deleteRSVP, addToWaitlist, removeFromWaitlist } from '../../controllers/hedSpace/guestStatus';
 
 const router = Router();
 
 router.post('/events/:eventId/rsvps', async (req, res) => {
   try {
-    const rsvp = await createRSVP(req.params.eventId, req.body);
+    const { userId, status } = req.body;
+    const rsvp = await createRSVP(parseInt(req.params.eventId), userId, status);
     if (rsvp) {
       return res.status(201).json(rsvp);
     } else {
@@ -18,7 +19,7 @@ router.post('/events/:eventId/rsvps', async (req, res) => {
 
 router.put('/rsvps/:id', async (req, res) => {
   try {
-    const rsvp = await updateRSVP(req.params.id, req.body);
+    const rsvp = await updateRSVP(parseInt(req.params.id), req.body);
     if (rsvp) {
       return res.status(200).json(rsvp);
     } else {
@@ -31,7 +32,7 @@ router.put('/rsvps/:id', async (req, res) => {
 
 router.delete('/rsvps/:id', async (req, res) => {
   try {
-    const isDeleted = await deleteRSVP(req.params.id);
+    const isDeleted = await deleteRSVP(parseInt(req.params.id));
     if (isDeleted) {
       return res.status(200).json({ message: 'RSVP deleted' });
     } else {
@@ -45,7 +46,9 @@ router.delete('/rsvps/:id', async (req, res) => {
 // Waitlist routes
 router.post('/events/:eventId/waitlists', async (req, res) => {
   try {
-    const waitlist = await addToWaitlist(req.params.eventId, req.body);
+    const { userId, position } = req.body;
+    //Make sure FE sends new position (AKA currrent max position + 1)
+    const waitlist = await addToWaitlist(parseInt(req.params.eventId), userId, position);
     if (waitlist) {
       return res.status(201).json(waitlist);
     } else {
@@ -58,7 +61,7 @@ router.post('/events/:eventId/waitlists', async (req, res) => {
 
 router.delete('/waitlists/:id', async (req, res) => {
   try {
-    const isRemoved = await removeFromWaitlist(req.params.id);
+    const isRemoved = await removeFromWaitlist(parseInt(req.params.id));
     if (isRemoved) {
       return res.status(200).json({ message: 'Guest removed from waitlist' });
     } else {
