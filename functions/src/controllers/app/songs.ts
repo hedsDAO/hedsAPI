@@ -85,34 +85,26 @@ export const getSongEventsById = async (songId: number) => {
   }
 };
 
-export const getLatestTrackSong = async (): Promise<any> => {
-  try {
-    const song = await prisma.songs.findFirst({
-      where: { type: 'track' },
-      orderBy: { created: 'desc' },
-      include: {
-        song_artists: {
-          select: {
-            user_id: true,
-            users: {
-              select: {
-                display_name: true,
-                profile_picture: true,
-                wallet: true,
-              },
+export const getLatestTrackSong = async () => {
+  const song = await prisma.songs.findFirst({
+    where: { type: 'track' },
+    orderBy: { created: 'desc' },
+    include: {
+      song_artists: {
+        select: {
+          user_id: true,
+          users: {
+            select: {
+              display_name: true,
+              profile_picture: true,
+              wallet: true,
             },
           },
         },
       },
-    });
-
-    if (!song) return null;
-
-    return { ...song, artists: [...song.song_artists] };
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+    },
+  });
+  return song;
 };
 
 // export async function createSong(requestData: CreateSongRequestBody) {
