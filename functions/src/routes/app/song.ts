@@ -38,14 +38,23 @@ router.get('/many-songs', async (req, res) => {
  * Retrieves the latest song.
  * @route GET /latest
  * @returns {Object} 200 - The latest song
+ * @returns {Error} 404 - Track not found
  * @returns {Error} 500 - Unexpected error
  */
-router.get('/latest', async (req, res) => {
+ router.get('/latest', async (req, res) => {
   try {
     const latestSong = await getLatestTrackSong();
-    if (latestSong) res.status(200).json(latestSong);
+    if (latestSong) {
+      res.status(200).json(latestSong);
+    } else {
+      res.status(404).send('No latest track song found');
+    }
   } catch (error: any) {
-    res.status(500).send(error.message);
+    // Log the error for server-side debugging
+    console.error(error);
+
+    // Respond with an appropriate error message and status code
+    res.status(500).send('An error occurred while retrieving the latest song');
   }
 });
 
