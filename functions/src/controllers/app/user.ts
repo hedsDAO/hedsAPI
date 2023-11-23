@@ -273,28 +273,15 @@ export const getUserEvents = async (userId: number) => {
  */
 export const createUser = async (userData: any) => {
   try {
+    functions.logger.log("user data body", userData)
     const user = await prisma.users.create({
       data: userData,
     });
-
-    const eventType = "user_created";
-    const eventData = {
-      message: "joined heds",
-      subject: `${new Date(userData.joined).toLocaleDateString()}`,
-    };
-
-    await prisma.user_events.create({
-      data: {
-        event_type: eventType,
-        event_data: eventData,
-        event_timestamp: new Date(),
-        user_id: user.id,
-      },
-    });
+    functions.logger.log("user creared", user)
 
     return user;
   } catch (error: any) {
-    functions.logger.log("error in controller", error);
+    functions.logger.log("error in user creation controller", error);
     throw new Error(`Unable to create user: ${error.message}`);
   }
 };
