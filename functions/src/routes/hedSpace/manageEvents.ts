@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getEvents, getEventById, createEvent, updateEvent, deleteEvent } from '../controllers/manageEvents';
+import { getEvents, getEventById, createEvent, updateEvent, deleteEvent } from '../../controllers/hedSpace/manageEvents';
 
 const router = Router();
 
-router.get('/events', async (req, res) => {
+router.get('/events', async (req, res) => { 
   try {
     const events = await getEvents;
     if (events) {
@@ -18,7 +18,7 @@ router.get('/events', async (req, res) => {
 
 router.get('/events/:id', async (req, res) => {
   try {
-    const event = await getEventById(req.params.id);
+    const event = await getEventById(parseInt(req.params.id));
     if (event) {
       return res.status(200).json(event);
     } else {
@@ -44,7 +44,7 @@ router.post('/events', async (req, res) => {
 
 router.put('/events/:id', async (req, res) => {
   try {
-    const event = await updateEvent(req.params.id, req.body);
+    const event = await updateEvent(parseInt(req.params.id), req.body);
     if (event) {
       return res.status(200).json(event);
     } else {
@@ -57,7 +57,7 @@ router.put('/events/:id', async (req, res) => {
 
 router.delete('/events/:id', async (req, res) => {
   try {
-    const isDeleted = await deleteEvent(req.params.id);
+    const isDeleted = await deleteEvent(parseInt(req.params.id));
     if (isDeleted) {
       return res.status(200).json({ message: 'Event deleted' });
     } else {
