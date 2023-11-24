@@ -1,9 +1,9 @@
 // import { UserData } from './types';
 // import { SongData } from '../songs/types';
 // import schemaName from '../../../config';
-import { user_role_type } from "@prisma/client";
-import * as functions from "firebase-functions";
-import { prisma } from "../../../prisma/client";
+import { user_role_type } from '@prisma/client';
+import * as functions from 'firebase-functions';
+import { prisma } from '../../../prisma/client';
 
 /**
  * Creates a new user data object with the provided wallet address.
@@ -11,7 +11,7 @@ import { prisma } from "../../../prisma/client";
  * @param {string} wallet - The wallet address of the new user.
  * @returns {Object} - The new user data object.
  */
- export const createNewUserData = (wallet: string) => {
+export const createNewUserData = (wallet: string) => {
   return {
     badges: JSON.stringify([
       {
@@ -20,12 +20,14 @@ import { prisma } from "../../../prisma/client";
         description: 'Welcome to heds.',
       },
     ]),
-    banner: 'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=c2e9c947-5965-4d77-b0c3-047c2bc125d3',
+    banner:
+      'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/banners%2F0x000000000000000000000000000000.png?alt=media&token=c2e9c947-5965-4d77-b0c3-047c2bc125d3',
     collection: {},
     description: '',
     display_name: '',
     joined: Date.now(),
-    profile_picture: 'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/profilePictures%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc',
+    profile_picture:
+      'https://firebasestorage.googleapis.com/v0/b/heds-104d8.appspot.com/o/profilePictures%2F0x000000000000000000000000000000.png?alt=media&token=55cb53fe-736d-4b1e-bcd0-bf17bc7146dc',
     wallet: wallet.toLowerCase(),
     spotlight: null,
     role: 'user' as user_role_type,
@@ -40,10 +42,10 @@ import { prisma } from "../../../prisma/client";
 export const getAllUsers = async () => {
   try {
     const allUsers = await prisma.users.findMany();
-    functions.logger.log("all users", allUsers);
+    functions.logger.log('all users', allUsers);
     return allUsers;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -56,7 +58,7 @@ export const getAllUsers = async () => {
 export const getArtistsAndCurators = async () => {
   try {
     const artists = await prisma.users.findMany({
-      where: {role: "artist"},
+      where: { role: 'artist' },
       select: {
         profile_picture: true,
         id: true,
@@ -83,7 +85,7 @@ export const getArtistsAndCurators = async () => {
       curators: curators.map((curator) => curator.users),
     };
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -94,26 +96,25 @@ export const getArtistsAndCurators = async () => {
  * @param {string} wallet - User's wallet identifier.
  * @returns {Promise<Object|null>} User object or null.
  */
- export const getUserByWallet = async (wallet: string) => {
-  functions.logger.log("wallet", wallet)
+export const getUserByWallet = async (wallet: string) => {
+  functions.logger.log('wallet', wallet);
   try {
     let user = await prisma.users.findFirst({
-      where: {wallet},
+      where: { wallet },
     });
-    functions.logger.log("existing user", user)
+    functions.logger.log('existing user', user);
     if (!user) {
       const newUser = createNewUserData(wallet);
       user = await prisma.users.create({ data: newUser });
-      functions.logger.log("new user", user)
-    };
+      functions.logger.log('new user', user);
+    }
 
     return user;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
-
 
 /**
  * Retrieve a user by their email address.
@@ -124,11 +125,11 @@ export const getArtistsAndCurators = async () => {
 export const getUserByEmaill = async (email: string) => {
   try {
     const user = await prisma.users.findFirst({
-      where: {email},
+      where: { email },
     });
     return user;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -142,11 +143,11 @@ export const getUserByEmaill = async (email: string) => {
 export const getUserByPhoneNumber = async (phone_number: string) => {
   try {
     const user = await prisma.users.findFirst({
-      where: {phone_number},
+      where: { phone_number },
     });
     return user;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -157,14 +158,14 @@ export const getUserByPhoneNumber = async (phone_number: string) => {
  * @param {string} id - User's id.
  * @returns {Promise<Object|null>} User object or null.
  */
- export const getUserById = async (id: number) => {
+export const getUserById = async (id: number) => {
   try {
     const user = await prisma.users.findFirst({
-      where: {id},
+      where: { id },
     });
     return user;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -179,12 +180,12 @@ export const getUserByPhoneNumber = async (phone_number: string) => {
 export const updateUser = async (user_id: number, data: any) => {
   try {
     const updatedUser = await prisma.users.update({
-      where: {id: user_id},
+      where: { id: user_id },
       data,
     });
     return updatedUser;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -208,7 +209,7 @@ export const getUserSongs = async (userId: number) => {
     });
     return songs;
   } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -222,7 +223,7 @@ export const getUserSongs = async (userId: number) => {
 export const getUserLikes = async (user_id: number) => {
   try {
     const likedSongIds = await prisma.likes.findMany({
-      where: {user_id},
+      where: { user_id },
       select: {
         song_id: true,
       },
@@ -242,25 +243,7 @@ export const getUserLikes = async (user_id: number) => {
 
     return likedSongs;
   } catch (e) {
-    functions.logger.log("error in controller", e);
-    return;
-  }
-};
-
-/**
- * Retrieve all events associated with a specific user.
- *
- * @param {number} userId - ID of the user.
- * @returns {Promise<Object[]>} Array of user events.
- */
-export const getUserEvents = async (userId: number) => {
-  try {
-    const userEvents = await prisma.user_events.findMany({
-      where: {user_id: userId},
-    });
-    return userEvents;
-  } catch (e) {
-    functions.logger.log("error in controller", e);
+    functions.logger.log('error in controller', e);
     return;
   }
 };
@@ -273,15 +256,15 @@ export const getUserEvents = async (userId: number) => {
  */
 export const createUser = async (userData: any) => {
   try {
-    functions.logger.log("user data body", userData)
+    functions.logger.log('user data body', userData);
     const user = await prisma.users.create({
       data: userData,
     });
-    functions.logger.log("user creared", user)
+    functions.logger.log('user creared', user);
 
     return user;
   } catch (error: any) {
-    functions.logger.log("error in user creation controller", error);
+    functions.logger.log('error in user creation controller', error);
     throw new Error(`Unable to create user: ${error.message}`);
   }
 };
@@ -295,15 +278,14 @@ export const createUser = async (userData: any) => {
 export const deleteUser = async (user_id: number) => {
   try {
     await prisma.$transaction([
-      prisma.likes.deleteMany({where: {user_id}}),
-      prisma.song_artists.deleteMany({where: {user_id}}),
-      prisma.user_events.deleteMany({where: {user_id}}),
-      prisma.users.delete({where: {id: user_id}}),
+      prisma.likes.deleteMany({ where: { user_id } }),
+      prisma.song_artists.deleteMany({ where: { user_id } }),
+      prisma.users.delete({ where: { id: user_id } }),
     ]);
 
-    return {success: true, message: "User deleted successfully."};
+    return { success: true, message: 'User deleted successfully.' };
   } catch (error: any) {
-    functions.logger.log("error in controller", error);
+    functions.logger.log('error in controller', error);
     throw new Error(`Unable to delete user: ${error.message}`);
   }
 };
@@ -325,9 +307,9 @@ export const addSongToListeningHistory = async (user_id: number, song_id: number
       },
     });
 
-    return {message: "Song added to listening history"};
+    return { message: 'Song added to listening history' };
   } catch (error: any) {
-    functions.logger.log("error in controller", error);
+    functions.logger.log('error in controller', error);
     throw new Error(`Unable to add song to listening history: ${error.message}`);
   }
 };
@@ -341,8 +323,8 @@ export const addSongToListeningHistory = async (user_id: number, song_id: number
 export const getUserListeningHistory = async (user_id: number) => {
   try {
     const history = await prisma.listening_history.findMany({
-      where: {user_id},
-      orderBy: {last_played: "desc"},
+      where: { user_id },
+      orderBy: { last_played: 'desc' },
       include: {
         songs: {
           include: {
@@ -367,7 +349,7 @@ export const getUserListeningHistory = async (user_id: number) => {
       artist_name: item.songs?.song_artists[0].users?.display_name,
     }));
   } catch (error: any) {
-    functions.logger.log("error in controller", error);
+    functions.logger.log('error in controller', error);
     throw new Error(`Unable to get user listening history: ${error.message}`);
   }
 };
@@ -396,7 +378,7 @@ export const getManyUsersByUserId = async (userIds: number[]) => {
 
     return users;
   } catch (error: any) {
-    functions.logger.log("error in controller", error);
+    functions.logger.log('error in controller', error);
     throw new Error(`Unable to get users by user id: ${error.message}`);
   }
 };

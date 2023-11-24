@@ -8,7 +8,7 @@ datasource db {
 }
 
 model likes {
-  id      Int    @id
+  id      Int    @id @default(autoincrement())
   user_id Int?
   song_id Int?
   songs   songs? @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_song_id_fk")
@@ -16,7 +16,7 @@ model likes {
 }
 
 model listening_history {
-  id          Int       @id
+  id          Int       @id @default(autoincrement())
   user_id     Int?
   song_id     Int?
   last_played DateTime? @db.Timestamp(6)
@@ -83,17 +83,17 @@ model users {
   id                  Int                   @id @default(autoincrement())
   profile_picture     String?               @db.VarChar
   banner              String?               @db.VarChar
-  twitter_handle      String?               @db.VarChar
+  twitter_handle      String?               @unique @db.VarChar
   badges              Json?
   description         String?
-  display_name        String?               @db.VarChar
+  display_name        String?               @unique @db.VarChar
   role                user_role_type?
-  wallet              String?               @db.VarChar
+  wallet              String?               @unique @db.VarChar
   joined              Float?
   spotlight           String?               @db.VarChar
   collection          Json?
-  email               String?               @db.VarChar
-  phone_number        String?               @db.VarChar
+  email               String?               @unique @db.VarChar
+  phone_number        String?               @unique @db.VarChar
   choices             choices[]
   event_comments      event_comments[]
   event_rsvps         event_rsvps[]
@@ -145,11 +145,12 @@ model proposals {
   spaces       spaces?        @relation(fields: [space_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "proposals_space_id_fk")
   strategies   strategies[]
   vote_choices vote_choices[]
+  votes        votes[]
 }
 
 model spaces {
-  id            Int             @id
-  name          String?         @db.VarChar(255)
+  id            Int             @id @default(autoincrement())
+  name          String?         @unique @db.VarChar(255)
   image         String?         @db.VarChar
   description   String?         @db.VarChar
   banner        String?         @db.VarChar
@@ -163,7 +164,7 @@ model spaces {
 }
 
 model strategies {
-  id          Int        @id
+  id          Int        @id @default(autoincrement())
   proposal_id String?    @db.VarChar(255)
   name        String?    @db.VarChar(255)
   params      Json?
@@ -177,23 +178,28 @@ model vote_choices {
   proposal_id String    @db.VarChar(255)
   amount      Int?
   proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: NoAction, onUpdate: NoAction, map: "fk_vote_choices_proposals")
+  votes       votes?    @relation(fields: [votesId], references: [id])
+  votesId     Int?
 
   @@id([vote_id, choice_id, proposal_id])
 }
 
 model votes {
-  id        Int       @id
-  signature String?   @db.VarChar(255)
-  created   DateTime? @db.Timestamp(6)
-  vp        Int?
-  voter     Int?
-  users     users?    @relation(fields: [voter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_votes_voter")
+  id                 Int            @id @default(autoincrement())
+  signature          String?        @db.VarChar(255)
+  created            DateTime?      @db.Timestamp(6)
+  vp                 Int?
+  voter              Int?
+  users              users?         @relation(fields: [voter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_votes_voter")
+  vote_choices       vote_choices[]
+  proposals          proposals?     @relation(fields: [proposalsIpfs_hash], references: [ipfs_hash])
+  proposalsIpfs_hash String?        @db.VarChar(255)
 }
 
 model space_authors {
   user_id  Int?
   space_id Int?
-  id       Int     @id
+  id       Int     @id @default(autoincrement())
   spaces   spaces? @relation(fields: [space_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "space_authors_space_id_fk")
   users    users?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "space_authors_user_id_fk")
 }

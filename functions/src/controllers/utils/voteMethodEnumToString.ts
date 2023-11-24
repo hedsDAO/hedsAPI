@@ -1,4 +1,3 @@
-import { method_enum } from "@prisma/client";
 import { VoteMethod } from "hedsvote";
 
 /**
@@ -8,7 +7,7 @@ import { VoteMethod } from "hedsvote";
  * @returns {string} The string representation of the given vote method.
  * @throws {Error} Throws an error if the given vote method enumeration is not supported.
  */
-export const voteMethodEnumToString = (method: VoteMethod): method_enum => {
+export const voteMethodEnumToString = (method: VoteMethod) => {
     switch (method) {
     case VoteMethod.QUADRATIC:
       return "quadratic";
