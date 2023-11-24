@@ -1,5 +1,14 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { getTapeById, saveTapeAndSampleSong, updateTape, deleteTape, getTapeSongs, getAllTapes, getTapeContractArgs, countArtistTracks } from '../../controllers/tapes';
+import {
+  getTapeById,
+  saveTapeAndSampleSong,
+  updateTape,
+  deleteTape,
+  getTapeSongs,
+  getAllTapes,
+  getTapeContractArgs,
+  countArtistTracks,
+} from '../../controllers/tapes';
 import * as functions from 'firebase-functions';
 import { pinFileToIpfs, unpinFromIpfs } from '../../controllers/utils/pinata';
 
@@ -26,7 +35,7 @@ router.get('/get-artists-tape-count', async (req, res) => {
   } catch (err: any) {
     return res.status(500).send(err.message);
   }
-})
+});
 
 /**
  * Retrieves contract arguments for tapes.
@@ -103,41 +112,43 @@ router.get('/:tape_id/songs', async (req, res) => {
  * @returns {Error} 500 - Unexpected error
  */
 router.post(
-  '/',   async (req, res , next) => {
+  '/',
+  async (req, res, next) => {
     const user = req.body.user;
 
-    if (user.role !== "admin") {
-        return res.status(403).send('User is not an admin'); 
+    if (user.role !== 'admin') {
+      return res.status(403).send('User is not an admin');
     }
 
     try {
       const imageObject = await pinFileToIpfs(req.body.coverImage, req.body.tapeData.name);
-      const audioObject = await pinFileToIpfs(req.body.sampleAudio,req.body.songData.track_name);
-      res.locals["coverImageIpfsHash"] = imageObject.IpfsHash;
-      res.locals["sampleAudioIpfsHash"] = audioObject.IpfsHash;
+      const audioObject = await pinFileToIpfs(req.body.sampleAudio, req.body.songData.track_name);
+      res.locals['coverImageIpfsHash'] = imageObject.IpfsHash;
+      res.locals['sampleAudioIpfsHash'] = audioObject.IpfsHash;
       return next();
-   } catch (e) {
-    functions.logger.log("error", e)
-    return next(e)
-   }
+    } catch (e) {
+      functions.logger.log('error', e);
+      return next(e);
+    }
   },
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const curatorWallet = req.body.user.wallet;
-      const gateway = 'https://www.heds.cloud/ipfs/'
+      const gateway = 'https://www.heds.cloud/ipfs/';
       const tapeData = req.body.tapeData;
       tapeData.image = gateway + res.locals['coverImageIpfsHash'];
       const songData = req.body.songData;
       songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
       songData.cover = tapeData.image;
       const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
-      
+
       res.status(201).json(newTape);
     } catch (error: any) {
-      next(error)
+      next(error);
       res.status(500).json(error.message);
     }
-  })
+  },
+);
 
 /**
  * Updates a tape by tape ID.
@@ -180,17 +191,16 @@ router.delete('/:tape_id', async (req, res) => {
  * Error handling middleware for the tapes router.
  * Unpins files from IPFS if necessary and sends a 500 status code.
  */
-router.use('*',async (err: Error, req: Request, res: Response, next: NextFunction) => {
+router.use('*', async (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (res.locals.coverImageIpfsHash) {
     await unpinFromIpfs(res.locals.coverImageIpfsHash);
   }
-  
+
   if (res.locals.sampleAudioIpfsHash) {
     await unpinFromIpfs(res.locals.sampleAudioIpfsHash);
   }
 
   res.status(500).send(err.message);
 });
-
 
 export default router;

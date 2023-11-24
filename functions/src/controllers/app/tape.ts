@@ -1,4 +1,4 @@
-import { PrismaClient, tapes as TapeData, songs as SongData, Prisma } from '@prisma/client';
+import { PrismaClient, tapes as TapeData, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -22,7 +22,6 @@ export const getAllTapes = async () => {
     throw error;
   }
 };
-
 
 /**
  * Retrieves a tape by its ID with associated sample artists.
@@ -104,65 +103,65 @@ export const getTapeSongs = async (tapeId: number) => {
  * @throws Will throw an error if curator is not found or if unable to create tape or song.
  * @returns {Promise} Promise object represents the new tape created.
  */
-export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, curatorWallet: string): Promise<any> => {
-  const curator = await prisma.users.findUnique({ where: { wallet: curatorWallet } });
+// export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongData, curatorWallet: string): Promise<any> => {
+//   const curator = await prisma.users.findUnique({ where: { wallet: curatorWallet } });
 
-  if (!curator?.id) {
-    throw new Error('Curator not found');
-  }
+//   if (!curator?.id) {
+//     throw new Error('Curator not found');
+//   }
 
-  try {
-    const newTape = await prisma.tapes.create({
-        data: {
-            contract: tapeData.contract,
-            name: tapeData.name,
-            merkle_root: tapeData.merkle_root,
-            description: tapeData.description,
-            image: tapeData.image,
-            proposal_id: tapeData.proposal_id,
-            video: tapeData.video,
-            bpm: tapeData.bpm,
-            timeline: tapeData.timeline as Prisma.InputJsonValue,
-            type: tapeData.type,
-            splits: tapeData.splits,
-            links: tapeData.links as Prisma.InputJsonValue,
-            tape_sample_artists: {
-              create: {
-                user_id: curator.id
-              }
-            }
-          }
-    });
+//   try {
+//     const newTape = await prisma.tapes.create({
+//         data: {
+//             contract: tapeData.contract,
+//             name: tapeData.name,
+//             merkle_root: tapeData.merkle_root,
+//             description: tapeData.description,
+//             image: tapeData.image,
+//             proposal_id: tapeData.proposal_id,
+//             video: tapeData.video,
+//             bpm: tapeData.bpm,
+//             timeline: tapeData.timeline as Prisma.InputJsonValue,
+//             type: tapeData.type,
+//             splits: tapeData.splits,
+//             links: tapeData.links as Prisma.InputJsonValue,
+//             tape_sample_artists: {
+//               create: {
+//                 user_id: curator.id
+//               }
+//             }
+//           }
+//     });
 
-    const song = await prisma.songs.create({
-      data: {
-        audio: songData.audio,
-        cover: songData.cover,
-        duration: songData.duration,
-        track_name: songData.track_name,
-        type: songData.type,
-        submission_data: songData.submission_data as Prisma.InputJsonValue,
-        cyanite_id: songData.cyanite_id,
-        track_data: songData.track_data as Prisma.InputJsonValue,
-        tape_id: newTape.id
-      },
-    });
+//     const song = await prisma.songs.create({
+//       data: {
+//         audio: songData.audio,
+//         cover: songData.cover,
+//         duration: songData.duration,
+//         track_name: songData.track_name,
+//         type: songData.type,
+//         submission_data: songData.submission_data as Prisma.InputJsonValue,
+//         cyanite_id: songData.cyanite_id,
+//         track_data: songData.track_data as Prisma.InputJsonValue,
+//         tape_id: newTape.id
+//       },
+//     });
 
-    await prisma.song_artists.create({
-      data: {
-        song_id: song.id,
-        user_id: curator.id,
-        verified: true,
-        ownership_percent: 100,
-      },
-    });
+//     await prisma.song_artists.create({
+//       data: {
+//         song_id: song.id,
+//         user_id: curator.id,
+//         verified: true,
+//         ownership_percent: 100,
+//       },
+//     });
 
-    return newTape;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+//     return newTape;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// };
 
 /**
  * Updates a tape with provided data.
@@ -173,21 +172,20 @@ export const saveTapeAndSampleSong = async (tapeData: TapeData, songData: SongDa
  * @returns {Promise} Promise object represents the updated tape.
  */
 export const updateTape = async (tapeId: number, tapeData: Partial<TapeData>): Promise<any> => {
-    try {
-
-      return await prisma.tapes.update({
-        where: { id: tapeId },
-        data: {
-            ...tapeData,
-            timeline: tapeData.timeline  as Prisma.InputJsonValue,
-            links: tapeData.links  as Prisma.InputJsonValue
-        }
-      });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+  try {
+    return await prisma.tapes.update({
+      where: { id: tapeId },
+      data: {
+        ...tapeData,
+        timeline: tapeData.timeline as Prisma.InputJsonValue,
+        links: tapeData.links as Prisma.InputJsonValue,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 /**
  * Deletes a tape by its ID.
@@ -234,12 +232,11 @@ export const getTapeContractArgs = async () => {
  * @returns {Promise} Promise object represents count of tracks for each artist.
  */
 export const countArtistTracks = async () => {
-    try {
-      const result = await prisma.$executeRaw`SELECT user_id as artist_id, COUNT(song_id) as track_count FROM song_artists GROUP BY user_id`;
-      return result;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-  
+  try {
+    const result = await prisma.$executeRaw`SELECT user_id as artist_id, COUNT(song_id) as track_count FROM song_artists GROUP BY user_id`;
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

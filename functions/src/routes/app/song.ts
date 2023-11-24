@@ -2,12 +2,11 @@ import * as express from 'express';
 import * as functions from 'firebase-functions';
 import {
   getSongByAudio,
-//   createSong,
+  //   createSong,
   deleteSong,
   getLikesBySongId,
   likeSong,
   unlikeSong,
-  getSongEventsById,
   getManySongs,
   getLatestTrackSong,
 } from '../../controllers/app/songs';
@@ -38,14 +37,23 @@ router.get('/many-songs', async (req, res) => {
  * Retrieves the latest song.
  * @route GET /latest
  * @returns {Object} 200 - The latest song
+ * @returns {Error} 404 - Track not found
  * @returns {Error} 500 - Unexpected error
  */
 router.get('/latest', async (req, res) => {
   try {
     const latestSong = await getLatestTrackSong();
-    if (latestSong) res.status(200).json(latestSong);
+    if (latestSong) {
+      res.status(200).json(latestSong);
+    } else {
+      res.status(404).send('No latest track song found');
+    }
   } catch (error: any) {
-    res.status(500).send(error.message);
+    // Log the error for server-side debugging
+    console.error(error);
+
+    // Respond with an appropriate error message and status code
+    res.status(500).send('An error occurred while retrieving the latest song');
   }
 });
 
@@ -136,23 +144,6 @@ router.get('/:song_id/likes', async (req, res) => {
 });
 
 /**
- * Retrieves events of a song by its ID.
- * @route GET /:song_id/events
- * @param {number} song_id - ID of the song
- * @returns {Object} 200 - An array of events associated with the song ID
- * @returns {Error} 500 - Unexpected error
- */
-router.get('/:song_id/events', async (req, res) => {
-  try {
-    const song_id = parseInt(req.params.song_id);
-    const events = await getSongEventsById(song_id);
-    res.json(events);
-  } catch (error: any) {
-    res.status(500).send(error.message);
-  }
-});
-
-/**
  * Likes a song.
  * @route POST /:song_id/likes
  * @param {number} - ID of the song to like
@@ -189,6 +180,5 @@ router.delete('/:song_id/:user_id/likes', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
 
 export default router;

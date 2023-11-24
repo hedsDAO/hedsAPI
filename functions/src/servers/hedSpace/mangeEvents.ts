@@ -1,12 +1,12 @@
 import express from 'express';
-import tapeRoutes from '../../routes/app/tape';
+import manageEventsRoutes from '../../routes/hedSpace/manageEvents';
 import { onRequest } from 'firebase-functions/v2/https';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/', tapeRoutes);
+app.use('/', manageEventsRoutes);
 
 export default onRequest(
   {

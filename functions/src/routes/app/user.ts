@@ -1,4 +1,4 @@
-import * as express from "express";
+import * as express from 'express';
 import {
   getUserByWallet,
   getUserByEmaill,
@@ -9,27 +9,29 @@ import {
   deleteUser,
   getUserSongs,
   getUserLikes,
-  getUserEvents,
   getUserListeningHistory,
   addSongToListeningHistory,
   getArtistsAndCurators,
   getManyUsersByUserId,
   getAllUsers,
-} from "../../controllers/app/user";
-import * as functions from "firebase-functions";
+} from '../../controllers/app/user';
+import * as functions from 'firebase-functions';
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const users = await getAllUsers();
-  functions.logger.log("users", users);
+  functions.logger.log('users', users);
   return res.json(users || []);
 });
 
 router.get('/manyUsers', async (req, res) => {
   functions.logger.log('inside many-users');
   try {
-    const userIds = req.query?.walletIds?.toString().split(',').map(userId => parseInt(userId))
+    const userIds = req.query?.walletIds
+      ?.toString()
+      .split(',')
+      .map((userId) => parseInt(userId));
     if (Array.isArray(userIds)) {
       functions.logger.log('userIds', userIds);
       const users = await getManyUsersByUserId(userIds);
@@ -55,7 +57,7 @@ router.get('/artists-curators', async (req, res) => {
 router.get('/wallet/:wallet', async (req, res) => {
   try {
     const wallet = req.params.wallet;
-    functions.logger.log("route-wallet", wallet)
+    functions.logger.log('route-wallet', wallet);
     const user = await getUserByWallet(wallet);
     return res.json(user);
   } catch (error: any) {
@@ -96,7 +98,7 @@ router.get('/phone/:phone_number', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const userData = req.body;
-    functions.logger.log("user data", userData);
+    functions.logger.log('user data', userData);
     const newUser = await createUser(userData);
     return res.status(201).json(newUser);
   } catch (error: any) {
@@ -161,16 +163,6 @@ router.get('/:user_id/listening-history', async (req, res) => {
     const user_id = parseInt(req.params.user_id);
     const listeningHistory = await getUserListeningHistory(user_id);
     res.json(listeningHistory);
-  } catch (error: any) {
-    res.status(500).send(error.message);
-  }
-});
-
-router.get('/:user_id/events', async (req, res) => {
-  try {
-    const user_id = parseInt(req.params.user_id);
-    const events = await getUserEvents(user_id);
-    res.json(events);
   } catch (error: any) {
     res.status(500).send(error.message);
   }
