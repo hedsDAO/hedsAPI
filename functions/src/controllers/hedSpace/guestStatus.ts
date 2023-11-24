@@ -1,13 +1,14 @@
 import { PrismaClient } from '@prisma/client';
+import type { event_rsvps as RSVP, event_waitlists as Waitlist } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 /**
  * Retrieves all RSVPs for a given event.
  * @param {number} eventId - The ID of the event.
- * @returns {Promise<any[]>} A promise that resolves to an array of RSVPs.
+ * @returns {Promise<RSVP[]>} A promise that resolves to an array of RSVPs.
  */
-export const getEventRSVPs = async (eventId: number) => {
+export const getEventRSVPs = async (eventId: number): Promise<RSVP[]> => {
   return await prisma.event_rsvps.findMany({
     where: { event_id: eventId },
   });
@@ -16,9 +17,9 @@ export const getEventRSVPs = async (eventId: number) => {
 /**
  * Retrieves a specific RSVP by its ID.
  * @param {number} id - The ID of the RSVP.
- * @returns {Promise<any|null>} A promise that resolves to the RSVP object, or null if not found.
+ * @returns {Promise<RSVP|null>} A promise that resolves to the RSVP object, or null if not found.
  */
-export const getRSVPById = async (id: number) => {
+export const getRSVPById = async (id: number): Promise<RSVP | null> => {
   return await prisma.event_rsvps.findUnique({
     where: { id },
   });
@@ -29,9 +30,9 @@ export const getRSVPById = async (id: number) => {
  * @param {number} eventId - The ID of the event.
  * @param {number} userId - The ID of the user who is RSVPing.
  * @param {string} status - The RSVP status.
- * @returns {Promise<any>} A promise that resolves to the created RSVP object.
+ * @returns {Promise<RSVP>} A promise that resolves to the created RSVP object.
  */
-export const createRSVP = async (eventId: number, userId: number, status: string) => {
+export const createRSVP = async (eventId: number, userId: number, status: string): Promise<RSVP> => {
   return await prisma.event_rsvps.create({
     data: {
       event_id: eventId,
@@ -45,9 +46,9 @@ export const createRSVP = async (eventId: number, userId: number, status: string
  * Updates the RSVP status for a given RSVP ID.
  * @param {number} id - The ID of the RSVP to update.
  * @param {string} status - The new status of the RSVP.
- * @returns {Promise<any>} A promise that resolves to the updated RSVP object.
+ * @returns {Promise<RSVP>} A promise that resolves to the updated RSVP object.
  */
-export const updateRSVP = async (id: number, status: string) => {
+export const updateRSVP = async (id: number, status: string): Promise<RSVP> => {
   return await prisma.event_rsvps.update({
     where: { id },
     data: { status },
@@ -59,7 +60,7 @@ export const updateRSVP = async (id: number, status: string) => {
  * @param {number} id - The ID of the RSVP to delete.
  * @returns {Promise<any>} A promise that resolves to the result of the deletion operation.
  */
-export const deleteRSVP = async (id: number) => {
+export const deleteRSVP = async (id: number): Promise<any> => {
   return await prisma.event_rsvps.delete({
     where: { id },
   });
@@ -68,9 +69,9 @@ export const deleteRSVP = async (id: number) => {
 /**
  * Retrieves the waitlist for a given event, ordered by position.
  * @param {number} eventId - The ID of the event.
- * @returns {Promise<any[]>} A promise that resolves to an array of waitlist entries.
+ * @returns {Promise<Waitlist[]>} A promise that resolves to an array of waitlist entries.
  */
-export const getEventWaitlist = async (eventId: number) => {
+export const getEventWaitlist = async (eventId: number): Promise<Waitlist[]> => {
   return await prisma.event_waitlists.findMany({
     where: { event_id: eventId },
     orderBy: { position: 'asc' },
@@ -82,9 +83,9 @@ export const getEventWaitlist = async (eventId: number) => {
  * @param {number} eventId - The ID of the event.
  * @param {number} userId - The ID of the user to add to the waitlist.
  * @param {number} position - The position in the waitlist.
- * @returns {Promise<any>} A promise that resolves to the created waitlist entry.
+ * @returns {Promise<Waitlist>} A promise that resolves to the created waitlist entry.
  */
-export const addToWaitlist = async (eventId: number, userId: number, position: number) => {
+export const addToWaitlist = async (eventId: number, userId: number, position: number): Promise<Waitlist> => {
   return await prisma.event_waitlists.create({
     data: {
       event_id: eventId,
@@ -99,7 +100,7 @@ export const addToWaitlist = async (eventId: number, userId: number, position: n
  * @param {number} id - The ID of the waitlist entry to delete.
  * @returns {Promise<any>} A promise that resolves to the result of the deletion operation.
  */
-export const removeFromWaitlist = async (id: number) => {
+export const removeFromWaitlist = async (id: number): Promise<any> => {
   return await prisma.event_waitlists.delete({
     where: { id },
   });
