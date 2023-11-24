@@ -11,8 +11,8 @@ model likes {
   id      Int    @id @default(autoincrement())
   user_id Int?
   song_id Int?
-  songs   songs? @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  songs   songs? @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_song_id_fk")
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_user_id_fk")
 }
 
 model listening_history {
@@ -20,40 +20,29 @@ model listening_history {
   user_id     Int?
   song_id     Int?
   last_played DateTime? @db.Timestamp(6)
-  songs       songs?    @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  songs       songs?    @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "listening_history_song_id_fk")
+  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "listening_history_user_id_fk")
 }
 
 model song_artists {
-  id                Int      @id @default(autoincrement())
+  id                Int      @id
   song_id           Int?
   user_id           Int?
   verified          Boolean?
   ownership_percent Float?
-  songs             songs?   @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users             users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model song_events {
-  id              Int       @id @default(autoincrement())
-  song_id         Int?
-  user_id         Int?
-  event_type      String?   @db.VarChar(255)
-  event_data      Json?
-  event_timestamp DateTime? @db.Timestamp(6)
-  songs           songs?    @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users           users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  songs             songs?   @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "song_artists_song_id_fk")
+  users             users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "song_artists_user_id_fk")
 }
 
 model songs {
-  id                Int                 @id @default(autoincrement())
+  id                Int                 @id
   tape_id           Int?
   audio             String?             @db.VarChar
   cover             String?             @db.VarChar
   duration          Float?
   public            Boolean?
   track_name        String?             @db.VarChar
-  type              song_type?
+  type              String?             @db.VarChar
   submission_data   Json?
   cyanite_id        String?             @db.VarChar
   created           DateTime?           @db.Timestamp(6)
@@ -63,30 +52,18 @@ model songs {
   likes             likes[]
   listening_history listening_history[]
   song_artists      song_artists[]
-  song_events       song_events[]
-}
-
-model tape_events {
-  id              Int       @id @default(autoincrement())
-  tape_id         Int?
-  user_id         Int?
-  event_type      String?   @db.VarChar(255)
-  event_data      Json?
-  event_timestamp DateTime? @db.Timestamp(6)
-  tapes           tapes?    @relation(fields: [tape_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users           users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model tape_sample_artists {
-  id      Int    @id @default(autoincrement())
+  id      Int    @id
   tape_id Int?
   user_id Int?
-  tapes   tapes? @relation(fields: [tape_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tapes   tapes? @relation(fields: [tape_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tape_sample_artists_tape_id_fk")
+  users   users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tape_sample_artists_user_id_fk")
 }
 
 model tapes {
-  id                  Int                   @id @default(autoincrement())
+  id                  Int                   @id
   contract            String?               @db.VarChar
   name                String?               @db.VarChar
   merkle_root         String?               @db.VarChar
@@ -96,75 +73,52 @@ model tapes {
   video               String?               @db.VarChar
   bpm                 Int?
   timeline            Json?
-  type                tape_type?
+  type                String?               @db.VarChar
   splits              String?               @db.VarChar
   links               Json?
-  tape_events         tape_events[]
   tape_sample_artists tape_sample_artists[]
-}
-
-model user_events {
-  id              Int       @id @default(autoincrement())
-  user_id         Int?
-  event_type      String?   @db.VarChar(255)
-  event_data      Json?
-  event_timestamp DateTime? @db.Timestamp(6)
-  users           users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model user_generations {
-  id           Int       @id @default(autoincrement())
-  user_id      Int
-  cyanite_id   Int
-  audio        String
-  image        String?
-  prompt       String
-  title        String
-  status       String?
-  cyanite_data Json?
-  created_at   DateTime? @db.Timestamp(6)
 }
 
 model users {
   id                  Int                   @id @default(autoincrement())
   profile_picture     String?               @db.VarChar
   banner              String?               @db.VarChar
-  twitter_handle      String?               @db.VarChar
+  twitter_handle      String?               @unique @db.VarChar
   badges              Json?
-  description         String?               @db.VarChar
+  description         String?
   display_name        String?               @unique @db.VarChar
   role                user_role_type?
   wallet              String?               @unique @db.VarChar
   joined              Float?
   spotlight           String?               @db.VarChar
   collection          Json?
-  email               String?               @db.VarChar
-  phone_number        String?               @db.VarChar
+  email               String?               @unique @db.VarChar
+  phone_number        String?               @unique @db.VarChar
   choices             choices[]
+  event_comments      event_comments[]
+  event_rsvps         event_rsvps[]
+  event_waitlists     event_waitlists[]
+  events              events[]
   likes               likes[]
   listening_history   listening_history[]
   proposals           proposals[]
   song_artists        song_artists[]
-  song_events         song_events[]
   space_authors       space_authors[]
-  tape_events         tape_events[]
   tape_sample_artists tape_sample_artists[]
-  user_events         user_events[]
   votes               votes[]
 }
 
 model choices {
-  id           Int
-  proposal_id  String         @db.VarChar(255)
-  image        String?        @db.VarChar(255)
-  artist       String?        @db.VarChar(255)
-  name         String?        @db.VarChar(255)
-  location     String?        @db.VarChar(255)
-  media        String?        @db.VarChar(255)
-  user_id      Int?
-  proposals    proposals      @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: Cascade, onUpdate: NoAction)
-  users        users?         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_choices_user_id")
-  vote_choices vote_choices[]
+  id          Int
+  proposal_id String    @db.VarChar(255)
+  image       String?   @db.VarChar(255)
+  artist      String?   @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  location    String?   @db.VarChar(255)
+  media       String?   @db.VarChar(255)
+  user_id     Int?
+  proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: NoAction, onUpdate: NoAction, map: "choices_proposal_id_fk")
+  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_choices_user_id")
 
   @@id([id, proposal_id])
 }
@@ -177,7 +131,7 @@ model proposals {
   start_time   DateTime?      @db.Timestamp(6)
   end_time     DateTime?      @db.Timestamp(6)
   block        Int?
-  method       method_enum?
+  method       String?        @db.VarChar
   title        String?
   description  String?
   scores       Float[]
@@ -188,7 +142,7 @@ model proposals {
   is_web3      Boolean?
   choices      choices[]
   users        users?         @relation(fields: [author], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "proposals_fk")
-  spaces       spaces?        @relation(fields: [space_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  spaces       spaces?        @relation(fields: [space_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "proposals_space_id_fk")
   strategies   strategies[]
   vote_choices vote_choices[]
   votes        votes[]
@@ -196,8 +150,7 @@ model proposals {
 
 model spaces {
   id            Int             @id @default(autoincrement())
-  name          String          @unique @db.VarChar(255)
-  created_at    BigInt?         @db.BigInt
+  name          String?         @unique @db.VarChar(255)
   image         String?         @db.VarChar
   description   String?         @db.VarChar
   banner        String?         @db.VarChar
@@ -205,86 +158,104 @@ model spaces {
   instagram     String?         @db.VarChar
   soundcloud    String?         @db.VarChar
   discord       String?         @db.VarChar
+  created_at    BigInt?
   proposals     proposals[]
   space_authors space_authors[]
 }
 
 model strategies {
-  id          Int       @id @default(autoincrement())
-  proposal_id String    @db.VarChar(255)
-  name        String    @db.VarChar(255)
+  id          Int        @id @default(autoincrement())
+  proposal_id String?    @db.VarChar(255)
+  name        String?    @db.VarChar(255)
   params      Json?
   network     Int?
-  proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: Cascade, onUpdate: NoAction)
+  proposals   proposals? @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: NoAction, onUpdate: NoAction, map: "strategies_proposal_id_fk")
 }
 
 model vote_choices {
   vote_id     Int
   choice_id   Int
   proposal_id String    @db.VarChar(255)
-  amount      Int
-  proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: Cascade, onUpdate: NoAction, map: "fk_vote_choices_proposals")
-  choices     choices   @relation(fields: [choice_id, proposal_id], references: [id, proposal_id], onDelete: Cascade, onUpdate: NoAction)
-  votes       votes     @relation(fields: [vote_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  amount      Int?
+  proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: NoAction, onUpdate: NoAction, map: "fk_vote_choices_proposals")
+  votes       votes?    @relation(fields: [votesId], references: [id])
+  votesId     Int?
 
   @@id([vote_id, choice_id, proposal_id])
 }
 
 model votes {
   id                 Int            @id @default(autoincrement())
-  signature          String         @db.VarChar(255)
-  created            DateTime       @db.Timestamp(6)
-  vp                 Int
-  voter              Int
+  signature          String?        @db.VarChar(255)
+  created            DateTime?      @db.Timestamp(6)
+  vp                 Int?
+  voter              Int?
+  users              users?         @relation(fields: [voter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_votes_voter")
   vote_choices       vote_choices[]
-  users              users          @relation(fields: [voter], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_votes_voter")
   proposals          proposals?     @relation(fields: [proposalsIpfs_hash], references: [ipfs_hash])
   proposalsIpfs_hash String?        @db.VarChar(255)
 }
 
 model space_authors {
-  user_id  Int
-  space_id Int
-  id       Int    @default(autoincrement())
-  spaces   spaces @relation(fields: [space_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users    users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([user_id, space_id])
+  user_id  Int?
+  space_id Int?
+  id       Int     @id @default(autoincrement())
+  spaces   spaces? @relation(fields: [space_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "space_authors_space_id_fk")
+  users    users?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "space_authors_user_id_fk")
 }
 
-enum song_type {
-  submission
-  track
-  collab
-  sample
-  devolo
+model event_comments {
+  id         Int       @id @default(autoincrement())
+  event_id   Int
+  user_id    Int
+  comment    String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  events     events    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-enum tape_market_type {
-  opensea
-  sound
+model event_rsvps {
+  id         Int       @id @default(autoincrement())
+  event_id   Int
+  user_id    Int
+  status     String    @db.VarChar(50)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  events     events    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-enum tape_type {
-  legacy
-  devtape
-  collabtape
+model event_waitlists {
+  id         Int       @id @default(autoincrement())
+  event_id   Int
+  user_id    Int
+  position   Int
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  events     events    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model events {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  description     String?
+  location        String            @db.VarChar(255)
+  start_time      DateTime          @db.Timestamp(6)
+  end_time        DateTime          @db.Timestamp(6)
+  image           String?           @db.VarChar(255)
+  user_id         Int
+  created_at      DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  event_comments  event_comments[]
+  event_rsvps     event_rsvps[]
+  event_waitlists event_waitlists[]
+  users           users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 enum user_role_type {
   user
   artist
   admin
-}
-
-enum method_enum {
-  linear
-  quadratic
-  single_choice @map("single choice")
-}
-
-enum state_enum {
-  pending
-  open
-  closed
 }

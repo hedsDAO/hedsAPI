@@ -1,12 +1,12 @@
 import express from 'express';
-import tapeRoutes from '../../routes/app/tape';
+import eventCommentsRoutes from '../../routes/hedSpace/eventComments';
 import { onRequest } from 'firebase-functions/v2/https';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/', tapeRoutes);
+app.use('/', eventCommentsRoutes);
 
 export default onRequest(
   {

@@ -2,17 +2,17 @@
 // import * as common from '../../common';
 // import * as randomData from '../../data/randomData';
 // import * as functions from 'firebase-functions';
-import {  unpinFromIpfs } from '../utils/pinata';
+import { unpinFromIpfs } from '../utils/pinata';
 
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export interface CreateSongRequestBody {
-    tempAudioRef: string;
-    user_id: number;
-    tape_id: number;
-    duration: number;
-  }
+  tempAudioRef: string;
+  user_id: number;
+  tape_id: number;
+  duration: number;
+}
 
 export const getSongByAudio = async (audio: string): Promise<any> => {
   try {
@@ -73,46 +73,26 @@ export const getLikesBySongId = async (songId: number) => {
   }
 };
 
-export const getSongEventsById = async (songId: number) => {
-  try {
-    const events = await prisma.song_events.findMany({
-      where: { song_id: songId },
-    });
-    return events;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
-export const getLatestTrackSong = async (): Promise<any> => {
-  try {
-    const song = await prisma.songs.findFirst({
-      where: { type: 'track' },
-      orderBy: { created: 'desc' },
-      include: {
-        song_artists: {
-          select: {
-            user_id: true,
-            users: {
-              select: {
-                display_name: true,
-                profile_picture: true,
-                wallet: true,
-              },
+export const getLatestTrackSong = async () => {
+  const song = await prisma.songs.findFirst({
+    where: { type: 'track' },
+    orderBy: { created: 'desc' },
+    include: {
+      song_artists: {
+        select: {
+          user_id: true,
+          users: {
+            select: {
+              display_name: true,
+              profile_picture: true,
+              wallet: true,
             },
           },
         },
       },
-    });
-
-    if (!song) return null;
-
-    return { ...song, artists: [...song.song_artists] };
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+    },
+  });
+  return song;
 };
 
 // export async function createSong(requestData: CreateSongRequestBody) {
@@ -224,7 +204,6 @@ export const deleteSong = async (songId: number) => {
         throw error;
       }
       await prisma.likes.deleteMany({ where: { song_id: songId } });
-      await prisma.song_events.deleteMany({ where: { song_id: songId } });
       await prisma.song_artists.deleteMany({ where: { song_id: songId } });
       await prisma.songs.delete({ where: { id: songId } });
     });
@@ -265,22 +244,6 @@ export const likeSong = async (songId: number, userId: number) => {
 
     if (!artist) throw new Error('Artist not found');
 
-    const eventType = 'song_like';
-    const eventData = {
-      message: `${user.display_name} liked a track`,
-      subject: `${song.track_name} by ${song.public ? artist.display_name : 'Anonymous'}`,
-    };
-
-    await prisma.song_events.create({
-      data: {
-        event_type: eventType,
-        event_data: JSON.stringify(eventData),
-        event_timestamp: new Date(),
-        song_id: songId,
-        user_id: userId,
-      },
-    });
-
     await prisma.songs.update({
       where: { id: songId },
       data: { total_likes: { increment: 1 } },
@@ -305,9 +268,6 @@ export const unlikeSong = async (songId: number, userId: number) => {
     await prisma.$transaction([
       prisma.likes.deleteMany({
         where: { song_id: songId, user_id: userId },
-      }),
-      prisma.song_events.deleteMany({
-        where: { song_id: songId, user_id: userId, event_type: 'song_like' },
       }),
       prisma.songs.update({
         where: { id: songId },
@@ -343,10 +303,7 @@ export const getManySongs = async (songHashes: string[]) => {
       },
     });
 
-    return songs.map((song) => ({
-      ...song,
-      artists: song.song_artists || [],
-    }));
+    return songs;
   } catch (error) {
     console.error('Error in getManySongs:', error);
     return null;

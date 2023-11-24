@@ -1,12 +1,12 @@
 import express from 'express';
-import tapeRoutes from '../../routes/app/tape';
+import guestStatusRoutes from '../../routes/hedSpace/guestStatus';
 import { onRequest } from 'firebase-functions/v2/https';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/', tapeRoutes);
+app.use('/', guestStatusRoutes);
 
 export default onRequest(
   {

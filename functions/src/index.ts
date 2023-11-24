@@ -18,7 +18,10 @@ import space from './servers/vote/space';
 import strategy from './servers/vote/strategy';
 import vote from './servers/vote/vote';
 
-
+/* HEDSPACE SERVER */
+import mangeEvents from './servers/hedSpace/mangeEvents';
+import guestStatus from './servers/hedSpace/guestStatus';
+import eventComments from './servers/hedSpace/eventComments';
 
 // API V1
 import app from './app';
@@ -26,6 +29,9 @@ import app from './app';
 exports.api = app;
 
 exports.auth = auth;
+exports.eventComments = eventComments;
+exports.guestStatus = guestStatus;
+exports.manageEvents = mangeEvents;
 exports.pinata = pinata;
 exports.proposal = proposal;
 exports.song = song;
