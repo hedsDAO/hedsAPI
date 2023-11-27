@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as functions from 'firebase-functions';
+import { toCamelCase } from '../../common';
 import {
   getSongByAudio,
   //   createSong,
@@ -26,7 +27,11 @@ router.get('/many-songs', async (req, res) => {
     if (Array.isArray(songHashes)) {
       const requestedSongs = await getManySongs(songHashes);
       if (!requestedSongs) res.status(404).json({ error: 'Songs not found' });
-      res.json(requestedSongs);
+      const convertedSongs = requestedSongs?.map((song) => {
+        const convertedSong = toCamelCase(song);
+        return convertedSong;
+      });
+      res.json(convertedSongs);
     }
   } catch (error: any) {
     res.status(500).send(error.message);
@@ -44,7 +49,8 @@ router.get('/latest', async (req, res) => {
   try {
     const latestSong = await getLatestTrackSong();
     if (latestSong) {
-      res.status(200).json(latestSong);
+      const convertedSong = toCamelCase(latestSong);
+      res.status(200).json(convertedSong);
     } else {
       res.status(404).send('No latest track song found');
     }
@@ -72,7 +78,10 @@ router.get('/:audio', async (req, res) => {
     const song = await getSongByAudio(ipfsPrefix + audio);
     if (!song) {
       return res.status(404).send('Song not found');
-    } else return res.json(song);
+    } else {
+      const convertedSong = toCamelCase(song);
+      return res.json(convertedSong);
+    };
   } catch (error: any) {
     return res.status(500).send(error.message);
   }
@@ -116,11 +125,12 @@ router.get('/:audio', async (req, res) => {
  * @returns {Object} 200 - Result of the deletion operation
  * @returns {Error} 500 - Unexpected error
  */
-router.delete('/:song_id', async (req, res) => {
+router.delete('/:songId', async (req, res) => {
   try {
-    const song_id = parseInt(req.params.song_id);
+    const song_id = parseInt(req.params.songId);
     const result = await deleteSong(song_id);
-    res.json(result);
+    if (!result) res.status(404).send('Song not found');
+    else res.json(result);
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -133,10 +143,18 @@ router.delete('/:song_id', async (req, res) => {
  * @returns {Object} 200 - An array of likes associated with the song ID
  * @returns {Error} 500 - Unexpected error
  */
-router.get('/:song_id/likes', async (req, res) => {
+router.get('/:songId/likes', async (req, res) => {
   try {
-    const song_id = parseInt(req.params.song_id);
+    const song_id = parseInt(req.params.songId);
     const likes = await getLikesBySongId(song_id);
+    if (!likes) res.status(404).send('Likes not found');
+    else {
+      const convertedLikes = likes.map((like) => {
+        const convertedLike = toCamelCase(like);
+        return convertedLike;
+      });
+      res.json(convertedLikes);
+    }
     res.json(likes);
   } catch (error: any) {
     res.status(500).send(error.message);
@@ -151,12 +169,13 @@ router.get('/:song_id/likes', async (req, res) => {
  * @returns {string} 201 - Confirmation message of successful like operation
  * @returns {Error} 500 - Unexpected error
  */
-router.post('/:song_id/:user_id/likes', async (req, res) => {
+router.post('/:songId/:userId/likes', async (req, res) => {
   try {
-    const songId = parseInt(req.params.song_id);
-    const userId = parseInt(req.params.user_id);
-    await likeSong(songId, userId);
-    res.status(201).send('Song liked successfully');
+    const song_id = parseInt(req.params.songId);
+    const user_id = parseInt(req.params.userId);
+    const likedSucces = await likeSong(song_id, user_id);
+    if (!likedSucces) res.status(404).send('Song not found');
+    else res.status(201).send('Song liked successfully');
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -170,12 +189,13 @@ router.post('/:song_id/:user_id/likes', async (req, res) => {
  * @returns {string} 200 - Confirmation message of successful unlike operation
  * @returns {Error} 500 - Unexpected error
  */
-router.delete('/:song_id/:user_id/likes', async (req, res) => {
+router.delete('/:songId/:userId/likes', async (req, res) => {
   try {
-    const songId = parseInt(req.params.song_id);
-    const userId = parseInt(req.params.user_id);
-    await unlikeSong(songId, userId);
-    res.status(200).send('Song unliked successfully');
+    const song_id = parseInt(req.params.songId);
+    const user_id = parseInt(req.params.userId);
+    const likedSucces = await unlikeSong(song_id, user_id);
+    if (!likedSucces) res.status(404).send('Song not found');
+    else res.status(201).send('Song liked successfully');
   } catch (error: any) {
     res.status(500).send(error.message);
   }

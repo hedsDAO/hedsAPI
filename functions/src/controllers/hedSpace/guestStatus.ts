@@ -56,13 +56,43 @@ export const updateRSVP = async (id: number, status: string): Promise<RSVP> => {
 };
 
 /**
- * Deletes an RSVP by its ID.
+ * Deletes an RSVP by its ID and also removes the user from the waitlist if they are on it.
  * @param {number} id - The ID of the RSVP to delete.
  * @returns {Promise<any>} A promise that resolves to the result of the deletion operation.
  */
-export const deleteRSVP = async (id: number): Promise<any> => {
-  return await prisma.event_rsvps.delete({
-    where: { id },
+ export const deleteRSVP = async (id: number): Promise<any> => {
+  // Start a transaction
+  return await prisma.$transaction(async () => {
+    // Retrieve the RSVP to get event_id and user_id
+    const rsvp = await prisma.event_rsvps.findUnique({
+      where: { id },
+      select: { event_id: true, user_id: true }
+    });
+
+    if (!rsvp) throw new Error('RSVP not found');
+
+    // Delete the RSVP
+    await prisma.event_rsvps.delete({
+      where: { id },
+    });
+
+    // Check if the user is on the waitlist for the same event
+    const waitlistEntry = await prisma.event_waitlists.findFirst({
+      where: {
+        event_id: rsvp.event_id,
+        user_id: rsvp.user_id,
+      },
+    });
+
+    // If they are on the waitlist, remove them
+    if (waitlistEntry) {
+      await prisma.event_waitlists.delete({
+        where: { id: waitlistEntry.id },
+      });
+    }
+
+    // Return some result or confirmation
+    return { message: 'RSVP and waitlist entry (if any) deleted successfully' };
   });
 };
 
