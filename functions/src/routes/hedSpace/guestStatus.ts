@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { toCamelCase } from '../../common';
 import { createRSVP, updateRSVP, deleteRSVP, addToWaitlist, removeFromWaitlist } from '../../controllers/hedSpace/guestStatus';
 
 const router = Router();
@@ -8,7 +9,8 @@ router.post('/events/:eventId/rsvps', async (req, res) => {
     const { userId, status } = req.body;
     const rsvp = await createRSVP(parseInt(req.params.eventId), userId, status);
     if (rsvp) {
-      return res.status(201).json(rsvp);
+      const convertedRSVP = toCamelCase(rsvp);
+      return res.status(201).json(convertedRSVP);
     } else {
       return res.status(400).json({ message: 'RSVP could not be created' });
     }
@@ -21,7 +23,8 @@ router.put('/rsvps/:id', async (req, res) => {
   try {
     const rsvp = await updateRSVP(parseInt(req.params.id), req.body);
     if (rsvp) {
-      return res.status(200).json(rsvp);
+      const convertedRSVP = toCamelCase(rsvp);
+      return res.status(200).json(convertedRSVP);
     } else {
       return res.status(400).json({ message: 'RSVP could not be updated' });
     }
@@ -44,13 +47,14 @@ router.delete('/rsvps/:id', async (req, res) => {
 });
 
 // Waitlist routes
-router.post('/events/:eventId/waitlists', async (req, res) => {
+router.post('/events/:eventId/waitlist', async (req, res) => {
   try {
     const { userId, position } = req.body;
     //Make sure FE sends new position (AKA currrent max position + 1)
     const waitlist = await addToWaitlist(parseInt(req.params.eventId), userId, position);
     if (waitlist) {
-      return res.status(201).json(waitlist);
+      const convertedWaitlist = toCamelCase(waitlist);
+      return res.status(201).json(convertedWaitlist);
     } else {
       return res.status(400).json({ message: 'Could not add guest to waitlist' });
     }
@@ -59,7 +63,7 @@ router.post('/events/:eventId/waitlists', async (req, res) => {
   }
 });
 
-router.delete('/waitlists/:id', async (req, res) => {
+router.delete('/waitlist/:id', async (req, res) => {
   try {
     const isRemoved = await removeFromWaitlist(parseInt(req.params.id));
     if (isRemoved) {

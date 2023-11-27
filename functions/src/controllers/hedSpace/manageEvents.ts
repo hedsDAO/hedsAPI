@@ -8,7 +8,13 @@ const prisma = new PrismaClient();
  * @returns {Promise<Event[]>} A promise that resolves to an array of event objects.
  */
 export const getEvents = async (): Promise<Event[]> => {
-  return await prisma.events.findMany();
+  return await prisma.events.findMany({
+    include: {
+      event_comments: true,
+      event_rsvps: true,
+      event_waitlists: true,
+    },
+  });
 };
 
 /**

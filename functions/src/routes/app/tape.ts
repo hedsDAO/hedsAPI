@@ -11,6 +11,8 @@ import {
 } from '../../controllers/tapes';
 import * as functions from 'firebase-functions';
 import { pinFileToIpfs, unpinFromIpfs } from '../../controllers/utils/pinata';
+import { toCamelCase, toSnakeCase } from '../../common';
+import { TapeData } from '../../controllers/tapes/types';
 
 const router = Router();
 
@@ -31,9 +33,16 @@ export interface RequestWithFile extends Request {
 router.get('/get-artists-tape-count', async (req, res) => {
   try {
     const results = await countArtistTracks();
-    return res.json(results);
+    if (!results) res.status(404).json({ error: 'No tapes found' });
+    else {
+      const convertedResults = results.map((result: object) => {
+        const convertedResult = toCamelCase(result);
+        return convertedResult;
+      });
+      res.json(convertedResults);
+    }
   } catch (err: any) {
-    return res.status(500).send(err.message);
+    res.status(500).send(err.message);
   }
 });
 
@@ -46,7 +55,14 @@ router.get('/get-artists-tape-count', async (req, res) => {
 router.get('/get-collection-args', async (req, res) => {
   try {
     const results = await getTapeContractArgs();
-    res.json(results);
+    if (!results) res.status(404).json({ error: 'No tapes found' });
+    else {
+      const convertedResults = results.map((result: object) => {
+        const convertedResult = toCamelCase(result);
+        return convertedResult;
+      });
+      res.json(convertedResults);
+    }
   } catch (err: any) {
     res.status(500).send(err.message);
   }
@@ -62,7 +78,14 @@ router.get('/', async (req, res) => {
   try {
     functions.logger.log('GET /tapes');
     const tapesInfo = await getAllTapes();
-    res.json(tapesInfo);
+    if (!tapesInfo) res.status(404).json({ error: 'No tapes found' });
+    else {
+      const convertedTapesInfo = tapesInfo.map((tapeInfo: object) => {
+        const convertedTapeInfo = toCamelCase(tapeInfo);
+        return convertedTapeInfo;
+      });
+      res.json(convertedTapesInfo);
+    }
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -75,12 +98,20 @@ router.get('/', async (req, res) => {
  * @returns {Object} 200 - Tape information along with associated songs
  * @returns {Error} 500 - Unexpected error
  */
-router.get('/:tape_id', async (req, res) => {
+router.get('/:tapeId', async (req, res) => {
   try {
-    const tape_id = parseInt(req.params.tape_id);
+    const tape_id = parseInt(req.params.tapeId);
     const tape = await getTapeById(tape_id);
     const songs = await getTapeSongs(tape_id);
-    res.json({ ...tape, songs });
+    if (!tape) res.status(404).json({ error: 'No tape found' });
+    else {
+      const convertedTape = toCamelCase(tape) as TapeData;
+      const convertedSongs = songs.map((song: object) => {
+        const convertedSong = toCamelCase(song);
+        return convertedSong;
+      });
+      res.json({...convertedTape, songs: convertedSongs});
+    }
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -93,11 +124,18 @@ router.get('/:tape_id', async (req, res) => {
  * @returns {Object} 200 - An array of songs associated with the tape ID
  * @returns {Error} 500 - Unexpected error
  */
-router.get('/:tape_id/songs', async (req, res) => {
+router.get('/:tapeId/songs', async (req, res) => {
   try {
-    const tape_id = parseInt(req.params.tape_id);
+    const tape_id = parseInt(req.params.tapeId);
     const songs = await getTapeSongs(tape_id);
-    res.json(songs);
+    if (!songs) res.status(404).json({ error: 'No songs found' });
+    else {
+      const convertedSongs = songs.map((song: object) => {
+        const convertedSong = toCamelCase(song);
+        return convertedSong;
+      });
+      res.json(convertedSongs);
+    }
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -159,12 +197,16 @@ router.post(
  * @returns {Object} 200 - The updated tape information
  * @returns {Error} 500 - Unexpected error
  */
-router.put('/:tape_id', async (req, res) => {
+router.put('/:tapeId', async (req, res) => {
   try {
-    const tape_id = parseInt(req.params.tape_id);
-    const tapeData = req.body;
+    const tape_id = parseInt(req.params.tapeId);
+    const tapeData = toSnakeCase(req.body);
     const updatedTape = await updateTape(tape_id, tapeData);
-    res.json(updatedTape);
+    if (!updatedTape) res.status(404).json({ error: 'No tape found' });
+    else {
+      const convertedTape = toCamelCase(updatedTape) as TapeData;
+      res.json(convertedTape);
+    }
   } catch (error: any) {
     res.status(500).send(error.message);
   }
@@ -177,11 +219,12 @@ router.put('/:tape_id', async (req, res) => {
  * @returns {Object} 200 - Result of the deletion operation
  * @returns {Error} 500 - Unexpected error
  */
-router.delete('/:tape_id', async (req, res) => {
+router.delete('/:tapeId', async (req, res) => {
   try {
-    const tape_id = parseInt(req.params.tape_id);
+    const tape_id = parseInt(req.params.tapeId);
     const result = await deleteTape(tape_id);
-    res.json(result);
+    if (!result) res.status(404).json({ error: 'No tape found' });
+    else res.json(result);
   } catch (error: any) {
     res.status(500).send(error.message);
   }

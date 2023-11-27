@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as functions from 'firebase-functions';
 import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode, validateUserByDisplayName, validateTwitterHandle } from '../../controllers/app/auth';
 import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/app/user';
-import { newUserObject } from '../../common';
+import { newUserObject, toCamelCase } from '../../common';
 
 const router = express.Router();
 
@@ -110,7 +110,7 @@ router.get('/sms/verify/:to/:code', async (req, res) => {
  */
 router.get('/google-oauth-callback', async (req, res) => {
   try {
-    const bearerToken = req.headers.authorization;
+    const bearerToken: string | undefined = req.headers.authorization;
     functions.logger.log('token', bearerToken);
 
     if (!bearerToken || !bearerToken.startsWith('Bearer ')) {
@@ -126,10 +126,12 @@ router.get('/google-oauth-callback', async (req, res) => {
       const user = await getUserByEmaill(email);
       functions.logger.log(user);
       if (user) {
-        return res.json(user);
+        const convertedUser = toCamelCase(user);
+        return res.json(convertedUser);
       } else {
         const createdUser = await createUser({ ...newUserObject, email });
-        return res.status(200).json(createdUser);
+        const convertedNewUser = toCamelCase(createdUser);
+        return res.status(200).json(convertedNewUser);
       }
     } else {
       throw new Error('Invalid ID token userInfo');
@@ -147,7 +149,8 @@ router.get('/google-oauth-callback', async (req, res) => {
  * @param {express.Response} res - Express response object.
  */
 router.put('/link-user', async (req, res) => {
-  const { link_type, user } = req.body;
+  const user = req.body.user;
+  const link_type = req.body.linkType;
 
   try {
     if (!user) {
@@ -179,12 +182,13 @@ router.put('/link-user', async (req, res) => {
 
         user.email = email;
         const createdUser = await createUser({ ...newUserObject, email });
-        return res.status(200).json(createdUser);
+        const convertedNewUser = toCamelCase(createdUser);
+        return res.status(200).json(convertedNewUser);
       } else {
         throw new Error('Invalid ID token userInfo');
       }
     } else {
-      const { phone_number } = req.body;
+      const phone_number = req.body.phoneNumber;
 
       const existingUser = await getUserByPhoneNumber(phone_number);
 
