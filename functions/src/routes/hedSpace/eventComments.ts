@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { toCamelCase } from '../../common';
 import { getEventComments, getCommentById, createEventComment, updateEventComment, deleteEventComment } from '../../controllers/hedSpace/eventComments';
 
 const router = Router();
@@ -7,7 +8,11 @@ router.get('/events/:eventId/comments', async (req, res) => {
   try {
     const comments = await getEventComments(parseInt(req.params.eventId));
     if (comments) {
-      return res.status(200).json(comments);
+      const convertedComments = comments.map((comment) => {
+        const convertedComment = toCamelCase(comment);
+        return convertedComment;
+      });
+      return res.status(200).json(convertedComments);
     } else {
       return res.status(404).json({ message: 'No comments found' });
     }
@@ -20,7 +25,8 @@ router.get('/comments/:id', async (req, res) => {
   try {
     const comment = await getCommentById(parseInt(req.params.id));
     if (comment) {
-      return res.status(200).json(comment);
+      const convertedComment = toCamelCase(comment);
+      return res.status(200).json(convertedComment);
     } else {
       return res.status(404).json({ message: 'Comment not found' });
     }
@@ -34,7 +40,8 @@ router.post('/events/:eventId/comments', async (req, res) => {
     const { userId, userComment } = req.body;
     const createdComment = await createEventComment(parseInt(req.params.eventId), userId, userComment);
     if (createdComment) {
-      return res.status(201).json(createdComment);
+      const convertedComment = toCamelCase(createdComment);
+      return res.status(201).json(convertedComment);
     } else {
       return res.status(400).json({ message: 'Comment could not be created' });
     }
@@ -45,9 +52,10 @@ router.post('/events/:eventId/comments', async (req, res) => {
 
 router.put('/comments/:id', async (req, res) => {
   try {
-    const comment = await updateEventComment(parseInt(req.params.id), req.body);
+    const comment = await updateEventComment(parseInt(req.params.id), req.body.comment);
     if (comment) {
-      return res.status(200).json(comment);
+      const convertedComment = toCamelCase(comment);
+      return res.status(200).json(convertedComment);
     } else {
       return res.status(400).json({ message: 'Comment could not be updated' });
     }
