@@ -21,7 +21,7 @@ router.post('/events/:eventId/rsvps', async (req, res) => {
 
 router.put('/rsvps/:id', async (req, res) => {
   try {
-    const rsvp = await updateRSVP(parseInt(req.params.id), req.body);
+    const rsvp = await updateRSVP(parseInt(req.params.id), req.body.status);
     if (rsvp) {
       const convertedRSVP = toCamelCase(rsvp);
       return res.status(200).json(convertedRSVP);

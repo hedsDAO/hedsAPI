@@ -303,7 +303,7 @@ export const addSongToListeningHistory = async (user_id: number, song_id: number
       data: {
         user_id,
         song_id,
-        last_played: new Date(),
+        last_played: Date.now(),
       },
     });
 
