@@ -52,7 +52,7 @@ router.post('/events/:eventId/comments', async (req, res) => {
 
 router.put('/comments/:id', async (req, res) => {
   try {
-    const comment = await updateEventComment(parseInt(req.params.id), req.body);
+    const comment = await updateEventComment(parseInt(req.params.id), req.body.comment);
     if (comment) {
       const convertedComment = toCamelCase(comment);
       return res.status(200).json(convertedComment);

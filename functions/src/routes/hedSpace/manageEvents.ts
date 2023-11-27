@@ -1,10 +1,11 @@
 import { Router } from 'express';
+import * as functions from 'firebase-functions';
 import { toCamelCase, toSnakeCase } from '../../common';
 import { getEvents, getEventById, createEvent, updateEvent, deleteEvent } from '../../controllers/hedSpace/manageEvents';
 
 const router = Router();
 
-router.get('/events', async (req, res) => { 
+router.get('/events', async (req, res) => {
   try {
     const events = await getEvents();
     if (events) {
@@ -38,6 +39,7 @@ router.get('/events/:id', async (req, res) => {
 router.post('/events', async (req, res) => {
   try {
     const eventData = toSnakeCase(req.body);
+    functions.logger.log('eventData', eventData);
     const event = await createEvent(eventData);
     if (event) {
       const convertedEvent = toCamelCase(event);

@@ -16,12 +16,12 @@ model likes {
 }
 
 model listening_history {
-  id          Int       @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   user_id     Int?
   song_id     Int?
-  last_played DateTime? @db.Timestamp(6)
-  songs       songs?    @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "listening_history_song_id_fk")
-  users       users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "listening_history_user_id_fk")
+  last_played Int?
+  songs       songs? @relation(fields: [song_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "listening_history_song_id_fk")
+  users       users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "listening_history_user_id_fk")
 }
 
 model song_artists {
@@ -45,7 +45,7 @@ model songs {
   type              String?             @db.VarChar
   submission_data   Json?
   cyanite_id        String?             @db.VarChar
-  created           DateTime?           @db.Timestamp(6)
+  created           Int?
   total_likes       Int?
   track_data        Json?
   video             String?             @db.VarChar
@@ -205,36 +205,36 @@ model space_authors {
 }
 
 model event_comments {
-  id         Int       @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   event_id   Int
   user_id    Int
   comment    String
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-  updated_at DateTime? @default(now()) @db.Timestamp(6)
-  events     events    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  created_at Int?
+  updated_at Int?
+  events     events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model event_rsvps {
-  id         Int       @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   event_id   Int
   user_id    Int
-  status     String    @db.VarChar(50)
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-  updated_at DateTime? @default(now()) @db.Timestamp(6)
-  events     events    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  status     String @db.VarChar(50)
+  created_at Int?
+  updated_at Int?
+  events     events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model event_waitlists {
-  id         Int       @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   event_id   Int
   user_id    Int
   position   Int
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-  updated_at DateTime? @default(now()) @db.Timestamp(6)
-  events     events    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  created_at Int?
+  updated_at Int?
+  events     events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model events {
@@ -242,12 +242,13 @@ model events {
   name            String            @db.VarChar(255)
   description     String?
   location        String            @db.VarChar(255)
-  start_time      DateTime          @db.Timestamp(6)
-  end_time        DateTime          @db.Timestamp(6)
+  start_time      Int?
+  end_time        Int?
   image           String?           @db.VarChar(255)
   user_id         Int
-  created_at      DateTime?         @default(now()) @db.Timestamp(6)
-  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  created_at      Int?
+  updated_at      Int?
+  max_guests      Int?
   event_comments  event_comments[]
   event_rsvps     event_rsvps[]
   event_waitlists event_waitlists[]
