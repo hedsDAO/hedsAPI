@@ -31,6 +31,7 @@ router.get('/many-songs', async (req, res) => {
         const convertedSong = toCamelCase(song);
         return convertedSong;
       });
+      functions.logger.log("convertedSong", convertedSongs);
       res.json(convertedSongs);
     }
   } catch (error: any) {
@@ -50,6 +51,7 @@ router.get('/latest', async (req, res) => {
     const latestSong = await getLatestTrackSong();
     if (latestSong) {
       const convertedSong = toCamelCase(latestSong);
+      functions.logger.log("convertedSong", convertedSong);
       res.status(200).json(convertedSong);
     } else {
       res.status(404).send('No latest track song found');
@@ -79,7 +81,9 @@ router.get('/:audio', async (req, res) => {
     if (!song) {
       return res.status(404).send('Song not found');
     } else {
+      functions.logger.log("song", song);
       const convertedSong = toCamelCase(song);
+      functions.logger.log("convertedSong", convertedSong);
       return res.json(convertedSong);
     };
   } catch (error: any) {
