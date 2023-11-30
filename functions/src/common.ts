@@ -35,18 +35,26 @@ export const newUserObject = {
   joined: Date.now(),
 };
 
-export const toCamelCase = <T extends Record<string, any>>(val: string | T): string | T => {
+export function toCamelCase(val: string): string;
+export function toCamelCase<T extends Record<string, any>>(val: T): T;
+export function toCamelCase<T extends any[]>(val: T): T;
+export function toCamelCase(val: any): any {
   if (typeof val === 'string') {
     return val.replace(/([-_][a-z])/gi, ($1) => $1.toUpperCase().replace('-', '').replace('_', ''));
+  } else if (Array.isArray(val)) {
+    return val.map(item => toCamelCase(item));
   } else if (typeof val === 'object' && val !== null) {
     const newObj: Record<string, any> = {};
     Object.keys(val).forEach((key) => {
-      newObj[toCamelCase(key) as string] = toCamelCase(val[key]);
+      newObj[toCamelCase(key)] = toCamelCase(val[key]);
     });
-    return newObj as T;
+    return newObj;
   }
   return val;
-};
+}
+
+
+
 
 export const toSnakeCase = <T extends Record<string, any>>(val: string | T): string | T => {
   if (typeof val === 'string') {

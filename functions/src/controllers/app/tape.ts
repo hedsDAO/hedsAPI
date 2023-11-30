@@ -1,4 +1,5 @@
 import { PrismaClient, tapes as TapeData, Prisma } from '@prisma/client';
+import * as functions from 'firebase-functions';
 
 const prisma = new PrismaClient();
 
@@ -50,7 +51,7 @@ export const getTapeById = async (tapeId: number) => {
         },
       },
     });
-
+  functions.logger.log('tape', tape);
     if (!tape) return null;
     return tape;
   } catch (error) {

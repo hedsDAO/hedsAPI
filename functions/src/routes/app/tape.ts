@@ -1,16 +1,19 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import {
   getTapeById,
-  saveTapeAndSampleSong,
+  // saveTapeAndSampleSong,
   updateTape,
   deleteTape,
   getTapeSongs,
   getAllTapes,
   getTapeContractArgs,
   countArtistTracks,
-} from '../../controllers/tapes';
+} from '../../controllers/app/tape';
 import * as functions from 'firebase-functions';
-import { pinFileToIpfs, unpinFromIpfs } from '../../controllers/utils/pinata';
+import {
+  // pinFileToIpfs,
+  unpinFromIpfs,
+} from '../../controllers/utils/pinata';
 import { toCamelCase, toSnakeCase } from '../../common';
 import { TapeData } from '../../controllers/tapes/types';
 
@@ -35,11 +38,7 @@ router.get('/get-artists-tape-count', async (req, res) => {
     const results = await countArtistTracks();
     if (!results) res.status(404).json({ error: 'No tapes found' });
     else {
-      const convertedResults = results.map((result: object) => {
-        const convertedResult = toCamelCase(result);
-        return convertedResult;
-      });
-      res.json(convertedResults);
+      res.json({results});
     }
   } catch (err: any) {
     res.status(500).send(err.message);
@@ -100,17 +99,21 @@ router.get('/', async (req, res) => {
  */
 router.get('/:tapeId', async (req, res) => {
   try {
+    functions.logger.log('GET /tapes/:tapeId', req.params.tapeId);
     const tape_id = parseInt(req.params.tapeId);
     const tape = await getTapeById(tape_id);
+    functions.logger.log('tape', tape);
     const songs = await getTapeSongs(tape_id);
+    functions.logger.log('songs', songs);
     if (!tape) res.status(404).json({ error: 'No tape found' });
     else {
-      const convertedTape = toCamelCase(tape) as TapeData;
+      const convertedTape = toCamelCase(tape);
+      functions.logger.log('convertedTape', convertedTape);
       const convertedSongs = songs.map((song: object) => {
         const convertedSong = toCamelCase(song);
         return convertedSong;
       });
-      res.json({...convertedTape, songs: convertedSongs});
+      res.json({ ...convertedTape, songs: convertedSongs });
     }
   } catch (error: any) {
     res.status(500).send(error.message);
@@ -141,52 +144,52 @@ router.get('/:tapeId/songs', async (req, res) => {
   }
 });
 
-/**
- * Creates a new tape along with a sample song, requires admin privileges.
- * @route POST /
- * @param {Object} - Tape and song data
- * @returns {Object} 201 - The created tape information
- * @returns {Error} 403 - Forbidden for non-admin users
- * @returns {Error} 500 - Unexpected error
- */
-router.post(
-  '/',
-  async (req, res, next) => {
-    const user = req.body.user;
+// /**
+//  * Creates a new tape along with a sample song, requires admin privileges.
+//  * @route POST /
+//  * @param {Object} - Tape and song data
+//  * @returns {Object} 201 - The created tape information
+//  * @returns {Error} 403 - Forbidden for non-admin users
+//  * @returns {Error} 500 - Unexpected error
+//  */
+// router.post(
+//   '/',
+//   async (req, res, next) => {
+//     const user = req.body.user;
 
-    if (user.role !== 'admin') {
-      return res.status(403).send('User is not an admin');
-    }
+//     if (user.role !== 'admin') {
+//       return res.status(403).send('User is not an admin');
+//     }
 
-    try {
-      const imageObject = await pinFileToIpfs(req.body.coverImage, req.body.tapeData.name);
-      const audioObject = await pinFileToIpfs(req.body.sampleAudio, req.body.songData.track_name);
-      res.locals['coverImageIpfsHash'] = imageObject.IpfsHash;
-      res.locals['sampleAudioIpfsHash'] = audioObject.IpfsHash;
-      return next();
-    } catch (e) {
-      functions.logger.log('error', e);
-      return next(e);
-    }
-  },
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const curatorWallet = req.body.user.wallet;
-      const gateway = 'https://www.heds.cloud/ipfs/';
-      const tapeData = req.body.tapeData;
-      tapeData.image = gateway + res.locals['coverImageIpfsHash'];
-      const songData = req.body.songData;
-      songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
-      songData.cover = tapeData.image;
-      const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
+//     try {
+//       const imageObject = await pinFileToIpfs(req.body.coverImage, req.body.tapeData.name);
+//       const audioObject = await pinFileToIpfs(req.body.sampleAudio, req.body.songData.track_name);
+//       res.locals['coverImageIpfsHash'] = imageObject.IpfsHash;
+//       res.locals['sampleAudioIpfsHash'] = audioObject.IpfsHash;
+//       return next();
+//     } catch (e) {
+//       functions.logger.log('error', e);
+//       return next(e);
+//     }
+//   },
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const curatorWallet = req.body.user.wallet;
+//       const gateway = 'https://www.heds.cloud/ipfs/';
+//       const tapeData = req.body.tapeData;
+//       tapeData.image = gateway + res.locals['coverImageIpfsHash'];
+//       const songData = req.body.songData;
+//       songData.audio = gateway + res.locals['sampleAudioIpfsHash'];
+//       songData.cover = tapeData.image;
+//       const newTape = await saveTapeAndSampleSong(tapeData, songData, curatorWallet);
 
-      res.status(201).json(newTape);
-    } catch (error: any) {
-      next(error);
-      res.status(500).json(error.message);
-    }
-  },
-);
+//       res.status(201).json(newTape);
+//     } catch (error: any) {
+//       next(error);
+//       res.status(500).json(error.message);
+//     }
+//   },
+// );
 
 /**
  * Updates a tape by tape ID.
