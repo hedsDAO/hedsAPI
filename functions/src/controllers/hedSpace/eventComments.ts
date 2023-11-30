@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import type { event_comments as Comment } from '@prisma/client';
+import type { event_comments as Comment, event_comments_likes as CommentLike } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -53,6 +53,29 @@ export const updateEventComment = async (id: number, comment: string): Promise<C
   return await prisma.event_comments.update({
     where: { id },
     data: { comment },
+  });
+};
+
+/**
+ * Adds a like that is assocaited with an event comment.
+ * @param {number} userId - The ID of the user liking the comment
+ * @param {number} commentId - The ID of the comment that is being liked.
+ * @returns {Promise<CommentLike>} A promise that resolves to the updated comment like object.
+ */
+ export const addLikeToEventComment = async (userId: number, commentId: number): Promise<CommentLike> => {
+  return await prisma.event_comments_likes.create({
+    data: { user_id: userId, comment_id: commentId },
+  });
+};
+
+/**
+ * Removes a like that is assocaited with an event comment.
+ * @param {number} id - The ID of the comment like entry
+ * @returns {Promise<CommentLike>} A promise that resolves to the updated comment like object.
+ */
+ export const removeLikeFromEventComment = async (id: number): Promise<CommentLike> => {
+  return await prisma.event_comments_likes.delete({
+    where: { id },
   });
 };
 
