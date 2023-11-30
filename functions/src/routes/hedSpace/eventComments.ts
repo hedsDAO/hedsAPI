@@ -1,6 +1,16 @@
 import { Router } from 'express';
 import { toCamelCase } from '../../common';
-import { getEventComments, getCommentById, createEventComment, updateEventComment, deleteEventComment } from '../../controllers/hedSpace/eventComments';
+import {
+  getEventComments,
+  getCommentById,
+  createEventComment,
+  updateEventComment,
+  addLikeToEventComment,
+  removeLikeFromEventComment,
+  deleteEventComment,
+} from '../../controllers/hedSpace/eventComments';
+import type { event_comments as Comment } from '@prisma/client';
+
 
 const router = Router();
 
@@ -23,7 +33,7 @@ router.get('/events/:eventId/comments', async (req, res) => {
 
 router.get('/comments/:id', async (req, res) => {
   try {
-    const comment = await getCommentById(parseInt(req.params.id));
+    const comment: Comment | null = await getCommentById(parseInt(req.params.id));
     if (comment) {
       const convertedComment = toCamelCase(comment);
       return res.status(200).json(convertedComment);
@@ -58,6 +68,38 @@ router.put('/comments/:id', async (req, res) => {
       return res.status(200).json(convertedComment);
     } else {
       return res.status(400).json({ message: 'Comment could not be updated' });
+    }
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+router.post('/comments/addLike', async (req, res) => {
+  try {
+    const { userId, eventId, commentId } = req.body;
+    const updatedComment = await addLikeToEventComment(userId, commentId);
+    if (updatedComment) {
+      const updatedComments = await getEventComments(eventId);
+      const convertedComments = toCamelCase(updatedComments);
+      return res.status(200).json(convertedComments);
+    } else {
+      return res.status(400).json({ message: 'Could not add like to comment' });
+    }
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+router.post('/comments/removeLike', async (req, res) => {
+  try {
+    const { commentLikeId, eventId } = req.body;
+    const updatedComment = await removeLikeFromEventComment(commentLikeId);
+    if (updatedComment) {
+      const updatedComments = await getEventComments(eventId);
+      const convertedComments = toCamelCase(updatedComments);
+      return res.status(200).json(convertedComments);
+    } else {
+      return res.status(400).json({ message: 'Could not remove like from comment' });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
