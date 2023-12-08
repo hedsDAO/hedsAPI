@@ -1,8 +1,16 @@
 import * as express from 'express';
 import * as functions from 'firebase-functions';
-import { getGoogleUserData, sendTwilioVerification, verifyTwilioCode, validateUserByDisplayName, validateTwitterHandle } from '../../controllers/app/auth';
+import {
+  getGoogleUserData,
+  sendTwilioVerification,
+  verifyTwilioCode,
+  // sendTwilioMessage,
+  validateUserByDisplayName,
+  validateTwitterHandle,
+} from '../../controllers/app/auth';
 import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/app/user';
 import { newUserObject, toCamelCase } from '../../common';
+import { createRSVP } from '../../controllers/hedSpace/guestStatus';
 
 const router = express.Router();
 
@@ -78,17 +86,22 @@ router.get('/sms/send/:to', async (req, res) => {
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
-router.get('/sms/verify/:to/:code', async (req, res) => {
+router.get('/sms/verify/:to/:code/:name', async (req, res) => {
   const to = req.params.to;
   const code = req.params.code;
+  const name = req.params.name;
   try {
     const verification = await verifyTwilioCode(to, code);
     if (verification?.status === 'approved') {
       const user = await getUserByPhoneNumber(to);
       if (user) {
+        functions.logger.log('returning user', user);
         return res.status(200).json(user);
       } else {
-        const createdUser = await createUser({ ...newUserObject, phone_number: to });
+        const createdUser = await createUser({ ...newUserObject, phone_number: to, display_name: name });
+        functions.logger.log('new user', createdUser);
+        await createRSVP(1, createdUser.id, 'attending');
+        // await sendTwilioMessage(to, "You've successfully created an account!");
         return res.status(200).json(createdUser);
       }
     } else {

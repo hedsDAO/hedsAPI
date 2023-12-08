@@ -27,7 +27,10 @@ export const getEventById = async (id: number): Promise<Event|null> => {
     where: { id },
     include: {
       event_comments: true,
-      event_rsvps: true,
+      event_rsvps: {
+        include: {
+          users: true,
+      }},
       event_waitlists: true,
     },
   });
