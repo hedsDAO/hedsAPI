@@ -162,6 +162,12 @@ export const getUserById = async (id: number) => {
   try {
     const user = await prisma.users.findFirst({
       where: { id },
+      include: {
+        events: true,
+        event_rsvps: true,
+        likes: true,
+        listening_history: true,
+      },
     });
     return user;
   } catch (e) {
@@ -259,6 +265,10 @@ export const createUser = async (userData: any) => {
     functions.logger.log('user data body', userData);
     const user = await prisma.users.create({
       data: userData,
+      include: {
+        events: true,
+        event_rsvps: true,
+      },
     });
     functions.logger.log('user creared', user);
 

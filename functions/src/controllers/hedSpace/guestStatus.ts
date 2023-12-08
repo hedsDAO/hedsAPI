@@ -38,6 +38,7 @@ export const createRSVP = async (eventId: number, userId: number, status: string
       event_id: eventId,
       user_id: userId,
       status,
+      created_at: Date.now(),
     },
   });
 };
@@ -51,7 +52,7 @@ export const createRSVP = async (eventId: number, userId: number, status: string
 export const updateRSVP = async (id: number, status: string): Promise<RSVP> => {
   return await prisma.event_rsvps.update({
     where: { id },
-    data: { status },
+    data: { status, updated_at: Date.now() },
   });
 };
 

@@ -80,6 +80,27 @@ export const verifyTwilioCode = async (to: string, code: string) => {
 };
 
 /**
+ * Send a custom message via Twilio SMS.
+ *
+ * @param {string} to - The phone number to which the message should be sent.
+ * @param {string} body - The message body.
+ * @returns {Promise<Object>} Twilio message response.
+ */
+ export const sendTwilioMessage = async (to: string, body: string) => {
+  try {
+    return twilioClient.messages.create({
+      to: to,
+      from: process.env.TWILIO_PHONE_NUMBER as string, // Your Twilio phone number
+      body: body,
+    });
+  } catch (e: any) {
+    // Assuming you have a logger set up similar to your verification functions
+    console.error(e); // You can replace this with your logger if available
+    throw new Error(e.message);
+  }
+};
+
+/**
  * Get user information from Google using a provided token.
  *
  * @param {string} token - The Google OAuth token.
