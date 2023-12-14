@@ -7,8 +7,8 @@ import { ProposalState } from "hedsvote";
  * @param {Date} endTime - The ending date/time of the proposal.
  * @returns {ProposalState} - The status of the proposal (PENDING, OPEN, or CLOSED).
  */
-export const determineProposalStatus = (startTime: Date, endTime: Date): ProposalState => {
-    const currentTime = new Date();
+export const determineProposalStatus = (startTime: number, endTime: number): ProposalState => {
+    const currentTime = Date.now();
   
     if (currentTime < startTime) {
       return ProposalState.PENDING;

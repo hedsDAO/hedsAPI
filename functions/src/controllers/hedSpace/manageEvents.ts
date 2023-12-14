@@ -26,6 +26,10 @@ export const getEventById = async (id: number): Promise<Event|null> => {
   return await prisma.events.findUnique({
     where: { id },
     include: {
+      _count: {
+        select: {
+          event_rsvps: true,
+        }},
       event_comments: true,
       event_rsvps: {
         include: {
