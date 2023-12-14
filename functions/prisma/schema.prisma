@@ -129,14 +129,14 @@ model proposals {
   space_id     Int?
   signature    String?        @db.VarChar(255)
   author       Int?
-  start_time   DateTime?      @db.Timestamp(6)
-  end_time     DateTime?      @db.Timestamp(6)
+  start_time   Int
+  end_time     Int
   block        Int?
   method       String?        @db.VarChar
   title        String?
   description  String?
   scores       Float[]
-  created_at   DateTime?      @db.Timestamp(6)
+  created_at   Int
   cover        String?        @db.VarChar
   choice_type  String?        @db.VarChar
   show_results Boolean?
@@ -193,8 +193,8 @@ model votes {
   voter              Int?
   users              users?         @relation(fields: [voter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_votes_voter")
   vote_choices       vote_choices[]
-  proposals          proposals?     @relation(fields: [proposalsIpfs_hash], references: [ipfs_hash])
-  proposalsIpfs_hash String?        @db.VarChar(255)
+  proposals          proposals?     @relation(fields: [proposal_ipfs_hash], references: [ipfs_hash])
+  proposal_ipfs_hash String?        @db.VarChar(255)
 }
 
 model space_authors {

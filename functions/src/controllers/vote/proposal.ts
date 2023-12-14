@@ -46,6 +46,7 @@ export async function createProposal({ proposal, message, signature, user_id }: 
       description: proposal.description,
       cover: proposal.cover,
       choice_type: proposal.choice_type,
+      created_at: proposal.createdAt,
       show_results: proposal.show_results,
       choices: { create: proposal.choices },
     },

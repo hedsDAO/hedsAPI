@@ -47,7 +47,7 @@ export async function castVote(req: Request, res: Response) {
       }
     }
 
-    const proposalState = determineProposalStatus(proposal.start_time as Date, proposal.end_time as Date);
+    const proposalState = determineProposalStatus(proposal.start_time, proposal.end_time);
     if (proposalState !== ProposalState.OPEN) {
       return res.status(400).json({ error: 'Proposal is not in an open state' });
     }
