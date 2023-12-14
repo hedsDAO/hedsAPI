@@ -96,13 +96,19 @@ router.get('/sms/verify/:to/:code/:name', async (req, res) => {
       const user = await getUserByPhoneNumber(to);
       if (user) {
         functions.logger.log('returning user', user);
-        return res.status(200).json(user);
+        const convertedUser = toCamelCase(user);
+        return res.status(200).json(convertedUser);
       } else {
-        const createdUser = await createUser({ ...newUserObject, phone_number: to, display_name: name });
-        functions.logger.log('new user', createdUser);
-        await createRSVP(1, createdUser.id, 'attending');
-        // await sendTwilioMessage(to, "You've successfully created an account!");
-        return res.status(200).json(createdUser);
+        if (name === 'playerLogin') {
+          const createdUser = await createUser({ ...newUserObject, phone_number: to });
+          return res.status(200).json(createdUser);
+        } else {
+          const createdUser = await createUser({ ...newUserObject, phone_number: to, display_name: name });
+          functions.logger.log('new user', createdUser);
+          await createRSVP(1, createdUser.id, 'attending');
+          // await sendTwilioMessage(to, "You've successfully created an account!");
+          return res.status(200).json(createdUser);
+        }
       }
     } else {
       return res.status(400).send('Verification denied. Try again.');
