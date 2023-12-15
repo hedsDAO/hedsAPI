@@ -2,6 +2,7 @@ import * as express from 'express';
 import { toCamelCase } from '../../common';
 import { determineProposalStatus } from '../../controllers/utils/determineProposalStatus';
 import { getProposal, createProposal, updateProposal, deleteProposal } from '../../controllers/vote/proposal';
+import * as functions from 'firebase-functions';
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get('/:ipfs_hash', async (req, res) => {
     const proposal = await getProposal(ipfsHash);
     if (!proposal) return res.status(404).json({ error: 'Proposal not found' });
     else {
+      functions.logger.info('proposal', proposal);
       const convertedProposal = await toCamelCase(proposal);
       return res.status(200).json({ ...convertedProposal, state: determineProposalStatus(proposal.start_time, proposal.end_time) });
     }
