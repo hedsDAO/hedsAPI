@@ -15,6 +15,10 @@ export async function getAllSpacesByAdmin(userId: number) {
   });
 }
 
+export async function getSpaceByName(name: string) {
+  return await prisma.spaces.findUnique({ where: { name }, include: { space_authors: true } });
+}
+
 export async function getSpaces() {
   return await prisma.spaces.findMany();
 }

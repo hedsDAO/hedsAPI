@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { toCamelCase } from '../../common';
 import { determineProposalStatus } from '../../controllers/utils/determineProposalStatus';
-import { getSpaces, createSpace, updateSpace, deleteSpace, getProposalsInSpace, getAllSpacesByAdmin } from '../../controllers/vote/space';
+import { getSpaces, createSpace, updateSpace, deleteSpace, getProposalsInSpace, getAllSpacesByAdmin, getSpaceByName } from '../../controllers/vote/space';
 
 const router = express.Router();
 
@@ -28,7 +28,8 @@ router.get('/:spaceName/proposals', async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 });
-router.get('/:userId', async (req, res) => {
+
+router.get('/space/:userId', async (req, res) => {
   const userId = req.params.userId;
 
   try {
@@ -43,6 +44,19 @@ router.get('/:userId', async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 });
+
+router.get('/:spaceName', async (req, res) => {
+  const name = req.params.spaceName;
+  try {
+    const space = await getSpaceByName(name);
+    if (!space) return res.status(404).json({ error: 'Space not found' });
+    const convertedSpace = toCamelCase(space);
+    return res.status(200).json(convertedSpace);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const spaces = await getSpaces();
