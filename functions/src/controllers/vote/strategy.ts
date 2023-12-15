@@ -1,12 +1,7 @@
 import axios from 'axios';
-import { Request, Response } from 'express';
 import * as functions from 'firebase-functions';
 import { Strategy, StrategyName, Erc721MultiRegistryWeightedStrategy, WhitelistWeightedStrategy } from 'hedsvote';
 import { PrismaClient } from '@prisma/client';
-
-interface TypedRequestBody<T> extends Request {
-  body: T;
-}
 
 const prisma = new PrismaClient();
 let cursor = '';
@@ -77,8 +72,8 @@ export const includeNextNPages = async (previous: any, numPages: number, contrac
  * @param {Response} res - Express response object.
  * @returns {Promise<Response>} A promise that resolves to an express response object.
  */
-export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strategy[]; proposalId: string }>, res: Response) => {
-  const { strategies, proposalId } = req.body;
+export const getTokenOwners = async (strategyBody: any) => {
+  const { strategies, proposalId } = strategyBody;
   const contracts = strategies
     .map((strategy: Strategy) => {
       if (strategy.name === StrategyName.ERC721) {
@@ -102,7 +97,7 @@ export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strateg
       contractOwners.push(ownersByContract);
     } catch (e) {
       functions.logger.log(e);
-      return res.json(e);
+      return 'error in fetching owners';
     }
   }
 
@@ -120,11 +115,11 @@ export const getTokenOwners = async (req: TypedRequestBody<{ strategies: Strateg
 
   try {
     await addStrategiesToDB(strategies, proposalId);
+    return;
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ message: 'Error inserting strategies into the database' });
+    functions.logger.error(e);
+    return 'Error inserting strategies into the database';
   }
-  return res.status(200).json({ message: 'Successfully inserted strategies into the database' });
 };
 
 /**
