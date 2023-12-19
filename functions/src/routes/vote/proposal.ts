@@ -1,8 +1,9 @@
 import * as express from 'express';
 import { toCamelCase } from '../../common';
 import { determineProposalStatus } from '../../controllers/utils/determineProposalStatus';
-import { getProposal, createProposal, updateProposal, deleteProposal } from '../../controllers/vote/proposal';
+import { getProposal, createProposal, updateProposal, deleteProposal, getTapeFromProposalId } from '../../controllers/vote/proposal';
 import * as functions from 'firebase-functions';
+import { ProposalState } from 'hedsvote';
 
 const router = express.Router();
 
@@ -14,8 +15,14 @@ router.get('/:ipfs_hash', async (req, res) => {
     if (!proposal) return res.status(404).json({ error: 'Proposal not found' });
     else {
       functions.logger.info('proposal', proposal);
+      const proposalStatus = determineProposalStatus(proposal.start_time, proposal.end_time);
+      if (proposalStatus === ProposalState.CLOSED) {
+        const tapeFromProposalId = await getTapeFromProposalId(proposal.ipfs_hash);
+        const convertedProposal = await toCamelCase({ ...proposal, tape: tapeFromProposalId });
+        return res.status(200).json({ ...convertedProposal, state: proposalStatus });
+      }
       const convertedProposal = await toCamelCase(proposal);
-      return res.status(200).json({ ...convertedProposal, state: determineProposalStatus(proposal.start_time, proposal.end_time) });
+      return res.status(200).json({ ...convertedProposal, state: proposalStatus });
     }
   } catch (error: any) {
     return res.status(500).json({ error: error.message });

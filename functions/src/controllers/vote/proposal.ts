@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 export const getProposal = async (ipfsHash: string) => {
   return await prisma.proposals.findUnique({
     where: { ipfs_hash: ipfsHash },
-    include: { choices: true, strategies: true, votes: { include: { vote_choices: true } } },
+    include: { choices: true, strategies: true, vote_choices: { include: { votes: true } } },
   });
 };
 
@@ -82,4 +82,10 @@ export async function deleteProposal(ipfsHash: string) {
   await unpinFromIpfs(ipfsHash);
 
   return await prisma.proposals.delete({ where: { ipfs_hash: ipfsHash } });
+}
+
+export async function getTapeFromProposalId(proposalId: string) {
+  return await prisma.tapes.findUnique({
+    where: { proposal_id: proposalId },
+  });
 }
