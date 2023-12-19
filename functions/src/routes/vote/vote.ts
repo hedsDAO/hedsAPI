@@ -1,12 +1,12 @@
 import * as express from 'express';
-import { toCamelCase } from '../../common';
+import { toCamelCase, toSnakeCase } from '../../common';
 import { castVote } from '../../controllers/vote/vote';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    const vote = await castVote(req.body);
+    const vote = await castVote(toSnakeCase(req.body));
     if (!vote) return res.status(404).json({ error: 'Vote not found' });
     if (vote === 'Proposal not found') return res.status(404).json({ error: 'Proposal not found' });
     if (vote === 'Unauthorized: Signature does not match address') return res.status(401).json({ error: 'Unauthorized: Signature does not match address' });

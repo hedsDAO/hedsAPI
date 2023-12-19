@@ -69,7 +69,7 @@ model tapes {
   merkle_root         String?               @db.VarChar
   description         String?               @db.VarChar
   image               String?               @db.VarChar
-  proposal_id         String?               @db.VarChar
+  proposal_id         String?               @unique @db.VarChar
   video               String?               @db.VarChar
   bpm                 Int?
   timeline            Json?
@@ -179,8 +179,7 @@ model vote_choices {
   proposal_id String    @db.VarChar(255)
   amount      Int?
   proposals   proposals @relation(fields: [proposal_id], references: [ipfs_hash], onDelete: NoAction, onUpdate: NoAction, map: "fk_vote_choices_proposals")
-  votes       votes?    @relation(fields: [votesId], references: [id])
-  votesId     Int?
+  votes       votes?    @relation(fields: [vote_id], references: [id])
 
   @@id([vote_id, choice_id, proposal_id])
 }
