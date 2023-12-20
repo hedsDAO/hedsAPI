@@ -89,3 +89,9 @@ export async function getTapeFromProposalId(proposalId: string) {
     where: { proposal_id: proposalId },
   });
 }
+
+export async function getTapeTracks(tapeId: number) {
+  return await prisma.songs.findMany({
+    where: { tape_id: tapeId, type: 'track' },
+  });
+}

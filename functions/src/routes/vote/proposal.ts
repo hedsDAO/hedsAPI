@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { toCamelCase } from '../../common';
 import { determineProposalStatus } from '../../controllers/utils/determineProposalStatus';
-import { getProposal, createProposal, updateProposal, deleteProposal, getTapeFromProposalId } from '../../controllers/vote/proposal';
+import { getProposal, createProposal, updateProposal, deleteProposal, getTapeFromProposalId, getTapeTracks } from '../../controllers/vote/proposal';
 import * as functions from 'firebase-functions';
 import { ProposalState } from 'hedsvote';
 
@@ -18,7 +18,8 @@ router.get('/:ipfs_hash', async (req, res) => {
       const proposalStatus = determineProposalStatus(proposal.start_time, proposal.end_time);
       if (proposalStatus === ProposalState.CLOSED) {
         const tapeFromProposalId = await getTapeFromProposalId(proposal.ipfs_hash);
-        const convertedProposal = await toCamelCase({ ...proposal, tape: tapeFromProposalId });
+        const tapeTracks = tapeFromProposalId?.id ?  await getTapeTracks(tapeFromProposalId.id) : [];
+        const convertedProposal = await toCamelCase({ ...proposal, tape: tapeFromProposalId, tracks: tapeTracks });
         return res.status(200).json({ ...convertedProposal, state: proposalStatus });
       }
       const convertedProposal = await toCamelCase(proposal);
