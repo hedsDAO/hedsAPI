@@ -10,7 +10,6 @@ import {
 } from '../../controllers/app/auth';
 import { createUser, getUserByEmaill, getUserByPhoneNumber } from '../../controllers/app/user';
 import { newUserObject, toCamelCase } from '../../common';
-import { createRSVP } from '../../controllers/hedSpace/guestStatus';
 
 const router = express.Router();
 
@@ -28,13 +27,13 @@ router.get('/validate-display-name/:displayName', async (req, res) => {
     const validationResult = await validateUserByDisplayName(displayName);
 
     if (validationResult) {
-      return res.status(200).json({ displayNameExists: true });
+      return res.sendStatus(200).json({ displayNameExists: true });
     } else {
-      return res.status(400).json({ displayNameExists: false });
+      return res.sendStatus(400).json({ displayNameExists: false });
     }
   } catch (err: any) {
     console.error(err);
-    return res.status(500).send({ message: 'Internal server error', error: err.message });
+    return res.sendStatus(500).send({ message: 'Internal server error', error: err.message });
   }
 });
 
@@ -50,13 +49,13 @@ router.get('/validate-twitter/:twitter_handle', async (req, res) => {
   try {
     const validationResult = await validateTwitterHandle(twitter_handle);
     if (validationResult) {
-      return res.status(200).json({ validated: true });
+      return res.sendStatus(200).json({ validated: true });
     } else {
-      return res.status(400).json({ validated: false });
+      return res.sendStatus(400).json({ validated: false });
     }
   } catch (err: any) {
     console.error(err);
-    return res.status(500).send({ message: 'Internal server error', error: err.message });
+    return res.sendStatus(500).send({ message: 'Internal server error', error: err.message });
   }
 });
 
@@ -72,10 +71,10 @@ router.get('/sms/send/:to', async (req, res) => {
   try {
     const verification = await sendTwilioVerification(to);
     functions.logger.log(verification?.status === 'pending');
-    res.status(200).send('Verification code sent.');
+    res.send('Verification code sent.');
   } catch (error) {
     console.log(error);
-    res.status(500).send('There was an error sending your verification code.');
+    res.send('There was an error sending your verification code.');
   }
 });
 
@@ -86,10 +85,9 @@ router.get('/sms/send/:to', async (req, res) => {
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
-router.get('/sms/verify/:to/:code/:name', async (req, res) => {
+router.get('/sms/verify/:to/:code', async (req, res) => {
   const to = req.params.to;
   const code = req.params.code;
-  const name = req.params.name;
   try {
     const verification = await verifyTwilioCode(to, code);
     if (verification?.status === 'approved') {
@@ -97,24 +95,16 @@ router.get('/sms/verify/:to/:code/:name', async (req, res) => {
       if (user) {
         functions.logger.log('returning user', user);
         const convertedUser = toCamelCase(user);
-        return res.status(200).json(convertedUser);
+        return res.json(convertedUser);
       } else {
-        if (name === 'playerLogin') {
-          const createdUser = await createUser({ ...newUserObject, phone_number: to });
-          return res.status(200).json(createdUser);
-        } else {
-          const createdUser = await createUser({ ...newUserObject, phone_number: to, display_name: name });
-          functions.logger.log('new user', createdUser);
-          await createRSVP(1, createdUser.id, 'attending');
-          // await sendTwilioMessage(to, "You've successfully created an account!");
-          return res.status(200).json(createdUser);
-        }
+        const createdUser = await createUser({ ...newUserObject, phone_number: to });
+        return res.json(createdUser);
       }
     } else {
-      return res.status(400).send('Verification denied. Try again.');
+      return res.send('Verification denied. Try again.');
     }
   } catch (error) {
-    return res.send(500).send('There was an error verifying your code.');
+    return res.send('There was an error verifying your code.');
   }
 });
 
@@ -150,13 +140,13 @@ router.get('/google-oauth-callback', async (req, res) => {
       } else {
         const createdUser = await createUser({ ...newUserObject, email });
         const convertedNewUser = toCamelCase(createdUser);
-        return res.status(200).json(convertedNewUser);
+        return res.sendStatus(200).json(convertedNewUser);
       }
     } else {
       throw new Error('Invalid ID token userInfo');
     }
   } catch (e: any) {
-    return res.status(400).json({ message: 'Token verification failed', error: e });
+    return res.sendStatus(400).json({ message: 'Token verification failed', error: e });
   }
 });
 
@@ -173,7 +163,7 @@ router.put('/link-user', async (req, res) => {
 
   try {
     if (!user) {
-      return res.status(404).json({ message: 'Missing User Data' });
+      return res.sendStatus(404).json({ message: 'Missing User Data' });
     }
 
     if (link_type === 'email') {
@@ -192,17 +182,17 @@ router.put('/link-user', async (req, res) => {
         const existingUser = await getUserByEmaill(email);
 
         if (existingUser) {
-          return res.status(400).json({ message: 'Email is already associated with another user' });
+          return res.sendStatus(400).json({ message: 'Email is already associated with another user' });
         }
 
         if (user.email) {
-          return res.status(400).json({ message: 'User already has an email linked' });
+          return res.sendStatus(400).json({ message: 'User already has an email linked' });
         }
 
         user.email = email;
         const createdUser = await createUser({ ...newUserObject, email });
         const convertedNewUser = toCamelCase(createdUser);
-        return res.status(200).json(convertedNewUser);
+        return res.sendStatus(200).json(convertedNewUser);
       } else {
         throw new Error('Invalid ID token userInfo');
       }
@@ -212,19 +202,19 @@ router.put('/link-user', async (req, res) => {
       const existingUser = await getUserByPhoneNumber(phone_number);
 
       if (existingUser) {
-        return res.status(400).json({ message: 'Phone number is already associated with another user' });
+        return res.sendStatus(400).json({ message: 'Phone number is already associated with another user' });
       }
 
       if (user.phone_number) {
-        return res.status(400).json({ message: 'User already has a phone number linked' });
+        return res.sendStatus(400).json({ message: 'User already has a phone number linked' });
       }
 
       await sendTwilioVerification(phone_number);
-      return res.status(200).send('Verification code sent.');
+      return res.sendStatus(200).send('Verification code sent.');
     }
   } catch (error: any) {
     console.error(error);
-    return res.status(500).send({ message: 'Internal server error', error: error.message });
+    return res.sendStatus(500).send({ message: 'Internal server error', error: error.message });
   }
 });
 

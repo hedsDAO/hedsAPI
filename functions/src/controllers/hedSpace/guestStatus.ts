@@ -26,6 +26,19 @@ export const getRSVPById = async (id: number): Promise<RSVP | null> => {
 };
 
 /**
+ * Find a RSVP by user and event.
+ * @param {number} userId - The ID of the user.
+ * @returns {Promise<RSVP[]>} A promise that resolves to an array of RSVPs.
+ */
+export const findRSVPByEventIdAndUserId = async (eventId: number, userId: number): Promise<RSVP | null> => {
+  return await prisma.event_rsvps.findFirst({
+    where: {
+      AND: [{ event_id: eventId }, { user_id: userId }],
+    },
+  });
+};
+
+/**
  * Creates a new RSVP for an event.
  * @param {number} eventId - The ID of the event.
  * @param {number} userId - The ID of the user who is RSVPing.
@@ -61,13 +74,13 @@ export const updateRSVP = async (id: number, status: string): Promise<RSVP> => {
  * @param {number} id - The ID of the RSVP to delete.
  * @returns {Promise<any>} A promise that resolves to the result of the deletion operation.
  */
- export const deleteRSVP = async (id: number): Promise<any> => {
+export const deleteRSVP = async (id: number): Promise<any> => {
   // Start a transaction
   return await prisma.$transaction(async () => {
     // Retrieve the RSVP to get event_id and user_id
     const rsvp = await prisma.event_rsvps.findUnique({
       where: { id },
-      select: { event_id: true, user_id: true }
+      select: { event_id: true, user_id: true },
     });
 
     if (!rsvp) throw new Error('RSVP not found');
