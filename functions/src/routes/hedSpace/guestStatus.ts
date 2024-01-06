@@ -1,12 +1,19 @@
 import { Router } from 'express';
 import { toCamelCase } from '../../common';
-import { createRSVP, updateRSVP, deleteRSVP, addToWaitlist, removeFromWaitlist } from '../../controllers/hedSpace/guestStatus';
+import { createRSVP, updateRSVP, deleteRSVP, addToWaitlist, removeFromWaitlist, findRSVPByEventIdAndUserId } from '../../controllers/hedSpace/guestStatus';
 
 const router = Router();
 
 router.post('/events/:eventId/rsvps', async (req, res) => {
   try {
     const { userId, status } = req.body;
+
+    const existingRSVP = await findRSVPByEventIdAndUserId(parseInt(req.params.eventId), userId);
+    if (existingRSVP) {
+      const convertedRsvp = toCamelCase(existingRSVP);
+      return res.json(convertedRsvp);
+    }
+
     const rsvp = await createRSVP(parseInt(req.params.eventId), userId, status);
     if (rsvp) {
       const convertedRSVP = toCamelCase(rsvp);

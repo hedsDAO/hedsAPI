@@ -2,6 +2,7 @@ import { verifyWalletSignature } from '../utils/verifySignature';
 import { determineProposalStatus } from '../utils/determineProposalStatus';
 import { PrismaClient } from '@prisma/client';
 import { ProposalState } from 'hedsvote';
+import * as functions from 'firebase-functions';
 
 const prisma = new PrismaClient();
 
@@ -23,7 +24,7 @@ export async function castVote(voteBody: any) {
   const message: string = voteBody.message;
   const signature: `0x${string}` = voteBody.signature;
 
-  const { vp, voter, proposal_id } = newVote;
+  const { vp, voter, proposal_id, wallet } = newVote;
 
   const proposal = await prisma.proposals.findUnique({
     where: { ipfs_hash: proposal_id },
@@ -40,7 +41,9 @@ export async function castVote(voteBody: any) {
 
   if (proposal.is_web3) {
     const recoveredAddress = await verifyWalletSignature(message, signature);
-    if (recoveredAddress.toLowerCase() !== voter) {
+    functions.logger.log('recoveredAddress', recoveredAddress);
+    functions.logger.log('wallet', wallet);
+    if (recoveredAddress.toLowerCase() !== wallet.toLowerCase()) {
       return 'Unauthorized: Signature does not match address';
     }
   }
