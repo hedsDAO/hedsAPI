@@ -11,7 +11,8 @@ import tape from './servers/app/tape';
 
 /* UTIL SERVER */
 import pinata from './servers/utils/pinata';
-import stripe from "./servers/utils/stripe";
+import stripe from './servers/utils/stripe';
+import twilio from './servers/utils/twilio';
 
 /*  VOTE SERVER */
 import proposal from './servers/vote/proposal';
@@ -40,5 +41,6 @@ exports.space = space;
 exports.strategy = strategy;
 exports.stripe = stripe;
 exports.tape = tape;
+exports.twilio = twilio;
 exports.user = user;
 exports.vote = vote;
