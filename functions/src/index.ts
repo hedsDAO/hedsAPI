@@ -25,12 +25,18 @@ import mangeEvents from './servers/hedSpace/mangeEvents';
 import guestStatus from './servers/hedSpace/guestStatus';
 import eventComments from './servers/hedSpace/eventComments';
 
+/* HEDSWORLD SERVER */
+import catalog from './servers/hedsWorld/catalog';
+import checkout from './servers/hedsWorld/checkout';
+
 // API V1
 import app from './app';
 
 exports.api = app;
 
 exports.auth = auth;
+exports.catalog = catalog;
+exports.checkout = checkout;
 exports.eventComments = eventComments;
 exports.guestStatus = guestStatus;
 exports.manageEvents = mangeEvents;
