@@ -11,13 +11,13 @@ router.post('/events/:eventId/rsvps', async (req, res) => {
     const existingRSVP = await findRSVPByEventIdAndUserId(parseInt(req.params.eventId), userId);
     if (existingRSVP) {
       const convertedRsvp = toCamelCase(existingRSVP);
-      return res.json(convertedRsvp);
+      return res.json({...convertedRsvp, isNew: false});
     }
 
     const rsvp = await createRSVP(parseInt(req.params.eventId), userId, status);
     if (rsvp) {
       const convertedRSVP = toCamelCase(rsvp);
-      return res.status(201).json(convertedRSVP);
+      return res.status(201).json({...convertedRSVP, isNew: true});
     } else {
       return res.status(400).json({ message: 'RSVP could not be created' });
     }
