@@ -1,5 +1,6 @@
 import twilio from 'twilio';
 import * as functions from 'firebase-functions';
+import { getAllUsers } from '../app/user';
 
 export class SMSRequest {
   recipients: string[];
@@ -58,4 +59,16 @@ export async function bulkSMS(request: SMSRequest): Promise<string> {
   }
 
   return `${request.recipients.length} message(s) sent successfully`;
+}
+
+export async function getPhoneNumbers() {
+  // Fetch all users
+  const allUsers = await getAllUsers();
+
+  // Filter out users without a phone number and map to get only phone numbers
+  const phoneNumbers = allUsers
+    ?.filter((user) => user.phone_number) // Assuming the field is named 'phoneNumber'
+    .map((user) => user.phone_number);
+
+  return phoneNumbers;
 }

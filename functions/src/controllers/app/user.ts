@@ -144,6 +144,7 @@ export const getUserByPhoneNumber = async (phone_number: string) => {
   try {
     const user = await prisma.users.findFirst({
       where: { phone_number },
+      include: { event_rsvps: true },
     });
     return user;
   } catch (e) {
