@@ -16,7 +16,7 @@ export interface RequestWithFile extends Request {
 router.get('/get-artists-tape-count', async (req, res) => {
   try {
     const results = await countArtistTracks();
-    return res.json(results);
+    return res.send(results);
   } catch (err: any) {
     return res.status(500).send(err.message);
   }
