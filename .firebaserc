@@ -1,18 +1,7 @@
 {
   "projects": {
-    "heds": "heds-104d8",
-    "heds-dev": "heds-dev"
+    "heds": "heds-104d8"
   },
-  "targets": {
-    "heds-104d8": {
-      "hosting": {
-        "prod": [
-          "heds-104d8"
-        ],
-        "staging": [
-          "heds-staging"
-        ]
-      }
-    }
-  }
+  "targets": {},
+  "etags": {}
 }

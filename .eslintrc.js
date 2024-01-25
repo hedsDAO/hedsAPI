@@ -1,29 +1,35 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
+  root: true,
+  env: {
+    es6: true,
+    node: true,
   },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
-  plugins: ['css-modules'],
   extends: [
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-    'plugin:css-modules/recommended',
-    'plugin:prettier/recommended',
-    'plugin:react/jsx-runtime',
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "google",
+    "plugin:@typescript-eslint/recommended",
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: ["./tsconfig.json", "./tsconfig.dev.json", "./test/**/*.ts"],
+    sourceType: "module",
+  },
+  ignorePatterns: [
+    "/lib/**/*", // Ignore built files.
+    "**/*.config.js",
+    "**/*custom-transformer.js",
+  ],
+  plugins: [
+    "@typescript-eslint",
+    "import",
   ],
   rules: {
-    'prettier/indent': 'off',
-    'indent': ["error", 2, { "SwitchCase": 1 }],
-    'react/display-name': 'off',
+    "max-len": 0,
+    "new-cap": 0,
+    "quotes": ["error", "double"],
+    "import/no-unresolved": 0,
   },
 };

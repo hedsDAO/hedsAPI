@@ -1,7 +1,19 @@
-node_modules
-package-lock.json 
-build
+# Compiled JavaScript files
+lib/**/*.js
+lib/**/*.js.map
+
+
+# TypeScript v1 declaration files
+typings/
+
+# Node.js dependency directory
+node_modules/
+
+# env variables
 .env
-.DS_Store
-.firebase/**/*
-**/logs
+lib/service_key.json
+service_key.json
+
+# logs
+firebase-debug.log
+```

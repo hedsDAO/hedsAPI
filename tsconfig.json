@@ -1,27 +1,18 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "outDir": "./build/",
-    "noImplicitAny": true,
-    "module": "ES2015",
-    "target": "ES5",
-    "jsx": "react-jsx",
-    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "resolveJsonModule": true,
     "allowJs": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"],
-      "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@common/*": ["src/common/*"],
-      "@models/*": ["src/models/*"],
-      "@modules/modals/*": ["src/modules/modals/*"],
-      "@modules/navigation/*": ["src/modules/navigation/*"],
-      "@api/*": ["src/api/*"],
-      "@public/*": ["public/*"]
-    }
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
   },
-  "exclude": ["node_modules", "build", "ipfs-http-client", "functions"]
+  "compileOnSave": true,
+  "include": ["src/**/*", "jest.config.js"],
+  "exclude": ["node_modules", "*/.test.ts"]
 }
