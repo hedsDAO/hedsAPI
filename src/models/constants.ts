@@ -1,1 +1,0 @@
-export const API_PREFIX = 'https://us-central1-heds-104d8.cloudfunctions.net/api'
