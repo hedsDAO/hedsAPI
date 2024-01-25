@@ -1,29 +1,15 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', '.png', '.svg'],
-  collectCoverageFrom: ['<rootDir>/**/*.{ts, tsx}'],
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   roots: ['<rootDir>'],
-  moduleNameMapper: {
-    "wagmi": "<rootDir>/src/tests/mocks/wagmi/wagmi.ts",
-    "@/hooks/useWaveform/useWaveform": "<rootDir>/src/tests/mocks/hooks/useWaveform.ts",
-    '^axios$': require.resolve('axios'),
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^@pages/(.*)$': '<rootDir>/src/pages/$1',
-    '^@components/(.*)$': '<rootDir>/src/components/$1',
-    '^@common/(.*)$': '<rootDir>/src/common/$1',
-    '^@api/(.*)$': '<rootDir>/src/api/$1',
-    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
-    '^@models/(.*)$': '<rootDir>/src/models/$1',
-    '^@modals/modals/(.*)$': '<rootDir>/src/modules/modals/$1',
-    '^@modals/navigation/(.*)$': '<rootDir>/src/modules/navigation/$1',
-    '^@public/(.*)$': '<rootDir>/public/$1',
-    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy',
-  },
-  testEnvironment: 'jsdom',
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx)$',
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-    "^.+\\.svg$": "jest-transform-stub",
+    '^.+\\.ts?$': 'ts-jest',
+    '\\.js$': './custom-transformer.js',
   },
-  setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
-  modulePathIgnorePatterns: ['<rootDir>/functions/'],
+  globals: {
+    "ts-jest": {
+      "tsconfig": "tsconfig.jest.json"
+    }
+  }
 };
