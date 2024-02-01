@@ -41,36 +41,8 @@ export async function getAllProducts() {
       const isPresentAtAllLocations = obj?.presentAtAllLocations === true;
       return false || isPresentAtAllLocations;
     });
-
-    /**
-     * @get_all_images
-     */
-    const allImages = await catalogApi.searchCatalogObjects({
-      objectTypes: ['ITEM'],
-      includeRelatedObjects: true,
-      includeDeletedObjects: false,
-    });
-    const imageMap: { [key: string]: any } = {};
-    allImages?.result?.relatedObjects?.forEach((obj) => {
-      if (obj.type === 'IMAGE') {
-        imageMap[obj.id] = obj.imageData?.url;
-      }
-    });
-    /**
-     * @combine_images_and_products
-     */
-    const productsWithImage = [];
-    if (!filteredProducts) return null;
-    else {
-      for (const product of filteredProducts) {
-        let productImages: string[] = [];
-        if (product?.itemData?.imageIds?.length) {
-          productImages = product?.itemData?.imageIds?.map((imageId) => imageMap[imageId]);
-        }
-        productsWithImage.push({ ...product, productImages: productImages });
-      }
-      return JSONBig.parse(JSONBig.stringify(productsWithImage));
-    }
+    // return JSONBig.parse(JSONBig.stringify(filteredProducts));
+    return filteredProducts;
   } catch (error) {
     functions.logger.log(`Error fetching products:", ${error}`);
     return error;
@@ -84,26 +56,12 @@ export async function getCatalogItem(itemId: string) {
     environment: Environment.Production,
   });
   try {
-    const response = await client.catalogApi.retrieveCatalogObject(itemId);
-    const allImages = await client.catalogApi.searchCatalogObjects({
-      objectTypes: ['ITEM'],
-      includeRelatedObjects: true,
-      includeDeletedObjects: false,
-    });
-    const imageMap: { [key: string]: any } = {};
-    allImages?.result?.relatedObjects?.forEach((obj) => {
-      if (obj.type === 'IMAGE') {
-        imageMap[obj.id] = obj.imageData?.url;
-      }
-    });
+    const product = await client.catalogApi.retrieveCatalogObject(itemId);
 
-    let productImages: string[] = [];
-    if (response.result.object?.itemData?.imageIds?.length) {
-      productImages = response.result.object?.itemData?.imageIds?.map((imageId) => imageMap[imageId]);
-    }
-    const productWithPicture = { ...response.result.object, productImages: productImages };
-    return JSONBig.parse(JSONBig.stringify(productWithPicture));
+    // return JSONBig.parse(JSONBig.stringify(product.result.object));
+    return product.result.object;
   } catch (error) {
     console.log(error);
+    return; 
   }
 }
