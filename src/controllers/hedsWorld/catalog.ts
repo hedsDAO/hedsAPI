@@ -41,8 +41,7 @@ export async function getAllProducts() {
       const isPresentAtAllLocations = obj?.presentAtAllLocations === true;
       return false || isPresentAtAllLocations;
     });
-    // return JSONBig.parse(JSONBig.stringify(filteredProducts));
-    return filteredProducts;
+    return JSONBig.parse(JSONBig.stringify(filteredProducts));
   } catch (error) {
     functions.logger.log(`Error fetching products:", ${error}`);
     return error;
@@ -58,8 +57,7 @@ export async function getCatalogItem(itemId: string) {
   try {
     const product = await client.catalogApi.retrieveCatalogObject(itemId);
 
-    // return JSONBig.parse(JSONBig.stringify(product.result.object));
-    return product.result.object;
+    return JSONBig.parse(JSONBig.stringify(product.result.object));
   } catch (error) {
     console.log(error);
     return; 
