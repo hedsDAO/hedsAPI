@@ -37,11 +37,11 @@ export async function getAllProducts() {
      */
     const catalogApi = client.catalogApi;
     const allProducts = await catalogApi.listCatalog(undefined, 'ITEM', undefined, undefined);
-    const filteredProducts = allProducts?.result?.objects?.filter((obj) => {
-      const isPresentAtAllLocations = obj?.presentAtAllLocations === true;
-      return false || isPresentAtAllLocations;
-    });
-    return JSONBig.parse(JSONBig.stringify(filteredProducts));
+    // const filteredProducts = allProducts?.result?.objects?.filter((obj) => {
+    //   const isPresentAtAllLocations = obj?.presentAtAllLocations === true;
+    //   return false || isPresentAtAllLocations;
+    // });
+    return JSONBig.parse(JSONBig.stringify(allProducts.result?.objects));
   } catch (error) {
     functions.logger.log(`Error fetching products:", ${error}`);
     return error;
