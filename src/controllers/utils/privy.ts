@@ -8,7 +8,7 @@ const privy = new PrivyClient(
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function importUserWithBackoff(phoneNumber: string , attempt = 0) {
+async function importUserWithBackoff(phoneNumber: string, attempt = 0) {
   try {
     const response = await privy.importUser({
       linkedAccounts: [{ type: "phone", number: phoneNumber }],
@@ -31,7 +31,8 @@ async function importUserWithBackoff(phoneNumber: string , attempt = 0) {
 
 export const bulkUpload = async () => {
   const success = [];
-  for (const phoneNumber of bulkUsers) { // Assuming bulkUsers is an array of phone numbers
+  for (const phoneNumber of bulkUsers) {
+    // Assuming bulkUsers is an array of phone numbers
     try {
       await importUserWithBackoff(phoneNumber);
       success.push(phoneNumber);
@@ -41,4 +42,16 @@ export const bulkUpload = async () => {
     }
   }
   return success;
+};
+
+export const addUserToPrivy = async (phoneNumber: string) => {
+  try {
+    const response = await privy.importUser({
+      linkedAccounts: [{ type: "phone", number: phoneNumber }],
+      createEmbeddedWallet: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error;
+  }
 };
