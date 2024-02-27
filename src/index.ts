@@ -11,6 +11,7 @@ import tape from "./servers/app/tape";
 
 /* UTIL SERVER */
 import pinata from "./servers/utils/pinata";
+import privy from "./servers/utils/privy";
 import stripe from "./servers/utils/stripe";
 import twilio from "./servers/utils/twilio";
 
@@ -36,6 +37,7 @@ exports.eventComments = eventComments;
 exports.guestStatus = guestStatus;
 exports.manageEvents = mangeEvents;
 exports.pinata = pinata;
+exports.privy = privy;
 exports.proposal = proposal;
 exports.song = song;
 exports.space = space;

@@ -12,6 +12,7 @@ router.get('/:ipfs_hash', async (req, res) => {
 
   try {
     const proposal = await getProposal(ipfsHash);
+    functions.logger.info('proposal', proposal);
     if (!proposal) return res.status(404).json({ error: 'Proposal not found' });
     else {
       functions.logger.info('proposal', proposal);
