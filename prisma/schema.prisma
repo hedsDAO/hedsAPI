@@ -258,6 +258,7 @@ model events {
   created_at      Int?
   updated_at      Int?
   max_guests      Int?
+  video           String           @db.VarChar(255)
   event_comments  event_comments[]
   event_rsvps     event_rsvps[]
   event_waitlists event_waitlists[]
