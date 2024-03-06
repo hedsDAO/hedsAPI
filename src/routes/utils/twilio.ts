@@ -1,5 +1,11 @@
-import * as express from 'express';
-import { SMSRequest, bulkSMS, getPhoneNumbers } from '../../controllers/utils/twilio';
+import * as express from "express";
+import {
+  SMSRequest,
+  bulkSMS,
+  getPhoneNumbers,
+  sendSMS,
+} from "../../controllers/utils/twilio";
+import * as functions from "firebase-functions";
 
 const router = express.Router();
 
@@ -10,19 +16,40 @@ const router = express.Router();
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
-router.post('/bulk', async (req, res) => {
+router.post("/bulk", async (req, res) => {
   try {
-    const bulkSMSRequest = new SMSRequest(req.body.recipients, req.body.message);
+    const bulkSMSRequest = new SMSRequest(
+      req.body.recipients,
+      req.body.message
+    );
     const err = bulkSMSRequest.validate();
     if (err) {
-      res.status(400).json({ message: err.message });
+      res.json({ message: err.message });
       return;
     }
 
     const response = await bulkSMS(bulkSMSRequest);
-    res.status(200).json({ message: response });
+    res.json({ message: response });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.json({ message: error.message });
+  }
+});
+
+router.post("/sendSMS", async (req, res) => {
+  try {
+    functions.logger.log({
+      recipients: req.body.recipients,
+      message: req.body.message,
+    });
+    // const smsRequest = new SMSRequest(req.body.recipients, req.body.message);
+
+    const response = await sendSMS({
+      recipients: req.body.recipients,
+      message: req.body.message,
+    });
+    res.json({ message: response });
+  } catch (error: any) {
+    res.json({ message: error.message });
   }
 });
 
@@ -33,12 +60,12 @@ router.post('/bulk', async (req, res) => {
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
-router.get('/phoneNumbers', async (req, res) => {
+router.get("/phoneNumbers", async (req, res) => {
   try {
     const response = await getPhoneNumbers();
-    res.status(200).json(response);
+    res.json(response);
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.json({ message: error.message });
   }
 });
 
