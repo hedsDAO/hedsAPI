@@ -1,6 +1,6 @@
-import twilio from 'twilio';
-import * as functions from 'firebase-functions';
-import { getAllUsers } from '../app/user';
+import twilio from "twilio";
+import * as functions from "firebase-functions";
+import { getAllUsers } from "../app/user";
 
 export class SMSRequest {
   recipients: string[];
@@ -12,11 +12,11 @@ export class SMSRequest {
   }
 
   validate(): Error | null {
-    if (this.message === '') {
-      return new Error('message cannot be empty');
+    if (this.message === "") {
+      return new Error("message cannot be empty");
     }
     if (!this.recipients.every(validatePhoneNumber)) {
-      return new Error('all phone numbers must be in E.164 format');
+      return new Error("all phone numbers must be in E.164 format");
     }
     return null;
   }
@@ -34,7 +34,7 @@ export async function bulkSMS(request: SMSRequest): Promise<string> {
 
   if (!accountSid || !authToken || !twilioMessagingServiceSID) {
     functions.logger.log({ accountSid, authToken, twilioMessagingServiceSID });
-    throw new Error('Twilio configuration is missing');
+    throw new Error("Twilio configuration is missing");
   }
 
   const client = twilio(accountSid, authToken);
@@ -59,6 +59,45 @@ export async function bulkSMS(request: SMSRequest): Promise<string> {
   }
 
   return `${request.recipients.length} message(s) sent successfully`;
+}
+
+export async function sendSMS(request: {
+  recipients: string[];
+  message: string;
+}): Promise<string> {
+  // Validate the message and phone number
+  const { recipients, message } = request;
+  functions.logger.log({ recipients, message });
+  const phoneNumber = recipients[0];
+  if (message === "") {
+    throw new Error("Message cannot be empty");
+  }
+
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const twilioMessagingServiceSID = process.env.TWILIO_MESSAGING_SID;
+
+  if (!accountSid || !authToken || !twilioMessagingServiceSID) {
+    functions.logger.log({ accountSid, authToken, twilioMessagingServiceSID });
+    throw new Error("Twilio configuration is missing");
+  }
+
+  const client = twilio(accountSid, authToken);
+
+  try {
+    functions.logger.log("Sending message", { phoneNumber, message });
+    await client.messages.create({
+      to: phoneNumber,
+      body: message,
+      messagingServiceSid: twilioMessagingServiceSID,
+    });
+    return `Message sent successfully to ${phoneNumber}`;
+  } catch (err) {
+    console.error(err);
+    throw new Error(
+      `Message could not be sent to ${phoneNumber}, please check your Twilio logs for more information`
+    );
+  }
 }
 
 export async function getPhoneNumbers() {
