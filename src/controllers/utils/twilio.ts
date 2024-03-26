@@ -1,6 +1,9 @@
 import twilio from "twilio";
+import { PrismaClient } from "@prisma/client";
 import * as functions from "firebase-functions";
 import { getAllUsers } from "../app/user";
+
+const prisma = new PrismaClient();
 
 export class SMSRequest {
   recipients: string[];
@@ -25,6 +28,51 @@ export class SMSRequest {
 function validatePhoneNumber(phoneNumber: string): boolean {
   const e164Pattern = /^\+[1-9]\d{1,14}$/;
   return e164Pattern.test(phoneNumber);
+}
+
+export async function getPhoneNumbersByEventId(
+  eventId: number
+): Promise<string[]> {
+  const phoneNumbers = await prisma.users.findMany({
+    where: {
+      event_rsvps: {
+        some: {
+          event_id: eventId,
+        },
+      },
+    },
+    select: {
+      phone_number: true,
+    },
+  });
+
+  const filteredPhoneNumbers = phoneNumbers
+    .map((user) => user.phone_number)
+    .filter((phoneNumber): phoneNumber is string => phoneNumber !== null);
+
+  if (filteredPhoneNumbers.length === 0) {
+    throw new Error("No phone numbers found for this event");
+  }
+
+  return filteredPhoneNumbers;
+}
+
+export async function getAllPhoneNumbersFromEvents() {
+  const phoneNumbers = await prisma.users.findMany({
+    select: {
+      phone_number: true,
+    },
+  });
+
+  const filteredPhoneNumbers = phoneNumbers
+    .map((user) => user.phone_number)
+    .filter((phoneNumber): phoneNumber is string => phoneNumber !== null);
+
+  if (filteredPhoneNumbers.length === 0) {
+    throw new Error("No phone numbers found for this event");
+  }
+
+  return filteredPhoneNumbers;
 }
 
 export async function bulkSMS(request: SMSRequest): Promise<string> {
