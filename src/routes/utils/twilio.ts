@@ -2,7 +2,9 @@ import * as express from "express";
 import {
   SMSRequest,
   bulkSMS,
+  getAllPhoneNumbersFromEvents,
   getPhoneNumbers,
+  getPhoneNumbersByEventId,
   sendSMS,
 } from "../../controllers/utils/twilio";
 import * as functions from "firebase-functions";
@@ -10,7 +12,7 @@ import * as functions from "firebase-functions";
 const router = express.Router();
 
 /**
- * Validate a given display name.
+ * Send bulk SMS.
  *
  * @route POST /bulk
  * @param {express.Request} req - Express request object.
@@ -35,13 +37,68 @@ router.post("/bulk", async (req, res) => {
   }
 });
 
+/**
+ * Send SMS messages to all users from an event.
+ *
+ * @route POST /sendTextBlastForEvent
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
+router.post("/sendTextBlastForEvent", async (req, res) => {
+  try {
+    const phoneNumbers = await getPhoneNumbersByEventId(req.body.eventId);
+
+    if (!phoneNumbers) {
+      throw new Error("No phone numbers found for this event");
+    }
+
+    const smsRequest = new SMSRequest(phoneNumbers, req.body.message);
+
+    const response = await bulkSMS(smsRequest);
+    res.json({ message: response });
+  } catch (error: any) {
+    res.json({ message: error.message });
+  }
+});
+
+/**
+ * Send SMS messages to all users in the database.
+ *
+ * @route POST /sendMassTextBlast
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ */
+router.post("/sendMassTextBlast", async (req, res) => {
+  try {
+    const phoneNumbers = await getAllPhoneNumbersFromEvents();
+
+    if (!phoneNumbers) {
+      throw new Error("No phone numbers found for this event");
+    }
+
+    const smsRequest = new SMSRequest(phoneNumbers, req.body.message);
+
+    const response = await bulkSMS(smsRequest);
+    res.json({ message: response });
+  } catch (error: any) {
+    res.json({ message: error.message });
+  }
+});
+
+/**
+ * Send SMS messages to a list of recipients.
+ *
+ * @route POST /sendSMS
+ * @param {express.Request} req - Express request object.
+ * @param {express.Response} res - Express response object.
+ 
+ */
 router.post("/sendSMS", async (req, res) => {
   try {
     functions.logger.log({
       recipients: req.body.recipients,
       message: req.body.message,
     });
-    // const smsRequest = new SMSRequest(req.body.recipients, req.body.message);
 
     const response = await sendSMS({
       recipients: req.body.recipients,
@@ -54,9 +111,9 @@ router.post("/sendSMS", async (req, res) => {
 });
 
 /**
- * Validate a given display name.
+ * Get phone numbers.
  *
- * @route POST /bulk
+ * @route POST /phoneNumbers
  * @param {express.Request} req - Express request object.
  * @param {express.Response} res - Express response object.
  */
