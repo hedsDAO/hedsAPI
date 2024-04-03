@@ -53,7 +53,6 @@ export async function getPhoneNumbersByEventId(
   if (filteredPhoneNumbers.length === 0) {
     throw new Error("No phone numbers found for this event");
   }
-
   return filteredPhoneNumbers;
 }
 
