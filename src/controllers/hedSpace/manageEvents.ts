@@ -41,6 +41,29 @@ export const getEventById = async (id: number): Promise<Event|null> => {
 };
 
 /**
+ * Retrieves a single event by its event name.
+ * @param {string} eventName - The event name of the event to retrieve.
+ * @returns {Promise<EventExtended|null>} A promise that resolves to the event object with comments, rsvps, and waitlist, or null if not found.
+ */
+export const getEventsByEventName = async (eventName: string): Promise<Event|null> => {
+  return await prisma.events.findUnique({
+    where: { name: eventName},
+    include: {
+      _count: {
+        select: {
+          event_rsvps: true,
+        }},
+      event_comments: true,
+      event_rsvps: {
+        include: {
+          users: true,
+      }},
+      event_waitlists: true,
+    },
+  });
+};
+
+/**
  * Creates a new event with the given data.
  * @param {Event} eventData - An object containing the event data.
  * @returns {Promise<Event>} A promise that resolves to the created event object.

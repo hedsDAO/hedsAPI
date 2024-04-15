@@ -248,7 +248,7 @@ model event_waitlists {
 
 model events {
   id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(255)
+  name            String            @unique @db.VarChar(255)
   description     String?
   location        String            @db.VarChar(255)
   start_time      Int?
@@ -258,7 +258,7 @@ model events {
   created_at      Int?
   updated_at      Int?
   max_guests      Int?
-  video           String           @db.VarChar(255)
+  video           String            @db.VarChar(255)
   event_comments  event_comments[]
   event_rsvps     event_rsvps[]
   event_waitlists event_waitlists[]
