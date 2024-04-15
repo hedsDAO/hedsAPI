@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as functions from 'firebase-functions';
 import { toCamelCase, toSnakeCase } from '../../common';
-import { getEvents, getEventById, createEvent, updateEvent, deleteEvent } from '../../controllers/hedSpace/manageEvents';
+import { getEvents, getEventById, createEvent, updateEvent, deleteEvent, getEventsByEventName } from '../../controllers/hedSpace/manageEvents';
 
 const router = Router();
 
@@ -22,9 +22,23 @@ router.get('/events', async (req, res) => {
   }
 });
 
-router.get('/events/:id', async (req, res) => {
+router.get('/event-id/:id', async (req, res) => {
   try {
     const event = await getEventById(parseInt(req.params.id));
+    if (event) {
+      const convertedEvent = toCamelCase(event);
+      return res.status(200).json(convertedEvent);
+    } else {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/events/:eventName', async (req, res) => {
+  try {
+    const event = await getEventsByEventName(req.params.eventName.replace(/-/g, ' '));
     if (event) {
       const convertedEvent = toCamelCase(event);
       return res.status(200).json(convertedEvent);
