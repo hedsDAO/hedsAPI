@@ -1,11 +1,18 @@
-import { Router } from 'express';
-import * as functions from 'firebase-functions';
-import { toCamelCase, toSnakeCase } from '../../common';
-import { getEvents, getEventById, createEvent, updateEvent, deleteEvent, getEventsByEventName } from '../../controllers/hedSpace/manageEvents';
+import { Router } from "express";
+import * as functions from "firebase-functions";
+import { toCamelCase, toSnakeCase } from "../../common";
+import {
+  getEvents,
+  getEventById,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  getEventsByEventName,
+} from "../../controllers/hedSpace/manageEvents";
 
 const router = Router();
 
-router.get('/events', async (req, res) => {
+router.get("/events", async (req, res) => {
   try {
     const events = await getEvents();
     if (events) {
@@ -15,58 +22,60 @@ router.get('/events', async (req, res) => {
       });
       return res.status(200).json(convertedEvents);
     } else {
-      return res.status(404).json({ message: 'No events found' });
+      return res.status(404).json({ message: "No events found" });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 });
 
-router.get('/event-id/:id', async (req, res) => {
+router.get("/event-id/:id", async (req, res) => {
   try {
     const event = await getEventById(parseInt(req.params.id));
     if (event) {
       const convertedEvent = toCamelCase(event);
       return res.status(200).json(convertedEvent);
     } else {
-      return res.status(404).json({ message: 'Event not found' });
+      return res.status(404).json({ message: "Event not found" });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 });
 
-router.get('/events/:eventName', async (req, res) => {
+router.get("/events/:eventName", async (req, res) => {
   try {
-    const event = await getEventsByEventName(req.params.eventName.replace(/-/g, ' '));
+    const event = await getEventsByEventName(
+      req.params.eventName.replace(/-/g, " ")
+    );
     if (event) {
       const convertedEvent = toCamelCase(event);
       return res.status(200).json(convertedEvent);
     } else {
-      return res.status(404).json({ message: 'Event not found' });
+      return res.status(404).json({ message: "Event not found" });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 });
 
-router.post('/events', async (req, res) => {
+router.post("/events", async (req, res) => {
   try {
     const eventData = toSnakeCase(req.body);
-    functions.logger.log('eventData', eventData);
+    functions.logger.log("eventData", eventData);
     const event = await createEvent(eventData);
     if (event) {
       const convertedEvent = toCamelCase(event);
       return res.status(201).json(convertedEvent);
     } else {
-      return res.status(400).json({ message: 'Event could not be created' });
+      return res.status(400).json({ message: "Event could not be created" });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 });
 
-router.put('/events/:id', async (req, res) => {
+router.put("/events/:id", async (req, res) => {
   try {
     const eventData = toSnakeCase(req.body);
     const event = await updateEvent(parseInt(req.params.id), eventData);
@@ -74,20 +83,20 @@ router.put('/events/:id', async (req, res) => {
       const convertedEvent = toCamelCase(event);
       return res.status(200).json(convertedEvent);
     } else {
-      return res.status(400).json({ message: 'Event could not be updated' });
+      return res.status(400).json({ message: "Event could not be updated" });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 });
 
-router.delete('/events/:id', async (req, res) => {
+router.delete("/events/:id", async (req, res) => {
   try {
     const isDeleted = await deleteEvent(parseInt(req.params.id));
     if (isDeleted) {
-      return res.status(200).json({ message: 'Event deleted' });
+      return res.status(200).json({ message: "Event deleted" });
     } else {
-      return res.status(400).json({ message: 'Event could not be deleted' });
+      return res.status(400).json({ message: "Event could not be deleted" });
     }
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
