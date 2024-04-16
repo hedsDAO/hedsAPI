@@ -3,7 +3,7 @@ import { generatePass } from "../../controllers/hedSpace/applePass";
 
 const router = Router();
 
-router.post("/generatePass/:eventId/:displayName", async (req, res) => {
+router.get("/generatePass/:eventId/:displayName", async (req, res) => {
   try {
     const pass = await generatePass(
       parseInt(req.params.eventId),

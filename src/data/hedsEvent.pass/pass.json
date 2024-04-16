@@ -1,0 +1,11 @@
+{
+  "formatVersion": 1,
+  "organizationName": "heds",
+  "passTypeIdentifier": "pass.heds.space",
+  "teamIdentifier": "UU29QT4RMW",
+  "logoText": "heds",
+  "labelColor": "rgb(192,192,192)",
+  "foregroundColor": "rgb(255,255,255)",
+  "backgroundColor": "rgb(0,0,0)",
+  "eventTicket": {}
+}
