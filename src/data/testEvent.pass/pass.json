@@ -1,0 +1,49 @@
+{
+  "organizationName": "heds",
+  "passTypeIdentifier": "pass.heds.space",
+  "teamIdentifier": "UU29QT4RMW",
+  "formatVersion": 1,
+  "eventTicket": {
+    "headerFields": [
+      {
+        "key": "date",
+        "value": "2024-04-26T21:00-07:00",
+        "label": "9:00 PM",
+        "timeStyle": "PKDateStyleNone",
+        "dateStyle": "PKDateStyleMedium",
+        "textAlignment": "PKTextAlignmentRight"
+      }
+    ],
+    "auxiliaryFields": [
+      {
+        "value": "Please have ID ready when you arrive",
+        "label": "Instructions"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "name",
+        "value": "club cyberspace",
+        "label": "event"
+      },
+      {
+        "key": "ownerName",
+        "value": "Cam Greer",
+        "label": "Attendee"
+      }
+    ],
+    "backFields": [
+      {
+        "value": "\"club cyberspace\" is an audiovisual dj set by Almondmilkhunni b2b John Liwag inspired by PC music and hyperpop. ENJOY THE RAVE. 21+",
+        "key": "description",
+        "label": "About"
+      },
+      {
+        "key": "location",
+        "value": "7515 Melrose Ave, Los Angeles, CA 90046",
+        "dataDetectorTypes": "PKDataDetectorTypeAddress",
+        "label": "Address"
+      }
+    ]
+  }
+}
