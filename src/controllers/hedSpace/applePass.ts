@@ -1,7 +1,7 @@
-import { PKPass, Field, OverridablePassProps } from "passkit-generator";
+import { PKPass } from "passkit-generator";
 import { PrismaClient, events } from "@prisma/client";
 import axios from "axios";
-
+import { DateTimeFormatOptions } from "luxon";
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -27,16 +27,9 @@ export const generatePass = async (eventId: number, displayName: string) => {
       throw new Error("Event not found");
     }
 
-    const passModelPath = "./src/data/heds event.pass/pass.json";
-    const logoText = "heds";
-    const labelColor = "rgb(192,192,192)";
-    const foregroundColor = "rgb(255,255,255)";
-    const backgroundColor = "rgb(0,0,0)";
+    const passModelPath = "./src/data/hedsEvent.pass";
+
     const relevantDate = new Date(event.start_time).toISOString();
-    const organizationName = "heds";
-    const passTypeIdentifier = "pass.heds.space";
-    const teamIdentifier = "UU29QT4RMW";
-    const formatVersion = 1;
 
     const newPass = await PKPass.from(
       {
@@ -49,22 +42,19 @@ export const generatePass = async (eventId: number, displayName: string) => {
         },
       },
       {
-        organizationName,
-        passTypeIdentifier,
-        teamIdentifier,
-        formatVersion,
         serialNumber: `${event.id}-${displayName}`,
         description: event.description,
-        logoText,
-        foregroundColor,
-        backgroundColor,
-        labelColor,
-        eventTicket: setEventPassFields(event, displayName),
-        relevantDate,
-      } as OverridablePassProps
+      }
     );
 
+    await setEventPassFields(newPass, event, displayName);
+
     await addImagesToPass(newPass, event);
+    newPass.setRelevantDate(new Date(relevantDate));
+    newPass.setLocations({
+      latitude: 34.0836,
+      longitude: -118.3562,
+    });
 
     return newPass;
   } catch (error: any) {
@@ -72,44 +62,46 @@ export const generatePass = async (eventId: number, displayName: string) => {
   }
 };
 
-const setEventPassFields = (event: events, displayName: string) => {
+const setEventPassFields = (
+  newPass: PKPass,
+  event: events,
+  displayName: string
+) => {
   if (!event.description || !event.start_time) return;
+  const formattedDate = new Date(event.start_time).toISOString();
 
-  const eventPassFields: {
-    headerFields: Field[];
-    auxiliaryFields: Field[];
-    secondaryFields: Field[];
-    backFields: Field[];
-  } = {
-    headerFields: [],
-    auxiliaryFields: [],
-    secondaryFields: [],
-    backFields: [],
+  const formatEventTime = (event: events) => {
+    if (!event.start_time) return;
+    const eventDate = new Date(event.start_time);
+
+    const options: DateTimeFormatOptions = {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "America/Los_Angeles",
+      hour12: true,
+    };
+
+    const formattedTime = eventDate.toLocaleTimeString("en-US", options);
+
+    return formattedTime;
   };
 
-  const startTimeHours = new Date(event.start_time).getHours();
-  const startTimeMinutes = new Date(event.start_time).getMinutes();
-  const formattedDate = new Date(event.start_time).toISOString();
-  const getAmOrPm = startTimeHours >= 12 ? "PM" : "AM";
-  const formatHours = startTimeHours % 12 || 12;
-  const startTime = `${formatHours}:${startTimeMinutes} ${getAmOrPm}`;
-
-  eventPassFields.headerFields.push({
+  newPass.headerFields.push({
     key: "startTime",
-    label: startTime,
+    label: formatEventTime(event),
     value: formattedDate,
     timeStyle: "PKDateStyleNone",
     dateStyle: "PKDateStyleShort",
     textAlignment: "PKTextAlignmentRight",
   });
 
-  eventPassFields.auxiliaryFields.push({
+  newPass.auxiliaryFields.push({
     key: "instructions",
     label: "Instructions",
     value: "Please have ID ready when you arrive",
   });
 
-  eventPassFields.secondaryFields.push(
+  newPass.secondaryFields.push(
     {
       key: "eventName",
       label: "Event",
@@ -122,7 +114,7 @@ const setEventPassFields = (event: events, displayName: string) => {
     }
   );
 
-  eventPassFields.backFields.push(
+  newPass.backFields.push(
     {
       key: "about",
       label: "About",
@@ -136,7 +128,7 @@ const setEventPassFields = (event: events, displayName: string) => {
     }
   );
 
-  return eventPassFields;
+  return;
 };
 
 const addImagesToPass = async (newPass: PKPass, event: events) => {
@@ -163,6 +155,7 @@ const addImagesToPass = async (newPass: PKPass, event: events) => {
     newPass.addBuffer("strip.png", stripBuffer);
     newPass.addBuffer("strip@2x.png", stripBuffer);
   }
+  return;
 };
 
 const downloadImageFromUrl = async (url: string) => {
