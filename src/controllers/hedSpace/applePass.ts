@@ -2,6 +2,7 @@ import { PKPass } from "passkit-generator";
 import { PrismaClient, events } from "@prisma/client";
 import axios from "axios";
 import { DateTimeFormatOptions } from "luxon";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -44,6 +45,7 @@ export const generatePass = async (eventId: number, displayName: string) => {
       {
         serialNumber: `${event.id}-${displayName}`,
         description: event.description,
+        groupingIdentifier: "heds",
       }
     );
 
@@ -98,7 +100,7 @@ const setEventPassFields = (
   newPass.auxiliaryFields.push({
     key: "instructions",
     label: "Instructions",
-    value: "Please have ID ready when you arrive",
+    value: event.pass_instructions,
   });
 
   newPass.secondaryFields.push(
