@@ -247,22 +247,24 @@ model event_waitlists {
 }
 
 model events {
-  id              Int               @id @default(autoincrement())
-  name            String            @unique @db.VarChar(255)
-  description     String?
-  location        String            @db.VarChar(255)
-  start_time      Int?
-  end_time        Int?
-  image           String?           @db.VarChar(255)
-  user_id         Int
-  created_at      Int?
-  updated_at      Int?
-  max_guests      Int?
-  video           String            @db.VarChar(255)
-  event_comments  event_comments[]
-  event_rsvps     event_rsvps[]
-  event_waitlists event_waitlists[]
-  users           users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id                Int               @id @default(autoincrement())
+  name              String            @unique @db.VarChar(255)
+  description       String?
+  location          String            @db.VarChar(255)
+  start_time        Int?
+  end_time          Int?
+  image             String?           @db.VarChar(255)
+  user_id           Int
+  created_at        Int?
+  updated_at        Int?
+  max_guests        Int?
+  video             String            @db.VarChar(255)
+  strip_image       String            @db.VarChar(255)
+  pass_instructions String
+  event_comments    event_comments[]
+  event_rsvps       event_rsvps[]
+  event_waitlists   event_waitlists[]
+  users             users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 enum user_role_type {
