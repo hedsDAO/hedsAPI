@@ -22,6 +22,7 @@ import strategy from "./servers/vote/strategy";
 import vote from "./servers/vote/vote";
 
 /* HEDSPACE SERVER */
+import applePass from "./servers/hedSpace/applePass";
 import mangeEvents from "./servers/hedSpace/mangeEvents";
 import guestStatus from "./servers/hedSpace/guestStatus";
 import eventComments from "./servers/hedSpace/eventComments";
@@ -30,6 +31,7 @@ import eventComments from "./servers/hedSpace/eventComments";
 import catalog from "./servers/hedsWorld/catalog";
 import checkout from "./servers/hedsWorld/checkout";
 
+exports.applePass = applePass;
 exports.auth = auth;
 exports.catalog = catalog;
 exports.checkout = checkout;
