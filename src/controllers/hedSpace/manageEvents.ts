@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import type { events as Event } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
+import type { events as Event } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,18 @@ export const getEvents = async (): Promise<Event[]> => {
   return await prisma.events.findMany({
     include: {
       event_comments: true,
-      event_rsvps: true,
+      event_rsvps: {
+        include: {
+          users: {
+            select: {
+              id: true,
+              display_name: true,
+              profile_picture: true,
+              role: true,
+            },
+          },
+        },
+      },
       event_waitlists: true,
     },
   });
@@ -22,19 +33,28 @@ export const getEvents = async (): Promise<Event[]> => {
  * @param {number} id - The ID of the event to retrieve.
  * @returns {Promise<EventExtended|null>} A promise that resolves to the event object with comments, rsvps, and waitlist, or null if not found.
  */
-export const getEventById = async (id: number): Promise<Event|null> => {
+export const getEventById = async (id: number): Promise<Event | null> => {
   return await prisma.events.findUnique({
     where: { id },
     include: {
       _count: {
         select: {
           event_rsvps: true,
-        }},
+        },
+      },
       event_comments: true,
       event_rsvps: {
         include: {
-          users: true,
-      }},
+          users: {
+            select: {
+              id: true,
+              display_name: true,
+              profile_picture: true,
+              role: true,
+            },
+          },
+        },
+      },
       event_waitlists: true,
     },
   });
@@ -45,19 +65,30 @@ export const getEventById = async (id: number): Promise<Event|null> => {
  * @param {string} eventName - The event name of the event to retrieve.
  * @returns {Promise<EventExtended|null>} A promise that resolves to the event object with comments, rsvps, and waitlist, or null if not found.
  */
-export const getEventsByEventName = async (eventName: string): Promise<Event|null> => {
+export const getEventsByEventName = async (
+  eventName: string
+): Promise<Event | null> => {
   return await prisma.events.findUnique({
-    where: { name: eventName},
+    where: { name: eventName },
     include: {
       _count: {
         select: {
           event_rsvps: true,
-        }},
+        },
+      },
       event_comments: true,
       event_rsvps: {
         include: {
-          users: true,
-      }},
+          users: {
+            select: {
+              id: true,
+              display_name: true,
+              profile_picture: true,
+              role: true,
+            },
+          },
+        },
+      },
       event_waitlists: true,
     },
   });
@@ -80,7 +111,10 @@ export const createEvent = async (eventData: Event): Promise<Event> => {
  * @param {Event} eventData - An object containing the new event data.
  * @returns {Promise<Event>} A promise that resolves to the updated event object.
  */
-export const updateEvent = async (id: number, eventData: Event): Promise<Event> => {
+export const updateEvent = async (
+  id: number,
+  eventData: Event
+): Promise<Event> => {
   return await prisma.events.update({
     where: { id },
     data: eventData,
