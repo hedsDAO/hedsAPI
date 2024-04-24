@@ -94,6 +94,7 @@ model users {
   collection           Json?
   email                String?                @unique @db.VarChar
   phone_number         String?                @unique @db.VarChar
+  avatar_image         String?                @db.VarChar
   choices              choices[]
   event_comments       event_comments[]
   event_rsvps          event_rsvps[]
