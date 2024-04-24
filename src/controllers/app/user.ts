@@ -190,6 +190,10 @@ export const updateUser = async (user_id: number, data: any) => {
     const updatedUser = await prisma.users.update({
       where: { id: user_id },
       data,
+      include: {
+        events: true,
+        event_rsvps: true,
+      },
     });
     return updatedUser;
   } catch (e) {

@@ -15,6 +15,7 @@ export const getEvents = async (): Promise<Event[]> => {
         include: {
           users: {
             select: {
+              avatar_image: true,
               id: true,
               display_name: true,
               profile_picture: true,
@@ -47,6 +48,7 @@ export const getEventById = async (id: number): Promise<Event | null> => {
         include: {
           users: {
             select: {
+              avatar_image: true,
               id: true,
               display_name: true,
               profile_picture: true,
@@ -81,6 +83,7 @@ export const getEventsByEventName = async (
         include: {
           users: {
             select: {
+              avatar_image: true,
               id: true,
               display_name: true,
               profile_picture: true,
