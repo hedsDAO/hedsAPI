@@ -52,7 +52,11 @@ router.post("/sendTextBlastForEvent", async (req, res) => {
       throw new Error("No phone numbers found for this event");
     }
 
-    const smsRequest = new SMSRequest(phoneNumbers, req.body.message);
+    const smsRequest = new SMSRequest(
+      phoneNumbers,
+      req.body.message,
+      req.body.mediaUrl
+    );
 
     const response = await bulkSMS(smsRequest);
     res.json({ message: response });
@@ -76,7 +80,11 @@ router.post("/sendMassTextBlast", async (req, res) => {
       throw new Error("No phone numbers found for this event");
     }
 
-    const smsRequest = new SMSRequest(phoneNumbers, req.body.message);
+    const smsRequest = new SMSRequest(
+      phoneNumbers,
+      req.body.message,
+      req.body.mediaUrl
+    );
 
     const response = await bulkSMS(smsRequest);
     res.json({ message: response });
