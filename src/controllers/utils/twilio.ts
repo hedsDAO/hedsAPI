@@ -8,10 +8,12 @@ const prisma = new PrismaClient();
 export class SMSRequest {
   recipients: string[];
   message: string;
+  mediaUrl?: string;
 
-  constructor(recipients: string[], message: string) {
+  constructor(recipients: string[], message: string, mediaUrl?: string) {
     this.recipients = recipients;
     this.message = message;
+    this.mediaUrl = mediaUrl;
   }
 
   validate(): Error | null {
@@ -89,11 +91,18 @@ export async function bulkSMS(request: SMSRequest): Promise<string> {
 
   for (const recipient of request.recipients) {
     try {
-      await client.messages.create({
-        to: recipient,
-        body: request.message,
-        messagingServiceSid: twilioMessagingServiceSID,
-      });
+      request.mediaUrl
+        ? await client.messages.create({
+            to: recipient,
+            body: request.message,
+            mediaUrl: [request.mediaUrl],
+            messagingServiceSid: twilioMessagingServiceSID,
+          })
+        : await client.messages.create({
+            to: recipient,
+            body: request.message,
+            messagingServiceSid: twilioMessagingServiceSID,
+          });
     } catch (err) {
       console.error(err);
       numberOfFailedRequests++;
