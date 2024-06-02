@@ -8,12 +8,16 @@ const router = express.Router();
 const YOUR_DOMAIN = 'https://heds.space/event';
 
 router.post('/create-checkout-session', async (req, res) => {
-  const PRICE_ID = 'price_1OK9nsCNykh0hWhuB0eyb4f3';
+  const PRICE_ID_ONE = 'price_1PLdbcCNykh0hWhuA3mi05lV';
+  const PRICE_ID_TWO = 'price_1PLdbcCNykh0hWhuXOzkuP5z';
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: PRICE_ID,
+        price: PRICE_ID_ONE,
+        quantity: 1,
+      },
+      {
+        price: PRICE_ID_TWO,
         quantity: 1,
       },
     ],
