@@ -9,6 +9,10 @@ import user from "./servers/app/user";
 import song from "./servers/app/song";
 import tape from "./servers/app/tape";
 
+/* BACKBLAZE SERVER */
+// import backblazeReadFile from "./servers/backblaze/readFile";
+// import backblazeTranscoder from "./servers/backblaze/transcoder";
+
 /* UTIL SERVER */
 import pinata from "./servers/utils/pinata";
 import privy from "./servers/utils/privy";
@@ -33,6 +37,8 @@ import checkout from "./servers/hedsWorld/checkout";
 
 exports.applePass = applePass;
 exports.auth = auth;
+// exports.backblazeReadFile = backblazeReadFile;
+// exports.backblazeTranscoder = backblazeTranscoder;
 exports.catalog = catalog;
 exports.checkout = checkout;
 exports.eventComments = eventComments;
