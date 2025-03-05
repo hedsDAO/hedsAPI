@@ -1,6 +1,14 @@
 {
   "functions": {
+    "predeploy": "npm run build",
     "source": ".",
-    "memory": "2GB"
+    "memory": "32GB",
+    "ignore": [
+      "**/node_modules/**",
+      "package.json",
+      "package-lock.json",
+      "local/**/*",
+      ".git"
+    ]
   }
 }
