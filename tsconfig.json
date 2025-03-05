@@ -6,13 +6,14 @@
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
+    "target": "es6",
     "resolveJsonModule": true,
     "allowJs": true,
     "esModuleInterop": true,
     "types": ["node", "jest"]
+    // "rootDirs": ["functions", "./prisma","config.js"],
   },
   "compileOnSave": true,
-  "include": ["src/**/*", "jest.config.js"],
+  "include": ["functions/**/*", "prisma", "index.ts", "functions/data", "functions/controllers", "functions/routes", "functions/servers", "functions/app.ts", "functions/common.ts", "functions/database.ts"],
   "exclude": ["node_modules", "*/.test.ts"]
 }
